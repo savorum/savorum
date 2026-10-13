@@ -1,0 +1,66 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://example.com/#author",
+      "name": "Fixture Kitchen"
+    },
+    {
+      "@type": "Recipe",
+      "@id": "https://example.com/oat-bowl#recipe",
+      "url": "https://example.com/oat-bowl",
+      "name": "Mint oat bowl",
+      "inLanguage": "en-GB",
+      "author": {
+        "@id": "https://example.com/#author"
+      },
+      "recipeYield": {
+        "@type": "QuantitativeValue",
+        "value": 2,
+        "unitText": "bowls"
+      },
+      "prepTime": "PT10M",
+      "cookTime": "PT5M",
+      "totalTime": "PT20M",
+      "recipeIngredient": [
+        "100 g oats",
+        "200 ml mint water"
+      ],
+      "recipeInstructions": [
+        {
+          "@type": "HowToSection",
+          "name": "Prepare",
+          "itemListElement": [
+            {
+              "@type": "HowToSection",
+              "name": "Steep",
+              "itemListElement": [
+                {
+                  "@type": "HowToStep",
+                  "text": "Cover the oats and rest 5 minutes.",
+                  "supply": [
+                    "100 g oats"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "@type": "HowToSection",
+          "name": "Finish",
+          "itemListElement": [
+            {
+              "@type": "HowToStep",
+              "text": "Stir in the mint water.",
+              "supply": [
+                "200 ml mint water"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

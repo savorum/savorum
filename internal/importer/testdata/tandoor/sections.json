@@ -1,0 +1,41 @@
+{
+  "name": "Toasted seed bowl",
+  "source_url": "https://example.com/recipes/toasted-seeds",
+  "servings_text": "2 bowls",
+  "steps": [
+    {
+      "name": "Toast",
+      "instruction": "Toast the seeds.",
+      "ingredients": [
+        {
+          "is_header": true,
+          "food": {
+            "name": "Seeds"
+          }
+        },
+        {
+          "amount": 25,
+          "unit": {
+            "name": "g"
+          },
+          "food": {
+            "name": "seeds"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finish",
+      "instruction": "Season the seeds.",
+      "ingredients": [
+        {
+          "no_amount": true,
+          "food": {
+            "name": "salt"
+          },
+          "note": "to taste"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "serving": {
+    "one": "人分",
+    "other": "人分"
+  },
+  "egg": {
+    "one": "個",
+    "other": "個"
+  },
+  "clove": {
+    "one": "片",
+    "other": "片"
+  },
+  "sprig": {
+    "one": "本",
+    "other": "本"
+  },
+  "bunch": {
+    "one": "束",
+    "other": "束"
+  },
+  "pinch": {
+    "one": "つまみ",
+    "other": "つまみ"
+  },
+  "handful": {
+    "one": "つかみ",
+    "other": "つかみ"
+  },
+  "can": {
+    "one": "缶",
+    "other": "缶"
+  },
+  "tin": {
+    "one": "缶",
+    "other": "缶"
+  },
+  "packet": {
+    "one": "袋",
+    "other": "袋"
+  },
+  "cup": {
+    "one": "カップ",
+    "other": "カップ"
+  },
+  "tablespoon": {
+    "one": "大さじ",
+    "other": "大さじ"
+  },
+  "teaspoon": {
+    "one": "小さじ",
+    "other": "小さじ"
+  },
+  "pint": {
+    "one": "パイント",
+    "other": "パイント"
+  },
+  "quart": {
+    "one": "クォート",
+    "other": "クォート"
+  },
+  "gallon": {
+    "one": "ガロン",
+    "other": "ガロン"
+  },
+  "fluidounce": {
+    "one": "液量オンス",
+    "other": "液量オンス"
+  }
+}

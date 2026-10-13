@@ -1,0 +1,70 @@
+{
+  "serving": {
+    "one": "portion",
+    "other": "portioner"
+  },
+  "egg": {
+    "one": "ägg",
+    "other": "ägg"
+  },
+  "clove": {
+    "one": "klyfta",
+    "other": "klyftor"
+  },
+  "sprig": {
+    "one": "kvist",
+    "other": "kvistar"
+  },
+  "bunch": {
+    "one": "knippe",
+    "other": "knippen"
+  },
+  "pinch": {
+    "one": "nypa",
+    "other": "nypor"
+  },
+  "handful": {
+    "one": "näve",
+    "other": "nävar"
+  },
+  "can": {
+    "one": "burk",
+    "other": "burkar"
+  },
+  "tin": {
+    "one": "burk",
+    "other": "burkar"
+  },
+  "packet": {
+    "one": "paket",
+    "other": "paket"
+  },
+  "cup": {
+    "one": "kopp",
+    "other": "koppar"
+  },
+  "tablespoon": {
+    "one": "msk",
+    "other": "msk"
+  },
+  "teaspoon": {
+    "one": "tsk",
+    "other": "tsk"
+  },
+  "pint": {
+    "one": "pint",
+    "other": "pint"
+  },
+  "quart": {
+    "one": "quart",
+    "other": "quart"
+  },
+  "gallon": {
+    "one": "gallon",
+    "other": "gallon"
+  },
+  "fluidounce": {
+    "one": "fl oz",
+    "other": "fl oz"
+  }
+}

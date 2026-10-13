@@ -1,0 +1,3202 @@
+[
+  {
+    "text": "Knead the mixture for 5 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Knead about 1.5 hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Knead at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Knead 1½ hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Knead 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Knead for 6 to 8 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Knead around 0,5 hour before serving.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Whisk the mixture for 5 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Whisk about 1.5 hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Whisk at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Whisk 1½ hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Whisk 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Whisk for 6 to 8 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Whisk around 0,5 hour before serving.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Stir the mixture for 5 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Stir about 1.5 hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Stir at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Stir 1½ hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Stir 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Stir for 6 to 8 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Stir around 0,5 hour before serving.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Beat the mixture for 5 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Beat about 1.5 hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Beat at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Beat 1½ hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Beat 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Beat for 6 to 8 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Beat around 0,5 hour before serving.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Mix the mixture for 5 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Mix about 1.5 hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Mix at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Mix 1½ hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Mix 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Mix for 6 to 8 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Mix around 0,5 hour before serving.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Fold the mixture for 5 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Fold about 1.5 hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Fold at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Fold 1½ hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Fold 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Fold for 6 to 8 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Fold around 0,5 hour before serving.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Shape the mixture for 5 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Shape about 1.5 hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Shape at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Shape 1½ hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Shape 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Shape for 6 to 8 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Shape around 0,5 hour before serving.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Roll the mixture for 5 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Roll about 1.5 hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Roll at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Roll 1½ hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Roll 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Roll for 6 to 8 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Roll around 0,5 hour before serving.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Chop the mixture for 5 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Chop about 1.5 hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Chop at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Chop 1½ hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Chop 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Chop for 6 to 8 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Chop around 0,5 hour before serving.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Slice the mixture for 5 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Slice about 1.5 hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Slice at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Slice 1½ hours until ready.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Slice 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Slice for 6 to 8 minutes.",
+    "expected": [
+      {
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Slice around 0,5 hour before serving.",
+    "expected": [
+      {
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Saute the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Saute about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Saute at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Saute 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Saute 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Saute for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Saute around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Sauté the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Sauté about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Sauté at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Sauté 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Sauté 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Sauté for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Sauté around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Sear the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Sear about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Sear at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Sear 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Sear 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Sear for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Sear around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Fry the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Fry about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Fry at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Fry 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Fry 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Fry for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Fry around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Bake the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Bake about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Bake at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Bake 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Bake 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Bake for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Bake around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Roast the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Roast about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Roast at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Roast 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Roast 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Roast for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Roast around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Grill the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Grill about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Grill at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Grill 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Grill 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Grill for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Grill around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Broil the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Broil about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Broil at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Broil 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Broil 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Broil for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Broil around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Bake",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Simmer the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Simmer",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Simmer about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Simmer",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Simmer at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Simmer",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Simmer 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Simmer",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Simmer 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Simmer for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Simmer",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Simmer around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Simmer",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Boil the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Simmer",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Boil about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Simmer",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Boil at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Simmer",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Boil 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Simmer",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Boil 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Boil for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Simmer",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Boil around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "cook",
+        "label": "Simmer",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Cook the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Cook about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Cook at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Cook 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Cook 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Cook for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Cook around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Rest the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "rest",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Rest about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "rest",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Rest at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "rest",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Rest 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "rest",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Rest 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Rest for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "rest",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Rest around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "rest",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Rise the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "proof",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Rise about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "proof",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Rise at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "proof",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Rise 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "proof",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Rise 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Rise for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "proof",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Rise around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "proof",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Proof the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "proof",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Proof about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "proof",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Proof at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "proof",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Proof 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "proof",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Proof 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Proof for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "proof",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Proof around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "proof",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Prove the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "proof",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Prove about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "proof",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Prove at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "proof",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Prove 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "proof",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Prove 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Prove for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "proof",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Prove around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "proof",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Marinate the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "marinate",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Marinate about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "marinate",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Marinate at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "marinate",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Marinate 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "marinate",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Marinate 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Marinate for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "marinate",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Marinate around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "marinate",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Brine the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "brine",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Brine about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "brine",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Brine at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "brine",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Brine 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "brine",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Brine 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Brine for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "brine",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Brine around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "brine",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Soak the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "soak",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Soak about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "soak",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Soak at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "soak",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Soak 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "soak",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Soak 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Soak for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "soak",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Soak around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "soak",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Chill the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "chill",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Chill about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "chill",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Chill at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "chill",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Chill 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "chill",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Chill 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Chill for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "chill",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Chill around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "chill",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Refrigerate the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "chill",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Refrigerate about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "chill",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Refrigerate at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "chill",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Refrigerate 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "chill",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Refrigerate 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Refrigerate for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "chill",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Refrigerate around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "chill",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Freeze the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "freeze",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Freeze about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "freeze",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Freeze at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "freeze",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Freeze 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "freeze",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Freeze 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Freeze for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "freeze",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Freeze around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "freeze",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Cool the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "cool",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Cool about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "cool",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Cool at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "cool",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Cool 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "cool",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Cool 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Cool for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "cool",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Cool around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "cool",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Ferment the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "ferment",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Ferment about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "ferment",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Ferment at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "ferment",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Ferment 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "ferment",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Ferment 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Ferment for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "ferment",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Ferment around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "ferment",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Cure the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "cure",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Cure about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "cure",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Cure at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "cure",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Cure 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "cure",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Cure 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Cure for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "cure",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Cure around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "cure",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Drain the mixture for 5 minutes.",
+    "expected": [
+      {
+        "kind": "drain",
+        "duration": {
+          "value": "PT5M",
+          "source_text": "for 5 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Drain about 1.5 hours until ready.",
+    "expected": [
+      {
+        "kind": "drain",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "about 1.5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Drain at least 1 1/2 hours before continuing.",
+    "expected": [
+      {
+        "kind": "drain",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "at least 1 1/2 hours"
+        },
+        "note": "at least",
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Drain 1½ hours until ready.",
+    "expected": [
+      {
+        "kind": "drain",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "Drain 1½ hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Drain for 6 to 8 minutes.",
+    "expected": [
+      {
+        "kind": "drain",
+        "duration": {
+          "min": "PT6M",
+          "max": "PT8M",
+          "source_text": "for 6 to 8 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Drain around 0,5 hour before serving.",
+    "expected": [
+      {
+        "kind": "drain",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "around 0,5 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "After 15 minutes, uncover the dish.",
+    "expected": [
+      {
+        "kind": "other",
+        "label": "Wait",
+        "duration": {
+          "value": "PT15M",
+          "source_text": "After 15 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "After about ½ hour, check the dough.",
+    "expected": [
+      {
+        "kind": "other",
+        "label": "Wait",
+        "duration": {
+          "value": "PT30M",
+          "approximate": true,
+          "source_text": "After about ½ hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "After approximately 1.25 hours, turn the roast.",
+    "expected": [
+      {
+        "kind": "other",
+        "label": "Wait",
+        "duration": {
+          "value": "PT1H15M",
+          "approximate": true,
+          "source_text": "After approximately 1.25 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "After around 1 1/2 hours, test for doneness.",
+    "expected": [
+      {
+        "kind": "other",
+        "label": "Wait",
+        "duration": {
+          "value": "PT1H30M",
+          "approximate": true,
+          "source_text": "After around 1 1/2 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "After 45–60 minutes, remove the lid.",
+    "expected": [
+      {
+        "kind": "other",
+        "label": "Wait",
+        "duration": {
+          "min": "PT45M",
+          "max": "PT1H",
+          "source_text": "After 45–60 minutes"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "After 1½ to 2 hours, check the center.",
+    "expected": [
+      {
+        "kind": "other",
+        "label": "Wait",
+        "duration": {
+          "min": "PT1H30M",
+          "max": "PT2H",
+          "source_text": "After 1½ to 2 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "After 3/4 hour, add the garnish.",
+    "expected": [
+      {
+        "kind": "other",
+        "label": "Wait",
+        "duration": {
+          "value": "PT45M",
+          "source_text": "After 3/4 hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "After 90 seconds, stir once.",
+    "expected": [
+      {
+        "kind": "other",
+        "label": "Wait",
+        "duration": {
+          "value": "PT1M30S",
+          "source_text": "After 90 seconds"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "After 0.5 day, unwrap the cheese.",
+    "expected": [
+      {
+        "kind": "other",
+        "label": "Wait",
+        "duration": {
+          "value": "PT12H",
+          "source_text": "After 0.5 day"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "After 1 1/4 days, refresh the starter.",
+    "expected": [
+      {
+        "kind": "other",
+        "label": "Wait",
+        "duration": {
+          "value": "P1DT6H",
+          "source_text": "After 1 1/4 days"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "After about ⅓ hour, rotate the pan.",
+    "expected": [
+      {
+        "kind": "other",
+        "label": "Wait",
+        "duration": {
+          "value": "PT20M",
+          "approximate": true,
+          "source_text": "After about ⅓ hour"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "After 2,5 hours, drain well.",
+    "expected": [
+      {
+        "kind": "other",
+        "label": "Wait",
+        "duration": {
+          "value": "PT2H30M",
+          "source_text": "After 2,5 hours"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Stir every 5 minutes until thickened.",
+    "expected": []
+  },
+  {
+    "text": "Whisk every ½ hour while chilling.",
+    "expected": []
+  },
+  {
+    "text": "Turn the pan every 15 minutes.",
+    "expected": []
+  },
+  {
+    "text": "Divide the dough into 16 balls.",
+    "expected": []
+  },
+  {
+    "text": "Preheat the oven to 450°F.",
+    "expected": []
+  },
+  {
+    "text": "Use an 8-inch skillet.",
+    "expected": []
+  },
+  {
+    "text": "Add 2 cups of stock.",
+    "expected": []
+  },
+  {
+    "text": "Serve after dinner.",
+    "expected": []
+  },
+  {
+    "text": "Wait several minutes before slicing.",
+    "expected": []
+  },
+  {
+    "text": "Bake until golden.",
+    "expected": []
+  },
+  {
+    "text": "Rest overnight.",
+    "expected": []
+  },
+  {
+    "text": "Chill briefly.",
+    "expected": []
+  },
+  {
+    "text": "The roast weighs 1.5 pounds.",
+    "expected": []
+  },
+  {
+    "text": "Set a timer if desired.",
+    "expected": []
+  },
+  {
+    "text": "Slice into 1 1/2-inch pieces.",
+    "expected": []
+  },
+  {
+    "text": "20 Minuten backen.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT20M",
+          "source_text": "20 Minuten"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Laisser reposer 1,5 heures.",
+    "expected": [
+      {
+        "kind": "rest",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "1,5 heures"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Hornear durante 20 minutos.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT20M",
+          "source_text": "20 minutos"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "20分焼く。",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT20M",
+          "source_text": "20分"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "煮20分钟。",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT20M",
+          "source_text": "20分钟"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "اطبخ لمدة ٢٠ دقيقة.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT20M",
+          "source_text": "٢٠ دقيقة"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "10 dakika pişirin.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT10M",
+          "source_text": "10 dakika"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Варить 20 минут.",
+    "expected": [
+      {
+        "kind": "cook",
+        "duration": {
+          "value": "PT20M",
+          "source_text": "20 минут"
+        },
+        "provenance": "derived"
+      }
+    ]
+  },
+  {
+    "text": "Alle 5 Minuten rühren.",
+    "expected": []
+  },
+  {
+    "text": "Cuire en remuant toutes les 5 minutes.",
+    "expected": []
+  },
+  {
+    "text": "Backen 20 Minuten und ruhen 10 Minuten",
+    "expected": []
+  },
+  {
+    "text": "材料 20 g",
+    "expected": []
+  }
+]

@@ -1,0 +1,219 @@
+version: "2"
+
+linters:
+  default: none
+
+  enable:
+    - errcheck
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+
+    - gocritic
+    - gosec
+    - modernize
+    - revive
+
+    - asasalint
+    - bidichk
+    - bodyclose
+    - containedctx
+    - durationcheck
+    - errchkjson
+    - errorlint
+    - exhaustive
+    - fatcontext
+    - gocheckcompilerdirectives
+    - gochecksumtype
+    - iotamixing
+    - makezero
+    - musttag
+    - nilnesserr
+    - noctx
+    - nosprintfhostport
+    - reassign
+    - rowserrcheck
+    - sqlclosecheck
+    - unqueryvet
+    - wastedassign
+
+    - asciicheck
+    - exptostd
+    - gochecknoinits
+    - gocognit
+    - godox
+    - misspell
+    - nakedret
+    - recvcheck
+    - unconvert
+    - unparam
+    - usestdlibvars
+    - wrapcheck
+
+    - loggercheck
+    - sloglint
+
+    - testableexamples
+    - thelper
+    - usetesting
+
+    - nolintlint
+    - tagliatelle
+    - whitespace
+    - wsl_v5
+
+  settings:
+    errcheck:
+      check-type-assertions: true
+      # `_ = thing()` is how this codebase says an error was considered and
+      # deliberately dropped. Reporting those would replace a visible decision
+      # in the source with a nolint directive, which says less.
+      check-blank: false
+      exclude-functions:
+        # Iteration failures are reported by Rows.Err, which the callers check;
+        # Close then has nothing left to say.
+        - (*database/sql.Rows).Close
+        # A deferred rollback is a guard. After a successful commit it returns
+        # sql.ErrTxDone by design, so its error is the expected case.
+        - (*database/sql.Tx).Rollback
+        # Writing the outcome of a command to stdout. If that write fails there
+        # is nowhere left to report it.
+        - fmt.Fprint
+        - fmt.Fprintf
+        - fmt.Fprintln
+
+    exhaustive:
+      check:
+        - switch
+      default-signifies-exhaustive: false
+
+    gocognit:
+      # Use the upstream default for branch-heavy format parsers and validators.
+      # Larger functions should still be split along meaningful responsibilities.
+      min-complexity: 30
+
+    nolintlint:
+      allow-unused: false
+      require-explanation: true
+      require-specific: true
+
+    revive:
+      # Keep the default suite active when customizing individual rules below.
+      enable-default-rules: true
+      confidence: 0.8
+      directives:
+        - name: specify-disable-reason
+          severity: error
+      rules:
+        # Domain names such as recipe.RecipeID and print.PrintDocument remain
+        # useful when imported alongside their storage and wire counterparts.
+        - name: exported
+          arguments:
+            - disable-stuttering-check
+        - name: unused-parameter
+          disabled: true
+        - name: unused-receiver
+
+    tagliatelle:
+      case:
+        # ETag is spelled by RFC 9110 and SHA256 by the digest algorithm, not by
+        # the linter's header-case rule; ExportedBy is CookbookManager's own
+        # export key, which this importer reads rather than defines.
+        ignored-fields:
+          - ETag
+          - SHA256
+          - ExportedBy
+        rules:
+          json: snake
+          yaml: snake
+          header: header
+        extended-rules:
+          header:
+            case: header
+            extra-initialisms: true
+
+    thelper:
+      test:
+        first: false
+        name: false
+        begin: true
+      benchmark:
+        first: false
+        name: false
+        begin: true
+      tb:
+        first: false
+        name: false
+        begin: true
+      fuzz:
+        first: false
+        name: false
+        begin: true
+
+    wrapcheck:
+      # Internal layers share typed domain errors. Wrap external dependencies
+      # where they enter the application, without repeating context at every
+      # internal delegation boundary.
+      ignore-package-globs:
+        - github.com/savorum/savorum/internal/*
+      # Cancellation already identifies why an operation stopped. Forward its
+      # standard sentinel without requiring another context-only wrapper.
+      extra-ignore-sigs:
+        - func (context.Context).Err() error
+
+    wsl_v5:
+      allow-first-in-block: true
+      allow-whole-block: false
+      branch-max-lines: 2
+
+  exclusions:
+    paths:
+      - web/
+
+    rules:
+      # Licensed upstream tree-builder control flow stays comparable to its pin.
+      # Correctness and security linters remain enabled on these adapted files.
+      - path: internal/importer/webrecipe/boundedhtml/(parse|const|foreign|doctype|stack)\.go$
+        linters:
+          - exhaustive
+          - gocognit
+          - gocritic
+          - godox
+          - revive
+          - unparam
+          - modernize
+      - path: internal/importer/webrecipe/boundedhtml/parse\.go$
+        linters:
+          - staticcheck
+        text: S1008
+      # Scenario tests keep setup, actions, and assertions together. Production
+      # branching retains the complexity limit; correctness checks also apply
+      # to test code.
+      - path: _test\.go$
+        linters:
+          - gocognit
+      # Tests deliberately load files from temporary directories and sibling
+      # fixture checkouts. Variable fixture paths are not request-controlled
+      # file inclusion; every other gosec rule still applies to test code.
+      - path: _test\.go$
+        linters:
+          - gosec
+        text: '^G304:'
+      # A deferred Close releases a handle, and it is exactly the position
+      # where the error has nowhere left to go. Anything written to is closed
+      # explicitly and its error checked, so this covers release rather than
+      # durability, and only the bare deferred form.
+      - linters:
+          - errcheck
+        source: '^\s*defer [\w.]+\.Close\(\)$'
+
+formatters:
+  enable:
+    - gofumpt
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  uniq-by-line: true
+  whole-files: false

@@ -1,0 +1,9 @@
+* text=auto eol=lf
+*.go text eol=lf
+*.sql text eol=lf
+*.typ text eol=lf
+*.otf binary
+internal/webui/dist/index.html text eol=lf
+
+# Source catalogs are reviewed; compiler output remains reproducible.
+web/src/paraglide/** linguist-generated=true

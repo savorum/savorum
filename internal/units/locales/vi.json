@@ -1,0 +1,70 @@
+{
+  "serving": {
+    "one": "khẩu phần",
+    "other": "khẩu phần"
+  },
+  "egg": {
+    "one": "quả",
+    "other": "quả"
+  },
+  "clove": {
+    "one": "tép",
+    "other": "tép"
+  },
+  "sprig": {
+    "one": "nhánh",
+    "other": "nhánh"
+  },
+  "bunch": {
+    "one": "bó",
+    "other": "bó"
+  },
+  "pinch": {
+    "one": "nhúm",
+    "other": "nhúm"
+  },
+  "handful": {
+    "one": "nắm",
+    "other": "nắm"
+  },
+  "can": {
+    "one": "lon",
+    "other": "lon"
+  },
+  "tin": {
+    "one": "hộp",
+    "other": "hộp"
+  },
+  "packet": {
+    "one": "gói",
+    "other": "gói"
+  },
+  "cup": {
+    "one": "cốc",
+    "other": "cốc"
+  },
+  "tablespoon": {
+    "one": "thìa canh",
+    "other": "thìa canh"
+  },
+  "teaspoon": {
+    "one": "thìa cà phê",
+    "other": "thìa cà phê"
+  },
+  "pint": {
+    "one": "pint",
+    "other": "pint"
+  },
+  "quart": {
+    "one": "quart",
+    "other": "quart"
+  },
+  "gallon": {
+    "one": "gallon",
+    "other": "gallon"
+  },
+  "fluidounce": {
+    "one": "ounce chất lỏng",
+    "other": "ounce chất lỏng"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Recipe",
+  "name": "Import discovery tart",
+  "description": "A toasted sesame noodle bowl.",
+  "recipeYield": "3 bowls",
+  "recipeIngredient": ["400 g rice noodles", "1 teaspoon sesame oil"],
+  "recipeInstructions": ["Boil the noodles.", "Toss with sesame oil."]
+}

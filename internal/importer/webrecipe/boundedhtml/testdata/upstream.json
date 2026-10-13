@@ -1,0 +1,1082 @@
+[
+  {
+    "name": "adoption01.dat:1",
+    "html": "<a><p></a></p>"
+  },
+  {
+    "name": "adoption01.dat:2",
+    "html": "<a>1<p>2</a>3</p>"
+  },
+  {
+    "name": "adoption01.dat:3",
+    "html": "<a>1<button>2</a>3</button>"
+  },
+  {
+    "name": "adoption01.dat:4",
+    "html": "<a>1<b>2</a>3</b>"
+  },
+  {
+    "name": "adoption01.dat:5",
+    "html": "<a>1<div>2<div>3</a>4</div>5</div>"
+  },
+  {
+    "name": "adoption01.dat:6",
+    "html": "<table><a>1<p>2</a>3</p>"
+  },
+  {
+    "name": "adoption01.dat:7",
+    "html": "<b><b><a><p></a>"
+  },
+  {
+    "name": "adoption01.dat:8",
+    "html": "<b><a><b><p></a>"
+  },
+  {
+    "name": "adoption01.dat:9",
+    "html": "<a><b><b><p></a>"
+  },
+  {
+    "name": "adoption01.dat:10",
+    "html": "<p>1<s id=\"A\">2<b id=\"B\">3</p>4</s>5</b>"
+  },
+  {
+    "name": "adoption01.dat:11",
+    "html": "<table><a>1<td>2</td>3</table>"
+  },
+  {
+    "name": "adoption01.dat:12",
+    "html": "<table>A<td>B</td>C</table>"
+  },
+  {
+    "name": "adoption01.dat:13",
+    "html": "<a><svg><tr><input></a>"
+  },
+  {
+    "name": "adoption01.dat:14",
+    "html": "<div><a><b><div><div><div><div><div><div><div><div><div><div></a>"
+  },
+  {
+    "name": "adoption01.dat:15",
+    "html": "<div><a><b><u><i><code><div></a>"
+  },
+  {
+    "name": "adoption01.dat:16",
+    "html": "<b><b><b><b>x</b></b></b></b>y"
+  },
+  {
+    "name": "adoption01.dat:17",
+    "html": "<p><b><b><b><b><p>x"
+  },
+  {
+    "name": "adoption02.dat:1",
+    "html": "<b>1<i>2<p>3</b>4"
+  },
+  {
+    "name": "adoption02.dat:2",
+    "html": "<a><div><style></style><address><a>"
+  },
+  {
+    "name": "scriptdata01.dat:1",
+    "html": "FOO<script>'Hello'</script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:2",
+    "html": "FOO<script></script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:3",
+    "html": "FOO<script></script >BAR"
+  },
+  {
+    "name": "scriptdata01.dat:4",
+    "html": "FOO<script></script/>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:5",
+    "html": "FOO<script></script/ >BAR"
+  },
+  {
+    "name": "scriptdata01.dat:6",
+    "html": "FOO<script type=\"text/plain\"></scriptx>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:7",
+    "html": "FOO<script></script foo=\">\" dd>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:8",
+    "html": "FOO<script>'<'</script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:9",
+    "html": "FOO<script>'<!'</script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:10",
+    "html": "FOO<script>'<!-'</script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:11",
+    "html": "FOO<script>'<!--'</script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:12",
+    "html": "FOO<script>'<!---'</script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:13",
+    "html": "FOO<script>'<!-->'</script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:14",
+    "html": "FOO<script>'<!-- potato'</script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:15",
+    "html": "FOO<script>'<!-- <sCrIpt'</script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:16",
+    "html": "FOO<script type=\"text/plain\">'<!-- <sCrIpt>'</script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:17",
+    "html": "FOO<script type=\"text/plain\">'<!-- <sCrIpt> -'</script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:18",
+    "html": "FOO<script type=\"text/plain\">'<!-- <sCrIpt> --'</script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:19",
+    "html": "FOO<script>'<!-- <sCrIpt> -->'</script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:20",
+    "html": "FOO<script type=\"text/plain\">'<!-- <sCrIpt> --!>'</script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:21",
+    "html": "FOO<script type=\"text/plain\">'<!-- <sCrIpt> -- >'</script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:22",
+    "html": "FOO<script type=\"text/plain\">'<!-- <sCrIpt '</script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:23",
+    "html": "FOO<script type=\"text/plain\">'<!-- <sCrIpt/'</script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:24",
+    "html": "FOO<script type=\"text/plain\">'<!-- <sCrIpt\\'</script>BAR"
+  },
+  {
+    "name": "scriptdata01.dat:25",
+    "html": "FOO<script type=\"text/plain\">'<!-- <sCrIpt/'</script>BAR</script>QUX"
+  },
+  {
+    "name": "scriptdata01.dat:26",
+    "html": "FOO<script><!--<script>-></script>--></script>QUX"
+  },
+  {
+    "name": "template.dat:1",
+    "html": "<body><template>Hello</template>"
+  },
+  {
+    "name": "template.dat:2",
+    "html": "<template>Hello</template>"
+  },
+  {
+    "name": "template.dat:3",
+    "html": "<template></template><div></div>"
+  },
+  {
+    "name": "template.dat:4",
+    "html": "<html><template>Hello</template>"
+  },
+  {
+    "name": "template.dat:5",
+    "html": "<head><template><div></div></template></head>"
+  },
+  {
+    "name": "template.dat:6",
+    "html": "<div><template><div><span></template><b>"
+  },
+  {
+    "name": "template.dat:7",
+    "html": "<div><template></div>Hello"
+  },
+  {
+    "name": "template.dat:8",
+    "html": "<div></template></div>"
+  },
+  {
+    "name": "template.dat:9",
+    "html": "<table><template></template></table>"
+  },
+  {
+    "name": "template.dat:10",
+    "html": "<table><template></template></div>"
+  },
+  {
+    "name": "template.dat:11",
+    "html": "<table><div><template></template></div>"
+  },
+  {
+    "name": "template.dat:12",
+    "html": "<table><template></template><div></div>"
+  },
+  {
+    "name": "template.dat:13",
+    "html": "<table>   <template></template></table>"
+  },
+  {
+    "name": "template.dat:14",
+    "html": "<table><tbody><template></template></tbody>"
+  },
+  {
+    "name": "template.dat:15",
+    "html": "<table><tbody><template></tbody></template>"
+  },
+  {
+    "name": "template.dat:16",
+    "html": "<table><tbody><template></template></tbody></table>"
+  },
+  {
+    "name": "template.dat:17",
+    "html": "<table><thead><template></template></thead>"
+  },
+  {
+    "name": "template.dat:18",
+    "html": "<table><tfoot><template></template></tfoot>"
+  },
+  {
+    "name": "template.dat:19",
+    "html": "<select><template></template></select>"
+  },
+  {
+    "name": "template.dat:20",
+    "html": "<select><template><option></option></template></select>"
+  },
+  {
+    "name": "template.dat:21",
+    "html": "<template><option></option></select><option></option></template>"
+  },
+  {
+    "name": "template.dat:22",
+    "html": "<select><template></template><option></select>"
+  },
+  {
+    "name": "template.dat:23",
+    "html": "<select><option><template></template></select>"
+  },
+  {
+    "name": "template.dat:24",
+    "html": "<select><template>"
+  },
+  {
+    "name": "template.dat:25",
+    "html": "<select><option></option><template>"
+  },
+  {
+    "name": "template.dat:26",
+    "html": "<select><option></option><template><option>"
+  },
+  {
+    "name": "template.dat:27",
+    "html": "<table><thead><template><td></template></table>"
+  },
+  {
+    "name": "template.dat:28",
+    "html": "<table><template><thead></template></table>"
+  },
+  {
+    "name": "template.dat:29",
+    "html": "<body><table><template><td></tr><div></template></table>"
+  },
+  {
+    "name": "template.dat:30",
+    "html": "<table><template><thead></template></thead></table>"
+  },
+  {
+    "name": "template.dat:31",
+    "html": "<table><thead><template><tr></template></table>"
+  },
+  {
+    "name": "template.dat:32",
+    "html": "<table><template><tr></template></table>"
+  },
+  {
+    "name": "template.dat:33",
+    "html": "<table><tr><template><td>"
+  },
+  {
+    "name": "template.dat:34",
+    "html": "<table><template><tr><template><td></template></tr></template></table>"
+  },
+  {
+    "name": "template.dat:35",
+    "html": "<table><template><tr><template><td></td></template></tr></template></table>"
+  },
+  {
+    "name": "template.dat:36",
+    "html": "<table><template><td></template>"
+  },
+  {
+    "name": "template.dat:37",
+    "html": "<body><template><td></td></template>"
+  },
+  {
+    "name": "template.dat:38",
+    "html": "<body><template><template><tr></tr></template><td></td></template>"
+  },
+  {
+    "name": "template.dat:39",
+    "html": "<table><colgroup><template><col>"
+  },
+  {
+    "name": "template.dat:40",
+    "html": "<frameset><template><frame></frame></template></frameset>"
+  },
+  {
+    "name": "template.dat:41",
+    "html": "<template><frame></frame></frameset><frame></frame></template>"
+  },
+  {
+    "name": "template.dat:42",
+    "html": "<template><div><frameset><span></span></div><span></span></template>"
+  },
+  {
+    "name": "template.dat:43",
+    "html": "<body><template><div><frameset><span></span></div><span></span></template></body>"
+  },
+  {
+    "name": "template.dat:44",
+    "html": "<body><template><script>var i = 1;</script><td></td></template>"
+  },
+  {
+    "name": "template.dat:45",
+    "html": "<body><template><tr><div></div></tr></template>"
+  },
+  {
+    "name": "template.dat:46",
+    "html": "<body><template><tr></tr><td></td></template>"
+  },
+  {
+    "name": "template.dat:47",
+    "html": "<body><template><td></td></tr><td></td></template>"
+  },
+  {
+    "name": "template.dat:48",
+    "html": "<body><template><td></td><tbody><td></td></template>"
+  },
+  {
+    "name": "template.dat:49",
+    "html": "<body><template><td></td><caption></caption><td></td></template>"
+  },
+  {
+    "name": "template.dat:50",
+    "html": "<body><template><td></td><colgroup></caption><td></td></template>"
+  },
+  {
+    "name": "template.dat:51",
+    "html": "<body><template><td></td></table><td></td></template>"
+  },
+  {
+    "name": "template.dat:52",
+    "html": "<body><template><tr></tr><tbody><tr></tr></template>"
+  },
+  {
+    "name": "template.dat:53",
+    "html": "<body><template><tr></tr><caption><tr></tr></template>"
+  },
+  {
+    "name": "template.dat:54",
+    "html": "<body><template><tr></tr></table><tr></tr></template>"
+  },
+  {
+    "name": "template.dat:55",
+    "html": "<body><template><thead></thead><caption></caption><tbody></tbody></template>"
+  },
+  {
+    "name": "template.dat:56",
+    "html": "<body><template><thead></thead></table><tbody></tbody></template></body>"
+  },
+  {
+    "name": "template.dat:57",
+    "html": "<body><template><div><tr></tr></div></template>"
+  },
+  {
+    "name": "template.dat:58",
+    "html": "<body><template><em>Hello</em></template>"
+  },
+  {
+    "name": "template.dat:59",
+    "html": "<body><template><!--comment--></template>"
+  },
+  {
+    "name": "template.dat:60",
+    "html": "<body><template><style></style><td></td></template>"
+  },
+  {
+    "name": "template.dat:61",
+    "html": "<body><template><meta><td></td></template>"
+  },
+  {
+    "name": "template.dat:62",
+    "html": "<body><template><link><td></td></template>"
+  },
+  {
+    "name": "template.dat:63",
+    "html": "<body><table><colgroup><template><col></col></template></colgroup></table></body>"
+  },
+  {
+    "name": "template.dat:64",
+    "html": "<body a=b><template><div></div><body c=d><div></div></body></template></body>"
+  },
+  {
+    "name": "template.dat:65",
+    "html": "<html a=b><template><div><html b=c><span></template>"
+  },
+  {
+    "name": "template.dat:66",
+    "html": "<html a=b><template><col></col><html b=c><col></col></template>"
+  },
+  {
+    "name": "template.dat:67",
+    "html": "<html a=b><template><frame></frame><html b=c><frame></frame></template>"
+  },
+  {
+    "name": "template.dat:68",
+    "html": "<body><template><tr></tr><template></template><td></td></template>"
+  },
+  {
+    "name": "template.dat:69",
+    "html": "<body><template><thead></thead><template><tr></tr></template><tr></tr><tfoot></tfoot></template>"
+  },
+  {
+    "name": "template.dat:70",
+    "html": "<body><template><template><b><template></template></template>text</template>"
+  },
+  {
+    "name": "template.dat:71",
+    "html": "<body><template><col><colgroup>"
+  },
+  {
+    "name": "template.dat:72",
+    "html": "<body><template><col></colgroup>"
+  },
+  {
+    "name": "template.dat:73",
+    "html": "<body><template><col><colgroup></template></body>"
+  },
+  {
+    "name": "template.dat:74",
+    "html": "<body><template><col><div>"
+  },
+  {
+    "name": "template.dat:75",
+    "html": "<body><template><col></div>"
+  },
+  {
+    "name": "template.dat:76",
+    "html": "<body><template><col>Hello"
+  },
+  {
+    "name": "template.dat:77",
+    "html": "<body><template><i><menu>Foo</i>"
+  },
+  {
+    "name": "template.dat:78",
+    "html": "<body><template></div><div>Foo</div><template></template><tr></tr>"
+  },
+  {
+    "name": "template.dat:79",
+    "html": "<body><div><template></div><tr><td>Foo</td></tr></template>"
+  },
+  {
+    "name": "template.dat:80",
+    "html": "<template></figcaption><sub><table></table>"
+  },
+  {
+    "name": "template.dat:81",
+    "html": "<template><template>"
+  },
+  {
+    "name": "template.dat:82",
+    "html": "<template><div>"
+  },
+  {
+    "name": "template.dat:83",
+    "html": "<template><template><div>"
+  },
+  {
+    "name": "template.dat:84",
+    "html": "<template><template><table>"
+  },
+  {
+    "name": "template.dat:85",
+    "html": "<template><template><tbody>"
+  },
+  {
+    "name": "template.dat:86",
+    "html": "<template><template><tr>"
+  },
+  {
+    "name": "template.dat:87",
+    "html": "<template><template><td>"
+  },
+  {
+    "name": "template.dat:88",
+    "html": "<template><template><caption>"
+  },
+  {
+    "name": "template.dat:89",
+    "html": "<template><template><colgroup>"
+  },
+  {
+    "name": "template.dat:90",
+    "html": "<template><template><col>"
+  },
+  {
+    "name": "template.dat:91",
+    "html": "<template><template><tbody><select>"
+  },
+  {
+    "name": "template.dat:92",
+    "html": "<template><template><table>Foo"
+  },
+  {
+    "name": "template.dat:93",
+    "html": "<template><template><frame>"
+  },
+  {
+    "name": "template.dat:94",
+    "html": "<template><template><script>var i"
+  },
+  {
+    "name": "template.dat:95",
+    "html": "<template><template><style>var i"
+  },
+  {
+    "name": "template.dat:96",
+    "html": "<template><table></template><body><span>Foo"
+  },
+  {
+    "name": "template.dat:97",
+    "html": "<template><td></template><body><span>Foo"
+  },
+  {
+    "name": "template.dat:98",
+    "html": "<template><object></template><body><span>Foo"
+  },
+  {
+    "name": "template.dat:99",
+    "html": "<template><svg><template>"
+  },
+  {
+    "name": "template.dat:100",
+    "html": "<template><svg><foo><template><foreignObject><div></template><div>"
+  },
+  {
+    "name": "template.dat:101",
+    "html": "<dummy><template><span></dummy>"
+  },
+  {
+    "name": "template.dat:102",
+    "html": "<body><table><tr><td><select><template>Foo</template><caption>A</table>"
+  },
+  {
+    "name": "template.dat:103",
+    "html": "<body></body><template>"
+  },
+  {
+    "name": "template.dat:104",
+    "html": "<head></head><template>"
+  },
+  {
+    "name": "template.dat:105",
+    "html": "<head></head><template>Foo</template>"
+  },
+  {
+    "name": "template.dat:106",
+    "html": "<html><head></head><template></template><head>"
+  },
+  {
+    "name": "template.dat:107",
+    "html": "<!DOCTYPE HTML><dummy><table><template><table><template><table><script>"
+  },
+  {
+    "name": "template.dat:108",
+    "html": "<template><a><table><a>"
+  },
+  {
+    "name": "template.dat:110",
+    "html": "<!DOCTYPE HTML><template><tr><td>cell</td></tr></template>"
+  },
+  {
+    "name": "template.dat:111",
+    "html": "<!DOCTYPE HTML><template> <tr> <td>cell</td> </tr> </template>"
+  },
+  {
+    "name": "template.dat:112",
+    "html": "<!DOCTYPE HTML><template><tr><td>cell</td></tr>a</template>"
+  },
+  {
+    "name": "tables01.dat:1",
+    "html": "<table><th>"
+  },
+  {
+    "name": "tables01.dat:2",
+    "html": "<table><td>"
+  },
+  {
+    "name": "tables01.dat:3",
+    "html": "<table><col foo='bar'>"
+  },
+  {
+    "name": "tables01.dat:4",
+    "html": "<table><colgroup></html>foo"
+  },
+  {
+    "name": "tables01.dat:5",
+    "html": "<table></table><p>foo"
+  },
+  {
+    "name": "tables01.dat:6",
+    "html": "<table></body></caption></col></colgroup></html></tbody></td></tfoot></th></thead></tr><td>"
+  },
+  {
+    "name": "tables01.dat:7",
+    "html": "<table><select><option>3</select></table>"
+  },
+  {
+    "name": "tables01.dat:8",
+    "html": "<table><select><table></table></select></table>"
+  },
+  {
+    "name": "tables01.dat:9",
+    "html": "<table><select></table>"
+  },
+  {
+    "name": "tables01.dat:10",
+    "html": "<table><select><option>A<tr><td>B</td></tr></table>"
+  },
+  {
+    "name": "tables01.dat:11",
+    "html": "<table><td></body></caption></col></colgroup></html>foo"
+  },
+  {
+    "name": "tables01.dat:12",
+    "html": "<table><td>A</table>B"
+  },
+  {
+    "name": "tables01.dat:13",
+    "html": "<table><tr><caption>"
+  },
+  {
+    "name": "tables01.dat:14",
+    "html": "<table><tr></body></caption></col></colgroup></html></td></th><td>foo"
+  },
+  {
+    "name": "tables01.dat:15",
+    "html": "<table><td><tr>"
+  },
+  {
+    "name": "tables01.dat:16",
+    "html": "<table><td><button><td>"
+  },
+  {
+    "name": "tables01.dat:17",
+    "html": "<table><tr><td><svg><desc><td>"
+  },
+  {
+    "name": "tables01.dat:18",
+    "html": "<div><table><svg><foreignObject><select><table><s>"
+  },
+  {
+    "name": "tables01.dat:19",
+    "html": "<table>a<!doctype html>"
+  },
+  {
+    "name": "comments01.dat:1",
+    "html": "FOO<!-- BAR -->BAZ"
+  },
+  {
+    "name": "comments01.dat:2",
+    "html": "FOO<!-- BAR --!>BAZ"
+  },
+  {
+    "name": "comments01.dat:3",
+    "html": "FOO<!-- BAR --! >BAZ"
+  },
+  {
+    "name": "comments01.dat:4",
+    "html": "FOO<!-- BAR --!\n>BAZ"
+  },
+  {
+    "name": "comments01.dat:5",
+    "html": "FOO<!-- BAR --   >BAZ"
+  },
+  {
+    "name": "comments01.dat:6",
+    "html": "FOO<!-- BAR -- <QUX> -- MUX -->BAZ"
+  },
+  {
+    "name": "comments01.dat:7",
+    "html": "FOO<!-- BAR -- <QUX> -- MUX --!>BAZ"
+  },
+  {
+    "name": "comments01.dat:8",
+    "html": "FOO<!-- BAR -- <QUX> -- MUX -- >BAZ"
+  },
+  {
+    "name": "comments01.dat:9",
+    "html": "FOO<!---->BAZ"
+  },
+  {
+    "name": "comments01.dat:10",
+    "html": "FOO<!--->BAZ"
+  },
+  {
+    "name": "comments01.dat:11",
+    "html": "FOO<!-->BAZ"
+  },
+  {
+    "name": "comments01.dat:12",
+    "html": "<?xml version=\"1.0\">Hi"
+  },
+  {
+    "name": "comments01.dat:13",
+    "html": "<?xml version=\"1.0\">"
+  },
+  {
+    "name": "comments01.dat:14",
+    "html": "<?xml version"
+  },
+  {
+    "name": "comments01.dat:15",
+    "html": "FOO<!----->BAZ"
+  },
+  {
+    "name": "comments01.dat:16",
+    "html": "<html><!-- comment --><title>Comment before head</title>"
+  },
+  {
+    "name": "entities01.dat:1",
+    "html": "FOO&gt;BAR"
+  },
+  {
+    "name": "entities01.dat:2",
+    "html": "FOO&gtBAR"
+  },
+  {
+    "name": "entities01.dat:3",
+    "html": "FOO&gt BAR"
+  },
+  {
+    "name": "entities01.dat:4",
+    "html": "FOO&gt;;;BAR"
+  },
+  {
+    "name": "entities01.dat:5",
+    "html": "I'm &notit; I tell you"
+  },
+  {
+    "name": "entities01.dat:6",
+    "html": "I'm &notin; I tell you"
+  },
+  {
+    "name": "entities01.dat:7",
+    "html": "&ammmp;"
+  },
+  {
+    "name": "entities01.dat:8",
+    "html": "&ammmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmp;"
+  },
+  {
+    "name": "entities01.dat:9",
+    "html": "FOO& BAR"
+  },
+  {
+    "name": "entities01.dat:10",
+    "html": "FOO&<BAR>"
+  },
+  {
+    "name": "entities01.dat:11",
+    "html": "FOO&&&&gt;BAR"
+  },
+  {
+    "name": "entities01.dat:12",
+    "html": "FOO&#41;BAR"
+  },
+  {
+    "name": "entities01.dat:13",
+    "html": "FOO&#x41;BAR"
+  },
+  {
+    "name": "entities01.dat:14",
+    "html": "FOO&#X41;BAR"
+  },
+  {
+    "name": "entities01.dat:15",
+    "html": "FOO&#BAR"
+  },
+  {
+    "name": "entities01.dat:16",
+    "html": "FOO&#ZOO"
+  },
+  {
+    "name": "entities01.dat:17",
+    "html": "FOO&#xBAR"
+  },
+  {
+    "name": "entities01.dat:18",
+    "html": "FOO&#xZOO"
+  },
+  {
+    "name": "entities01.dat:19",
+    "html": "FOO&#XZOO"
+  },
+  {
+    "name": "entities01.dat:20",
+    "html": "FOO&#41BAR"
+  },
+  {
+    "name": "entities01.dat:21",
+    "html": "FOO&#x41BAR"
+  },
+  {
+    "name": "entities01.dat:22",
+    "html": "FOO&#x41ZOO"
+  },
+  {
+    "name": "entities01.dat:23",
+    "html": "FOO&#x0000;ZOO"
+  },
+  {
+    "name": "entities01.dat:24",
+    "html": "FOO&#x0078;ZOO"
+  },
+  {
+    "name": "entities01.dat:25",
+    "html": "FOO&#x0079;ZOO"
+  },
+  {
+    "name": "entities01.dat:26",
+    "html": "FOO&#x0080;ZOO"
+  },
+  {
+    "name": "entities01.dat:27",
+    "html": "FOO&#x0081;ZOO"
+  },
+  {
+    "name": "entities01.dat:28",
+    "html": "FOO&#x0082;ZOO"
+  },
+  {
+    "name": "entities01.dat:29",
+    "html": "FOO&#x0083;ZOO"
+  },
+  {
+    "name": "entities01.dat:30",
+    "html": "FOO&#x0084;ZOO"
+  },
+  {
+    "name": "entities01.dat:31",
+    "html": "FOO&#x0085;ZOO"
+  },
+  {
+    "name": "entities01.dat:32",
+    "html": "FOO&#x0086;ZOO"
+  },
+  {
+    "name": "entities01.dat:33",
+    "html": "FOO&#x0087;ZOO"
+  },
+  {
+    "name": "entities01.dat:34",
+    "html": "FOO&#x0088;ZOO"
+  },
+  {
+    "name": "entities01.dat:35",
+    "html": "FOO&#x0089;ZOO"
+  },
+  {
+    "name": "entities01.dat:36",
+    "html": "FOO&#x008A;ZOO"
+  },
+  {
+    "name": "entities01.dat:37",
+    "html": "FOO&#x008B;ZOO"
+  },
+  {
+    "name": "entities01.dat:38",
+    "html": "FOO&#x008C;ZOO"
+  },
+  {
+    "name": "entities01.dat:39",
+    "html": "FOO&#x008D;ZOO"
+  },
+  {
+    "name": "entities01.dat:40",
+    "html": "FOO&#x008E;ZOO"
+  },
+  {
+    "name": "entities01.dat:41",
+    "html": "FOO&#x008F;ZOO"
+  },
+  {
+    "name": "entities01.dat:42",
+    "html": "FOO&#x0090;ZOO"
+  },
+  {
+    "name": "entities01.dat:43",
+    "html": "FOO&#x0091;ZOO"
+  },
+  {
+    "name": "entities01.dat:44",
+    "html": "FOO&#x0092;ZOO"
+  },
+  {
+    "name": "entities01.dat:45",
+    "html": "FOO&#x0093;ZOO"
+  },
+  {
+    "name": "entities01.dat:46",
+    "html": "FOO&#x0094;ZOO"
+  },
+  {
+    "name": "entities01.dat:47",
+    "html": "FOO&#x0095;ZOO"
+  },
+  {
+    "name": "entities01.dat:48",
+    "html": "FOO&#x0096;ZOO"
+  },
+  {
+    "name": "entities01.dat:49",
+    "html": "FOO&#x0097;ZOO"
+  },
+  {
+    "name": "entities01.dat:50",
+    "html": "FOO&#x0098;ZOO"
+  },
+  {
+    "name": "entities01.dat:51",
+    "html": "FOO&#x0099;ZOO"
+  },
+  {
+    "name": "entities01.dat:52",
+    "html": "FOO&#x009A;ZOO"
+  },
+  {
+    "name": "entities01.dat:53",
+    "html": "FOO&#x009B;ZOO"
+  },
+  {
+    "name": "entities01.dat:54",
+    "html": "FOO&#x009C;ZOO"
+  },
+  {
+    "name": "entities01.dat:55",
+    "html": "FOO&#x009D;ZOO"
+  },
+  {
+    "name": "entities01.dat:56",
+    "html": "FOO&#x009E;ZOO"
+  },
+  {
+    "name": "entities01.dat:57",
+    "html": "FOO&#x009F;ZOO"
+  },
+  {
+    "name": "entities01.dat:58",
+    "html": "FOO&#x00A0;ZOO"
+  },
+  {
+    "name": "entities01.dat:59",
+    "html": "FOO&#xD7FF;ZOO"
+  },
+  {
+    "name": "entities01.dat:60",
+    "html": "FOO&#xD800;ZOO"
+  },
+  {
+    "name": "entities01.dat:61",
+    "html": "FOO&#xD801;ZOO"
+  },
+  {
+    "name": "entities01.dat:62",
+    "html": "FOO&#xDFFE;ZOO"
+  },
+  {
+    "name": "entities01.dat:63",
+    "html": "FOO&#xDFFF;ZOO"
+  },
+  {
+    "name": "entities01.dat:64",
+    "html": "FOO&#xE000;ZOO"
+  },
+  {
+    "name": "entities01.dat:65",
+    "html": "FOO&#x10FFFE;ZOO"
+  },
+  {
+    "name": "entities01.dat:66",
+    "html": "FOO&#x1087D4;ZOO"
+  },
+  {
+    "name": "entities01.dat:67",
+    "html": "FOO&#x10FFFF;ZOO"
+  },
+  {
+    "name": "entities01.dat:68",
+    "html": "FOO&#x110000;ZOO"
+  },
+  {
+    "name": "entities01.dat:69",
+    "html": "FOO&#xFFFFFF;ZOO"
+  },
+  {
+    "name": "entities01.dat:70",
+    "html": "FOO&#11111111111"
+  },
+  {
+    "name": "entities01.dat:71",
+    "html": "FOO&#1111111111"
+  },
+  {
+    "name": "entities01.dat:72",
+    "html": "FOO&#111111111111"
+  },
+  {
+    "name": "entities01.dat:73",
+    "html": "FOO&#11111111111ZOO"
+  },
+  {
+    "name": "entities01.dat:74",
+    "html": "FOO&#1111111111ZOO"
+  },
+  {
+    "name": "entities01.dat:75",
+    "html": "FOO&#111111111111ZOO"
+  },
+  {
+    "name": "inbody01.dat:1",
+    "html": "<button>1</foo>"
+  },
+  {
+    "name": "inbody01.dat:2",
+    "html": "<foo>1<p>2</foo>"
+  },
+  {
+    "name": "inbody01.dat:3",
+    "html": "<dd>1</foo>"
+  },
+  {
+    "name": "inbody01.dat:4",
+    "html": "<foo>1<dd>2</foo>"
+  }
+]

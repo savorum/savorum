@@ -1,0 +1,150 @@
+{
+  "method": "existing independent Java participant C; application CLI and conformance adapter",
+  "cases": [
+    {
+      "fixture": "australian-scones.recipe.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "berry-granita.recipe.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "chocolate-chip-cookies.recipe.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "complex-layer-cake.recipe.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "creme-anglaise.recipe.sref",
+      "first_library_import_enrichment": "the packaged recipe changed: instruction_sections[1].steps[0].timing_refs: 1 items became 2",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "divided-sugar-cake.recipe.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "holiday-punch.recipe.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "pizza-night.recipe.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "preserved-lemons.recipe.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "ramen-bowl.recipe.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "roast-chicken.recipe.sref",
+      "first_library_import_enrichment": "the packaged recipe changed: instruction_sections[0].steps[0].timing_refs: 1 items became 2",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "savory-hand-pies.recipe.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "sourdough.recipe.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "tempered-chocolate.recipe.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "vegetable-biryani.recipe.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "vietnamese-pickles.recipe.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "authored-metadata-preservation.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "extension-preservation.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "forward-compatible-preservation.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "source-identity-preservation.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    },
+    {
+      "fixture": "image.sref",
+      "passed": true,
+      "chain": "source \u2192 Savorum \u2192 C \u2192 Savorum",
+      "semantic": true
+    }
+  ],
+  "bundle": {
+    "passed": true,
+    "members": 21,
+    "chain": "Savorum packages \u2192 C bundle \u2192 Savorum import \u2192 Savorum packages"
+  },
+  "disagreements": [
+    {
+      "classification": "intentionally unsupported optional capability",
+      "detail": "Frozen C predates authored ingredient choices; its 16-example kit is used. New ingredient-choice example excluded; no frozen participant changed."
+    },
+    {
+      "classification": "documented application enrichment",
+      "detail": "First library writes reconcile derived timings from prose for creme-anglaise and roast-chicken. Exact source equivalence is verified separately through the Savorum codec/C/codec chain; subsequent product hops preserve the first library export."
+    }
+  ],
+  "savorum_revision": "5d4a48d6c19549b8187d25f8f097108d808a4a13",
+  "sref_revision": "04ab2dd01e901e6243e34f7c4a36900e573e2c09"
+}

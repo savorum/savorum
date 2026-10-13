@@ -1,0 +1,9 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Recipe",
+  "name": "Source refresh saffron rice",
+  "url": "https://recipes.example/saffron-rice",
+  "description": "Original rice recipe.",
+  "recipeIngredient": ["240 g basmati rice", "1 g saffron"],
+  "recipeInstructions": ["Steep the saffron.", "Simmer the rice."]
+}

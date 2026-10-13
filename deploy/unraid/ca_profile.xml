@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommunityApplications>
+  <Profile><![CDATA[
+**A recipe library you can keep.**
+
+Savorum is a free, open-source recipe manager for your own server. Save the recipes you want to cook, give family favourites a place in your collection, and use the same library to plan meals, shop, and cook. The web interface works on phones, tablets, and computers.
+
+- **Bring your recipes with you.** Save recipes from public websites, scan them from PDFs and photographs, or import exports from Paprika, Mealie, Tandoor Recipes, and CookBook Manager. Review ingredients, instructions, and possible duplicates before adding them to your library.
+- **Build your own cookbook.** Search by title or ingredient, mark favourites, and organize recipes with tags and books. Give a book a cover and chapters; a recipe can belong to several books without making extra copies.
+- **Cook the batch you need.** Scale supported ingredient quantities without rewriting the saved recipe. Cooking mode shows one step at a time, with ingredient check-offs and timers, and can keep several dishes in progress.
+- **Plan the week and shop for it.** Schedule recipes, simple dishes, and leftovers. Add ingredients from your plan to a shopping list and use pantry notes to check what you already have.
+- **Keep a kitchen copy.** Print A4 or US Letter pages, or recipe cards in three sizes. Export recipes with their photographs in SREF, an open recipe format, and back up the whole library with its books and history.
+
+This repository provides Savorum's Unraid installation template. Recipes and photographs are stored on your server. Start with a local library, or enable accounts and shared libraries for your household.
+
+[Explore Savorum](https://savorum.app/) · [Installation guide](https://github.com/savorum/unraid-templates/blob/main/README.md) · [Get help](https://savorum.app/contact/)
+]]></Profile>
+  <Icon>https://raw.githubusercontent.com/savorum/unraid-templates/main/icon.png</Icon>
+  <WebPage>https://savorum.app/</WebPage>
+  <Forum>https://savorum.app/contact/</Forum>
+  <Photo>https://savorum.app/images/library-compact.webp</Photo>
+  <Photo>https://savorum.app/images/cooking.webp</Photo>
+</CommunityApplications>

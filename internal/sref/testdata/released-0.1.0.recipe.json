@@ -1,0 +1,48 @@
+{
+  "sref": {"version": "0.1.0", "unit_registry": "0.1.0"},
+  "id": "preserved-lemons",
+  "title": "Salt-Preserved Lemons",
+  "description": "Salt-cured lemons packed tightly and kept submerged in their juice.",
+  "language": "en",
+  "source_locale": "en-MA",
+  "yield": {"text": "one 1 L jar", "quantity": {"kind": "simple", "amount": {"value": "1"}, "unit": "count.item"}, "label": "1 L jar"},
+  "times": {
+    "prep": {"value": "PT25M"},
+    "additional": {"text": "at least 4 weeks"},
+    "assertions": [
+      {"id": "prep-time", "kind": "prep", "duration": {"value": "PT25M"}},
+      {"id": "cure-time", "kind": "cure", "duration": {"text": "at least 4 weeks"}, "attention": "passive"}
+    ]
+  },
+  "ingredient_sections": [
+    {
+      "id": "lemons",
+      "title": "Lemons and salt",
+      "ingredients": [
+        {"id": "lemons-to-pack", "name": "unwaxed lemons", "quantity": {"kind": "simple", "amount": {"min": "6", "max": "8"}, "unit": "count.item"}, "note": "scrubbed; choose enough to fill the jar tightly", "source_text": "6–8 unwaxed lemons, scrubbed"},
+        {"id": "salt", "name": "coarse sea salt", "quantity": {"kind": "simple", "amount": {"value": "150", "approximate": true}, "unit": "mass.gram"}, "note": "use more if needed to coat each cut surface", "source_text": "about 150 g coarse sea salt, plus more if needed"}
+      ]
+    },
+    {
+      "id": "brine",
+      "title": "To cover",
+      "ingredients": [
+        {"id": "extra-lemons", "name": "additional lemons", "quantity": {"kind": "simple", "amount": {"min": "2", "max": "4"}, "unit": "count.item"}, "note": "juiced", "source_text": "juice of 2–4 additional lemons"},
+        {"id": "extra-juice", "name": "fresh lemon juice", "quantity": {"kind": "opaque", "text": "enough to submerge the packed lemons"}, "source_text": "enough fresh lemon juice to submerge the packed lemons", "normalization": {"method": "unresolved", "warnings": ["The required volume depends on the fruit and vessel."]}}
+      ]
+    },
+    {
+      "id": "spices",
+      "title": "Optional spices",
+      "ingredients": [
+        {"id": "peppercorns", "name": "black peppercorns", "quantity": {"kind": "simple", "amount": {"value": "1"}, "unit": "volume.teaspoon.metric.culinary"}, "note": "optional", "source_text": "1 tsp black peppercorns (optional)"},
+        {"id": "bay", "name": "bay leaves", "quantity": {"kind": "simple", "amount": {"value": "2"}, "unit": "count.item"}, "note": "optional", "source_text": "2 bay leaves (optional)"}
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {"id": "prepare", "title": "Prepare the lemons", "steps": [{"id": "cut", "text": "Cut each packing lemon into quarters without cutting all the way through.", "timing_refs": ["prep-time"], "ingredient_uses": [{"ingredient_ref": "lemons-to-pack"}]}, {"id": "salt-lemons", "text": "Work salt into every cut surface.", "timing_refs": ["prep-time"], "ingredient_uses": [{"ingredient_ref": "salt"}]}]},
+    {"id": "pack", "title": "Pack the jar", "steps": [{"id": "compress", "text": "Pack the lemons tightly with any optional spices, pressing to release juice.", "timing_refs": ["prep-time"], "ingredient_uses": [{"ingredient_ref": "lemons-to-pack"}, {"ingredient_ref": "peppercorns"}, {"ingredient_ref": "bay"}]}, {"id": "cover", "text": "Add the juice from the extra lemons and enough additional juice to keep every lemon submerged.", "timing_refs": ["prep-time"], "ingredient_uses": [{"ingredient_ref": "extra-lemons"}, {"ingredient_ref": "extra-juice"}]}]},
+    {"id": "cure", "title": "Cure", "steps": [{"id": "wait", "text": "Seal and leave in a cool, dark place for at least 4 weeks, turning the jar periodically.", "timing_refs": ["cure-time"]}]}
+  ]
+}

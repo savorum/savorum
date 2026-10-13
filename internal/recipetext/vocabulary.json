@@ -1,0 +1,1298 @@
+[
+  {
+    "locale": "en",
+    "ingredients": [
+      "ingredients",
+      "ingredient"
+    ],
+    "instructions": [
+      "instructions",
+      "instruction",
+      "directions",
+      "method",
+      "preparation"
+    ],
+    "actions": {
+      "cook": [
+        "bake",
+        "cook",
+        "boil",
+        "simmer"
+      ],
+      "rest": [
+        "rest"
+      ]
+    },
+    "units": {
+      "second": [
+        "seconds",
+        "second",
+        "sec"
+      ],
+      "minute": [
+        "minutes",
+        "minute",
+        "min"
+      ],
+      "hour": [
+        "hours",
+        "hour",
+        "hr"
+      ],
+      "day": [
+        "days",
+        "day"
+      ]
+    },
+    "cadence": [
+      "every"
+    ],
+    "span": "to",
+    "compact": false
+  },
+  {
+    "locale": "de",
+    "ingredients": [
+      "zutaten"
+    ],
+    "instructions": [
+      "zubereitung",
+      "anleitung"
+    ],
+    "actions": {
+      "cook": [
+        "backen",
+        "kochen",
+        "koche",
+        "köcheln"
+      ],
+      "rest": [
+        "ruhen",
+        "ruhen lassen"
+      ]
+    },
+    "units": {
+      "second": [
+        "sekunden",
+        "sekunde",
+        "sek"
+      ],
+      "minute": [
+        "minuten",
+        "minute",
+        "min"
+      ],
+      "hour": [
+        "stunden",
+        "stunde",
+        "std"
+      ],
+      "day": [
+        "tage",
+        "tagen",
+        "tag"
+      ]
+    },
+    "cadence": [
+      "alle",
+      "jede",
+      "jeden"
+    ],
+    "span": "bis",
+    "compact": false
+  },
+  {
+    "locale": "fr",
+    "ingredients": [
+      "ingrédients"
+    ],
+    "instructions": [
+      "préparation",
+      "instructions",
+      "étapes"
+    ],
+    "actions": {
+      "cook": [
+        "cuire",
+        "cuisez",
+        "mijoter",
+        "mijotez",
+        "bouillir"
+      ],
+      "rest": [
+        "reposer"
+      ]
+    },
+    "units": {
+      "second": [
+        "secondes",
+        "seconde",
+        "s"
+      ],
+      "minute": [
+        "min",
+        "minutes",
+        "minute"
+      ],
+      "hour": [
+        "heures",
+        "heure",
+        "h"
+      ],
+      "day": [
+        "jours",
+        "jour"
+      ]
+    },
+    "cadence": [
+      "toutes",
+      "tous",
+      "chaque"
+    ],
+    "span": "à",
+    "compact": false
+  },
+  {
+    "locale": "es",
+    "ingredients": [
+      "ingredientes"
+    ],
+    "instructions": [
+      "preparación",
+      "instrucciones",
+      "elaboración"
+    ],
+    "actions": {
+      "cook": [
+        "hornear",
+        "hornea",
+        "hornee",
+        "cocinar",
+        "cocina",
+        "cocine",
+        "hervir",
+        "hierve"
+      ],
+      "rest": [
+        "reposar",
+        "reposa",
+        "repose"
+      ]
+    },
+    "units": {
+      "second": [
+        "segundos",
+        "segundo",
+        "s"
+      ],
+      "minute": [
+        "minutos",
+        "minuto",
+        "min"
+      ],
+      "hour": [
+        "horas",
+        "hora",
+        "h"
+      ],
+      "day": [
+        "días",
+        "día"
+      ]
+    },
+    "cadence": [
+      "cada"
+    ],
+    "span": "a",
+    "compact": false
+  },
+  {
+    "locale": "it",
+    "ingredients": [
+      "ingredienti"
+    ],
+    "instructions": [
+      "preparazione",
+      "istruzioni",
+      "procedimento"
+    ],
+    "actions": {
+      "cook": [
+        "cuocere",
+        "cuocete",
+        "cuoci",
+        "infornare",
+        "bollire"
+      ],
+      "rest": [
+        "riposare"
+      ]
+    },
+    "units": {
+      "second": [
+        "secondi",
+        "secondo",
+        "s"
+      ],
+      "minute": [
+        "minuti",
+        "minuto",
+        "min"
+      ],
+      "hour": [
+        "ore",
+        "ora",
+        "h"
+      ],
+      "day": [
+        "giorni",
+        "giorno"
+      ]
+    },
+    "cadence": [
+      "ogni"
+    ],
+    "span": "a",
+    "compact": false
+  },
+  {
+    "locale": "pt",
+    "ingredients": [
+      "ingredientes"
+    ],
+    "instructions": [
+      "preparação",
+      "preparo",
+      "instruções",
+      "modo de preparo"
+    ],
+    "actions": {
+      "cook": [
+        "assar",
+        "asse",
+        "cozinhar",
+        "cozinhe",
+        "ferver"
+      ],
+      "rest": [
+        "descansar",
+        "repousar"
+      ]
+    },
+    "units": {
+      "second": [
+        "segundos",
+        "segundo",
+        "s"
+      ],
+      "minute": [
+        "minutos",
+        "minuto",
+        "min"
+      ],
+      "hour": [
+        "horas",
+        "hora",
+        "h"
+      ],
+      "day": [
+        "dias",
+        "dia"
+      ]
+    },
+    "cadence": [
+      "cada"
+    ],
+    "span": "a",
+    "compact": false
+  },
+  {
+    "locale": "nl",
+    "ingredients": [
+      "ingrediënten"
+    ],
+    "instructions": [
+      "bereiding",
+      "instructies",
+      "bereidingswijze"
+    ],
+    "actions": {
+      "cook": [
+        "bakken",
+        "bak",
+        "koken",
+        "kook",
+        "sudderen"
+      ],
+      "rest": [
+        "rusten"
+      ]
+    },
+    "units": {
+      "second": [
+        "seconden",
+        "seconde",
+        "sec"
+      ],
+      "minute": [
+        "minuten",
+        "minuut",
+        "min"
+      ],
+      "hour": [
+        "uren",
+        "uur"
+      ],
+      "day": [
+        "dagen",
+        "dag"
+      ]
+    },
+    "cadence": [
+      "elke",
+      "iedere"
+    ],
+    "span": "tot",
+    "compact": false
+  },
+  {
+    "locale": "da",
+    "ingredients": [
+      "ingredienser"
+    ],
+    "instructions": [
+      "fremgangsmåde",
+      "tilberedning"
+    ],
+    "actions": {
+      "cook": [
+        "bag",
+        "bages",
+        "kog",
+        "koges"
+      ],
+      "rest": [
+        "hvile"
+      ]
+    },
+    "units": {
+      "second": [
+        "sekunder",
+        "sekund",
+        "sek"
+      ],
+      "minute": [
+        "minutter",
+        "minut",
+        "min"
+      ],
+      "hour": [
+        "timer",
+        "time"
+      ],
+      "day": [
+        "dage",
+        "dag"
+      ]
+    },
+    "cadence": [
+      "hver",
+      "hvert"
+    ],
+    "span": "til",
+    "compact": false
+  },
+  {
+    "locale": "nb",
+    "ingredients": [
+      "ingredienser"
+    ],
+    "instructions": [
+      "fremgangsmåte",
+      "tilberedning"
+    ],
+    "actions": {
+      "cook": [
+        "stek",
+        "steke",
+        "kok",
+        "koke"
+      ],
+      "rest": [
+        "hvile"
+      ]
+    },
+    "units": {
+      "second": [
+        "sekunder",
+        "sekund",
+        "sek"
+      ],
+      "minute": [
+        "minutter",
+        "minutt",
+        "min"
+      ],
+      "hour": [
+        "timer",
+        "time"
+      ],
+      "day": [
+        "dager",
+        "dag"
+      ]
+    },
+    "cadence": [
+      "hver",
+      "hvert"
+    ],
+    "span": "til",
+    "compact": false
+  },
+  {
+    "locale": "sv",
+    "ingredients": [
+      "ingredienser"
+    ],
+    "instructions": [
+      "gör så här",
+      "tillagning",
+      "instruktioner"
+    ],
+    "actions": {
+      "cook": [
+        "grädda",
+        "koka",
+        "sjud"
+      ],
+      "rest": [
+        "vila"
+      ]
+    },
+    "units": {
+      "second": [
+        "sekunder",
+        "sekund",
+        "sek"
+      ],
+      "minute": [
+        "minuter",
+        "minut",
+        "min"
+      ],
+      "hour": [
+        "timmar",
+        "timme"
+      ],
+      "day": [
+        "dagar",
+        "dag"
+      ]
+    },
+    "cadence": [
+      "varje",
+      "var"
+    ],
+    "span": "till",
+    "compact": false
+  },
+  {
+    "locale": "fi",
+    "ingredients": [
+      "ainekset",
+      "ainesosat"
+    ],
+    "instructions": [
+      "valmistus",
+      "valmistusohje"
+    ],
+    "actions": {
+      "cook": [
+        "paista",
+        "keitä",
+        "hauduta"
+      ],
+      "rest": [
+        "levätä"
+      ]
+    },
+    "units": {
+      "second": [
+        "sekuntia",
+        "sekunti",
+        "s"
+      ],
+      "minute": [
+        "minuuttia",
+        "minuutin",
+        "minuutti",
+        "min"
+      ],
+      "hour": [
+        "tuntia",
+        "tunnin",
+        "tunti",
+        "h"
+      ],
+      "day": [
+        "päivää",
+        "päivä"
+      ]
+    },
+    "cadence": [
+      "välein"
+    ],
+    "span": "–",
+    "compact": false
+  },
+  {
+    "locale": "cs",
+    "ingredients": [
+      "ingredience",
+      "suroviny"
+    ],
+    "instructions": [
+      "postup",
+      "příprava"
+    ],
+    "actions": {
+      "cook": [
+        "pečte",
+        "péct",
+        "vařte",
+        "vařit"
+      ],
+      "rest": [
+        "odpočívat"
+      ]
+    },
+    "units": {
+      "second": [
+        "sekund",
+        "sekundy",
+        "sekundu",
+        "sekunda"
+      ],
+      "minute": [
+        "minut",
+        "minuty",
+        "minutu",
+        "minuta"
+      ],
+      "hour": [
+        "hodin",
+        "hodiny",
+        "hodinu",
+        "hodina"
+      ],
+      "day": [
+        "dní",
+        "dny",
+        "den"
+      ]
+    },
+    "cadence": [
+      "každých",
+      "každé"
+    ],
+    "span": "až",
+    "compact": false
+  },
+  {
+    "locale": "pl",
+    "ingredients": [
+      "składniki"
+    ],
+    "instructions": [
+      "przygotowanie",
+      "instrukcje"
+    ],
+    "actions": {
+      "cook": [
+        "piecz",
+        "piec",
+        "gotuj",
+        "gotować"
+      ],
+      "rest": [
+        "odpocząć"
+      ]
+    },
+    "units": {
+      "second": [
+        "sekund",
+        "sekundy",
+        "sekundę",
+        "sekunda"
+      ],
+      "minute": [
+        "minut",
+        "minuty",
+        "minutę",
+        "minuta"
+      ],
+      "hour": [
+        "godzin",
+        "godziny",
+        "godzinę",
+        "godzina"
+      ],
+      "day": [
+        "dni",
+        "dzień"
+      ]
+    },
+    "cadence": [
+      "co",
+      "każde"
+    ],
+    "span": "do",
+    "compact": false
+  },
+  {
+    "locale": "hu",
+    "ingredients": [
+      "hozzávalók"
+    ],
+    "instructions": [
+      "elkészítés"
+    ],
+    "actions": {
+      "cook": [
+        "süssük",
+        "sütjük",
+        "sütni",
+        "főzzük",
+        "főzni"
+      ],
+      "rest": [
+        "pihentessük"
+      ]
+    },
+    "units": {
+      "second": [
+        "másodpercig",
+        "másodperc"
+      ],
+      "minute": [
+        "percig",
+        "perc"
+      ],
+      "hour": [
+        "óráig",
+        "óra"
+      ],
+      "day": [
+        "napig",
+        "nap"
+      ]
+    },
+    "cadence": [
+      "minden"
+    ],
+    "span": "–",
+    "compact": false
+  },
+  {
+    "locale": "ro",
+    "ingredients": [
+      "ingrediente"
+    ],
+    "instructions": [
+      "preparare",
+      "instrucțiuni"
+    ],
+    "actions": {
+      "cook": [
+        "coaceți",
+        "coace",
+        "fierbeți",
+        "fierbe"
+      ],
+      "rest": [
+        "odihnească"
+      ]
+    },
+    "units": {
+      "second": [
+        "secunde",
+        "secundă",
+        "s"
+      ],
+      "minute": [
+        "minute",
+        "minut",
+        "min"
+      ],
+      "hour": [
+        "ore",
+        "oră",
+        "h"
+      ],
+      "day": [
+        "zile",
+        "zi"
+      ]
+    },
+    "cadence": [
+      "fiecare"
+    ],
+    "span": "până la",
+    "compact": false
+  },
+  {
+    "locale": "el",
+    "ingredients": [
+      "υλικά"
+    ],
+    "instructions": [
+      "εκτέλεση",
+      "οδηγίες"
+    ],
+    "actions": {
+      "cook": [
+        "ψήστε",
+        "ψήνουμε",
+        "βράστε",
+        "βράζουμε"
+      ],
+      "rest": [
+        "ξεκουραστεί"
+      ]
+    },
+    "units": {
+      "second": [
+        "δευτερόλεπτα",
+        "δευτερόλεπτο"
+      ],
+      "minute": [
+        "λεπτά",
+        "λεπτό"
+      ],
+      "hour": [
+        "ώρες",
+        "ώρα"
+      ],
+      "day": [
+        "ημέρες",
+        "ημέρα"
+      ]
+    },
+    "cadence": [
+      "κάθε"
+    ],
+    "span": "έως",
+    "compact": false
+  },
+  {
+    "locale": "ru",
+    "ingredients": [
+      "ингредиенты"
+    ],
+    "instructions": [
+      "приготовление",
+      "инструкции",
+      "способ приготовления"
+    ],
+    "actions": {
+      "cook": [
+        "выпекайте",
+        "выпекать",
+        "варите",
+        "варить",
+        "готовьте",
+        "готовить"
+      ],
+      "rest": [
+        "отдохнуть"
+      ]
+    },
+    "units": {
+      "second": [
+        "секунд",
+        "секунды",
+        "секунду",
+        "секунда"
+      ],
+      "minute": [
+        "минут",
+        "минуты",
+        "минуту",
+        "минута"
+      ],
+      "hour": [
+        "часов",
+        "часа",
+        "час"
+      ],
+      "day": [
+        "дней",
+        "дня",
+        "день"
+      ]
+    },
+    "cadence": [
+      "каждые",
+      "каждых"
+    ],
+    "span": "до",
+    "compact": false
+  },
+  {
+    "locale": "uk",
+    "ingredients": [
+      "інгредієнти"
+    ],
+    "instructions": [
+      "приготування",
+      "інструкції"
+    ],
+    "actions": {
+      "cook": [
+        "випікайте",
+        "випікати",
+        "варіть",
+        "варити",
+        "готуйте"
+      ],
+      "rest": [
+        "відпочити"
+      ]
+    },
+    "units": {
+      "second": [
+        "секунд",
+        "секунди",
+        "секунду",
+        "секунда"
+      ],
+      "minute": [
+        "хвилин",
+        "хвилини",
+        "хвилину",
+        "хвилина"
+      ],
+      "hour": [
+        "годин",
+        "години",
+        "годину",
+        "година"
+      ],
+      "day": [
+        "днів",
+        "дні",
+        "день"
+      ]
+    },
+    "cadence": [
+      "кожні",
+      "кожних"
+    ],
+    "span": "до",
+    "compact": false
+  },
+  {
+    "locale": "tr",
+    "ingredients": [
+      "malzemeler"
+    ],
+    "instructions": [
+      "hazırlanışı",
+      "hazırlık",
+      "yapılışı"
+    ],
+    "actions": {
+      "cook": [
+        "pişirin",
+        "pişir",
+        "kaynatın",
+        "kaynat"
+      ],
+      "rest": [
+        "dinlendirin"
+      ]
+    },
+    "units": {
+      "second": [
+        "saniye",
+        "sn"
+      ],
+      "minute": [
+        "dakika",
+        "dk"
+      ],
+      "hour": [
+        "saat",
+        "sa"
+      ],
+      "day": [
+        "gün"
+      ]
+    },
+    "cadence": [
+      "her"
+    ],
+    "span": "ila",
+    "compact": false
+  },
+  {
+    "locale": "id",
+    "ingredients": [
+      "bahan",
+      "bahan-bahan"
+    ],
+    "instructions": [
+      "cara membuat",
+      "langkah-langkah",
+      "instruksi"
+    ],
+    "actions": {
+      "cook": [
+        "panggang",
+        "masak",
+        "rebus",
+        "kukus"
+      ],
+      "rest": [
+        "diamkan"
+      ]
+    },
+    "units": {
+      "second": [
+        "detik"
+      ],
+      "minute": [
+        "menit"
+      ],
+      "hour": [
+        "jam"
+      ],
+      "day": [
+        "hari"
+      ]
+    },
+    "cadence": [
+      "setiap"
+    ],
+    "span": "sampai",
+    "compact": false
+  },
+  {
+    "locale": "vi",
+    "ingredients": [
+      "nguyên liệu"
+    ],
+    "instructions": [
+      "cách làm",
+      "hướng dẫn"
+    ],
+    "actions": {
+      "cook": [
+        "nướng",
+        "nấu",
+        "luộc",
+        "hấp"
+      ],
+      "rest": [
+        "nghỉ"
+      ]
+    },
+    "units": {
+      "second": [
+        "giây"
+      ],
+      "minute": [
+        "phút"
+      ],
+      "hour": [
+        "giờ"
+      ],
+      "day": [
+        "ngày"
+      ]
+    },
+    "cadence": [
+      "mỗi"
+    ],
+    "span": "đến",
+    "compact": false
+  },
+  {
+    "locale": "ar",
+    "ingredients": [
+      "المكونات",
+      "المقادير"
+    ],
+    "instructions": [
+      "الطريقة",
+      "طريقة التحضير",
+      "التحضير",
+      "التعليمات"
+    ],
+    "actions": {
+      "cook": [
+        "اخبز",
+        "اخبزي",
+        "اطبخ",
+        "اطبخي",
+        "اغل",
+        "اغلي"
+      ],
+      "rest": [
+        "يرتاح"
+      ]
+    },
+    "units": {
+      "second": [
+        "ثواني",
+        "ثوان",
+        "ثانية"
+      ],
+      "minute": [
+        "دقائق",
+        "دقيقة"
+      ],
+      "hour": [
+        "ساعات",
+        "ساعة"
+      ],
+      "day": [
+        "أيام",
+        "يوم"
+      ]
+    },
+    "cadence": [
+      "كل"
+    ],
+    "span": "إلى",
+    "compact": false
+  },
+  {
+    "locale": "he",
+    "ingredients": [
+      "מרכיבים",
+      "מצרכים"
+    ],
+    "instructions": [
+      "הוראות",
+      "אופן ההכנה",
+      "הכנה"
+    ],
+    "actions": {
+      "cook": [
+        "אופים",
+        "לאפות",
+        "מבשלים",
+        "לבשל"
+      ],
+      "rest": [
+        "לנוח"
+      ]
+    },
+    "units": {
+      "second": [
+        "שניות",
+        "שנייה"
+      ],
+      "minute": [
+        "דקות",
+        "דקה"
+      ],
+      "hour": [
+        "שעות",
+        "שעה"
+      ],
+      "day": [
+        "ימים",
+        "יום"
+      ]
+    },
+    "cadence": [
+      "כל"
+    ],
+    "span": "עד",
+    "compact": false
+  },
+  {
+    "locale": "ja",
+    "ingredients": [
+      "材料"
+    ],
+    "instructions": [
+      "作り方",
+      "手順",
+      "調理方法"
+    ],
+    "actions": {
+      "cook": [
+        "焼く",
+        "焼きます",
+        "煮る",
+        "煮ます",
+        "茹でる",
+        "蒸す"
+      ],
+      "rest": [
+        "休ませる"
+      ]
+    },
+    "units": {
+      "second": [
+        "秒間",
+        "秒"
+      ],
+      "minute": [
+        "分間",
+        "分"
+      ],
+      "hour": [
+        "時間"
+      ],
+      "day": [
+        "日間",
+        "日"
+      ]
+    },
+    "cadence": [
+      "ごと",
+      "おき"
+    ],
+    "span": "から",
+    "compact": true
+  },
+  {
+    "locale": "ko",
+    "ingredients": [
+      "재료"
+    ],
+    "instructions": [
+      "만드는 법",
+      "조리법",
+      "조리 방법"
+    ],
+    "actions": {
+      "cook": [
+        "굽는다",
+        "구워",
+        "끓인다",
+        "끓여",
+        "삶는다"
+      ],
+      "rest": [
+        "휴지"
+      ]
+    },
+    "units": {
+      "second": [
+        "초"
+      ],
+      "minute": [
+        "분"
+      ],
+      "hour": [
+        "시간"
+      ],
+      "day": [
+        "일"
+      ]
+    },
+    "cadence": [
+      "마다"
+    ],
+    "span": "에서",
+    "compact": true
+  },
+  {
+    "locale": "th",
+    "ingredients": [
+      "ส่วนผสม"
+    ],
+    "instructions": [
+      "วิธีทำ",
+      "ขั้นตอน"
+    ],
+    "actions": {
+      "cook": [
+        "อบ",
+        "ต้ม",
+        "นึ่ง",
+        "เคี่ยว"
+      ],
+      "rest": [
+        "พัก"
+      ]
+    },
+    "units": {
+      "second": [
+        "วินาที"
+      ],
+      "minute": [
+        "นาที"
+      ],
+      "hour": [
+        "ชั่วโมง"
+      ],
+      "day": [
+        "วัน"
+      ]
+    },
+    "cadence": [
+      "ทุก"
+    ],
+    "span": "ถึง",
+    "compact": true
+  },
+  {
+    "locale": "zh",
+    "ingredients": [
+      "食材",
+      "材料",
+      "配料"
+    ],
+    "instructions": [
+      "做法",
+      "步骤",
+      "步驟",
+      "制作方法",
+      "製作方法"
+    ],
+    "actions": {
+      "cook": [
+        "烘烤",
+        "烤",
+        "煮",
+        "蒸",
+        "炖",
+        "燉"
+      ],
+      "rest": [
+        "静置",
+        "靜置"
+      ]
+    },
+    "units": {
+      "second": [
+        "秒钟",
+        "秒鐘",
+        "秒"
+      ],
+      "minute": [
+        "分钟",
+        "分鐘",
+        "分"
+      ],
+      "hour": [
+        "小时",
+        "小時"
+      ],
+      "day": [
+        "天"
+      ]
+    },
+    "cadence": [
+      "每"
+    ],
+    "span": "至",
+    "compact": true
+  }
+]

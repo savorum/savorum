@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "sizes": [
+    100,
+    1000,
+    10000
+  ],
+  "samples": 20,
+  "history": {
+    "ordinary_revisions": 2,
+    "every_tenth_revisions": 20,
+    "every_hundredth_revisions": 100,
+    "book_members": 100,
+    "book_revisions": 5,
+    "image_every": 4,
+    "image_versions": 2,
+    "cookings_per_recipe": 3
+  },
+  "budgets_ms": {
+    "startup": 2000,
+    "list": 300,
+    "search": 250,
+    "open": 150,
+    "save": 300,
+    "filter": 300,
+    "pagination": 300,
+    "import_100": 10000,
+    "search_rebuild": 10000,
+    "backup": 120000,
+    "restore": 120000,
+    "image_card": 1000,
+    "browser_first_render": 2500,
+    "migrations": 30000,
+    "image_original": 300,
+    "image_reader": 1000
+  },
+  "storage_budgets_bytes_per_recipe": {
+    "database": 131072,
+    "originals": 131072
+  }
+}

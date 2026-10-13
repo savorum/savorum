@@ -1,0 +1,70 @@
+{
+  "serving": {
+    "one": "adag",
+    "other": "adag"
+  },
+  "egg": {
+    "one": "tojás",
+    "other": "tojás"
+  },
+  "clove": {
+    "one": "gerezd",
+    "other": "gerezd"
+  },
+  "sprig": {
+    "one": "ág",
+    "other": "ág"
+  },
+  "bunch": {
+    "one": "csokor",
+    "other": "csokor"
+  },
+  "pinch": {
+    "one": "csipet",
+    "other": "csipet"
+  },
+  "handful": {
+    "one": "marék",
+    "other": "marék"
+  },
+  "can": {
+    "one": "konzerv",
+    "other": "konzerv"
+  },
+  "tin": {
+    "one": "konzerv",
+    "other": "konzerv"
+  },
+  "packet": {
+    "one": "csomag",
+    "other": "csomag"
+  },
+  "cup": {
+    "one": "csésze",
+    "other": "csésze"
+  },
+  "tablespoon": {
+    "one": "ek.",
+    "other": "ek."
+  },
+  "teaspoon": {
+    "one": "tk.",
+    "other": "tk."
+  },
+  "pint": {
+    "one": "pint",
+    "other": "pint"
+  },
+  "quart": {
+    "one": "quart",
+    "other": "quart"
+  },
+  "gallon": {
+    "one": "gallon",
+    "other": "gallon"
+  },
+  "fluidounce": {
+    "one": "folyadékuncia",
+    "other": "folyadékuncia"
+  }
+}

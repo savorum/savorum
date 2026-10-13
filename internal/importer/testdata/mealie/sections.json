@@ -1,0 +1,27 @@
+{
+  "id": "mealie-sections",
+  "slug": "lime-beans",
+  "name": "Lime bean bowl",
+  "org_url": "https://example.com/recipes/lime-beans",
+  "recipe_ingredient": [
+    {
+      "title": "Beans",
+      "display": "100 g beans"
+    },
+    {
+      "group": "Dressing",
+      "original_text": "20 ml lime juice"
+    }
+  ],
+  "recipe_instructions": [
+    {
+      "title": "Warm",
+      "text": "Warm the beans."
+    },
+    {
+      "title": "Dress",
+      "summary": "Stir in the lime juice."
+    }
+  ],
+  "image": "lime-beans"
+}

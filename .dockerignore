@@ -1,0 +1,16 @@
+.git
+.cache
+bin
+output
+tmp
+web/node_modules
+web/dist
+internal/webui/dist
+web/test-results
+**/.DS_Store
+.recipe-corpus
+.native-recipe-corpus
+recipe-corpus
+local-private
+**/*.paprikarecipe
+**/*.paprikarecipes

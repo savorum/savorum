@@ -1,0 +1,9 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Recipe",
+  "name": "First pass loaf",
+  "description": "Imported in the first pass of a queue worked through in stages.",
+  "recipeYield": "1 loaf",
+  "recipeIngredient": ["500 g strong flour", "320 g water"],
+  "recipeInstructions": ["Mix and prove.", "Bake until hollow."]
+}

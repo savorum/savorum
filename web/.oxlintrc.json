@@ -1,0 +1,109 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript"],
+  "jsPlugins": ["eslint-plugin-solid"],
+  "categories": {
+    "correctness": "warn"
+  },
+  "ignorePatterns": [
+    "src/api/schema.d.ts",
+    "src/lib/unit-registry.generated.ts",
+    "src/lib/unit-locales.generated.ts",
+    "src/lib/unit-locales/*.generated.ts",
+    "src/lib/messages.generated.ts",
+    "src/routeTree.gen.ts",
+    "src/paraglide/**"
+  ],
+  "overrides": [
+    {
+      "files": ["src/**/*"],
+      "rules": {
+        "solid/jsx-no-duplicate-props": 2,
+        "solid/jsx-no-undef": [
+          2,
+          {
+            "typescriptEnabled": true
+          }
+        ],
+        "solid/jsx-uses-vars": 2,
+        "solid/no-unknown-namespaces": 2,
+        "solid/no-innerhtml": 2,
+        "solid/jsx-no-script-url": 2,
+        "solid/components-return-once": 1,
+        "solid/no-destructure": 2,
+        "solid/prefer-for": 2,
+        "solid/reactivity": "error",
+        "solid/event-handlers": 1,
+        "solid/imports": 1,
+        "solid/style-prop": 1,
+        "solid/no-react-deps": 1,
+        "solid/no-react-specific-props": 1,
+        "solid/self-closing-comp": 1,
+        "typescript/no-floating-promises": "error",
+        "typescript/no-misused-promises": "error"
+      }
+    },
+    {
+      "files": ["src/features/**/*"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": ["@/routes/*", "**/routes/*"]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/api/**/*"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": ["@/components/*", "@/features/*", "**/components/*", "**/features/*"]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/components/ui/**/*"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": ["@/features/*", "**/features/*"]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/lib/**/*"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              "@/features/*",
+              "@/components/*",
+              "@/routes/*",
+              "**/features/*",
+              "**/components/*",
+              "**/routes/*"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/routes/**/*"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": ["@/api/*", "**/api/*"]
+          }
+        ]
+      }
+    }
+  ]
+}

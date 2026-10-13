@@ -1,0 +1,9 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Recipe",
+  "name": "Second pass loaf",
+  "description": "Left in the staged review and taken up again afterwards.",
+  "recipeYield": "1 loaf",
+  "recipeIngredient": ["400 g rye flour", "300 g water"],
+  "recipeInstructions": ["Mix and prove.", "Bake until dark."]
+}

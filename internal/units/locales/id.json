@@ -1,0 +1,70 @@
+{
+  "serving": {
+    "one": "porsi",
+    "other": "porsi"
+  },
+  "egg": {
+    "one": "butir",
+    "other": "butir"
+  },
+  "clove": {
+    "one": "siung",
+    "other": "siung"
+  },
+  "sprig": {
+    "one": "tangkai",
+    "other": "tangkai"
+  },
+  "bunch": {
+    "one": "ikat",
+    "other": "ikat"
+  },
+  "pinch": {
+    "one": "sejumput",
+    "other": "sejumput"
+  },
+  "handful": {
+    "one": "genggam",
+    "other": "genggam"
+  },
+  "can": {
+    "one": "kaleng",
+    "other": "kaleng"
+  },
+  "tin": {
+    "one": "kaleng",
+    "other": "kaleng"
+  },
+  "packet": {
+    "one": "bungkus",
+    "other": "bungkus"
+  },
+  "cup": {
+    "one": "cangkir",
+    "other": "cangkir"
+  },
+  "tablespoon": {
+    "one": "sdm",
+    "other": "sdm"
+  },
+  "teaspoon": {
+    "one": "sdt",
+    "other": "sdt"
+  },
+  "pint": {
+    "one": "pint",
+    "other": "pint"
+  },
+  "quart": {
+    "one": "quart",
+    "other": "quart"
+  },
+  "gallon": {
+    "one": "galon",
+    "other": "galon"
+  },
+  "fluidounce": {
+    "one": "ons cair",
+    "other": "ons cair"
+  }
+}

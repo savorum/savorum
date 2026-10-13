@@ -1,0 +1,9 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Recipe",
+  "name": "Accessible imported chowder",
+  "description": "Imported through a job so the progress page has something to report.",
+  "recipeYield": "4 bowls",
+  "recipeIngredient": ["3 potatoes", "500 ml stock"],
+  "recipeInstructions": ["Soften the potatoes.", "Simmer in the stock."]
+}

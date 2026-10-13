@@ -1,0 +1,21 @@
+name: savorum
+
+services:
+  savorum:
+    image: ${SAVORUM_IMAGE:-savorum:local}
+    build:
+      context: .
+      args:
+        VERSION: development
+    restart: unless-stopped
+    read_only: true
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - savorum-data:/data
+    tmpfs:
+      - /tmp:size=256m,mode=1777
+    stop_grace_period: 30s
+
+volumes:
+  savorum-data:

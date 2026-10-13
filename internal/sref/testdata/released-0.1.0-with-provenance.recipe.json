@@ -1,0 +1,43 @@
+{
+  "sref": {"version": "0.1.0", "unit_registry": "0.1.0"},
+  "id": "holiday-punch",
+  "title": "Spiced Cranberry Citrus Punch",
+  "description": "A tart cranberry and citrus punch finished with sparkling water.",
+  "language": "en-CA",
+  "source_locale": "en-CA",
+  "yield": {"text": "10–12 glasses", "quantity": {"kind": "simple", "amount": {"min": "10", "max": "12"}}, "label": "glasses"},
+  "ingredient_sections": [
+    {
+      "id": "punch-base",
+      "title": "Punch base",
+      "ingredients": [
+        {"id": "cranberry-juice", "name": "unsweetened cranberry juice", "quantity": {"kind": "opaque", "text": "2 cups"}, "source_text": "2 cups unsweetened cranberry juice", "normalization": {"method": "unresolved", "warnings": ["The source locale alone does not establish which cup convention the author used."]}},
+        {"id": "orange-juice", "name": "fresh orange juice", "quantity": {"kind": "simple", "amount": {"value": "500"}, "unit": "volume.milliliter"}, "source_text": "500 mL fresh orange juice", "normalization": {"method": "extracted"}},
+        {"id": "tea", "name": "strong black tea", "quantity": {"kind": "simple", "amount": {"value": "750"}, "unit": "volume.milliliter"}, "note": "chilled", "source_text": "750 mL strong black tea, chilled"}
+      ]
+    },
+    {
+      "id": "spice-syrup",
+      "title": "Spice syrup",
+      "ingredients": [
+        {"id": "syrup-water", "name": "water", "quantity": {"kind": "simple", "amount": {"value": "250"}, "unit": "volume.milliliter"}, "source_text": "250 mL water"},
+        {"id": "sugar", "name": "demerara sugar", "quantity": {"kind": "simple", "amount": {"min": "100", "max": "150"}, "unit": "mass.gram"}, "note": "adjust to the tartness of the juice", "source_text": "100–150 g demerara sugar, to taste"},
+        {"id": "cinnamon", "name": "cinnamon sticks", "quantity": {"kind": "simple", "amount": {"value": "2"}, "unit": "count.item"}, "source_text": "2 cinnamon sticks"},
+        {"id": "cloves", "name": "whole cloves", "quantity": {"kind": "simple", "amount": {"min": "6", "max": "8"}, "unit": "count.item"}, "source_text": "6–8 whole cloves"}
+      ]
+    },
+    {
+      "id": "finish",
+      "title": "To finish",
+      "ingredients": [
+        {"id": "sparkling-water", "name": "sparkling water", "quantity": {"kind": "opaque", "text": "1 bottle"}, "package_size": {"kind": "simple", "amount": {"value": "750"}, "unit": "volume.milliliter"}, "note": "well chilled", "source_text": "1 (750 mL) bottle sparkling water, well chilled", "normalization": {"method": "unresolved", "warnings": ["Bottle is retained as opaque because no bottle container identity is declared."]}},
+        {"id": "orange", "name": "orange", "quantity": {"kind": "simple", "amount": {"value": "1"}, "unit": "count.item"}, "note": "thinly sliced", "source_text": "1 orange, thinly sliced"}
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {"id": "make-syrup", "title": "Make the spice syrup", "steps": [{"id": "simmer-syrup", "text": "Simmer the water, sugar, cinnamon, and cloves until the sugar dissolves; cool and strain.", "ingredient_uses": [{"ingredient_ref": "syrup-water"}, {"ingredient_ref": "sugar"}, {"ingredient_ref": "cinnamon"}, {"ingredient_ref": "cloves"}]}]},
+    {"id": "mix", "title": "Mix and chill", "steps": [{"id": "combine-base", "text": "Combine the cranberry juice, orange juice, tea, and cooled syrup; chill thoroughly.", "ingredient_uses": [{"ingredient_ref": "cranberry-juice"}, {"ingredient_ref": "orange-juice"}, {"ingredient_ref": "tea"}, {"ingredient_ref": "syrup-water"}, {"ingredient_ref": "sugar"}]}]},
+    {"id": "serve", "title": "Finish immediately before serving", "steps": [{"id": "add-fizz", "text": "Add the sparkling water and orange slices, then serve over ice.", "ingredient_uses": [{"ingredient_ref": "sparkling-water"}, {"ingredient_ref": "orange"}]}]}
+  ]
+}

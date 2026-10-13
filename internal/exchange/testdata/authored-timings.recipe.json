@@ -1,0 +1,107 @@
+{
+  "sref": {
+    "version": "0.2.0",
+    "unit_registry": "0.2.0"
+  },
+  "id": "authored-timings",
+  "title": "Slow oat pudding",
+  "description": "A small timing preservation fixture.",
+  "language": "en",
+  "source": {
+    "name": "Fixture author",
+    "url": "https://example.com/slow-oats"
+  },
+  "yield": {
+    "text": "2 bowls"
+  },
+  "notes": [
+    "Serve in small bowls."
+  ],
+  "ingredient_sections": [
+    {
+      "id": "base",
+      "ingredients": [
+        {
+          "id": "oats",
+          "name": "oats",
+          "source_text": "100 g oats"
+        }
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "id": "method",
+      "steps": [
+        {
+          "id": "soak",
+          "text": "Soak for thirty minutes, then rest for one and one-half hours.",
+          "timing_refs": [
+            "soak",
+            "rest"
+          ]
+        },
+        {
+          "id": "bake",
+          "text": "Bake until set; check the centre before serving.",
+          "timing_refs": [
+            "bake"
+          ],
+          "temperatures": [
+            {
+              "amount": {
+                "value": "350"
+              },
+              "unit": "temperature.fahrenheit"
+            },
+            {
+              "amount": {
+                "value": "175"
+              },
+              "unit": "temperature.celsius"
+            },
+            {
+              "amount": {
+                "value": "200"
+              },
+              "unit": "temperature.fahrenheit"
+            },
+            {
+              "amount": {
+                "value": "95"
+              },
+              "unit": "temperature.celsius"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "times": {
+    "assertions": [
+      {
+        "id": "soak",
+        "duration": {
+          "value": "PT30M",
+          "source_text": "thirty minutes"
+        }
+      },
+      {
+        "id": "rest",
+        "duration": {
+          "value": "PT1H30M",
+          "source_text": "one and one-half hours"
+        }
+      },
+      {
+        "id": "bake",
+        "kind": "cook",
+        "duration": {
+          "min": "PT50M",
+          "max": "PT60M",
+          "source_text": "50–60 minutes"
+        }
+      }
+    ]
+  }
+}

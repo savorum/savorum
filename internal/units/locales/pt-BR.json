@@ -1,0 +1,70 @@
+{
+  "serving": {
+    "one": "porção",
+    "other": "porções"
+  },
+  "egg": {
+    "one": "ovo",
+    "other": "ovos"
+  },
+  "clove": {
+    "one": "dente",
+    "other": "dentes"
+  },
+  "sprig": {
+    "one": "ramo",
+    "other": "ramos"
+  },
+  "bunch": {
+    "one": "maço",
+    "other": "maços"
+  },
+  "pinch": {
+    "one": "pitada",
+    "other": "pitadas"
+  },
+  "handful": {
+    "one": "punhado",
+    "other": "punhados"
+  },
+  "can": {
+    "one": "lata",
+    "other": "latas"
+  },
+  "tin": {
+    "one": "lata",
+    "other": "latas"
+  },
+  "packet": {
+    "one": "pacote",
+    "other": "pacotes"
+  },
+  "cup": {
+    "one": "xícara",
+    "other": "xícaras"
+  },
+  "tablespoon": {
+    "one": "colher de sopa",
+    "other": "colheres de sopa"
+  },
+  "teaspoon": {
+    "one": "colher de chá",
+    "other": "colheres de chá"
+  },
+  "pint": {
+    "one": "pinta",
+    "other": "pintas"
+  },
+  "quart": {
+    "one": "quarto",
+    "other": "quartos"
+  },
+  "gallon": {
+    "one": "galão",
+    "other": "galões"
+  },
+  "fluidounce": {
+    "one": "onça líquida",
+    "other": "onças líquidas"
+  }
+}

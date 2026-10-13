@@ -1,0 +1,9 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Recipe",
+  "name": "Reported spiced buns",
+  "description": "A batch imported through a job so its progress can be read.",
+  "recipeYield": "12 buns",
+  "recipeIngredient": ["500 g flour", "2 tsp mixed spice"],
+  "recipeInstructions": ["Knead and prove.", "Bake until golden."]
+}

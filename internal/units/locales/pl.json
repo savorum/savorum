@@ -1,0 +1,104 @@
+{
+  "serving": {
+    "one": "porcja",
+    "few": "porcje",
+    "many": "porcji",
+    "other": "porcji"
+  },
+  "egg": {
+    "one": "jajko",
+    "few": "jajka",
+    "many": "jajek",
+    "other": "jajka"
+  },
+  "clove": {
+    "one": "ząbek",
+    "few": "ząbki",
+    "many": "ząbków",
+    "other": "ząbka"
+  },
+  "sprig": {
+    "one": "gałązka",
+    "few": "gałązki",
+    "many": "gałązek",
+    "other": "gałązki"
+  },
+  "bunch": {
+    "one": "pęczek",
+    "few": "pęczki",
+    "many": "pęczków",
+    "other": "pęczka"
+  },
+  "pinch": {
+    "one": "szczypta",
+    "few": "szczypty",
+    "many": "szczypt",
+    "other": "szczypty"
+  },
+  "handful": {
+    "one": "garść",
+    "few": "garście",
+    "many": "garści",
+    "other": "garści"
+  },
+  "can": {
+    "one": "puszka",
+    "few": "puszki",
+    "many": "puszek",
+    "other": "puszki"
+  },
+  "tin": {
+    "one": "puszka",
+    "few": "puszki",
+    "many": "puszek",
+    "other": "puszki"
+  },
+  "packet": {
+    "one": "opakowanie",
+    "few": "opakowania",
+    "many": "opakowań",
+    "other": "opakowania"
+  },
+  "cup": {
+    "one": "szklanka",
+    "few": "szklanki",
+    "many": "szklanek",
+    "other": "szklanki"
+  },
+  "tablespoon": {
+    "one": "łyżka",
+    "few": "łyżki",
+    "many": "łyżek",
+    "other": "łyżki"
+  },
+  "teaspoon": {
+    "one": "łyżeczka",
+    "few": "łyżeczki",
+    "many": "łyżeczek",
+    "other": "łyżeczki"
+  },
+  "pint": {
+    "one": "pinta",
+    "few": "pinty",
+    "many": "pint",
+    "other": "pinty"
+  },
+  "quart": {
+    "one": "kwarta",
+    "few": "kwarty",
+    "many": "kwart",
+    "other": "kwarty"
+  },
+  "gallon": {
+    "one": "galon",
+    "few": "galony",
+    "many": "galonów",
+    "other": "galona"
+  },
+  "fluidounce": {
+    "one": "uncja płynu",
+    "few": "uncje płynu",
+    "many": "uncji płynu",
+    "other": "uncji płynu"
+  }
+}

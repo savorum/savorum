@@ -1,0 +1,44 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directories:
+      - /
+      - /.github/actions/setup-web
+    schedule:
+      interval: monthly
+    groups:
+      maintenance:
+        applies-to: version-updates
+        patterns: ["*"]
+  - package-ecosystem: gomod
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      maintenance:
+        applies-to: version-updates
+        patterns: ["*"]
+  - package-ecosystem: npm
+    directory: /web
+    schedule:
+      interval: monthly
+    groups:
+      maintenance:
+        applies-to: version-updates
+        patterns: ["*"]
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      maintenance:
+        applies-to: version-updates
+        patterns: ["*"]
+  - package-ecosystem: pip
+    directory: /integration
+    schedule:
+      interval: monthly
+    groups:
+      maintenance:
+        applies-to: version-updates
+        patterns: ["*"]

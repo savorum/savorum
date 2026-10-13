@@ -1,0 +1,70 @@
+{
+  "serving": {
+    "one": "portion",
+    "other": "portions"
+  },
+  "egg": {
+    "one": "œuf",
+    "other": "œufs"
+  },
+  "clove": {
+    "one": "gousse",
+    "other": "gousses"
+  },
+  "sprig": {
+    "one": "brin",
+    "other": "brins"
+  },
+  "bunch": {
+    "one": "botte",
+    "other": "bottes"
+  },
+  "pinch": {
+    "one": "pincée",
+    "other": "pincées"
+  },
+  "handful": {
+    "one": "poignée",
+    "other": "poignées"
+  },
+  "can": {
+    "one": "boîte",
+    "other": "boîtes"
+  },
+  "tin": {
+    "one": "boîte",
+    "other": "boîtes"
+  },
+  "packet": {
+    "one": "sachet",
+    "other": "sachets"
+  },
+  "cup": {
+    "one": "tasse",
+    "other": "tasses"
+  },
+  "tablespoon": {
+    "one": "c. à s.",
+    "other": "c. à s."
+  },
+  "teaspoon": {
+    "one": "c. à c.",
+    "other": "c. à c."
+  },
+  "pint": {
+    "one": "pinte",
+    "other": "pintes"
+  },
+  "quart": {
+    "one": "quart",
+    "other": "quarts"
+  },
+  "gallon": {
+    "one": "gallon",
+    "other": "gallons"
+  },
+  "fluidounce": {
+    "one": "oz liq.",
+    "other": "oz liq."
+  }
+}

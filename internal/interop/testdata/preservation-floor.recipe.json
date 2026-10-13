@@ -1,0 +1,165 @@
+{
+  "sref": {
+    "version": "0.2.0",
+    "unit_registry": "0.2.0"
+  },
+  "id": "preservation-floor",
+  "title": "Preservation floor",
+  "language": "en",
+  "source_locale": "en",
+  "source": {
+    "name": "Savorum test fixture",
+    "attribution": "Authored for savorum/savorum#200"
+  },
+  "yield": {
+    "text": "makes 12 buns"
+  },
+  "times": {
+    "assertions": [
+      {
+        "id": "prove",
+        "kind": "rest",
+        "attention": "passive",
+        "duration": {
+          "value": "PT1H"
+        },
+        "label": "First prove"
+      },
+      {
+        "id": "bake",
+        "kind": "cook",
+        "attention": "active",
+        "duration": {
+          "value": "PT25M"
+        },
+        "label": "Bake"
+      }
+    ]
+  },
+  "ingredient_sections": [
+    {
+      "id": "dough",
+      "title": "Dough",
+      "ingredients": [
+        {
+          "id": "flour",
+          "name": "strong white flour",
+          "quantity": {
+            "kind": "simple",
+            "amount": {
+              "value": "500"
+            },
+            "unit": "mass.gram"
+          }
+        },
+        {
+          "id": "water",
+          "name": "water",
+          "quantity": {
+            "kind": "simple",
+            "amount": {
+              "value": "300"
+            },
+            "unit": "volume.milliliter"
+          }
+        },
+        {
+          "id": "butter",
+          "name": "butter",
+          "note": "divided",
+          "quantity": {
+            "kind": "simple",
+            "amount": {
+              "value": "60"
+            },
+            "unit": "mass.gram"
+          }
+        }
+      ]
+    },
+    {
+      "id": "glaze",
+      "title": "Glaze",
+      "ingredients": [
+        {
+          "id": "milk",
+          "name": "milk",
+          "quantity": {
+            "kind": "simple",
+            "amount": {
+              "value": "2"
+            },
+            "unit": "volume.tablespoon.us.customary"
+          }
+        }
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "id": "make",
+      "title": "Make the dough",
+      "steps": [
+        {
+          "id": "mix",
+          "text": "Rub half the butter into the flour, then add the water.",
+          "ingredient_uses": [
+            {
+              "ingredient_ref": "flour"
+            },
+            {
+              "ingredient_ref": "butter",
+              "quantity": {
+                "kind": "simple",
+                "amount": {
+                  "value": "30"
+                },
+                "unit": "mass.gram"
+              }
+            }
+          ]
+        },
+        {
+          "id": "prove",
+          "text": "Leave to prove.",
+          "timing_refs": [
+            "prove"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "finish",
+      "title": "Bake and glaze",
+      "steps": [
+        {
+          "id": "bake",
+          "text": "Bake until golden.",
+          "timing_refs": [
+            "bake"
+          ],
+          "temperatures": [
+            {
+              "amount": {
+                "value": "200"
+              },
+              "unit": "temperature.celsius"
+            }
+          ]
+        },
+        {
+          "id": "glaze",
+          "text": "Brush with the milk and the remaining butter.",
+          "ingredient_uses": [
+            {
+              "ingredient_ref": "milk"
+            },
+            {
+              "ingredient_ref": "butter"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

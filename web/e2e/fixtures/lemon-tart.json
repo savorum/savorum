@@ -1,0 +1,9 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Recipe",
+  "name": "Previewed lemon tart",
+  "description": "A bright tart held for review before it reaches the library.",
+  "recipeYield": "8 slices",
+  "recipeIngredient": ["200 g flour", "2 lemons"],
+  "recipeInstructions": ["Make the pastry.", "Fill and bake."]
+}

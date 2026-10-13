@@ -1,0 +1,70 @@
+{
+  "serving": {
+    "one": "porție",
+    "other": "porții"
+  },
+  "egg": {
+    "one": "ou",
+    "other": "ouă"
+  },
+  "clove": {
+    "one": "cățel",
+    "other": "căței"
+  },
+  "sprig": {
+    "one": "fir",
+    "other": "fire"
+  },
+  "bunch": {
+    "one": "legătură",
+    "other": "legături"
+  },
+  "pinch": {
+    "one": "priză",
+    "other": "prize"
+  },
+  "handful": {
+    "one": "mână",
+    "other": "mâini"
+  },
+  "can": {
+    "one": "conservă",
+    "other": "conserve"
+  },
+  "tin": {
+    "one": "conservă",
+    "other": "conserve"
+  },
+  "packet": {
+    "one": "pachet",
+    "other": "pachete"
+  },
+  "cup": {
+    "one": "cană",
+    "other": "căni"
+  },
+  "tablespoon": {
+    "one": "lingură",
+    "other": "linguri"
+  },
+  "teaspoon": {
+    "one": "linguriță",
+    "other": "lingurițe"
+  },
+  "pint": {
+    "one": "pintă",
+    "other": "pinte"
+  },
+  "quart": {
+    "one": "sfert de galon",
+    "other": "sferturi de galon"
+  },
+  "gallon": {
+    "one": "galon",
+    "other": "galoane"
+  },
+  "fluidounce": {
+    "one": "uncie lichidă",
+    "other": "uncii lichide"
+  }
+}

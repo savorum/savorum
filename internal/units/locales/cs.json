@@ -1,0 +1,100 @@
+{
+  "serving": {
+    "one": "porce",
+    "few": "porce",
+    "many": "porce",
+    "other": "porcí"
+  },
+  "egg": {
+    "one": "vejce",
+    "few": "vejce",
+    "many": "vejce",
+    "other": "vajec"
+  },
+  "clove": {
+    "one": "stroužek",
+    "few": "stroužky",
+    "many": "stroužku",
+    "other": "stroužků"
+  },
+  "sprig": {
+    "one": "snítka",
+    "few": "snítky",
+    "many": "snítky",
+    "other": "snítek"
+  },
+  "bunch": {
+    "one": "svazek",
+    "few": "svazky",
+    "many": "svazku",
+    "other": "svazků"
+  },
+  "pinch": {
+    "one": "špetka",
+    "few": "špetky",
+    "many": "špetky",
+    "other": "špetek"
+  },
+  "handful": {
+    "one": "hrst",
+    "few": "hrsti",
+    "many": "hrsti",
+    "other": "hrstí"
+  },
+  "can": {
+    "one": "plechovka",
+    "few": "plechovky",
+    "many": "plechovky",
+    "other": "plechovek"
+  },
+  "tin": {
+    "one": "konzerva",
+    "few": "konzervy",
+    "many": "konzervy",
+    "other": "konzerv"
+  },
+  "packet": {
+    "one": "balíček",
+    "few": "balíčky",
+    "many": "balíčku",
+    "other": "balíčků"
+  },
+  "cup": {
+    "one": "hrnek",
+    "few": "hrnky",
+    "many": "hrnku",
+    "other": "hrnků"
+  },
+  "tablespoon": {
+    "one": "lžíce",
+    "other": "lžíce"
+  },
+  "teaspoon": {
+    "one": "lžička",
+    "few": "lžičky",
+    "many": "lžičky",
+    "other": "lžiček"
+  },
+  "pint": {
+    "one": "pinta",
+    "few": "pinty",
+    "many": "pinty",
+    "other": "pint"
+  },
+  "quart": {
+    "one": "kvart",
+    "few": "kvarty",
+    "many": "kvartu",
+    "other": "kvartů"
+  },
+  "gallon": {
+    "one": "galon",
+    "few": "galony",
+    "many": "galonu",
+    "other": "galonů"
+  },
+  "fluidounce": {
+    "one": "tek. oz",
+    "other": "tek. oz"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "serving": {
+    "one": "porsiyon",
+    "other": "porsiyon"
+  },
+  "egg": {
+    "one": "yumurta",
+    "other": "yumurta"
+  },
+  "clove": {
+    "one": "diş",
+    "other": "diş"
+  },
+  "sprig": {
+    "one": "dal",
+    "other": "dal"
+  },
+  "bunch": {
+    "one": "demet",
+    "other": "demet"
+  },
+  "pinch": {
+    "one": "tutam",
+    "other": "tutam"
+  },
+  "handful": {
+    "one": "avuç",
+    "other": "avuç"
+  },
+  "can": {
+    "one": "konserve",
+    "other": "konserve"
+  },
+  "tin": {
+    "one": "konserve",
+    "other": "konserve"
+  },
+  "packet": {
+    "one": "paket",
+    "other": "paket"
+  },
+  "cup": {
+    "one": "su bardağı",
+    "other": "su bardağı"
+  },
+  "tablespoon": {
+    "one": "yemek kaşığı",
+    "other": "yemek kaşığı"
+  },
+  "teaspoon": {
+    "one": "çay kaşığı",
+    "other": "çay kaşığı"
+  },
+  "pint": {
+    "one": "pint",
+    "other": "pint"
+  },
+  "quart": {
+    "one": "kuart",
+    "other": "kuart"
+  },
+  "gallon": {
+    "one": "galon",
+    "other": "galon"
+  },
+  "fluidounce": {
+    "one": "sıvı ons",
+    "other": "sıvı ons"
+  }
+}

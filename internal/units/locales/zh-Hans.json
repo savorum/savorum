@@ -1,0 +1,70 @@
+{
+  "serving": {
+    "one": "份",
+    "other": "份"
+  },
+  "egg": {
+    "one": "个",
+    "other": "个"
+  },
+  "clove": {
+    "one": "瓣",
+    "other": "瓣"
+  },
+  "sprig": {
+    "one": "枝",
+    "other": "枝"
+  },
+  "bunch": {
+    "one": "把",
+    "other": "把"
+  },
+  "pinch": {
+    "one": "小撮",
+    "other": "小撮"
+  },
+  "handful": {
+    "one": "把",
+    "other": "把"
+  },
+  "can": {
+    "one": "罐",
+    "other": "罐"
+  },
+  "tin": {
+    "one": "罐",
+    "other": "罐"
+  },
+  "packet": {
+    "one": "包",
+    "other": "包"
+  },
+  "cup": {
+    "one": "杯",
+    "other": "杯"
+  },
+  "tablespoon": {
+    "one": "汤匙",
+    "other": "汤匙"
+  },
+  "teaspoon": {
+    "one": "茶匙",
+    "other": "茶匙"
+  },
+  "pint": {
+    "one": "品脱",
+    "other": "品脱"
+  },
+  "quart": {
+    "one": "夸脱",
+    "other": "夸脱"
+  },
+  "gallon": {
+    "one": "加仑",
+    "other": "加仑"
+  },
+  "fluidounce": {
+    "one": "液量盎司",
+    "other": "液量盎司"
+  }
+}

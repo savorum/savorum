@@ -1,0 +1,21 @@
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+.env
+.nitro
+.tanstack
+.wrangler
+.output
+.vinxi
+__unconfig*
+
+## Panda
+styled-system
+styled-system-studio
+test-results/
+playwright-report/
+.playwright/
+
+coverage/

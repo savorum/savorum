@@ -1,0 +1,70 @@
+{
+  "serving": {
+    "one": "annos",
+    "other": "annosta"
+  },
+  "egg": {
+    "one": "muna",
+    "other": "munaa"
+  },
+  "clove": {
+    "one": "kynsi",
+    "other": "kynttä"
+  },
+  "sprig": {
+    "one": "oksa",
+    "other": "oksaa"
+  },
+  "bunch": {
+    "one": "nippu",
+    "other": "nippua"
+  },
+  "pinch": {
+    "one": "ripaus",
+    "other": "ripausta"
+  },
+  "handful": {
+    "one": "kourallinen",
+    "other": "kourallista"
+  },
+  "can": {
+    "one": "tölkki",
+    "other": "tölkkiä"
+  },
+  "tin": {
+    "one": "tölkki",
+    "other": "tölkkiä"
+  },
+  "packet": {
+    "one": "paketti",
+    "other": "pakettia"
+  },
+  "cup": {
+    "one": "kuppi",
+    "other": "kuppia"
+  },
+  "tablespoon": {
+    "one": "rkl",
+    "other": "rkl"
+  },
+  "teaspoon": {
+    "one": "tl",
+    "other": "tl"
+  },
+  "pint": {
+    "one": "pintti",
+    "other": "pinttiä"
+  },
+  "quart": {
+    "one": "kvartti",
+    "other": "kvarttia"
+  },
+  "gallon": {
+    "one": "gallona",
+    "other": "gallonaa"
+  },
+  "fluidounce": {
+    "one": "nesteunssi",
+    "other": "nesteunssia"
+  }
+}

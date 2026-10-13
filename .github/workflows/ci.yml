@@ -1,0 +1,365 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "41 4 * * 1"
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: ${{ github.ref_type != 'tag' }}
+
+env:
+  GOTOOLCHAIN: local
+  # Kept in step with the justfile: decode AVIF and JPEG XL in WebAssembly.
+  GOFLAGS: -tags=nodynamic
+  # Kept in step with mise.toml.
+  GOFUMPT_VERSION: v0.12.0
+  GOLANGCI_LINT_VERSION: v2.13.2
+
+jobs:
+  dco:
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Require a Developer Certificate of Origin sign-off
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: scripts/check-dco.sh "$BASE" "$HEAD"
+
+  # Browser and container checks guard system boundaries and are expensive.
+  # They run on pull requests that touch those boundaries, and browser checks
+  # also run on the schedule and on manual runs.
+  changes:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 5
+    outputs:
+      e2e: ${{ steps.filter.outputs.e2e }}
+      container: ${{ steps.filter.outputs.container }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - id: filter
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          e2e=false
+          container=false
+          if [[ "$EVENT" == schedule || "$EVENT" == workflow_dispatch ]]; then
+            e2e=true
+          elif [[ "$EVENT" == pull_request ]]; then
+            changed="$(git diff --name-only "$BASE" HEAD)"
+            e2e_paths='^(\.github/|go\.mod$|go\.sum$|justfile$|web/|api/|cmd/savorum/|cmd/scalecheck/|scripts/scale-check\.sh$|internal/(scalefixture|capacity|recovery|access|account|api|app|assets|configuration|export|exchange|federation|httpsecurity|identity|importjob|importer|library|print|recipe|render|storage|webui)/)'
+            container_paths='^(\.github/|\.dockerignore$|Dockerfile$|compose\.yaml$|scripts/container-smoke-test\.sh$|scripts/publish-container\.sh$|cmd/savorum/(healthcheck|healthcheck_test|main)\.go$|internal/buildinfo/)'
+            if grep -qE "$e2e_paths" <<< "$changed"; then e2e=true; fi
+            if grep -qE "$container_paths" <<< "$changed"; then container=true; fi
+          fi
+          echo "e2e=$e2e" >> "$GITHUB_OUTPUT"
+          echo "container=$container" >> "$GITHUB_OUTPUT"
+
+  web:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 20
+    outputs:
+      playwright-image: ${{ steps.playwright.outputs.image }}
+    env:
+      NODE_OPTIONS: --max-old-space-size=4096
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-web
+      - name: Select the matching Playwright browser image
+        id: playwright
+        working-directory: web
+        run: |
+          version="$(node -p "require('@playwright/test/package.json').version")"
+          echo "image=mcr.microsoft.com/playwright:v${version}-noble" >> "$GITHUB_OUTPUT"
+      - run: pnpm --dir web run build
+      - run: pnpm --dir web test
+      # The prerendered shell embeds a build timestamp, so it is passed to later
+      # jobs as an artifact instead of compared byte-for-byte.
+      - run: git diff --exit-code -- web/src/api/schema.d.ts web/src/routeTree.gen.ts
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: webui
+          path: internal/webui/dist/
+          retention-days: 1
+
+  lint:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - run: |
+          go install "mvdan.cc/gofumpt@$GOFUMPT_VERSION"
+          go install "github.com/golangci/golangci-lint/v2/cmd/golangci-lint@$GOLANGCI_LINT_VERSION"
+      - name: Check formatting
+        run: |
+          unformatted="$(gofumpt -l cmd internal)"
+          if [ -n "$unformatted" ]; then
+            printf 'The following Go files require gofumpt:\n%s\n' "$unformatted"
+            exit 1
+          fi
+      - run: golangci-lint run
+      - run: scripts/verify-typst-wasm.sh
+
+  verify:
+    needs: [changes, web]
+    runs-on: ubuntu-26.04
+    timeout-minutes: 45
+    env:
+      SAVORUM_REQUIRE_WEB_BUILD: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: webui
+          path: internal/webui/dist
+      # Race detection covers Go code; the embedded Typst/WASM rendering corpus
+      # runs without it because the detector cannot instrument that compiler.
+      - run: ./scripts/test-race.sh
+      - run: go run ./cmd/openapi --check
+      - run: go run ./cmd/units --check
+      - run: go build -o bin/savorum ./cmd/savorum
+      - run: go build -o bin/scalecheck ./cmd/scalecheck
+      - if: needs.changes.outputs.e2e == 'true'
+        run: |
+          strip --strip-unneeded bin/savorum bin/scalecheck
+          gzip -9 bin/savorum bin/scalecheck
+      - if: needs.changes.outputs.e2e == 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: binaries
+          path: |
+            bin/savorum.gz
+            bin/scalecheck.gz
+          retention-days: 1
+
+  # Checks against the SREF revisions declared in integration/sref.json, never
+  # a mutable branch. SREF_REQUIRED and SREF_REGISTRY_REQUIRED turn the local
+  # skips for a missing checkout into failures.
+  sref-integration:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 30
+    env:
+      SREF_CHECKOUT: ${{ github.workspace }}/.sref
+      SREF_READER_CHECKOUT: ${{ github.workspace }}/.sref-reader
+      SREF_WRITER_CHECKOUT: ${{ github.workspace }}/.sref-writer
+      SREF_REQUIRED: "1"
+      SREF_REGISTRY_PATH: ${{ github.workspace }}/.sref/registry/units.json
+      SREF_REGISTRY_REQUIRED: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - id: pins
+        run: |
+          {
+            echo "sref=$(scripts/declared-sref-commit.sh)"
+            echo "reader=$(scripts/declared-sref-commit.sh sref_reader)"
+            echo "writer=$(scripts/declared-sref-commit.sh sref_writer)"
+          } >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: savorum/sref
+          ref: ${{ steps.pins.outputs.sref }}
+          path: .sref
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: savorum/sref-reader
+          ref: ${{ steps.pins.outputs.reader }}
+          path: .sref-reader
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: savorum/sref-writer
+          ref: ${{ steps.pins.outputs.writer }}
+          path: .sref-writer
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.14"
+      # The interop chain shells out to `python3`, so the dependencies are
+      # installed on that interpreter as well as in the venv.
+      - run: |
+          python3 -m pip install --disable-pip-version-check --quiet --require-hashes -r integration/requirements.txt
+          python3 -m venv .sref-venv
+          .sref-venv/bin/pip install --disable-pip-version-check --quiet --require-hashes -r integration/requirements.txt
+      - run: go test -count=1 ./internal/sref/... ./internal/units/ ./internal/ingredientparser/ ./internal/interop/...
+      - run: go build -o bin/srefadapter ./cmd/srefadapter
+      - run: .sref-venv/bin/python .sref/conformance/runner.py --adapter "$PWD/bin/srefadapter" --json sref-conformance.json
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: ${{ !cancelled() }}
+        with:
+          name: sref-conformance
+          path: sref-conformance.json
+          retention-days: 30
+
+  # Nonblocking: a failure means the pin is behind, not that a change is wrong.
+  sref-drift:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 10
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: savorum/sref
+          ref: main
+          fetch-depth: 0
+          path: .sref
+          persist-credentials: false
+      - run: ./scripts/sref-drift.sh .sref
+
+  document-import-fidelity:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    env:
+      # Avoids OpenMP oversubscription turning fixture OCR into a timeout.
+      OMP_THREAD_LIMIT: "1"
+      SAVORUM_DOCUMENT_TOOLS_REQUIRED: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends poppler-utils tesseract-ocr
+      - run: go test -count=1 -run 'TestLocalOCR(TextPDF|Image|ScannedPDF)Fidelity' ./internal/importer/
+
+  fuzz-smoke:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - run: ./scripts/fuzz-security.sh smoke
+
+  fuzz-campaign:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - run: ./scripts/fuzz-security.sh campaign
+
+  e2e:
+    needs: [changes, web, verify]
+    if: needs.changes.outputs.e2e == 'true'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 30
+    # The installed Playwright version selects its browsers and OS dependencies.
+    container: ${{ needs.web.outputs.playwright-image }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: binaries
+          path: bin
+      - run: |
+          corepack enable
+          corepack install --global "$(node -p "require('./web/package.json').packageManager")"
+          pnpm --dir web install --frozen-lockfile
+      - run: |
+          gzip -d bin/savorum.gz
+          chmod +x bin/savorum
+      - run: pnpm --dir web run test:e2e
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: failure()
+        with:
+          name: e2e-results
+          path: web/test-results/
+          retention-days: 1
+
+  # Fixture sizes, retained history, backup and restore, and browser rendering
+  # share one versioned workload.
+  scale:
+    needs: [changes, web, verify]
+    if: needs.changes.outputs.e2e == 'true'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 45
+    container: ${{ needs.web.outputs.playwright-image }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: binaries
+          path: bin
+      - run: |
+          corepack enable
+          corepack install --global "$(node -p "require('./web/package.json').packageManager")"
+          pnpm --dir web install --frozen-lockfile
+      - run: |
+          gzip -d bin/savorum.gz bin/scalecheck.gz
+          chmod +x bin/savorum bin/scalecheck
+      - run: ./scripts/scale-check.sh
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: ${{ !cancelled() }}
+        with:
+          name: scale
+          path: |
+            output/scale/
+            web/test-results/
+          retention-days: 30
+
+  container-smoke:
+    needs: changes
+    if: needs.changes.outputs.container == 'true'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: docker build --pull --build-arg VERSION=development --build-arg REVISION="$GITHUB_SHA" --tag "savorum:smoke-$GITHUB_SHA" .
+      - run: ./scripts/container-smoke-test.sh "savorum:smoke-$GITHUB_SHA"

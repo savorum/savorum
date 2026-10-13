@@ -1,0 +1,10 @@
+allowBuilds:
+  "@parcel/watcher": false
+  esbuild: true
+  lightningcss: true
+overrides:
+  browserslist: ^4.28.7
+  effect: ^3.20.0
+  js-yaml: ^4.3.2
+  postcss: ^8.5.26
+  postcss-selector-parser: ^7.1.3

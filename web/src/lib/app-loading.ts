@@ -1,0 +1,2 @@
+/** Runs before blocking downloads; the deadline is relative to navigation start. */
+export const appLoadingBootScript = `(()=>{document.addEventListener("load",e=>{const link=e.target;if(link instanceof HTMLLinkElement&&link.hasAttribute("data-app-styles"))link.media="all"},true);setTimeout(()=>{document.documentElement.dataset.appLoading=String(Math.floor(Math.random()*4))},Math.max(0,400-performance.now()))})()`

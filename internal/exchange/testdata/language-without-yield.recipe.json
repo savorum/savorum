@@ -1,0 +1,47 @@
+{
+  "sref": {
+    "version": "0.2.0",
+    "unit_registry": "0.2.0"
+  },
+  "id": "language-without-yield",
+  "title": "Kräuterwasser",
+  "language": "de",
+  "ingredient_sections": [
+    {
+      "id": "ingredients",
+      "ingredients": [
+        {
+          "id": "mint",
+          "name": "Minze"
+        }
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "id": "method",
+      "steps": [
+        {
+          "id": "rest",
+          "text": "Minze in Wasser ca. 4-6 Stunden ziehen lassen.",
+          "timing_refs": [
+            "rest"
+          ]
+        }
+      ]
+    }
+  ],
+  "times": {
+    "assertions": [
+      {
+        "id": "rest",
+        "duration": {
+          "min": "PT4H",
+          "max": "PT6H",
+          "approximate": true,
+          "source_text": "ca. 4-6 Stunden"
+        }
+      }
+    ]
+  }
+}
