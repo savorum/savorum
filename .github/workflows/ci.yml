@@ -96,7 +96,7 @@ jobs:
       # The prerendered shell embeds a build timestamp, so it is passed to later
       # jobs as an artifact instead of compared byte-for-byte.
       - run: git diff --exit-code -- web/src/api/schema.d.ts web/src/routeTree.gen.ts
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: webui
           path: internal/webui/dist/
@@ -138,7 +138,7 @@ jobs:
       - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version-file: go.mod
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: webui
           path: internal/webui/dist
@@ -154,7 +154,7 @@ jobs:
           strip --strip-unneeded bin/savorum bin/scalecheck
           gzip -9 bin/savorum bin/scalecheck
       - if: needs.changes.outputs.e2e == 'true'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: binaries
           path: |
@@ -219,7 +219,7 @@ jobs:
       - run: go test -count=1 ./internal/sref/... ./internal/units/ ./internal/ingredientparser/ ./internal/interop/...
       - run: go build -o bin/srefadapter ./cmd/srefadapter
       - run: .sref-venv/bin/python .sref/conformance/runner.py --adapter "$PWD/bin/srefadapter" --json sref-conformance.json
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: ${{ !cancelled() }}
         with:
           name: sref-conformance
@@ -300,7 +300,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: binaries
           path: bin
@@ -312,7 +312,7 @@ jobs:
           gzip -d bin/savorum.gz
           chmod +x bin/savorum
       - run: pnpm --dir web run test:e2e
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: failure()
         with:
           name: e2e-results
@@ -331,7 +331,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: binaries
           path: bin
@@ -343,7 +343,7 @@ jobs:
           gzip -d bin/savorum.gz bin/scalecheck.gz
           chmod +x bin/savorum bin/scalecheck
       - run: ./scripts/scale-check.sh
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: ${{ !cancelled() }}
         with:
           name: scale
