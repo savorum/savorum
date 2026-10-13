@@ -341,8 +341,14 @@ func startIntegrationWorkers(ctx context.Context, application *app.Application) 
 func runIntegrationWorker(ctx context.Context, run func(context.Context) error) error {
 	for {
 		err := run(ctx)
-		if ctx.Err() != nil || !sqlite.IsBusy(err) {
+		if !sqlite.IsBusy(err) {
 			return err
+		}
+
+		// Cancellation can land while an attempt is still contending for the
+		// writer; that attempt's busy error is then a shutdown, not a failure.
+		if ctx.Err() != nil {
+			return ctx.Err()
 		}
 
 		// Each worker resumes through its durable recovery contract.
