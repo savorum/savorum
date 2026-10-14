@@ -509,7 +509,7 @@ func TestAnImportIsNotThrottledIntoLosingPhotographs(t *testing.T) {
 // photograph.
 func TestAnImportWaitsOutTheUploadMeterAndKeepsEveryPhotograph(t *testing.T) {
 	fetcher := &staticFetcher{}
-	blobs := &openingMeteredAssets{meteredAssets: meteredAssets{allowed: 6}}
+	blobs := &openingMeteredAssets{allowed: 6}
 	service := exchange.NewService(&importLibrary{}, blobs,
 		exchange.WithRemoteAssetFetcher(fetcher), exchange.WithIngestRetry(4, time.Millisecond))
 	preview := imagePreview(t, service, 10)

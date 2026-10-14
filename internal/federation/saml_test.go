@@ -53,7 +53,7 @@ func samlTestProvider(t *testing.T) (Provider, *rsa.PrivateKey, []byte) {
 		t.Fatal(e)
 	}
 
-	metadata := saml.EntityDescriptor{EntityID: "https://idp.example/metadata", ValidUntil: time.Now().Add(time.Hour), IDPSSODescriptors: []saml.IDPSSODescriptor{{SSODescriptor: saml.SSODescriptor{RoleDescriptor: saml.RoleDescriptor{ProtocolSupportEnumeration: "urn:oasis:names:tc:SAML:2.0:protocol", KeyDescriptors: []saml.KeyDescriptor{{Use: "signing", KeyInfo: saml.KeyInfo{X509Data: saml.X509Data{X509Certificates: []saml.X509Certificate{{Data: base64.StdEncoding.EncodeToString(cert)}}}}}}}}, SingleSignOnServices: []saml.Endpoint{{Binding: saml.HTTPRedirectBinding, Location: "https://idp.example/sso"}}}}}
+	metadata := saml.EntityDescriptor{EntityID: "https://idp.example/metadata", ValidUntil: time.Now().Add(time.Hour), IDPSSODescriptors: []saml.IDPSSODescriptor{{ProtocolSupportEnumeration: "urn:oasis:names:tc:SAML:2.0:protocol", KeyDescriptors: []saml.KeyDescriptor{{Use: "signing", KeyInfo: saml.KeyInfo{X509Data: saml.X509Data{X509Certificates: []saml.X509Certificate{{Data: base64.StdEncoding.EncodeToString(cert)}}}}}}, SingleSignOnServices: []saml.Endpoint{{Binding: saml.HTTPRedirectBinding, Location: "https://idp.example/sso"}}}}}
 
 	data, e := xml.Marshal(metadata)
 	if e != nil {

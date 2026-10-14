@@ -29,7 +29,7 @@ func RegisterStorageStatus(api huma.API, read func(context.Context) CustomerStor
 		Description: "Authenticated, bounded read of current combined hosted usage and filesystem headroom. Unknown measurements are omitted. This observation does not change write admission or start background polling.",
 		Errors:      []int{http.StatusUnauthorized, http.StatusForbidden},
 	}, func(ctx context.Context, _ *struct{}) (*storageStatusOutput, error) {
-		report := CustomerStorageStatus{Status: storagebudget.Status{State: "unknown"}}
+		report := CustomerStorageStatus{State: "unknown"}
 		if read != nil {
 			report = read(ctx)
 		}

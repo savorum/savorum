@@ -222,7 +222,7 @@ func TestCachedImagesAndCancelledWaitersDoNotWaitForAnotherDecode(t *testing.T) 
 		t.Fatal(err)
 	}
 
-	cold := &waitingDerivativeService{derivativeAssetService: derivativeAssetService{blob: assets.Blob{ID: "sha256:cold", Size: int64(len(data))}, data: data}, entered: make(chan struct{}), release: make(chan struct{})}
+	cold := &waitingDerivativeService{blob: assets.Blob{ID: "sha256:cold", Size: int64(len(data))}, data: data, entered: make(chan struct{}), release: make(chan struct{})}
 	finished := make(chan error, 1)
 
 	go func() {
@@ -295,7 +295,7 @@ func (ctx *observedWaitContext) Done() <-chan struct{} {
 
 func TestCancelledImageGenerationDoesNotCancelAnotherCaller(t *testing.T) {
 	data := derivativeTestPNG(t)
-	service := &cancelFirstDerivativeService{derivativeAssetService: derivativeAssetService{blob: assets.Blob{ID: "sha256:cancel-first", Size: int64(len(data))}, data: data}, entered: make(chan struct{})}
+	service := &cancelFirstDerivativeService{blob: assets.Blob{ID: "sha256:cancel-first", Size: int64(len(data))}, data: data, entered: make(chan struct{})}
 	cache := derivativeCache{}
 
 	first, cancel := context.WithCancel(t.Context())

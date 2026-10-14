@@ -32,7 +32,7 @@ func TestManagedGrantTrustBoundariesAndRotation(t *testing.T) {
 
 	for _, name := range []string{"valid", "issuer", "audience", "multiple-audience", "origin", "expired", "future", "long", "nonce", "subject", "local-user", "library", "signature", "type", "retired-key", "overlap-key", "replay"} {
 		t.Run(name, func(t *testing.T) {
-			grant := ManagedGrant{Claims: jwt.Claims{Issuer: p.Managed.Issuer, Subject: "account", Audience: jwt.Audience{"tenant"}, ID: "unique", IssuedAt: jwt.NewNumericDate(now), Expiry: jwt.NewNumericDate(now.Add(time.Minute))}, Origin: "https://tenant.example", CodeChallenge: oauth2.S256ChallengeFromVerifier(verifier), LocalUserID: "user", LibraryID: "default"}
+			grant := ManagedGrant{Issuer: p.Managed.Issuer, Subject: "account", Audience: jwt.Audience{"tenant"}, ID: "unique", IssuedAt: jwt.NewNumericDate(now), Expiry: jwt.NewNumericDate(now.Add(time.Minute)), Origin: "https://tenant.example", CodeChallenge: oauth2.S256ChallengeFromVerifier(verifier), LocalUserID: "user", LibraryID: "default"}
 			signingKey := key
 			kind := ManagedGrantType
 			kid := "current"
