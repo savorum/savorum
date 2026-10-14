@@ -4,6 +4,8 @@ This page is for anyone changing Savorum's code or docs: how to set up, the
 rules the code follows, and what a pull request needs. Keep contributions
 focused and include tests for observable behavior.
 
+Follow the [code of conduct](CODE_OF_CONDUCT.md) in project discussions.
+
 Judge feature proposals against the
 [product principles](docs/contribute/product-principles.md) and protect the
 outcomes in the [core UX contract](docs/contribute/core-ux-contract.md).
@@ -129,12 +131,11 @@ The migration sequence is the only database schema initializer. Follow the
 [database migrations reference](docs/reference/database-migrations.md) for
 every persisted schema change.
 
-Add the next contiguous `NNNN_name.sql` file; never edit an existing migration
-outside a pre-release consolidation. Record the new file's SHA-256 checksum in
-`internal/storage/sqlite/migration_checksums.txt`. Include a semantic upgrade
-test for the affected domain data, not only an assertion about columns or
-tables. When a tagged release changes the schema, keep a representative
-database from the preceding release under
+Add the next contiguous `NNNN_name.sql` file; never edit an existing migration.
+Record its SHA-256 checksum in `internal/storage/sqlite/migration_checksums.txt`.
+Include a semantic upgrade test for the affected domain data, not only an
+assertion about columns or tables. When a tagged release changes the schema,
+keep a representative database from the preceding release under
 `internal/storage/sqlite/testdata/migrations/`.
 
 ## Submit

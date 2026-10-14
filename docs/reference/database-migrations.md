@@ -10,8 +10,8 @@ upgrading or rolling back an instance should read
 Migrations live in `internal/storage/sqlite/migrations/`, with their checksums
 in `internal/storage/sqlite/migration_checksums.txt`.
 
-- Every schema change is a new migration. Never edit an applied migration's
-  filename, SQL, or recorded checksum.
+- Every schema change is a new migration. Never consolidate migration history
+  or edit an existing migration's filename, SQL, or recorded checksum.
 - Use only operations SQLite can roll back. If you can't, document and test a
   recoverable alternative before the change is accepted.
 - When a tagged release changes the schema, add a representative database from
@@ -19,14 +19,6 @@ in `internal/storage/sqlite/migration_checksums.txt`.
   real upgrade path.
 - A matching migration sequence doesn't mean the recipe document or backup
   format is compatible. Check those versions too.
-
-## Before the first release
-
-Savorum has no tagged release yet, so the sequence may be consolidated into one
-that produces an identical schema. A consolidation is its own change: it lists
-the new checksums and says whether existing development databases are rebuilt
-or must be recreated. After the first tagged release, history is never
-rewritten.
 
 ## Recipe document versions
 
