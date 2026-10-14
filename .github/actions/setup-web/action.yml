@@ -1,6 +1,11 @@
 name: Set up web toolchain
 description: Install the pinned Node and pnpm, then the web dependencies.
 
+inputs:
+  cache:
+    description: Cache web dependencies.
+    default: "true"
+
 runs:
   using: composite
   steps:
@@ -11,7 +16,8 @@ runs:
     - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
       with:
         node-version: 26.9.0
-        cache: pnpm
+        cache: ${{ inputs.cache == 'true' && 'pnpm' || '' }}
+        package-manager-cache: ${{ inputs.cache == 'true' }}
         cache-dependency-path: web/pnpm-lock.yaml
     - run: pnpm --dir web install --frozen-lockfile
       shell: bash
