@@ -90,6 +90,7 @@ type Application struct {
 
 // Options supplies optional application capabilities at the composition root.
 type Options struct {
+	EventStreamShutdown  <-chan struct{}
 	WebhookDirectory     string
 	DurableBudget        *storagebudget.Coordinator
 	StoragePath          string
@@ -150,11 +151,12 @@ func New(store Store, catalog recipe.UnitCatalog, options Options) (*Application
 	calendar := mealcalendar.NewService(store, mealService, store.InstanceID, publicURLFor(options.Configuration))
 
 	apiOptions := api.Options{
-		Pantry:          store,
-		Events:          store,
-		Idempotency:     idempotency.New(store),
-		BulkLimit:       options.BulkLimit,
-		SuggestionLimit: options.SuggestionLimit, LookupLimit: options.LookupLimit, GroceryAdditionLimit: options.GroceryAdditionLimit,
+		EventStreamShutdown: options.EventStreamShutdown,
+		Pantry:              store,
+		Events:              store,
+		Idempotency:         idempotency.New(store),
+		BulkLimit:           options.BulkLimit,
+		SuggestionLimit:     options.SuggestionLimit, LookupLimit: options.LookupLimit, GroceryAdditionLimit: options.GroceryAdditionLimit,
 		AuthEnabled:       options.AuthEnabled,
 		Assets:            options.Assets,
 		SourceAttachments: store,

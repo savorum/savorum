@@ -133,6 +133,7 @@ func serve(rootContext context.Context, deployment configuration.Deployment) err
 	}
 
 	application, err := app.New(store, units.DefaultCatalog(), app.Options{
+		EventStreamShutdown: rootContext.Done(),
 		AutomationDirectory: automation.ArtifactDirectory(deployment.DatabasePath),
 		BulkLimit:           deployment.BulkLimit,
 		SuggestionLimit:     deployment.SuggestionLimit, LookupLimit: deployment.LookupLimit, GroceryAdditionLimit: deployment.GroceryAdditionLimit,

@@ -243,7 +243,7 @@ func TestSSEFramingResumeAndAuthorizationLoss(t *testing.T) {
 	reader := &streamReader{}
 	mux := http.NewServeMux()
 	api := humago.New(mux, huma.DefaultConfig("stream", "1"))
-	registerEvents(api, reader)
+	registerEvents(api, reader, nil)
 
 	server := httptest.NewServer(mux)
 	defer server.Close()

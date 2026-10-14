@@ -25,7 +25,7 @@ type eventConnections struct {
 	total int
 }
 
-func registerEvents(api huma.API, reader event.Reader) {
+func registerEvents(api huma.API, reader event.Reader, shutdown <-chan struct{}) {
 	connections := &eventConnections{users: map[string]int{}}
 
 	huma.Register(api, huma.Operation{OperationID: "get-library-events", Method: http.MethodGet, Path: "/api/v1/events", Summary: "Follow library changes", Description: "Authorized server-sent events use the versioned domain envelope. Send Last-Event-ID (or after) to resume up to seven days of retained history. A resync event requires a normal API refresh; cursor events advance past irrelevant facts. Authorization is rechecked every second. There are at most four streams per account, 1024 per instance, 100 events per page, 15-second heartbeats, and five-minute connections. Reconnect with backoff; correctness never depends on this connection. Tokens are accepted only in Authorization, never query parameters.", Tags: []string{"Events"}, Responses: map[string]*huma.Response{"200": {Description: "Bounded, resumable event stream", Content: map[string]*huma.MediaType{"text/event-stream": {Schema: &huma.Schema{Type: "string"}}}}}}, func(ctx context.Context, in *eventInput) (*huma.StreamResponse, error) {
@@ -47,6 +47,19 @@ func registerEvents(api huma.API, reader event.Reader) {
 
 		return &huma.StreamResponse{Body: func(hctx huma.Context) {
 			defer connections.release(p.UserID)
+
+			ctx, cancel := context.WithCancel(ctx)
+			defer cancel()
+
+			if shutdown != nil {
+				go func() {
+					select {
+					case <-shutdown:
+						cancel()
+					case <-ctx.Done():
+					}
+				}()
+			}
 
 			_, w := humago.Unwrap(hctx)
 			streamEvents(ctx, w, reader, page, after)
