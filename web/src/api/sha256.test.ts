@@ -1,3 +1,4 @@
+import { Buffer } from "node:buffer"
 import { createHash, webcrypto } from "node:crypto"
 
 import { afterEach, expect, test, vi } from "vitest"
@@ -79,6 +80,6 @@ test("fallback matches the platform digest across block boundaries", async () =>
       (value) => value.toString(16).padStart(2, "0"),
     ).join("")
     expect(await sha256Hex(slice)).toBe(native)
-    expect(new Uint8Array(slice)).toEqual(new Uint8Array(bytes, 0, length))
+    expect(Buffer.from(slice).equals(Buffer.from(bytes, 0, length))).toBe(true)
   }
 })
