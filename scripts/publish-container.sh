@@ -35,6 +35,11 @@ if [ -n "$target" ]; then
   set -- "$@" --target "$target"
 fi
 
+# METADATA_FILE receives the build metadata, including the pushed digest.
+if [ -n "${METADATA_FILE:-}" ]; then
+  set -- "$@" --metadata-file "$METADATA_FILE"
+fi
+
 docker buildx build \
   --pull \
   --platform linux/amd64,linux/arm64 \

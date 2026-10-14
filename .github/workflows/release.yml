@@ -23,6 +23,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+      id-token: write
+      attestations: write
     env:
       RELEASE_TAG: ${{ github.ref_name }}
       IMAGE: ghcr.io/savorum/savorum
@@ -53,20 +55,44 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ github.token }}
-      - run: ./scripts/publish-container.sh
-      - run: ./scripts/publish-container.sh
+      - id: minimal
+        env:
+          METADATA_FILE: ${{ runner.temp }}/minimal.json
+        run: |
+          ./scripts/publish-container.sh
+          echo "digest=$(jq -r '."containerimage.digest"' "$METADATA_FILE")" >> "$GITHUB_OUTPUT"
+      - uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-name: ${{ env.IMAGE }}
+          subject-digest: ${{ steps.minimal.outputs.digest }}
+          push-to-registry: true
+          create-storage-record: false
+      - id: documents
         env:
           TARGET: documents
           VARIANT: documents
+          METADATA_FILE: ${{ runner.temp }}/documents.json
+        run: |
+          ./scripts/publish-container.sh
+          echo "digest=$(jq -r '."containerimage.digest"' "$METADATA_FILE")" >> "$GITHUB_OUTPUT"
+      - uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-name: ${{ env.IMAGE }}
+          subject-digest: ${{ steps.documents.outputs.digest }}
+          push-to-registry: true
+          create-storage-record: false
 
   # Mirrors SREF: the release is created from the tag once its images exist.
-  # It carries an SPDX SBOM of the binary's Go modules and web UI packages.
+  # It carries an SPDX SBOM of the binary's Go modules and web UI packages, with
+  # a Sigstore bundle that `gh attestation verify` checks.
   github-release:
     needs: container-release
     runs-on: ubuntu-26.04
     timeout-minutes: 15
     permissions:
       contents: write
+      id-token: write
+      attestations: write
     env:
       RELEASE_TAG: ${{ github.ref_name }}
     steps:
@@ -83,7 +109,17 @@ jobs:
       - name: Write the SBOM
         env:
           SYFT: ${{ steps.syft.outputs.cmd }}
-        run: scripts/release-sbom.sh "${RELEASE_TAG#v}" "$RUNNER_TEMP/savorum-${RELEASE_TAG#v}.spdx.json"
+        run: |
+          mkdir "$RUNNER_TEMP/assets"
+          scripts/release-sbom.sh "${RELEASE_TAG#v}" "$RUNNER_TEMP/assets/savorum-${RELEASE_TAG#v}.spdx.json"
+      - id: attest
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: ${{ runner.temp }}/assets/*.spdx.json
+      - name: Attach the signature
+        env:
+          BUNDLE: ${{ steps.attest.outputs.bundle-path }}
+        run: cp "$BUNDLE" "$RUNNER_TEMP/assets/savorum-${RELEASE_TAG#v}.spdx.json.sigstore.json"
       - name: Publish release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -96,4 +132,4 @@ jobs:
             --title "Savorum ${RELEASE_TAG#v}" \
             --notes-file "$RUNNER_TEMP/release-notes.md" \
             "${prerelease[@]}" \
-            "$RUNNER_TEMP/savorum-${RELEASE_TAG#v}.spdx.json"
+            "$RUNNER_TEMP"/assets/*
