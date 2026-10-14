@@ -6,6 +6,10 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+## 0.1.1
+
+Released 2026-10-14.
+
 - Fix shutdown delays caused by open event streams.
 - Require Go 1.27.2 or later for source builds.
 
