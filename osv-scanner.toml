@@ -1,0 +1,7 @@
+# Vulnerabilities that do not affect Savorum. OSV-Scanner and OpenSSF Scorecard
+# read this file; each entry says why it is ignored and when to look again.
+
+[[IgnoredVulns]]
+id = "GO-2026-5932"
+ignoreUntil = 2027-04-01T00:00:00Z
+reason = "Flags golang.org/x/crypto/openpgp, which no Savorum package imports. The advisory has no fixed version, so it matches every golang.org/x/crypto release."
