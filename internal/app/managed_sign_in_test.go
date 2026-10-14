@@ -83,7 +83,7 @@ func TestManagedWebAndNativeSignInUseOrdinaryLocalSessions(t *testing.T) {
 		}
 
 		now := time.Now()
-		grant := federation.ManagedGrant{Claims: jwt.Claims{Issuer: issuer, Subject: subject, Audience: jwt.Audience{"household"}, IssuedAt: jwt.NewNumericDate(now), Expiry: jwt.NewNumericDate(now.Add(time.Minute)), ID: oauth2.GenerateVerifier()}, Origin: "https://tenant.example", CodeChallenge: expectedChallenge, LocalUserID: userID, LibraryID: "default"}
+		grant := federation.ManagedGrant{Issuer: issuer, Subject: subject, Audience: jwt.Audience{"household"}, IssuedAt: jwt.NewNumericDate(now), Expiry: jwt.NewNumericDate(now.Add(time.Minute)), ID: oauth2.GenerateVerifier(), Origin: "https://tenant.example", CodeChallenge: expectedChallenge, LocalUserID: userID, LibraryID: "default"}
 
 		raw, err := jwt.Signed(signer).Claims(grant).Serialize()
 		if err != nil {
@@ -173,7 +173,7 @@ func TestManagedWebAndNativeSignInUseOrdinaryLocalSessions(t *testing.T) {
 	for _, who := range []struct{ subject, user string }{{"owner", owner.OwnerUserID}, {"member", member.UserID}} {
 		verifier := oauth2.GenerateVerifier()
 		now := time.Now()
-		grant := federation.ManagedGrant{Claims: jwt.Claims{Issuer: issuer, Subject: who.subject, Audience: jwt.Audience{"household"}, IssuedAt: jwt.NewNumericDate(now), Expiry: jwt.NewNumericDate(now.Add(time.Minute)), ID: oauth2.GenerateVerifier()}, Origin: origin, CodeChallenge: oauth2.S256ChallengeFromVerifier(verifier), LocalUserID: who.user, LibraryID: "default"}
+		grant := federation.ManagedGrant{Issuer: issuer, Subject: who.subject, Audience: jwt.Audience{"household"}, IssuedAt: jwt.NewNumericDate(now), Expiry: jwt.NewNumericDate(now.Add(time.Minute)), ID: oauth2.GenerateVerifier(), Origin: origin, CodeChallenge: oauth2.S256ChallengeFromVerifier(verifier), LocalUserID: who.user, LibraryID: "default"}
 
 		raw, err := jwt.Signed(signer).Claims(grant).Serialize()
 		if err != nil {

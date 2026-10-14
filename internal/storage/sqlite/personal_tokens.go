@@ -42,7 +42,7 @@ func (s *Store) CreatePersonalToken(ctx context.Context, in identity.TokenReques
 
 	now := time.Now().Unix()
 
-	grant := identity.TokenGrant{PersonalToken: identity.PersonalToken{ID: "pat:" + id, Name: strings.TrimSpace(in.Name), CreatedAt: now, Scopes: in.Scopes, Libraries: in.Libraries}, Secret: "savorum_pat_" + secret}
+	grant := identity.TokenGrant{ID: "pat:" + id, Name: strings.TrimSpace(in.Name), CreatedAt: now, Scopes: in.Scopes, Libraries: in.Libraries, Secret: "savorum_pat_" + secret}
 	if !in.Nonexpiring {
 		grant.ExpiresAt = now + int64(in.Days)*86400
 	}

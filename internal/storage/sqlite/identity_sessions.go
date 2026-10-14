@@ -38,7 +38,7 @@ func (s *Store) CreateSession(ctx context.Context, userID, provider string, idle
 	}
 
 	now := time.Now().UTC().Truncate(time.Second)
-	session := identity.SessionCredentials{Session: identity.Session{ID: id, UserID: userID, CreatedAt: now, LastSeen: now, IdleExpires: now.Add(idle), AbsoluteExpires: now.Add(absolute), Provider: provider}, Token: token, CSRF: csrf}
+	session := identity.SessionCredentials{ID: id, UserID: userID, CreatedAt: now, LastSeen: now, IdleExpires: now.Add(idle), AbsoluteExpires: now.Add(absolute), Provider: provider, Token: token, CSRF: csrf}
 
 	tx, err := s.db.BeginTx(ctx, nil)
 	if err != nil {

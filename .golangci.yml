@@ -200,6 +200,18 @@ linters:
         linters:
           - gosec
         text: '^G304:'
+      # Corpus fixtures come from a contributor-selected local checkout.
+      - path: ^internal/exchange/corpus_(coverage|slice)_test\.go$
+        linters:
+          - gosec
+        text: '^G703:'
+        source: 'os\.ReadFile\(path\)'
+      # SREF_CHECKOUT selects a trusted local fixture checkout.
+      - path: ^internal/srefcheckout/srefcheckout\.go$
+        linters:
+          - gosec
+        text: '^G703:'
+        source: 'os\.Stat\(absolute\)'
       # A deferred Close releases a handle, and it is exactly the position
       # where the error has nowhere left to go. Anything written to is closed
       # explicitly and its error checked, so this covers release rather than

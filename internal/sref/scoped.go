@@ -337,8 +337,8 @@ func join(base, member string) string {
 }
 
 func lastSegment(member string) string {
-	if index := strings.LastIndex(member, "/"); index >= 0 {
-		return member[index+1:]
+	if _, after, ok := strings.CutLast(member, "/"); ok {
+		return after
 	}
 
 	return member

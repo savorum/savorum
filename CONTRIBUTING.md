@@ -68,7 +68,7 @@ pnpm --dir web install --frozen-lockfile
 pnpm --dir web exec playwright install chromium
 ```
 
-Use Go 1.26.4 or later (the version in `go.mod`), `just`, and Python 3.10 or
+Use Go 1.27.2 or later (the version in `go.mod`), `just`, and Python 3.10 or
 later. Keep `sref`, `sref-reader`, and `sref-writer` as sibling Git checkouts
 at the declared commits; [integration inputs](integration/README.md) explains
 the pins. Then install SREF's development requirements in a virtual

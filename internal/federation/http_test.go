@@ -98,7 +98,7 @@ func (*fakeStore) ReconcileProviderGroups(context.Context, string, string, []str
 }
 
 func (*fakeStore) CreateSession(context.Context, string, string, time.Duration, time.Duration) (identity.SessionCredentials, error) {
-	return identity.SessionCredentials{Session: identity.Session{AbsoluteExpires: time.Now().Add(time.Hour)}, Token: "new-session", CSRF: "csrf"}, nil
+	return identity.SessionCredentials{AbsoluteExpires: time.Now().Add(time.Hour), Token: "new-session", CSRF: "csrf"}, nil
 }
 
 func (*fakeStore) ResolveSession(context.Context, string) (identity.Principal, identity.Session, error) {
