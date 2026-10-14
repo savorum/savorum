@@ -82,6 +82,7 @@ type ConfigurationService interface {
 // Options are application capabilities supplied by the composition root.
 // Their presence determines which optional routes exist.
 type Options struct {
+	EventStreamShutdown  <-chan struct{}
 	Selection            SelectionService
 	SuggestionLimit      int
 	LookupLimit          int
@@ -295,7 +296,7 @@ func New(service RecipeService, health HealthChecker, printer PrintService, opti
 	}
 
 	if options.Events != nil {
-		registerEvents(api, options.Events)
+		registerEvents(api, options.Events, options.EventStreamShutdown)
 	}
 
 	if options.Webhooks != nil {
