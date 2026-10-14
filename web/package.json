@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@ark-ui/solid": "^5.39.3",
+    "@noble/hashes": "2.4.0",
     "@tanstack/history": "1.162.5",
     "@tanstack/solid-router": "1.170.39",
     "@tanstack/solid-start": "1.168.58",
