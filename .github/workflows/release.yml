@@ -60,10 +60,11 @@ jobs:
           VARIANT: documents
 
   # Mirrors SREF: the release is created from the tag once its images exist.
+  # It carries an SPDX SBOM of the binary's Go modules and web UI packages.
   github-release:
     needs: container-release
     runs-on: ubuntu-26.04
-    timeout-minutes: 5
+    timeout-minutes: 15
     permissions:
       contents: write
     env:
@@ -73,6 +74,16 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - uses: ./.github/actions/setup-web
+      - uses: anchore/sbom-action/download-syft@3ad7283483fc7af8ff2b4ea19663c2d5ca935e26 # v0.24.2
+        id: syft
+      - name: Write the SBOM
+        env:
+          SYFT: ${{ steps.syft.outputs.cmd }}
+        run: scripts/release-sbom.sh "${RELEASE_TAG#v}" "$RUNNER_TEMP/savorum-${RELEASE_TAG#v}.spdx.json"
       - name: Publish release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -84,4 +95,5 @@ jobs:
             --verify-tag \
             --title "Savorum ${RELEASE_TAG#v}" \
             --notes-file "$RUNNER_TEMP/release-notes.md" \
-            "${prerelease[@]}"
+            "${prerelease[@]}" \
+            "$RUNNER_TEMP/savorum-${RELEASE_TAG#v}.spdx.json"
