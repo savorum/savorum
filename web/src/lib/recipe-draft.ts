@@ -8,12 +8,18 @@ import { normalizeNumericInput } from "./locale-format.ts"
 import { totalContradictions } from "./timing-summary.ts"
 
 const idAlphabet = "abcdefghijklmnopqrstuvwxyz0123456789"
+const idByteLimit = 256 - (256 % idAlphabet.length)
 
 /** Portable identifiers must match `^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$`. */
 export function newID(prefix: string): string {
-  const bytes = crypto.getRandomValues(new Uint8Array(16))
   let value = ""
-  for (const byte of bytes) value += idAlphabet[byte % idAlphabet.length]
+  while (value.length < 16) {
+    const bytes = crypto.getRandomValues(new Uint8Array(16 - value.length))
+    for (const byte of bytes) {
+      if (byte >= idByteLimit) continue
+      value += idAlphabet[byte % idAlphabet.length]
+    }
+  }
   return `${prefix}${value}`
 }
 

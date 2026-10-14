@@ -55,6 +55,46 @@ test("newID generates unique portable identifiers with prefix", () => {
   assert.notEqual(id1, id2)
 })
 
+test("newID gives every character equal weight across the byte range", (t) => {
+  let nextByte = 0
+  t.mock.method(crypto, "getRandomValues", (bytes: Uint8Array) => {
+    for (let index = 0; index < bytes.length; index++) {
+      bytes[index] = nextByte
+      nextByte = (nextByte + 1) % 256
+    }
+    return bytes
+  })
+
+  const counts = new Map<string, number>()
+  for (let index = 0; index < 63; index++) {
+    const id = newID("r")
+    assert.match(id, /^r[a-z0-9]{16}$/)
+    for (const character of id.slice(1)) {
+      counts.set(character, (counts.get(character) ?? 0) + 1)
+    }
+  }
+  assert.equal(counts.size, 36)
+  for (const count of counts.values()) assert.equal(count, 28)
+})
+
+test("newID retries a rejected batch and returns the complete identifier", (t) => {
+  let calls = 0
+  t.mock.method(crypto, "getRandomValues", (bytes: Uint8Array) => {
+    bytes.fill(calls++ === 0 ? 255 : 251)
+    return bytes
+  })
+
+  assert.equal(newID("choice"), `choice${"9".repeat(16)}`)
+  assert.equal(calls, 2)
+})
+
+test("newID works with only the crypto API available on insecure HTTP origins", (t) => {
+  const getRandomValues = crypto.getRandomValues.bind(crypto)
+  t.mock.getter(globalThis, "crypto", () => ({ getRandomValues }))
+
+  assert.match(newID("r"), /^r[a-z0-9]{16}$/)
+})
+
 test("emptyIngredient creates an empty ingredient draft", () => {
   const ingredient = emptyIngredient()
   assert.match(ingredient.id, /^i[a-z0-9]{16}$/)
