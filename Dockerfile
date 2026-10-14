@@ -7,7 +7,10 @@ ARG NODE_VERSION=26.9.0
 # platform-independent, so it is built once on the build platform.
 FROM --platform=$BUILDPLATFORM node:${NODE_VERSION}-bookworm@sha256:347d9d5391493c2fc3f0d161b75a9cab64a9805064b1b01b099f8ee97f98ed47 AS web
 WORKDIR /src
-RUN npm install --global --no-fund --no-audit corepack@0.36.0 && corepack enable
+COPY scripts/corepack/package.json scripts/corepack/package-lock.json /opt/corepack/
+ENV PATH="/opt/corepack/node_modules/.bin:${PATH}"
+RUN npm ci --prefix /opt/corepack --ignore-scripts --no-fund --no-audit \
+    && /opt/corepack/node_modules/.bin/corepack enable --install-directory /usr/local/bin
 COPY web/package.json web/
 RUN corepack install --global "$(node -p "require('./web/package.json').packageManager")"
 COPY api/openapi.json api/
