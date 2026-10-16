@@ -226,3 +226,28 @@ func NumericText(text string) string {
 		return character
 	}, text)
 }
+
+var instructionPattern = buildInstructionPattern()
+
+func buildInstructionPattern() *regexp.Regexp {
+	var patterns []string
+
+	for _, entry := range vocabularies {
+		words := append(slices.Clone(entry.Actions["cook"]), entry.Actions["rest"]...)
+		words = append(words, entry.Actions["prepare"]...)
+
+		before, after := `^`, `(?:$|[^\p{L}\p{N}_])`
+		if entry.Compact {
+			before, after = "", ""
+		}
+
+		patterns = append(patterns, before+alternatives(words)+after)
+	}
+
+	return regexp.MustCompile(`(?i)` + strings.Join(patterns, "|"))
+}
+
+// InstructionStart recognizes cooking actions in the source vocabularies.
+func InstructionStart(text string) bool {
+	return instructionPattern.MatchString(text)
+}

@@ -354,3 +354,26 @@ func TestImportLeavesOutImagesThisLibraryDoesNotHold(t *testing.T) {
 		t.Fatalf("imported recipe kept references to absent images: %#v", entry.Recipe.Assets)
 	}
 }
+
+func TestImportParserLimitsOfferTextFallback(t *testing.T) {
+	body := `<script type="application/ld+json">` + strings.Repeat("[", 150) + "0" + strings.Repeat("]", 150) + `</script>`
+
+	_, err := webrecipe.ExtractContext(t.Context(), webrecipe.Load([]byte(body), "text/html", "https://example.com/recipe"))
+	if webrecipe.CodeOf(err) != webrecipe.ExtractionLimited {
+		t.Fatalf("extraction error: %v", err)
+	}
+
+	var failure *webrecipe.Failure
+	if !errors.As(err, &failure) || failure.Err == nil {
+		t.Fatal("internal diagnostic missing")
+	}
+
+	var problem *Problem
+	if !errors.As(mapImportError(err), &problem) {
+		t.Fatalf("mapped error: %v", err)
+	}
+
+	if problem.Detail != "Savorum could not read this page. Try the recipe’s own website, or paste the recipe text." {
+		t.Fatalf("user-facing error: %s", problem.Detail)
+	}
+}

@@ -13,6 +13,7 @@ import (
 	"github.com/savorum/savorum/internal/ingredientparser"
 	"github.com/savorum/savorum/internal/recipe"
 	"github.com/savorum/savorum/internal/recipetext"
+	"github.com/savorum/savorum/internal/units"
 )
 
 // plainTextAdapter is deliberately conservative: it extracts obvious recipe
@@ -74,9 +75,6 @@ func (plainTextAdapter) Import(_ context.Context, input Input, _ Options) (Impor
 	lines := strings.Split(text, "\n")
 
 	title, start := plainTitle(lines)
-	if title == "" {
-		title = "Untitled recipe"
-	}
 
 	hash := sha256.Sum256([]byte(text))
 	doc := recipe.Document{
@@ -88,6 +86,14 @@ func (plainTextAdapter) Import(_ context.Context, input Input, _ Options) (Impor
 	item := ImportedRecipe{Document: doc, SourceKey: fmt.Sprintf("sha256:%x", hash[:]), ImporterMetadata: map[string]any{"source_text": text}}
 	parser := plainTextParser{item: &item, mode: plainModeNotes}
 	parser.parse(lines, start)
+
+	if len(item.Document.IngredientSections) == 0 || len(item.Document.InstructionSections) == 0 {
+		inferRecipeSections(&item, strings.Join(lines[start:], "\n"), "")
+	}
+
+	if item.Document.Title == "" {
+		item.Document.Title = "Untitled recipe"
+	}
 
 	return ImportBatch{Source: ImportSource{Format: plainTextAdapter{}.Format(), InputName: input.Name, InputKind: "file"}, Recipes: []ImportedRecipe{item}}, nil
 }
@@ -134,9 +140,14 @@ func plainTextSource(inputURL string, lines []string) *recipe.Source {
 }
 
 func (p *plainTextParser) parse(lines []string, start int) {
+	ingredients := textIngredientLines(lines, p.readingLocale)
+	numberedStep := false
+	bulletedStep := false
+
 	for i := start; i < len(lines); i++ {
 		line := strings.TrimSpace(lines[i])
 		if line == "" {
+			numberedStep = false
 			continue
 		}
 
@@ -149,14 +160,43 @@ func (p *plainTextParser) parse(lines []string, start int) {
 		}
 
 		if p.readHeading(line) {
+			numberedStep = false
+			bulletedStep = false
+
+			continue
+		}
+
+		clean := recipeTextLine(line)
+		if p.mode == plainModeIngredients && textIngredientHeading(lines, ingredients, i) {
+			p.readIngredient(strings.TrimSuffix(clean, ":")+":", i)
+			continue
+		}
+
+		if p.mode == plainModeIngredients && i > start && strings.TrimSpace(lines[i-1]) == "" && recipeTextAction(clean) && !recipeTextMeasured(clean, p.readingLocale) {
+			p.mode = plainModeInstructions
+			p.instructionSection = len(p.item.Document.InstructionSections) + 1
+			p.markInferred()
+		}
+
+		if p.mode == plainModeInstructions && bulletedStep && i > start && strings.TrimSpace(lines[i-1]) == "" && !textStep.MatchString(clean) && !textBullet.MatchString(line) {
+			p.item.Document.Notes = append(p.item.Document.Notes, line)
 			continue
 		}
 
 		switch p.mode {
 		case plainModeIngredients:
-			p.readIngredient(line, i)
+			p.readIngredientLine(lines, i)
 		case plainModeInstructions:
-			p.readInstruction(line, i)
+			if numberedStep && !textStep.MatchString(clean) && !textBullet.MatchString(line) && !isPlainNote(clean) && !strings.Contains(clean, ":") {
+				steps := p.item.Document.InstructionSections[p.instructionSection-1].Steps
+				steps[len(steps)-1].Text += " " + clean
+
+				continue
+			}
+
+			p.readInstruction(clean, i)
+			numberedStep = textStep.MatchString(clean) && !looksPlainSubheading(clean)
+			bulletedStep = textBullet.MatchString(line)
 		case plainModeNotes:
 			p.readUnclassified(line, i)
 		}
@@ -164,7 +204,21 @@ func (p *plainTextParser) parse(lines []string, start int) {
 }
 
 func (p *plainTextParser) readHeading(line string) bool {
+	line = plainHeadingText(line)
 	section, locale := recipetext.Heading(line)
+	title := ""
+
+	if section == "" && looksPlainSubheading(line) {
+		words := strings.Fields(strings.TrimSuffix(line, ":"))
+		for n := 1; n < len(words); n++ {
+			section, locale = recipetext.Heading(strings.Join(words[:n], " "))
+			if section != "" {
+				title = strings.TrimSuffix(line, ":")
+				break
+			}
+		}
+	}
+
 	if locale != "" {
 		p.readingLocale = locale
 	}
@@ -175,13 +229,13 @@ func (p *plainTextParser) readHeading(line string) bool {
 		// Headings select the next slot; only content creates it. A repeated
 		// mode heading followed by a subtitle still names just one new section.
 		p.ingredientSection = len(p.item.Document.IngredientSections) + 1
-		p.ingredientTitle = ""
+		p.ingredientTitle = title
 
 		return true
 	case "instructions":
 		p.mode = plainModeInstructions
 		p.instructionSection = len(p.item.Document.InstructionSections) + 1
-		p.instructionTitle = ""
+		p.instructionTitle = title
 
 		return true
 	default:
@@ -220,6 +274,45 @@ func (p *plainTextParser) readIngredient(line string, lineIndex int) {
 		p.item.Document.IngredientSections[p.ingredientSection-1].Ingredients,
 		ingredient,
 	)
+}
+
+func (p *plainTextParser) readIngredientLine(lines []string, index int) {
+	line := recipeTextLine(lines[index])
+	if index > 0 && strings.TrimSpace(lines[index-1]) != "" && !textBullet.MatchString(strings.TrimSpace(lines[index])) && p.joinIngredient(line) {
+		return
+	}
+
+	p.readIngredient(line, index)
+}
+
+func (p *plainTextParser) joinIngredient(line string) bool {
+	if p.ingredientSection < 1 || p.ingredientSection > len(p.item.Document.IngredientSections) || recipeTextMeasured(line, p.readingLocale) || recipeTextAction(line) {
+		return false
+	}
+
+	items := p.item.Document.IngredientSections[p.ingredientSection-1].Ingredients
+	if len(items) == 0 {
+		return false
+	}
+
+	previous := &items[len(items)-1]
+
+	locale := p.readingLocale
+	if locale == "" {
+		locale = ingredientparser.AliasLanguage
+	}
+
+	catalog := units.DefaultCatalog()
+	unitID, _ := catalog.ResolveAlias(previous.Name, locale)
+	unit, _ := catalog.Lookup(unitID)
+
+	amountOnly := previous.Quantity != nil && (previous.Name == "" || unit.Kind == recipe.UnitPhysical)
+	if amountOnly || strings.HasSuffix(previous.SourceText, ",") || strings.HasSuffix(previous.SourceText, "，") || strings.HasSuffix(previous.SourceText, "،") {
+		*previous = ingredientparser.Parse(previous.SourceText+" "+line, previous.ID, p.readingLocale)
+		return true
+	}
+
+	return false
 }
 
 func (p *plainTextParser) readInstruction(line string, lineIndex int) {
@@ -284,9 +377,11 @@ func plainTitle(lines []string) (string, int) {
 			continue
 		}
 
+		s = plainHeadingText(s)
+
 		section, _ := recipetext.Heading(s)
-		if section != "" {
-			return "Untitled recipe", i
+		if section != "" || textIngredientLines(lines[i:], "")[0] {
+			return "", i
 		}
 
 		return s, i + 1
@@ -295,22 +390,34 @@ func plainTitle(lines []string) (string, int) {
 	return "", len(lines)
 }
 
+var (
+	plainMarkdownHeading = regexp.MustCompile(`^#{1,6}\s+`)
+	plainStepNumber      = regexp.MustCompile(`^(?:\d+|[ivxlcdm]+)[.)-]\s*`)
+)
+
+func plainHeadingText(s string) string {
+	return strings.TrimSpace(strings.Trim(plainMarkdownHeading.ReplaceAllString(s, ""), "*_"))
+}
+
 func stripNumber(s string) string {
-	return regexp.MustCompile(`^\s*(?:\d+|[ivxlcdm]+)[.)-]\s*`).ReplaceAllString(s, "")
+	s = textStep.ReplaceAllString(strings.TrimSpace(s), "")
+	return plainStepNumber.ReplaceAllString(s, "")
 }
 
 func looksPlainSubheading(s string) bool {
 	s = strings.TrimSpace(s)
-	return strings.HasSuffix(s, ":") && len(s) < 60
+	return strings.HasSuffix(s, ":") && utf8.RuneCountInString(s) < 60
 }
 
 var plainIngredientPattern = regexp.MustCompile(`^\s*(?:\d+(?:[./]\d+)?|[¼½¾⅓⅔⅛⅜⅝⅞])\s+\S+`)
 
-func looksIngredientLine(s string) bool { return plainIngredientPattern.MatchString(s) }
+func looksIngredientLine(s string) bool {
+	return plainIngredientPattern.MatchString(recipetext.NumericText(s))
+}
 
 func isPlainNote(s string) bool {
 	l := strings.ToLower(strings.TrimSpace(s))
-	return strings.HasPrefix(l, "note:") || strings.HasPrefix(l, "note ") || strings.HasPrefix(l, "tip:") || strings.HasPrefix(l, "source:")
+	return strings.HasPrefix(l, "#") || strings.HasPrefix(l, "note:") || strings.HasPrefix(l, "note ") || strings.HasPrefix(l, "tip:") || strings.HasPrefix(l, "source:")
 }
 
 func isLikelyPlainText(s string) bool { return utf8.ValidString(s) && !strings.ContainsRune(s, '\x00') }

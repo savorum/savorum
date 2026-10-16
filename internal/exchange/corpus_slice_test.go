@@ -35,7 +35,7 @@ import (
 // constructs this slice must exercise are declared in corpus_coverage_test.go,
 // so coverage cannot silently disappear with a repin.
 const (
-	recipeCorpusRevision      = "669d57fa3bd308b06716dcd1856964d608e62ba8"
+	recipeCorpusRevision      = "1fe02c0d5823256695a273fa4241a174b77660d0"
 	srefEvaluationRevision    = "d1988251d64717d6ac65d3a4160ac98d10ce685f"
 	savorumEvaluationRevision = "a6e10d08ed1eaf74bbb7d5dae708cbbf46958aba"
 )

@@ -127,7 +127,7 @@ func fixture(t *testing.T, root, pattern string) []byte {
 }
 
 func TestNativeCorpus(t *testing.T) {
-	const revision = "fec20ecf1bc350598df7c86e91e902708c8a2e4b"
+	const revision = "1fe02c0d5823256695a273fa4241a174b77660d0"
 
 	root := os.Getenv("SAVORUM_RECIPE_CORPUS")
 	if root == "" {

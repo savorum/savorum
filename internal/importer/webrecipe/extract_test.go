@@ -767,6 +767,22 @@ func TestBlockedStatusIsAFetchFailureNotAnExtractionFailure(t *testing.T) {
 	}
 }
 
+func TestFetchReportsRateLimit(t *testing.T) {
+	allowLoopback(t)
+
+	server := httptest.NewServer(http.HandlerFunc(func(response http.ResponseWriter, _ *http.Request) {
+		response.WriteHeader(http.StatusTooManyRequests)
+	}))
+	defer server.Close()
+
+	_, err := Fetch(t.Context(), server.URL)
+
+	failure, ok := errors.AsType[*Failure](err)
+	if !ok || failure.Code != FetchBlocked || failure.StatusCode != http.StatusTooManyRequests || !strings.Contains(failure.Message, "Try again later") {
+		t.Fatalf("rate limit: %v", err)
+	}
+}
+
 func TestEnormousResponseIsAbortedWhileStreaming(t *testing.T) {
 	allowLoopback(t)
 	// No Content-Length: the ceiling has to hold on the stream itself rather

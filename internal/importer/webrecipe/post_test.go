@@ -2,9 +2,61 @@ package webrecipe
 
 import (
 	"context"
+	"errors"
+	"html"
 	"strings"
 	"testing"
 )
+
+func TestPostReadsBoundedObjectInsideLargeScript(t *testing.T) {
+	for _, prefix := range []string{`<script type="application/json">`, `<script>const state = `} {
+		body := prefix + `{"unused":"` + strings.Repeat("x", maximumHTMLTokenBytes) + `","suggestion":{"id":"other123","desc":"Wrong caption"},"post":{"id":"recipe\u003123","contents":[{"desc":"2 cups rice"},{"desc":"Boil."}]}}</script>`
+
+		post, err := ExtractPostContext(t.Context(), Load([]byte(body), "text/html", "https://example.com/posts/recipe123"))
+		if err != nil || post == nil || post.AuthoredText != "2 cups rice\nBoil." {
+			t.Fatalf("caption: %+v %v", post, err)
+		}
+	}
+}
+
+func TestPostPrioritizesInstructionLinksWithinFetchLimit(t *testing.T) {
+	for _, label := range []string{"INSTRUCTIONS & FULL PRINTABLE RECIPE", "Préparation", "作り方", "Gör så här", "Cara membuat", "만드는 법"} {
+		caption := "Related https://example.com/one\nhttps://example.com/two\nhttps://example.com/three\n" + label + ": https://example.com/recipe?servings=4"
+		body := `<meta property="og:description" content="` + html.EscapeString(caption) + `">`
+
+		post, err := ExtractPostContext(t.Context(), Load([]byte(body), "text/html", "https://example.com/posts/recipe123"))
+		if err != nil || post == nil || len(post.Links) != 3 || post.Links[0] != "https://example.com/recipe?servings=4" {
+			t.Fatalf("ranked links for %s: %+v %v", label, post, err)
+		}
+	}
+}
+
+func TestIdentifiedJSONObjectsKeepBounds(t *testing.T) {
+	for _, body := range []string{
+		`{"id":"recipe123","desc":"` + strings.Repeat("x", maximumHTMLTokenBytes) + `"}`,
+		`{"description":"recipe123","id":"other123","desc":"Wrong caption"}`,
+		`{"id":"recipe123","desc":"unterminated}`,
+	} {
+		post, err := ExtractPostContext(t.Context(), Load([]byte(`<script type="application/json">`+body+`</script>`), "text/html", "https://example.com/posts/recipe123"))
+		if err != nil || post != nil {
+			t.Fatalf("invalid caption retained: %+v %v", post, err)
+		}
+	}
+
+	ctx, cancel := context.WithCancel(t.Context())
+	cancel()
+
+	if err := visitIdentifiedJSONObjects(ctx, newWorkBudget(ctx), `{}`, nil, func(map[string]any) { t.Fatal("visited cancelled input") }); !errors.Is(err, context.Canceled) {
+		t.Fatalf("cancellation: %v", err)
+	}
+
+	budget := newWorkBudget(t.Context())
+
+	budget.remaining = 20
+	if err := visitIdentifiedJSONObjects(t.Context(), budget, `{"unused":"`+strings.Repeat("x", 30)+`"}`, nil, func(map[string]any) {}); !errors.Is(err, errExtractionLimited) {
+		t.Fatalf("scan work: %v", err)
+	}
+}
 
 func TestPostLinksAreBoundedAndUntrusted(t *testing.T) {
 	page := Load([]byte(`<meta property="og:description" content="Recipe https://example.com/rice. More https://127.0.0.1/private https://example.com/rice. https://example.com/two https://example.com/three">`), "text/html", "https://pin.it/abc")
@@ -153,5 +205,66 @@ func TestPostChoosesLargestPublishedThumbnail(t *testing.T) {
 	post, err := ExtractPostContext(context.Background(), Load([]byte(body), "text/html", "https://example.com/watch?v=recipe123"))
 	if err != nil || len(post.Images) != 1 || post.Images[0] != "https://example.com/large.jpg" {
 		t.Fatalf("thumbnail: %+v %v", post, err)
+	}
+}
+
+func TestPostReadsLargePlayerPage(t *testing.T) {
+	body := `<script>(function(){"` + strings.Repeat("x", 750<<10) + `";})();</script>` +
+		`<script>var ytInitialPlayerResponse = {"videoDetails":{"videoId":"recipe123","title":"Bread","shortDescription":"Ingredients:\n500 g flour\nBake until golden."}};</script>` +
+		`<script>var ytInitialData = {"padding":"` + strings.Repeat("x", 300<<10) + `"};</script>`
+
+	post, err := ExtractPostContext(t.Context(), Load([]byte(body), "text/html", "https://www.youtube.com/watch?v=recipe123"))
+	if err != nil || post == nil || post.AuthoredText != "Ingredients:\n500 g flour\nBake until golden." {
+		t.Fatalf("player caption: %+v %v", post, err)
+	}
+}
+
+func TestPostReadsCaptionFromSocialMetadata(t *testing.T) {
+	for _, test := range []struct{ name, address, canonical, title, caption string }{
+		{"Instagram reel", "https://www.instagram.com/reel/recipe123/", "https://www.instagram.com/cook/reel/recipe123/", "Cook on Instagram: &quot;Soup\n1 cup rice\nSimmer.&quot;", "Soup\n1 cup rice\nSimmer."},
+		{"Facebook video", "https://www.facebook.com/cook/videos/soup/123456789/", "https://www.facebook.com/reel/123456789/", "2M views · 3K reactions | Soup\n1 cup rice\nSimmer. | Cook", "Soup\n1 cup rice\nSimmer."},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			body := `<meta property="og:type" content="article"><meta property="og:description" content="` + html.EscapeString(test.caption) + `"><meta property="og:url" content="` + test.canonical + `"><meta property="og:title" content="` + test.title + `">`
+
+			post, err := ExtractPostContext(t.Context(), Load([]byte(body), "text/html", test.address))
+			if err != nil || post == nil || post.AuthoredText != test.caption || post.Title != "Soup" {
+				t.Fatalf("metadata caption: %+v %v", post, err)
+			}
+
+			for _, address := range []string{strings.TrimRight(test.address, "/") + "other/", "https://example.com/reel/recipe123/", "https://www.instagram.com/accounts/login/"} {
+				if address == test.address {
+					continue
+				}
+
+				post, err = ExtractPostContext(t.Context(), Load([]byte(body), "text/html", address))
+				if err != nil || (post != nil && post.AuthoredText != "") {
+					t.Fatalf("unrelated metadata accepted for %s: %+v %v", address, post, err)
+				}
+			}
+		})
+	}
+}
+
+func TestPostReadsRedditThreadWithoutComments(t *testing.T) {
+	body := `<script type="application/ld+json">{"@type":"DiscussionForumPosting","url":"https://www.reddit.com/r/recipes/comments/recipe123/soup/","headline":"Soup","articleBody":"Ingredients\n1 cup rice\nInstructions\nSimmer.","comment":[{"@type":"Comment","text":"Ingredients\npoison\nInstructions\nDo not import this comment."}]}</script>`
+
+	post, err := ExtractPostContext(t.Context(), Load([]byte(body), "text/html", "https://www.reddit.com/r/recipes/comments/recipe123/soup/"))
+	if err != nil || post == nil || len(post.Texts) != 1 || strings.Contains(post.AuthoredText, "poison") || !strings.Contains(post.AuthoredText, "1 cup rice") {
+		t.Fatalf("thread body: %+v %v", post, err)
+	}
+}
+
+func TestMetadataCaptionRequiresMatchingDescription(t *testing.T) {
+	for _, test := range []struct{ title, description, want string }{
+		{"Cook: \"Soup\nRice\nSimmer.\"", "Cook posted: \"Soup\nRice\nSimmer.\"", "Soup\nRice\nSimmer."},
+		{"12 views | Soup\nRice\nSimmer. | Cook", "Soup\nRi...", "Soup\nRice\nSimmer."},
+		{"Cook: \"Soup\nRice\nSimmer.\"", "Sign in to continue", ""},
+		{"12 views | Soup\nRice\nSimmer. | Cook", "Soup", ""},
+		{"Cook: \"Soup\nRice", "Soup\nRice", ""},
+	} {
+		if got := metadataCaption(test.title, test.description); got != test.want {
+			t.Errorf("caption from %q and %q = %q, want %q", test.title, test.description, got, test.want)
+		}
 	}
 }

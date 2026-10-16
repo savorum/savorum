@@ -2,13 +2,162 @@ package importer
 
 import (
 	"context"
+	"errors"
 	"html"
+	"net/http"
 	"strconv"
 	"strings"
 	"testing"
 
 	"github.com/savorum/savorum/internal/importer/webrecipe"
 )
+
+func TestPartialRecipeFollowsSourceLink(t *testing.T) {
+	page := webrecipe.Load([]byte(`<meta property="og:see_also" content="https://example.com/recipe"><script type="application/ld+json">{"@type":"Recipe","name":"Preview","recipeIngredient":["1 cup rice"]}</script>`), "text/html", "https://example.com/posts/recipe123")
+	calls := 0
+
+	batch, err := fetchSharedRecipe(t.Context(), page, func(_ context.Context, address string) (*webrecipe.Page, error) {
+		calls++
+
+		if address != "https://example.com/recipe" {
+			t.Fatalf("unexpected link: %s", address)
+		}
+
+		return webrecipe.Load([]byte(`{"@type":"Recipe","name":"Rice","inLanguage":"en_US","recipeIngredient":["1 cup rice"],"recipeInstructions":["Boil."]}`), "application/ld+json", address), nil
+	})
+	if err != nil || calls != 1 || !captionComplete(batch) {
+		t.Fatalf("linked recipe: %+v %v", batch, err)
+	}
+
+	if doc := batch.Recipes[0].Document; doc.Title != "Rice" || doc.Language != "en-US" || doc.SourceLocale != "en-US" {
+		t.Fatalf("linked metadata: %+v", doc)
+	}
+}
+
+func TestPostFeedRouting(t *testing.T) {
+	for _, host := range []string{"reddit.com", "www.reddit.com", "old.reddit.com", "np.reddit.com", "m.reddit.com"} {
+		for _, suffix := range []string{"", "/", "?utm_source=share#comments"} {
+			address := "https://" + host + "/r/recipes/comments/abc123/soup" + suffix
+			if got := postFeedURL(address); got != "https://www.reddit.com/r/recipes/comments/abc123/soup/.rss" {
+				t.Fatalf("%s: %s", address, got)
+			}
+		}
+	}
+
+	for _, address := range []string{
+		"https://www.reddit.com/r/recipes/comments/abc123/soup/reply123/",
+		"https://www.reddit.com/r/recipes/",
+		"https://www.reddit.com/r/recipes/comments/abc123/.rss",
+		"https://www.reddit.com/r/recipes/comments/abc123/soup/.rss",
+		"https://www.reddit.com.evil.test/r/recipes/comments/abc123/soup",
+		"https://user:secret@www.reddit.com/r/recipes/comments/abc123/soup",
+		"https://www.reddit.com:444/r/recipes/comments/abc123/soup",
+		"file://www.reddit.com/r/recipes/comments/abc123/soup",
+		"https://example.com/r/recipes/comments/abc123/soup",
+	} {
+		if got := postFeedURL(address); got != "" {
+			t.Fatalf("unexpected feed for %s: %s", address, got)
+		}
+	}
+}
+
+func TestPostPermalinkUsesSharedFeedImporter(t *testing.T) {
+	const address = "https://www.reddit.com/r/recipes/comments/abc123/soup/"
+
+	for _, available := range []bool{true, false} {
+		var calls []string
+
+		batch, err := fetchWebRecipe(t.Context(), address, func(_ context.Context, target string) (*webrecipe.Page, error) {
+			calls = append(calls, target)
+			if target == postFeedURL(address) {
+				if !available {
+					return nil, errors.New("feed unavailable")
+				}
+
+				body := `<feed xmlns="http://www.w3.org/2005/Atom"><link href="` + address + `"/>
+<entry><link href="` + address + `reply123/"/><content>2 cups salt
+1 cup flour
+Mix the comment recipe.</content></entry>
+<entry><title>Soup</title><link href="` + address + `"/><content>2 cups rice
+1 cup water
+Boil and simmer.</content></entry></feed>`
+
+				return webrecipe.Load([]byte(body), "application/atom+xml", target), nil
+			}
+
+			if target != address || available {
+				t.Fatalf("unexpected request: %s", target)
+			}
+
+			return webrecipe.Load([]byte(`{"@type":"Recipe","name":"Soup","recipeIngredient":["2 cups rice"],"recipeInstructions":["Boil."]}`), "application/ld+json", target), nil
+		})
+		if err != nil || !captionComplete(batch) || batch.Recipes[0].Document.Source.URL != address {
+			t.Fatalf("post import: %+v %v", batch, err)
+		}
+
+		if available && (len(calls) != 1 || batch.Recipes[0].Document.IngredientSections[0].Ingredients[0].SourceText != "2 cups rice") {
+			t.Fatalf("wrong post content or extra request: %v %+v", calls, batch.Recipes[0].Document)
+		}
+
+		if !available && len(calls) != 2 {
+			t.Fatalf("missing page fallback: %v", calls)
+		}
+	}
+}
+
+func TestPostFeedRateLimitStopsRequests(t *testing.T) {
+	calls := 0
+	limited := &webrecipe.Failure{Code: webrecipe.FetchBlocked, StatusCode: http.StatusTooManyRequests, Message: "Try again later."}
+
+	_, err := fetchWebRecipe(t.Context(), "https://www.reddit.com/r/recipes/comments/abc123/soup/", func(context.Context, string) (*webrecipe.Page, error) {
+		calls++
+		return nil, limited
+	})
+	if !errors.Is(err, limited) || calls != 1 {
+		t.Fatalf("rate limit: calls=%d error=%v", calls, err)
+	}
+}
+
+func TestPostFeedCancellationStopsFallback(t *testing.T) {
+	ctx, cancel := context.WithCancel(t.Context())
+	defer cancel()
+
+	calls := 0
+
+	_, err := fetchWebRecipe(ctx, "https://www.reddit.com/r/recipes/comments/abc123/soup/", func(context.Context, string) (*webrecipe.Page, error) {
+		calls++
+
+		cancel()
+
+		return nil, context.Canceled
+	})
+	if !errors.Is(err, context.Canceled) || calls != 1 {
+		t.Fatalf("cancellation: calls=%d error=%v", calls, err)
+	}
+}
+
+func TestFeedSkipsItsOwnPermalinkAndFollowsRecipe(t *testing.T) {
+	const (
+		address = "https://example.com/post"
+		linked  = "https://recipes.example/soup?id=123"
+	)
+
+	body := `<feed xmlns="http://www.w3.org/2005/Atom"><link href="` + address + `"/><entry><link href="` + address + `"/><content type="html">&lt;p&gt;&lt;a href="` + address + `"&gt;Post&lt;/a&gt; &lt;a href="` + linked + `"&gt;Recipe&lt;/a&gt;&lt;/p&gt;</content></entry></feed>`
+	calls := 0
+
+	batch, err := fetchSharedRecipe(t.Context(), webrecipe.Load([]byte(body), "application/atom+xml", "https://example.com/feed"), func(_ context.Context, target string) (*webrecipe.Page, error) {
+		calls++
+
+		if target != linked {
+			t.Fatalf("unexpected request: %s", target)
+		}
+
+		return webrecipe.Load([]byte(`{"@type":"Recipe","name":"Soup","recipeIngredient":["water"],"recipeInstructions":["Boil."]}`), "application/ld+json", target), nil
+	})
+	if err != nil || !captionComplete(batch) || calls != 1 || batch.Recipes[0].ImporterMetadata["shared_from"] != address {
+		t.Fatalf("linked feed: %+v %v", batch, err)
+	}
+}
 
 func TestPublicSocialCaptionImport(t *testing.T) {
 	for _, host := range []string{"www.tiktok.com", "www.instagram.com", "www.youtube.com", "www.reddit.com", "www.facebook.com", "www.pinterest.com"} {
@@ -246,6 +395,91 @@ func TestSocialDraftRecognizesExplicitLocalizedHeadings(t *testing.T) {
 		item := batch.Recipes[0]
 		if len(item.Document.IngredientSections) != 1 || len(item.Document.IngredientSections[0].Ingredients) != 1 || len(item.Document.InstructionSections) != 1 || len(item.Document.InstructionSections[0].Steps) != 1 || item.ImporterMetadata["source_text"] != caption {
 			t.Fatalf("localized caption changed: %+v", item)
+		}
+	}
+}
+
+func TestSocialMetadataCaptionProducesReviewableDraft(t *testing.T) {
+	body := `<meta property="og:type" content="article"><meta property="og:description" content="Soup\n1 cup rice\nSimmer."><meta property="og:url" content="https://www.instagram.com/cook/reel/recipe123/"><meta property="og:title" content="Cook on Instagram: &quot;Soup\n1 cup rice\nSimmer.&quot;">`
+	body = strings.ReplaceAll(body, `\n`, "\n")
+
+	batch, err := DecodeWebRecipeContext(t.Context(), []byte(body), "text/html", "https://www.instagram.com/reel/recipe123/")
+	if err != nil || len(batch.Recipes) != 1 {
+		t.Fatalf("caption import: %+v %v", batch, err)
+	}
+
+	item := batch.Recipes[0]
+	if item.Document.Title != "Soup" || len(item.Document.Notes) != 1 || item.Document.Notes[0] != "Soup\n1 cup rice\nSimmer." {
+		t.Fatalf("caption draft: %+v", item.Document)
+	}
+
+	if len(item.Document.IngredientSections) != 0 || len(item.Document.InstructionSections) != 0 {
+		t.Fatal("caption without headings was assigned recipe sections")
+	}
+}
+
+func TestLinkedRecipeWinsOverInferredCaption(t *testing.T) {
+	page := webrecipe.Load([]byte(`<script type="application/ld+json">{"@type":"VideoObject","description":"2 eggs\n1 tbsp oil\n\nMix and cook.\n\nhttps://example.com/full"}</script>`), "text/html", "https://example.com/video/recipe123")
+
+	for _, available := range []bool{true, false} {
+		called := 0
+
+		batch, err := fetchSharedRecipe(t.Context(), page, func(_ context.Context, address string) (*webrecipe.Page, error) {
+			called++
+
+			if address != "https://example.com/full" {
+				t.Fatalf("unexpected link: %s", address)
+			}
+
+			body := `{"@type":"Recipe","name":"Full recipe","recipeIngredient":["2 eggs"],"recipeInstructions":["Whisk and cook."]}`
+			if !available {
+				body = `{}`
+			}
+
+			return webrecipe.Load([]byte(body), "application/ld+json", address), nil
+		})
+		if err != nil || called != 1 || len(batch.Recipes) != 1 {
+			t.Fatalf("linked import: %+v %v", batch, err)
+		}
+
+		if available && batch.Recipes[0].Document.Title != "Full recipe" {
+			t.Fatal("linked recipe ignored")
+		}
+
+		if !available && !captionComplete(batch) {
+			t.Fatal("inferred caption lost when link is unavailable")
+		}
+	}
+}
+
+func TestAdvertisedFeedImport(t *testing.T) {
+	page := webrecipe.Load([]byte(`<link rel="alternate" type="application/atom+xml" href="/feed">`), "text/html", "https://example.com/post")
+	for _, permalink := range []string{page.URL, "https://example.com/post/reply"} {
+		calls := 0
+
+		batch, err := fetchSharedRecipe(t.Context(), page, func(_ context.Context, address string) (*webrecipe.Page, error) {
+			calls++
+			if address != "https://example.com/feed" || calls > 1 {
+				t.Fatalf("unexpected request: %s", address)
+			}
+
+			body := `<feed xmlns="http://www.w3.org/2005/Atom"><link rel="alternate" href="` + permalink + `"/><entry><title>Rice</title><link href="` + permalink + `"/><content>2 cups rice
+1 cup water
+
+Boil and simmer.</content></entry></feed>`
+
+			return webrecipe.Load([]byte(body), "application/atom+xml", address), nil
+		})
+		if permalink != page.URL {
+			if err == nil || len(batch.Recipes) != 0 {
+				t.Fatal("imported a reply instead of the requested post")
+			}
+
+			continue
+		}
+
+		if err != nil || !captionComplete(batch) || batch.Recipes[0].Document.Source.URL != page.URL {
+			t.Fatalf("feed import: %+v %v", batch, err)
 		}
 	}
 }

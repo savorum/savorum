@@ -18,6 +18,10 @@ import (
 // A parser implements the HTML5 parsing algorithm:
 // https://html.spec.whatwg.org/multipage/syntax.html#tree-construction
 type parser struct {
+	input         []byte
+	inputOffset   int
+	rawTextTag    string
+	rawText       func(*Node, []byte)
 	guard         *guard
 	tokenizerType TokenType
 	// tokenizer provides the tokens for the parser.
@@ -205,6 +209,7 @@ func (p *parser) clearStackToContext(s scope) {
 // TODO: Since both RAWTEXT and RCDATA states are treated as tokenizer's part
 // officially, need to make tokenizer consider both states.
 func (p *parser) parseGenericRawTextElement() {
+	p.rawTextTag = p.tok.Data
 	p.addElement()
 	p.originalIM = p.im
 	p.im = textIM
@@ -733,6 +738,7 @@ func inHeadIM(p *parser) bool {
 
 			return true
 		case a.Script, a.Title:
+			p.rawTextTag = p.tok.Data
 			p.addElement()
 			p.setOriginalIM()
 			p.im = textIM
@@ -1231,6 +1237,7 @@ func inBodyIM(p *parser) bool {
 
 			return false
 		case a.Textarea:
+			p.rawTextTag = p.tok.Data
 			p.addElement()
 			p.setOriginalIM()
 			p.framesetOK = false
@@ -2533,11 +2540,14 @@ func (p *parser) parse() (err error) {
 	for !errors.Is(err, io.EOF) {
 		p.guard.spend(1)
 
+		p.skipRawText()
+
 		// CDATA sections are allowed only in foreign content.
 		n := p.oe.top()
 		p.tokenizer.AllowCDATA(n != nil && n.Namespace != "")
 		// Read and parse the next token.
 		p.tokenizerType = p.tokenizer.Next()
+		p.inputOffset += len(p.tokenizer.Raw())
 
 		p.tok = p.readToken()
 		if p.tok.Type == ErrorToken {

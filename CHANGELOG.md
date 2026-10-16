@@ -6,6 +6,8 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+- Improve recipe imports from captions and feeds.
+
 ## 0.1.1
 
 Released 2026-10-14.

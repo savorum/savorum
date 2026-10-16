@@ -59,7 +59,7 @@ func controlledExtractionError(err error) error {
 		return err
 	}
 
-	return failuref(ExtractionLimited, err, "this page is too deeply nested or complex to import safely")
+	return failuref(ExtractionLimited, err, "Savorum could not read this page. Try the recipe’s own website, or paste the recipe text.")
 }
 
 // document is one parsed page: its DOM when it had one, every structured-data
@@ -67,11 +67,12 @@ func controlledExtractionError(err error) error {
 // by @id so that a reference to a Person or an Organization elsewhere in the
 // graph can be followed.
 type document struct {
-	budget *workBudget
-	root   *html.Node
-	page   *Page
-	blocks []block
-	byID   map[string]map[string]any
+	budget  *workBudget
+	root    *html.Node
+	page    *Page
+	blocks  []block
+	scripts map[*html.Node][]byte
+	byID    map[string]map[string]any
 	// warnings records what was survived rather than what stopped anything.
 	warnings []Warning
 }
@@ -114,7 +115,7 @@ func parse(ctx context.Context, page *Page) (*document, error) {
 		return result, nil
 	}
 
-	root, err := parseHTML(ctx, page.Body)
+	root, err := parseHTML(ctx, page.Body, boundedhtml.ObserveRawText(result.retainScript))
 	if err != nil {
 		if ctx.Err() != nil {
 			return nil, ctx.Err()
@@ -665,4 +666,16 @@ func scriptData(node *html.Node) string {
 	}
 
 	return text.String()
+}
+
+func (d *document) retainScript(node *html.Node, body []byte) {
+	if node.Data != "script" || len(body) < maximumHTMLTokenBytes {
+		return
+	}
+
+	if d.scripts == nil {
+		d.scripts = make(map[*html.Node][]byte)
+	}
+
+	d.scripts[node] = body
 }

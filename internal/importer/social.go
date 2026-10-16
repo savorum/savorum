@@ -2,11 +2,34 @@ package importer
 
 import (
 	"context"
+	"net/url"
+	"regexp"
 	"slices"
 	"strings"
 
 	"github.com/savorum/savorum/internal/importer/webrecipe"
 )
+
+var forumPostPath = regexp.MustCompile(`^/r/[A-Za-z0-9_]+/comments/[a-z0-9]+(?:/[^/]+)?/?$`)
+
+func postFeedURL(address string) string {
+	u, err := url.Parse(strings.TrimSpace(address))
+	if err != nil || u.User != nil || (u.Scheme != "https" && u.Scheme != "http") || !forumPostPath.MatchString(u.Path) || strings.HasSuffix(strings.TrimRight(u.Path, "/"), "/.rss") {
+		return ""
+	}
+
+	switch strings.ToLower(u.Host) {
+	case "reddit.com", "www.reddit.com", "old.reddit.com", "np.reddit.com", "m.reddit.com":
+		// Reddit exposes post bodies as Atom at the permalink's .rss endpoint.
+		u.Scheme, u.Host = "https", "www.reddit.com"
+		u.Path = strings.TrimRight(u.Path, "/") + "/.rss"
+		u.RawPath, u.RawQuery, u.Fragment = "", "", ""
+
+		return u.String()
+	}
+
+	return ""
+}
 
 func decodeWebPage(ctx context.Context, page *webrecipe.Page) (ImportBatch, *webrecipe.Post, error) {
 	extracted, err := webrecipe.ExtractContext(ctx, page)
@@ -47,11 +70,13 @@ func captionComplete(batch ImportBatch) bool {
 	return len(document.IngredientSections) > 0 && len(document.InstructionSections) > 0
 }
 
-// Captions use the text importer's explicit section headings. Numbers, verbs,
-// and prose are not evidence of ingredient or method boundaries.
 func captionBatch(ctx context.Context, address string, post *webrecipe.Post, text string) (ImportBatch, error) {
 	if err := ctx.Err(); err != nil {
 		return ImportBatch{}, err
+	}
+
+	if post.URL != "" {
+		address = post.URL
 	}
 
 	title := strings.TrimSpace(post.Title)
@@ -65,8 +90,17 @@ func captionBatch(ctx context.Context, address string, post *webrecipe.Post, tex
 	}
 
 	item := &batch.Recipes[0]
+	item.Document.Title = strings.TrimSpace(post.Title)
 	parser := plainTextParser{item: item, mode: plainModeNotes, requireHeadings: true}
 	parser.parse(strings.Split(normalizePlainText([]byte(text)), "\n"), 0)
+
+	if !captionComplete(batch) {
+		inferRecipeSections(item, text, post.SourceLocale)
+	}
+
+	if item.Document.Title == "" {
+		item.Document.Title = title
+	}
 
 	item.Document.Language = post.Language
 	item.Document.SourceLocale = post.SourceLocale
@@ -121,14 +155,37 @@ func captionDraft(ctx context.Context, address string, post *webrecipe.Post, ori
 
 // fetchSharedRecipe follows at most three explicit links from a public caption.
 // Every request retains the normal outbound safety policy. Linked structured
-// recipes take priority over incomplete caption drafts.
+// recipes take priority over inferred captions and incomplete drafts.
 func fetchSharedRecipe(ctx context.Context, page *webrecipe.Page, fetch func(context.Context, string) (*webrecipe.Page, error)) (ImportBatch, error) {
 	batch, post, originalErr := decodeWebPage(ctx, page)
-	if originalErr == nil || post == nil {
+	if originalErr == nil && post == nil && !captionComplete(batch) {
+		post, _ = webrecipe.ExtractPostContext(ctx, page)
+	}
+
+	if post != nil && post.URL != "" {
+		page = webrecipe.Load(page.Body, page.ContentType, post.URL)
+	}
+
+	inferred := len(batch.Recipes) == 1 && slices.ContainsFunc(batch.Recipes[0].Diagnostics, func(d Diagnostic) bool { return d.Code == "text-sections-inferred" })
+	if post == nil || (originalErr == nil && !inferred && captionComplete(batch)) {
 		return batch, originalErr
 	}
 
+	if originalErr != nil && post.Feed != "" {
+		if next := fetchAdvertisedPost(ctx, page.URL, post.Feed, fetch); next != nil {
+			post = next
+
+			if parsed, err := captionBatch(ctx, page.URL, post, post.AuthoredText); err == nil && captionComplete(parsed) {
+				batch, originalErr = parsed, nil
+			}
+		}
+	}
+
 	for _, address := range post.Links {
+		if address == page.URL {
+			continue
+		}
+
 		if ctx.Err() != nil {
 			return ImportBatch{}, ctx.Err()
 		}
@@ -164,5 +221,23 @@ func fetchSharedRecipe(ctx context.Context, page *webrecipe.Page, fetch func(con
 		return ImportBatch{}, ctx.Err()
 	}
 
+	if originalErr == nil {
+		return batch, nil
+	}
+
 	return captionDraft(ctx, page.URL, post, originalErr)
+}
+
+func fetchAdvertisedPost(ctx context.Context, address, feedURL string, fetch func(context.Context, string) (*webrecipe.Page, error)) *webrecipe.Post {
+	feed, err := fetch(ctx, feedURL)
+	if err != nil || feed.ContentType != "application/atom+xml" {
+		return nil
+	}
+
+	post, err := webrecipe.ExtractPostContext(ctx, feed)
+	if err != nil || post == nil || post.URL != address {
+		return nil
+	}
+
+	return post
 }
