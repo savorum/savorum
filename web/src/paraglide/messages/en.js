@@ -664,6 +664,25 @@
 /** @typedef {{ value1: NonNullable<unknown> }} Common_Step_NumberInputs */
 /** @typedef {{}} Common_Times_SymbolInputs */
 /** @typedef {{}} Common_Untitled_RecipeInputs */
+/** @typedef {{}} Connect_Authentication_RequiredInputs */
+/** @typedef {{}} Connect_Certificate_PendingInputs */
+/** @typedef {{}} Connect_ConnectedInputs */
+/** @typedef {{}} Connect_ConnectingInputs */
+/** @typedef {{}} Connect_DisabledInputs */
+/** @typedef {{}} Connect_DisconnectInputs */
+/** @typedef {{}} Connect_Disconnect_HintInputs */
+/** @typedef {{}} Connect_Get_SetupInputs */
+/** @typedef {{}} Connect_Invalid_SetupInputs */
+/** @typedef {{}} Connect_LedeInputs */
+/** @typedef {{}} Connect_Page_TitleInputs */
+/** @typedef {{}} Connect_PrivacyInputs */
+/** @typedef {{}} Connect_ReconnectingInputs */
+/** @typedef {{}} Connect_SaveInputs */
+/** @typedef {{}} Connect_SetupInputs */
+/** @typedef {{}} Connect_Setup_HintInputs */
+/** @typedef {{}} Connect_Storage_ErrorInputs */
+/** @typedef {{}} Connect_TitleInputs */
+/** @typedef {{}} Connect_UnavailableInputs */
 /** @typedef {{}} Cooking_Add_FailedInputs */
 /** @typedef {{}} Cooking_Add_RecipeInputs */
 /** @typedef {{}} Cooking_Add_ReminderInputs */
@@ -4997,6 +5016,82 @@ export const common_untitled_recipe = /** @type {(inputs: Common_Untitled_Recipe
 	return /** @type {LocalizedString} */ (`Untitled recipe`)
 };
 
+export const connect_authentication_required = /** @type {(inputs: Connect_Authentication_RequiredInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Enable authentication to use Connect.`)
+};
+
+export const connect_certificate_pending = /** @type {(inputs: Connect_Certificate_PendingInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Connected. Preparing the HTTPS certificate.`)
+};
+
+export const connect_connected = /** @type {(inputs: Connect_ConnectedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Connected`)
+};
+
+export const connect_connecting = /** @type {(inputs: Connect_ConnectingInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Connecting…`)
+};
+
+export const connect_disabled = /** @type {(inputs: Connect_DisabledInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Disconnected`)
+};
+
+export const connect_disconnect = /** @type {(inputs: Connect_DisconnectInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Disconnect`)
+};
+
+export const connect_disconnect_hint = /** @type {(inputs: Connect_Disconnect_HintInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Disconnect revokes remote access. It does not cancel your subscription.`)
+};
+
+export const connect_get_setup = /** @type {(inputs: Connect_Get_SetupInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Get setup from Savorum Cloud`)
+};
+
+export const connect_invalid_setup = /** @type {(inputs: Connect_Invalid_SetupInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`The setup document is invalid. Copy a new one from Savorum Cloud.`)
+};
+
+export const connect_lede = /** @type {(inputs: Connect_LedeInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Remote access without opening router ports.`)
+};
+
+export const connect_page_title = /** @type {(inputs: Connect_Page_TitleInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Connect · Savorum`)
+};
+
+export const connect_privacy = /** @type {(inputs: Connect_PrivacyInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Traffic is decrypted here. The service operator controls the assigned domain and can obtain another trusted certificate for it.`)
+};
+
+export const connect_reconnecting = /** @type {(inputs: Connect_ReconnectingInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Reconnecting…`)
+};
+
+export const connect_save = /** @type {(inputs: Connect_SaveInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Save and connect`)
+};
+
+export const connect_setup = /** @type {(inputs: Connect_SetupInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Setup document`)
+};
+
+export const connect_setup_hint = /** @type {(inputs: Connect_Setup_HintInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Paste a new setup document from Cloud. Each document works once.`)
+};
+
+export const connect_storage_error = /** @type {(inputs: Connect_Storage_ErrorInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Connect could not read its saved setup. Check appdata permissions.`)
+};
+
+export const connect_title = /** @type {(inputs: Connect_TitleInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Savorum Connect`)
+};
+
+export const connect_unavailable = /** @type {(inputs: Connect_UnavailableInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Connect is unavailable. Check your subscription and setup. Savorum will retry automatically.`)
+};
+
 export const cooking_add_failed = /** @type {(inputs: Cooking_Add_FailedInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`The recipe could not be added. Try again.`)
 };
@@ -6033,72 +6128,72 @@ export const import_job_diagnostic = /** @type {(inputs: Import_Job_DiagnosticIn
 	const occurrencePlural = registry.plural("en", i?.occurrences, {});
 	const recipePlural = registry.plural("en", i?.recipes, {});
 	if (i?.classification === "actionable" && i?.area === "assets" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} photograph detail in ${recipesText} recipe`);
-	if (i?.classification === "actionable" && i?.area === "assets" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} photograph detail in ${recipesText} recipes`);
-	if (i?.classification === "actionable" && i?.area === "assets" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} photograph details in ${recipesText} recipe`);
-	if (i?.classification === "actionable" && i?.area === "assets") return /** @type {LocalizedString} */ (`Review ${occurrencesText} photograph details in ${recipesText} recipes`);
 	if (i?.classification === "actionable" && i?.area === "content" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} content detail in ${recipesText} recipe`);
-	if (i?.classification === "actionable" && i?.area === "content" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} content detail in ${recipesText} recipes`);
-	if (i?.classification === "actionable" && i?.area === "content" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} content details in ${recipesText} recipe`);
-	if (i?.classification === "actionable" && i?.area === "content") return /** @type {LocalizedString} */ (`Review ${occurrencesText} content details in ${recipesText} recipes`);
 	if (i?.classification === "actionable" && i?.area === "duplicate" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} duplicate detail in ${recipesText} recipe`);
-	if (i?.classification === "actionable" && i?.area === "duplicate" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} duplicate detail in ${recipesText} recipes`);
-	if (i?.classification === "actionable" && i?.area === "duplicate" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} duplicate details in ${recipesText} recipe`);
-	if (i?.classification === "actionable" && i?.area === "duplicate") return /** @type {LocalizedString} */ (`Review ${occurrencesText} duplicate details in ${recipesText} recipes`);
 	if (i?.classification === "actionable" && i?.area === "ingredients" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} ingredient detail in ${recipesText} recipe`);
-	if (i?.classification === "actionable" && i?.area === "ingredients" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} ingredient detail in ${recipesText} recipes`);
-	if (i?.classification === "actionable" && i?.area === "ingredients" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} ingredient details in ${recipesText} recipe`);
-	if (i?.classification === "actionable" && i?.area === "ingredients") return /** @type {LocalizedString} */ (`Review ${occurrencesText} ingredient details in ${recipesText} recipes`);
 	if (i?.classification === "actionable" && i?.area === "instructions" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} instruction detail in ${recipesText} recipe`);
-	if (i?.classification === "actionable" && i?.area === "instructions" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} instruction detail in ${recipesText} recipes`);
-	if (i?.classification === "actionable" && i?.area === "instructions" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} instruction details in ${recipesText} recipe`);
-	if (i?.classification === "actionable" && i?.area === "instructions") return /** @type {LocalizedString} */ (`Review ${occurrencesText} instruction details in ${recipesText} recipes`);
-	if (i?.classification === "actionable" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} detail in ${recipesText} recipe`);
-	if (i?.classification === "actionable" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} detail in ${recipesText} recipes`);
-	if (i?.classification === "actionable" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} details in ${recipesText} recipe`);
-	if (i?.classification === "actionable") return /** @type {LocalizedString} */ (`Review ${occurrencesText} details in ${recipesText} recipes`);
 	if (i?.classification === "blocking" && i?.area === "assets" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} photograph detail in ${recipesText} recipe`);
-	if (i?.classification === "blocking" && i?.area === "assets" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} photograph detail in ${recipesText} recipes`);
-	if (i?.classification === "blocking" && i?.area === "assets" && recipePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} photograph details in ${recipesText} recipe`);
-	if (i?.classification === "blocking" && i?.area === "assets") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} photograph details in ${recipesText} recipes`);
 	if (i?.classification === "blocking" && i?.area === "content" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} content detail in ${recipesText} recipe`);
-	if (i?.classification === "blocking" && i?.area === "content" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} content detail in ${recipesText} recipes`);
-	if (i?.classification === "blocking" && i?.area === "content" && recipePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} content details in ${recipesText} recipe`);
-	if (i?.classification === "blocking" && i?.area === "content") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} content details in ${recipesText} recipes`);
 	if (i?.classification === "blocking" && i?.area === "duplicate" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} duplicate detail in ${recipesText} recipe`);
-	if (i?.classification === "blocking" && i?.area === "duplicate" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} duplicate detail in ${recipesText} recipes`);
-	if (i?.classification === "blocking" && i?.area === "duplicate" && recipePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} duplicate details in ${recipesText} recipe`);
-	if (i?.classification === "blocking" && i?.area === "duplicate") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} duplicate details in ${recipesText} recipes`);
 	if (i?.classification === "blocking" && i?.area === "ingredients" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} ingredient detail in ${recipesText} recipe`);
-	if (i?.classification === "blocking" && i?.area === "ingredients" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} ingredient detail in ${recipesText} recipes`);
-	if (i?.classification === "blocking" && i?.area === "ingredients" && recipePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} ingredient details in ${recipesText} recipe`);
-	if (i?.classification === "blocking" && i?.area === "ingredients") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} ingredient details in ${recipesText} recipes`);
 	if (i?.classification === "blocking" && i?.area === "instructions" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} instruction detail in ${recipesText} recipe`);
+	if (i?.classification === "actionable" && i?.area === "assets" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} photograph detail in ${recipesText} recipes`);
+	if (i?.classification === "actionable" && i?.area === "content" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} content detail in ${recipesText} recipes`);
+	if (i?.classification === "actionable" && i?.area === "duplicate" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} duplicate detail in ${recipesText} recipes`);
+	if (i?.classification === "actionable" && i?.area === "ingredients" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} ingredient detail in ${recipesText} recipes`);
+	if (i?.classification === "actionable" && i?.area === "instructions" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} instruction detail in ${recipesText} recipes`);
+	if (i?.classification === "blocking" && i?.area === "assets" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} photograph detail in ${recipesText} recipes`);
+	if (i?.classification === "blocking" && i?.area === "content" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} content detail in ${recipesText} recipes`);
+	if (i?.classification === "blocking" && i?.area === "duplicate" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} duplicate detail in ${recipesText} recipes`);
+	if (i?.classification === "blocking" && i?.area === "ingredients" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} ingredient detail in ${recipesText} recipes`);
 	if (i?.classification === "blocking" && i?.area === "instructions" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} instruction detail in ${recipesText} recipes`);
+	if (i?.classification === "actionable" && i?.area === "assets" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} photograph details in ${recipesText} recipe`);
+	if (i?.classification === "actionable" && i?.area === "content" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} content details in ${recipesText} recipe`);
+	if (i?.classification === "actionable" && i?.area === "duplicate" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} duplicate details in ${recipesText} recipe`);
+	if (i?.classification === "actionable" && i?.area === "ingredients" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} ingredient details in ${recipesText} recipe`);
+	if (i?.classification === "actionable" && i?.area === "instructions" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} instruction details in ${recipesText} recipe`);
+	if (i?.classification === "blocking" && i?.area === "assets" && recipePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} photograph details in ${recipesText} recipe`);
+	if (i?.classification === "blocking" && i?.area === "content" && recipePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} content details in ${recipesText} recipe`);
+	if (i?.classification === "blocking" && i?.area === "duplicate" && recipePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} duplicate details in ${recipesText} recipe`);
+	if (i?.classification === "blocking" && i?.area === "ingredients" && recipePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} ingredient details in ${recipesText} recipe`);
 	if (i?.classification === "blocking" && i?.area === "instructions" && recipePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} instruction details in ${recipesText} recipe`);
+	if (i?.classification === "actionable" && i?.area === "assets") return /** @type {LocalizedString} */ (`Review ${occurrencesText} photograph details in ${recipesText} recipes`);
+	if (i?.classification === "actionable" && i?.area === "content") return /** @type {LocalizedString} */ (`Review ${occurrencesText} content details in ${recipesText} recipes`);
+	if (i?.classification === "actionable" && i?.area === "duplicate") return /** @type {LocalizedString} */ (`Review ${occurrencesText} duplicate details in ${recipesText} recipes`);
+	if (i?.classification === "actionable" && i?.area === "ingredients") return /** @type {LocalizedString} */ (`Review ${occurrencesText} ingredient details in ${recipesText} recipes`);
+	if (i?.classification === "actionable" && i?.area === "instructions") return /** @type {LocalizedString} */ (`Review ${occurrencesText} instruction details in ${recipesText} recipes`);
+	if (i?.classification === "blocking" && i?.area === "assets") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} photograph details in ${recipesText} recipes`);
+	if (i?.classification === "blocking" && i?.area === "content") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} content details in ${recipesText} recipes`);
+	if (i?.classification === "blocking" && i?.area === "duplicate") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} duplicate details in ${recipesText} recipes`);
+	if (i?.classification === "blocking" && i?.area === "ingredients") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} ingredient details in ${recipesText} recipes`);
 	if (i?.classification === "blocking" && i?.area === "instructions") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} instruction details in ${recipesText} recipes`);
+	if (i?.classification === "actionable" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} detail in ${recipesText} recipe`);
 	if (i?.classification === "blocking" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} detail in ${recipesText} recipe`);
+	if (i?.classification === "actionable" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} detail in ${recipesText} recipes`);
 	if (i?.classification === "blocking" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} detail in ${recipesText} recipes`);
+	if (i?.classification === "actionable" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} details in ${recipesText} recipe`);
 	if (i?.classification === "blocking" && recipePlural === "one") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} details in ${recipesText} recipe`);
+	if (i?.classification === "actionable") return /** @type {LocalizedString} */ (`Review ${occurrencesText} details in ${recipesText} recipes`);
 	if (i?.classification === "blocking") return /** @type {LocalizedString} */ (`Could not import ${occurrencesText} details in ${recipesText} recipes`);
 	if (i?.area === "assets" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} photograph detail in ${recipesText} recipe`);
-	if (i?.area === "assets" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} photograph detail in ${recipesText} recipes`);
-	if (i?.area === "assets" && recipePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} photograph details in ${recipesText} recipe`);
-	if (i?.area === "assets") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} photograph details in ${recipesText} recipes`);
 	if (i?.area === "content" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} content detail in ${recipesText} recipe`);
-	if (i?.area === "content" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} content detail in ${recipesText} recipes`);
-	if (i?.area === "content" && recipePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} content details in ${recipesText} recipe`);
-	if (i?.area === "content") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} content details in ${recipesText} recipes`);
 	if (i?.area === "duplicate" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} duplicate detail in ${recipesText} recipe`);
-	if (i?.area === "duplicate" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} duplicate detail in ${recipesText} recipes`);
-	if (i?.area === "duplicate" && recipePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} duplicate details in ${recipesText} recipe`);
-	if (i?.area === "duplicate") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} duplicate details in ${recipesText} recipes`);
 	if (i?.area === "ingredients" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} ingredient detail in ${recipesText} recipe`);
-	if (i?.area === "ingredients" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} ingredient detail in ${recipesText} recipes`);
-	if (i?.area === "ingredients" && recipePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} ingredient details in ${recipesText} recipe`);
-	if (i?.area === "ingredients") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} ingredient details in ${recipesText} recipes`);
 	if (i?.area === "instructions" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} instruction detail in ${recipesText} recipe`);
+	if (i?.area === "assets" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} photograph detail in ${recipesText} recipes`);
+	if (i?.area === "content" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} content detail in ${recipesText} recipes`);
+	if (i?.area === "duplicate" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} duplicate detail in ${recipesText} recipes`);
+	if (i?.area === "ingredients" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} ingredient detail in ${recipesText} recipes`);
 	if (i?.area === "instructions" && occurrencePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} instruction detail in ${recipesText} recipes`);
+	if (i?.area === "assets" && recipePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} photograph details in ${recipesText} recipe`);
+	if (i?.area === "content" && recipePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} content details in ${recipesText} recipe`);
+	if (i?.area === "duplicate" && recipePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} duplicate details in ${recipesText} recipe`);
+	if (i?.area === "ingredients" && recipePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} ingredient details in ${recipesText} recipe`);
 	if (i?.area === "instructions" && recipePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} instruction details in ${recipesText} recipe`);
+	if (i?.area === "assets") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} photograph details in ${recipesText} recipes`);
+	if (i?.area === "content") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} content details in ${recipesText} recipes`);
+	if (i?.area === "duplicate") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} duplicate details in ${recipesText} recipes`);
+	if (i?.area === "ingredients") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} ingredient details in ${recipesText} recipes`);
 	if (i?.area === "instructions") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} instruction details in ${recipesText} recipes`);
 	if (occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} detail in ${recipesText} recipe`);
 	if (occurrencePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} detail in ${recipesText} recipes`);
@@ -8686,10 +8781,10 @@ export const pdf_preview_page_number = /** @type {(inputs: Pdf_Preview_Page_Numb
 export const pdf_preview_pages_count = /** @type {(inputs: Pdf_Preview_Pages_CountInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.pages, {});
 	const plural = registry.plural("en", i?.pages, {});
 	if (i?.unit === "page" && plural === "one") return /** @type {LocalizedString} */ (`${countText} page`);
-	if (i?.unit === "page") return /** @type {LocalizedString} */ (`${countText} pages`);
 	if (i?.unit === "sheet" && plural === "one") return /** @type {LocalizedString} */ (`${countText} sheet`);
-	if (i?.unit === "sheet") return /** @type {LocalizedString} */ (`${countText} sheets`);
 	if (i?.unit === "card" && plural === "one") return /** @type {LocalizedString} */ (`${countText} card`);
+	if (i?.unit === "page") return /** @type {LocalizedString} */ (`${countText} pages`);
+	if (i?.unit === "sheet") return /** @type {LocalizedString} */ (`${countText} sheets`);
 	if (i?.unit === "card") return /** @type {LocalizedString} */ (`${countText} cards`);
 	return /** @type {LocalizedString} */ ("pdf_preview_pages_count");
 };

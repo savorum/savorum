@@ -24,6 +24,7 @@ import { Route as AccountSecurityRouteImport } from './routes/account.security'
 import { Route as AccountTokensRouteImport } from './routes/account.tokens'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminAuditRouteImport } from './routes/admin.audit'
+import { Route as AdminConnectRouteImport } from './routes/admin.connect'
 import { Route as AdminLibrariesRouteImport } from './routes/admin.libraries'
 import { Route as AdminProvidersRouteImport } from './routes/admin.providers'
 import { Route as BooksIndexRouteImport } from './routes/books.index'
@@ -116,6 +117,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
 const AdminAuditRoute = AdminAuditRouteImport.update({
   id: '/admin/audit',
   path: '/admin/audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminConnectRoute = AdminConnectRouteImport.update({
+  id: '/admin/connect',
+  path: '/admin/connect',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminLibrariesRoute = AdminLibrariesRouteImport.update({
@@ -225,6 +231,7 @@ export interface FileRoutesByFullPath {
   '/account/security': typeof AccountSecurityRoute
   '/account/tokens': typeof AccountTokensRoute
   '/admin/audit': typeof AdminAuditRoute
+  '/admin/connect': typeof AdminConnectRoute
   '/admin/libraries': typeof AdminLibrariesRoute
   '/admin/providers': typeof AdminProvidersRoute
   '/imports/$jobId': typeof ImportsJobIdRoute
@@ -260,6 +267,7 @@ export interface FileRoutesByTo {
   '/account/security': typeof AccountSecurityRoute
   '/account/tokens': typeof AccountTokensRoute
   '/admin/audit': typeof AdminAuditRoute
+  '/admin/connect': typeof AdminConnectRoute
   '/admin/libraries': typeof AdminLibrariesRoute
   '/admin/providers': typeof AdminProvidersRoute
   '/imports/$jobId': typeof ImportsJobIdRoute
@@ -296,6 +304,7 @@ export interface FileRoutesById {
   '/account/security': typeof AccountSecurityRoute
   '/account/tokens': typeof AccountTokensRoute
   '/admin/audit': typeof AdminAuditRoute
+  '/admin/connect': typeof AdminConnectRoute
   '/admin/libraries': typeof AdminLibrariesRoute
   '/admin/providers': typeof AdminProvidersRoute
   '/imports/$jobId': typeof ImportsJobIdRoute
@@ -333,6 +342,7 @@ export interface FileRouteTypes {
     | '/account/security'
     | '/account/tokens'
     | '/admin/audit'
+    | '/admin/connect'
     | '/admin/libraries'
     | '/admin/providers'
     | '/imports/$jobId'
@@ -368,6 +378,7 @@ export interface FileRouteTypes {
     | '/account/security'
     | '/account/tokens'
     | '/admin/audit'
+    | '/admin/connect'
     | '/admin/libraries'
     | '/admin/providers'
     | '/imports/$jobId'
@@ -403,6 +414,7 @@ export interface FileRouteTypes {
     | '/account/security'
     | '/account/tokens'
     | '/admin/audit'
+    | '/admin/connect'
     | '/admin/libraries'
     | '/admin/providers'
     | '/imports/$jobId'
@@ -439,6 +451,7 @@ export interface RootRouteChildren {
   AccountSecurityRoute: typeof AccountSecurityRoute
   AccountTokensRoute: typeof AccountTokensRoute
   AdminAuditRoute: typeof AdminAuditRoute
+  AdminConnectRoute: typeof AdminConnectRoute
   AdminLibrariesRoute: typeof AdminLibrariesRoute
   AdminProvidersRoute: typeof AdminProvidersRoute
   ImportsJobIdRoute: typeof ImportsJobIdRoute
@@ -566,6 +579,13 @@ declare module '@tanstack/solid-router' {
       path: '/admin/audit'
       fullPath: '/admin/audit'
       preLoaderRoute: typeof AdminAuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/connect': {
+      id: '/admin/connect'
+      path: '/admin/connect'
+      fullPath: '/admin/connect'
+      preLoaderRoute: typeof AdminConnectRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/libraries': {
@@ -711,6 +731,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccountSecurityRoute: AccountSecurityRoute,
   AccountTokensRoute: AccountTokensRoute,
   AdminAuditRoute: AdminAuditRoute,
+  AdminConnectRoute: AdminConnectRoute,
   AdminLibrariesRoute: AdminLibrariesRoute,
   AdminProvidersRoute: AdminProvidersRoute,
   ImportsJobIdRoute: ImportsJobIdRoute,

@@ -115,10 +115,6 @@ func (unexpectedPasskeyRepository) Passkeys(context.Context, string) ([]identity
 	panic(unexpectedRepositoryCall)
 }
 
-func (unexpectedPasskeyRepository) CheckPasskeyRP(context.Context, string) error {
-	panic(unexpectedRepositoryCall)
-}
-
 func (unexpectedPasskeyRepository) StorePasskey(context.Context, string, string, string, webauthn.Credential) error {
 	panic(unexpectedRepositoryCall)
 }

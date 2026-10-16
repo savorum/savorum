@@ -39,7 +39,7 @@ func (h *Handler) oidcClient(ctx context.Context, p Provider) (*oidc.Provider, *
 
 	scopes := append([]string{oidc.ScopeOpenID, "profile", "email"}, p.OIDC.Scopes...)
 
-	return provider, &oauth2.Config{ClientID: p.OIDC.ClientID, ClientSecret: secret, Endpoint: provider.Endpoint(), RedirectURL: h.endpoint(p, "callback"), Scopes: scopes}, nil
+	return provider, &oauth2.Config{ClientID: p.OIDC.ClientID, ClientSecret: secret, Endpoint: provider.Endpoint(), RedirectURL: h.endpoint(ctx, p, "callback"), Scopes: scopes}, nil
 }
 
 func (h *Handler) oidcBegin(w http.ResponseWriter, r *http.Request, p Provider, t transaction) {

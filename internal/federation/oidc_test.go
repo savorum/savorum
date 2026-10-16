@@ -1,6 +1,7 @@
 package federation
 
 import (
+	"context"
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/sha256"
@@ -13,11 +14,13 @@ import (
 	"testing"
 	"time"
 
+	"github.com/savorum/savorum/internal/httpsecurity"
+
 	jose "github.com/go-jose/go-jose/v4"
 )
 
 func TestOIDCCodePKCEAndTokenValidation(t *testing.T) {
-	for _, scenario := range []string{"valid", "wrong_nonce", "wrong_audience", "wrong_issuer", "expired", "future_nbf", "wrong_azp", "unsigned"} {
+	for _, scenario := range []string{"valid", "connect", "wrong_nonce", "wrong_audience", "wrong_issuer", "expired", "future_nbf", "wrong_azp", "unsigned"} {
 		t.Run(scenario, func(t *testing.T) {
 			key, e := rsa.GenerateKey(rand.Reader, 2048)
 			if e != nil {
@@ -25,6 +28,11 @@ func TestOIDCCodePKCEAndTokenValidation(t *testing.T) {
 			}
 
 			var issuer, nonce, challenge string
+
+			origin := "https://recipes.example"
+			if scenario == "connect" {
+				origin = "https://acorn-apple-basil-basket.connect.test"
+			}
 
 			provider := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				w.Header().Set("Content-Type", "application/json")
@@ -40,7 +48,7 @@ func TestOIDCCodePKCEAndTokenValidation(t *testing.T) {
 					}
 
 					sum := sha256.Sum256([]byte(r.Form.Get("code_verifier")))
-					if base64.RawURLEncoding.EncodeToString(sum[:]) != challenge || r.Form.Get("grant_type") != "authorization_code" || r.Form.Get("redirect_uri") != "https://recipes.example/api/v1/auth/oidc/callback" {
+					if base64.RawURLEncoding.EncodeToString(sum[:]) != challenge || r.Form.Get("grant_type") != "authorization_code" || r.Form.Get("redirect_uri") != origin+"/api/v1/auth/oidc/callback" {
 						t.Error("PKCE or exact redirect absent")
 					}
 
@@ -95,11 +103,17 @@ func TestOIDCCodePKCEAndTokenValidation(t *testing.T) {
 			issuer = provider.URL
 			h, f := testHandler(t, Provider{ID: "oidc", Kind: "oidc", DisplayName: "Work", OIDC: &OIDCConfig{Issuer: issuer, ClientID: "client"}})
 			h.client = provider.Client()
-			start := httptest.NewRequestWithContext(t.Context(), http.MethodPost, "/api/v1/auth/oidc/login", strings.NewReader(`{}`))
-			start.Header.Set("Origin", "https://recipes.example")
+
+			var handler http.Handler = h
+			if scenario == "connect" {
+				handler = httpsecurity.ConnectTransport(httpsecurity.NewHandler(h, httpsecurity.Options{ListenAddress: "0.0.0.0:8080", ConnectOrigin: origin, ApplicationOrigin: func(context.Context) (string, error) { return "https://recipes.example", nil }}))
+			}
+
+			start := httptest.NewRequestWithContext(t.Context(), http.MethodPost, origin+"/api/v1/auth/oidc/login", strings.NewReader(`{}`))
+			start.Header.Set("Origin", origin)
 
 			w := httptest.NewRecorder()
-			h.ServeHTTP(w, start)
+			handler.ServeHTTP(w, start)
 
 			if w.Code != 200 {
 				t.Fatal(w.Code, w.Body.String())
@@ -123,19 +137,19 @@ func TestOIDCCodePKCEAndTokenValidation(t *testing.T) {
 				t.Fatal(q)
 			}
 
-			callback := httptest.NewRequestWithContext(t.Context(), http.MethodGet, "https://recipes.example/api/v1/auth/oidc/callback?code=code&state="+q.Get("state"), nil)
+			callback := httptest.NewRequestWithContext(t.Context(), http.MethodGet, origin+"/api/v1/auth/oidc/callback?code=code&state="+q.Get("state"), nil)
 			callback.AddCookie(w.Result().Cookies()[0])
 
 			result := httptest.NewRecorder()
-			h.ServeHTTP(result, callback)
+			handler.ServeHTTP(result, callback)
 
-			if scenario == "valid" {
+			if scenario == "valid" || scenario == "connect" {
 				if result.Code != 303 || len(f.subjects) != 1 || f.subjects[0] != "oidc:opaque-subject" {
 					t.Fatal(result.Code, result.Body.String(), f.subjects)
 				}
 
 				replay := httptest.NewRecorder()
-				h.ServeHTTP(replay, callback)
+				handler.ServeHTTP(replay, callback)
 
 				if replay.Code != 401 {
 					t.Fatal("callback replay accepted")

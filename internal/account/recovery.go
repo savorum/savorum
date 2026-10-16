@@ -63,7 +63,7 @@ func (h *Handler) recoveryLogin(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if h.options.PublicURL != nil {
-		raw, err := h.options.PublicURL(r.Context())
+		raw, err := h.authenticationOrigin(r.Context())
 		if err != nil {
 			problem(w, 500, problemAccountUnavailable)
 			return

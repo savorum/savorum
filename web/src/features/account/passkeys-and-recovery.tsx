@@ -15,7 +15,13 @@ import { accountStyles as styles } from "./account-layout"
 import { accountRequest } from "./account-state"
 import { passkeysSupported, registerPasskey, signInWithPasskey } from "./passkeys"
 
-type Passkey = { id: string; name: string; created_at: string; last_used_at: string | null }
+type Passkey = {
+  rp_id?: string
+  id: string
+  name: string
+  created_at: string
+  last_used_at: string | null
+}
 type Run = (action: () => Promise<void>, message: string) => Promise<void>
 
 function useTask() {
@@ -134,6 +140,9 @@ function PasskeyRow(props: {
           {m.account_passkeys_save_name()}
         </Button>
       </form>
+      <Show when={props.passkey.rp_id}>
+        <p class={styles.muted}>{props.passkey.rp_id}</p>
+      </Show>
       <p class={styles.muted}>
         {props.passkey.last_used_at
           ? m.account_passkeys_last_used({ date: formatDate(props.passkey.last_used_at) })

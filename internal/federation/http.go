@@ -54,6 +54,7 @@ type Repository interface {
 type Options struct {
 	Cookies                        identity.BrowserCookies
 	PublicURL                      string
+	AllowConnect                   bool
 	IdleLifetime, AbsoluteLifetime time.Duration
 }
 
@@ -74,6 +75,7 @@ type Handler struct {
 }
 type (
 	transaction struct {
+		Origin          string `json:"origin"`
 		Verifier        string `json:"verifier"`
 		Nonce           string `json:"nonce"`
 		RequestID       string `json:"requestid"`
@@ -98,7 +100,7 @@ func New(store Repository, c Config, o Options, next http.Handler) (*Handler, er
 		return nil, e
 	}
 
-	if (len(c.Providers) > 0 || o.Cookies.HostPrefix) && !secureURL(o.PublicURL) {
+	if (o.Cookies.HostPrefix || (len(c.Providers) > 0 && !o.AllowConnect)) && !secureURL(o.PublicURL) {
 		return nil, errors.New("external authentication requires a canonical HTTPS public URL")
 	}
 
@@ -155,6 +157,11 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if strings.HasPrefix(r.URL.Path, "/api/v1/auth/") {
+		if r.URL.Path != "/api/v1/auth/providers" && !secureURL(h.authenticationOrigin(r.Context())) {
+			httpsecurity.WriteProblem(w, http.StatusServiceUnavailable, "secure_origin_required", "External sign-in requires HTTPS")
+			return
+		}
+
 		if _, present := r.Header["Authorization"]; present {
 			httpsecurity.WriteProblem(w, http.StatusForbidden, "token_scope_required", "token_scope_required")
 			return
@@ -182,7 +189,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h.next.ServeHTTP(w, r)
 }
 
-func (h *Handler) list(w http.ResponseWriter, _ *http.Request) {
+func (h *Handler) list(w http.ResponseWriter, r *http.Request) {
 	type summary struct {
 		ID          string `json:"id"`
 		Kind        string `json:"kind"`
@@ -190,7 +197,12 @@ func (h *Handler) list(w http.ResponseWriter, _ *http.Request) {
 	}
 
 	out := []summary{}
+
 	for _, p := range h.providers {
+		if !secureURL(h.authenticationOrigin(r.Context())) {
+			continue
+		}
+
 		out = append(out, summary{ID: p.ID, Kind: p.Kind, DisplayName: p.DisplayName})
 	}
 
@@ -230,12 +242,12 @@ func randomToken() (string, error) {
 	return hex.EncodeToString(b), e
 }
 
-func (h *Handler) endpoint(p Provider, suffix string) string {
-	return strings.TrimRight(h.options.PublicURL, "/") + "/api/v1/auth/" + p.ID + "/" + suffix
+func (h *Handler) endpoint(ctx context.Context, p Provider, suffix string) string {
+	return strings.TrimRight(h.authenticationOrigin(ctx), "/") + "/api/v1/auth/" + p.ID + "/" + suffix
 }
 
 func (h *Handler) originOK(r *http.Request) bool {
-	u, e := url.Parse(h.options.PublicURL)
+	u, e := url.Parse(h.authenticationOrigin(r.Context()))
 	return e == nil && r.Header.Get("Origin") == u.Scheme+"://"+u.Host
 }
 
@@ -321,6 +333,8 @@ func (h *Handler) saveTransaction(w http.ResponseWriter, r *http.Request, p Prov
 		return "", e
 	}
 
+	t.Origin = h.authenticationOrigin(r.Context())
+
 	payload, e := json.Marshal(t)
 	if e != nil {
 		return "", fmt.Errorf("encode federation transaction: %w", e)
@@ -367,6 +381,10 @@ func (h *Handler) consume(w http.ResponseWriter, r *http.Request, p Provider, st
 
 	if err := json.Unmarshal([]byte(payload), &t); err != nil {
 		return t, fmt.Errorf("decode federation transaction: %w", err)
+	}
+
+	if t.Origin != h.authenticationOrigin(r.Context()) {
+		return t, identity.ErrCredentials
 	}
 
 	return t, nil
@@ -514,4 +532,12 @@ func (h *Handler) strictProxyAllows(r *http.Request) bool {
 	}
 
 	return !strict
+}
+
+func (h *Handler) authenticationOrigin(ctx context.Context) string {
+	if origin := httpsecurity.ConnectOrigin(ctx); origin != "" {
+		return origin
+	}
+
+	return h.options.PublicURL
 }

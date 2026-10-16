@@ -188,7 +188,7 @@ func (h *Handler) registerInvitedAccount(w http.ResponseWriter, r *http.Request)
 	}
 
 	if h.options.PublicURL != nil {
-		value, err := h.options.PublicURL(r.Context())
+		value, err := h.authenticationOrigin(r.Context())
 		if err != nil {
 			problem(w, 503, problemPublicURLUnavailable)
 			return

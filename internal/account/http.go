@@ -49,13 +49,14 @@ type Repository interface {
 
 // Options controls authentication deployment policy.
 type Options struct {
-	Cookies          identity.BrowserCookies
-	TokenPolicy      identity.TokenPolicy
-	Enabled          bool
-	IdleLifetime     time.Duration
-	AbsoluteLifetime time.Duration
-	PublicURL        func(context.Context) (string, error)
-	ConnectOrigin    string
+	Cookies              identity.BrowserCookies
+	TokenPolicy          identity.TokenPolicy
+	Enabled              bool
+	IdleLifetime         time.Duration
+	AbsoluteLifetime     time.Duration
+	PublicURL            func(context.Context) (string, error)
+	ConnectOrigin        string
+	ResolveConnectOrigin func() string
 }
 type (
 	// Handler resolves identity before dispatching protected application requests.
@@ -162,9 +163,9 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		h.next.ServeHTTP(w, r)
 		return
 	}
-	// Current-user preferences do not require content membership.
-	if strings.HasPrefix(r.URL.Path, "/api/v1/me/") {
-		h.next.ServeHTTP(w, r)
+
+	// Instance controls and preferences do not require library membership.
+	if h.serveIndependent(w, r, b) {
 		return
 	}
 
@@ -268,7 +269,13 @@ func (h *Handler) current(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) cookie(w http.ResponseWriter, r *http.Request, name, value string, maxAge int) {
 	secure := r.TLS != nil
-	if h.options.ConnectOrigin != "" && "https://"+r.Host == h.options.ConnectOrigin {
+
+	origin := h.options.ConnectOrigin
+	if h.options.ResolveConnectOrigin != nil {
+		origin = h.options.ResolveConnectOrigin()
+	}
+
+	if origin != "" && "https://"+r.Host == origin {
 		secure = true
 	}
 
@@ -767,4 +774,24 @@ func (h *Handler) resolveBrowser(w http.ResponseWriter, r *http.Request) (browse
 	}
 
 	return b, true
+}
+
+func (h *Handler) serveIndependent(w http.ResponseWriter, r *http.Request, b browser) bool {
+	if strings.HasPrefix(r.URL.Path, "/api/v1/me/") {
+		h.next.ServeHTTP(w, r)
+		return true
+	}
+
+	if !strings.HasPrefix(r.URL.Path, "/api/v1/instance/") {
+		return false
+	}
+
+	if b.personalToken != nil {
+		problem(w, 403, problemAccessDenied)
+		return true
+	}
+
+	h.next.ServeHTTP(w, r)
+
+	return true
 }

@@ -6,6 +6,7 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+- Add Savorum Connect setup and remote access.
 - Improve recipe imports from captions and feeds.
 
 ## 0.1.1

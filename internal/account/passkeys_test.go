@@ -15,8 +15,6 @@ type passkeyConfigStore struct {
 	unexpectedPasskeyRepository
 }
 
-func (passkeyConfigStore) CheckPasskeyRP(context.Context, string) error { return nil }
-
 func TestPasskeySecureOriginAndAuthenticatorPolicy(t *testing.T) {
 	for _, tc := range []struct {
 		url     string

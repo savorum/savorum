@@ -165,6 +165,7 @@ export const AdministrationNav = () => (
         { to: "/admin", label: m.account_admin_nav_people() },
         { to: "/admin/libraries", label: m.account_admin_nav_libraries() },
         { to: "/admin/providers", label: m.account_admin_nav_providers() },
+        { to: "/admin/connect", label: m.connect_title() },
         { to: "/admin/audit", label: m.account_admin_nav_audit() },
       ]}
     />

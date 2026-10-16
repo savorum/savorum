@@ -69,7 +69,8 @@ type Options struct {
 	// and authority checks. An empty result uses the effective request origin.
 	ApplicationOrigin func(context.Context) (string, error)
 	// ConnectOrigin is an optional second HTTPS authority for remote access.
-	ConnectOrigin string
+	ConnectOrigin        string
+	ResolveConnectOrigin func() string
 }
 
 // ParseTrustedProxies accepts individual IP addresses or CIDR prefixes. An IP
@@ -120,6 +121,11 @@ func NewHandler(next http.Handler, options Options) http.Handler {
 	return http.HandlerFunc(func(response http.ResponseWriter, request *http.Request) {
 		setSecurityHeaders(response.Header())
 
+		options := options
+		if options.ResolveConnectOrigin != nil {
+			options.ConnectOrigin = options.ResolveConnectOrigin()
+		}
+
 		allowed, configuredOrigin, err := policyOrigins(request.Context(), options, localOrigins)
 		if err != nil {
 			WriteProblem(response, http.StatusInternalServerError, "origin-policy-unavailable", "The request authority policy could not be evaluated")
@@ -164,6 +170,8 @@ func NewHandler(next http.Handler, options Options) http.Handler {
 		if request.Body != nil {
 			request.Body = http.MaxBytesReader(response, request.Body, requestBodyLimit(request))
 		}
+
+		request = withConnectOrigin(request, options.ConnectOrigin)
 
 		next.ServeHTTP(response, request)
 	})
@@ -418,6 +426,11 @@ func allowUnsafeRequest(request *http.Request, configuredOrigin string, connectO
 		return false
 	}
 
+	if remote && connectOrigin != "" {
+		expected, err := parseOrigin(connectOrigin)
+		return err == nil && sameOrigin(supplied, expected)
+	}
+
 	var expected *url.URL
 	if strings.TrimSpace(configuredOrigin) != "" {
 		expected, err = parseOrigin(configuredOrigin)
@@ -429,16 +442,7 @@ func allowUnsafeRequest(request *http.Request, configuredOrigin string, connectO
 		return false
 	}
 
-	if sameOrigin(supplied, expected) {
-		return true
-	}
-
-	if remote && connectOrigin != "" {
-		remote, err := parseOrigin(connectOrigin)
-		return err == nil && sameOrigin(supplied, remote)
-	}
-
-	return false
+	return sameOrigin(supplied, expected)
 }
 
 func connectRequest(request *http.Request, origin string) bool {
@@ -449,6 +453,10 @@ func connectRequest(request *http.Request, origin string) bool {
 	u, err := parseOrigin(origin)
 	if err != nil || request.Host != u.Host {
 		return false
+	}
+
+	if trusted, _ := request.Context().Value(connectTransportKey{}).(bool); trusted {
+		return true
 	}
 
 	host, _, err := net.SplitHostPort(request.RemoteAddr)
@@ -768,4 +776,29 @@ func ImmediatePeer(request *http.Request) string {
 	}
 
 	return request.RemoteAddr
+}
+
+type connectTransportKey struct{}
+
+// ConnectTransport marks requests from the TLS tunnel. Apply only to the tunnel handler.
+func ConnectTransport(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), connectTransportKey{}, true)))
+	})
+}
+
+type connectOriginKey struct{}
+
+// ConnectOrigin returns the verified tunnel origin, or an empty string for local requests.
+func ConnectOrigin(ctx context.Context) string {
+	origin, _ := ctx.Value(connectOriginKey{}).(string)
+	return origin
+}
+
+func withConnectOrigin(request *http.Request, origin string) *http.Request {
+	if !connectRequest(request, origin) {
+		origin = ""
+	}
+
+	return request.WithContext(context.WithValue(request.Context(), connectOriginKey{}, origin))
 }

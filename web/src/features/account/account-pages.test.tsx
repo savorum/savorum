@@ -10,6 +10,7 @@ import type { JSX } from "solid-js"
 import { afterEach, expect, test, vi } from "vitest"
 
 import { AccountOverview } from "./account-overview"
+import { AdminConnectPage } from "./admin-connect-page"
 import { AdminLibrariesPage } from "./admin-libraries-page"
 import { AdminPeoplePage } from "./admin-people-page"
 import { AdminProvidersPage } from "./admin-providers-page"
@@ -48,6 +49,8 @@ vi.mock("./account-state", async () => {
     roleName: () => messages.m.account_role_owner(),
     refreshAccount: vi.fn(),
     accountRequest: vi.fn(async (path: string) => {
+      if (path === "/instance/connect")
+        return { configured: false, state: "disabled", certificate_ready: false }
       if (path.includes("/audit?")) return { events: [] }
       if (path.endsWith("/sessions")) return { sessions: [] }
       if (path.endsWith("/members"))
@@ -212,4 +215,25 @@ test("administration stays hidden from a member who is not an administrator", ()
   const people = render(() => <AdminPeoplePage />)
   expect(people.queryByLabelText("Login name")).toBeNull()
   expect(people.queryByRole("navigation")).toBeNull()
+})
+
+test("Connect setup retains its input while typing and composing", async () => {
+  const page = render(() => <AdminConnectPage />)
+  const input = page.getByLabelText("Setup document") as HTMLTextAreaElement
+  input.focus()
+  for (const value of ["{", '{"', '{"version', '{"version": 1}']) {
+    fireEvent.input(input, { target: { value } })
+    expect(page.getByLabelText("Setup document")).toBe(input)
+    expect(document.activeElement).toBe(input)
+    expect(input.value).toBe(value)
+  }
+  input.setSelectionRange(3, 3)
+  fireEvent.compositionStart(input)
+  fireEvent.input(input, { target: { value: "setup 日本語" }, isComposing: true })
+  input.setSelectionRange(9, 9)
+  fireEvent.compositionEnd(input, { data: "日本語" })
+  expect(page.getByLabelText("Setup document")).toBe(input)
+  expect(document.activeElement).toBe(input)
+  expect(input.value).toBe("setup 日本語")
+  expect(input.selectionStart).toBe(9)
 })

@@ -158,6 +158,41 @@ disabled in one supported mode can still apply in another.
 - SQLite, assets, migrations, backup and restore: S1 to S4.
 - Events, webhooks, tokens, jobs and temporary artifacts: G1, G2, H3 to H5, I1.
 
+## Savorum Connect
+
+Connect is off until an authenticated instance administrator imports enrollment.
+The client runs inside the server process and opens outbound connections only.
+Cloud credentials authorize the tunnel; local users and library roles authorize
+requests. Personal API tokens cannot configure Connect.
+
+The relay forwards TLS bytes. Savorum terminates TLS locally and routes requests
+through the full HTTP security and account middleware. The in-process transport
+marker cannot be supplied through HTTP headers. The client strips forwarded
+headers and accepts only the enrolled hostname. The ordinary LAN listener does
+not gain this transport marker.
+
+The setup document holds a one-use secret. Savorum exchanges it over outbound HTTPS
+for a separate agent credential. A claimed document cannot open a tunnel or be
+claimed again. Enrollment is written atomically with mode `0600` inside an owner-only directory.
+Status responses exclude credentials and private keys. Persisted symlinks,
+non-private state, and oversized setup files are rejected. Certificate keys and
+ACME state remain local. Disabling authentication prevents remote connections.
+Disconnect revokes the Cloud credential before removing local enrollment. If
+revocation cannot be confirmed, enrollment stays available for a retry.
+Disconnect and credential replacement cancel active client streams. Remote
+failures do not stop the local HTTP server.
+
+Passkey ceremonies select the verified request origin and load credentials only
+for its RP ID. Local and Connect credentials coexist. Federation callbacks use
+the same verified origin; one-time transactions bind the starting origin, browser
+cookie, provider, and state. Request headers cannot select another callback
+origin. External sign-in is available only at HTTPS origins.
+
+The operator controls the assigned domain and can issue an alternate trusted
+certificate. TLS forwarding does not eliminate this trust. Hostnames are public
+identifiers, not authorization secrets. See the [Connect guide](https://docs.savorum.app/admin/connect/)
+for setup, recovery, and the appdata backup boundary.
+
 ## When to review again
 
 Review the model whenever an authentication provider, import path, remote

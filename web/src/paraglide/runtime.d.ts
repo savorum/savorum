@@ -779,7 +779,7 @@ export type MessageMarkupSchema = Record<string, MessageMarkupTag>;
 /**
  * Type-only metadata attached to compiled message functions.
  */
-export type MessageMetadata<Inputs, Options, Markup extends MessageMarkupSchema = MessageMarkupSchema> = {
+export type MessageMetadata<Inputs, Options, Markup extends MessageMarkupSchema = Record<string, MessageMarkupTag>> = {
     readonly __paraglide?: {
         inputs: Inputs;
         options: Options;

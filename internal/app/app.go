@@ -22,12 +22,14 @@ import (
 	"github.com/savorum/savorum/internal/assets"
 	"github.com/savorum/savorum/internal/automation"
 	"github.com/savorum/savorum/internal/buildinfo"
+	"github.com/savorum/savorum/internal/connect"
 	"github.com/savorum/savorum/internal/diskspace"
 	"github.com/savorum/savorum/internal/event"
 	"github.com/savorum/savorum/internal/exchange"
 	"github.com/savorum/savorum/internal/export"
 	"github.com/savorum/savorum/internal/federation"
 	"github.com/savorum/savorum/internal/hosting"
+	"github.com/savorum/savorum/internal/httpsecurity"
 	"github.com/savorum/savorum/internal/idempotency"
 	"github.com/savorum/savorum/internal/identity"
 	"github.com/savorum/savorum/internal/importjob"
@@ -105,6 +107,8 @@ type Options struct {
 	TokenPolicy          identity.TokenPolicy
 	AuthEnabled          bool
 	ConnectOrigin        string
+	Connect              *connect.Service
+	ResolveConnectOrigin func() string
 	SessionIdle          time.Duration
 	SessionAbsolute      time.Duration
 	Assets               api.AssetService
@@ -224,6 +228,7 @@ func New(store Store, catalog recipe.UnitCatalog, options Options) (*Application
 
 	registerBootstrap(mux, store, options)
 	registerStorageStatus(openAPI, store, options)
+	api.RegisterConnect(openAPI, options.Connect, options.AuthEnabled)
 
 	// Calendar clients cannot sign in; the feed secret is the credential.
 	mux.HandleFunc("GET /calendar/{file}", calendarFeedHandler(calendar))
@@ -249,7 +254,7 @@ func New(store Store, catalog recipe.UnitCatalog, options Options) (*Application
 	cookies := identity.BrowserCookies{HostPrefix: hosted}
 	openAPI.OpenAPI().Components.SecuritySchemes["browserSession"].Name = cookies.Name(identity.SessionCookie)
 
-	var handler http.Handler = account.New(store, account.Options{Cookies: cookies, TokenPolicy: options.TokenPolicy, Enabled: options.AuthEnabled, IdleLifetime: options.SessionIdle, AbsoluteLifetime: options.SessionAbsolute, ConnectOrigin: options.ConnectOrigin, PublicURL: func(ctx context.Context) (string, error) {
+	var handler http.Handler = account.New(store, account.Options{Cookies: cookies, TokenPolicy: options.TokenPolicy, Enabled: options.AuthEnabled, IdleLifetime: options.SessionIdle, AbsoluteLifetime: options.SessionAbsolute, ConnectOrigin: options.ConnectOrigin, ResolveConnectOrigin: options.ResolveConnectOrigin, PublicURL: func(ctx context.Context) (string, error) {
 		if options.Configuration == nil {
 			return "", nil
 		}
@@ -260,7 +265,7 @@ func New(store Store, catalog recipe.UnitCatalog, options Options) (*Application
 	}}, mux)
 
 	if options.AuthEnabled {
-		handler, err = federation.New(store, options.Providers, federation.Options{Cookies: cookies, PublicURL: publicURL, IdleLifetime: options.SessionIdle, AbsoluteLifetime: options.SessionAbsolute}, handler)
+		handler, err = federation.New(store, options.Providers, federation.Options{Cookies: cookies, PublicURL: publicURL, AllowConnect: options.Connect != nil, IdleLifetime: options.SessionIdle, AbsoluteLifetime: options.SessionAbsolute}, handler)
 		if err != nil {
 			return nil, err
 		}
@@ -284,6 +289,10 @@ func printCatalog(catalog recipe.UnitCatalog) units.Catalog {
 
 func publicURLFor(settings api.ConfigurationService) func(context.Context) string {
 	return func(ctx context.Context) string {
+		if origin := httpsecurity.ConnectOrigin(ctx); origin != "" {
+			return origin
+		}
+
 		if settings == nil {
 			return ""
 		}
