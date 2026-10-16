@@ -156,7 +156,7 @@ func VerifyManagedGrant(raw string, p Provider, keys map[string]ed25519.PublicKe
 // redeemManagedGrant verifies a grant, records its one use, then checks the
 // verifier. A wrong verifier still uses the grant.
 func (h *Handler) redeemManagedGrant(ctx context.Context, p Provider, raw, verifier string) (ManagedGrant, error) {
-	grant, err := VerifyManagedGrant(raw, p, h.managedKeys[p.ID], h.publicOrigin(), time.Now())
+	grant, err := VerifyManagedGrant(raw, p, h.managedKeys[p.ID], h.publicOrigin(ctx), time.Now())
 	if err != nil {
 		return grant, err
 	}
@@ -172,8 +172,8 @@ func (h *Handler) redeemManagedGrant(ctx context.Context, p Provider, raw, verif
 	return grant, nil
 }
 
-func (h *Handler) publicOrigin() string {
-	u, err := url.Parse(h.options.PublicURL)
+func (h *Handler) publicOrigin(ctx context.Context) string {
+	u, err := url.Parse(h.authenticationOrigin(ctx))
 	if err != nil {
 		return ""
 	}
@@ -197,7 +197,7 @@ func (h *Handler) managedAuthorization(w http.ResponseWriter, r *http.Request, p
 	}
 
 	location.RawQuery = url.Values{
-		"audience": {p.Managed.Audience}, "redirect_uri": {h.endpoint(p, "callback")}, "state": {state},
+		"audience": {p.Managed.Audience}, "redirect_uri": {h.endpoint(r.Context(), p, "callback")}, "state": {state},
 		"code_challenge": {oauth2.S256ChallengeFromVerifier(t.Verifier)}, "code_challenge_method": {"S256"},
 	}.Encode()
 
@@ -305,7 +305,7 @@ func (h *Handler) managedCallback(w http.ResponseWriter, r *http.Request, p Prov
 }
 
 func (h *Handler) exchangeManagedCode(ctx context.Context, p Provider, code, verifier string) (string, error) {
-	payload, err := json.Marshal(map[string]string{"code": code, "code_verifier": verifier, "audience": p.Managed.Audience, "redirect_uri": h.endpoint(p, "callback")})
+	payload, err := json.Marshal(map[string]string{"code": code, "code_verifier": verifier, "audience": p.Managed.Audience, "redirect_uri": h.endpoint(ctx, p, "callback")})
 	if err != nil {
 		return "", fmt.Errorf("encode managed exchange: %w", err)
 	}

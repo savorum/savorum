@@ -15,13 +15,13 @@ import (
 
 	"github.com/go-webauthn/webauthn/protocol"
 	"github.com/go-webauthn/webauthn/webauthn"
+	"github.com/savorum/savorum/internal/httpsecurity"
 	"github.com/savorum/savorum/internal/identity"
 )
 
 type passkeyRepository interface {
 	RecordAuthenticationFailure(context.Context) error
 	Passkeys(context.Context, string) ([]identity.Passkey, error)
-	CheckPasskeyRP(context.Context, string) error
 	StorePasskey(context.Context, string, string, string, webauthn.Credential) error
 	UpdatePasskeyCredential(context.Context, string, webauthn.Credential, webauthn.Credential) error
 	ChangePasskey(context.Context, string, string, string, bool) error
@@ -72,7 +72,7 @@ func (h *Handler) passkeyConfig(ctx context.Context) (*webauthn.WebAuthn, error)
 		return nil, identity.ErrConflict
 	}
 
-	raw, err := h.options.PublicURL(ctx)
+	raw, err := h.authenticationOrigin(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -87,13 +87,9 @@ func (h *Handler) passkeyConfig(ctx context.Context) (*webauthn.WebAuthn, error)
 		return nil, identity.ErrConflict
 	}
 
-	store, ok := h.store.(passkeyRepository)
+	_, ok := h.store.(passkeyRepository)
 	if !ok {
 		return nil, identity.ErrConflict
-	}
-
-	if err = store.CheckPasskeyRP(ctx, hostname); err != nil {
-		return nil, err
 	}
 
 	wa, err := webauthn.New(&webauthn.Config{RPID: hostname, RPDisplayName: "Savorum", RPOrigins: []string{u.Scheme + "://" + u.Host}, AttestationPreference: protocol.PreferNoAttestation, AuthenticatorSelection: protocol.AuthenticatorSelection{ResidentKey: protocol.ResidentKeyRequirementRequired, UserVerification: protocol.VerificationRequired}, Timeouts: webauthn.TimeoutsConfig{Login: webauthn.TimeoutConfig{Enforce: true, Timeout: 5 * time.Minute}, Registration: webauthn.TimeoutConfig{Enforce: true, Timeout: 5 * time.Minute}}})
@@ -109,7 +105,7 @@ func (h *Handler) passkeyAvailable(ctx context.Context) bool {
 	return err == nil
 }
 
-func (h *Handler) loadPasskeyUser(ctx context.Context, id string) (passkeyUser, error) {
+func (h *Handler) loadPasskeyUser(ctx context.Context, id, rp string) (passkeyUser, error) {
 	u, err := h.store.User(ctx, id)
 	if err != nil || u.Status != "active" {
 		return passkeyUser{}, identity.ErrCredentials
@@ -121,8 +117,11 @@ func (h *Handler) loadPasskeyUser(ctx context.Context, id string) (passkeyUser, 
 	}
 
 	p := passkeyUser{user: u}
+
 	for _, key := range keys {
-		p.credentials = append(p.credentials, key.Credential)
+		if key.RPID == rp {
+			p.credentials = append(p.credentials, key.Credential)
+		}
 	}
 
 	return p, nil
@@ -200,7 +199,7 @@ func (h *Handler) beginPasskeyRegistration(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	u, err := h.loadPasskeyUser(r.Context(), getBrowser(r).principal.UserID)
+	u, err := h.loadPasskeyUser(r.Context(), getBrowser(r).principal.UserID, wa.Config.RPID)
 	if err != nil {
 		operationError(w, err)
 		return
@@ -239,7 +238,7 @@ func (h *Handler) finishPasskeyRegistration(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	u, err := h.loadPasskeyUser(r.Context(), getBrowser(r).principal.UserID)
+	u, err := h.loadPasskeyUser(r.Context(), getBrowser(r).principal.UserID, wa.Config.RPID)
 	if err != nil {
 		operationError(w, err)
 		return
@@ -333,7 +332,7 @@ func (h *Handler) finishPasskeyLogin(w http.ResponseWriter, r *http.Request) {
 	var original webauthn.Credential
 
 	handler := func(rawID, handle []byte) (webauthn.User, error) {
-		u, e := h.loadPasskeyUser(r.Context(), string(handle))
+		u, e := h.loadPasskeyUser(r.Context(), string(handle), wa.Config.RPID)
 		if e != nil {
 			return nil, e
 		}
@@ -402,4 +401,16 @@ func (h *Handler) passkeyStore() passkeyRepository {
 	}
 
 	return store
+}
+
+func (h *Handler) authenticationOrigin(ctx context.Context) (string, error) {
+	if origin := httpsecurity.ConnectOrigin(ctx); origin != "" {
+		return origin, nil
+	}
+
+	if h.options.PublicURL == nil {
+		return "", nil
+	}
+
+	return h.options.PublicURL(ctx)
 }

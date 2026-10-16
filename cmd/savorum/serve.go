@@ -27,6 +27,7 @@ import (
 	"github.com/savorum/savorum/internal/automation"
 	"github.com/savorum/savorum/internal/backupstream"
 	"github.com/savorum/savorum/internal/configuration"
+	"github.com/savorum/savorum/internal/connect"
 	"github.com/savorum/savorum/internal/dnssd"
 	"github.com/savorum/savorum/internal/federation"
 	"github.com/savorum/savorum/internal/httpsecurity"
@@ -132,6 +133,9 @@ func serve(rootContext context.Context, deployment configuration.Deployment) err
 		return fmt.Errorf("resolve instance configuration: %w", err)
 	}
 
+	remote := connect.New(deployment.DatabasePath+".connect", deployment.AuthEnabled)
+	resolveConnectOrigin := connectOrigin(remote, deployment.ConnectOrigin)
+
 	application, err := app.New(store, units.DefaultCatalog(), app.Options{
 		EventStreamShutdown: rootContext.Done(),
 		AutomationDirectory: automation.ArtifactDirectory(deployment.DatabasePath),
@@ -144,7 +148,8 @@ func serve(rootContext context.Context, deployment configuration.Deployment) err
 		WebhookFailureLimit: deployment.WebhookFailureLimit,
 		Assets:              assetService, Configuration: configurationService,
 		Providers: deployment.Providers, TokenPolicy: deployment.TokenPolicy, AuthEnabled: deployment.AuthEnabled, SessionIdle: deployment.SessionIdle, SessionAbsolute: deployment.SessionAbsolute,
-		ConnectOrigin:       deployment.ConnectOrigin,
+		ConnectOrigin: deployment.ConnectOrigin,
+		Connect:       remote, ResolveConnectOrigin: resolveConnectOrigin,
 		PrintCacheDirectory: deployment.PrintCacheDirectory,
 		PrintRecipeLimit:    deployment.PrintRecipeLimit,
 	})
@@ -184,8 +189,15 @@ func serve(rootContext context.Context, deployment configuration.Deployment) err
 			settings, err := configurationService.Current(ctx)
 			return settings.PublicURL, err
 		},
-		ConnectOrigin: deployment.ConnectOrigin,
+		ConnectOrigin: deployment.ConnectOrigin, ResolveConnectOrigin: resolveConnectOrigin,
 	})
+
+	connectContext, stopConnect := context.WithCancel(rootContext)
+
+	connectDone := make(chan struct{})
+	go func() { defer close(connectDone); remote.Run(connectContext, httpsecurity.ConnectTransport(handler)) }()
+
+	defer func() { stopConnect(); <-connectDone }()
 
 	server := httpsecurity.NewServer(deployment.ListenAddress, handler)
 	serverErrors := make(chan error, 1)
@@ -496,4 +508,14 @@ func bootstrapBeforeServing(ctx context.Context, store *sqlite.Store, deployment
 	}
 
 	return nil
+}
+
+func connectOrigin(remote *connect.Service, fallback string) func() string {
+	return func() string {
+		if origin := remote.Origin(); origin != "" {
+			return origin
+		}
+
+		return fallback
+	}
 }

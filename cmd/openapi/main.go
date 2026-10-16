@@ -83,6 +83,7 @@ func schemaDefinition() (huma.API, error) {
 	}
 
 	api.RegisterStorageStatus(definition, nil)
+	api.RegisterConnect(definition, nil, true)
 
 	return definition, nil
 }

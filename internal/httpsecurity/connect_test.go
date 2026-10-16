@@ -37,3 +37,49 @@ func TestConnectOriginRequiresLoopbackAgentAndKeepsLocalOrigin(t *testing.T) {
 		})
 	}
 }
+
+func TestIntegratedConnectTrustCannotBeForgedAndOriginChangesLive(t *testing.T) {
+	origin := "https://acorn-apple-basil-basket.via.example.test"
+	handler := NewHandler(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) { w.WriteHeader(http.StatusNoContent) }), Options{
+		ListenAddress: "0.0.0.0:8080", ResolveConnectOrigin: func() string { return origin }, ApplicationOrigin: func(context.Context) (string, error) { return "http://192.168.1.10:8080", nil },
+	})
+	request := func(h http.Handler, host, requestOrigin string) int {
+		r := httptest.NewRequestWithContext(t.Context(), http.MethodPost, "http://"+host+"/api/v1/account/login", nil)
+		r.RemoteAddr = "198.51.100.2:44123"
+		r.Header.Set("Origin", requestOrigin)
+		r.Header.Set("X-Savorum-Connect", "true")
+
+		w := httptest.NewRecorder()
+		h.ServeHTTP(w, r)
+
+		return w.Code
+	}
+
+	host := "acorn-apple-basil-basket.via.example.test"
+	if got := request(handler, host, origin); got != http.StatusMisdirectedRequest {
+		t.Fatalf("LAN listener accepted spoofed tunnel: %d", got)
+	}
+
+	trusted := ConnectTransport(handler)
+	if got := request(trusted, host, origin); got != http.StatusNoContent {
+		t.Fatalf("integrated tunnel rejected: %d", got)
+	}
+
+	if got := request(trusted, host, "https://attacker.test"); got != http.StatusForbidden {
+		t.Fatalf("cross-origin mutation accepted: %d", got)
+	}
+
+	if got := request(trusted, host, "http://192.168.1.10:8080"); got != http.StatusForbidden {
+		t.Fatalf("local origin accepted remotely: %d", got)
+	}
+
+	origin = ""
+
+	if got := request(trusted, host, "https://"+host); got != http.StatusMisdirectedRequest {
+		t.Fatalf("disconnect retained authority: %d", got)
+	}
+
+	if got := request(handler, "192.168.1.10:8080", "http://192.168.1.10:8080"); got != http.StatusNoContent {
+		t.Fatalf("local access lost: %d", got)
+	}
+}

@@ -29,14 +29,6 @@ func TestPasskeyPersistenceOwnershipLastMethodAndRPBinding(t *testing.T) {
 		t.Fatal("stored credential", err)
 	}
 
-	if err = s.CheckPasskeyRP(ctx, "different.test"); !errors.Is(err, identity.ErrConflict) {
-		t.Fatal("RP change accepted")
-	}
-
-	if err = s.StorePasskey(ctx, p.UserID, "Other", "different.test", webauthn.Credential{ID: []byte("other")}); !errors.Is(err, identity.ErrConflict) {
-		t.Fatal("conflicting RP inserted")
-	}
-
 	id := base64.RawURLEncoding.EncodeToString(credential.ID)
 	if err = s.ChangePasskey(ctx, "other-user", id, "Stolen", false); !errors.Is(err, identity.ErrConflict) {
 		t.Fatal("cross-account rename")
@@ -107,5 +99,25 @@ func TestPasskeyCeremonyBindingExpiryAndSingleUse(t *testing.T) {
 
 	if _, err := s.TakeWebAuthnCeremony(ctx, "expired", "", "", "login", "example.test"); !errors.Is(err, identity.ErrCredentials) {
 		t.Fatal("expired ceremony")
+	}
+}
+
+func TestPasskeysAtSeparateOriginsCoexist(t *testing.T) {
+	s := openStore(t.Context(), t)
+
+	user, err := s.BootstrapAdmin(t.Context(), "chef", "Chef", "long password for passkey tests")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for _, rp := range []string{"recipes.example", "acorn-apple-basil-basket.connect.test"} {
+		if err := s.StorePasskey(t.Context(), user.UserID, rp, rp, webauthn.Credential{ID: []byte(rp), PublicKey: []byte("key")}); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	keys, err := s.Passkeys(t.Context(), user.UserID)
+	if err != nil || len(keys) != 2 || keys[0].RPID == keys[1].RPID {
+		t.Fatalf("separate RP credentials: %v %v", keys, err)
 	}
 }

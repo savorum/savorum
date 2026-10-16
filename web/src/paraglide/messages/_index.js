@@ -666,6 +666,25 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{ value1: NonNullable<unknown> }} Common_Step_NumberInputs */
 /** @typedef {{}} Common_Times_SymbolInputs */
 /** @typedef {{}} Common_Untitled_RecipeInputs */
+/** @typedef {{}} Connect_Authentication_RequiredInputs */
+/** @typedef {{}} Connect_Certificate_PendingInputs */
+/** @typedef {{}} Connect_ConnectedInputs */
+/** @typedef {{}} Connect_ConnectingInputs */
+/** @typedef {{}} Connect_DisabledInputs */
+/** @typedef {{}} Connect_DisconnectInputs */
+/** @typedef {{}} Connect_Disconnect_HintInputs */
+/** @typedef {{}} Connect_Get_SetupInputs */
+/** @typedef {{}} Connect_Invalid_SetupInputs */
+/** @typedef {{}} Connect_LedeInputs */
+/** @typedef {{}} Connect_Page_TitleInputs */
+/** @typedef {{}} Connect_PrivacyInputs */
+/** @typedef {{}} Connect_ReconnectingInputs */
+/** @typedef {{}} Connect_SaveInputs */
+/** @typedef {{}} Connect_SetupInputs */
+/** @typedef {{}} Connect_Setup_HintInputs */
+/** @typedef {{}} Connect_Storage_ErrorInputs */
+/** @typedef {{}} Connect_TitleInputs */
+/** @typedef {{}} Connect_UnavailableInputs */
 /** @typedef {{}} Cooking_Add_FailedInputs */
 /** @typedef {{}} Cooking_Add_RecipeInputs */
 /** @typedef {{}} Cooking_Add_ReminderInputs */
@@ -29594,6 +29613,785 @@ export const common_untitled_recipe = /** @type {((inputs?: Common_Untitled_Reci
 	if (locale === "zh-Hans") return __zh_hans1.common_untitled_recipe(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.common_untitled_recipe(inputs)
 	return __en.common_untitled_recipe(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Enable authentication to use Connect." |
+*
+* @param {Connect_Authentication_RequiredInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_authentication_required = /** @type {((inputs?: Connect_Authentication_RequiredInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_Authentication_RequiredInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_authentication_required(inputs)
+	if (locale === "cs") return __cs.connect_authentication_required(inputs)
+	if (locale === "da") return __da.connect_authentication_required(inputs)
+	if (locale === "de") return __de.connect_authentication_required(inputs)
+	if (locale === "el") return __el.connect_authentication_required(inputs)
+	if (locale === "es") return __es.connect_authentication_required(inputs)
+	if (locale === "fi") return __fi.connect_authentication_required(inputs)
+	if (locale === "fr") return __fr.connect_authentication_required(inputs)
+	if (locale === "he") return __he.connect_authentication_required(inputs)
+	if (locale === "hu") return __hu.connect_authentication_required(inputs)
+	if (locale === "id") return __id.connect_authentication_required(inputs)
+	if (locale === "it") return __it.connect_authentication_required(inputs)
+	if (locale === "ja") return __ja.connect_authentication_required(inputs)
+	if (locale === "ko") return __ko.connect_authentication_required(inputs)
+	if (locale === "nb") return __nb.connect_authentication_required(inputs)
+	if (locale === "nl") return __nl.connect_authentication_required(inputs)
+	if (locale === "pl") return __pl.connect_authentication_required(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_authentication_required(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_authentication_required(inputs)
+	if (locale === "ro") return __ro.connect_authentication_required(inputs)
+	if (locale === "ru") return __ru.connect_authentication_required(inputs)
+	if (locale === "sv") return __sv.connect_authentication_required(inputs)
+	if (locale === "th") return __th.connect_authentication_required(inputs)
+	if (locale === "tr") return __tr.connect_authentication_required(inputs)
+	if (locale === "uk") return __uk.connect_authentication_required(inputs)
+	if (locale === "vi") return __vi.connect_authentication_required(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_authentication_required(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_authentication_required(inputs)
+	return __en.connect_authentication_required(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Connected. Preparing the HTTPS certificate." |
+*
+* @param {Connect_Certificate_PendingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_certificate_pending = /** @type {((inputs?: Connect_Certificate_PendingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_Certificate_PendingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_certificate_pending(inputs)
+	if (locale === "cs") return __cs.connect_certificate_pending(inputs)
+	if (locale === "da") return __da.connect_certificate_pending(inputs)
+	if (locale === "de") return __de.connect_certificate_pending(inputs)
+	if (locale === "el") return __el.connect_certificate_pending(inputs)
+	if (locale === "es") return __es.connect_certificate_pending(inputs)
+	if (locale === "fi") return __fi.connect_certificate_pending(inputs)
+	if (locale === "fr") return __fr.connect_certificate_pending(inputs)
+	if (locale === "he") return __he.connect_certificate_pending(inputs)
+	if (locale === "hu") return __hu.connect_certificate_pending(inputs)
+	if (locale === "id") return __id.connect_certificate_pending(inputs)
+	if (locale === "it") return __it.connect_certificate_pending(inputs)
+	if (locale === "ja") return __ja.connect_certificate_pending(inputs)
+	if (locale === "ko") return __ko.connect_certificate_pending(inputs)
+	if (locale === "nb") return __nb.connect_certificate_pending(inputs)
+	if (locale === "nl") return __nl.connect_certificate_pending(inputs)
+	if (locale === "pl") return __pl.connect_certificate_pending(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_certificate_pending(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_certificate_pending(inputs)
+	if (locale === "ro") return __ro.connect_certificate_pending(inputs)
+	if (locale === "ru") return __ru.connect_certificate_pending(inputs)
+	if (locale === "sv") return __sv.connect_certificate_pending(inputs)
+	if (locale === "th") return __th.connect_certificate_pending(inputs)
+	if (locale === "tr") return __tr.connect_certificate_pending(inputs)
+	if (locale === "uk") return __uk.connect_certificate_pending(inputs)
+	if (locale === "vi") return __vi.connect_certificate_pending(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_certificate_pending(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_certificate_pending(inputs)
+	return __en.connect_certificate_pending(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Connected" |
+*
+* @param {Connect_ConnectedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_connected = /** @type {((inputs?: Connect_ConnectedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_ConnectedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_connected(inputs)
+	if (locale === "cs") return __cs.connect_connected(inputs)
+	if (locale === "da") return __da.connect_connected(inputs)
+	if (locale === "de") return __de.connect_connected(inputs)
+	if (locale === "el") return __el.connect_connected(inputs)
+	if (locale === "es") return __es.connect_connected(inputs)
+	if (locale === "fi") return __fi.connect_connected(inputs)
+	if (locale === "fr") return __fr.connect_connected(inputs)
+	if (locale === "he") return __he.connect_connected(inputs)
+	if (locale === "hu") return __hu.connect_connected(inputs)
+	if (locale === "id") return __id.connect_connected(inputs)
+	if (locale === "it") return __it.connect_connected(inputs)
+	if (locale === "ja") return __ja.connect_connected(inputs)
+	if (locale === "ko") return __ko.connect_connected(inputs)
+	if (locale === "nb") return __nb.connect_connected(inputs)
+	if (locale === "nl") return __nl.connect_connected(inputs)
+	if (locale === "pl") return __pl.connect_connected(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_connected(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_connected(inputs)
+	if (locale === "ro") return __ro.connect_connected(inputs)
+	if (locale === "ru") return __ru.connect_connected(inputs)
+	if (locale === "sv") return __sv.connect_connected(inputs)
+	if (locale === "th") return __th.connect_connected(inputs)
+	if (locale === "tr") return __tr.connect_connected(inputs)
+	if (locale === "uk") return __uk.connect_connected(inputs)
+	if (locale === "vi") return __vi.connect_connected(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_connected(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_connected(inputs)
+	return __en.connect_connected(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Connecting…" |
+*
+* @param {Connect_ConnectingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_connecting = /** @type {((inputs?: Connect_ConnectingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_ConnectingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_connecting(inputs)
+	if (locale === "cs") return __cs.connect_connecting(inputs)
+	if (locale === "da") return __da.connect_connecting(inputs)
+	if (locale === "de") return __de.connect_connecting(inputs)
+	if (locale === "el") return __el.connect_connecting(inputs)
+	if (locale === "es") return __es.connect_connecting(inputs)
+	if (locale === "fi") return __fi.connect_connecting(inputs)
+	if (locale === "fr") return __fr.connect_connecting(inputs)
+	if (locale === "he") return __he.connect_connecting(inputs)
+	if (locale === "hu") return __hu.connect_connecting(inputs)
+	if (locale === "id") return __id.connect_connecting(inputs)
+	if (locale === "it") return __it.connect_connecting(inputs)
+	if (locale === "ja") return __ja.connect_connecting(inputs)
+	if (locale === "ko") return __ko.connect_connecting(inputs)
+	if (locale === "nb") return __nb.connect_connecting(inputs)
+	if (locale === "nl") return __nl.connect_connecting(inputs)
+	if (locale === "pl") return __pl.connect_connecting(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_connecting(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_connecting(inputs)
+	if (locale === "ro") return __ro.connect_connecting(inputs)
+	if (locale === "ru") return __ru.connect_connecting(inputs)
+	if (locale === "sv") return __sv.connect_connecting(inputs)
+	if (locale === "th") return __th.connect_connecting(inputs)
+	if (locale === "tr") return __tr.connect_connecting(inputs)
+	if (locale === "uk") return __uk.connect_connecting(inputs)
+	if (locale === "vi") return __vi.connect_connecting(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_connecting(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_connecting(inputs)
+	return __en.connect_connecting(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Disconnected" |
+*
+* @param {Connect_DisabledInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_disabled = /** @type {((inputs?: Connect_DisabledInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_DisabledInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_disabled(inputs)
+	if (locale === "cs") return __cs.connect_disabled(inputs)
+	if (locale === "da") return __da.connect_disabled(inputs)
+	if (locale === "de") return __de.connect_disabled(inputs)
+	if (locale === "el") return __el.connect_disabled(inputs)
+	if (locale === "es") return __es.connect_disabled(inputs)
+	if (locale === "fi") return __fi.connect_disabled(inputs)
+	if (locale === "fr") return __fr.connect_disabled(inputs)
+	if (locale === "he") return __he.connect_disabled(inputs)
+	if (locale === "hu") return __hu.connect_disabled(inputs)
+	if (locale === "id") return __id.connect_disabled(inputs)
+	if (locale === "it") return __it.connect_disabled(inputs)
+	if (locale === "ja") return __ja.connect_disabled(inputs)
+	if (locale === "ko") return __ko.connect_disabled(inputs)
+	if (locale === "nb") return __nb.connect_disabled(inputs)
+	if (locale === "nl") return __nl.connect_disabled(inputs)
+	if (locale === "pl") return __pl.connect_disabled(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_disabled(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_disabled(inputs)
+	if (locale === "ro") return __ro.connect_disabled(inputs)
+	if (locale === "ru") return __ru.connect_disabled(inputs)
+	if (locale === "sv") return __sv.connect_disabled(inputs)
+	if (locale === "th") return __th.connect_disabled(inputs)
+	if (locale === "tr") return __tr.connect_disabled(inputs)
+	if (locale === "uk") return __uk.connect_disabled(inputs)
+	if (locale === "vi") return __vi.connect_disabled(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_disabled(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_disabled(inputs)
+	return __en.connect_disabled(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Disconnect" |
+*
+* @param {Connect_DisconnectInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_disconnect = /** @type {((inputs?: Connect_DisconnectInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_DisconnectInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_disconnect(inputs)
+	if (locale === "cs") return __cs.connect_disconnect(inputs)
+	if (locale === "da") return __da.connect_disconnect(inputs)
+	if (locale === "de") return __de.connect_disconnect(inputs)
+	if (locale === "el") return __el.connect_disconnect(inputs)
+	if (locale === "es") return __es.connect_disconnect(inputs)
+	if (locale === "fi") return __fi.connect_disconnect(inputs)
+	if (locale === "fr") return __fr.connect_disconnect(inputs)
+	if (locale === "he") return __he.connect_disconnect(inputs)
+	if (locale === "hu") return __hu.connect_disconnect(inputs)
+	if (locale === "id") return __id.connect_disconnect(inputs)
+	if (locale === "it") return __it.connect_disconnect(inputs)
+	if (locale === "ja") return __ja.connect_disconnect(inputs)
+	if (locale === "ko") return __ko.connect_disconnect(inputs)
+	if (locale === "nb") return __nb.connect_disconnect(inputs)
+	if (locale === "nl") return __nl.connect_disconnect(inputs)
+	if (locale === "pl") return __pl.connect_disconnect(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_disconnect(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_disconnect(inputs)
+	if (locale === "ro") return __ro.connect_disconnect(inputs)
+	if (locale === "ru") return __ru.connect_disconnect(inputs)
+	if (locale === "sv") return __sv.connect_disconnect(inputs)
+	if (locale === "th") return __th.connect_disconnect(inputs)
+	if (locale === "tr") return __tr.connect_disconnect(inputs)
+	if (locale === "uk") return __uk.connect_disconnect(inputs)
+	if (locale === "vi") return __vi.connect_disconnect(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_disconnect(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_disconnect(inputs)
+	return __en.connect_disconnect(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Disconnect revokes remote access. It does not cancel your subscription." |
+*
+* @param {Connect_Disconnect_HintInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_disconnect_hint = /** @type {((inputs?: Connect_Disconnect_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_Disconnect_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_disconnect_hint(inputs)
+	if (locale === "cs") return __cs.connect_disconnect_hint(inputs)
+	if (locale === "da") return __da.connect_disconnect_hint(inputs)
+	if (locale === "de") return __de.connect_disconnect_hint(inputs)
+	if (locale === "el") return __el.connect_disconnect_hint(inputs)
+	if (locale === "es") return __es.connect_disconnect_hint(inputs)
+	if (locale === "fi") return __fi.connect_disconnect_hint(inputs)
+	if (locale === "fr") return __fr.connect_disconnect_hint(inputs)
+	if (locale === "he") return __he.connect_disconnect_hint(inputs)
+	if (locale === "hu") return __hu.connect_disconnect_hint(inputs)
+	if (locale === "id") return __id.connect_disconnect_hint(inputs)
+	if (locale === "it") return __it.connect_disconnect_hint(inputs)
+	if (locale === "ja") return __ja.connect_disconnect_hint(inputs)
+	if (locale === "ko") return __ko.connect_disconnect_hint(inputs)
+	if (locale === "nb") return __nb.connect_disconnect_hint(inputs)
+	if (locale === "nl") return __nl.connect_disconnect_hint(inputs)
+	if (locale === "pl") return __pl.connect_disconnect_hint(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_disconnect_hint(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_disconnect_hint(inputs)
+	if (locale === "ro") return __ro.connect_disconnect_hint(inputs)
+	if (locale === "ru") return __ru.connect_disconnect_hint(inputs)
+	if (locale === "sv") return __sv.connect_disconnect_hint(inputs)
+	if (locale === "th") return __th.connect_disconnect_hint(inputs)
+	if (locale === "tr") return __tr.connect_disconnect_hint(inputs)
+	if (locale === "uk") return __uk.connect_disconnect_hint(inputs)
+	if (locale === "vi") return __vi.connect_disconnect_hint(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_disconnect_hint(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_disconnect_hint(inputs)
+	return __en.connect_disconnect_hint(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Get setup from Savorum Cloud" |
+*
+* @param {Connect_Get_SetupInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_get_setup = /** @type {((inputs?: Connect_Get_SetupInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_Get_SetupInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_get_setup(inputs)
+	if (locale === "cs") return __cs.connect_get_setup(inputs)
+	if (locale === "da") return __da.connect_get_setup(inputs)
+	if (locale === "de") return __de.connect_get_setup(inputs)
+	if (locale === "el") return __el.connect_get_setup(inputs)
+	if (locale === "es") return __es.connect_get_setup(inputs)
+	if (locale === "fi") return __fi.connect_get_setup(inputs)
+	if (locale === "fr") return __fr.connect_get_setup(inputs)
+	if (locale === "he") return __he.connect_get_setup(inputs)
+	if (locale === "hu") return __hu.connect_get_setup(inputs)
+	if (locale === "id") return __id.connect_get_setup(inputs)
+	if (locale === "it") return __it.connect_get_setup(inputs)
+	if (locale === "ja") return __ja.connect_get_setup(inputs)
+	if (locale === "ko") return __ko.connect_get_setup(inputs)
+	if (locale === "nb") return __nb.connect_get_setup(inputs)
+	if (locale === "nl") return __nl.connect_get_setup(inputs)
+	if (locale === "pl") return __pl.connect_get_setup(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_get_setup(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_get_setup(inputs)
+	if (locale === "ro") return __ro.connect_get_setup(inputs)
+	if (locale === "ru") return __ru.connect_get_setup(inputs)
+	if (locale === "sv") return __sv.connect_get_setup(inputs)
+	if (locale === "th") return __th.connect_get_setup(inputs)
+	if (locale === "tr") return __tr.connect_get_setup(inputs)
+	if (locale === "uk") return __uk.connect_get_setup(inputs)
+	if (locale === "vi") return __vi.connect_get_setup(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_get_setup(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_get_setup(inputs)
+	return __en.connect_get_setup(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "The setup document is invalid. Copy a new one from Savorum Cloud." |
+*
+* @param {Connect_Invalid_SetupInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_invalid_setup = /** @type {((inputs?: Connect_Invalid_SetupInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_Invalid_SetupInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_invalid_setup(inputs)
+	if (locale === "cs") return __cs.connect_invalid_setup(inputs)
+	if (locale === "da") return __da.connect_invalid_setup(inputs)
+	if (locale === "de") return __de.connect_invalid_setup(inputs)
+	if (locale === "el") return __el.connect_invalid_setup(inputs)
+	if (locale === "es") return __es.connect_invalid_setup(inputs)
+	if (locale === "fi") return __fi.connect_invalid_setup(inputs)
+	if (locale === "fr") return __fr.connect_invalid_setup(inputs)
+	if (locale === "he") return __he.connect_invalid_setup(inputs)
+	if (locale === "hu") return __hu.connect_invalid_setup(inputs)
+	if (locale === "id") return __id.connect_invalid_setup(inputs)
+	if (locale === "it") return __it.connect_invalid_setup(inputs)
+	if (locale === "ja") return __ja.connect_invalid_setup(inputs)
+	if (locale === "ko") return __ko.connect_invalid_setup(inputs)
+	if (locale === "nb") return __nb.connect_invalid_setup(inputs)
+	if (locale === "nl") return __nl.connect_invalid_setup(inputs)
+	if (locale === "pl") return __pl.connect_invalid_setup(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_invalid_setup(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_invalid_setup(inputs)
+	if (locale === "ro") return __ro.connect_invalid_setup(inputs)
+	if (locale === "ru") return __ru.connect_invalid_setup(inputs)
+	if (locale === "sv") return __sv.connect_invalid_setup(inputs)
+	if (locale === "th") return __th.connect_invalid_setup(inputs)
+	if (locale === "tr") return __tr.connect_invalid_setup(inputs)
+	if (locale === "uk") return __uk.connect_invalid_setup(inputs)
+	if (locale === "vi") return __vi.connect_invalid_setup(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_invalid_setup(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_invalid_setup(inputs)
+	return __en.connect_invalid_setup(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Remote access without opening router ports." |
+*
+* @param {Connect_LedeInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_lede = /** @type {((inputs?: Connect_LedeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_LedeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_lede(inputs)
+	if (locale === "cs") return __cs.connect_lede(inputs)
+	if (locale === "da") return __da.connect_lede(inputs)
+	if (locale === "de") return __de.connect_lede(inputs)
+	if (locale === "el") return __el.connect_lede(inputs)
+	if (locale === "es") return __es.connect_lede(inputs)
+	if (locale === "fi") return __fi.connect_lede(inputs)
+	if (locale === "fr") return __fr.connect_lede(inputs)
+	if (locale === "he") return __he.connect_lede(inputs)
+	if (locale === "hu") return __hu.connect_lede(inputs)
+	if (locale === "id") return __id.connect_lede(inputs)
+	if (locale === "it") return __it.connect_lede(inputs)
+	if (locale === "ja") return __ja.connect_lede(inputs)
+	if (locale === "ko") return __ko.connect_lede(inputs)
+	if (locale === "nb") return __nb.connect_lede(inputs)
+	if (locale === "nl") return __nl.connect_lede(inputs)
+	if (locale === "pl") return __pl.connect_lede(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_lede(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_lede(inputs)
+	if (locale === "ro") return __ro.connect_lede(inputs)
+	if (locale === "ru") return __ru.connect_lede(inputs)
+	if (locale === "sv") return __sv.connect_lede(inputs)
+	if (locale === "th") return __th.connect_lede(inputs)
+	if (locale === "tr") return __tr.connect_lede(inputs)
+	if (locale === "uk") return __uk.connect_lede(inputs)
+	if (locale === "vi") return __vi.connect_lede(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_lede(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_lede(inputs)
+	return __en.connect_lede(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Connect · Savorum" |
+*
+* @param {Connect_Page_TitleInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_page_title = /** @type {((inputs?: Connect_Page_TitleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_Page_TitleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_page_title(inputs)
+	if (locale === "cs") return __cs.connect_page_title(inputs)
+	if (locale === "da") return __da.connect_page_title(inputs)
+	if (locale === "de") return __de.connect_page_title(inputs)
+	if (locale === "el") return __el.connect_page_title(inputs)
+	if (locale === "es") return __es.connect_page_title(inputs)
+	if (locale === "fi") return __fi.connect_page_title(inputs)
+	if (locale === "fr") return __fr.connect_page_title(inputs)
+	if (locale === "he") return __he.connect_page_title(inputs)
+	if (locale === "hu") return __hu.connect_page_title(inputs)
+	if (locale === "id") return __id.connect_page_title(inputs)
+	if (locale === "it") return __it.connect_page_title(inputs)
+	if (locale === "ja") return __ja.connect_page_title(inputs)
+	if (locale === "ko") return __ko.connect_page_title(inputs)
+	if (locale === "nb") return __nb.connect_page_title(inputs)
+	if (locale === "nl") return __nl.connect_page_title(inputs)
+	if (locale === "pl") return __pl.connect_page_title(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_page_title(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_page_title(inputs)
+	if (locale === "ro") return __ro.connect_page_title(inputs)
+	if (locale === "ru") return __ru.connect_page_title(inputs)
+	if (locale === "sv") return __sv.connect_page_title(inputs)
+	if (locale === "th") return __th.connect_page_title(inputs)
+	if (locale === "tr") return __tr.connect_page_title(inputs)
+	if (locale === "uk") return __uk.connect_page_title(inputs)
+	if (locale === "vi") return __vi.connect_page_title(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_page_title(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_page_title(inputs)
+	return __en.connect_page_title(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Traffic is decrypted here. The service operator controls the assigned domain and can obtain another trusted certificate for it." |
+*
+* @param {Connect_PrivacyInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_privacy = /** @type {((inputs?: Connect_PrivacyInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_PrivacyInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_privacy(inputs)
+	if (locale === "cs") return __cs.connect_privacy(inputs)
+	if (locale === "da") return __da.connect_privacy(inputs)
+	if (locale === "de") return __de.connect_privacy(inputs)
+	if (locale === "el") return __el.connect_privacy(inputs)
+	if (locale === "es") return __es.connect_privacy(inputs)
+	if (locale === "fi") return __fi.connect_privacy(inputs)
+	if (locale === "fr") return __fr.connect_privacy(inputs)
+	if (locale === "he") return __he.connect_privacy(inputs)
+	if (locale === "hu") return __hu.connect_privacy(inputs)
+	if (locale === "id") return __id.connect_privacy(inputs)
+	if (locale === "it") return __it.connect_privacy(inputs)
+	if (locale === "ja") return __ja.connect_privacy(inputs)
+	if (locale === "ko") return __ko.connect_privacy(inputs)
+	if (locale === "nb") return __nb.connect_privacy(inputs)
+	if (locale === "nl") return __nl.connect_privacy(inputs)
+	if (locale === "pl") return __pl.connect_privacy(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_privacy(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_privacy(inputs)
+	if (locale === "ro") return __ro.connect_privacy(inputs)
+	if (locale === "ru") return __ru.connect_privacy(inputs)
+	if (locale === "sv") return __sv.connect_privacy(inputs)
+	if (locale === "th") return __th.connect_privacy(inputs)
+	if (locale === "tr") return __tr.connect_privacy(inputs)
+	if (locale === "uk") return __uk.connect_privacy(inputs)
+	if (locale === "vi") return __vi.connect_privacy(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_privacy(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_privacy(inputs)
+	return __en.connect_privacy(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Reconnecting…" |
+*
+* @param {Connect_ReconnectingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_reconnecting = /** @type {((inputs?: Connect_ReconnectingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_ReconnectingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_reconnecting(inputs)
+	if (locale === "cs") return __cs.connect_reconnecting(inputs)
+	if (locale === "da") return __da.connect_reconnecting(inputs)
+	if (locale === "de") return __de.connect_reconnecting(inputs)
+	if (locale === "el") return __el.connect_reconnecting(inputs)
+	if (locale === "es") return __es.connect_reconnecting(inputs)
+	if (locale === "fi") return __fi.connect_reconnecting(inputs)
+	if (locale === "fr") return __fr.connect_reconnecting(inputs)
+	if (locale === "he") return __he.connect_reconnecting(inputs)
+	if (locale === "hu") return __hu.connect_reconnecting(inputs)
+	if (locale === "id") return __id.connect_reconnecting(inputs)
+	if (locale === "it") return __it.connect_reconnecting(inputs)
+	if (locale === "ja") return __ja.connect_reconnecting(inputs)
+	if (locale === "ko") return __ko.connect_reconnecting(inputs)
+	if (locale === "nb") return __nb.connect_reconnecting(inputs)
+	if (locale === "nl") return __nl.connect_reconnecting(inputs)
+	if (locale === "pl") return __pl.connect_reconnecting(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_reconnecting(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_reconnecting(inputs)
+	if (locale === "ro") return __ro.connect_reconnecting(inputs)
+	if (locale === "ru") return __ru.connect_reconnecting(inputs)
+	if (locale === "sv") return __sv.connect_reconnecting(inputs)
+	if (locale === "th") return __th.connect_reconnecting(inputs)
+	if (locale === "tr") return __tr.connect_reconnecting(inputs)
+	if (locale === "uk") return __uk.connect_reconnecting(inputs)
+	if (locale === "vi") return __vi.connect_reconnecting(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_reconnecting(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_reconnecting(inputs)
+	return __en.connect_reconnecting(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Save and connect" |
+*
+* @param {Connect_SaveInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_save = /** @type {((inputs?: Connect_SaveInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_SaveInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_save(inputs)
+	if (locale === "cs") return __cs.connect_save(inputs)
+	if (locale === "da") return __da.connect_save(inputs)
+	if (locale === "de") return __de.connect_save(inputs)
+	if (locale === "el") return __el.connect_save(inputs)
+	if (locale === "es") return __es.connect_save(inputs)
+	if (locale === "fi") return __fi.connect_save(inputs)
+	if (locale === "fr") return __fr.connect_save(inputs)
+	if (locale === "he") return __he.connect_save(inputs)
+	if (locale === "hu") return __hu.connect_save(inputs)
+	if (locale === "id") return __id.connect_save(inputs)
+	if (locale === "it") return __it.connect_save(inputs)
+	if (locale === "ja") return __ja.connect_save(inputs)
+	if (locale === "ko") return __ko.connect_save(inputs)
+	if (locale === "nb") return __nb.connect_save(inputs)
+	if (locale === "nl") return __nl.connect_save(inputs)
+	if (locale === "pl") return __pl.connect_save(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_save(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_save(inputs)
+	if (locale === "ro") return __ro.connect_save(inputs)
+	if (locale === "ru") return __ru.connect_save(inputs)
+	if (locale === "sv") return __sv.connect_save(inputs)
+	if (locale === "th") return __th.connect_save(inputs)
+	if (locale === "tr") return __tr.connect_save(inputs)
+	if (locale === "uk") return __uk.connect_save(inputs)
+	if (locale === "vi") return __vi.connect_save(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_save(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_save(inputs)
+	return __en.connect_save(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Setup document" |
+*
+* @param {Connect_SetupInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_setup = /** @type {((inputs?: Connect_SetupInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_SetupInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_setup(inputs)
+	if (locale === "cs") return __cs.connect_setup(inputs)
+	if (locale === "da") return __da.connect_setup(inputs)
+	if (locale === "de") return __de.connect_setup(inputs)
+	if (locale === "el") return __el.connect_setup(inputs)
+	if (locale === "es") return __es.connect_setup(inputs)
+	if (locale === "fi") return __fi.connect_setup(inputs)
+	if (locale === "fr") return __fr.connect_setup(inputs)
+	if (locale === "he") return __he.connect_setup(inputs)
+	if (locale === "hu") return __hu.connect_setup(inputs)
+	if (locale === "id") return __id.connect_setup(inputs)
+	if (locale === "it") return __it.connect_setup(inputs)
+	if (locale === "ja") return __ja.connect_setup(inputs)
+	if (locale === "ko") return __ko.connect_setup(inputs)
+	if (locale === "nb") return __nb.connect_setup(inputs)
+	if (locale === "nl") return __nl.connect_setup(inputs)
+	if (locale === "pl") return __pl.connect_setup(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_setup(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_setup(inputs)
+	if (locale === "ro") return __ro.connect_setup(inputs)
+	if (locale === "ru") return __ru.connect_setup(inputs)
+	if (locale === "sv") return __sv.connect_setup(inputs)
+	if (locale === "th") return __th.connect_setup(inputs)
+	if (locale === "tr") return __tr.connect_setup(inputs)
+	if (locale === "uk") return __uk.connect_setup(inputs)
+	if (locale === "vi") return __vi.connect_setup(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_setup(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_setup(inputs)
+	return __en.connect_setup(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Paste a new setup document from Cloud. Each document works once." |
+*
+* @param {Connect_Setup_HintInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_setup_hint = /** @type {((inputs?: Connect_Setup_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_Setup_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_setup_hint(inputs)
+	if (locale === "cs") return __cs.connect_setup_hint(inputs)
+	if (locale === "da") return __da.connect_setup_hint(inputs)
+	if (locale === "de") return __de.connect_setup_hint(inputs)
+	if (locale === "el") return __el.connect_setup_hint(inputs)
+	if (locale === "es") return __es.connect_setup_hint(inputs)
+	if (locale === "fi") return __fi.connect_setup_hint(inputs)
+	if (locale === "fr") return __fr.connect_setup_hint(inputs)
+	if (locale === "he") return __he.connect_setup_hint(inputs)
+	if (locale === "hu") return __hu.connect_setup_hint(inputs)
+	if (locale === "id") return __id.connect_setup_hint(inputs)
+	if (locale === "it") return __it.connect_setup_hint(inputs)
+	if (locale === "ja") return __ja.connect_setup_hint(inputs)
+	if (locale === "ko") return __ko.connect_setup_hint(inputs)
+	if (locale === "nb") return __nb.connect_setup_hint(inputs)
+	if (locale === "nl") return __nl.connect_setup_hint(inputs)
+	if (locale === "pl") return __pl.connect_setup_hint(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_setup_hint(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_setup_hint(inputs)
+	if (locale === "ro") return __ro.connect_setup_hint(inputs)
+	if (locale === "ru") return __ru.connect_setup_hint(inputs)
+	if (locale === "sv") return __sv.connect_setup_hint(inputs)
+	if (locale === "th") return __th.connect_setup_hint(inputs)
+	if (locale === "tr") return __tr.connect_setup_hint(inputs)
+	if (locale === "uk") return __uk.connect_setup_hint(inputs)
+	if (locale === "vi") return __vi.connect_setup_hint(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_setup_hint(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_setup_hint(inputs)
+	return __en.connect_setup_hint(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Connect could not read its saved setup. Check appdata permissions." |
+*
+* @param {Connect_Storage_ErrorInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_storage_error = /** @type {((inputs?: Connect_Storage_ErrorInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_Storage_ErrorInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_storage_error(inputs)
+	if (locale === "cs") return __cs.connect_storage_error(inputs)
+	if (locale === "da") return __da.connect_storage_error(inputs)
+	if (locale === "de") return __de.connect_storage_error(inputs)
+	if (locale === "el") return __el.connect_storage_error(inputs)
+	if (locale === "es") return __es.connect_storage_error(inputs)
+	if (locale === "fi") return __fi.connect_storage_error(inputs)
+	if (locale === "fr") return __fr.connect_storage_error(inputs)
+	if (locale === "he") return __he.connect_storage_error(inputs)
+	if (locale === "hu") return __hu.connect_storage_error(inputs)
+	if (locale === "id") return __id.connect_storage_error(inputs)
+	if (locale === "it") return __it.connect_storage_error(inputs)
+	if (locale === "ja") return __ja.connect_storage_error(inputs)
+	if (locale === "ko") return __ko.connect_storage_error(inputs)
+	if (locale === "nb") return __nb.connect_storage_error(inputs)
+	if (locale === "nl") return __nl.connect_storage_error(inputs)
+	if (locale === "pl") return __pl.connect_storage_error(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_storage_error(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_storage_error(inputs)
+	if (locale === "ro") return __ro.connect_storage_error(inputs)
+	if (locale === "ru") return __ru.connect_storage_error(inputs)
+	if (locale === "sv") return __sv.connect_storage_error(inputs)
+	if (locale === "th") return __th.connect_storage_error(inputs)
+	if (locale === "tr") return __tr.connect_storage_error(inputs)
+	if (locale === "uk") return __uk.connect_storage_error(inputs)
+	if (locale === "vi") return __vi.connect_storage_error(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_storage_error(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_storage_error(inputs)
+	return __en.connect_storage_error(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Savorum Connect" |
+*
+* @param {Connect_TitleInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_title = /** @type {((inputs?: Connect_TitleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_TitleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_title(inputs)
+	if (locale === "cs") return __cs.connect_title(inputs)
+	if (locale === "da") return __da.connect_title(inputs)
+	if (locale === "de") return __de.connect_title(inputs)
+	if (locale === "el") return __el.connect_title(inputs)
+	if (locale === "es") return __es.connect_title(inputs)
+	if (locale === "fi") return __fi.connect_title(inputs)
+	if (locale === "fr") return __fr.connect_title(inputs)
+	if (locale === "he") return __he.connect_title(inputs)
+	if (locale === "hu") return __hu.connect_title(inputs)
+	if (locale === "id") return __id.connect_title(inputs)
+	if (locale === "it") return __it.connect_title(inputs)
+	if (locale === "ja") return __ja.connect_title(inputs)
+	if (locale === "ko") return __ko.connect_title(inputs)
+	if (locale === "nb") return __nb.connect_title(inputs)
+	if (locale === "nl") return __nl.connect_title(inputs)
+	if (locale === "pl") return __pl.connect_title(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_title(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_title(inputs)
+	if (locale === "ro") return __ro.connect_title(inputs)
+	if (locale === "ru") return __ru.connect_title(inputs)
+	if (locale === "sv") return __sv.connect_title(inputs)
+	if (locale === "th") return __th.connect_title(inputs)
+	if (locale === "tr") return __tr.connect_title(inputs)
+	if (locale === "uk") return __uk.connect_title(inputs)
+	if (locale === "vi") return __vi.connect_title(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_title(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_title(inputs)
+	return __en.connect_title(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Connect is unavailable. Check your subscription and setup. Savorum will retry automatically." |
+*
+* @param {Connect_UnavailableInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const connect_unavailable = /** @type {((inputs?: Connect_UnavailableInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Connect_UnavailableInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.connect_unavailable(inputs)
+	if (locale === "cs") return __cs.connect_unavailable(inputs)
+	if (locale === "da") return __da.connect_unavailable(inputs)
+	if (locale === "de") return __de.connect_unavailable(inputs)
+	if (locale === "el") return __el.connect_unavailable(inputs)
+	if (locale === "es") return __es.connect_unavailable(inputs)
+	if (locale === "fi") return __fi.connect_unavailable(inputs)
+	if (locale === "fr") return __fr.connect_unavailable(inputs)
+	if (locale === "he") return __he.connect_unavailable(inputs)
+	if (locale === "hu") return __hu.connect_unavailable(inputs)
+	if (locale === "id") return __id.connect_unavailable(inputs)
+	if (locale === "it") return __it.connect_unavailable(inputs)
+	if (locale === "ja") return __ja.connect_unavailable(inputs)
+	if (locale === "ko") return __ko.connect_unavailable(inputs)
+	if (locale === "nb") return __nb.connect_unavailable(inputs)
+	if (locale === "nl") return __nl.connect_unavailable(inputs)
+	if (locale === "pl") return __pl.connect_unavailable(inputs)
+	if (locale === "pt-BR") return __pt_br2.connect_unavailable(inputs)
+	if (locale === "pt-PT") return __pt_pt2.connect_unavailable(inputs)
+	if (locale === "ro") return __ro.connect_unavailable(inputs)
+	if (locale === "ru") return __ru.connect_unavailable(inputs)
+	if (locale === "sv") return __sv.connect_unavailable(inputs)
+	if (locale === "th") return __th.connect_unavailable(inputs)
+	if (locale === "tr") return __tr.connect_unavailable(inputs)
+	if (locale === "uk") return __uk.connect_unavailable(inputs)
+	if (locale === "vi") return __vi.connect_unavailable(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.connect_unavailable(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.connect_unavailable(inputs)
+	return __en.connect_unavailable(inputs)
 });
 /**
 * | output |

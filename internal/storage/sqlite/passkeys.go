@@ -50,20 +50,6 @@ func (s *Store) Passkeys(ctx context.Context, userID string) ([]identity.Passkey
 	return out, credentialOperationError("iterate passkeys", rows.Err())
 }
 
-// CheckPasskeyRP refuses a hostname change while credentials remain bound to the old RP.
-func (s *Store) CheckPasskeyRP(ctx context.Context, rp string) error {
-	var n int
-	if err := s.db.QueryRowContext(ctx, `SELECT count(*) FROM passkeys WHERE rp_id<>?`, rp).Scan(&n); err != nil {
-		return fmt.Errorf("CheckPasskeyRP: %w", err)
-	}
-
-	if n != 0 {
-		return fmt.Errorf("passkey RP ID change would strand existing credentials: %w", identity.ErrConflict)
-	}
-
-	return nil
-}
-
 // StorePasskey persists a verified credential and audits enrollment atomically.
 func (s *Store) StorePasskey(ctx context.Context, userID, name, rp string, c webauthn.Credential) error {
 	name = strings.TrimSpace(name)
@@ -83,20 +69,11 @@ func (s *Store) StorePasskey(ctx context.Context, userID, name, rp string, c web
 	defer tx.Rollback()
 
 	var n int
-	if err = tx.QueryRowContext(ctx, `SELECT count(*) FROM passkeys WHERE user_id=? OR rp_id<>?`, userID, rp).Scan(&n); err != nil {
+	if err = tx.QueryRowContext(ctx, `SELECT count(*) FROM passkeys WHERE user_id=?`, userID).Scan(&n); err != nil {
 		return fmt.Errorf("StorePasskey: %w", err)
 	}
 
 	if n >= 20 {
-		return identity.ErrConflict
-	}
-
-	var mismatched int
-	if err = tx.QueryRowContext(ctx, `SELECT count(*) FROM passkeys WHERE rp_id<>?`, rp).Scan(&mismatched); err != nil {
-		return fmt.Errorf("StorePasskey: %w", err)
-	}
-
-	if mismatched > 0 {
 		return identity.ErrConflict
 	}
 

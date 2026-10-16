@@ -1,6 +1,7 @@
 package federation
 
 import (
+	"context"
 	"crypto"
 	"crypto/tls"
 	"crypto/x509"
@@ -11,13 +12,14 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/crewjam/saml"
 	dsig "github.com/russellhaering/goxmldsig"
 )
 
-func (h *Handler) samlLocalProvider(p Provider) (*saml.ServiceProvider, error) {
+func (h *Handler) samlLocalProvider(ctx context.Context, p Provider) (*saml.ServiceProvider, error) {
 	c := p.SAML
 
 	pair, e := tls.LoadX509KeyPair(c.CertificateFile, c.PrivateKeyFile)
@@ -35,16 +37,18 @@ func (h *Handler) samlLocalProvider(p Provider) (*saml.ServiceProvider, error) {
 		return nil, errors.New("invalid SP signer")
 	}
 
-	metadataURL, _ := url.Parse(h.endpoint(p, "metadata"))
-	acs, _ := url.Parse(h.endpoint(p, "acs"))
+	metadataURL, _ := url.Parse(h.endpoint(ctx, p, "metadata"))
+	acs, _ := url.Parse(h.endpoint(ctx, p, "acs"))
 
-	sp := &saml.ServiceProvider{EntityID: metadataURL.String(), MetadataURL: *metadataURL, AcsURL: *acs, Key: key, Certificate: cert, AuthnNameIDFormat: saml.PersistentNameIDFormat, AllowIDPInitiated: false, SignatureMethod: dsig.RSASHA256SignatureMethod}
+	entityID := strings.TrimRight(h.options.PublicURL, "/") + "/api/v1/auth/" + p.ID + "/metadata"
+
+	sp := &saml.ServiceProvider{EntityID: entityID, MetadataURL: *metadataURL, AcsURL: *acs, Key: key, Certificate: cert, AuthnNameIDFormat: saml.PersistentNameIDFormat, AllowIDPInitiated: false, SignatureMethod: dsig.RSASHA256SignatureMethod}
 
 	return sp, nil
 }
 
 func (h *Handler) samlProvider(r *http.Request, p Provider) (*saml.ServiceProvider, error) {
-	sp, err := h.samlLocalProvider(p)
+	sp, err := h.samlLocalProvider(r.Context(), p)
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +135,7 @@ func (h *Handler) samlMetadata(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sp, e := h.samlLocalProvider(p)
+	sp, e := h.samlLocalProvider(r.Context(), p)
 	if e != nil {
 		h.fail(w, r)
 		return

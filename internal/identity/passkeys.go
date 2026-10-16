@@ -14,5 +14,5 @@ type Passkey struct {
 	Name       string              `json:"name"`
 	CreatedAt  time.Time           `json:"created_at"`
 	LastUsedAt *time.Time          `json:"last_used_at"`
-	RPID       string              `json:"-"`
+	RPID       string              `json:"rp_id"`
 }
