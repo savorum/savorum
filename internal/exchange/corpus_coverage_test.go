@@ -1,7 +1,6 @@
 package exchange_test
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -10,6 +9,7 @@ import (
 
 	"github.com/savorum/savorum/internal/corpuscheck"
 	"github.com/savorum/savorum/internal/recipe"
+	"github.com/savorum/savorum/internal/sref"
 )
 
 // requiredSliceConstructs is the preservation coverage the pinned corpus slice
@@ -156,12 +156,37 @@ func readSliceTarget(t *testing.T, root string, fixture corpusSliceCase) recipe.
 		t.Fatalf("%s: %v", fixture.ID, err)
 	}
 
-	var document recipe.Document
-	if err := json.Unmarshal(data, &document); err != nil {
+	document, err := sref.Decode(data)
+	if err != nil {
 		t.Fatalf("%s: %v", fixture.ID, err)
 	}
 
 	return document
+}
+
+func TestCorpusCoverageReadsReleasedSREFYield(t *testing.T) {
+	t.Parallel()
+
+	root := t.TempDir()
+
+	directory := filepath.Join(root, "evaluations", "sref", srefEvaluationRevision, "targets")
+	if err := os.MkdirAll(directory, 0o700); err != nil {
+		t.Fatal(err)
+	}
+
+	data := []byte(`{
+		"sref":{"version":"0.1.0","unit_registry":"0.1.0"},
+		"id":"coverage-example","title":"Example","yield":{"text":"4 servings"},
+		"ingredient_sections":[{"id":"main","ingredients":[{"id":"salt","name":"salt"}]}]
+	}`)
+	if err := os.WriteFile(filepath.Join(directory, "coverage-example.recipe.json"), data, 0o600); err != nil {
+		t.Fatal(err)
+	}
+
+	document := readSliceTarget(t, root, corpusSliceCase{ID: "coverage-example"})
+	if !corpuscheck.Of(document)[corpuscheck.Yield] || document.FirstYield().Text != "4 servings" {
+		t.Fatal("released SREF yield is missing from the coverage inventory")
+	}
 }
 
 // everyConstructDocument carries one of everything corpuscheck can report, so

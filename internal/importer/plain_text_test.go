@@ -38,7 +38,7 @@ func TestPlainTextWithoutHeadingsUsesConservativeHeuristics(t *testing.T) {
 	}
 
 	doc := batch.Recipes[0].Document
-	if len(doc.IngredientSections) != 1 || len(doc.IngredientSections[0].Ingredients) != 2 || len(doc.Notes) != 1 || len(doc.InstructionSections) != 0 {
+	if len(doc.IngredientSections) != 1 || len(doc.IngredientSections[0].Ingredients) != 2 || len(doc.Notes) != 0 || len(doc.InstructionSections) != 1 || len(doc.InstructionSections[0].Steps) != 1 || doc.InstructionSections[0].Steps[0].Text != "Whisk well and serve." {
 		t.Fatalf("document=%#v", doc)
 	}
 }

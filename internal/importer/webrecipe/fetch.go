@@ -73,7 +73,8 @@ func Fetch(ctx context.Context, rawURL string) (*Page, error) {
 		return nil, failuref(FetchRejected, nil, "that address could not be requested")
 	}
 
-	request.Header.Set("Accept", "text/html,application/xhtml+xml,application/ld+json;q=0.9,application/json;q=0.8")
+	request.Header.Set("Accept", "text/html,application/xhtml+xml,application/ld+json;q=0.9,application/json;q=0.8,application/atom+xml;q=0.7")
+
 	request.Header.Set("Accept-Language", "en;q=0.9,*;q=0.5")
 	request.Header.Set("User-Agent", userAgent)
 
@@ -84,7 +85,12 @@ func Fetch(ctx context.Context, rawURL string) (*Page, error) {
 	defer response.Body.Close()
 
 	if response.StatusCode < 200 || response.StatusCode >= 300 {
-		return nil, failuref(FetchBlocked, nil, "the site answered %s", strings.TrimSpace(response.Status))
+		message := "the site answered " + strings.TrimSpace(response.Status)
+		if response.StatusCode == http.StatusTooManyRequests {
+			message = "This site is limiting requests. Try again later."
+		}
+
+		return nil, &Failure{Code: FetchBlocked, Message: message, StatusCode: response.StatusCode}
 	}
 
 	mediaType := strings.ToLower(strings.TrimSpace(strings.Split(response.Header.Get("Content-Type"), ";")[0]))
@@ -204,7 +210,7 @@ func blockedIP(ip net.IP) bool { return httpsecurity.NonPublicIP(ip) }
 
 func supportedPageType(mediaType string) bool {
 	switch mediaType {
-	case "", "text/html", "application/xhtml+xml", "application/json", "application/ld+json", "text/plain":
+	case "", "text/html", "application/xhtml+xml", "application/json", "application/ld+json", "text/plain", "application/atom+xml":
 		return true
 	}
 

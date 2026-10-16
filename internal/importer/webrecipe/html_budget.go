@@ -7,10 +7,12 @@ import (
 	"golang.org/x/net/html"
 )
 
-func parseHTML(ctx context.Context, body []byte) (*html.Node, error) {
+const maximumHTMLTokenBytes = 256 << 10
+
+func parseHTML(ctx context.Context, body []byte, options ...boundedhtml.ParseOption) (*html.Node, error) {
 	if len(body) > maximumStructuredBytes {
 		return nil, errExtractionLimited
 	}
 
-	return boundedhtml.Parse(ctx, body, boundedhtml.Limits{Nodes: maximumDOMNodes, Work: maximumExtractionWork, TokenBytes: 256 << 10, AttributeBytes: 64 << 10})
+	return boundedhtml.Parse(ctx, body, boundedhtml.Limits{Nodes: maximumDOMNodes, Work: maximumExtractionWork, TokenBytes: maximumHTMLTokenBytes, AttributeBytes: 64 << 10}, options...)
 }

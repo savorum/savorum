@@ -14,7 +14,7 @@ func TestHTMLBuilderBudgets(t *testing.T) {
 	for name, markup := range map[string]string{
 		"script hidden attribute": `<script><!--</script><div title="` + strings.Repeat("x", 70<<10) + `">-->`,
 		"attributes":              `<div title="` + strings.Repeat("x", 65536) + `">`,
-		"token buffer":            "<script>" + strings.Repeat("x", 256<<10) + "</script>",
+		"token buffer":            "<p>" + strings.Repeat("x", maximumHTMLTokenBytes) + "</p>",
 		"text concatenation":      strings.Repeat("texttext</ignored>", 4000),
 		"reconstructed":           strings.Repeat("<b><i>", 150) + "<p>text",
 		"text":                    strings.Repeat("x", maximumStructuredBytes+1),

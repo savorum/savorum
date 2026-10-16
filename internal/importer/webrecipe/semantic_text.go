@@ -68,7 +68,11 @@ func (w *semanticTextWriter) open(node *html.Node, marker string) {
 	}
 
 	switch node.Data {
-	case "p", "div", "section", "ul", "ol":
+	case "p":
+		if node.Parent == nil || node.Parent.Data != "li" || node.PrevSibling != nil {
+			w.text.WriteString("\n\n")
+		}
+	case "div", "section", "ul", "ol":
 		w.text.WriteString("\n\n")
 	case "br":
 		w.text.WriteByte('\n')

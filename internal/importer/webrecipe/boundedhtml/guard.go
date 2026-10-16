@@ -52,6 +52,15 @@ var ErrLimit = errors.New("HTML resource budget exceeded")
 // and each element's attributes. It does not bound process RSS.
 type Limits struct{ Nodes, Work, TokenBytes, AttributeBytes int }
 
+// ParseOption configures access to source data during tree construction.
+type ParseOption func(*parser)
+
+// ObserveRawText visits raw-text bodies without copying them into token buffers.
+// The body aliases the input and must not be modified.
+func ObserveRawText(visit func(*Node, []byte)) ParseOption {
+	return func(p *parser) { p.rawText = visit }
+}
+
 type stopped struct{ err error }
 
 //nolint:containedctx // one synchronous parse owns the guard
@@ -73,9 +82,8 @@ func (g *guard) spend(amount int) {
 	g.work += amount
 }
 
-// Parse preserves the pinned HTML5 tree builder with reservations at allocation
-// and work sites, using its actual tokenizer state rather than a shadow scan.
-func Parse(ctx context.Context, body []byte, limits Limits) (root *Node, err error) {
+// Parse builds an HTML5 tree within the allocation and work limits.
+func Parse(ctx context.Context, body []byte, limits Limits, options ...ParseOption) (root *Node, err error) {
 	defer func() {
 		if v := recover(); v != nil {
 			if stop, ok := v.(stopped); ok {
@@ -88,7 +96,11 @@ func Parse(ctx context.Context, body []byte, limits Limits) (root *Node, err err
 		}
 	}()
 
-	p := &parser{guard: &guard{ctx: ctx, limits: limits}, tokenizer: html.NewTokenizer(&contextReader{ctx: ctx, reader: bytes.NewReader(body)}), scripting: true, framesetOK: true, im: initialIM}
+	p := &parser{input: body, guard: &guard{ctx: ctx, limits: limits}, tokenizer: html.NewTokenizer(&contextReader{ctx: ctx, reader: bytes.NewReader(body)}), scripting: true, framesetOK: true, im: initialIM}
+	for _, option := range options {
+		option(p)
+	}
+
 	p.tokenizer.SetMaxBuf(limits.TokenBytes)
 
 	p.doc = p.newNode(Node{Type: DocumentNode})

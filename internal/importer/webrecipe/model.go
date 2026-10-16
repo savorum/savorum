@@ -48,9 +48,10 @@ const (
 
 // Failure is an extraction or fetch error carrying the classification above.
 type Failure struct {
-	Code    FailureCode
-	Message string
-	Err     error
+	Code       FailureCode
+	Message    string
+	Err        error
+	StatusCode int
 }
 
 func (f *Failure) Error() string {

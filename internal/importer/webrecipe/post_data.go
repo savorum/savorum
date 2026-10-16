@@ -2,6 +2,7 @@ package webrecipe
 
 import (
 	"context"
+	"encoding/json"
 	"net/url"
 	"regexp"
 	"slices"
@@ -21,6 +22,9 @@ func (p *Post) readPageData(ctx context.Context, document *document) error {
 
 	for _, script := range elementsByTag(document.root, "script") {
 		body := strings.TrimSpace(scriptData(script))
+		if raw := document.scripts[script]; raw != nil {
+			body = strings.TrimSpace(string(raw))
+		}
 
 		kind := strings.ToLower(strings.TrimSpace(strings.Split(attribute(script, "type"), ";")[0]))
 		if kind != "application/json" {
@@ -34,19 +38,103 @@ func (p *Post) readPageData(ctx context.Context, document *document) error {
 			body = body[prefix[1]-1:]
 		}
 
-		values, _, err := parseJSONValues(ctx, document.budget, body)
-		if err != nil {
+		if err := visitIdentifiedJSONObjects(ctx, document.budget, body, identifiers, func(object map[string]any) {
+			p.readIdentifiedCaption(object, identifiers)
+		}); err != nil {
 			return controlledExtractionError(err)
-		}
-
-		for _, value := range values {
-			walkObjects(value, func(object map[string]any, _ string, _ []string) {
-				p.readIdentifiedCaption(object, identifiers)
-			})
 		}
 	}
 
 	return nil
+}
+
+// Only bounded objects containing a requested identifier are decoded. Large
+// surrounding application state is scanned without building its object tree.
+func visitIdentifiedJSONObjects(ctx context.Context, budget *workBudget, text string, identifiers []string, visit func(map[string]any)) error {
+	type frame struct {
+		start      int
+		identified bool
+	}
+
+	var stack []frame
+
+	candidates := 0
+
+	for i := 0; i < len(text); i++ {
+		if err := budget.spend(1); err != nil {
+			return err
+		}
+
+		c := text[i]
+
+		switch c {
+		case '"':
+			end, err := jsonStringEnd(budget, text, i+1)
+			if err != nil {
+				return err
+			}
+
+			if len(stack) > 0 && text[stack[len(stack)-1].start] == '{' && identifierLiteral(text[i:end], identifiers) {
+				stack[len(stack)-1].identified = true
+			}
+
+			i = end - 1
+		case '{', '[':
+			if len(stack) == maximumJSONNesting {
+				return errExtractionLimited
+			}
+
+			stack = append(stack, frame{start: i})
+		case '}', ']':
+			if len(stack) == 0 {
+				continue
+			}
+
+			f := stack[len(stack)-1]
+
+			stack = stack[:len(stack)-1]
+			if (text[f.start] == '{') != (c == '}') {
+				stack = stack[:0]
+				continue
+			}
+
+			if !boundedIdentifiedObject(f.identified, i+1-f.start) {
+				continue
+			}
+
+			candidates++
+			if candidates > maximumJSONSpans {
+				return errExtractionLimited
+			}
+
+			if err := visitJSONObject(ctx, budget, text[f.start:i+1], visit); err != nil {
+				return err
+			}
+		}
+	}
+
+	return budget.spend(0)
+}
+
+func boundedIdentifiedObject(identified bool, size int) bool {
+	return identified && size <= maximumHTMLTokenBytes
+}
+
+func identifierLiteral(literal string, identifiers []string) bool {
+	for _, id := range identifiers {
+		if literal == `"`+id+`"` {
+			return true
+		}
+
+		if len(literal) <= 6*len(id)+2 && strings.Contains(literal, `\`) {
+			var value string
+			if json.Unmarshal([]byte(literal), &value) == nil && value == id {
+				return true
+			}
+		}
+	}
+
+	return false
 }
 
 var assignedJSONPattern = regexp.MustCompile(`^(?:var|let|const)\s+[A-Za-z_$][A-Za-z0-9_$]*\s*=\s*[\[{]`)
@@ -216,4 +304,38 @@ func (p *Post) readPostImages(object map[string]any) {
 			p.addImage(best)
 		}
 	}
+}
+
+func jsonStringEnd(budget *workBudget, text string, start int) (int, error) {
+	escaped := false
+
+	for i := start; i < len(text); i++ {
+		if err := budget.spend(1); err != nil {
+			return 0, err
+		}
+
+		switch {
+		case escaped:
+			escaped = false
+		case text[i] == '\\':
+			escaped = true
+		case text[i] == '"':
+			return i + 1, nil
+		}
+	}
+
+	return len(text), nil
+}
+
+func visitJSONObject(ctx context.Context, budget *workBudget, text string, visit func(map[string]any)) error {
+	if err := budget.spend(len(text)); err != nil {
+		return err
+	}
+
+	var object map[string]any
+	if err := decodeJSON(ctx, text, &object); err == nil {
+		visit(object)
+	}
+
+	return nil
 }

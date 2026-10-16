@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math/rand/v2"
 	"os"
 	"runtime"
 	"strings"
@@ -17,6 +18,25 @@ import (
 
 func testLimits() Limits {
 	return Limits{Nodes: 200000, Work: 32 << 20, TokenBytes: 256 << 10, AttributeBytes: 64 << 10}
+}
+
+func TestRawTextObserverUsesHTMLContext(t *testing.T) {
+	data := strings.Repeat("x", testLimits().TokenBytes+1)
+	body := []byte(`<!-- <script>comment</script> --><textarea><script>text</script></textarea><script type="application/json">` + data + `</script><p>After</p>`)
+	seen := 0
+
+	_, err := Parse(t.Context(), body, testLimits(), ObserveRawText(func(node *Node, raw []byte) {
+		if node.Data == "script" {
+			seen++
+
+			if string(raw) != data || node.FirstChild != nil {
+				t.Fatal("raw script boundary or allocation")
+			}
+		}
+	}))
+	if err != nil || seen != 1 {
+		t.Fatalf("observed %d scripts: %v", seen, err)
+	}
 }
 
 func TestPinnedDocumentFixtures(t *testing.T) {
@@ -324,5 +344,128 @@ func TestRepeatedNamesAndAttributeKeysAreReserved(t *testing.T) {
 
 			operation(p)
 		}()
+	}
+}
+
+func TestOversizedScriptsPreserveHTMLBoundaries(t *testing.T) {
+	for name, script := range map[string]string{
+		"normal":         `const data = "` + strings.Repeat("x", 300<<10) + `";</SCRIPT><p>after`,
+		"escaped":        `<!--` + strings.Repeat("x", 300<<10) + `</script><p>after`,
+		"double escaped": `<!--<script>` + strings.Repeat("x", 300<<10) + `</script><meta name="hidden">--></script><p>after`,
+		"false end":      strings.Repeat("x", 300<<10) + `</scripture><meta name="hidden"></script><p>after`,
+		"unclosed":       `<!--<script>` + strings.Repeat("x", 300<<10) + `</script><p>hidden`,
+	} {
+		t.Run(name, func(t *testing.T) {
+			body := []byte(`<script>` + script)
+			limits := testLimits()
+
+			got, err := Parse(t.Context(), body, limits)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			want, err := html.Parse(bytes.NewReader(body))
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			var withoutScripts func(*html.Node)
+
+			withoutScripts = func(n *html.Node) {
+				if n.Type == html.ElementNode && n.Data == "script" && n.Namespace == "" {
+					n.FirstChild = nil
+					n.LastChild = nil
+
+					return
+				}
+
+				for child := n.FirstChild; child != nil; child = child.NextSibling {
+					withoutScripts(child)
+				}
+			}
+			withoutScripts(want)
+
+			var actual, expected strings.Builder
+			if err := html.Render(&actual, got); err != nil {
+				t.Fatal(err)
+			}
+
+			if err := html.Render(&expected, want); err != nil {
+				t.Fatal(err)
+			}
+
+			if actual.String() != expected.String() {
+				t.Fatalf("script boundary differs:\n%s\n%s", actual.String(), expected.String())
+			}
+		})
+	}
+}
+
+func TestRawTextSkippingRetainsOtherLimits(t *testing.T) {
+	limits := testLimits()
+
+	for _, body := range []string{
+		`<p>` + strings.Repeat("x", 300<<10) + `</p>`,
+		`<svg><script>` + strings.Repeat("x", 300<<10) + `</script></svg>`,
+	} {
+		if _, err := Parse(t.Context(), []byte(body), limits); !errors.Is(err, ErrLimit) {
+			t.Fatalf("non-HTML-script limit: %v", err)
+		}
+	}
+
+	limits.Work = 1024
+	if _, err := Parse(t.Context(), []byte(`<script>`+strings.Repeat("x", 300<<10)+`</script>`), limits); !errors.Is(err, ErrLimit) {
+		t.Fatalf("script work limit: %v", err)
+	}
+}
+
+func TestRawTextBoundariesMatchTokenizer(t *testing.T) {
+	random := rand.New(rand.NewPCG(1, 2)) //nolint:gosec // deterministic parser corpus
+	parts := []string{"<!--", "-->", "-", "<", ">", "<script>", "</script>", "</SCRIPT\t", "</scripture>", "<script/", "</scr", "ipt>", "<a", "</a", "<!", "x"}
+
+	for range 2000 {
+		var body strings.Builder
+		body.WriteString("<script>")
+
+		for range 20 {
+			body.WriteString(parts[random.IntN(len(parts))])
+		}
+
+		input := []byte(body.String())
+		p := &parser{input: input, inputOffset: len("<script>"), guard: &guard{ctx: t.Context(), limits: testLimits()}}
+		got := p.rawTextEnd("script")
+		tokenizer := html.NewTokenizer(bytes.NewReader(input))
+		tokenizer.Next()
+
+		want := len("<script>")
+		if tokenizer.Next() == html.TextToken {
+			want += len(tokenizer.Raw())
+		}
+
+		if got != want {
+			t.Fatalf("boundary %d, want %d: %q", got, want, body.String())
+		}
+	}
+}
+
+func TestOversizedRawTextElements(t *testing.T) {
+	for _, tag := range []string{"style", "title", "textarea", "xmp", "iframe", "noembed", "noframes", "noscript"} {
+		t.Run(tag, func(t *testing.T) {
+			body := "<" + tag + ">" + strings.Repeat("x", 300<<10) + "</" + tag + "><p>Recipe</p>"
+
+			root, err := Parse(t.Context(), []byte(body), testLimits())
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			var result strings.Builder
+			if err := html.Render(&result, root); err != nil {
+				t.Fatal(err)
+			}
+
+			if strings.Contains(result.String(), "xxxx") || !strings.Contains(result.String(), "<p>Recipe</p>") {
+				t.Fatal("lost surrounding content or retained oversized text")
+			}
+		})
 	}
 }

@@ -33,6 +33,7 @@ uses it for duplicate matching.
 | Boundary | Limit |
 | --- | ---: |
 | Imported recipe page | 8 MiB |
+| Single HTML token | 256 KiB |
 | Imported remote image | 16 MiB |
 | PDF or image file | 32 MiB, 8 PDF pages, 20 seconds per extraction |
 | Document extractions at a time | 1 per process; overlapping work is refused |
@@ -40,6 +41,10 @@ uses it for duplicate matching.
 | Durable asset capacity | 10 GiB or 50,000 objects |
 | Unreferenced asset capacity | 2 GiB |
 | Reserved filesystem headroom | 512 MiB |
+
+Oversized raw-text bodies are omitted from the HTML tree. Caption extraction
+scans script data for matching post objects up to 256 KiB without decoding the
+surrounding application state. The JSON nesting and extraction work limits apply.
 
 The other budgets are constants next to the code that enforces them.
 

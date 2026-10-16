@@ -21,6 +21,27 @@
       ],
       "rest": [
         "rest"
+      ],
+      "prepare": [
+        "brown",
+        "stir",
+        "mix",
+        "whisk",
+        "add",
+        "heat",
+        "cover",
+        "combine",
+        "drain",
+        "serve",
+        "knead",
+        "fold",
+        "chop",
+        "slice",
+        "pour",
+        "preheat",
+        "remove",
+        "season",
+        "wash"
       ]
     },
     "units": {
@@ -69,6 +90,16 @@
       "rest": [
         "ruhen",
         "ruhen lassen"
+      ],
+      "prepare": [
+        "mischen",
+        "mische",
+        "vermischen",
+        "verrühren",
+        "rühren",
+        "erhitzen",
+        "zugeben",
+        "servieren"
       ]
     },
     "units": {
@@ -121,6 +152,18 @@
       ],
       "rest": [
         "reposer"
+      ],
+      "prepare": [
+        "mélangez",
+        "mélanger",
+        "ajoutez",
+        "ajouter",
+        "chauffez",
+        "couvrez",
+        "versez",
+        "fouettez",
+        "pétrissez",
+        "servez"
       ]
     },
     "units": {
@@ -177,6 +220,18 @@
         "reposar",
         "reposa",
         "repose"
+      ],
+      "prepare": [
+        "mezcla",
+        "mezcle",
+        "mezclar",
+        "añade",
+        "añada",
+        "añadir",
+        "calienta",
+        "cubre",
+        "sirve",
+        "remueve"
       ]
     },
     "units": {
@@ -226,6 +281,14 @@
       ],
       "rest": [
         "riposare"
+      ],
+      "prepare": [
+        "mescolare",
+        "mescolate",
+        "aggiungete",
+        "scaldate",
+        "coprite",
+        "servite"
       ]
     },
     "units": {
@@ -277,6 +340,15 @@
       "rest": [
         "descansar",
         "repousar"
+      ],
+      "prepare": [
+        "misture",
+        "misturar",
+        "adicione",
+        "adicionar",
+        "aqueça",
+        "cubra",
+        "sirva"
       ]
     },
     "units": {
@@ -326,6 +398,13 @@
       ],
       "rest": [
         "rusten"
+      ],
+      "prepare": [
+        "meng",
+        "roer",
+        "voeg",
+        "verwarm",
+        "serveer"
       ]
     },
     "units": {
@@ -373,6 +452,13 @@
       ],
       "rest": [
         "hvile"
+      ],
+      "prepare": [
+        "bland",
+        "rør",
+        "tilsæt",
+        "varm",
+        "server"
       ]
     },
     "units": {
@@ -420,6 +506,13 @@
       ],
       "rest": [
         "hvile"
+      ],
+      "prepare": [
+        "bland",
+        "rør",
+        "tilsett",
+        "varm",
+        "server"
       ]
     },
     "units": {
@@ -467,6 +560,13 @@
       ],
       "rest": [
         "vila"
+      ],
+      "prepare": [
+        "blanda",
+        "rör",
+        "tillsätt",
+        "värm",
+        "servera"
       ]
     },
     "units": {
@@ -514,6 +614,12 @@
       ],
       "rest": [
         "levätä"
+      ],
+      "prepare": [
+        "sekoita",
+        "lisää",
+        "kuumenna",
+        "tarjoile"
       ]
     },
     "units": {
@@ -564,6 +670,12 @@
       ],
       "rest": [
         "odpočívat"
+      ],
+      "prepare": [
+        "smíchejte",
+        "přidejte",
+        "promíchejte",
+        "podávejte"
       ]
     },
     "units": {
@@ -616,6 +728,12 @@
       ],
       "rest": [
         "odpocząć"
+      ],
+      "prepare": [
+        "wymieszaj",
+        "dodaj",
+        "podgrzej",
+        "podawaj"
       ]
     },
     "units": {
@@ -667,6 +785,12 @@
       ],
       "rest": [
         "pihentessük"
+      ],
+      "prepare": [
+        "keverjük",
+        "adjuk",
+        "melegítsük",
+        "tálaljuk"
       ]
     },
     "units": {
@@ -711,6 +835,12 @@
       ],
       "rest": [
         "odihnească"
+      ],
+      "prepare": [
+        "amestecați",
+        "adăugați",
+        "încălziți",
+        "serviți"
       ]
     },
     "units": {
@@ -758,6 +888,12 @@
       ],
       "rest": [
         "ξεκουραστεί"
+      ],
+      "prepare": [
+        "ανακατέψτε",
+        "προσθέστε",
+        "ζεστάνετε",
+        "σερβίρετε"
       ]
     },
     "units": {
@@ -805,6 +941,13 @@
       ],
       "rest": [
         "отдохнуть"
+      ],
+      "prepare": [
+        "смешайте",
+        "добавьте",
+        "перемешайте",
+        "нагрейте",
+        "подавайте"
       ]
     },
     "units": {
@@ -857,6 +1000,13 @@
       ],
       "rest": [
         "відпочити"
+      ],
+      "prepare": [
+        "змішайте",
+        "додайте",
+        "перемішайте",
+        "нагрійте",
+        "подавайте"
       ]
     },
     "units": {
@@ -910,6 +1060,12 @@
       ],
       "rest": [
         "dinlendirin"
+      ],
+      "prepare": [
+        "karıştırın",
+        "ekleyin",
+        "ısıtın",
+        "servis edin"
       ]
     },
     "units": {
@@ -955,6 +1111,13 @@
       ],
       "rest": [
         "diamkan"
+      ],
+      "prepare": [
+        "campur",
+        "aduk",
+        "tambahkan",
+        "panaskan",
+        "sajikan"
       ]
     },
     "units": {
@@ -995,6 +1158,12 @@
       ],
       "rest": [
         "nghỉ"
+      ],
+      "prepare": [
+        "trộn",
+        "thêm",
+        "khuấy",
+        "đun"
       ]
     },
     "units": {
@@ -1040,6 +1209,16 @@
       ],
       "rest": [
         "يرتاح"
+      ],
+      "prepare": [
+        "اخلط",
+        "اخلطي",
+        "أضف",
+        "أضيفي",
+        "حرك",
+        "حركي",
+        "سخن",
+        "سخني"
       ]
     },
     "units": {
@@ -1087,6 +1266,14 @@
       ],
       "rest": [
         "לנוח"
+      ],
+      "prepare": [
+        "מערבבים",
+        "ערבבו",
+        "מוסיפים",
+        "הוסיפו",
+        "מחממים",
+        "מגישים"
       ]
     },
     "units": {
@@ -1134,6 +1321,13 @@
       ],
       "rest": [
         "休ませる"
+      ],
+      "prepare": [
+        "混ぜ",
+        "混ぜる",
+        "加え",
+        "注ぎ",
+        "炒め"
       ]
     },
     "units": {
@@ -1180,6 +1374,13 @@
       ],
       "rest": [
         "휴지"
+      ],
+      "prepare": [
+        "섞어",
+        "섞는다",
+        "넣고",
+        "넣는다",
+        "볶아"
       ]
     },
     "units": {
@@ -1220,6 +1421,12 @@
       ],
       "rest": [
         "พัก"
+      ],
+      "prepare": [
+        "ผสม",
+        "คนให้เข้ากัน",
+        "ใส่",
+        "เติม"
       ]
     },
     "units": {
@@ -1268,6 +1475,14 @@
       "rest": [
         "静置",
         "靜置"
+      ],
+      "prepare": [
+        "搅拌",
+        "攪拌",
+        "混合",
+        "加入",
+        "倒入",
+        "翻炒"
       ]
     },
     "units": {

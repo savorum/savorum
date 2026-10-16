@@ -3,7 +3,9 @@ package importer
 import (
 	"context"
 	"crypto/sha256"
+	"errors"
 	"fmt"
+	"net/http"
 	"net/url"
 	"regexp"
 	"strconv"
@@ -13,6 +15,7 @@ import (
 	"github.com/savorum/savorum/internal/importer/webrecipe"
 	"github.com/savorum/savorum/internal/ingredientparser"
 	"github.com/savorum/savorum/internal/recipe"
+	"golang.org/x/text/language"
 )
 
 // webRecipeAdapter adapts the web extraction pipeline to the common importer,
@@ -82,12 +85,33 @@ func FetchWebRecipe(ctx context.Context, rawURL string) (ImportBatch, error) {
 	ctx, cancel := context.WithTimeout(ctx, 45*time.Second)
 	defer cancel()
 
-	page, err := webrecipe.Fetch(ctx, rawURL)
+	return fetchWebRecipe(ctx, rawURL, webrecipe.Fetch)
+}
+
+func fetchWebRecipe(ctx context.Context, rawURL string, fetch func(context.Context, string) (*webrecipe.Page, error)) (ImportBatch, error) {
+	if address := postFeedURL(rawURL); address != "" {
+		page, err := fetch(ctx, address)
+		if failure, ok := errors.AsType[*webrecipe.Failure](err); ok && failure.StatusCode == http.StatusTooManyRequests {
+			return ImportBatch{}, err
+		}
+
+		if err == nil && page.ContentType == "application/atom+xml" {
+			if batch, err := fetchSharedRecipe(ctx, page, fetch); err == nil {
+				return batch, nil
+			}
+		}
+	}
+
+	if err := ctx.Err(); err != nil {
+		return ImportBatch{}, err
+	}
+
+	page, err := fetch(ctx, rawURL)
 	if err != nil {
 		return ImportBatch{}, err
 	}
 
-	return fetchSharedRecipe(ctx, page, webrecipe.Fetch)
+	return fetchSharedRecipe(ctx, page, fetch)
 }
 
 func contentTypeForFilename(filename string) string {
@@ -120,6 +144,13 @@ var webReadingNotes = map[string]bool{
 // warning, so a reviewer is told what the page had rather than left to notice
 // what the recipe lacks.
 func mapWebRecipe(source *webrecipe.Recipe, retrievedAt time.Time) ImportedRecipe {
+	sourceLanguage := source.Language
+	if sourceLanguage != "" {
+		if tag, err := language.Parse(sourceLanguage); err == nil {
+			sourceLanguage = tag.String()
+		}
+	}
+
 	diagnostics := make([]Diagnostic, 0, len(source.Warnings))
 	for _, warning := range source.Warnings {
 		diagnostic := Diagnostic{Code: warning.Code, Message: warning.Message}
@@ -151,8 +182,8 @@ func mapWebRecipe(source *webrecipe.Recipe, retrievedAt time.Time) ImportedRecip
 		ID:             recipe.RecipeID(fmt.Sprintf("web.%x", digest[:8])),
 		Title:          source.Name,
 		Description:    source.Description,
-		Language:       source.Language,
-		SourceLocale:   source.Language,
+		Language:       sourceLanguage,
+		SourceLocale:   sourceLanguage,
 		Authors:        webAuthors(source.Authors),
 		Categories:     source.Categories,
 		Keywords:       source.Keywords,
