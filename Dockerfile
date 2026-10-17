@@ -37,72 +37,54 @@ RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH \
 RUN CGO_ENABLED=0 go run -tags nodynamic ./cmd/savorum admin compatibility > /out/savorum-compatibility.json
 RUN mkdir -p /out/data /out/tmp && chmod 0750 /out/data && chmod 1777 /out/tmp
 
+FROM alpine:3.24.2@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6 AS runtime
+ARG VERSION=development
+ARG REVISION=
+RUN apk add --no-cache \
+       bash=5.3.9-r1 \
+       ca-certificates-bundle=20260909-r0 \
+       setpriv=2.42.3-r1 \
+       zlib=1.3.2-r1 \
+    && addgroup -g 65532 savorum \
+    && adduser -D -H -h /data -s /bin/bash -u 65532 -G savorum savorum \
+    && ln -s /savorum /usr/local/bin/savorum
+
+LABEL org.opencontainers.image.title="Savorum" \
+      org.opencontainers.image.source="https://github.com/savorum/savorum" \
+      org.opencontainers.image.licenses="AGPL-3.0-only" \
+      org.opencontainers.image.version=$VERSION \
+      org.opencontainers.image.revision=$REVISION
+
+COPY --from=build /out/savorum /savorum
+COPY --from=build /out/savorum-compatibility.json /savorum-compatibility.json
+COPY --from=build --chown=65532:65532 /out/data /data
+COPY --from=build /out/tmp /tmp
+
+USER 65532:65532
+VOLUME ["/data"]
+EXPOSE 8080
+ENV SAVORUM_DATABASE=/data/savorum.db \
+    SAVORUM_ASSETS=/data/assets \
+    SAVORUM_LISTEN=0.0.0.0:8080 \
+    TMPDIR=/data
+STOPSIGNAL SIGTERM
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD ["/savorum", "healthcheck"]
+ENTRYPOINT ["/savorum"]
+CMD ["serve"]
+
 # The documents target adds Poppler and Tesseract for PDF and photo import:
 #   docker build --target documents -t savorum:documents .
-# Savorum Cloud runs this target. The default target below stays minimal.
-FROM debian:bookworm-slim@sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587 AS documents
-ARG VERSION=development
-ARG REVISION=
-ARG DEBIAN_SNAPSHOT=20261003T000000Z
-RUN printf 'Types: deb\nURIs: http://snapshot.debian.org/archive/debian/%s/\nSuites: bookworm bookworm-updates\nComponents: main\nSigned-By: /usr/share/keyrings/debian-archive-keyring.gpg\nCheck-Valid-Until: no\n\nTypes: deb\nURIs: http://snapshot.debian.org/archive/debian-security/%s/\nSuites: bookworm-security\nComponents: main\nSigned-By: /usr/share/keyrings/debian-archive-keyring.gpg\nCheck-Valid-Until: no\n' "$DEBIAN_SNAPSHOT" "$DEBIAN_SNAPSHOT" > /etc/apt/sources.list.d/debian.sources \
-    && apt-get -o Acquire::Retries=0 -o Acquire::http::Timeout=30 update \
-    && apt-get install -y --no-install-recommends \
-       dash=0.5.12-2 \
-       poppler-utils=22.12.0-2+deb12u3 \
-       tesseract-ocr=5.3.0-2 \
-       tesseract-ocr-eng=1:4.1.0-2 \
-       fonts-dejavu-core=2.37-6 \
-       ca-certificates=20250419~deb12u1 \
-    && rm -rf /var/lib/apt/lists/*
+FROM runtime AS documents
+USER 0:0
+RUN apk add --no-cache \
+       poppler-utils=25.12.0-r1 \
+       tesseract-ocr=5.5.2-r0 \
+       tesseract-ocr-data-eng=5.5.2-r0 \
+       font-dejavu=2.37-r6
 
-LABEL org.opencontainers.image.title="Savorum" \
-      org.opencontainers.image.description="Self-hosted recipe manager with PDF and photo import" \
-      org.opencontainers.image.source="https://github.com/savorum/savorum" \
-      org.opencontainers.image.licenses="AGPL-3.0-only" \
-      org.opencontainers.image.version=$VERSION \
-      org.opencontainers.image.revision=$REVISION
-
-COPY --from=build /out/savorum /savorum
-COPY --from=build /out/savorum-compatibility.json /savorum-compatibility.json
-COPY --from=build --chown=65532:65532 /out/data /data
-COPY --from=build /out/tmp /tmp
-
+LABEL org.opencontainers.image.description="Self-hosted recipe manager with PDF and photo import"
 USER 65532:65532
-VOLUME ["/data"]
-EXPOSE 8080
-ENV SAVORUM_DATABASE=/data/savorum.db \
-    SAVORUM_ASSETS=/data/assets \
-    SAVORUM_LISTEN=0.0.0.0:8080
-STOPSIGNAL SIGTERM
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-    CMD ["/savorum", "healthcheck"]
-ENTRYPOINT ["/savorum"]
-CMD ["serve"]
 
-FROM gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab
-ARG VERSION=development
-ARG REVISION=
-
-LABEL org.opencontainers.image.title="Savorum" \
-      org.opencontainers.image.description="Self-hosted recipe manager" \
-      org.opencontainers.image.source="https://github.com/savorum/savorum" \
-      org.opencontainers.image.licenses="AGPL-3.0-only" \
-      org.opencontainers.image.version=$VERSION \
-      org.opencontainers.image.revision=$REVISION
-
-COPY --from=build /out/savorum /savorum
-COPY --from=build /out/savorum-compatibility.json /savorum-compatibility.json
-COPY --from=build --chown=65532:65532 /out/data /data
-COPY --from=build /out/tmp /tmp
-
-USER 65532:65532
-VOLUME ["/data"]
-EXPOSE 8080
-ENV SAVORUM_DATABASE=/data/savorum.db \
-    SAVORUM_ASSETS=/data/assets \
-    SAVORUM_LISTEN=0.0.0.0:8080
-STOPSIGNAL SIGTERM
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-    CMD ["/savorum", "healthcheck"]
-ENTRYPOINT ["/savorum"]
-CMD ["serve"]
+FROM runtime AS minimal
+LABEL org.opencontainers.image.description="Self-hosted recipe manager"
