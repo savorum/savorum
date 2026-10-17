@@ -5,10 +5,12 @@ image="${1:?usage: scripts/container-smoke-test.sh IMAGE}"
 suffix="$$"
 container="savorum-smoke-${suffix}"
 volume="savorum-smoke-data-${suffix}"
+backups="savorum-smoke-backups-${suffix}"
 
 cleanup() {
   docker rm --force "$container" >/dev/null 2>&1 || true
   docker volume rm --force "$volume" >/dev/null 2>&1 || true
+  docker volume rm --force "$backups" >/dev/null 2>&1 || true
 }
 trap cleanup EXIT
 
@@ -23,11 +25,16 @@ if [ "$(docker image inspect --format '{{index .Config.ExposedPorts "8080/tcp"}}
 fi
 
 docker volume create "$volume" >/dev/null
+docker volume create "$backups" >/dev/null
+docker run --rm --user 0:0 --entrypoint /bin/sh \
+  --volume "$backups:/backups" "$image" -ec \
+  'chown 65532:65532 /backups; chmod 0700 /backups'
 docker run --detach \
   --name "$container" \
   --read-only \
   --tmpfs /tmp:size=256m,mode=1777 \
   --volume "$volume:/data" \
+  --volume "$backups:/backups" \
   "$image" >/dev/null
 
 for _ in $(seq 1 45); do
@@ -50,6 +57,15 @@ fi
 
 docker exec "$container" /savorum healthcheck
 docker exec "$container" /savorum healthcheck --url http://127.0.0.1:8080/openapi.json
+docker exec --user 0:0 "$container" su savorum -c '
+  test "$(id -u):$(id -g)" = 65532:65532 &&
+  test -r "$SAVORUM_DATABASE" &&
+  savorum healthcheck
+'
+docker exec "$container" /savorum backup \
+  --database /data/savorum.db --assets /data/assets \
+  --output /backups/instance.savorum-backup
+docker exec "$container" /savorum verify --input /backups/instance.savorum-backup
 
 docker stop --time 20 "$container" >/dev/null
 if [ "$(docker inspect --format '{{.State.ExitCode}}' "$container")" != "0" ]; then
@@ -59,6 +75,10 @@ if [ "$(docker inspect --format '{{.State.ExitCode}}' "$container")" != "0" ]; t
 fi
 
 docker rm "$container" >/dev/null
+docker run --rm --read-only --tmpfs /tmp:size=256m,mode=1777 \
+  --volume "$volume:/data" --volume "$backups:/backups:ro" \
+  "$image" restore --input /backups/instance.savorum-backup \
+  --database /data/savorum.db --assets /data/assets
 docker run --detach \
   --name "$container" \
   --read-only \

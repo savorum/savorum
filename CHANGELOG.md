@@ -6,6 +6,8 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+- Improve Docker security and console usability.
+
 ## 0.2.0
 
 - Add Savorum Connect setup and remote access.
