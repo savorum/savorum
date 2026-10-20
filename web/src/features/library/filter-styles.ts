@@ -12,6 +12,7 @@ export const chip = cva({
     display: "inline-flex",
     fontSize: "xs",
     gap: "1.5",
+    minHeight: { base: "11", md: "8" },
     paddingBlock: "1",
     paddingInline: "2",
     transition: "colors",
@@ -31,16 +32,27 @@ export const chip = cva({
 })
 
 export const styles = {
-  // Ruled on both sides, between the controls and the results.
   panel: css({
     borderBlockWidth: "1px",
     borderColor: "border.subtle",
-    columnGap: "6",
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(13rem, 1fr))",
+    gap: "5",
     marginBlock: "4",
     paddingBlock: "5",
-    rowGap: "5",
+  }),
+  shortcuts: css({
+    display: "grid",
+    gridTemplateColumns: { base: "1fr", md: "1fr 1fr" },
+    gap: "4",
+  }),
+  categories: css({
+    display: "grid",
+    gridTemplateColumns: {
+      base: "1fr",
+      sm: "repeat(2, minmax(0, 1fr))",
+      lg: "repeat(3, minmax(0, 1fr))",
+    },
+    gap: "4",
   }),
   group: css({ alignContent: "start", display: "grid", gap: "2.5", minWidth: "0" }),
   groupTitle: css({
@@ -52,13 +64,21 @@ export const styles = {
   chips: css({ display: "flex", flexWrap: "wrap", gap: "1.5" }),
   hint: css({ color: "fg.muted", fontSize: "xs", lineHeight: "1.5", margin: "0" }),
   summary: css({ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "1.5" }),
+  summaryActions: css({
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "center",
+    gap: "2",
+    maxWidth: "100%",
+  }),
   clear: css({
     background: "none",
     borderWidth: "0",
     color: "fg.muted",
     cursor: "pointer",
     fontSize: "xs",
-    padding: "0",
+    minHeight: { base: "11", md: "8" },
+    paddingInline: "2",
     textDecoration: "underline",
     textUnderlineOffset: "3px",
     _hover: { color: "accent.default" },

@@ -147,10 +147,11 @@ const styles = {
   results: css({ scrollMarginBlockStart: "5", outline: "none" }),
   grid: css({
     display: "grid",
+    "& > li": { minWidth: "0" },
     gap: { base: "5", md: "7" },
     gridTemplateColumns: {
-      base: "repeat(auto-fill, minmax(9.5rem, 1fr))",
-      sm: "repeat(auto-fill, minmax(13rem, 1fr))",
+      base: "repeat(auto-fill, minmax(min(100%, 9.5rem), 1fr))",
+      sm: "repeat(auto-fill, minmax(min(100%, 13rem), 1fr))",
     },
     listStyle: "none",
     margin: "0",

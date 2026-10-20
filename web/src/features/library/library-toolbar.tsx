@@ -1,5 +1,5 @@
-import { CheckSquare } from "lucide-solid"
-import { Show, untrack } from "solid-js"
+import { BookmarkPlus, CheckSquare } from "lucide-solid"
+import { Show, createMemo, untrack } from "solid-js"
 import { css } from "styled-system/css"
 
 import type { RecipeSort } from "@/api/client"
@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Select } from "@/components/ui/select"
 import { FilterButton } from "@/features/library/filter-button"
 import { FilterSummary } from "@/features/library/filter-summary"
-import { activeFilterCount } from "@/lib/library-query"
+import { activeFilterCount, describeQuery } from "@/lib/library-query"
 import { formatNumber } from "@/lib/locale-format"
 import { settled } from "@/lib/settled"
 
@@ -29,32 +29,38 @@ export function LibraryToolbar(props: { query: LibraryQuery; selection: LibraryS
     entries,
     total,
     narrowed,
+    savableSearch,
+    setNamingSearch,
+    currentQuery,
+    labelFor,
   } = untrack(() => props.query)
   const { selecting, enterSelection } = untrack(() => props.selection)
-  const organizable = () =>
-    total() > 0 ||
-    narrowed() ||
-    (settled(views) ?? []).length > 0 ||
-    activeFilterCount(filters()) > 0
+  let filterControls: HTMLDivElement | undefined
+  const organizable = createMemo(
+    (visible) =>
+      visible ||
+      total() > 0 ||
+      narrowed() ||
+      (settled(views) ?? []).length > 0 ||
+      activeFilterCount(filters()) > 0,
+    false,
+  )
   return (
     <Show when={organizable()}>
-      <div class={styles.tools}>
-        <div class={styles.start}>
-          <FilterButton
-            filters={filters()}
-            open={filtersOpen()}
-            onToggleOpen={() => setFiltersOpen((open) => !open)}
-          />
-          <span class={styles.count} aria-live="polite">
-            {formatNumber(total())} {total() === 1 ? "recipe" : "recipes"}
-          </span>
-        </div>
-        <div class={styles.end}>
-          <Show when={!selecting() && entries().length > 0}>
-            <Button size="sm" variant="plain" onClick={() => enterSelection()}>
-              <CheckSquare aria-hidden="true" size={14} /> {m.library_toolbar_select()}
-            </Button>
-          </Show>
+      <div class={styles.container}>
+        <div class={styles.tools}>
+          <div
+            class={styles.filter}
+            ref={(element) => {
+              filterControls = element
+            }}
+          >
+            <FilterButton
+              filters={filters()}
+              open={filtersOpen()}
+              onToggleOpen={() => setFiltersOpen((open) => !open)}
+            />
+          </div>
           <Select
             class={styles.sort}
             size="sm"
@@ -63,23 +69,92 @@ export function LibraryToolbar(props: { query: LibraryQuery; selection: LibraryS
             onValueChange={(value) => editSearch({ sort: value as RecipeSort })}
             items={sorts.map((value) => ({ value, label: sortLabels[value] }))}
           />
+          <Show when={activeFilterCount(filters()) > 0 || savableSearch()}>
+            <div class={styles.applied}>
+              <FilterSummary
+                filters={filters()}
+                vocabulary={vocabulary}
+                onChange={applyFilters}
+                onEmpty={() => filterControls?.querySelector("button")?.focus()}
+                actions={
+                  <Show when={savableSearch()}>
+                    <Button
+                      size="sm"
+                      variant="plain"
+                      class={styles.save}
+                      aria-label={m.library_toolbar_save_this_search()}
+                      title={m.library_toolbar_save_this_search()}
+                      onClick={() => setNamingSearch(describeQuery(currentQuery(), labelFor))}
+                    >
+                      <BookmarkPlus size={16} aria-hidden="true" />
+                      <span class={styles.saveShort}>{m.save_search_dialog_save()}</span>
+                      <span class={styles.saveFull}>{m.library_toolbar_save_this_search()}</span>
+                    </Button>
+                  </Show>
+                }
+              />
+            </div>
+          </Show>
+          <span class={styles.count} aria-live="polite">
+            {formatNumber(total())} {total() === 1 ? "recipe" : "recipes"}
+          </span>
+          <div class={styles.select}>
+            <Show when={!selecting() && entries().length > 0}>
+              <Button size="sm" variant="plain" onClick={() => enterSelection()}>
+                <CheckSquare aria-hidden="true" size={14} /> {m.library_toolbar_select()}
+              </Button>
+            </Show>
+          </div>
         </div>
       </div>
-      <FilterSummary filters={filters()} vocabulary={vocabulary} onChange={applyFilters} />
     </Show>
   )
 }
 const styles = {
-  tools: css({
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: "2",
-    marginTop: "4",
+  container: css({ containerName: "library-tools", containerType: "inline-size" }),
+  applied: css({ gridArea: "applied", minWidth: "0" }),
+  saveShort: css({ display: { base: "inline", md: "none" } }),
+  saveFull: css({ display: { base: "none", md: "inline" } }),
+  save: css({
+    flexShrink: "0",
+    maxWidth: "100%",
+    whiteSpace: "normal",
+    textAlign: "start",
+    height: "auto",
+    minHeight: "11",
   }),
-  start: css({ display: "flex", alignItems: "center", gap: "3", minWidth: "0" }),
-  end: css({ display: "flex", alignItems: "center", gap: "2", minWidth: "0" }),
-  sort: css({ width: "auto", minWidth: "10.5rem", maxWidth: "100%" }),
-  count: css({ color: "fg.muted", fontSize: "sm", whiteSpace: "nowrap" }),
+  tools: css({
+    display: "grid",
+    gridTemplateColumns: { base: "auto minmax(0, 1fr)", md: "auto auto minmax(0, 1fr) auto" },
+    gridTemplateAreas: {
+      base: '"filter sort" "applied applied" "count select"',
+      md: '"filter sort count select" "applied applied applied applied"',
+    },
+    alignItems: "center",
+    columnGap: "3",
+    rowGap: "2",
+    marginTop: "4",
+    "@container library-tools (max-width: 17rem)": {
+      gridTemplateColumns: "minmax(0, 1fr) auto",
+      gridTemplateAreas: '"filter filter" "sort sort" "applied applied" "count select"',
+    },
+  }),
+  filter: css({ gridArea: "filter", "& > button": { minHeight: "11" } }),
+  select: css({ gridArea: "select", justifySelf: "end" }),
+  sort: css({
+    gridArea: "sort",
+    justifySelf: "end",
+    width: { base: "100%", md: "auto" },
+    minWidth: "0",
+    maxWidth: "100%",
+    "& [data-part=trigger]": { minHeight: "11", height: "auto", paddingBlock: "2" },
+    "& [data-part=value-text]": { whiteSpace: "normal" },
+  }),
+  count: css({
+    gridArea: "count",
+    justifySelf: { base: "start", md: "end" },
+    color: "fg.muted",
+    fontSize: "sm",
+    whiteSpace: "normal",
+  }),
 }

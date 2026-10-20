@@ -6,6 +6,8 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+- Improved library filter design.
+
 ## 0.2.1
 
 - Improve Docker security and console usability.

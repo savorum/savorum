@@ -197,7 +197,7 @@ test("a search and a filter that match nothing offer the whole library back", as
   await page.getByRole("button", { name: "Choose a tag", exact: true }).click()
   const tagSearch = page.getByRole("searchbox", { name: "Search tags", exact: true })
   if (await tagSearch.count()) await tagSearch.fill("Recovery unused")
-  await page.getByRole("button", { name: "Narrow to Recovery unused", exact: true }).click()
+  await page.getByRole("checkbox", { name: "Recovery unused", exact: true }).click()
   await expect(page.getByText("Nothing matches that search.")).toBeVisible()
   await expect(page.getByRole("heading", { name: "Your library is empty." })).toHaveCount(0)
   await page.getByRole("button", { name: "Show all recipes", exact: true }).click()

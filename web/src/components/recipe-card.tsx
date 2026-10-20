@@ -17,6 +17,7 @@ const styles = {
     display: "grid",
     gap: "2.5",
     gridTemplateRows: "auto 1fr",
+    gridTemplateColumns: "minmax(0, 1fr)",
     textDecoration: "none",
     _focusVisible: {
       outline: "2px solid",
@@ -62,6 +63,7 @@ const styles = {
     fontFamily: "editorial",
     fontSize: "lg",
     fontWeight: "normal",
+    hyphens: "auto",
     lineHeight: "1.25",
     margin: "0",
     transition: "colors",
@@ -98,6 +100,7 @@ const styles = {
     display: "grid",
     gap: "2.5",
     gridTemplateRows: "auto 1fr",
+    gridTemplateColumns: "minmax(0, 1fr)",
     padding: "0",
     textAlign: "start",
     width: "100%",

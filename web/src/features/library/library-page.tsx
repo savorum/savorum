@@ -1,5 +1,4 @@
 import { Link } from "@tanstack/solid-router"
-import { BookmarkPlus } from "lucide-solid"
 import { type Accessor, Show, Suspense, createSignal, lazy } from "solid-js"
 import { css, cx } from "styled-system/css"
 import { pageShell } from "styled-system/recipes"
@@ -9,10 +8,8 @@ import { createLiveRefresh } from "@/api/live-events"
 import { ImportMenu } from "@/components/import-menu"
 import { ImportProgress } from "@/components/import-progress"
 import { ChangeError, Loading } from "@/components/status"
-import { Button } from "@/components/ui/button"
 import { buttonLink } from "@/components/ui/button-link"
 import { RestoreNotice } from "@/features/library/restore-notice"
-import { describeQuery } from "@/lib/library-query"
 import type { TrashedRecipe } from "@/lib/library-return"
 
 import { m } from "../../lib/messages.ts"
@@ -193,24 +190,6 @@ export function LibraryPage(props: {
                   filters={query.filters()}
                   vocabulary={query.vocabulary}
                   onChange={query.applyFilters}
-                  tools={
-                    <Show when={query.savableSearch()}>
-                      <div class={styles.filterTools}>
-                        <Button
-                          size="sm"
-                          variant="plain"
-                          onClick={() =>
-                            query.setNamingSearch(
-                              describeQuery(query.currentQuery(), query.labelFor),
-                            )
-                          }
-                        >
-                          <BookmarkPlus size={14} aria-hidden="true" />{" "}
-                          {m.library_toolbar_save_this_search()}
-                        </Button>
-                      </div>
-                    </Show>
-                  }
                 />
               </Suspense>
             </Show>
@@ -284,13 +263,6 @@ const styles = {
     gridColumn: { base: "2", md: "auto" },
     gridRow: { base: "1", md: "auto" },
     justifySelf: "end",
-  }),
-  filterTools: css({
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center",
-    gap: "3",
-    marginTop: "4",
   }),
   fileInput: css({ display: "none" }),
   dropOverlay: css({
