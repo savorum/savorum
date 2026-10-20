@@ -31,7 +31,7 @@ function RecipeRoute() {
       clearTimeout(timeout)
     }
     const restore = () => {
-      window.scrollTo({ left: target.scrollX, top: target.scrollY })
+      window.scrollTo({ left: target.scrollX, top: target.scrollY, behavior: "instant" })
       if (
         Math.abs(window.scrollX - target.scrollX) <= 1 &&
         Math.abs(window.scrollY - target.scrollY) <= 1
