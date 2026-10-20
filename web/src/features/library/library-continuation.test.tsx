@@ -172,7 +172,7 @@ test("the default toolbar exposes filters, selection and sort without a saved-se
   expect(screen.getByRole("button", { name: "Select" })).toBeTruthy()
   expect(screen.queryByRole("combobox", { name: "Saved search" })).toBeNull()
   expect(screen.getByRole("combobox", { name: "Sort recipes" })).toBeTruthy()
-  expect(screen.queryByRole("button", { name: "Save this search" })).toBeNull()
+  expect(screen.getByRole("button", { name: "Save this search" })).toBeTruthy()
 })
 
 test("large libraries continue at the footer within a bounded rendered view", async () => {

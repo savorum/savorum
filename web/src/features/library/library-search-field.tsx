@@ -44,7 +44,10 @@ export function LibrarySearchField(props: {
     async (query) => props.vocabulary.searchBooks?.(query, 0),
   )
   createEffect(() => {
-    void props.vocabulary.resolveBooks?.(props.filters().book ?? [])
+    void props.vocabulary.resolveBooks?.([
+      ...(props.filters().book ?? []),
+      ...(props.filters().source ?? []),
+    ])
   })
   const matches = createMemo<SearchSuggestion[]>(() =>
     composing()

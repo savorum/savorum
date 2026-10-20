@@ -153,7 +153,7 @@ test("tags and books filter the library and a trashed recipe can be restored", a
   await page.goto("/?q=Contract")
   await page.getByRole("button", { name: /Filters/ }).click()
   await page.getByRole("button", { name: "Choose a tag", exact: true }).click()
-  await page.getByRole("button", { name: "Narrow to Contract quick", exact: true }).click()
+  await page.getByRole("checkbox", { name: "Contract quick", exact: true }).click()
   await expect(page).toHaveURL(new RegExp(encodeURIComponent(tag.id)))
   await expect(page.getByRole("link", { name: new RegExp(recipe.title) })).toBeVisible()
   await expect(page.getByRole("link", { name: new RegExp(unrelated.title) })).toHaveCount(0)
