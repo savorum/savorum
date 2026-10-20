@@ -29,7 +29,7 @@ export const FilterPicker = (props: {
     (request) => props.load!(request.query, request.offset),
   )
   const offered = () =>
-    props.load ? (remote.error ? [] : (remote.latest?.items ?? [])) : props.values
+    props.load ? (remote.error || remote.loading ? [] : (remote.latest?.items ?? [])) : props.values
   const chosen = () => new Set(props.selected)
   const selectedLabels = () =>
     props.values.filter((value) => chosen().has(value.id)).map((value) => value.label)
@@ -103,13 +103,11 @@ export const FilterPicker = (props: {
             <For
               each={visible()}
               fallback={
-                <Show when={remote.loading || !remote.latest?.has_more}>
-                  <p class={styles.empty}>
-                    {remote.loading
-                      ? m.cooking_log_loading()
-                      : m.label_choices_nothing_here_matches_that()}
-                  </p>
-                </Show>
+                <p class={styles.empty}>
+                  {remote.loading
+                    ? m.cooking_log_loading()
+                    : m.label_choices_nothing_here_matches_that()}
+                </p>
               }
             >
               {(id) => (

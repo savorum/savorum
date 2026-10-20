@@ -1,6 +1,8 @@
 import { cleanup, fireEvent, render, within } from "@solidjs/testing-library"
 import { createSignal } from "solid-js"
-import { afterEach, expect, test } from "vitest"
+import { afterEach, expect, test, vi } from "vitest"
+
+import type { ChoiceLoader } from "@/components/label-choices"
 
 import { FilterPicker } from "./filter-picker"
 
@@ -39,9 +41,9 @@ test("filter search retains its element, focus and caret during typing and compo
     expect(document.activeElement).toBe(input)
     expect(input.value).toBe(value)
   }
-  input.setSelectionRange(3, 3)
-  fireEvent.input(input, { target: { value: "WeeXkend" } })
+  input.value = "WeeXkend"
   input.setSelectionRange(4, 4)
+  fireEvent.input(input)
   expect(input.selectionStart).toBe(4)
   fireEvent.compositionStart(input)
   fireEvent.input(input, { target: { value: "週末" }, isComposing: true })
@@ -64,4 +66,53 @@ test("selected filter choices remain mounted and can be removed in the same pick
   fireEvent.click(choice)
   expect(screen.selected()).toEqual([])
   expect((choice as HTMLInputElement).checked).toBe(false)
+})
+
+function remotePicker(load: ChoiceLoader) {
+  const toggle = vi.fn()
+  render(() => (
+    <FilterPicker
+      label="Books"
+      action="Choose a book"
+      searchNoun="books"
+      values={[]}
+      selected={[]}
+      load={load}
+      onToggle={toggle}
+    />
+  ))
+  return { ...within(document.body), toggle }
+}
+
+test("a new remote search removes stale choices until its results arrive", async () => {
+  let complete!: (page: Awaited<ReturnType<ChoiceLoader>>) => void
+  const next = new Promise<Awaited<ReturnType<ChoiceLoader>>>((resolve) => {
+    complete = resolve
+  })
+  const screen = remotePicker(async (query) =>
+    query ? next : { items: [{ id: "old", label: "Old book" }], has_more: false },
+  )
+  fireEvent.click(screen.getByRole("button", { name: "Choose a book" }))
+  await screen.findByRole("checkbox", { name: "Old book" })
+  fireEvent.input(screen.getByRole("searchbox", { name: "Search books" }), {
+    target: { value: "New" },
+  })
+  expect(screen.queryByRole("checkbox", { name: "Old book" })).toBeNull()
+  expect(screen.getByText("Loading…")).toBeTruthy()
+  expect(screen.toggle).not.toHaveBeenCalled()
+  complete({ items: [{ id: "new", label: "New book" }], has_more: false })
+  fireEvent.click(await screen.findByRole("checkbox", { name: "New book" }))
+  expect(screen.toggle).toHaveBeenCalledExactlyOnceWith("new")
+})
+
+test("an empty remote page explains its result while another page is available", async () => {
+  const screen = remotePicker(async (_, offset) =>
+    offset === 0
+      ? { items: [], has_more: true }
+      : { items: [{ id: "publication", label: "Later cookbook" }], has_more: false },
+  )
+  fireEvent.click(screen.getByRole("button", { name: "Choose a book" }))
+  expect(await screen.findByText("Nothing here matches that.")).toBeTruthy()
+  fireEvent.click(screen.getByRole("button", { name: "Next" }))
+  expect(await screen.findByRole("checkbox", { name: "Later cookbook" })).toBeTruthy()
 })
