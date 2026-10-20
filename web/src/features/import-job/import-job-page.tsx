@@ -31,7 +31,10 @@ export function ImportJobPage(props: {
       const position =
         typeof window === "undefined" ? undefined : { x: window.scrollX, y: window.scrollY }
       publish()
-      if (position) requestAnimationFrame(() => window.scrollTo(position.x, position.y))
+      if (position)
+        requestAnimationFrame(() =>
+          window.scrollTo({ left: position.x, top: position.y, behavior: "instant" }),
+        )
     },
   )
   createLiveRefresh(
