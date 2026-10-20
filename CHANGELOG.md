@@ -6,6 +6,8 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+## 0.2.2
+
 - Improved library filter design.
 
 ## 0.2.1
