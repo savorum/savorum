@@ -6,6 +6,7 @@ import { pageShell } from "styled-system/recipes"
 import { ResourceState } from "@/components/status"
 import { directionalIcon } from "@/components/ui/directional"
 import { usePageTitle } from "@/lib/page-title"
+import { latestUnlessFailed } from "@/lib/settled"
 
 import { m } from "../../lib/messages.ts"
 import { BookView } from "./book-view"
@@ -38,7 +39,7 @@ export function BookPage(props: { bookID: Accessor<string>; onTrashed: () => Pro
               book={loaded().value}
               revision={loaded().revision}
               sourced={sourced() ?? []}
-              candidatePage={candidates.latest}
+              candidatePage={latestUnlessFailed(candidates)}
               candidateQuery={candidateQuery()}
               onCandidateQuery={(query) => {
                 setCandidateQuery(query)

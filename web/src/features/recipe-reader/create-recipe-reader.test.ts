@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from "@solidjs/testing-library"
-import { createSignal } from "solid-js"
+import { createSignal, onError } from "solid-js"
 import { afterEach, expect, test, vi } from "vitest"
 
 import type { OrganizationInput, RecipeOrganization } from "@/api/client"
@@ -109,6 +109,23 @@ test("navigation waits for matching recipe data before applying the next remembe
   await new Promise((resolve) => setTimeout(resolve, 0))
   await Promise.resolve()
   expect(formatRational(hook.result.scale())).toBe("3/2")
+})
+test("a recipe that fails to load leaves its error to the page instead of throwing", async () => {
+  const failure = new Error("unusable response")
+  vi.mocked(getRecipe).mockRejectedValue(failure)
+  vi.mocked(createOrganizationController).mockReturnValue(
+    organizationController(() => organizationFor("a")),
+  )
+  const thrown: unknown[] = []
+  const hook = renderHook(() => {
+    const reader = createRecipeReader(readerOptions(() => "a"))
+    onError((error) => thrown.push(error))
+    return reader
+  })
+  disposers.push(hook.cleanup)
+  await waitFor(() => expect(hook.result.entry.error).toBe(failure))
+  await new Promise((resolve) => setTimeout(resolve, 0))
+  expect(thrown).toEqual([])
 })
 test("trashing is single-flight and reports the returned revision with the loaded title", async () => {
   vi.mocked(getRecipe).mockResolvedValue(recipeEntry("a", "Layer cake"))

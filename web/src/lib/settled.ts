@@ -8,3 +8,8 @@ import type { Resource } from "solid-js"
 export function settled<T>(resource: Resource<T>): T | undefined {
   return resource.state === "ready" || resource.state === "refreshing" ? resource.latest : undefined
 }
+
+/** A resource's latest value, or nothing once it has failed: `latest` rethrows. */
+export function latestUnlessFailed<T>(resource: Resource<T>): T | undefined {
+  return resource.error ? undefined : resource.latest
+}

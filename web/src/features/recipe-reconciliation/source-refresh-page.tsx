@@ -11,7 +11,7 @@ import { directionalIcon } from "@/components/ui/directional"
 import { Input } from "@/components/ui/input"
 import { SourceRefreshReview } from "@/features/recipe-reconciliation/recipe-compare"
 import { isolate } from "@/lib/direction"
-import { settled } from "@/lib/settled"
+import { latestUnlessFailed, settled } from "@/lib/settled"
 import { sourceHost } from "@/lib/source-url"
 
 import { m } from "../../lib/messages.ts"
@@ -49,10 +49,10 @@ export function SourceRefreshPage(props: { recipeID: () => string; onApplied: ()
   let initialized = ""
   // The address the recipe itself records, which is what separates rechecking
   // a known source from supplying one for the first time.
-  const recorded = () => entry.latest?.value.recipe.source?.url?.trim() ?? ""
-  const title = () => entry.latest?.value.recipe.title ?? ""
+  const recorded = () => latestUnlessFailed(entry)?.value.recipe.source?.url?.trim() ?? ""
+  const title = () => latestUnlessFailed(entry)?.value.recipe.title ?? ""
   createEffect(() => {
-    const loaded = entry.latest
+    const loaded = latestUnlessFailed(entry)
     if (loaded && initialized !== loaded.value.id) {
       initialized = loaded.value.id
       setSource(loaded.value.recipe.source?.url ?? "")
@@ -120,7 +120,7 @@ export function SourceRefreshPage(props: { recipeID: () => string; onApplied: ()
         when={preview()}
         fallback={
           <>
-            <Show when={entry.loading && !entry.latest}>
+            <Show when={entry.loading && !latestUnlessFailed(entry)}>
               <Loading>{m.recipe_loading()}</Loading>
             </Show>
             <h1 class={styles.title}>

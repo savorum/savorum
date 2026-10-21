@@ -20,6 +20,7 @@ import {
 } from "@/lib/rational"
 import { displayYield } from "@/lib/recipe-facts"
 import { yieldAmount } from "@/lib/recipe-format"
+import { latestUnlessFailed } from "@/lib/settled"
 
 import { m } from "../../lib/messages.ts"
 export type CreateRecipeReaderOptions = {
@@ -73,7 +74,7 @@ export function createRecipeReader(props: CreateRecipeReaderOptions) {
   // Fall back to a remembered scale when no usable yield exists. Apply once per
   // recipe after both resources arrive, leaving subsequent edits visit-local.
   createEffect(() => {
-    const loaded = entry.latest
+    const loaded = latestUnlessFailed(entry)
     const organized = organization.value()
     const recipeID = props.recipeID()
     if (
@@ -110,7 +111,7 @@ export function createRecipeReader(props: CreateRecipeReaderOptions) {
 
   // The batch stays the same; a remembered amount is restated in the new yield.
   const choosePreferredYield = (index: number) => {
-    const recipe = entry.latest?.value.recipe
+    const recipe = latestUnlessFailed(entry)?.value.recipe
     const written = recipe ? yieldAmount(displayYield(recipe, index).value) : undefined
     const remembered = rememberedYield()
     const previous = recipe ? yieldAmount(displayYield(recipe, preferredYield()).value) : undefined
@@ -156,7 +157,8 @@ export function createRecipeReader(props: CreateRecipeReaderOptions) {
     try {
       const owner = cookingOwner()
       if (!owner) return
-      const first = entry.latest?.value.recipe.instruction_sections?.[0]?.steps?.[0]?.id
+      const first =
+        latestUnlessFailed(entry)?.value.recipe.instruction_sections?.[0]?.steps?.[0]?.id
       const session = await withCookingLock(JSON.stringify(owner), () =>
         untrack(() =>
           startCookingSession(
@@ -164,8 +166,8 @@ export function createRecipeReader(props: CreateRecipeReaderOptions) {
             scale(),
             first,
             owner,
-            entry.latest?.value.recipe,
-            entry.latest?.revision,
+            latestUnlessFailed(entry)?.value.recipe,
+            latestUnlessFailed(entry)?.revision,
             cookingDisplay(),
           ),
         ),
@@ -188,7 +190,7 @@ export function createRecipeReader(props: CreateRecipeReaderOptions) {
     setTrashing(true)
     setTrashError(undefined)
     try {
-      const title = entry.latest?.value.recipe.title ?? ""
+      const title = latestUnlessFailed(entry)?.value.recipe.title ?? ""
       const trashed = await trashRecipe(props.recipeID(), revision)
       // The revision trashing returned is what a restore has to name, so the
       // library can offer the way back without reading the recipe again.

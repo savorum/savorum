@@ -15,6 +15,7 @@ import { OrganizationEditor } from "@/features/recipe-organization/organization-
 import { facetGroups } from "@/lib/library-query"
 import { formatNumber } from "@/lib/locale-format"
 import type { Rational } from "@/lib/rational"
+import { latestUnlessFailed } from "@/lib/settled"
 
 import { m } from "../../lib/messages.ts"
 
@@ -54,17 +55,17 @@ export const OrganizationSummary = (props: {
   const labels = createMemo(() => {
     const staticCurrent = organization()
     return [
-      ...(books.latest ?? [])
+      ...(latestUnlessFailed(books) ?? [])
         .filter((book) => book.contains_entry)
         .map((book) => ({
           name: book.title,
           kind: m.organization_label_book(),
           color: undefined as string | undefined,
         })),
-      ...(tags.latest ?? [])
+      ...(latestUnlessFailed(tags) ?? [])
         .filter((tag) => staticCurrent?.tag_ids?.includes(tag.id))
         .map((tag) => ({ name: tag.name, kind: m.organization_label_tag(), color: tag.color })),
-      ...(facets.latest ?? [])
+      ...(latestUnlessFailed(facets) ?? [])
         .filter((facet) => staticCurrent?.facet_ids?.includes(facet.id))
         .map((facet) => ({ name: facet.value, kind: facetKind(facet.kind), color: undefined })),
     ]
@@ -160,9 +161,9 @@ export const OrganizationSummary = (props: {
         <Show when={editing()}>
           <OrganizationEditor
             controller={props.controller}
-            tags={tags.latest ?? []}
-            facets={facets.latest ?? []}
-            books={books.latest ?? []}
+            tags={latestUnlessFailed(tags) ?? []}
+            facets={latestUnlessFailed(facets) ?? []}
+            books={latestUnlessFailed(books) ?? []}
             onClose={() => setEditing(false)}
             onSaved={() => void refetchBooks()}
           />

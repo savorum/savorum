@@ -25,6 +25,7 @@ import {
   measuredImportProgress,
   observeImportProgress,
 } from "@/lib/import-progress"
+import { latestUnlessFailed } from "@/lib/settled"
 /** A running import is polled until it finishes. */
 const pollInterval = 2000
 
@@ -83,7 +84,7 @@ export function createImportJob(
   const [loaded, { refetch }] = createResource(request, loadSnapshot)
   const [snapshot, setSnapshot] = createSignal<Awaited<ReturnType<typeof loadSnapshot>>>()
   createEffect(() => {
-    const next = loaded.latest
+    const next = latestUnlessFailed(loaded)
     if (next) setSnapshot(next)
   })
   const job = () => (snapshot()?.job.id === jobID() ? snapshot()?.job : undefined)
