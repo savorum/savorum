@@ -2241,7 +2241,7 @@ export interface paths {
         put?: never;
         /**
          * Commit an import preview
-         * @description Either `item_ids` with an `on_duplicate` policy, or `resolutions` naming what to do with each item individually. A preview with items left over comes back as `remaining`.
+         * @description Either `item_ids` with an `on_duplicate` policy, or `resolutions` naming what to do with each item individually. A preview with items left over comes back as `remaining`. For large previews or ones with photographs on the web, use `start-import-job`: this request waits for every recipe and can outlast a proxy's timeout.
          */
         post: operations["commit-import-preview"];
         delete?: never;
