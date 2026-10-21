@@ -10,7 +10,7 @@ import { StepTimingEditor } from "@/components/recipe-editor/timing"
 import { Button } from "@/components/ui/button"
 import { IconButton } from "@/components/ui/icon-button"
 import { Input } from "@/components/ui/input"
-import { createReorder, reorderRow } from "@/components/ui/reorder"
+import { createGroupedReorder, reorderRow } from "@/components/ui/reorder"
 import { Textarea } from "@/components/ui/textarea"
 import { removeAt } from "@/lib/lists"
 import { formatNumber } from "@/lib/locale-format"
@@ -120,19 +120,14 @@ export function RecipeInstructionsEditor(props: {
   const headingID = createUniqueId()
   const [timingFor, setTimingFor] = createSignal<string>()
   const phases = createMemo(() => props.draft.times?.assertions ?? [])
-  /** Steps can be carried within their stage. */
-  const reorder = createReorder({
-    onMove: (from, to) => moveStep(from.group, from.index, to.index),
+  const reorder = createGroupedReorder({
+    groups: () => (props.draft.instruction_sections ?? []).map((section) => section.steps ?? []),
+    setGroup: (group, steps) => props.setDraft("instruction_sections", group, "steps", steps),
+    onMoved: (step, to) => {
+      props.onAnnounce(m.editor_step_moved({ position: formatNumber(to.index + 1) }))
+      props.onFocus(step.id)
+    },
   })
-
-  const moveStep = (section: number, from: number, to: number, focus?: string) => {
-    if (from === to) return
-    props.setDraft("instruction_sections", section, "steps", (steps) =>
-      moveItem(steps ?? [], from, to),
-    )
-    props.onAnnounce(m.editor_step_moved({ position: formatNumber(to + 1) }))
-    if (focus) props.onFocus(focus)
-  }
 
   const [named, setNamed] = createSignal(
     new Set(
@@ -160,7 +155,12 @@ export function RecipeInstructionsEditor(props: {
       </Show>
       <For each={props.draft.instruction_sections ?? []}>
         {(section, sectionIndex) => (
-          <div class={styles.section} data-editor-kind="step" data-editor-id={section.id}>
+          <div
+            class={styles.section}
+            data-editor-kind="step"
+            data-editor-id={section.id}
+            {...reorder.group(sectionIndex, () => section.steps?.length ?? 0)}
+          >
             <Show
               when={named().has(section.id) || (props.draft.instruction_sections?.length ?? 0) > 1}
               fallback={
@@ -386,13 +386,13 @@ export function RecipeInstructionsEditor(props: {
                       })}
                       size="xs"
                       variant="plain"
-                      disabled={stepIndex() === 0}
+                      disabled={
+                        !reorder.canMoveBy({ group: sectionIndex(), index: stepIndex() }, -1)
+                      }
                       onClick={() =>
-                        moveStep(
-                          untrack(sectionIndex),
-                          untrack(stepIndex),
-                          untrack(stepIndex) - 1,
-                          step.id,
+                        reorder.moveBy(
+                          { group: untrack(sectionIndex), index: untrack(stepIndex) },
+                          -1,
                         )
                       }
                     >
@@ -404,13 +404,13 @@ export function RecipeInstructionsEditor(props: {
                       })}
                       size="xs"
                       variant="plain"
-                      disabled={stepIndex() === (section.steps?.length ?? 0) - 1}
+                      disabled={
+                        !reorder.canMoveBy({ group: sectionIndex(), index: stepIndex() }, 1)
+                      }
                       onClick={() =>
-                        moveStep(
-                          untrack(sectionIndex),
-                          untrack(stepIndex),
-                          untrack(stepIndex) + 1,
-                          step.id,
+                        reorder.moveBy(
+                          { group: untrack(sectionIndex), index: untrack(stepIndex) },
+                          1,
                         )
                       }
                     >

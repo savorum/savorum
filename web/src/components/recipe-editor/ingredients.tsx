@@ -12,7 +12,7 @@ import { IngredientReadingContext } from "@/components/ingredient-reading"
 import { Button } from "@/components/ui/button"
 import { IconButton } from "@/components/ui/icon-button"
 import { Input } from "@/components/ui/input"
-import { createReorder, moveBetween, reorderRow } from "@/components/ui/reorder"
+import { createGroupedReorder, reorderRow } from "@/components/ui/reorder"
 import { isolate } from "@/lib/direction"
 import { removeAt } from "@/lib/lists"
 import { formatNumber } from "@/lib/locale-format"
@@ -87,28 +87,19 @@ export function RecipeIngredientsEditor(props: {
     sourceLocale: props.draft.source_locale,
     convention: props.convention || undefined,
   })
-  /** Ingredients can be carried within a group or into another one. */
-  const reorder = createReorder({
-    acrossGroups: true,
-    onMove: (from, to) => {
-      const sections = props.draft.ingredient_sections ?? []
-      const id = sections[from.group]?.ingredients?.[from.index]?.id
-      if (from.group === to.group && from.index === to.index) return
-      const moved = moveBetween(
-        sections.map((section) => section.ingredients ?? []),
-        from,
-        to,
-      )
-      for (const group of new Set([from.group, to.group]))
-        props.setDraft("ingredient_sections", group, "ingredients", moved[group])
+  const reorder = createGroupedReorder({
+    groups: () =>
+      (props.draft.ingredient_sections ?? []).map((section) => section.ingredients ?? []),
+    setGroup: (group, ingredients) =>
+      props.setDraft("ingredient_sections", group, "ingredients", ingredients),
+    onMoved: (ingredient, to) => {
       props.onAnnounce(
         m.editor_ingredient_moved({
-          name:
-            sections[from.group]?.ingredients?.[from.index]?.name || m.editor_ingredient_fallback(),
+          name: ingredient.name || m.editor_ingredient_fallback(),
           position: formatNumber(to.index + 1),
         }),
       )
-      if (id) props.onFocus(id, "primary")
+      props.onFocus(ingredient.id, "primary")
     },
   })
   return (
@@ -266,29 +257,21 @@ export function RecipeIngredientsEditor(props: {
                       ingredient={ingredient()}
                       position={ingredientIndex + 1}
                       style={props.style}
-                      first={ingredientIndex === 0}
-                      last={ingredientIndex === (section.ingredients?.length ?? 0) - 1}
+                      first={
+                        !reorder.canMoveBy({ group: sectionIndex(), index: ingredientIndex }, -1)
+                      }
+                      last={
+                        !reorder.canMoveBy({ group: sectionIndex(), index: ingredientIndex }, 1)
+                      }
                       removable={(section.ingredients?.length ?? 0) > 1}
                       // Replace rather than merge, since reverting removes fields.
                       onChange={(next) => replaceIngredient(ingredient().id, next)}
-                      onMove={(offset) => {
-                        const id = ingredient().id
-                        const name = ingredient().name || m.editor_ingredient_fallback()
-                        const nextPosition = ingredientIndex + offset
-                        props.setDraft(
-                          "ingredient_sections",
-                          sectionIndex(),
-                          "ingredients",
-                          (items) => moveItem(items ?? [], ingredientIndex, nextPosition),
+                      onMove={(offset) =>
+                        reorder.moveBy(
+                          { group: untrack(sectionIndex), index: ingredientIndex },
+                          offset,
                         )
-                        props.onAnnounce(
-                          m.editor_ingredient_moved({
-                            name,
-                            position: formatNumber(nextPosition + 1),
-                          }),
-                        )
-                        props.onFocus(id, "primary")
-                      }}
+                      }
                       onRemove={() => {
                         const items = section.ingredients ?? []
                         const survivor = items[ingredientIndex + 1] ?? items[ingredientIndex - 1]

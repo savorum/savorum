@@ -1,10 +1,56 @@
-import { createSignal } from "solid-js"
+import { batch, createMemo, createSignal } from "solid-js"
 import { css } from "styled-system/css"
 
 /** Where a row sits: which list it is in, and its place in that list. */
 export interface Slot {
   group: number
   index: number
+}
+
+/** Shared drag and move actions for rows in adjacent groups. */
+export function createGroupedReorder<T>(options: {
+  groups: () => readonly (readonly T[])[]
+  setGroup: (group: number, rows: T[]) => void
+  onMoved: (row: T, to: Slot) => void
+}) {
+  const lengths = createMemo(() => options.groups().map((rows) => rows.length))
+  const destination = (from: Slot, offset: number): Slot | undefined => {
+    if (offset !== -1 && offset !== 1) return
+    const length = lengths()[from.group]
+    if (length === undefined || from.index < 0 || from.index >= length) return
+    const index = from.index + offset
+    if (index >= 0 && index < length) return { group: from.group, index }
+    const group = from.group + offset
+    const adjacent = lengths()[group]
+    if (adjacent !== undefined) return { group, index: offset === -1 ? adjacent : 0 }
+  }
+  const move = (from: Slot, to: Slot) => {
+    if (from.group === to.group && from.index === to.index) return
+    const groups = options.groups()
+    const row = groups[from.group]?.[from.index]
+    if (row === undefined || !groups[to.group]) return
+    const sameGroup = from.group === to.group
+    const affected = sameGroup ? [groups[from.group]] : [groups[from.group], groups[to.group]]
+    const moved = moveBetween(
+      affected,
+      { group: 0, index: from.index },
+      { group: sameGroup ? 0 : 1, index: to.index },
+    )
+    batch(() => {
+      options.setGroup(from.group, moved[0])
+      if (!sameGroup) options.setGroup(to.group, moved[1])
+    })
+    options.onMoved(row, to)
+  }
+
+  return {
+    ...createReorder({ acrossGroups: true, onMove: move }),
+    canMoveBy: (from: Slot, offset: number) => destination(from, offset) !== undefined,
+    moveBy: (from: Slot, offset: number) => {
+      const to = destination(from, offset)
+      if (to) move(from, to)
+    },
+  }
 }
 
 /**
