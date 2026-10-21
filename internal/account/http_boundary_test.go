@@ -128,7 +128,7 @@ func TestHandlerBindsAuthenticatedIdentityAndSelectedLibrary(t *testing.T) {
 		t.Fatalf("request did not reach the protected handler: reached=%v status=%d", reached, response.Code)
 	}
 
-	if got := response.Header().Get("Cache-Control"); got != "no-store" {
+	if got := response.Header().Get("Cache-Control"); got != "no-store, no-transform" {
 		t.Fatalf("Cache-Control = %q", got)
 	}
 

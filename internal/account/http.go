@@ -118,7 +118,8 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Cache-Control", "no-store")
+	// no-transform keeps CDNs from weakening ETags.
+	w.Header().Set("Cache-Control", "no-store, no-transform")
 
 	b, ok := h.resolveBrowser(w, r)
 	if !ok {
