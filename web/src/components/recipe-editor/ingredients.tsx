@@ -69,17 +69,14 @@ export function RecipeIngredientsEditor(props: {
     setNamed((current) => new Set([...current, id]))
     props.onFocus(id)
   }
-  /**
-   * A row is found by its identity, not its place: a line read by the server
-   * can arrive after the row has been moved or another inserted before it.
-   * The whole row is replaced, since reverting removes fields.
-   */
-  const replaceIngredient = (next: Ingredient) => {
+  // Parsing can finish after a row moves. Match its original ID because
+  // converting an ingredient to a choice gives it a new ID.
+  const replaceIngredient = (id: string, next: Ingredient) => {
     const sections = props.draft.ingredient_sections ?? []
     for (const [group, section] of sections.entries()) {
-      if (!(section.ingredients ?? []).some((item) => item.id === next.id)) continue
+      if (!(section.ingredients ?? []).some((item) => item.id === id)) continue
       props.setDraft("ingredient_sections", group, "ingredients", (items) =>
-        (items ?? []).map((item) => (item.id === next.id ? next : item)),
+        (items ?? []).map((item) => (item.id === id ? next : item)),
       )
       return
     }
@@ -273,7 +270,7 @@ export function RecipeIngredientsEditor(props: {
                       last={ingredientIndex === (section.ingredients?.length ?? 0) - 1}
                       removable={(section.ingredients?.length ?? 0) > 1}
                       // Replace rather than merge, since reverting removes fields.
-                      onChange={replaceIngredient}
+                      onChange={(next) => replaceIngredient(ingredient().id, next)}
                       onMove={(offset) => {
                         const id = ingredient().id
                         const name = ingredient().name || m.editor_ingredient_fallback()
