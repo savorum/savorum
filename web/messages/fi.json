@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "Kirjan historian lataaminen epäonnistui.",
   "books_that_version_of_the_book_could_not_be_loaded": "Kirjan kyseisen version lataaminen epäonnistui.",
   "books_that_version_of_the_book_could_not_be_restored": "Kirjan kyseisen version palauttaminen epäonnistui.",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorum lähetti vastauksen, jota tämä sivu ei pysty käyttämään. Lataa sivu uudelleen ja yritä uudestaan.",
   "cookings_the_cooking_history_could_not_be_loaded": "Ruoanlaittohistorian lataaminen epäonnistui.",
   "cookings_the_cooking_could_not_be_recorded": "Ruoanlaittokerran kirjaaminen epäonnistui.",
   "cookings_the_cooking_could_not_be_saved": "Ruoanlaittokerran tallentaminen epäonnistui.",

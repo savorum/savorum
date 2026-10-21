@@ -13,7 +13,6 @@ import {
   expectOk,
   failure,
   ifMatch,
-  revisionOf,
   unwrap,
   unwrapItems,
   unwrapVersioned,
@@ -171,7 +170,8 @@ export async function createRecipe(
       m.recipes_the_recipe_could_not_be_created(),
     )
   }
-  return { value: (await response.json()) as LibraryEntry, revision: revisionOf(response) }
+  const value = (await response.json()) as LibraryEntry
+  return { value, revision: value.revision }
 }
 
 export async function updateRecipe(
@@ -195,7 +195,8 @@ export async function updateRecipe(
       m.recipes_the_recipe_could_not_be_saved(),
     )
   }
-  return { value: (await response.json()) as LibraryEntry, revision: revisionOf(response) }
+  const value = (await response.json()) as LibraryEntry
+  return { value, revision: value.revision }
 }
 
 /** Re-runs the shared timing analysis against a revision the reader has seen. */
@@ -211,10 +212,8 @@ export async function reanalyzeMicrowave(
     },
   )
   if (!response.ok) throw new Error(m.recipes_microwave_timings_could_not_be_reanalyzed())
-  return {
-    value: (await response.json()) as LibraryEntry,
-    revision: revisionOf(response),
-  }
+  const value = (await response.json()) as LibraryEntry
+  return { value, revision: value.revision }
 }
 
 export async function trashRecipe(id: string, revision: number): Promise<Versioned<LibraryEntry>> {

@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "Không thể tải lịch sử của sách.",
   "books_that_version_of_the_book_could_not_be_loaded": "Không thể tải phiên bản đó của sách.",
   "books_that_version_of_the_book_could_not_be_restored": "Không thể khôi phục phiên bản đó của sách.",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorum đã gửi phản hồi mà trang này không thể sử dụng. Hãy tải lại rồi thử lại.",
   "cookings_the_cooking_history_could_not_be_loaded": "Không thể tải lịch sử nấu ăn.",
   "cookings_the_cooking_could_not_be_recorded": "Không thể ghi lại lần nấu này.",
   "cookings_the_cooking_could_not_be_saved": "Không thể lưu lần nấu này.",

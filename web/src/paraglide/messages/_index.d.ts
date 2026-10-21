@@ -9021,20 +9021,6 @@ export const claims_variant_number: ((inputs: Claims_Variant_NumberInputs, optio
 /**
 * | output |
 * | --- |
-* | "Savorum sent a response this page could not use. Reload and try again." |
-*
-* @param {Client_Savorum_Returned_An_Invalid_Revision_EtagInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const client_savorum_returned_an_invalid_revision_etag: ((inputs?: Client_Savorum_Returned_An_Invalid_Revision_EtagInputs, options?: {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}) => LocalizedString) & import("../runtime.js").MessageMetadata<Client_Savorum_Returned_An_Invalid_Revision_EtagInputs, {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}, {}>;
-/**
-* | output |
-* | --- |
 * | "Cancel" |
 *
 * @param {Common_CancelInputs} inputs
@@ -33762,7 +33748,6 @@ export type Claims_TitleInputs = {};
 export type Claims_Variant_NumberInputs = {
     number: NonNullable<unknown>;
 };
-export type Client_Savorum_Returned_An_Invalid_Revision_EtagInputs = {};
 export type Common_CancelInputs = {};
 export type Common_Dash_SeparatorInputs = {};
 export type Common_Dot_SeparatorInputs = {};

@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "The book history could not be loaded.",
   "books_that_version_of_the_book_could_not_be_loaded": "That version of the book could not be loaded.",
   "books_that_version_of_the_book_could_not_be_restored": "That version of the book could not be restored.",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorum sent a response this page could not use. Reload and try again.",
   "cookings_the_cooking_history_could_not_be_loaded": "The cooking history could not be loaded.",
   "cookings_the_cooking_could_not_be_recorded": "The cooking could not be recorded.",
   "cookings_the_cooking_could_not_be_saved": "The cooking could not be saved.",

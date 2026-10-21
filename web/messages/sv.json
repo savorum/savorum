@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "Receptbokens historik kunde inte läsas in.",
   "books_that_version_of_the_book_could_not_be_loaded": "Den versionen av receptboken kunde inte läsas in.",
   "books_that_version_of_the_book_could_not_be_restored": "Den versionen av receptboken kunde inte återställas.",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorum skickade ett svar som sidan inte kunde använda. Läs in sidan igen och försök på nytt.",
   "cookings_the_cooking_history_could_not_be_loaded": "Tillagningshistoriken kunde inte läsas in.",
   "cookings_the_cooking_could_not_be_recorded": "Tillagningen kunde inte registreras.",
   "cookings_the_cooking_could_not_be_saved": "Tillagningen kunde inte sparas.",

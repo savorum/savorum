@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "Historii knihy se nepodařilo načíst.",
   "books_that_version_of_the_book_could_not_be_loaded": "Tuto verzi knihy se nepodařilo načíst.",
   "books_that_version_of_the_book_could_not_be_restored": "Tuto verzi knihy se nepodařilo obnovit.",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorum odeslalo odpověď, kterou tato stránka nedokáže použít. Načtěte ji znovu a opakujte akci.",
   "cookings_the_cooking_history_could_not_be_loaded": "Historii vaření se nepodařilo načíst.",
   "cookings_the_cooking_could_not_be_recorded": "Vaření se nepodařilo zaznamenat.",
   "cookings_the_cooking_could_not_be_saved": "Záznam o vaření se nepodařilo uložit.",

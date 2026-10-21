@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "Nie udało się wczytać historii książki kucharskiej.",
   "books_that_version_of_the_book_could_not_be_loaded": "Nie udało się wczytać tej wersji książki kucharskiej.",
   "books_that_version_of_the_book_could_not_be_restored": "Nie udało się przywrócić tej wersji książki kucharskiej.",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorum wysłał odpowiedź, której ta strona nie mogła przetworzyć. Odśwież stronę i spróbuj ponownie.",
   "cookings_the_cooking_history_could_not_be_loaded": "Nie udało się wczytać historii gotowania.",
   "cookings_the_cooking_could_not_be_recorded": "Nie udało się zarejestrować gotowania.",
   "cookings_the_cooking_could_not_be_saved": "Nie udało się zapisać wpisu o gotowaniu.",

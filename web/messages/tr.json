@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "Tarif kitabının geçmişi yüklenemedi.",
   "books_that_version_of_the_book_could_not_be_loaded": "Tarif kitabının bu sürümü yüklenemedi.",
   "books_that_version_of_the_book_could_not_be_restored": "Tarif kitabının bu sürümü geri yüklenemedi.",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorum, bu sayfanın kullanamadığı bir yanıt gönderdi. Sayfayı yeniden yükleyip tekrar deneyin.",
   "cookings_the_cooking_history_could_not_be_loaded": "Pişirme geçmişi yüklenemedi.",
   "cookings_the_cooking_could_not_be_recorded": "Pişirme kaydı oluşturulamadı.",
   "cookings_the_cooking_could_not_be_saved": "Pişirme kaydı kaydedilemedi.",

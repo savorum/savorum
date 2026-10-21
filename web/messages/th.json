@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "โหลดประวัติสมุดสูตรอาหารไม่ได้",
   "books_that_version_of_the_book_could_not_be_loaded": "โหลดสมุดสูตรอาหารเวอร์ชันนั้นไม่ได้",
   "books_that_version_of_the_book_could_not_be_restored": "กู้คืนสมุดสูตรอาหารเวอร์ชันนั้นไม่ได้",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorum ส่งการตอบกลับที่หน้านี้ใช้ไม่ได้ โปรดโหลดใหม่แล้วลองอีกครั้ง",
   "cookings_the_cooking_history_could_not_be_loaded": "โหลดประวัติการทำอาหารไม่ได้",
   "cookings_the_cooking_could_not_be_recorded": "บันทึกการทำอาหารครั้งนี้ไม่ได้",
   "cookings_the_cooking_could_not_be_saved": "บันทึกข้อมูลการทำอาหารไม่ได้",

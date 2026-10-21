@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "Impossibile caricare la cronologia del libro.",
   "books_that_version_of_the_book_could_not_be_loaded": "Impossibile caricare questa versione del libro.",
   "books_that_version_of_the_book_could_not_be_restored": "Impossibile ripristinare questa versione del libro.",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorum ha inviato una risposta che questa pagina non ha potuto utilizzare. Ricarica la pagina e riprova.",
   "cookings_the_cooking_history_could_not_be_loaded": "Impossibile caricare la cronologia delle preparazioni.",
   "cookings_the_cooking_could_not_be_recorded": "Impossibile registrare la preparazione.",
   "cookings_the_cooking_could_not_be_saved": "Impossibile salvare la preparazione.",

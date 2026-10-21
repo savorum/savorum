@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "לא ניתן לטעון את היסטוריית הספר.",
   "books_that_version_of_the_book_could_not_be_loaded": "לא ניתן לטעון את הגרסה הזו של הספר.",
   "books_that_version_of_the_book_could_not_be_restored": "לא ניתן לשחזר את הגרסה הזו של הספר.",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorum שלח תגובה שהדף הזה לא הצליח לעבד. יש לטעון את הדף מחדש ולנסות שוב.",
   "cookings_the_cooking_history_could_not_be_loaded": "לא ניתן לטעון את היסטוריית הבישול.",
   "cookings_the_cooking_could_not_be_recorded": "לא ניתן לתעד את הבישול.",
   "cookings_the_cooking_could_not_be_saved": "לא ניתן לשמור את רישום הבישול.",

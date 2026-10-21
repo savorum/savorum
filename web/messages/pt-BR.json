@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "Não foi possível carregar o histórico do livro.",
   "books_that_version_of_the_book_could_not_be_loaded": "Não foi possível carregar essa versão do livro.",
   "books_that_version_of_the_book_could_not_be_restored": "Não foi possível restaurar essa versão do livro.",
-  "client_savorum_returned_an_invalid_revision_etag": "O Savorum enviou uma resposta que esta página não conseguiu usar. Recarregue a página e tente novamente.",
   "cookings_the_cooking_history_could_not_be_loaded": "Não foi possível carregar o histórico de preparos.",
   "cookings_the_cooking_could_not_be_recorded": "Não foi possível registrar o preparo.",
   "cookings_the_cooking_could_not_be_saved": "Não foi possível salvar o preparo.",

@@ -12,9 +12,9 @@ afterEach(() => {
 })
 
 function savedResponse(status: number) {
-  return new Response(JSON.stringify({ id: "r-1" }), {
+  return new Response(JSON.stringify({ id: "r-1", revision: 7 }), {
     status,
-    headers: { "Content-Type": "application/json", ETag: '"7"' },
+    headers: { "Content-Type": "application/json", ETag: 'W/"7"' },
   })
 }
 

@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "Nem sikerült betölteni a könyv előzményeit.",
   "books_that_version_of_the_book_could_not_be_loaded": "Nem sikerült betölteni a könyv ezen verzióját.",
   "books_that_version_of_the_book_could_not_be_restored": "Nem sikerült visszaállítani a könyv ezen verzióját.",
-  "client_savorum_returned_an_invalid_revision_etag": "A Savorum olyan választ küldött, amelyet ez az oldal nem tud használni. Töltsd újra az oldalt, és próbáld meg ismét.",
   "cookings_the_cooking_history_could_not_be_loaded": "Nem sikerült betölteni a főzési előzményeket.",
   "cookings_the_cooking_could_not_be_recorded": "Nem sikerült rögzíteni a főzést.",
   "cookings_the_cooking_could_not_be_saved": "Nem sikerült menteni a főzési bejegyzést.",

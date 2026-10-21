@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "تعذّر تحميل سجلّ الكتاب.",
   "books_that_version_of_the_book_could_not_be_loaded": "تعذّر تحميل هذا الإصدار من الكتاب.",
   "books_that_version_of_the_book_could_not_be_restored": "تعذّر استعادة هذا الإصدار من الكتاب.",
-  "client_savorum_returned_an_invalid_revision_etag": "أرسل Savorum استجابة تعذّر على هذه الصفحة استخدامها. أعد تحميل الصفحة وحاول مجددًا.",
   "cookings_the_cooking_history_could_not_be_loaded": "تعذّر تحميل سجلّ الطهي.",
   "cookings_the_cooking_could_not_be_recorded": "تعذّر تسجيل عملية الطهي.",
   "cookings_the_cooking_could_not_be_saved": "تعذّر حفظ عملية الطهي.",

@@ -8,6 +8,7 @@ Notable changes to Savorum Core. Each release publishes
 
 - Move ingredients and steps between groups.
 - Confirm removal of nonempty groups.
+- Fix recipe pages and long imports failing behind some proxies.
 
 ## 0.2.2
 
