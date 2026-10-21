@@ -87,6 +87,8 @@ func streamExternalRecipeImport(service ExchangeService) http.HandlerFunc {
 			policy = library.DuplicateSkip
 		}
 
+		outlastWriteTimeout(response)
+
 		results, err := service.ImportSources(request.Context(), inputs, importer.Options{}, policy)
 		if err != nil {
 			status, kind, detail := importHTTPError(err)
@@ -206,6 +208,8 @@ func streamImportPreviewCommit(service ExchangeService) http.HandlerFunc {
 			err       error
 		)
 
+		outlastWriteTimeout(response)
+
 		if len(input.Resolutions) > 0 {
 			resolutions := make([]exchange.PreviewResolution, len(input.Resolutions))
 			for index, resolution := range input.Resolutions {
@@ -248,6 +252,11 @@ func streamImportPreviewCommit(service ExchangeService) http.HandlerFunc {
 		response.Header().Set("Content-Type", "application/json")
 		_ = json.NewEncoder(response).Encode(result)
 	}
+}
+
+// outlastWriteTimeout keeps a long synchronous import from losing its response.
+func outlastWriteTimeout(response http.ResponseWriter) {
+	_ = http.NewResponseController(response).SetWriteDeadline(time.Time{})
 }
 
 func streamImportPreviewCancel(service ExchangeService) http.HandlerFunc {
@@ -1097,6 +1106,8 @@ func streamPackageImport(exchanger ExchangeService) http.HandlerFunc {
 
 			return
 		}
+
+		outlastWriteTimeout(response)
 
 		results, err := exchanger.ImportPackage(request.Context(), data, policy)
 		if err != nil {
