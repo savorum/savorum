@@ -41,7 +41,7 @@ const styles = {
 }
 
 export function SourceRefreshPage(props: { recipeID: () => string; onApplied: () => void }) {
-  const [entry] = createResource(() => props.recipeID(), getRecipe)
+  const [entry, { refetch }] = createResource(() => props.recipeID(), getRecipe)
   const [source, setSource] = createSignal("")
   const [preview, setPreview] = createSignal<Awaited<ReturnType<typeof previewSourceRefreshURL>>>()
   const [error, setError] = createSignal<unknown>()
@@ -122,6 +122,9 @@ export function SourceRefreshPage(props: { recipeID: () => string; onApplied: ()
           <>
             <Show when={entry.loading && !latestUnlessFailed(entry)}>
               <Loading>{m.recipe_loading()}</Loading>
+            </Show>
+            <Show when={entry.error}>
+              {(failure) => <ErrorState error={failure()} onRetry={() => void refetch()} />}
             </Show>
             <h1 class={styles.title}>
               <Show

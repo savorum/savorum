@@ -7,7 +7,14 @@ import { recipePage } from "styled-system/recipes"
 import { createMeal } from "@/api/meals"
 import { listTranslations } from "@/api/translations"
 import { RecipeArticle } from "@/components/recipe-article"
-import { Callout, ChangeError, Loading, Problem, ResourceState } from "@/components/status"
+import {
+  Callout,
+  ChangeError,
+  ErrorState,
+  Loading,
+  Problem,
+  ResourceState,
+} from "@/components/status"
 import { Button } from "@/components/ui/button"
 import { buttonLink } from "@/components/ui/button-link"
 import { ConfirmDialog } from "@/components/ui/dialog"
@@ -307,6 +314,11 @@ export function RecipePage(props: CreateRecipeReaderOptions) {
               <>
                 <ChangeError error={trashError()} onReload={() => void refetch()} />
                 <ChangeError error={exportError()} onReload={() => void refetch()} />
+                <Show when={managingTranslations() && translations.error}>
+                  {(failure) => (
+                    <ErrorState error={failure()} onRetry={() => void refetchTranslations()} />
+                  )}
+                </Show>
                 <OrganizationSummary
                   entryID={props.recipeID()}
                   controller={organization}

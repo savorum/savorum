@@ -220,7 +220,7 @@ func (s *Service) fetchPendingPhotographs(ctx context.Context, targets []library
 		}
 
 		_, err := pending.CompletePendingPhotographs(access.WithLibrary(ctx, candidate.target.LibraryID), candidate.entry.ID, candidate.entry.Revision, document)
-		if _, stale := errors.AsType[*library.PreconditionError](err); stale {
+		if _, stale := errors.AsType[*library.PreconditionError](err); stale || errors.Is(err, library.ErrNotFound) || errors.Is(err, library.ErrInvalidState) {
 			continue
 		}
 
