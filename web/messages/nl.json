@@ -3127,5 +3127,8 @@
   "connect_setup": "Configuratiedocument",
   "connect_setup_hint": "Plak een nieuw configuratiedocument uit Cloud. Elk document kan één keer worden gebruikt.",
   "connect_save": "Opslaan en verbinden",
-  "connect_privacy": "Het verkeer wordt hier ontsleuteld. De dienstverlener beheert het toegewezen domein en kan er een ander vertrouwd certificaat voor verkrijgen."
+  "connect_privacy": "Het verkeer wordt hier ontsleuteld. De dienstverlener beheert het toegewezen domein en kan er een ander vertrouwd certificaat voor verkrijgen.",
+  "editor_confirm_group_removal": "Verwijderen bevestigen",
+  "editor_remove_ingredient_group_warning": "Deze groep en alle ingrediënten erin verwijderen?",
+  "editor_remove_instruction_group_warning": "Deze fase en alle stappen erin verwijderen?"
 }

@@ -803,6 +803,7 @@ export const editor_alternative_removed: (inputs: Editor_Alternative_RemovedInpu
 export const editor_amount_position: (inputs: Editor_Amount_PositionInputs) => LocalizedString;
 export const editor_approximate_time: (inputs: Editor_Approximate_TimeInputs) => LocalizedString;
 export const editor_author_position: (inputs: Editor_Author_PositionInputs) => LocalizedString;
+export const editor_confirm_group_removal: (inputs: Editor_Confirm_Group_RemovalInputs) => LocalizedString;
 export const editor_context_changed: (inputs: Editor_Context_ChangedInputs) => LocalizedString;
 export const editor_cook_time: (inputs: Editor_Cook_TimeInputs) => LocalizedString;
 export const editor_discard: (inputs: Editor_DiscardInputs) => LocalizedString;
@@ -845,6 +846,8 @@ export const editor_recovered_replace_confirm: (inputs: Editor_Recovered_Replace
 export const editor_recovered_replace_description: (inputs: Editor_Recovered_Replace_DescriptionInputs) => LocalizedString;
 export const editor_recovered_replace_title: (inputs: Editor_Recovered_Replace_TitleInputs) => LocalizedString;
 export const editor_recovered_restore: (inputs: Editor_Recovered_RestoreInputs) => LocalizedString;
+export const editor_remove_ingredient_group_warning: (inputs: Editor_Remove_Ingredient_Group_WarningInputs) => LocalizedString;
+export const editor_remove_instruction_group_warning: (inputs: Editor_Remove_Instruction_Group_WarningInputs) => LocalizedString;
 export const editor_remove_label_position: (inputs: Editor_Remove_Label_PositionInputs) => LocalizedString;
 export const editor_save_recipe: (inputs: Editor_Save_RecipeInputs) => LocalizedString;
 export const editor_see_the_problem: (inputs: Editor_See_The_ProblemInputs) => LocalizedString;
@@ -3378,6 +3381,7 @@ export type Editor_Approximate_TimeInputs = {};
 export type Editor_Author_PositionInputs = {
     position: NonNullable<unknown>;
 };
+export type Editor_Confirm_Group_RemovalInputs = {};
 export type Editor_Context_ChangedInputs = {};
 export type Editor_Cook_TimeInputs = {};
 export type Editor_DiscardInputs = {};
@@ -3454,6 +3458,8 @@ export type Editor_Recovered_Replace_ConfirmInputs = {};
 export type Editor_Recovered_Replace_DescriptionInputs = {};
 export type Editor_Recovered_Replace_TitleInputs = {};
 export type Editor_Recovered_RestoreInputs = {};
+export type Editor_Remove_Ingredient_Group_WarningInputs = {};
+export type Editor_Remove_Instruction_Group_WarningInputs = {};
 export type Editor_Remove_Label_PositionInputs = {
     label: NonNullable<unknown>;
     position: NonNullable<unknown>;

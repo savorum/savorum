@@ -3121,5 +3121,8 @@
   "connect_setup": "Asetusasiakirja",
   "connect_setup_hint": "Liitä uusi asetusasiakirja Cloudista. Kutakin asiakirjaa voi käyttää kerran.",
   "connect_save": "Tallenna ja yhdistä",
-  "connect_privacy": "Liikenteen salaus puretaan täällä. Palvelun ylläpitäjä hallitsee osoitettua verkkotunnusta ja voi hankkia sille toisen luotetun varmenteen."
+  "connect_privacy": "Liikenteen salaus puretaan täällä. Palvelun ylläpitäjä hallitsee osoitettua verkkotunnusta ja voi hankkia sille toisen luotetun varmenteen.",
+  "editor_confirm_group_removal": "Vahvista poisto",
+  "editor_remove_ingredient_group_warning": "Poistetaanko tämä ryhmä ja kaikki sen ainekset?",
+  "editor_remove_instruction_group_warning": "Poistetaanko tämä vaihe ja kaikki sen ohjeet?"
 }

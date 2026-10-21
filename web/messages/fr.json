@@ -3127,5 +3127,8 @@
   "connect_setup": "Document de configuration",
   "connect_setup_hint": "Collez un nouveau document de configuration depuis Cloud. Chaque document ne peut être utilisé qu’une fois.",
   "connect_save": "Enregistrer et connecter",
-  "connect_privacy": "Le trafic est déchiffré ici. L’opérateur du service contrôle le domaine attribué et peut obtenir un autre certificat de confiance pour celui-ci."
+  "connect_privacy": "Le trafic est déchiffré ici. L’opérateur du service contrôle le domaine attribué et peut obtenir un autre certificat de confiance pour celui-ci.",
+  "editor_confirm_group_removal": "Confirmer la suppression",
+  "editor_remove_ingredient_group_warning": "Supprimer ce groupe et tous ses ingrédients ?",
+  "editor_remove_instruction_group_warning": "Supprimer cette phase et toutes ses étapes ?"
 }

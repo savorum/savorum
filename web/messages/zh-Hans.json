@@ -2983,5 +2983,8 @@
   "connect_setup": "配置文档",
   "connect_setup_hint": "粘贴 Cloud 中的新配置文档。每份文档只能使用一次。",
   "connect_save": "保存并连接",
-  "connect_privacy": "流量在此解密。服务运营方控制分配的域名，并可为其获取其他受信任的证书。"
+  "connect_privacy": "流量在此解密。服务运营方控制分配的域名，并可为其获取其他受信任的证书。",
+  "editor_confirm_group_removal": "确认移除",
+  "editor_remove_ingredient_group_warning": "移除此分组及其中的所有食材？",
+  "editor_remove_instruction_group_warning": "移除此阶段及其中的所有步骤？"
 }

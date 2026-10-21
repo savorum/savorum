@@ -807,6 +807,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{ position: NonNullable<unknown> }} Editor_Amount_PositionInputs */
 /** @typedef {{}} Editor_Approximate_TimeInputs */
 /** @typedef {{ position: NonNullable<unknown> }} Editor_Author_PositionInputs */
+/** @typedef {{}} Editor_Confirm_Group_RemovalInputs */
 /** @typedef {{}} Editor_Context_ChangedInputs */
 /** @typedef {{}} Editor_Cook_TimeInputs */
 /** @typedef {{}} Editor_DiscardInputs */
@@ -849,6 +850,8 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Editor_Recovered_Replace_DescriptionInputs */
 /** @typedef {{}} Editor_Recovered_Replace_TitleInputs */
 /** @typedef {{}} Editor_Recovered_RestoreInputs */
+/** @typedef {{}} Editor_Remove_Ingredient_Group_WarningInputs */
+/** @typedef {{}} Editor_Remove_Instruction_Group_WarningInputs */
 /** @typedef {{ label: NonNullable<unknown>, position: NonNullable<unknown> }} Editor_Remove_Label_PositionInputs */
 /** @typedef {{}} Editor_Save_RecipeInputs */
 /** @typedef {{}} Editor_See_The_ProblemInputs */
@@ -35399,6 +35402,47 @@ export const editor_author_position = /** @type {((inputs: Editor_Author_Positio
 /**
 * | output |
 * | --- |
+* | "Confirm removal" |
+*
+* @param {Editor_Confirm_Group_RemovalInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const editor_confirm_group_removal = /** @type {((inputs?: Editor_Confirm_Group_RemovalInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Editor_Confirm_Group_RemovalInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.editor_confirm_group_removal(inputs)
+	if (locale === "cs") return __cs.editor_confirm_group_removal(inputs)
+	if (locale === "da") return __da.editor_confirm_group_removal(inputs)
+	if (locale === "de") return __de.editor_confirm_group_removal(inputs)
+	if (locale === "el") return __el.editor_confirm_group_removal(inputs)
+	if (locale === "es") return __es.editor_confirm_group_removal(inputs)
+	if (locale === "fi") return __fi.editor_confirm_group_removal(inputs)
+	if (locale === "fr") return __fr.editor_confirm_group_removal(inputs)
+	if (locale === "he") return __he.editor_confirm_group_removal(inputs)
+	if (locale === "hu") return __hu.editor_confirm_group_removal(inputs)
+	if (locale === "id") return __id.editor_confirm_group_removal(inputs)
+	if (locale === "it") return __it.editor_confirm_group_removal(inputs)
+	if (locale === "ja") return __ja.editor_confirm_group_removal(inputs)
+	if (locale === "ko") return __ko.editor_confirm_group_removal(inputs)
+	if (locale === "nb") return __nb.editor_confirm_group_removal(inputs)
+	if (locale === "nl") return __nl.editor_confirm_group_removal(inputs)
+	if (locale === "pl") return __pl.editor_confirm_group_removal(inputs)
+	if (locale === "pt-BR") return __pt_br2.editor_confirm_group_removal(inputs)
+	if (locale === "pt-PT") return __pt_pt2.editor_confirm_group_removal(inputs)
+	if (locale === "ro") return __ro.editor_confirm_group_removal(inputs)
+	if (locale === "ru") return __ru.editor_confirm_group_removal(inputs)
+	if (locale === "sv") return __sv.editor_confirm_group_removal(inputs)
+	if (locale === "th") return __th.editor_confirm_group_removal(inputs)
+	if (locale === "tr") return __tr.editor_confirm_group_removal(inputs)
+	if (locale === "uk") return __uk.editor_confirm_group_removal(inputs)
+	if (locale === "vi") return __vi.editor_confirm_group_removal(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.editor_confirm_group_removal(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.editor_confirm_group_removal(inputs)
+	return __en.editor_confirm_group_removal(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Your account or active library changed. Return to the original account and library before saving this recipe." |
 *
 * @param {Editor_Context_ChangedInputs} inputs
@@ -37119,6 +37163,88 @@ export const editor_recovered_restore = /** @type {((inputs?: Editor_Recovered_R
 	if (locale === "zh-Hans") return __zh_hans1.editor_recovered_restore(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.editor_recovered_restore(inputs)
 	return __en.editor_recovered_restore(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Remove this group and all its ingredients?" |
+*
+* @param {Editor_Remove_Ingredient_Group_WarningInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const editor_remove_ingredient_group_warning = /** @type {((inputs?: Editor_Remove_Ingredient_Group_WarningInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Editor_Remove_Ingredient_Group_WarningInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "cs") return __cs.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "da") return __da.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "de") return __de.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "el") return __el.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "es") return __es.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "fi") return __fi.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "fr") return __fr.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "he") return __he.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "hu") return __hu.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "id") return __id.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "it") return __it.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "ja") return __ja.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "ko") return __ko.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "nb") return __nb.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "nl") return __nl.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "pl") return __pl.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "pt-BR") return __pt_br2.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "pt-PT") return __pt_pt2.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "ro") return __ro.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "ru") return __ru.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "sv") return __sv.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "th") return __th.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "tr") return __tr.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "uk") return __uk.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "vi") return __vi.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.editor_remove_ingredient_group_warning(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.editor_remove_ingredient_group_warning(inputs)
+	return __en.editor_remove_ingredient_group_warning(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Remove this stage and all its steps?" |
+*
+* @param {Editor_Remove_Instruction_Group_WarningInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const editor_remove_instruction_group_warning = /** @type {((inputs?: Editor_Remove_Instruction_Group_WarningInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Editor_Remove_Instruction_Group_WarningInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.editor_remove_instruction_group_warning(inputs)
+	if (locale === "cs") return __cs.editor_remove_instruction_group_warning(inputs)
+	if (locale === "da") return __da.editor_remove_instruction_group_warning(inputs)
+	if (locale === "de") return __de.editor_remove_instruction_group_warning(inputs)
+	if (locale === "el") return __el.editor_remove_instruction_group_warning(inputs)
+	if (locale === "es") return __es.editor_remove_instruction_group_warning(inputs)
+	if (locale === "fi") return __fi.editor_remove_instruction_group_warning(inputs)
+	if (locale === "fr") return __fr.editor_remove_instruction_group_warning(inputs)
+	if (locale === "he") return __he.editor_remove_instruction_group_warning(inputs)
+	if (locale === "hu") return __hu.editor_remove_instruction_group_warning(inputs)
+	if (locale === "id") return __id.editor_remove_instruction_group_warning(inputs)
+	if (locale === "it") return __it.editor_remove_instruction_group_warning(inputs)
+	if (locale === "ja") return __ja.editor_remove_instruction_group_warning(inputs)
+	if (locale === "ko") return __ko.editor_remove_instruction_group_warning(inputs)
+	if (locale === "nb") return __nb.editor_remove_instruction_group_warning(inputs)
+	if (locale === "nl") return __nl.editor_remove_instruction_group_warning(inputs)
+	if (locale === "pl") return __pl.editor_remove_instruction_group_warning(inputs)
+	if (locale === "pt-BR") return __pt_br2.editor_remove_instruction_group_warning(inputs)
+	if (locale === "pt-PT") return __pt_pt2.editor_remove_instruction_group_warning(inputs)
+	if (locale === "ro") return __ro.editor_remove_instruction_group_warning(inputs)
+	if (locale === "ru") return __ru.editor_remove_instruction_group_warning(inputs)
+	if (locale === "sv") return __sv.editor_remove_instruction_group_warning(inputs)
+	if (locale === "th") return __th.editor_remove_instruction_group_warning(inputs)
+	if (locale === "tr") return __tr.editor_remove_instruction_group_warning(inputs)
+	if (locale === "uk") return __uk.editor_remove_instruction_group_warning(inputs)
+	if (locale === "vi") return __vi.editor_remove_instruction_group_warning(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.editor_remove_instruction_group_warning(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.editor_remove_instruction_group_warning(inputs)
+	return __en.editor_remove_instruction_group_warning(inputs)
 });
 /**
 * | output |

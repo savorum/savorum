@@ -2980,5 +2980,8 @@
   "connect_setup": "Tài liệu thiết lập",
   "connect_setup_hint": "Dán tài liệu thiết lập mới từ Cloud. Mỗi tài liệu chỉ dùng được một lần.",
   "connect_save": "Lưu và kết nối",
-  "connect_privacy": "Lưu lượng được giải mã tại đây. Nhà cung cấp dịch vụ kiểm soát tên miền được chỉ định và có thể lấy một chứng chỉ đáng tin cậy khác cho tên miền đó."
+  "connect_privacy": "Lưu lượng được giải mã tại đây. Nhà cung cấp dịch vụ kiểm soát tên miền được chỉ định và có thể lấy một chứng chỉ đáng tin cậy khác cho tên miền đó.",
+  "editor_confirm_group_removal": "Xác nhận xóa",
+  "editor_remove_ingredient_group_warning": "Xóa nhóm này và tất cả nguyên liệu trong nhóm?",
+  "editor_remove_instruction_group_warning": "Xóa giai đoạn này và tất cả các bước trong đó?"
 }

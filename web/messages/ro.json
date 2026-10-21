@@ -3304,5 +3304,8 @@
   "connect_setup": "Document de configurare",
   "connect_setup_hint": "Lipește un document de configurare nou din Cloud. Fiecare document poate fi folosit o singură dată.",
   "connect_save": "Salvează și conectează",
-  "connect_privacy": "Traficul este decriptat aici. Operatorul serviciului controlează domeniul atribuit și poate obține un alt certificat de încredere pentru acesta."
+  "connect_privacy": "Traficul este decriptat aici. Operatorul serviciului controlează domeniul atribuit și poate obține un alt certificat de încredere pentru acesta.",
+  "editor_confirm_group_removal": "Confirmă eliminarea",
+  "editor_remove_ingredient_group_warning": "Elimini acest grup și toate ingredientele sale?",
+  "editor_remove_instruction_group_warning": "Elimini această etapă și toți pașii săi?"
 }

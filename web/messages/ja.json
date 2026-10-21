@@ -2881,5 +2881,8 @@
   "connect_setup": "設定ドキュメント",
   "connect_setup_hint": "Cloudから新しい設定ドキュメントを貼り付けてください。各ドキュメントは一度だけ使用できます。",
   "connect_save": "保存して接続",
-  "connect_privacy": "通信データはここで復号されます。サービス運営者は割り当てられたドメインを管理しており、そのドメイン用に別の信頼された証明書を取得できます。"
+  "connect_privacy": "通信データはここで復号されます。サービス運営者は割り当てられたドメインを管理しており、そのドメイン用に別の信頼された証明書を取得できます。",
+  "editor_confirm_group_removal": "削除を確認",
+  "editor_remove_ingredient_group_warning": "このグループとすべての材料を削除しますか？",
+  "editor_remove_instruction_group_warning": "この段階とすべての手順を削除しますか？"
 }

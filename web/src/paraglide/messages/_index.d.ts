@@ -11234,6 +11234,20 @@ export const editor_author_position: ((inputs: Editor_Author_PositionInputs, opt
 /**
 * | output |
 * | --- |
+* | "Confirm removal" |
+*
+* @param {Editor_Confirm_Group_RemovalInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const editor_confirm_group_removal: ((inputs?: Editor_Confirm_Group_RemovalInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Editor_Confirm_Group_RemovalInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Your account or active library changed. Return to the original account and library before saving this recipe." |
 *
 * @param {Editor_Context_ChangedInputs} inputs
@@ -11819,6 +11833,34 @@ export const editor_recovered_replace_title: ((inputs?: Editor_Recovered_Replace
 export const editor_recovered_restore: ((inputs?: Editor_Recovered_RestoreInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Editor_Recovered_RestoreInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Remove this group and all its ingredients?" |
+*
+* @param {Editor_Remove_Ingredient_Group_WarningInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const editor_remove_ingredient_group_warning: ((inputs?: Editor_Remove_Ingredient_Group_WarningInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Editor_Remove_Ingredient_Group_WarningInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Remove this stage and all its steps?" |
+*
+* @param {Editor_Remove_Instruction_Group_WarningInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const editor_remove_instruction_group_warning: ((inputs?: Editor_Remove_Instruction_Group_WarningInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Editor_Remove_Instruction_Group_WarningInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -33943,6 +33985,7 @@ export type Editor_Approximate_TimeInputs = {};
 export type Editor_Author_PositionInputs = {
     position: NonNullable<unknown>;
 };
+export type Editor_Confirm_Group_RemovalInputs = {};
 export type Editor_Context_ChangedInputs = {};
 export type Editor_Cook_TimeInputs = {};
 export type Editor_DiscardInputs = {};
@@ -34019,6 +34062,8 @@ export type Editor_Recovered_Replace_ConfirmInputs = {};
 export type Editor_Recovered_Replace_DescriptionInputs = {};
 export type Editor_Recovered_Replace_TitleInputs = {};
 export type Editor_Recovered_RestoreInputs = {};
+export type Editor_Remove_Ingredient_Group_WarningInputs = {};
+export type Editor_Remove_Instruction_Group_WarningInputs = {};
 export type Editor_Remove_Label_PositionInputs = {
     label: NonNullable<unknown>;
     position: NonNullable<unknown>;

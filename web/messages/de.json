@@ -2983,5 +2983,8 @@
   "connect_setup": "Einrichtungsdokument",
   "connect_setup_hint": "Füge ein neues Einrichtungsdokument aus Cloud ein. Jedes Dokument kann einmal verwendet werden.",
   "connect_save": "Speichern und verbinden",
-  "connect_privacy": "Der Datenverkehr wird hier entschlüsselt. Der Dienstbetreiber kontrolliert die zugewiesene Domain und kann ein weiteres vertrauenswürdiges Zertifikat dafür erhalten."
+  "connect_privacy": "Der Datenverkehr wird hier entschlüsselt. Der Dienstbetreiber kontrolliert die zugewiesene Domain und kann ein weiteres vertrauenswürdiges Zertifikat dafür erhalten.",
+  "editor_confirm_group_removal": "Entfernen bestätigen",
+  "editor_remove_ingredient_group_warning": "Diese Gruppe und alle ihre Zutaten entfernen?",
+  "editor_remove_instruction_group_warning": "Diese Phase und alle ihre Schritte entfernen?"
 }

@@ -3127,5 +3127,8 @@
   "connect_setup": "Opsætningsdokument",
   "connect_setup_hint": "Indsæt et nyt opsætningsdokument fra Cloud. Hvert dokument kan bruges én gang.",
   "connect_save": "Gem og forbind",
-  "connect_privacy": "Trafikken dekrypteres her. Tjenesteudbyderen kontrollerer det tildelte domæne og kan få udstedt et andet betroet certifikat til det."
+  "connect_privacy": "Trafikken dekrypteres her. Tjenesteudbyderen kontrollerer det tildelte domæne og kan få udstedt et andet betroet certifikat til det.",
+  "editor_confirm_group_removal": "Bekræft fjernelse",
+  "editor_remove_ingredient_group_warning": "Fjern denne gruppe og alle dens ingredienser?",
+  "editor_remove_instruction_group_warning": "Fjern denne fase og alle dens trin?"
 }
