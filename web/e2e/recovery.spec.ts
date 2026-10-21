@@ -281,3 +281,40 @@ test("earlier versions say what each change touched", async ({ page, request }) 
     /ingredient_sections|instruction_sections/,
   )
 })
+
+test("translation management can retry a failed list without leaving the recipe", async ({
+  page,
+  request,
+}) => {
+  const recipe = await seedRecipe(request, "Translation recovery supper")
+  const errors: string[] = []
+  page.on("pageerror", (error) => errors.push(error.message))
+  let reads = 0
+  await page.route(`**/api/v1/recipes/${recipe.id}/translations`, async (route) => {
+    reads += 1
+    if (reads === 1) {
+      await route.fulfill({
+        status: 503,
+        json: { detail: "Translations unavailable", status: 503 },
+      })
+    } else {
+      await route.continue()
+    }
+  })
+  await page.goto(`/recipes/${recipe.id}`)
+  await expect(page.getByRole("heading", { name: recipe.title, exact: true })).toBeVisible()
+  await expect.poll(() => reads).toBe(1)
+  await page.getByRole("button", { name: "More actions", exact: true }).click()
+  await page.getByRole("menuitem", { name: "Translations", exact: true }).click()
+  await expect(page.getByRole("alert")).toContainText("The service is temporarily unavailable.")
+  await expect(page.getByRole("dialog", { name: "Translations", exact: true })).toHaveCount(0)
+  await page.getByRole("button", { name: "Try again", exact: true }).click()
+  const dialog = page.getByRole("dialog", { name: "Translations", exact: true })
+  await expect(dialog).toBeVisible()
+  await expect(page).toHaveURL(`/recipes/${recipe.id}`)
+  await dialog.getByRole("button", { name: "Done", exact: true }).click()
+  await expect(page.getByRole("alert")).toHaveCount(0)
+  await expect(page.getByRole("heading", { name: recipe.title, exact: true })).toBeVisible()
+  expect(reads).toBe(2)
+  expect(errors).toEqual([])
+})

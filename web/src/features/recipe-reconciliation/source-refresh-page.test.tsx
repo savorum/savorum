@@ -195,3 +195,18 @@ test("an apply superseded by navigation cannot report or fail on the previous re
   await screen.findByTestId("refresh-review")
   expect(screen.getByTestId("refresh-review").textContent).toContain("B")
 })
+
+test("a failed recipe load can be retried before checking its source", async () => {
+  vi.mocked(getRecipe)
+    .mockRejectedValueOnce(new Error("recipe load unavailable"))
+    .mockResolvedValueOnce(entryFor("A", "https://recipes.example/supper"))
+  const screen = setup("A")
+  await screen.findByText("recipe load unavailable")
+  const input = screen.getByRole("textbox", { name: "Recipe source URL" }) as HTMLInputElement
+  expect(checkButton(screen).disabled).toBe(true)
+  fireEvent.click(screen.getByRole("button", { name: "Try again" }))
+  await waitFor(() => expect(checkButton(screen).disabled).toBe(false))
+  expect(screen.queryByText("recipe load unavailable")).toBeNull()
+  expect(input.value).toBe("https://recipes.example/supper")
+  expect(getRecipe).toHaveBeenCalledTimes(2)
+})

@@ -2,6 +2,8 @@ package exchange_test
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"io"
 	"strings"
 	"sync"
@@ -17,10 +19,12 @@ import (
 type pendingLibrary struct {
 	importLibrary
 
-	mu       sync.Mutex
-	entries  map[library.EntryID]library.Entry
-	revised  int
-	editedAt uint64
+	mu                 sync.Mutex
+	entries            map[library.EntryID]library.Entry
+	revised            int
+	editedAt           uint64
+	completionError    error
+	completionAttempts int
 }
 
 func (f *pendingLibrary) ImportRecipes(ctx context.Context, documents []recipe.Document, policy library.DuplicatePolicy) ([]library.ImportResult, error) {
@@ -66,6 +70,11 @@ func (f *pendingLibrary) PendingPhotographs(_ context.Context, after library.Ent
 func (f *pendingLibrary) CompletePendingPhotographs(_ context.Context, id library.EntryID, expected uint64, document recipe.Document) (library.Entry, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
+
+	f.completionAttempts++
+	if f.completionAttempts == 1 && f.completionError != nil {
+		return library.Entry{}, fmt.Errorf("complete pending photographs: %w", f.completionError)
+	}
 
 	entry := f.entries[id]
 	if f.editedAt != 0 {
@@ -249,5 +258,39 @@ func TestAnImportFollowsUpOnItsDeferredPhotographs(t *testing.T) {
 	entry := recipes.only(t)
 	if _, ok := entry.Recipe.Extensions["x-org.savorum.pending-images"]; ok || len(entry.Recipe.Assets) != 1 {
 		t.Fatalf("assets = %#v, extensions = %#v", entry.Recipe.Assets, entry.Recipe.Extensions)
+	}
+}
+
+func TestDeferredPhotographCompletionFailuresDoNotDiscardOtherRecipes(t *testing.T) {
+	for _, test := range []struct {
+		name         string
+		failure      error
+		wantRevised  int
+		wantAttempts int
+	}{
+		{name: "deleted recipe", failure: library.ErrNotFound, wantRevised: 1, wantAttempts: 2},
+		{name: "trashed recipe", failure: library.ErrInvalidState, wantRevised: 1, wantAttempts: 2},
+		{name: "storage failure", failure: errors.New("storage unavailable"), wantRevised: 0, wantAttempts: 1},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			fetcher := &hangsUntilOpened{}
+			service, recipes := deferringService(t, fetcher)
+			commitWithin(t, service, imagePreview(t, service, 2), 3*time.Second)
+			waitForPhotographs(t, service)
+
+			recipes.completionError = test.failure
+
+			fetcher.opened()
+
+			if err := service.FetchPendingPhotographs(context.Background()); err != nil {
+				t.Fatal(err)
+			}
+
+			waitForPhotographs(t, service)
+
+			if recipes.revised != test.wantRevised || recipes.completionAttempts != test.wantAttempts {
+				t.Fatalf("revised %d recipes in %d attempts, want %d in %d", recipes.revised, recipes.completionAttempts, test.wantRevised, test.wantAttempts)
+			}
+		})
 	}
 }
