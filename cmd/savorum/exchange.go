@@ -406,8 +406,13 @@ func (a *application) openExchange(ctx context.Context, databasePath, assetPath 
 		return nil, nil, err
 	}
 
+	exchanger := exchange.NewService(recipes, blobs)
+
 	return ctx, &exchangeServices{
-		recipes: recipes, exchange: exchange.NewService(recipes, blobs), export: exporter, close: closeStore,
+		recipes: recipes, exchange: exchanger, export: exporter, close: func() {
+			exchanger.Close()
+			closeStore()
+		},
 	}, nil
 }
 

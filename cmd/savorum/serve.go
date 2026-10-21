@@ -29,6 +29,7 @@ import (
 	"github.com/savorum/savorum/internal/configuration"
 	"github.com/savorum/savorum/internal/connect"
 	"github.com/savorum/savorum/internal/dnssd"
+	"github.com/savorum/savorum/internal/exchange"
 	"github.com/savorum/savorum/internal/federation"
 	"github.com/savorum/savorum/internal/httpsecurity"
 	"github.com/savorum/savorum/internal/standby"
@@ -165,6 +166,9 @@ func serve(rootContext context.Context, deployment configuration.Deployment) err
 		defer application.ImportJobs.Close()
 	}
 
+	closePhotographs := fetchDeferredPhotographs(rootContext, application.Exchange)
+	defer closePhotographs()
+
 	workers := startIntegrationWorkers(rootContext, application)
 	defer workers.close()
 
@@ -248,6 +252,8 @@ func serve(rootContext context.Context, deployment configuration.Deployment) err
 	if application.ImportJobs != nil {
 		application.ImportJobs.Close()
 	}
+
+	closePhotographs()
 
 	if err := store.Shutdown(shutdownContext); err != nil {
 		return fmt.Errorf("drain SQLite: %w", err)
@@ -420,7 +426,7 @@ func standbyMonitor(ctx context.Context, deployment configuration.Deployment, ap
 	if deployment.IdleTimeout > 0 {
 		go idle.Run(ctx, deployment.IdleTimeout, func(ctx context.Context) (bool, error) {
 			stats := application.Printing.WorkloadStats()
-			if stats.Active > 0 || stats.Queued > 0 || backups != nil && backups.Busy() {
+			if stats.Active > 0 || stats.Queued > 0 || backups != nil && backups.Busy() || fetchingPhotographs(application.Exchange) {
 				return true, nil
 			}
 
@@ -518,4 +524,22 @@ func connectOrigin(remote *connect.Service, fallback string) func() string {
 
 		return fallback
 	}
+}
+
+// fetchDeferredPhotographs fetches photographs earlier imports deferred and
+// returns a func that stops it.
+func fetchDeferredPhotographs(ctx context.Context, exchanger *exchange.Service) func() {
+	if exchanger == nil {
+		return func() {}
+	}
+
+	if err := exchanger.FetchPendingPhotographs(ctx); err != nil {
+		slog.Warn("could not look for deferred photographs", "error", err)
+	}
+
+	return exchanger.Close
+}
+
+func fetchingPhotographs(exchanger *exchange.Service) bool {
+	return exchanger != nil && exchanger.FetchingPhotographs()
 }

@@ -87,7 +87,10 @@ type Application struct {
 	// must recover interrupted jobs before serving and close it on shutdown,
 	// so an import is never left recorded as running by a process that stopped.
 	ImportJobs *importjob.Service
-	Printing   *print.Service
+	// Exchange is held so photographs imports deferred can be fetched and
+	// closed on shutdown.
+	Exchange *exchange.Service
+	Printing *print.Service
 }
 
 // Options supplies optional application capabilities at the composition root.
@@ -273,7 +276,7 @@ func New(store Store, catalog recipe.UnitCatalog, options Options) (*Application
 
 	ready = true
 
-	return &Application{Automation: automationService, Webhooks: webhooks, Handler: handler, OpenAPI: openAPI, Renderer: renderer, ImportJobs: jobs, Printing: printer}, nil
+	return &Application{Automation: automationService, Webhooks: webhooks, Handler: handler, OpenAPI: openAPI, Renderer: renderer, ImportJobs: jobs, Exchange: exchanger, Printing: printer}, nil
 }
 
 // printCatalog resolves the unit catalog printing converts through. The
