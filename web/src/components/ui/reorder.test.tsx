@@ -1,10 +1,100 @@
 import { cleanup, fireEvent, render } from "@solidjs/testing-library"
-import { For } from "solid-js"
+import { For, createRoot, untrack } from "solid-js"
+import { createStore } from "solid-js/store"
 import { afterEach, expect, test, vi } from "vitest"
 
-import { createReorder, moveBetween } from "./reorder"
+import { createGroupedReorder, createReorder, moveBetween } from "./reorder"
 
 afterEach(cleanup)
+
+test("grouped move actions cross empty lists, keep row data, and respect outer boundaries", () => {
+  createRoot((dispose) => {
+    try {
+      const [state, setState] = createStore({
+        groups: [
+          [
+            { id: "a", note: "First" },
+            { id: "b", note: "Keep this note" },
+          ],
+          [],
+          [{ id: "c", note: "Last" }],
+        ],
+      })
+      const untouched = untrack(() => state.groups[2])
+      const setGroup = vi.fn((group: number, rows: { id: string; note: string }[]) =>
+        setState("groups", group, rows),
+      )
+      const onMoved = vi.fn()
+      const reorder = createGroupedReorder({ groups: () => state.groups, setGroup, onMoved })
+      expect(reorder.canMoveBy({ group: 0, index: 0 }, -1)).toBe(false)
+      expect(reorder.canMoveBy({ group: 2, index: 0 }, 1)).toBe(false)
+      reorder.moveBy({ group: 0, index: 0 }, -1)
+      expect(onMoved).not.toHaveBeenCalled()
+
+      reorder.moveBy({ group: 0, index: 1 }, 1)
+      expect(untrack(() => state.groups.map((rows) => rows.map((row) => row.id)))).toEqual([
+        ["a"],
+        ["b"],
+        ["c"],
+      ])
+      expect(onMoved).toHaveBeenLastCalledWith(
+        { id: "b", note: "Keep this note" },
+        { group: 1, index: 0 },
+      )
+      expect(setGroup.mock.calls.map(([group]) => group)).toEqual([0, 1])
+      expect(untrack(() => state.groups[2])).toBe(untouched)
+
+      reorder.moveBy({ group: 1, index: 0 }, -1)
+      expect(untrack(() => state.groups[0].map((row) => row.id))).toEqual(["a", "b"])
+      setGroup.mockClear()
+      reorder.moveBy({ group: 0, index: 0 }, 1)
+      expect(untrack(() => state.groups[0].map((row) => row.id))).toEqual(["b", "a"])
+      expect(setGroup.mock.calls.map(([group]) => group)).toEqual([0])
+      reorder.moveBy({ group: 2, index: 0 }, -1)
+      expect(untrack(() => state.groups[1].map((row) => row.id))).toEqual(["c"])
+      expect(reorder.canMoveBy({ group: 1, index: 0 }, 1)).toBe(true)
+    } finally {
+      dispose()
+    }
+  })
+})
+
+test("grouped dragging and move actions use the same row transfer", () => {
+  const [state, setState] = createStore({ groups: [["a", "b"], ["c"], ["untouched"]] })
+  const onMoved = vi.fn()
+  render(() => {
+    const reorder = createGroupedReorder({
+      groups: () => state.groups,
+      setGroup: (group, rows) => setState("groups", group, rows),
+      onMoved,
+    })
+    return (
+      <>
+        <span
+          data-testid="handle"
+          {...reorder.handle(
+            () => ({ group: 0, index: 1 }),
+            () => "b",
+          )}
+        />
+        <div
+          data-testid="target"
+          {...reorder.group(
+            () => 1,
+            () => state.groups[1].length,
+          )}
+        />
+      </>
+    )
+  })
+  const handle = document.querySelector('[data-testid="handle"]')!
+  const target = document.querySelector('[data-testid="target"]')!
+  fireEvent.dragStart(handle)
+  fireEvent.dragOver(target)
+  fireEvent.drop(target)
+  expect(untrack(() => state.groups)).toEqual([["a"], ["c", "b"], ["untouched"]])
+  expect(onMoved).toHaveBeenCalledExactlyOnceWith("b", { group: 1, index: 1 })
+})
 
 test("a row moves within its list and between lists", () => {
   const lists = [["a", "b", "c"], ["x"]]
