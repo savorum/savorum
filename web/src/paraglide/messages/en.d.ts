@@ -645,7 +645,6 @@ export const claims_may_contain: (inputs: Claims_May_ContainInputs) => Localized
 export const claims_not_verified: (inputs: Claims_Not_VerifiedInputs) => LocalizedString;
 export const claims_title: (inputs: Claims_TitleInputs) => LocalizedString;
 export const claims_variant_number: (inputs: Claims_Variant_NumberInputs) => LocalizedString;
-export const client_savorum_returned_an_invalid_revision_etag: (inputs: Client_Savorum_Returned_An_Invalid_Revision_EtagInputs) => LocalizedString;
 export const common_cancel: (inputs: Common_CancelInputs) => LocalizedString;
 export const common_dash_separator: (inputs: Common_Dash_SeparatorInputs) => LocalizedString;
 export const common_dot_separator: (inputs: Common_Dot_SeparatorInputs) => LocalizedString;
@@ -3158,7 +3157,6 @@ export type Claims_TitleInputs = {};
 export type Claims_Variant_NumberInputs = {
     number: NonNullable<unknown>;
 };
-export type Client_Savorum_Returned_An_Invalid_Revision_EtagInputs = {};
 export type Common_CancelInputs = {};
 export type Common_Dash_SeparatorInputs = {};
 export type Common_Dot_SeparatorInputs = {};

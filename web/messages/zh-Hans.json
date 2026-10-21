@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "无法加载食谱集的历史记录。",
   "books_that_version_of_the_book_could_not_be_loaded": "无法加载食谱集的该版本。",
   "books_that_version_of_the_book_could_not_be_restored": "无法恢复食谱集的该版本。",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorum 返回了此页面无法使用的响应。请重新加载后再试。",
   "cookings_the_cooking_history_could_not_be_loaded": "无法加载烹饪历史。",
   "cookings_the_cooking_could_not_be_recorded": "无法记录此次烹饪。",
   "cookings_the_cooking_could_not_be_saved": "无法保存烹饪记录。",

@@ -1,15 +1,13 @@
 import assert from "node:assert/strict"
 import test from "node:test"
 
-import { assetURL, revisionOf } from "../api/client.ts"
+import { assetURL, unwrapVersioned } from "../api/client.ts"
 
-test("revisionOf requires the canonical strong revision ETag", () => {
-  const response = new Response(null, { headers: { ETag: '"42"' } })
-  assert.equal(revisionOf(response), 42)
-
-  for (const etag of [undefined, "42", 'W/"42"', '"0"', '"not-a-number"']) {
+test("versioned reads take the revision from the body, whatever the ETag says", () => {
+  for (const etag of [undefined, '"7"', 'W/"7"']) {
     const headers = etag === undefined ? undefined : { ETag: etag }
-    assert.throws(() => revisionOf(new Response(null, { headers })), /could not use/)
+    const response = new Response(null, { headers })
+    assert.equal(unwrapVersioned({ data: { revision: 42 }, response }, "unused").revision, 42)
   }
 })
 

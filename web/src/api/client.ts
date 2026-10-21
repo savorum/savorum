@@ -1,6 +1,5 @@
 import createClient from "openapi-fetch"
 
-import { m } from "../lib/messages.ts"
 import { problemMessage, violationMessage } from "./problem-messages.ts"
 import type { components, paths } from "./schema"
 import { sessionFetch } from "./session.ts"
@@ -150,16 +149,6 @@ export function failure({ error, response }: Failure, fallback: string): ApiErro
   )
 }
 
-/** Reads the required strong revision validator a change must send back as `If-Match`. */
-export function revisionOf(response: Response): number {
-  const etag = response.headers.get("ETag")
-  const match = etag?.match(/^"([1-9][0-9]*)"$/)
-  const parsed = match ? Number.parseInt(match[1], 10) : Number.NaN
-  if (!Number.isSafeInteger(parsed))
-    throw new Error(m.client_savorum_returned_an_invalid_revision_etag())
-  return parsed
-}
-
 /** The shape every openapi-fetch call returns, narrowed to what unwrapping needs. */
 interface Result<T> {
   data?: T
@@ -173,16 +162,11 @@ export function unwrap<T>(result: Result<T>, fallback: string): T {
   return result.data
 }
 
-/** A read together with the revision its changes must cite back. */
-export function unwrapVersioned<T>(result: Result<T>, fallback: string): Versioned<T> {
-  return { value: unwrap(result, fallback), revision: revisionOf(result.response) }
-}
-
 /**
- * A meal or saved meal together with its revision. Their `ETag` validates the
- * representation rather than naming a revision, so the revision comes from the body.
+ * A read with its revision, taken from the body because proxies may weaken the
+ * `ETag`.
  */
-export function unwrapBodyVersioned<T extends { revision: number }>(
+export function unwrapVersioned<T extends { revision: number }>(
   result: Result<T>,
   fallback: string,
 ): Versioned<T> {

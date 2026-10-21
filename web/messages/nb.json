@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "Oppskriftsbokens historikk kunne ikke lastes.",
   "books_that_version_of_the_book_could_not_be_loaded": "Den versjonen av oppskriftsboken kunne ikke lastes.",
   "books_that_version_of_the_book_could_not_be_restored": "Den versjonen av oppskriftsboken kunne ikke gjenopprettes.",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorum sendte et svar som denne siden ikke kunne bruke. Last inn siden på nytt og prøv igjen.",
   "cookings_the_cooking_history_could_not_be_loaded": "Matlagingshistorikken kunne ikke lastes.",
   "cookings_the_cooking_could_not_be_recorded": "Matlagingen kunne ikke registreres.",
   "cookings_the_cooking_could_not_be_saved": "Matlagingen kunne ikke lagres.",

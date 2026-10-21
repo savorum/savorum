@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "無法載入食譜集的歷程記錄。",
   "books_that_version_of_the_book_could_not_be_loaded": "無法載入該版本的食譜集。",
   "books_that_version_of_the_book_could_not_be_restored": "無法還原該版本的食譜集。",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorum 傳回了此頁面無法使用的回應。請重新載入後再試一次。",
   "cookings_the_cooking_history_could_not_be_loaded": "無法載入烹飪記錄。",
   "cookings_the_cooking_could_not_be_recorded": "無法記錄這次烹飪。",
   "cookings_the_cooking_could_not_be_saved": "無法儲存烹飪記錄。",

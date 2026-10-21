@@ -649,7 +649,6 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Claims_Not_VerifiedInputs */
 /** @typedef {{}} Claims_TitleInputs */
 /** @typedef {{ number: NonNullable<unknown> }} Claims_Variant_NumberInputs */
-/** @typedef {{}} Client_Savorum_Returned_An_Invalid_Revision_EtagInputs */
 /** @typedef {{}} Common_CancelInputs */
 /** @typedef {{}} Common_Dash_SeparatorInputs */
 /** @typedef {{}} Common_Dot_SeparatorInputs */
@@ -28919,47 +28918,6 @@ export const claims_variant_number = /** @type {((inputs: Claims_Variant_NumberI
 	if (locale === "zh-Hans") return __zh_hans1.claims_variant_number(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.claims_variant_number(inputs)
 	return __en.claims_variant_number(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "Savorum sent a response this page could not use. Reload and try again." |
-*
-* @param {Client_Savorum_Returned_An_Invalid_Revision_EtagInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const client_savorum_returned_an_invalid_revision_etag = /** @type {((inputs?: Client_Savorum_Returned_An_Invalid_Revision_EtagInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Client_Savorum_Returned_An_Invalid_Revision_EtagInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "cs") return __cs.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "da") return __da.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "de") return __de.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "el") return __el.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "es") return __es.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "fi") return __fi.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "fr") return __fr.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "he") return __he.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "hu") return __hu.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "id") return __id.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "it") return __it.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "ja") return __ja.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "ko") return __ko.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "nb") return __nb.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "nl") return __nl.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "pl") return __pl.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "pt-BR") return __pt_br2.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "pt-PT") return __pt_pt2.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "ro") return __ro.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "ru") return __ru.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "sv") return __sv.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "th") return __th.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "tr") return __tr.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "uk") return __uk.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "vi") return __vi.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.client_savorum_returned_an_invalid_revision_etag(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.client_savorum_returned_an_invalid_revision_etag(inputs)
-	return __en.client_savorum_returned_an_invalid_revision_etag(inputs)
 });
 /**
 * | output |

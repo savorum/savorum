@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "Δεν ήταν δυνατή η φόρτωση του ιστορικού του βιβλίου.",
   "books_that_version_of_the_book_could_not_be_loaded": "Δεν ήταν δυνατή η φόρτωση εκείνης της έκδοσης του βιβλίου.",
   "books_that_version_of_the_book_could_not_be_restored": "Δεν ήταν δυνατή η επαναφορά εκείνης της έκδοσης του βιβλίου.",
-  "client_savorum_returned_an_invalid_revision_etag": "Το Savorum έστειλε μια απάντηση που αυτή η σελίδα δεν μπορεί να χρησιμοποιήσει. Ανανεώστε τη σελίδα και δοκιμάστε ξανά.",
   "cookings_the_cooking_history_could_not_be_loaded": "Δεν ήταν δυνατή η φόρτωση του ιστορικού μαγειρέματος.",
   "cookings_the_cooking_could_not_be_recorded": "Δεν ήταν δυνατή η καταγραφή του μαγειρέματος.",
   "cookings_the_cooking_could_not_be_saved": "Δεν ήταν δυνατή η αποθήκευση της καταγραφής μαγειρέματος.",

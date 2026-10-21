@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "Opskriftsbogens historik kunne ikke indlæses.",
   "books_that_version_of_the_book_could_not_be_loaded": "Den version af opskriftsbogen kunne ikke indlæses.",
   "books_that_version_of_the_book_could_not_be_restored": "Den version af opskriftsbogen kunne ikke gendannes.",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorum sendte et svar, som denne side ikke kunne bruge. Genindlæs siden, og prøv igen.",
   "cookings_the_cooking_history_could_not_be_loaded": "Madlavningshistorikken kunne ikke indlæses.",
   "cookings_the_cooking_could_not_be_recorded": "Madlavningen kunne ikke registreres.",
   "cookings_the_cooking_could_not_be_saved": "Madlavningen kunne ikke gemmes.",

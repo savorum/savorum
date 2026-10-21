@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "レシピブックの履歴を読み込めませんでした。",
   "books_that_version_of_the_book_could_not_be_loaded": "そのバージョンのレシピブックを読み込めませんでした。",
   "books_that_version_of_the_book_could_not_be_restored": "そのバージョンのレシピブックを復元できませんでした。",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorumからこのページで処理できない応答が返されました。再読み込みして、もう一度お試しください。",
   "cookings_the_cooking_history_could_not_be_loaded": "調理履歴を読み込めませんでした。",
   "cookings_the_cooking_could_not_be_recorded": "調理を記録できませんでした。",
   "cookings_the_cooking_could_not_be_saved": "調理記録を保存できませんでした。",

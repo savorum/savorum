@@ -647,7 +647,6 @@
 /** @typedef {{}} Claims_Not_VerifiedInputs */
 /** @typedef {{}} Claims_TitleInputs */
 /** @typedef {{ number: NonNullable<unknown> }} Claims_Variant_NumberInputs */
-/** @typedef {{}} Client_Savorum_Returned_An_Invalid_Revision_EtagInputs */
 /** @typedef {{}} Common_CancelInputs */
 /** @typedef {{}} Common_Dash_SeparatorInputs */
 /** @typedef {{}} Common_Dot_SeparatorInputs */
@@ -4949,10 +4948,6 @@ export const claims_title = /** @type {(inputs: Claims_TitleInputs) => Localized
 
 export const claims_variant_number = /** @type {(inputs: Claims_Variant_NumberInputs) => LocalizedString} */ (i) => {
 	return /** @type {LocalizedString} */ (`Variation ${i?.number}`)
-};
-
-export const client_savorum_returned_an_invalid_revision_etag = /** @type {(inputs: Client_Savorum_Returned_An_Invalid_Revision_EtagInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Savorum sent a response this page could not use. Reload and try again.`)
 };
 
 export const common_cancel = /** @type {(inputs: Common_CancelInputs) => LocalizedString} */ () => {

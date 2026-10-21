@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "Riwayat buku tidak dapat dimuat.",
   "books_that_version_of_the_book_could_not_be_loaded": "Versi buku tersebut tidak dapat dimuat.",
   "books_that_version_of_the_book_could_not_be_restored": "Versi buku tersebut tidak dapat dipulihkan.",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorum mengirim respons yang tidak dapat digunakan halaman ini. Muat ulang lalu coba lagi.",
   "cookings_the_cooking_history_could_not_be_loaded": "Riwayat memasak tidak dapat dimuat.",
   "cookings_the_cooking_could_not_be_recorded": "Kegiatan memasak tidak dapat dicatat.",
   "cookings_the_cooking_could_not_be_saved": "Catatan memasak tidak dapat disimpan.",

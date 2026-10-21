@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "Der Verlauf des Buchs konnte nicht geladen werden.",
   "books_that_version_of_the_book_could_not_be_loaded": "Diese Version des Buchs konnte nicht geladen werden.",
   "books_that_version_of_the_book_could_not_be_restored": "Diese Version des Buchs konnte nicht wiederhergestellt werden.",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorum hat eine Antwort gesendet, die diese Seite nicht verarbeiten konnte. Lade die Seite neu und versuche es erneut.",
   "cookings_the_cooking_history_could_not_be_loaded": "Der Kochverlauf konnte nicht geladen werden.",
   "cookings_the_cooking_could_not_be_recorded": "Der Kochvorgang konnte nicht erfasst werden.",
   "cookings_the_cooking_could_not_be_saved": "Der Kochvorgang konnte nicht gespeichert werden.",

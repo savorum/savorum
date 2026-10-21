@@ -1949,9 +1949,6 @@ export const claims_title: Messages["claims_title"] = /* @__PURE__ */ localized(
 export const claims_variant_number: Messages["claims_variant_number"] = /* @__PURE__ */ localized("claims_variant_number", (i) => {
 	return /** @type {LocalizedString} */ (`Variation ${i?.number}`)
 })
-export const client_savorum_returned_an_invalid_revision_etag: Messages["client_savorum_returned_an_invalid_revision_etag"] = /* @__PURE__ */ localized("client_savorum_returned_an_invalid_revision_etag", () => {
-	return /** @type {LocalizedString} */ (`Savorum sent a response this page could not use. Reload and try again.`)
-})
 export const common_cancel: Messages["common_cancel"] = /* @__PURE__ */ localized("common_cancel", () => {
 	return /** @type {LocalizedString} */ (`Cancel`)
 })

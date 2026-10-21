@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "Не удалось загрузить историю книги рецептов.",
   "books_that_version_of_the_book_could_not_be_loaded": "Не удалось загрузить эту версию книги рецептов.",
   "books_that_version_of_the_book_could_not_be_restored": "Не удалось восстановить эту версию книги рецептов.",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorum отправил ответ, который эта страница не смогла обработать. Перезагрузите страницу и повторите попытку.",
   "cookings_the_cooking_history_could_not_be_loaded": "Не удалось загрузить историю приготовления.",
   "cookings_the_cooking_could_not_be_recorded": "Не удалось записать приготовление.",
   "cookings_the_cooking_could_not_be_saved": "Не удалось сохранить запись о приготовлении.",

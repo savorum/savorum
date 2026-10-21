@@ -9,7 +9,7 @@ import {
   expectOk,
   ifMatch,
   unwrap,
-  unwrapBodyVersioned,
+  unwrapVersioned,
 } from "./client"
 
 export interface MealPage {
@@ -39,7 +39,7 @@ export async function listMeals(
 }
 
 export async function createMeal(input: MealInput): Promise<Versioned<Meal>> {
-  return unwrapBodyVersioned(
+  return unwrapVersioned(
     await client.POST("/api/v1/meals", { body: input }),
     m.plan_create_failed(),
   )
@@ -50,7 +50,7 @@ export async function replaceMeal(
   revision: number,
   input: MealInput,
 ): Promise<Versioned<Meal>> {
-  return unwrapBodyVersioned(
+  return unwrapVersioned(
     await client.PUT("/api/v1/meals/{id}", {
       params: { path: { id }, header: { "If-Match": ifMatch(revision) } },
       body: input,
@@ -73,7 +73,7 @@ export async function copyMeal(
   date?: string,
   mealType?: MealInput["meal_type"],
 ): Promise<Versioned<Meal>> {
-  return unwrapBodyVersioned(
+  return unwrapVersioned(
     await client.POST("/api/v1/meals/{id}/copy", {
       params: { path: { id } },
       body: { date, meal_type: mealType },
@@ -91,7 +91,7 @@ export async function listSavedMeals(): Promise<SavedMeal[]> {
 }
 
 export async function createSavedMeal(input: SavedMealInput): Promise<Versioned<SavedMeal>> {
-  return unwrapBodyVersioned(
+  return unwrapVersioned(
     await client.POST("/api/v1/saved-meals", { body: input }),
     m.plan_saved_create_failed(),
   )
@@ -102,7 +102,7 @@ export async function replaceSavedMeal(
   revision: number,
   input: SavedMealInput,
 ): Promise<Versioned<SavedMeal>> {
-  return unwrapBodyVersioned(
+  return unwrapVersioned(
     await client.PUT("/api/v1/saved-meals/{id}", {
       params: { path: { id }, header: { "If-Match": ifMatch(revision) } },
       body: input,

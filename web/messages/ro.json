@@ -35,7 +35,6 @@
   "books_the_book_history_could_not_be_loaded": "Istoricul cărții nu a putut fi încărcat.",
   "books_that_version_of_the_book_could_not_be_loaded": "Acea versiune a cărții nu a putut fi încărcată.",
   "books_that_version_of_the_book_could_not_be_restored": "Acea versiune a cărții nu a putut fi restaurată.",
-  "client_savorum_returned_an_invalid_revision_etag": "Savorum a trimis un răspuns pe care această pagină nu îl poate folosi. Reîncarcă pagina și încearcă din nou.",
   "cookings_the_cooking_history_could_not_be_loaded": "Istoricul de gătit nu a putut fi încărcat.",
   "cookings_the_cooking_could_not_be_recorded": "Prepararea nu a putut fi înregistrată.",
   "cookings_the_cooking_could_not_be_saved": "Înregistrarea preparării nu a putut fi salvată.",

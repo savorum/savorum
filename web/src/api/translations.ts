@@ -6,7 +6,6 @@ import {
   type Versioned,
   client,
   failure,
-  revisionOf,
   unwrap,
 } from "./client"
 import { sessionFetch } from "./session"
@@ -89,5 +88,6 @@ export async function createTranslation(
       m.recipes_the_recipe_could_not_be_created(),
     )
   }
-  return { value: (await response.json()) as LibraryEntry, revision: revisionOf(response) }
+  const value = (await response.json()) as LibraryEntry
+  return { value, revision: value.revision }
 }
