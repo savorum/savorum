@@ -3529,5 +3529,8 @@
   "connect_setup": "Dokument s nastavením",
   "connect_setup_hint": "Vložte nový dokument s nastavením z Cloud. Každý dokument lze použít jednou.",
   "connect_save": "Uložit a připojit",
-  "connect_privacy": "Provoz se dešifruje zde. Provozovatel služby spravuje přidělenou doménu a může pro ni získat další důvěryhodný certifikát."
+  "connect_privacy": "Provoz se dešifruje zde. Provozovatel služby spravuje přidělenou doménu a může pro ni získat další důvěryhodný certifikát.",
+  "editor_confirm_group_removal": "Potvrdit odebrání",
+  "editor_remove_ingredient_group_warning": "Odebrat tuto skupinu a všechny její suroviny?",
+  "editor_remove_instruction_group_warning": "Odebrat tuto fázi a všechny její kroky?"
 }

@@ -2976,5 +2976,8 @@
   "connect_setup": "Setup document",
   "connect_setup_hint": "Paste a new setup document from Cloud. Each document works once.",
   "connect_save": "Save and connect",
-  "connect_privacy": "Traffic is decrypted here. The service operator controls the assigned domain and can obtain another trusted certificate for it."
+  "connect_privacy": "Traffic is decrypted here. The service operator controls the assigned domain and can obtain another trusted certificate for it.",
+  "editor_confirm_group_removal": "Confirm removal",
+  "editor_remove_ingredient_group_warning": "Remove this group and all its ingredients?",
+  "editor_remove_instruction_group_warning": "Remove this stage and all its steps?"
 }

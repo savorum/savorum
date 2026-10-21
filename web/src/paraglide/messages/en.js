@@ -805,6 +805,7 @@
 /** @typedef {{ position: NonNullable<unknown> }} Editor_Amount_PositionInputs */
 /** @typedef {{}} Editor_Approximate_TimeInputs */
 /** @typedef {{ position: NonNullable<unknown> }} Editor_Author_PositionInputs */
+/** @typedef {{}} Editor_Confirm_Group_RemovalInputs */
 /** @typedef {{}} Editor_Context_ChangedInputs */
 /** @typedef {{}} Editor_Cook_TimeInputs */
 /** @typedef {{}} Editor_DiscardInputs */
@@ -847,6 +848,8 @@
 /** @typedef {{}} Editor_Recovered_Replace_DescriptionInputs */
 /** @typedef {{}} Editor_Recovered_Replace_TitleInputs */
 /** @typedef {{}} Editor_Recovered_RestoreInputs */
+/** @typedef {{}} Editor_Remove_Ingredient_Group_WarningInputs */
+/** @typedef {{}} Editor_Remove_Instruction_Group_WarningInputs */
 /** @typedef {{ label: NonNullable<unknown>, position: NonNullable<unknown> }} Editor_Remove_Label_PositionInputs */
 /** @typedef {{}} Editor_Save_RecipeInputs */
 /** @typedef {{}} Editor_See_The_ProblemInputs */
@@ -5583,6 +5586,10 @@ export const editor_author_position = /** @type {(inputs: Editor_Author_Position
 	return /** @type {LocalizedString} */ (`Author ${i?.position}`)
 };
 
+export const editor_confirm_group_removal = /** @type {(inputs: Editor_Confirm_Group_RemovalInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Confirm removal`)
+};
+
 export const editor_context_changed = /** @type {(inputs: Editor_Context_ChangedInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Your account or active library changed. Return to the original account and library before saving this recipe.`)
 };
@@ -5755,6 +5762,14 @@ export const editor_recovered_replace_title = /** @type {(inputs: Editor_Recover
 
 export const editor_recovered_restore = /** @type {(inputs: Editor_Recovered_RestoreInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Restore it`)
+};
+
+export const editor_remove_ingredient_group_warning = /** @type {(inputs: Editor_Remove_Ingredient_Group_WarningInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Remove this group and all its ingredients?`)
+};
+
+export const editor_remove_instruction_group_warning = /** @type {(inputs: Editor_Remove_Instruction_Group_WarningInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Remove this stage and all its steps?`)
 };
 
 export const editor_remove_label_position = /** @type {(inputs: Editor_Remove_Label_PositionInputs) => LocalizedString} */ (i) => {

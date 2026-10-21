@@ -3121,5 +3121,8 @@
   "connect_setup": "Beállítási dokumentum",
   "connect_setup_hint": "Illessz be egy új beállítási dokumentumot a Cloudból. Minden dokumentum egyszer használható.",
   "connect_save": "Mentés és csatlakozás",
-  "connect_privacy": "A forgalom titkosításának feloldása itt történik. A szolgáltatás üzemeltetője felügyeli a hozzárendelt domaint, és másik megbízható tanúsítványt is szerezhet hozzá."
+  "connect_privacy": "A forgalom titkosításának feloldása itt történik. A szolgáltatás üzemeltetője felügyeli a hozzárendelt domaint, és másik megbízható tanúsítványt is szerezhet hozzá.",
+  "editor_confirm_group_removal": "Eltávolítás megerősítése",
+  "editor_remove_ingredient_group_warning": "Eltávolítja ezt a csoportot és minden hozzávalóját?",
+  "editor_remove_instruction_group_warning": "Eltávolítja ezt a szakaszt és minden lépését?"
 }

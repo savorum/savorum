@@ -3127,5 +3127,8 @@
   "connect_setup": "Kurulum belgesi",
   "connect_setup_hint": "Cloud’dan yeni bir kurulum belgesi yapıştırın. Her belge yalnızca bir kez kullanılabilir.",
   "connect_save": "Kaydet ve bağlan",
-  "connect_privacy": "Trafiğin şifresi burada çözülür. Hizmet işletmecisi atanan alan adını kontrol eder ve bu alan adı için başka bir güvenilir sertifika alabilir."
+  "connect_privacy": "Trafiğin şifresi burada çözülür. Hizmet işletmecisi atanan alan adını kontrol eder ve bu alan adı için başka bir güvenilir sertifika alabilir.",
+  "editor_confirm_group_removal": "Kaldırmayı onayla",
+  "editor_remove_ingredient_group_warning": "Bu grup ve tüm malzemeleri kaldırılsın mı?",
+  "editor_remove_instruction_group_warning": "Bu aşama ve tüm adımları kaldırılsın mı?"
 }

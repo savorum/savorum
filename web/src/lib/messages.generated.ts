@@ -2426,6 +2426,9 @@ export const editor_approximate_time: Messages["editor_approximate_time"] = /* @
 export const editor_author_position: Messages["editor_author_position"] = /* @__PURE__ */ localized("editor_author_position", (i) => {
 	return /** @type {LocalizedString} */ (`Author ${i?.position}`)
 })
+export const editor_confirm_group_removal: Messages["editor_confirm_group_removal"] = /* @__PURE__ */ localized("editor_confirm_group_removal", () => {
+	return /** @type {LocalizedString} */ (`Confirm removal`)
+})
 export const editor_context_changed: Messages["editor_context_changed"] = /* @__PURE__ */ localized("editor_context_changed", () => {
 	return /** @type {LocalizedString} */ (`Your account or active library changed. Return to the original account and library before saving this recipe.`)
 })
@@ -2557,6 +2560,12 @@ export const editor_recovered_replace_title: Messages["editor_recovered_replace_
 })
 export const editor_recovered_restore: Messages["editor_recovered_restore"] = /* @__PURE__ */ localized("editor_recovered_restore", () => {
 	return /** @type {LocalizedString} */ (`Restore it`)
+})
+export const editor_remove_ingredient_group_warning: Messages["editor_remove_ingredient_group_warning"] = /* @__PURE__ */ localized("editor_remove_ingredient_group_warning", () => {
+	return /** @type {LocalizedString} */ (`Remove this group and all its ingredients?`)
+})
+export const editor_remove_instruction_group_warning: Messages["editor_remove_instruction_group_warning"] = /* @__PURE__ */ localized("editor_remove_instruction_group_warning", () => {
+	return /** @type {LocalizedString} */ (`Remove this stage and all its steps?`)
 })
 export const editor_remove_label_position: Messages["editor_remove_label_position"] = /* @__PURE__ */ localized("editor_remove_label_position", (i) => {
 	return /** @type {LocalizedString} */ (`Remove ${i?.label} ${i?.position}`)

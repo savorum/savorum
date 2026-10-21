@@ -3127,5 +3127,8 @@
   "connect_setup": "Documento di configurazione",
   "connect_setup_hint": "Incolla un nuovo documento di configurazione da Cloud. Ogni documento può essere usato una sola volta.",
   "connect_save": "Salva e connetti",
-  "connect_privacy": "Il traffico viene decrittografato qui. Il gestore del servizio controlla il dominio assegnato e può ottenere un altro certificato attendibile per quel dominio."
+  "connect_privacy": "Il traffico viene decrittografato qui. Il gestore del servizio controlla il dominio assegnato e può ottenere un altro certificato attendibile per quel dominio.",
+  "editor_confirm_group_removal": "Conferma rimozione",
+  "editor_remove_ingredient_group_warning": "Rimuovere questo gruppo e tutti i suoi ingredienti?",
+  "editor_remove_instruction_group_warning": "Rimuovere questa fase e tutti i suoi passaggi?"
 }

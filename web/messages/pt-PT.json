@@ -3304,5 +3304,8 @@
   "connect_setup": "Documento de configuração",
   "connect_setup_hint": "Cole um novo documento de configuração do Cloud. Cada documento pode ser utilizado uma única vez.",
   "connect_save": "Guardar e ligar",
-  "connect_privacy": "O tráfego é desencriptado aqui. O operador do serviço controla o domínio atribuído e pode obter outro certificado de confiança para esse domínio."
+  "connect_privacy": "O tráfego é desencriptado aqui. O operador do serviço controla o domínio atribuído e pode obter outro certificado de confiança para esse domínio.",
+  "editor_confirm_group_removal": "Confirmar remoção",
+  "editor_remove_ingredient_group_warning": "Remover este grupo e todos os seus ingredientes?",
+  "editor_remove_instruction_group_warning": "Remover esta etapa e todos os seus passos?"
 }

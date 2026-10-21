@@ -660,11 +660,14 @@ for (const kind of ["ingredients", "instructions", "stub"]) {
   test(`save and read a ${kind} recipe without fabricated content`, async ({ page, request }) => {
     const record = await seedRecipe(request, `Partial ${kind}`)
     await page.goto(`/recipes/${record.id}/edit`)
-    if (kind !== "ingredients")
+    if (kind !== "ingredients") {
       await page.getByRole("button", { name: "Remove group", exact: true }).click()
+      await page.getByRole("button", { name: "Confirm removal", exact: true }).click()
+    }
     if (kind !== "instructions") {
       await page.getByRole("button", { name: "Add a heading Instructions", exact: true }).click()
       await page.getByRole("button", { name: "Remove stage", exact: true }).click()
+      await page.getByRole("button", { name: "Confirm removal", exact: true }).click()
     }
     await page.getByRole("button", { name: "Save changes" }).click()
     await expect(page).toHaveURL(new RegExp(`/recipes/${record.id}$`))

@@ -2980,5 +2980,8 @@
   "connect_setup": "設定文件",
   "connect_setup_hint": "貼上 Cloud 中的新設定文件。每份文件只能使用一次。",
   "connect_save": "儲存並連線",
-  "connect_privacy": "流量在此解密。服務營運商控制指派的網域，並可為其取得其他受信任的憑證。"
+  "connect_privacy": "流量在此解密。服務營運商控制指派的網域，並可為其取得其他受信任的憑證。",
+  "editor_confirm_group_removal": "確認移除",
+  "editor_remove_ingredient_group_warning": "移除此群組及其中的所有食材？",
+  "editor_remove_instruction_group_warning": "移除此階段及其中的所有步驟？"
 }

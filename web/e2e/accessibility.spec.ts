@@ -625,6 +625,8 @@ test("editor insertion and section movement support continuous keyboard entry", 
   await expect(page.getByRole("textbox", { name: "Stage name", exact: true }).nth(1)).toBeFocused()
   await page.getByRole("button", { name: "Remove stage", exact: true }).nth(1).focus()
   await page.keyboard.press("Enter")
+  await expect(page.getByRole("button", { name: "Confirm removal", exact: true })).toBeFocused()
+  await page.keyboard.press("Enter")
   await expect(page.getByRole("textbox", { name: "Stage name", exact: true })).toBeFocused()
 })
 

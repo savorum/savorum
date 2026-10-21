@@ -7,6 +7,7 @@ Notable changes to Savorum Core. Each release publishes
 ## Unreleased
 
 - Move ingredients and steps between groups.
+- Confirm removal of nonempty groups.
 
 ## 0.2.2
 

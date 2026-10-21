@@ -3541,5 +3541,8 @@
   "connect_setup": "Dokument konfiguracji",
   "connect_setup_hint": "Wklej nowy dokument konfiguracji z Cloud. Każdego dokumentu można użyć raz.",
   "connect_save": "Zapisz i połącz",
-  "connect_privacy": "Ruch jest odszyfrowywany tutaj. Operator usługi kontroluje przypisaną domenę i może uzyskać dla niej inny zaufany certyfikat."
+  "connect_privacy": "Ruch jest odszyfrowywany tutaj. Operator usługi kontroluje przypisaną domenę i może uzyskać dla niej inny zaufany certyfikat.",
+  "editor_confirm_group_removal": "Potwierdź usunięcie",
+  "editor_remove_ingredient_group_warning": "Usunąć tę grupę i wszystkie jej składniki?",
+  "editor_remove_instruction_group_warning": "Usunąć ten etap i wszystkie jego kroki?"
 }

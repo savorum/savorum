@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronUp, Plus, X } from "lucide-solid"
+import { ChevronDown, ChevronUp, Plus } from "lucide-solid"
 import { For, Index, Show, createSignal, createUniqueId, untrack } from "solid-js"
 import type { JSX } from "solid-js"
 import type { SetStoreFunction } from "solid-js/store"
@@ -9,6 +9,8 @@ import type { IngredientConvention } from "@/api/ingredient-lines"
 import type { components } from "@/api/schema"
 import { IngredientChoice } from "@/components/ingredient-choice"
 import { IngredientReadingContext } from "@/components/ingredient-reading"
+import { hasGroupContent } from "@/components/recipe-editor/group-content"
+import { RemoveGroup } from "@/components/recipe-editor/remove-group"
 import { Button } from "@/components/ui/button"
 import { IconButton } from "@/components/ui/icon-button"
 import { Input } from "@/components/ui/input"
@@ -43,7 +45,15 @@ const styles = {
   section: css({ display: "grid", gap: "2", marginBottom: "5" }),
   sectionHeader: css({ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "2" }),
   sectionTitle: css({ maxWidth: "20rem" }),
-  spacer: css({ flex: "1" }),
+  groupActions: css({
+    alignItems: "center",
+    display: "flex",
+    flex: "1",
+    flexBasis: { base: "100%", sm: "0" },
+    gap: "2",
+    justifyContent: "flex-end",
+    minWidth: "0",
+  }),
   inline: css({ display: "flex", flexWrap: "wrap", gap: "2" }),
 }
 
@@ -132,6 +142,7 @@ export function RecipeIngredientsEditor(props: {
                 fallback={
                   <Button
                     id={`${headingID}-name-${section.id}`}
+                    data-focus="primary"
                     // Named by its own words and the list it belongs to, so the
                     // button under Ingredients and the one under Instructions
                     // are not two buttons of the same name.
@@ -174,67 +185,70 @@ export function RecipeIngredientsEditor(props: {
                       )
                     }
                   />
-                  <span class={styles.spacer} />
-                  <IconButton
-                    aria-label={m.ingredients_move_group_up({
-                      value1: formatNumber(sectionIndex() + 1),
-                    })}
-                    size="xs"
-                    variant="plain"
-                    disabled={sectionIndex() === 0}
-                    onClick={() => {
-                      const position = untrack(sectionIndex) + -1
-                      props.setDraft("ingredient_sections", (sections) =>
-                        moveItem(sections ?? [], untrack(sectionIndex), position),
-                      )
-                      props.onAnnounce(
-                        m.editor_group_moved({ position: formatNumber(position + 1) }),
-                      )
-                      props.onFocus(section.id)
-                    }}
-                  >
-                    <ChevronUp aria-hidden="true" size={15} />
-                  </IconButton>
-                  <IconButton
-                    aria-label={m.ingredients_move_group_down({
-                      value1: formatNumber(sectionIndex() + 1),
-                    })}
-                    size="xs"
-                    variant="plain"
-                    disabled={sectionIndex() === (props.draft.ingredient_sections?.length ?? 0) - 1}
-                    onClick={() => {
-                      const position = untrack(sectionIndex) + 1
-                      props.setDraft("ingredient_sections", (sections) =>
-                        moveItem(sections ?? [], untrack(sectionIndex), position),
-                      )
-                      props.onAnnounce(
-                        m.editor_group_moved({ position: formatNumber(position + 1) }),
-                      )
-                      props.onFocus(section.id)
-                    }}
-                  >
-                    <ChevronDown aria-hidden="true" size={15} />
-                  </IconButton>
-                  <IconButton
-                    aria-label={m.ingredients_remove_group()}
-                    size="xs"
-                    variant="plain"
-                    onClick={() => {
-                      const initialSection = untrack(sectionIndex)
-                      const sections = props.draft.ingredient_sections ?? []
-                      const survivor = sections[initialSection + 1] ?? sections[initialSection - 1]
-                      props.setDraft("ingredient_sections", (sections) =>
-                        removeAt(sections ?? [], initialSection),
-                      )
-                      props.onAnnounce(
-                        m.editor_group_removed({ position: formatNumber(initialSection + 1) }),
-                      )
-                      if (survivor) props.onFocus(survivor.id)
-                      else queueMicrotask(() => document.getElementById("add-group")?.focus())
-                    }}
-                  >
-                    <X aria-hidden="true" size={15} />
-                  </IconButton>
+                  <div class={styles.groupActions}>
+                    <IconButton
+                      aria-label={m.ingredients_move_group_up({
+                        value1: formatNumber(sectionIndex() + 1),
+                      })}
+                      size="xs"
+                      variant="plain"
+                      disabled={sectionIndex() === 0}
+                      onClick={() => {
+                        const position = untrack(sectionIndex) + -1
+                        props.setDraft("ingredient_sections", (sections) =>
+                          moveItem(sections ?? [], untrack(sectionIndex), position),
+                        )
+                        props.onAnnounce(
+                          m.editor_group_moved({ position: formatNumber(position + 1) }),
+                        )
+                        props.onFocus(section.id)
+                      }}
+                    >
+                      <ChevronUp aria-hidden="true" size={15} />
+                    </IconButton>
+                    <IconButton
+                      aria-label={m.ingredients_move_group_down({
+                        value1: formatNumber(sectionIndex() + 1),
+                      })}
+                      size="xs"
+                      variant="plain"
+                      disabled={
+                        sectionIndex() === (props.draft.ingredient_sections?.length ?? 0) - 1
+                      }
+                      onClick={() => {
+                        const position = untrack(sectionIndex) + 1
+                        props.setDraft("ingredient_sections", (sections) =>
+                          moveItem(sections ?? [], untrack(sectionIndex), position),
+                        )
+                        props.onAnnounce(
+                          m.editor_group_moved({ position: formatNumber(position + 1) }),
+                        )
+                        props.onFocus(section.id)
+                      }}
+                    >
+                      <ChevronDown aria-hidden="true" size={15} />
+                    </IconButton>
+                    <RemoveGroup
+                      label={m.ingredients_remove_group()}
+                      warning={m.editor_remove_ingredient_group_warning()}
+                      hasContent={hasGroupContent(section.ingredients)}
+                      onAnnounce={props.onAnnounce}
+                      onRemove={() => {
+                        const initialSection = untrack(sectionIndex)
+                        const sections = props.draft.ingredient_sections ?? []
+                        const survivor =
+                          sections[initialSection + 1] ?? sections[initialSection - 1]
+                        props.setDraft("ingredient_sections", (sections) =>
+                          removeAt(sections ?? [], initialSection),
+                        )
+                        props.onAnnounce(
+                          m.editor_group_removed({ position: formatNumber(initialSection + 1) }),
+                        )
+                        if (survivor) props.onFocus(survivor.id)
+                        else queueMicrotask(() => document.getElementById("add-group")?.focus())
+                      }}
+                    />
+                  </div>
                 </div>
               </Show>
               {/* Index preserves active ingredient fields as controlled values change. */}

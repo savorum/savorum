@@ -2980,5 +2980,8 @@
   "connect_setup": "Dokumen pengaturan",
   "connect_setup_hint": "Tempel dokumen pengaturan baru dari Cloud. Setiap dokumen hanya dapat digunakan sekali.",
   "connect_save": "Simpan dan hubungkan",
-  "connect_privacy": "Lalu lintas didekripsi di sini. Operator layanan mengendalikan domain yang ditetapkan dan dapat memperoleh sertifikat tepercaya lain untuk domain tersebut."
+  "connect_privacy": "Lalu lintas didekripsi di sini. Operator layanan mengendalikan domain yang ditetapkan dan dapat memperoleh sertifikat tepercaya lain untuk domain tersebut.",
+  "editor_confirm_group_removal": "Konfirmasi penghapusan",
+  "editor_remove_ingredient_group_warning": "Hapus grup ini dan semua bahannya?",
+  "editor_remove_instruction_group_warning": "Hapus tahap ini dan semua langkahnya?"
 }

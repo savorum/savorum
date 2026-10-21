@@ -3127,5 +3127,8 @@
   "connect_setup": "Konfigurationsdokument",
   "connect_setup_hint": "Klistra in ett nytt konfigurationsdokument från Cloud. Varje dokument kan användas en gång.",
   "connect_save": "Spara och anslut",
-  "connect_privacy": "Trafiken dekrypteras här. Tjänsteoperatören kontrollerar den tilldelade domänen och kan skaffa ett annat betrott certifikat för den."
+  "connect_privacy": "Trafiken dekrypteras här. Tjänsteoperatören kontrollerar den tilldelade domänen och kan skaffa ett annat betrott certifikat för den.",
+  "editor_confirm_group_removal": "Bekräfta borttagning",
+  "editor_remove_ingredient_group_warning": "Ta bort den här gruppen och alla dess ingredienser?",
+  "editor_remove_instruction_group_warning": "Ta bort den här fasen och alla dess steg?"
 }

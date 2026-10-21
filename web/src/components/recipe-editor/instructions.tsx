@@ -5,6 +5,8 @@ import { css } from "styled-system/css"
 
 import type { Recipe } from "@/api/client"
 import type { components } from "@/api/schema"
+import { hasGroupContent } from "@/components/recipe-editor/group-content"
+import { RemoveGroup } from "@/components/recipe-editor/remove-group"
 import { RowActions } from "@/components/recipe-editor/row-actions"
 import { StepTimingEditor } from "@/components/recipe-editor/timing"
 import { Button } from "@/components/ui/button"
@@ -36,7 +38,15 @@ const styles = {
   section: css({ display: "grid", gap: "2", marginBottom: "5" }),
   sectionHeader: css({ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "2" }),
   sectionTitle: css({ maxWidth: "20rem" }),
-  spacer: css({ flex: "1" }),
+  groupActions: css({
+    alignItems: "center",
+    display: "flex",
+    flex: "1",
+    flexBasis: { base: "100%", sm: "0" },
+    gap: "2",
+    justifyContent: "flex-end",
+    minWidth: "0",
+  }),
   stepRow: css({
     alignItems: "start",
     borderRadius: "l1",
@@ -166,6 +176,7 @@ export function RecipeInstructionsEditor(props: {
               fallback={
                 <Button
                   id={`${headingID}-name-${section.id}`}
+                  data-focus="primary"
                   aria-labelledby={`${headingID}-name-${section.id} ${headingID}`}
                   size="xs"
                   variant="plain"
@@ -205,63 +216,69 @@ export function RecipeInstructionsEditor(props: {
                     )
                   }
                 />
-                <span class={styles.spacer} />
-                <IconButton
-                  aria-label={m.instructions_move_stage_up({
-                    value1: formatNumber(sectionIndex() + 1),
-                  })}
-                  size="xs"
-                  variant="plain"
-                  disabled={sectionIndex() === 0}
-                  onClick={() => {
-                    const position = untrack(sectionIndex) + -1
-                    props.setDraft("instruction_sections", (sections) =>
-                      moveItem(sections ?? [], untrack(sectionIndex), position),
-                    )
-                    props.onAnnounce(m.editor_stage_moved({ position: formatNumber(position + 1) }))
-                    props.onFocus(section.id)
-                  }}
-                >
-                  <ChevronUp aria-hidden="true" size={15} />
-                </IconButton>
-                <IconButton
-                  aria-label={m.instructions_move_stage_down({
-                    value1: formatNumber(sectionIndex() + 1),
-                  })}
-                  size="xs"
-                  variant="plain"
-                  disabled={sectionIndex() === (props.draft.instruction_sections?.length ?? 0) - 1}
-                  onClick={() => {
-                    const position = untrack(sectionIndex) + 1
-                    props.setDraft("instruction_sections", (sections) =>
-                      moveItem(sections ?? [], untrack(sectionIndex), position),
-                    )
-                    props.onAnnounce(m.editor_stage_moved({ position: formatNumber(position + 1) }))
-                    props.onFocus(section.id)
-                  }}
-                >
-                  <ChevronDown aria-hidden="true" size={15} />
-                </IconButton>
-                <IconButton
-                  aria-label={m.instructions_remove_stage()}
-                  size="xs"
-                  variant="plain"
-                  onClick={() => {
-                    const initialSection = untrack(sectionIndex)
-                    const sections = props.draft.instruction_sections ?? []
-                    const survivor = sections[initialSection + 1] ?? sections[initialSection - 1]
-                    props.setDraft("instruction_sections", (sections) =>
-                      removeAt(sections ?? [], initialSection),
-                    )
-                    props.onAnnounce(
-                      m.editor_stage_removed({ position: formatNumber(initialSection + 1) }),
-                    )
-                    if (survivor) props.onFocus(survivor.id)
-                    else queueMicrotask(() => document.getElementById("add-stage")?.focus())
-                  }}
-                >
-                  <X aria-hidden="true" size={15} />
-                </IconButton>
+                <div class={styles.groupActions}>
+                  <IconButton
+                    aria-label={m.instructions_move_stage_up({
+                      value1: formatNumber(sectionIndex() + 1),
+                    })}
+                    size="xs"
+                    variant="plain"
+                    disabled={sectionIndex() === 0}
+                    onClick={() => {
+                      const position = untrack(sectionIndex) + -1
+                      props.setDraft("instruction_sections", (sections) =>
+                        moveItem(sections ?? [], untrack(sectionIndex), position),
+                      )
+                      props.onAnnounce(
+                        m.editor_stage_moved({ position: formatNumber(position + 1) }),
+                      )
+                      props.onFocus(section.id)
+                    }}
+                  >
+                    <ChevronUp aria-hidden="true" size={15} />
+                  </IconButton>
+                  <IconButton
+                    aria-label={m.instructions_move_stage_down({
+                      value1: formatNumber(sectionIndex() + 1),
+                    })}
+                    size="xs"
+                    variant="plain"
+                    disabled={
+                      sectionIndex() === (props.draft.instruction_sections?.length ?? 0) - 1
+                    }
+                    onClick={() => {
+                      const position = untrack(sectionIndex) + 1
+                      props.setDraft("instruction_sections", (sections) =>
+                        moveItem(sections ?? [], untrack(sectionIndex), position),
+                      )
+                      props.onAnnounce(
+                        m.editor_stage_moved({ position: formatNumber(position + 1) }),
+                      )
+                      props.onFocus(section.id)
+                    }}
+                  >
+                    <ChevronDown aria-hidden="true" size={15} />
+                  </IconButton>
+                  <RemoveGroup
+                    label={m.instructions_remove_stage()}
+                    warning={m.editor_remove_instruction_group_warning()}
+                    hasContent={hasGroupContent(section.steps)}
+                    onAnnounce={props.onAnnounce}
+                    onRemove={() => {
+                      const initialSection = untrack(sectionIndex)
+                      const sections = props.draft.instruction_sections ?? []
+                      const survivor = sections[initialSection + 1] ?? sections[initialSection - 1]
+                      props.setDraft("instruction_sections", (sections) =>
+                        removeAt(sections ?? [], initialSection),
+                      )
+                      props.onAnnounce(
+                        m.editor_stage_removed({ position: formatNumber(initialSection + 1) }),
+                      )
+                      if (survivor) props.onFocus(survivor.id)
+                      else queueMicrotask(() => document.getElementById("add-stage")?.focus())
+                    }}
+                  />
+                </div>
               </div>
             </Show>
             <For each={section.steps ?? []}>
