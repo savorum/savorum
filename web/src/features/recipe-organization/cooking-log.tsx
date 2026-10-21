@@ -15,6 +15,7 @@ import { createAsyncAction } from "@/lib/create-async-action"
 import { formatDate } from "@/lib/date-format"
 import { calendarDate } from "@/lib/date-format"
 import { type Rational, compare, formatRational, rational } from "@/lib/rational"
+import { latestUnlessFailed } from "@/lib/settled"
 import { uniqueID } from "@/lib/unique-id"
 
 import { m } from "../../lib/messages.ts"
@@ -135,15 +136,15 @@ export const CookingLog = (props: CookingLogProps) => {
   const more = async () => {
     if (busy()) return
     const entryID = props.entryID
-    const loaded = history.latest?.items ?? []
+    const loaded = latestUnlessFailed(history)?.items ?? []
     await run(async () => {
       const next = await listCookings(entryID, 50, loaded.length)
       mutate({ ...next, items: [...loaded, ...(next.items ?? [])] })
     })
   }
   const recordedCount = () =>
-    (history.latest?.times_cooked ?? 0) -
-    (history.latest?.imported_baselines ?? []).reduce((n, item) => n + item.count, 0)
+    (latestUnlessFailed(history)?.times_cooked ?? 0) -
+    (latestUnlessFailed(history)?.imported_baselines ?? []).reduce((n, item) => n + item.count, 0)
   return (
     <section class={styles.root} aria-label={m.cooking_log_cooking_history()}>
       <div class={styles.bar}>
@@ -155,7 +156,10 @@ export const CookingLog = (props: CookingLogProps) => {
       <Show when={!open()}>
         <ChangeError error={error() ?? history.error} onReload={() => void refetch()} />
       </Show>
-      <Show when={history.latest} fallback={<p class={styles.muted}>{m.cooking_log_loading()}</p>}>
+      <Show
+        when={latestUnlessFailed(history)}
+        fallback={<p class={styles.muted}>{m.cooking_log_loading()}</p>}
+      >
         {(loaded) => (
           <>
             <p class={styles.muted}>

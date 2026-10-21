@@ -10,6 +10,7 @@ import { FormField } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Select } from "@/components/ui/select"
 import { RecipeCombine, RecipeComparison } from "@/features/recipe-reconciliation/recipe-compare"
+import { latestUnlessFailed } from "@/lib/settled"
 
 import { m } from "../../lib/messages.ts"
 const shell = pageShell()
@@ -48,7 +49,7 @@ export function RecipeMergePage(props: {
   const [busy, setBusy] = createSignal(false)
   const [error, setError] = createSignal<unknown>()
   const merge = async (recipe: NonNullable<ReturnType<typeof preview>>["suggested"]) => {
-    const current = preview.latest
+    const current = latestUnlessFailed(preview)
     if (!current || busy()) return
     const keep = survivor() === "left" ? current.left : current.right
     const discard = survivor() === "left" ? current.right : current.left
@@ -70,7 +71,10 @@ export function RecipeMergePage(props: {
     }
   }
   const choosable = () =>
-    (recipes.latest?.items ?? []).map((item) => ({ value: item.id, label: item.title }))
+    (latestUnlessFailed(recipes)?.items ?? []).map((item) => ({
+      value: item.id,
+      label: item.title,
+    }))
   return (
     <main class={styles.page}>
       <Show when={!submitted()}>
@@ -127,7 +131,7 @@ export function RecipeMergePage(props: {
           {m.recipe_merge_page_choose_recipes()}
         </Button>
       </Show>
-      <Show keyed when={preview.latest}>
+      <Show keyed when={latestUnlessFailed(preview)}>
         {(value) => (
           <>
             <Show

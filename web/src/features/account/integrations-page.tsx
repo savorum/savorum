@@ -16,6 +16,7 @@ import { FormField, ToggleField } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Select } from "@/components/ui/select"
 import { formatDateTime } from "@/lib/date-format"
+import { latestUnlessFailed } from "@/lib/settled"
 
 import { m } from "../../lib/messages.ts"
 import { AccountNav, ScopePage, accountStyles as styles } from "./account-layout"
@@ -349,9 +350,10 @@ function ScopedIntegrationsPage(props: { libraryID: string }) {
                 </div>
               </form>
             </Show>
-            <For each={(subscriptions.latest ?? []).map((value) => value.id)}>
+            <For each={(latestUnlessFailed(subscriptions) ?? []).map((value) => value.id)}>
               {(id) => {
-                const item = () => (subscriptions.latest ?? []).find((value) => value.id === id)!
+                const item = () =>
+                  (latestUnlessFailed(subscriptions) ?? []).find((value) => value.id === id)!
                 return (
                   <section class={styles.card}>
                     <h3>{item().name}</h3>
@@ -429,7 +431,7 @@ function ScopedIntegrationsPage(props: { libraryID: string }) {
                 )
               }}
             </For>
-            <Show when={!subscriptions.loading && subscriptions.latest?.length === 0}>
+            <Show when={!subscriptions.loading && latestUnlessFailed(subscriptions)?.length === 0}>
               <p class={styles.muted}>{m.integrations_empty()}</p>
             </Show>
           </Show>
@@ -451,7 +453,7 @@ function ScopedIntegrationsPage(props: { libraryID: string }) {
           >
             {m.account_retry()}
           </Button>
-          <For each={history.latest ?? []}>
+          <For each={latestUnlessFailed(history) ?? []}>
             {(delivery) => (
               <div class={styles.card}>
                 <p>
@@ -515,7 +517,7 @@ function ScopedIntegrationsPage(props: { libraryID: string }) {
             </Button>
             <Button
               variant="outline"
-              disabled={history.latest?.length !== 25 || offset() >= 975}
+              disabled={latestUnlessFailed(history)?.length !== 25 || offset() >= 975}
               onClick={() => setOffset(offset() + 25)}
             >
               {m.integrations_next()}

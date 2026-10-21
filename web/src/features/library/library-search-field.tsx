@@ -15,6 +15,7 @@ import { LabelSwatch } from "@/components/label-swatch"
 import { Input } from "@/components/ui/input"
 import type { LibraryFilters } from "@/lib/library-query"
 import { type SearchSuggestion, searchSuggestions, withSuggestion } from "@/lib/search-suggestions"
+import { latestUnlessFailed } from "@/lib/settled"
 
 import { m } from "../../lib/messages.ts"
 import type { LibraryVocabulary } from "./create-library-vocabulary"
@@ -56,7 +57,9 @@ export function LibrarySearchField(props: {
           {
             ...props.vocabulary,
             books: () =>
-              bookMatches.loading ? [] : (bookMatches.latest?.items ?? props.vocabulary.books()),
+              bookMatches.loading
+                ? []
+                : (latestUnlessFailed(bookMatches)?.items ?? props.vocabulary.books()),
           },
           typed(),
           props.filters(),

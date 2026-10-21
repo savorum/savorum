@@ -3,7 +3,7 @@ import { createMemo, createResource } from "solid-js"
 import type { BookSummary, Facet, Tag } from "@/api/client"
 import { listFacets, listTags } from "@/api/organization"
 import { suggestBooks, lookupBooks } from "@/api/selections"
-import { settled } from "@/lib/settled"
+import { latestUnlessFailed, settled } from "@/lib/settled"
 
 /** Names what the library knows, so a stored identifier can be shown as a word. */
 export interface LibraryVocabulary {
@@ -31,7 +31,7 @@ export function createLibraryVocabulary(): LibraryVocabulary {
     })),
   )
   const remember = (items: Awaited<ReturnType<typeof suggestBooks>>["items"]) => {
-    const current = books.latest ?? []
+    const current = latestUnlessFailed(books) ?? []
     mutateBooks([
       ...current,
       ...items

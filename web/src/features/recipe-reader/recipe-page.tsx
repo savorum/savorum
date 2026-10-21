@@ -30,6 +30,7 @@ import { calendarDate } from "@/lib/date-format"
 import { isolate } from "@/lib/direction"
 import { usePageTitle } from "@/lib/page-title"
 import { formatRational } from "@/lib/rational"
+import { latestUnlessFailed } from "@/lib/settled"
 import { uniqueID } from "@/lib/unique-id"
 
 import { m } from "../../lib/messages.ts"
@@ -98,7 +99,10 @@ export function RecipePage(props: CreateRecipeReaderOptions) {
   const [managingTranslations, setManagingTranslations] = createSignal(false)
   // Keyed by revision so a relationship change reloads what is shown.
   const [translations, { refetch: refetchTranslations }] = createResource(
-    () => (entry.latest ? { id: props.recipeID(), revision: entry.latest.revision } : undefined),
+    () => {
+      const loaded = latestUnlessFailed(entry)
+      return loaded ? { id: props.recipeID(), revision: loaded.revision } : undefined
+    },
     (key) => listTranslations(key.id),
   )
   const [planned, setPlanned] = createSignal(false)
@@ -116,7 +120,7 @@ export function RecipePage(props: CreateRecipeReaderOptions) {
 
   return (
     <main class={styles.main}>
-      <Show when={planning() && entry.latest}>
+      <Show when={planning() && latestUnlessFailed(entry)}>
         <MealEditor
           recipes={[]}
           meal={{
@@ -124,14 +128,14 @@ export function RecipePage(props: CreateRecipeReaderOptions) {
             revision: 0,
             created_at: "",
             updated_at: "",
-            display_title: entry.latest!.value.recipe.title,
+            display_title: latestUnlessFailed(entry)!.value.recipe.title,
             date: calendarDate(),
             skipped: false,
             dishes: [
               {
                 entry_id: props.recipeID(),
-                display_name: entry.latest!.value.recipe.title,
-                recipe_revision: entry.latest!.revision,
+                display_name: latestUnlessFailed(entry)!.value.recipe.title,
+                recipe_revision: latestUnlessFailed(entry)!.revision,
                 scale: formatRational(scale()),
               },
             ],
@@ -167,7 +171,7 @@ export function RecipePage(props: CreateRecipeReaderOptions) {
                 {
                   id,
                   recipe_id: props.recipeID(),
-                  revision: entry.latest?.revision,
+                  revision: latestUnlessFailed(entry)?.revision,
                   scale: formatRational(scale()),
                 },
               ],
@@ -197,7 +201,7 @@ export function RecipePage(props: CreateRecipeReaderOptions) {
             languages={
               <TranslationLanguages
                 language={loaded().value.recipe.language}
-                renditions={translations.latest?.renditions ?? []}
+                renditions={latestUnlessFailed(translations)?.renditions ?? []}
               />
             }
             toolbar={
@@ -308,7 +312,7 @@ export function RecipePage(props: CreateRecipeReaderOptions) {
                   controller={organization}
                   scale={scale()}
                 />
-                <Show when={managingTranslations() && translations.latest}>
+                <Show when={managingTranslations() && latestUnlessFailed(translations)}>
                   {(current) => (
                     <TranslationsDialog
                       entryID={props.recipeID()}

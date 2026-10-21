@@ -19,7 +19,7 @@ import { authEnabled } from "@/features/account/account-state"
 import { createAsyncAction } from "@/lib/create-async-action"
 import { isolate } from "@/lib/direction"
 import { formatRational, parseRational } from "@/lib/rational"
-import { settled } from "@/lib/settled"
+import { latestUnlessFailed, settled } from "@/lib/settled"
 
 import { m } from "../../lib/messages.ts"
 
@@ -401,7 +401,11 @@ export function MealEditor(props: {
                 </Button>
               </div>
               <Show
-                when={choiceOffset() > 0 || matches.latest?.has_more || savedMeals.latest?.has_more}
+                when={
+                  choiceOffset() > 0 ||
+                  latestUnlessFailed(matches)?.has_more ||
+                  latestUnlessFailed(savedMeals)?.has_more
+                }
               >
                 <div class={styles.actions}>
                   <Button
@@ -416,7 +420,10 @@ export function MealEditor(props: {
                     type="button"
                     variant="plain"
                     disabled={
-                      !(matches.latest?.has_more || savedMeals.latest?.has_more) ||
+                      !(
+                        latestUnlessFailed(matches)?.has_more ||
+                        latestUnlessFailed(savedMeals)?.has_more
+                      ) ||
                       matches.loading ||
                       savedMeals.loading
                     }

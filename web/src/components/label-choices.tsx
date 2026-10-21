@@ -6,6 +6,7 @@ import { LabelSwatch } from "@/components/label-swatch"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { type FilterValue, filterGroupView } from "@/lib/filter-vocabulary"
+import { latestUnlessFailed } from "@/lib/settled"
 
 import { m } from "../lib/messages.ts"
 
@@ -104,7 +105,7 @@ export const LabelChooser = (props: {
     (request) => props.load!(request.query, request.offset),
   )
   const offered = () =>
-    props.load ? (remote.loading ? [] : (remote.latest?.items ?? [])) : props.values
+    props.load ? (remote.loading ? [] : (latestUnlessFailed(remote)?.items ?? [])) : props.values
   const view = createMemo(() =>
     filterGroupView(offered(), {
       selected: [],
@@ -175,7 +176,7 @@ export const LabelChooser = (props: {
             </Button>
           </Show>
         </Show>
-        <Show when={props.load && (offset() > 0 || remote.latest?.has_more)}>
+        <Show when={props.load && (offset() > 0 || latestUnlessFailed(remote)?.has_more)}>
           <Button
             size="xs"
             variant="plain"
@@ -187,7 +188,7 @@ export const LabelChooser = (props: {
           <Button
             size="xs"
             variant="plain"
-            disabled={remote.loading || !remote.latest?.has_more}
+            disabled={remote.loading || !latestUnlessFailed(remote)?.has_more}
             onClick={() => setOffset(offset() + 10)}
           >
             {m.common_next()}

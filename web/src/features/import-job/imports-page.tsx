@@ -12,6 +12,7 @@ import { directionalIcon } from "@/components/ui/directional"
 import { formatDateTime } from "@/lib/date-format"
 import { describeImportJob } from "@/lib/import-job-presentation"
 import { formatNumber } from "@/lib/locale-format"
+import { latestUnlessFailed } from "@/lib/settled"
 
 import { m } from "../../lib/messages.ts"
 
@@ -89,7 +90,7 @@ export function ImportsPage() {
   const [loaded, { refetch }] = createResource(limit, loadJobs)
   const [state, setState] = createStore<{ jobs: ImportJob[] }>({ jobs: [] })
   createEffect(() => {
-    const page = loaded.latest
+    const page = latestUnlessFailed(loaded)
     if (!page) return
     setState("jobs", reconcile(page.items, { key: "id" }))
   })
