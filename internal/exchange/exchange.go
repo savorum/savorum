@@ -22,6 +22,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/savorum/savorum/internal/access"
 	"github.com/savorum/savorum/internal/assets"
 	"github.com/savorum/savorum/internal/imaging"
 	"github.com/savorum/savorum/internal/importer"
@@ -92,6 +93,7 @@ type Service struct {
 	previewScope        func(context.Context) string
 	ingestAttempts      int
 	ingestRetryDelay    time.Duration
+	pending             pendingPhotographs
 }
 
 // PreviewSourceRefreshURL fetches and interprets the current source through
@@ -377,6 +379,9 @@ func NewService(recipes Library, blobs Assets, options ...Option) *Service {
 		remoteLimits:   DefaultRemoteImportLimits(),
 		ingestAttempts: defaultIngestAttempts, ingestRetryDelay: defaultIngestRetryDelay,
 	}
+
+	lifetime, stop := context.WithCancel(context.Background())
+	service.pending = pendingPhotographs{lifetime: lifetime, stop: stop, queued: map[library.PendingPhotographs]bool{}}
 
 	service.archiveSlots = make(chan struct{}, 2)
 	for _, option := range options {
@@ -664,6 +669,16 @@ func (s *Service) importItems(ctx, staging context.Context, items []ImportItem, 
 	}
 
 	decorateAssetResults(results, dropped, deferred)
+
+	var pending []library.PendingPhotographs
+
+	for index, photographs := range deferred {
+		if len(photographs) > 0 {
+			pending = append(pending, library.PendingPhotographs{LibraryID: access.LibraryID(ctx), EntryID: results[index].EntryID})
+		}
+	}
+
+	s.queuePendingPhotographs(pending)
 
 	return results, nil
 }
@@ -1286,6 +1301,11 @@ func remoteReferenceEntries(assets []importer.RemoteAsset) []any {
 	entries := make([]any, 0, len(assets))
 	for _, asset := range assets {
 		entry := map[string]any{"url": asset.URL}
+		// Steps refer to the photograph by this ID.
+		if asset.LogicalID != "" {
+			entry["logical_id"] = asset.LogicalID
+		}
+
 		if asset.Alt != "" {
 			entry["alt"] = asset.Alt
 		}
