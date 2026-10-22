@@ -5,7 +5,7 @@ import solidPlugin from "vite-plugin-solid"
 
 import { messageExportsPlugin } from "./scripts/generate-messages.ts"
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   resolve: { tsconfigPaths: true },
   build: {
     rolldownOptions: {
@@ -34,6 +34,11 @@ export default defineConfig({
     proxy: {
       "/api": "http://127.0.0.1:8080",
       "/openapi.json": "http://127.0.0.1:8080",
+      "/llms.txt": "http://127.0.0.1:8080",
+      "/AGENTS.md": "http://127.0.0.1:8080",
+      "/.well-known": "http://127.0.0.1:8080",
+      "/oauth": "http://127.0.0.1:8080",
+      "/mcp": "http://127.0.0.1:8080",
     },
   },
   // TanStack prerender fetches Vite's preview URL from inside the build
@@ -41,7 +46,7 @@ export default defineConfig({
   // resolve localhost to an unreachable ::1 listener.
   preview: { host: "127.0.0.1" },
   plugins: [
-    paraglideVitePlugin({ project: "./project.inlang" }),
+    command === "serve" && paraglideVitePlugin({ project: "./project.inlang" }),
     messageExportsPlugin(),
     tanstackStart({
       spa: {
@@ -53,4 +58,4 @@ export default defineConfig({
     }),
     solidPlugin({ ssr: true }),
   ],
-})
+}))

@@ -329,11 +329,13 @@ func describeAPI(document *huma.OpenAPI) {
 	document.Info.Description = strings.Join([]string{
 		"The /api/v1 namespace is the compatibility boundary for browser, native, and external clients. Optional response fields and new operations may be added. Removing or renaming fields, changing meaning, tightening accepted inputs, or changing behavior through defaults requires a new API major. Clients must ignore unknown response fields.",
 		"",
+		"Each instance serves a guide for agents and integrations at `/llms.txt`, and serves this document at `/openapi.json` with its own address in `servers`.",
+		"",
 		"### Credentials and local mode",
 		"",
 		"An instance started without `--auth-enabled` runs in local mode: it authenticates nobody and acts as one persisted local user, so keep it on loopback or behind an access-controlled network or proxy.",
 		"",
-		"With authentication enabled, a browser session or a personal API token is required. Send a token as `Authorization: Bearer <token>`, and name a library with `X-Savorum-Library: <library-id>` when the token reaches more than one. A token's authority is the intersection of its scopes, its optional library restriction, and the current membership of the account that owns it.",
+		"With authentication enabled, a browser session or a personal API token is required. Create a token in the web app under Account, API tokens (`/account/tokens`). Send it as `Authorization: Bearer <token>`, and name a library with `X-Savorum-Library: <library-id>` when the token reaches more than one. A token's authority is the intersection of its scopes, its optional library restriction, and the current membership of the account that owns it.",
 		"",
 		"A request using any method other than `GET`, `HEAD`, or `OPTIONS` passes an origin check first. A cookie-authenticated one additionally requires the session-bound `X-CSRF-Token` header. Bearer requests set no cookie and need no CSRF header.",
 		"",
@@ -352,6 +354,7 @@ func describeAPI(document *huma.OpenAPI) {
 		URL:         "http://127.0.0.1:8080",
 		Description: "A local instance on its default listener.",
 	})
+	document.ExternalDocs = &huma.ExternalDocs{Description: "Guide for agents and integrations", URL: "http://127.0.0.1:8080/llms.txt"}
 }
 
 // describeTags gives the document an explicit, described tag list. Generated

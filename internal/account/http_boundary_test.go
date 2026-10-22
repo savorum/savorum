@@ -239,7 +239,7 @@ func TestHandlerRequiresCSRFAndEditorOnlyForSharedUnsafeChanges(t *testing.T) {
 		}
 	}
 
-	for _, path := range []string{"/api/v1/recipes/lookup", "/api/v1/books/lookup"} {
+	for _, path := range []string{"/api/v1/recipes/lookup", "/api/v1/books/lookup", "/api/v1/ingredient-lines/parse"} {
 		if denied := post(path, ""); denied.Code != http.StatusForbidden {
 			t.Fatalf("lookup without CSRF status=%d", denied.Code)
 		}

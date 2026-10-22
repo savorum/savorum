@@ -148,7 +148,7 @@ func serve(rootContext context.Context, deployment configuration.Deployment) err
 		WebhookPolicy:       webhook.DestinationPolicy{TrustedNetworks: deployment.WebhookNetworks},
 		WebhookFailureLimit: deployment.WebhookFailureLimit,
 		Assets:              assetService, Configuration: configurationService,
-		Providers: deployment.Providers, TokenPolicy: deployment.TokenPolicy, AuthEnabled: deployment.AuthEnabled, SessionIdle: deployment.SessionIdle, SessionAbsolute: deployment.SessionAbsolute,
+		Providers: deployment.Providers, TokenPolicy: deployment.TokenPolicy, AuthEnabled: deployment.AuthEnabled, AssistantAllowLANHTTP: deployment.AssistantAllowLANHTTP, SessionIdle: deployment.SessionIdle, SessionAbsolute: deployment.SessionAbsolute,
 		ConnectOrigin: deployment.ConnectOrigin,
 		Connect:       remote, ResolveConnectOrigin: resolveConnectOrigin,
 		PrintCacheDirectory: deployment.PrintCacheDirectory,

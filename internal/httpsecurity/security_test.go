@@ -519,3 +519,23 @@ func TestUnspecifiedListenerAcceptsLANAuthoritiesAndLocalhost(t *testing.T) {
 		}
 	}
 }
+
+func TestAbsoluteRequestTargetCannotClaimTLS(t *testing.T) {
+	request := httptest.NewRequestWithContext(t.Context(), http.MethodGet, "https://recipes.example/llms.txt", nil)
+	request.TLS = nil
+	request.Header.Set("X-Forwarded-Proto", "https")
+
+	handler := NewHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if got := PublicOrigin(r, ""); got != "http://recipes.example" {
+			t.Errorf("untrusted request claimed HTTPS: %s", got)
+		}
+
+		w.WriteHeader(http.StatusNoContent)
+	}), Options{})
+	response := httptest.NewRecorder()
+	handler.ServeHTTP(response, request)
+
+	if response.Code != http.StatusNoContent {
+		t.Fatalf("unexpected response: %d", response.Code)
+	}
+}

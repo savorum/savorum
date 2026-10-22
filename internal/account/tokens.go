@@ -112,6 +112,10 @@ func tokenCapability(r *http.Request) string {
 		if read {
 			return "recipes:read"
 		}
+	case "ingredient-lines":
+		if ingredientLinePreview(r) {
+			return "recipes:read"
+		}
 	case "books", "tags", "facets", "saved-views":
 		if len(parts) > 2 && (parts[2] == "export" || parts[2] == "sourced-recipes" || parts[2] == "recipes") {
 			return "recipes:read"

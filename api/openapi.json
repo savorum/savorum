@@ -695,6 +695,105 @@
         ],
         "type": "object"
       },
+      "AssistantApprovalDetails": {
+        "additionalProperties": true,
+        "properties": {
+          "client_name": {
+            "type": "string"
+          },
+          "client_origin": {
+            "type": "string"
+          },
+          "reauth_required": {
+            "type": "boolean"
+          },
+          "remember_days": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "user_code": {
+            "type": "string"
+          },
+          "verification_required": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "reauth_required",
+          "client_origin",
+          "client_name",
+          "scope",
+          "user_code",
+          "remember_days",
+          "verification_required"
+        ],
+        "type": "object"
+      },
+      "AssistantApprovalRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "access": {
+            "enum": [
+              "read",
+              "write"
+            ],
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "deny": {
+            "type": "boolean"
+          },
+          "library_id": {
+            "type": "string"
+          },
+          "remember": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "code",
+          "library_id",
+          "access",
+          "remember",
+          "deny"
+        ],
+        "type": "object"
+      },
+      "AssistantApprovalResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "redirect_uri": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "redirect_uri"
+        ],
+        "type": "object"
+      },
+      "AssistantConnectionsResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "connections": {
+            "items": {
+              "$ref": "#/components/schemas/Connection"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "connections"
+        ],
+        "type": "object"
+      },
       "Attempt": {
         "additionalProperties": true,
         "properties": {
@@ -939,10 +1038,12 @@
             "type": "integer"
           },
           "recipe_state": {
+            "description": "Derived recipe state. Omit this field from book write entries.",
             "enum": [
               "active",
               "trash"
             ],
+            "readOnly": true,
             "type": "string"
           },
           "section_id": {
@@ -1629,6 +1730,9 @@
           "limits": {
             "$ref": "#/components/schemas/CapabilityLimits"
           },
+          "links": {
+            "$ref": "#/components/schemas/CapabilityLinks"
+          },
           "product": {
             "type": "string"
           },
@@ -1654,6 +1758,10 @@
               "null"
             ]
           },
+          "token": {
+            "$ref": "#/components/schemas/CapabilityToken",
+            "description": "The personal API token that authenticated this request"
+          },
           "version": {
             "type": "string"
           }
@@ -1664,7 +1772,8 @@
           "version",
           "api_major",
           "auth_enabled",
-          "auth_methods"
+          "auth_methods",
+          "links"
         ],
         "type": "object"
       },
@@ -1811,6 +1920,63 @@
         ],
         "type": "object"
       },
+      "CapabilityLinks": {
+        "additionalProperties": true,
+        "properties": {
+          "guide": {
+            "description": "Guide for agents and integrations, written for this instance's version",
+            "type": "string"
+          },
+          "openapi": {
+            "description": "OpenAPI description of this API",
+            "type": "string"
+          },
+          "tokens": {
+            "description": "Page where a signed-in person creates personal API tokens",
+            "type": "string"
+          }
+        },
+        "required": [
+          "guide",
+          "openapi",
+          "tokens"
+        ],
+        "type": "object"
+      },
+      "CapabilityToken": {
+        "additionalProperties": true,
+        "properties": {
+          "expires_at": {
+            "description": "Unix time the token expires; absent when it does not expire",
+            "format": "int64",
+            "type": "integer"
+          },
+          "libraries": {
+            "description": "Library IDs the token is limited to; empty means every library its owner can reach",
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "scopes": {
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "scopes",
+          "libraries"
+        ],
+        "type": "object"
+      },
       "ChangedEntriesOutputBody": {
         "additionalProperties": true,
         "properties": {
@@ -1843,6 +2009,66 @@
         },
         "required": [
           "policy"
+        ],
+        "type": "object"
+      },
+      "Connection": {
+        "additionalProperties": true,
+        "properties": {
+          "client_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "expires_at": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "id": {
+            "type": "string"
+          },
+          "last_used_at": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "libraries": {
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "revoked_at": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "scopes": {
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "client_id",
+          "id",
+          "name",
+          "created_at",
+          "expires_at",
+          "last_used_at",
+          "revoked_at",
+          "scopes",
+          "libraries"
         ],
         "type": "object"
       },
@@ -5270,6 +5496,7 @@
             "type": "string"
           },
           "leftover_of": {
+            "description": "Source dish ID for leftovers. Omit entry_id on this dish to avoid repeating the recipe requirement.",
             "maxLength": 201,
             "type": "string"
           },
@@ -5307,6 +5534,7 @@
             "type": "string"
           },
           "scale": {
+            "description": "Positive rational string multiplying the recipe quantities, such as 1/2 for half a batch. This is not a serving count.",
             "maxLength": 100,
             "type": "string"
           },
@@ -10017,8 +10245,12 @@
       }
     }
   },
+  "externalDocs": {
+    "description": "Guide for agents and integrations",
+    "url": "http://127.0.0.1:8080/llms.txt"
+  },
   "info": {
-    "description": "The /api/v1 namespace is the compatibility boundary for browser, native, and external clients. Optional response fields and new operations may be added. Removing or renaming fields, changing meaning, tightening accepted inputs, or changing behavior through defaults requires a new API major. Clients must ignore unknown response fields.\n\n### Credentials and local mode\n\nAn instance started without `--auth-enabled` runs in local mode: it authenticates nobody and acts as one persisted local user, so keep it on loopback or behind an access-controlled network or proxy.\n\nWith authentication enabled, a browser session or a personal API token is required. Send a token as `Authorization: Bearer \u003ctoken\u003e`, and name a library with `X-Savorum-Library: \u003clibrary-id\u003e` when the token reaches more than one. A token's authority is the intersection of its scopes, its optional library restriction, and the current membership of the account that owns it.\n\nA request using any method other than `GET`, `HEAD`, or `OPTIONS` passes an origin check first. A cookie-authenticated one additionally requires the session-bound `X-CSRF-Token` header. Bearer requests set no cookie and need no CSRF header.\n\nThe `bearerToken` and `browserSession` security schemes name these credentials. Operations that answer without credentials declare that explicitly.\n\n### Extension boundary\n\nExternal integrations use the authenticated HTTP API, versioned events, signed webhooks, SREF, and iCalendar. Internal import, export, authentication, and extraction adapters are compiled, typed components over canonical models and services. They receive no database handle. Adapter metadata is registered by the capability implementation, not a frontend list. There is no Go native plugin, shared-library loader, server-script runtime, plugin SQL migration, or plugin package manager. Any future richer extension protocol must be out of process with explicit capabilities and API authorization.\n\n### Conventions\n\nOperation IDs are `verb-resource`. Responses that carry a revision use a strong `ETag`, and a conditional write echoes it in `If-Match`. Meals and saved meals differ: their `ETag` validates the representation as returned, and `If-Match` takes their `revision` field as a strong ETag. Problem responses use `application/problem+json` with stable machine-readable codes, field locations, and revision context. Missing write preconditions return 428, stale revisions return 412. Shopping field-edit conflicts retain their documented 409 outcome and explicit resolution flow.",
+    "description": "The /api/v1 namespace is the compatibility boundary for browser, native, and external clients. Optional response fields and new operations may be added. Removing or renaming fields, changing meaning, tightening accepted inputs, or changing behavior through defaults requires a new API major. Clients must ignore unknown response fields.\n\nEach instance serves a guide for agents and integrations at `/llms.txt`, and serves this document at `/openapi.json` with its own address in `servers`.\n\n### Credentials and local mode\n\nAn instance started without `--auth-enabled` runs in local mode: it authenticates nobody and acts as one persisted local user, so keep it on loopback or behind an access-controlled network or proxy.\n\nWith authentication enabled, a browser session or a personal API token is required. Create a token in the web app under Account, API tokens (`/account/tokens`). Send it as `Authorization: Bearer \u003ctoken\u003e`, and name a library with `X-Savorum-Library: \u003clibrary-id\u003e` when the token reaches more than one. A token's authority is the intersection of its scopes, its optional library restriction, and the current membership of the account that owns it.\n\nA request using any method other than `GET`, `HEAD`, or `OPTIONS` passes an origin check first. A cookie-authenticated one additionally requires the session-bound `X-CSRF-Token` header. Bearer requests set no cookie and need no CSRF header.\n\nThe `bearerToken` and `browserSession` security schemes name these credentials. Operations that answer without credentials declare that explicitly.\n\n### Extension boundary\n\nExternal integrations use the authenticated HTTP API, versioned events, signed webhooks, SREF, and iCalendar. Internal import, export, authentication, and extraction adapters are compiled, typed components over canonical models and services. They receive no database handle. Adapter metadata is registered by the capability implementation, not a frontend list. There is no Go native plugin, shared-library loader, server-script runtime, plugin SQL migration, or plugin package manager. Any future richer extension protocol must be out of process with explicit capabilities and API authorization.\n\n### Conventions\n\nOperation IDs are `verb-resource`. Responses that carry a revision use a strong `ETag`, and a conditional write echoes it in `If-Match`. Meals and saved meals differ: their `ETag` validates the representation as returned, and `If-Match` takes their `revision` field as a strong ETag. Problem responses use `application/problem+json` with stable machine-readable codes, field locations, and revision context. Missing write preconditions return 428, stale revisions return 412. Shopping field-edit conflicts retain their documented 409 outcome and explicit resolution flow.",
     "license": {
       "identifier": "AGPL-3.0-only",
       "name": "AGPL-3.0-only"
@@ -10237,6 +10469,221 @@
         "summary": "List audit events",
         "tags": [
           "Account"
+        ]
+      }
+    },
+    "/api/v1/account/authorization": {
+      "get": {
+        "description": "Requires the user_code returned by device authorization or the code in the browser approval URL. The code identifies a pending request, not an access credential. Uses the persisted local-mode user when authentication is disabled. Otherwise an authenticated browser session is required, except for the current account and sign-in. Modifying authenticated requests require the current X-CSRF-Token. Credentials and responses must not be cached.",
+        "operationId": "get-assistant-authorization",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "code",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssistantApprovalDetails"
+                }
+              }
+            },
+            "description": "Operation completed."
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountProblem"
+                }
+              }
+            },
+            "description": "No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`)."
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountProblem"
+                }
+              }
+            },
+            "description": "Stable account problem code; authentication, authority, validation or lifecycle conflict."
+          }
+        },
+        "summary": "Read an approval request",
+        "tags": [
+          "Assistant connections"
+        ]
+      },
+      "post": {
+        "description": "Requires browser sign-in within five minutes and CSRF. Access is limited to the selected library and read/write choice. Remember permits rotating refresh credentials until the instance policy's expiry. The browser never receives access or refresh tokens. Uses the persisted local-mode user when authentication is disabled. Otherwise an authenticated browser session is required, except for the current account and sign-in. Modifying authenticated requests require the current X-CSRF-Token. Credentials and responses must not be cached.",
+        "operationId": "approve-assistant-authorization",
+        "parameters": [
+          {
+            "description": "Required with an authenticated browser session; read from current-account.",
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssistantApprovalRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssistantApprovalResponse"
+                }
+              }
+            },
+            "description": "Operation completed."
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountProblem"
+                }
+              }
+            },
+            "description": "No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`)."
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountProblem"
+                }
+              }
+            },
+            "description": "Stable account problem code; authentication, authority, validation or lifecycle conflict."
+          }
+        },
+        "summary": "Approve or deny a connection",
+        "tags": [
+          "Assistant connections"
+        ]
+      }
+    },
+    "/api/v1/account/connections": {
+      "get": {
+        "description": "Lists current grants without credentials. Refreshing access does not add another connection. Uses the persisted local-mode user when authentication is disabled. Otherwise an authenticated browser session is required, except for the current account and sign-in. Modifying authenticated requests require the current X-CSRF-Token. Credentials and responses must not be cached.",
+        "operationId": "list-assistant-connections",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssistantConnectionsResponse"
+                }
+              }
+            },
+            "description": "Operation completed."
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountProblem"
+                }
+              }
+            },
+            "description": "No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`)."
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountProblem"
+                }
+              }
+            },
+            "description": "Stable account problem code; authentication, authority, validation or lifecycle conflict."
+          }
+        },
+        "summary": "List connected assistants",
+        "tags": [
+          "Assistant connections"
+        ]
+      }
+    },
+    "/api/v1/account/connections/{id}": {
+      "delete": {
+        "description": "Revokes the connection's access and refresh credentials immediately. Uses the persisted local-mode user when authentication is disabled. Otherwise an authenticated browser session is required, except for the current account and sign-in. Modifying authenticated requests require the current X-CSRF-Token. Credentials and responses must not be cached.",
+        "operationId": "disconnect-assistant",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Required with an authenticated browser session; read from current-account.",
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Operation completed."
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountProblem"
+                }
+              }
+            },
+            "description": "No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`)."
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountProblem"
+                }
+              }
+            },
+            "description": "Stable account problem code; authentication, authority, validation or lifecycle conflict."
+          }
+        },
+        "summary": "Disconnect an assistant",
+        "tags": [
+          "Assistant connections"
         ]
       }
     },
@@ -17139,7 +17586,7 @@
     },
     "/api/v1/capabilities": {
       "get": {
-        "description": "Unauthenticated requests return product, API compatibility, interactive sign-in methods, and sign-in features only. `auth.native_sign_in` means a native app can complete OIDC, SAML, and managed sign-in through `begin-native-provider-login` and `finish-native-provider-login`. `auth.native_link` means a signed-in native app can link an OIDC or SAML identity through `create-native-link-ticket`, `begin-native-provider-login`, and `finish-native-provider-link`. `auth.managed_session` means a managed provider is configured and its web and native sign-in use short-lived, tenant-audienced grants after PKCE code redemption. `auth.managed_native_session` means a native client can redeem a scoped hosting grant through `finish-managed-native-login` for an ordinary local session. Authenticated requests add registered formats, optional features, and enforced bounds. `recipes.search.ingredient` means ingredient: queries match indexed ingredient names, including optional and alternative names, with original-line fallback only when the name is absent. All words in one qualifier must match the same ingredient. Capabilities describe availability, not a grant of authorization. Schema version 1 permits additive optional fields and new IDs; clients ignore unknown IDs. Cache for the current session and refresh after reconnect or configuration changes.",
+        "description": "Unauthenticated requests return product, API compatibility, interactive sign-in methods, and sign-in features only. `auth.native_sign_in` means a native app can complete OIDC, SAML, and managed sign-in through `begin-native-provider-login` and `finish-native-provider-login`. `auth.native_link` means a signed-in native app can link an OIDC or SAML identity through `create-native-link-ticket`, `begin-native-provider-login`, and `finish-native-provider-link`. `auth.managed_session` means a managed provider is configured and its web and native sign-in use short-lived, tenant-audienced grants after PKCE code redemption. `auth.managed_native_session` means a native client can redeem a scoped hosting grant through `finish-managed-native-login` for an ordinary local session. Every response links to this instance's guide, OpenAPI description, and token page. Authenticated requests add registered formats, optional features, and enforced bounds, and a request made with a personal API token adds that token's scopes, libraries, and expiry. `recipes.search.ingredient` means ingredient: queries match indexed ingredient names, including optional and alternative names, with original-line fallback only when the name is absent. All words in one qualifier must match the same ingredient. Capabilities describe availability, not a grant of authorization. Schema version 1 permits additive optional fields and new IDs; clients ignore unknown IDs. Cache for the current session and refresh after reconnect or configuration changes.",
         "operationId": "get-capabilities",
         "responses": {
           "200": {
@@ -21309,9 +21756,11 @@
             }
           },
           {
+            "description": "The current response body revision in double quotes, such as \"4\". Do not use the GET response ETag or put revision in the body.",
             "in": "header",
             "name": "If-Match",
             "schema": {
+              "description": "The current response body revision in double quotes, such as \"4\". Do not use the GET response ETag or put revision in the body.",
               "type": "string"
             }
           }
@@ -21490,9 +21939,11 @@
             }
           },
           {
+            "description": "The current response body revision in double quotes, such as \"4\". Do not use the GET response ETag or put revision in the body.",
             "in": "header",
             "name": "If-Match",
             "schema": {
+              "description": "The current response body revision in double quotes, such as \"4\". Do not use the GET response ETag or put revision in the body.",
               "type": "string"
             }
           }
@@ -27963,9 +28414,11 @@
             }
           },
           {
+            "description": "The current response body revision in double quotes, such as \"4\". Do not use the GET response ETag or put revision in the body.",
             "in": "header",
             "name": "If-Match",
             "schema": {
+              "description": "The current response body revision in double quotes, such as \"4\". Do not use the GET response ETag or put revision in the body.",
               "type": "string"
             }
           }
@@ -28144,9 +28597,11 @@
             }
           },
           {
+            "description": "The current response body revision in double quotes, such as \"4\". Do not use the GET response ETag or put revision in the body.",
             "in": "header",
             "name": "If-Match",
             "schema": {
+              "description": "The current response body revision in double quotes, such as \"4\". Do not use the GET response ETag or put revision in the body.",
               "type": "string"
             }
           }

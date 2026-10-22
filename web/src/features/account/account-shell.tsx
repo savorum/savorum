@@ -13,6 +13,7 @@ import {
   sessionEnded,
   watchSessionStanding,
 } from "./account-state"
+import { takeAssistantApprovalReturn } from "./assistant-return"
 
 const Login = lazy(() => import("./login-page").then((module) => ({ default: module.Login })))
 
@@ -21,7 +22,14 @@ export function AccountShell(props: ParentProps) {
   watchSessionStanding()
   const load = () => {
     setError("")
-    void refreshAccount().catch((failure: Error) => setError(failure.message))
+    void refreshAccount()
+      .then(() => {
+        if (account()?.user) {
+          const target = takeAssistantApprovalReturn()
+          if (target) window.location.replace(target)
+        }
+      })
+      .catch((failure: Error) => setError(failure.message))
   }
   onMount(load)
   return (

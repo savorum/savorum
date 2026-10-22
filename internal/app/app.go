@@ -23,6 +23,7 @@ import (
 	"github.com/savorum/savorum/internal/automation"
 	"github.com/savorum/savorum/internal/buildinfo"
 	"github.com/savorum/savorum/internal/connect"
+	"github.com/savorum/savorum/internal/discovery"
 	"github.com/savorum/savorum/internal/diskspace"
 	"github.com/savorum/savorum/internal/event"
 	"github.com/savorum/savorum/internal/exchange"
@@ -95,27 +96,28 @@ type Application struct {
 
 // Options supplies optional application capabilities at the composition root.
 type Options struct {
-	EventStreamShutdown  <-chan struct{}
-	WebhookDirectory     string
-	DurableBudget        *storagebudget.Coordinator
-	StoragePath          string
-	WebhookPolicy        webhook.DestinationPolicy
-	WebhookFailureLimit  int
-	AutomationDirectory  string
-	BulkLimit            int
-	SuggestionLimit      int
-	LookupLimit          int
-	GroceryAdditionLimit int
-	Providers            federation.Config
-	TokenPolicy          identity.TokenPolicy
-	AuthEnabled          bool
-	ConnectOrigin        string
-	Connect              *connect.Service
-	ResolveConnectOrigin func() string
-	SessionIdle          time.Duration
-	SessionAbsolute      time.Duration
-	Assets               api.AssetService
-	Configuration        api.ConfigurationService
+	EventStreamShutdown   <-chan struct{}
+	WebhookDirectory      string
+	DurableBudget         *storagebudget.Coordinator
+	StoragePath           string
+	WebhookPolicy         webhook.DestinationPolicy
+	WebhookFailureLimit   int
+	AutomationDirectory   string
+	BulkLimit             int
+	SuggestionLimit       int
+	LookupLimit           int
+	GroceryAdditionLimit  int
+	Providers             federation.Config
+	TokenPolicy           identity.TokenPolicy
+	AuthEnabled           bool
+	AssistantAllowLANHTTP bool
+	ConnectOrigin         string
+	Connect               *connect.Service
+	ResolveConnectOrigin  func() string
+	SessionIdle           time.Duration
+	SessionAbsolute       time.Duration
+	Assets                api.AssetService
+	Configuration         api.ConfigurationService
 	// PrintCacheDirectory keeps the print compiler's machine code between
 	// processes. Empty compiles it in memory in every process.
 	PrintCacheDirectory string
@@ -257,7 +259,7 @@ func New(store Store, catalog recipe.UnitCatalog, options Options) (*Application
 	cookies := identity.BrowserCookies{HostPrefix: hosted}
 	openAPI.OpenAPI().Components.SecuritySchemes["browserSession"].Name = cookies.Name(identity.SessionCookie)
 
-	var handler http.Handler = account.New(store, account.Options{Cookies: cookies, TokenPolicy: options.TokenPolicy, Enabled: options.AuthEnabled, IdleLifetime: options.SessionIdle, AbsoluteLifetime: options.SessionAbsolute, ConnectOrigin: options.ConnectOrigin, ResolveConnectOrigin: options.ResolveConnectOrigin, PublicURL: func(ctx context.Context) (string, error) {
+	var handler http.Handler = account.New(store, account.Options{Schema: func() any { return openAPI.OpenAPI() }, Cookies: cookies, TokenPolicy: options.TokenPolicy, Enabled: options.AuthEnabled, AllowLANHTTP: options.AssistantAllowLANHTTP, IdleLifetime: options.SessionIdle, AbsoluteLifetime: options.SessionAbsolute, ConnectOrigin: options.ConnectOrigin, ResolveConnectOrigin: options.ResolveConnectOrigin, PublicURL: func(ctx context.Context) (string, error) {
 		if options.Configuration == nil {
 			return "", nil
 		}
@@ -273,6 +275,8 @@ func New(store Store, catalog recipe.UnitCatalog, options Options) (*Application
 			return nil, err
 		}
 	}
+
+	handler = discovery.Handler(handler, discovery.Options{Spec: openAPI.OpenAPI, PublicURL: publicURLFor(options.Configuration)})
 
 	ready = true
 

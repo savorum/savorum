@@ -75,6 +75,25 @@ export const account_admin_recovered: (inputs: Account_Admin_RecoveredInputs) =>
 export const account_admin_reset_password: (inputs: Account_Admin_Reset_PasswordInputs) => LocalizedString;
 export const account_admin_reset_submit: (inputs: Account_Admin_Reset_SubmitInputs) => LocalizedString;
 export const account_admin_unavailable: (inputs: Account_Admin_UnavailableInputs) => LocalizedString;
+export const account_assistant_access_read: (inputs: Account_Assistant_Access_ReadInputs) => LocalizedString;
+export const account_assistant_access_read_hint: (inputs: Account_Assistant_Access_Read_HintInputs) => LocalizedString;
+export const account_assistant_access_viewer_hint: (inputs: Account_Assistant_Access_Viewer_HintInputs) => LocalizedString;
+export const account_assistant_access_write: (inputs: Account_Assistant_Access_WriteInputs) => LocalizedString;
+export const account_assistant_access_write_hint: (inputs: Account_Assistant_Access_Write_HintInputs) => LocalizedString;
+export const account_assistant_allow: (inputs: Account_Assistant_AllowInputs) => LocalizedString;
+export const account_assistant_check_code: (inputs: Account_Assistant_Check_CodeInputs) => LocalizedString;
+export const account_assistant_code: (inputs: Account_Assistant_CodeInputs) => LocalizedString;
+export const account_assistant_connections: (inputs: Account_Assistant_ConnectionsInputs) => LocalizedString;
+export const account_assistant_continue: (inputs: Account_Assistant_ContinueInputs) => LocalizedString;
+export const account_assistant_done: (inputs: Account_Assistant_DoneInputs) => LocalizedString;
+export const account_assistant_heading: (inputs: Account_Assistant_HeadingInputs) => LocalizedString;
+export const account_assistant_prompt_label: (inputs: Account_Assistant_Prompt_LabelInputs) => LocalizedString;
+export const account_assistant_remember: (inputs: Account_Assistant_RememberInputs) => LocalizedString;
+export const account_assistant_request_from: (inputs: Account_Assistant_Request_FromInputs) => LocalizedString;
+export const account_assistant_request_unavailable: (inputs: Account_Assistant_Request_UnavailableInputs) => LocalizedString;
+export const account_assistant_setup_hint: (inputs: Account_Assistant_Setup_HintInputs) => LocalizedString;
+export const account_assistant_setup_prompt: (inputs: Account_Assistant_Setup_PromptInputs) => LocalizedString;
+export const account_assistant_temporary: (inputs: Account_Assistant_TemporaryInputs) => LocalizedString;
 export const account_audit_activity: (inputs: Account_Audit_ActivityInputs) => LocalizedString;
 export const account_audit_actor: (inputs: Account_Audit_ActorInputs) => LocalizedString;
 export const account_audit_all: (inputs: Account_Audit_AllInputs) => LocalizedString;
@@ -2456,6 +2475,31 @@ export type Account_Admin_Reset_PasswordInputs = {
 };
 export type Account_Admin_Reset_SubmitInputs = {};
 export type Account_Admin_UnavailableInputs = {};
+export type Account_Assistant_Access_ReadInputs = {};
+export type Account_Assistant_Access_Read_HintInputs = {};
+export type Account_Assistant_Access_Viewer_HintInputs = {};
+export type Account_Assistant_Access_WriteInputs = {};
+export type Account_Assistant_Access_Write_HintInputs = {};
+export type Account_Assistant_AllowInputs = {};
+export type Account_Assistant_Check_CodeInputs = {
+    code: NonNullable<unknown>;
+};
+export type Account_Assistant_CodeInputs = {};
+export type Account_Assistant_ConnectionsInputs = {};
+export type Account_Assistant_ContinueInputs = {};
+export type Account_Assistant_DoneInputs = {};
+export type Account_Assistant_HeadingInputs = {};
+export type Account_Assistant_Prompt_LabelInputs = {};
+export type Account_Assistant_RememberInputs = {};
+export type Account_Assistant_Request_FromInputs = {
+    name: NonNullable<unknown>;
+};
+export type Account_Assistant_Request_UnavailableInputs = {};
+export type Account_Assistant_Setup_HintInputs = {};
+export type Account_Assistant_Setup_PromptInputs = {
+    guide: NonNullable<unknown>;
+};
+export type Account_Assistant_TemporaryInputs = {};
 export type Account_Audit_ActivityInputs = {};
 export type Account_Audit_ActorInputs = {};
 export type Account_Audit_AllInputs = {};

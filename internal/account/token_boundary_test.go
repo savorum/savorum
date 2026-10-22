@@ -43,6 +43,7 @@ func TestBearerRequestsNeverFallBackToCookiesOrAcquireAdminPower(t *testing.T) {
 		{"GET", "/api/v1/recipes", grant.Secret, 204},
 		{"POST", "/api/v1/recipes", grant.Secret, 403},
 		{"POST", "/api/v1/exports/sref-bundle", grant.Secret, 204},
+		{"POST", "/api/v1/ingredient-lines/parse", grant.Secret, 204},
 		{"GET", "/api/v1/users", grant.Secret, 403},
 		{"PUT", "/api/v1/configuration", grant.Secret, 403},
 		{"GET", "/api/v1/account", grant.Secret, 403},

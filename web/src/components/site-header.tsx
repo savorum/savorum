@@ -5,9 +5,16 @@ import { css } from "styled-system/css"
 
 import { Problem } from "@/components/status"
 import { IconButton } from "@/components/ui/icon-button"
-import { Menu, MenuItem, MenuItemGroup, MenuItemGroupLabel } from "@/components/ui/menu"
+import {
+  Menu,
+  MenuItem,
+  MenuItemGroup,
+  MenuItemGroupLabel,
+  MenuSeparator,
+} from "@/components/ui/menu"
 import { Select } from "@/components/ui/select"
-import { account, accountRequest, administers } from "@/features/account/account-state"
+import { account, accountRequest, administers, authEnabled } from "@/features/account/account-state"
+import { SignOutDialog } from "@/features/account/sign-out-dialog"
 import { ResumeCooking } from "@/features/cooking/resume-cooking"
 import { TimerStatus } from "@/features/cooking/timer-status"
 import { recipeEditorOpen } from "@/features/recipe-editing/editing-scope"
@@ -106,12 +113,14 @@ const destinations = [
 ] as const
 
 export function SiteHeader() {
+  const [signingOut, setSigningOut] = createSignal(false)
   const navigate = useNavigate()
   const location = useLocation()
   const [switchFailed, setSwitchFailed] = createSignal<string>()
   const libraries = () => account()?.libraries ?? []
   return (
     <header class={styles.banner}>
+      <SignOutDialog open={signingOut()} onClose={() => setSigningOut(false)} />
       <div class={styles.header}>
         <Link class={styles.brand} to="/" aria-label={m.site_header_savorum()}>
           <img class={styles.logo} src="/brand/icon-mono.svg" width="32" height="32" alt="" />
@@ -150,7 +159,10 @@ export function SiteHeader() {
           </Show>
           <TimerStatus />
           <Menu
-            onSelect={(details) => void navigate({ to: details.value })}
+            onSelect={(details) => {
+              if (details.value === "sign-out") setSigningOut(true)
+              else void navigate({ to: details.value })
+            }}
             trigger={(triggerProps) => (
               <IconButton
                 {...triggerProps()}
@@ -171,12 +183,17 @@ export function SiteHeader() {
             </MenuItemGroup>
             <MenuItemGroup>
               <MenuItemGroupLabel>{m.site_header_you()}</MenuItemGroupLabel>
-              <MenuItem value="/preferences">{m.site_header_preferences()}</MenuItem>
               <MenuItem value="/account">{m.account_nav_account_menu()}</MenuItem>
+              <MenuItem value="/preferences">{m.site_header_preferences()}</MenuItem>
+              <MenuItem value="/account/integrations">{m.integrations_title()}</MenuItem>
               <Show when={administers()}>
                 <MenuItem value="/admin">{m.account_admin_nav_label()}</MenuItem>
               </Show>
             </MenuItemGroup>
+            <Show when={authEnabled() && account()?.user}>
+              <MenuSeparator />
+              <MenuItem value="sign-out">{m.account_overview_sign_out()}</MenuItem>
+            </Show>
           </Menu>
         </div>
       </div>

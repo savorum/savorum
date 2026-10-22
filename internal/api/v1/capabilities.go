@@ -6,6 +6,7 @@ import (
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/savorum/savorum/internal/buildinfo"
+	"github.com/savorum/savorum/internal/discovery"
 	"github.com/savorum/savorum/internal/event"
 	"github.com/savorum/savorum/internal/export"
 	"github.com/savorum/savorum/internal/identity"
@@ -47,6 +48,22 @@ type Capabilities struct {
 	Features      []string               `json:"features,omitempty"`
 	EventTypes    []string               `json:"event_types,omitempty"`
 	Limits        *CapabilityLimits      `json:"limits,omitempty"`
+	Links         CapabilityLinks        `json:"links"`
+	Token         *CapabilityToken       `json:"token,omitempty" doc:"The personal API token that authenticated this request"`
+}
+
+// CapabilityLinks point a client at this instance's own documentation.
+type CapabilityLinks struct {
+	Guide   string `json:"guide" doc:"Guide for agents and integrations, written for this instance's version"`
+	OpenAPI string `json:"openapi" doc:"OpenAPI description of this API"`
+	Tokens  string `json:"tokens" doc:"Page where a signed-in person creates personal API tokens"`
+}
+
+// CapabilityToken is what the requesting token may do.
+type CapabilityToken struct {
+	Scopes    []string `json:"scopes"`
+	Libraries []string `json:"libraries" doc:"Library IDs the token is limited to; empty means every library its owner can reach"`
+	ExpiresAt int64    `json:"expires_at,omitempty" doc:"Unix time the token expires; absent when it does not expire"`
 }
 
 // CapabilityLimits reports enforced bounds rather than internal configuration.
@@ -83,10 +100,20 @@ func registerCapabilities(api huma.API, options Options, printRecipes int) {
 		}
 	}
 
-	huma.Register(api, huma.Operation{OperationID: "get-capabilities", Method: http.MethodGet, Path: "/api/v1/capabilities", Summary: "Discover capabilities", Description: "Unauthenticated requests return product, API compatibility, interactive sign-in methods, and sign-in features only. `auth.native_sign_in` means a native app can complete OIDC, SAML, and managed sign-in through `begin-native-provider-login` and `finish-native-provider-login`. `auth.native_link` means a signed-in native app can link an OIDC or SAML identity through `create-native-link-ticket`, `begin-native-provider-login`, and `finish-native-provider-link`. `auth.managed_session` means a managed provider is configured and its web and native sign-in use short-lived, tenant-audienced grants after PKCE code redemption. `auth.managed_native_session` means a native client can redeem a scoped hosting grant through `finish-managed-native-login` for an ordinary local session. Authenticated requests add registered formats, optional features, and enforced bounds. `recipes.search.ingredient` means ingredient: queries match indexed ingredient names, including optional and alternative names, with original-line fallback only when the name is absent. All words in one qualifier must match the same ingredient. Capabilities describe availability, not a grant of authorization. Schema version 1 permits additive optional fields and new IDs; clients ignore unknown IDs. Cache for the current session and refresh after reconnect or configuration changes.", Tags: []string{"Instance"}}, func(ctx context.Context, _ *struct{}) (*struct{ Body Capabilities }, error) {
+	huma.Register(api, huma.Operation{OperationID: "get-capabilities", Method: http.MethodGet, Path: "/api/v1/capabilities", Summary: "Discover capabilities", Description: "Unauthenticated requests return product, API compatibility, interactive sign-in methods, and sign-in features only. `auth.native_sign_in` means a native app can complete OIDC, SAML, and managed sign-in through `begin-native-provider-login` and `finish-native-provider-login`. `auth.native_link` means a signed-in native app can link an OIDC or SAML identity through `create-native-link-ticket`, `begin-native-provider-login`, and `finish-native-provider-link`. `auth.managed_session` means a managed provider is configured and its web and native sign-in use short-lived, tenant-audienced grants after PKCE code redemption. `auth.managed_native_session` means a native client can redeem a scoped hosting grant through `finish-managed-native-login` for an ordinary local session. Every response links to this instance's guide, OpenAPI description, and token page. Authenticated requests add registered formats, optional features, and enforced bounds, and a request made with a personal API token adds that token's scopes, libraries, and expiry. `recipes.search.ingredient` means ingredient: queries match indexed ingredient names, including optional and alternative names, with original-line fallback only when the name is absent. All words in one qualifier must match the same ingredient. Capabilities describe availability, not a grant of authorization. Schema version 1 permits additive optional fields and new IDs; clients ignore unknown IDs. Cache for the current session and refresh after reconnect or configuration changes.", Tags: []string{"Instance"}}, func(ctx context.Context, _ *struct{}) (*struct{ Body Capabilities }, error) {
 		value := base
+		origin := discovery.Origin(ctx)
+		value.Links = CapabilityLinks{Guide: origin + discovery.GuidePath, OpenAPI: origin + discovery.SpecPath, Tokens: origin + discovery.TokensPath}
+
 		if p, ok := identity.FromContext(ctx); ok && p.UserID != "" {
 			value = authenticatedCapabilities(value, options, printRecipes)
+		}
+
+		if token, ok := identity.PersonalTokenFromContext(ctx); ok {
+			value.Token = &CapabilityToken{Scopes: token.Scopes, Libraries: token.Libraries, ExpiresAt: token.ExpiresAt}
+			if value.Token.Libraries == nil {
+				value.Token.Libraries = []string{}
+			}
 		}
 
 		return &struct{ Body Capabilities }{value}, nil

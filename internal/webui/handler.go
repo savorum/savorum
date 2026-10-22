@@ -12,6 +12,8 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/savorum/savorum/internal/httpsecurity"
 )
 
 // The build output is not committed. `all:` admits the tracked .gitkeep, so a
@@ -67,8 +69,10 @@ func newHandler(directory fs.FS) http.Handler {
 			cleaned = "index.html"
 		}
 
-		if _, err := fs.Stat(directory, cleaned); err != nil || strings.HasPrefix(path.Base(cleaned), ".") || strings.HasSuffix(cleaned, ".gz") || strings.HasSuffix(cleaned, ".br") {
-			cleaned = "index.html"
+		cleaned, found := servedPath(directory, cleaned)
+		if !found {
+			notFound(writer, cleaned)
+			return
 		}
 
 		if fingerprintedAsset.MatchString(cleaned) {
@@ -117,6 +121,46 @@ func newHandler(directory fs.FS) http.Handler {
 
 		files.ServeHTTP(writer, clone)
 	})
+}
+
+// servedPath is the file that answers a path: the file itself, the app shell
+// for a page of the app, or nothing.
+func servedPath(directory fs.FS, cleaned string) (string, bool) {
+	if _, err := fs.Stat(directory, cleaned); err == nil && !strings.HasPrefix(path.Base(cleaned), ".") && !strings.HasSuffix(cleaned, ".gz") && !strings.HasSuffix(cleaned, ".br") {
+		return cleaned, true
+	}
+
+	if !applicationRoute(cleaned) {
+		return cleaned, false
+	}
+
+	return "index.html", true
+}
+
+// applicationRoute reports whether a path with no file can be a page of the
+// app. Documents and API paths answer 404 so clients can tell they are absent.
+func applicationRoute(cleaned string) bool {
+	if cleaned == "api" || strings.HasPrefix(cleaned, "api/") || cleaned == ".well-known" || strings.HasPrefix(cleaned, ".well-known/") {
+		return false
+	}
+
+	switch strings.ToLower(path.Ext(cleaned)) {
+	case ".txt", ".md", ".json", ".yaml", ".yml", ".xml":
+		return false
+	}
+
+	return true
+}
+
+func notFound(writer http.ResponseWriter, cleaned string) {
+	if cleaned == "api" || strings.HasPrefix(cleaned, "api/") {
+		httpsecurity.WriteProblem(writer, http.StatusNotFound, "not-found", "No API operation has this path. See /openapi.json for the API and /llms.txt for a guide.")
+		return
+	}
+
+	writer.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	writer.WriteHeader(http.StatusNotFound)
+	_, _ = writer.Write([]byte("Not found. This Savorum instance describes its API at /llms.txt.\n"))
 }
 
 func preferredEncoding(header string, variants map[string]string) (string, bool) {

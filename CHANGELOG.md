@@ -6,6 +6,8 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+- Add assistant connections through MCP and device authorization, with browser approval and an agent guide.
+
 ## 0.2.3
 
 - Move ingredients and steps between groups.

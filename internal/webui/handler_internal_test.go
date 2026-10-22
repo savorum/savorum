@@ -254,3 +254,27 @@ func TestPlaceholderFilesAreNotServed(t *testing.T) {
 		t.Fatalf("placeholder request served %q", response.Body.String())
 	}
 }
+
+func TestHandlerAnswersMissingDocumentsWithNotFound(t *testing.T) {
+	t.Parallel()
+
+	handler := newHandler(fstest.MapFS{"index.html": &fstest.MapFile{Data: []byte("<!doctype html>")}})
+
+	for target, want := range map[string]int{
+		"/recipes/example":           http.StatusOK,
+		"/llms.txt":                  http.StatusNotFound,
+		"/README.md":                 http.StatusNotFound,
+		"/.well-known/security.txt":  http.StatusNotFound,
+		"/.well-known/openid-config": http.StatusNotFound,
+		"/api":                       http.StatusNotFound,
+		"/api/v2/recipes":            http.StatusNotFound,
+		"/openapi.yaml":              http.StatusNotFound,
+	} {
+		response := httptest.NewRecorder()
+		handler.ServeHTTP(response, httptest.NewRequestWithContext(t.Context(), http.MethodGet, target, nil))
+
+		if response.Code != want {
+			t.Fatalf("%s: status %d, want %d", target, response.Code, want)
+		}
+	}
+}

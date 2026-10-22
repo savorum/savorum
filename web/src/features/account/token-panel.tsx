@@ -1,8 +1,10 @@
 import { For, Show, createResource, createSignal } from "solid-js"
+import { css } from "styled-system/css"
 
 import { Callout, ChangeError, Notice } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import { CopyField } from "@/components/ui/clipboard"
+import { Disclosure } from "@/components/ui/disclosure"
 import { FieldGroup, FormField, ToggleField } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Select } from "@/components/ui/select"
@@ -73,6 +75,15 @@ export function TokenPanel() {
   const [error, setError] = createSignal<unknown>()
   const [notice, setNotice] = createSignal("")
   const [busy, setBusy] = createSignal(false)
+  const activeTokens = () =>
+    settled(data)?.tokens.filter(
+      (token) => !token.revoked_at && (!token.expires_at || token.expires_at > Date.now() / 1000),
+    ) ?? []
+  const revokedTokens = () => settled(data)?.tokens.filter((token) => token.revoked_at) ?? []
+  const expiredTokens = () =>
+    settled(data)?.tokens.filter(
+      (token) => !token.revoked_at && !!token.expires_at && token.expires_at <= Date.now() / 1000,
+    ) ?? []
   const canWrite = () => libraries().some((library) => library.role !== "viewer")
   function toggle(values: string[], id: string, checked: boolean) {
     return checked ? [...values, id] : values.filter((value) => value !== id)
@@ -112,6 +123,49 @@ export function TokenPanel() {
       setBusy(false)
     }
   }
+  const TokenList = (props: { tokens: Token[] }) => (
+    <ul class={styles.list}>
+      <For each={props.tokens}>
+        {(token) => (
+          <li class={styles.card}>
+            <h3>{token.name}</h3>
+            <p class={styles.muted}>
+              {tokenState(token)} ·{" "}
+              {token.last_used_at
+                ? m.account_tokens_last_used({ date: formatEpoch(token.last_used_at) })
+                : m.account_tokens_never_used()}
+            </p>
+            <p>
+              {token.scopes
+                .map(
+                  (scope) =>
+                    capabilities.find((capability) => capability.id === scope)?.label() ?? scope,
+                )
+                .join(", ")}
+            </p>
+            <p>
+              {token.libraries.length
+                ? token.libraries
+                    .map(
+                      (id) =>
+                        libraries().find((library) => library.id === id)?.name ??
+                        m.account_tokens_unavailable_library(),
+                    )
+                    .join(", ")
+                : m.account_tokens_all_accessible()}
+            </p>
+            <Show when={!token.revoked_at}>
+              <div class={styles.actions}>
+                <Button variant="outline" disabled={busy()} onClick={() => void revoke(token.id)}>
+                  {m.account_tokens_revoke({ name: isolate(token.name) })}
+                </Button>
+              </div>
+            </Show>
+          </li>
+        )}
+      </For>
+    </ul>
+  )
   return (
     <>
       <ChangeError error={error()} />
@@ -231,55 +285,80 @@ export function TokenPanel() {
         <section class={styles.section}>
           <h2>{m.account_tokens_existing_heading()}</h2>
           <Show when={settled(data)?.tokens.length} fallback={<p>{m.account_tokens_none()}</p>}>
-            <ul class={styles.list}>
-              <For each={settled(data)?.tokens}>
-                {(token) => (
-                  <li class={styles.card}>
-                    <h3>{token.name}</h3>
-                    <p class={styles.muted}>
-                      {tokenState(token)} ·{" "}
-                      {token.last_used_at
-                        ? m.account_tokens_last_used({ date: formatEpoch(token.last_used_at) })
-                        : m.account_tokens_never_used()}
-                    </p>
-                    <p>
-                      {token.scopes
-                        .map(
-                          (scope) =>
-                            capabilities.find((capability) => capability.id === scope)?.label() ??
-                            scope,
-                        )
-                        .join(", ")}
-                    </p>
-                    <p>
-                      {token.libraries.length
-                        ? token.libraries
-                            .map(
-                              (id) =>
-                                libraries().find((library) => library.id === id)?.name ??
-                                m.account_tokens_unavailable_library(),
-                            )
-                            .join(", ")
-                        : m.account_tokens_all_accessible()}
-                    </p>
-                    <Show when={!token.revoked_at}>
-                      <div class={styles.actions}>
-                        <Button
-                          variant="outline"
-                          disabled={busy()}
-                          onClick={() => void revoke(token.id)}
-                        >
-                          {m.account_tokens_revoke({ name: isolate(token.name) })}
-                        </Button>
-                      </div>
-                    </Show>
-                  </li>
-                )}
-              </For>
-            </ul>
+            <Show when={activeTokens().length}>
+              <TokenList tokens={activeTokens()} />
+            </Show>
+            <For
+              each={[
+                { label: () => m.account_tokens_state_revoked(), tokens: revokedTokens },
+                { label: () => m.account_tokens_state_expired(), tokens: expiredTokens },
+              ]}
+            >
+              {(group) => (
+                <Show when={group.tokens().length}>
+                  <Disclosure label={`${group.label()} (${formatNumber(group.tokens().length)})`}>
+                    <TokenHistory tokens={group.tokens()} />
+                  </Disclosure>
+                </Show>
+              )}
+            </For>
           </Show>
         </section>
       </Show>
     </>
+  )
+}
+
+function TokenHistory(props: { tokens: Token[] }) {
+  const [page, setPage] = createSignal(0)
+  const ordered = () =>
+    [...props.tokens].sort(
+      (a, b) => (b.revoked_at || b.expires_at) - (a.revoked_at || a.expires_at),
+    )
+  const current = () => Math.min(page(), Math.max(0, Math.ceil(props.tokens.length / 10) - 1))
+  return (
+    <div class={styles.form}>
+      <ul class={styles.list}>
+        <For each={ordered().slice(current() * 10, current() * 10 + 10)}>
+          {(token) => (
+            <li
+              class={css({
+                paddingBlock: "3",
+                borderBottomWidth: "1px",
+                borderColor: "border.subtle",
+                display: "grid",
+                gap: "1",
+              })}
+            >
+              <strong>{token.name}</strong>
+              <p class={styles.muted}>{formatEpoch(token.revoked_at || token.expires_at)}</p>
+            </li>
+          )}
+        </For>
+      </ul>
+      <Show when={props.tokens.length > 10}>
+        <div class={styles.actions}>
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={current() === 0}
+            onClick={() => setPage(current() - 1)}
+          >
+            {m.common_previous()}
+          </Button>
+          <span class={styles.muted} aria-live="polite">
+            {formatNumber(current() + 1)} / {formatNumber(Math.ceil(props.tokens.length / 10))}
+          </span>
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={(current() + 1) * 10 >= props.tokens.length}
+            onClick={() => setPage(current() + 1)}
+          >
+            {m.common_next()}
+          </Button>
+        </div>
+      </Show>
+    </div>
   )
 }

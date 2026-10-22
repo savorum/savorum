@@ -186,7 +186,7 @@ type BookEntry struct {
 	LibraryEntryID string `json:"library_entry_id" doc:"Identifier of the member entry in the local Savorum library"`
 	Position       int    `json:"position"`
 	Note           string `json:"note,omitempty"`
-	RecipeState    string `json:"recipe_state" enum:"active,trash"`
+	RecipeState    string `json:"recipe_state" enum:"active,trash" readOnly:"true" doc:"Derived recipe state. Omit this field from book write entries."`
 }
 
 // BookEntryInput supplies a recipe entry for a book.

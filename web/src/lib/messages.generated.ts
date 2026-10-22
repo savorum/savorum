@@ -234,6 +234,63 @@ export const account_admin_reset_submit: Messages["account_admin_reset_submit"] 
 export const account_admin_unavailable: Messages["account_admin_unavailable"] = /* @__PURE__ */ localized("account_admin_unavailable", () => {
 	return /** @type {LocalizedString} */ (`Instance administration is available to administrators when authentication is enabled.`)
 })
+export const account_assistant_access_read: Messages["account_assistant_access_read"] = /* @__PURE__ */ localized("account_assistant_access_read", () => {
+	return /** @type {LocalizedString} */ (`Read only`)
+})
+export const account_assistant_access_read_hint: Messages["account_assistant_access_read_hint"] = /* @__PURE__ */ localized("account_assistant_access_read_hint", () => {
+	return /** @type {LocalizedString} */ (`View recipes and library information. No changes.`)
+})
+export const account_assistant_access_viewer_hint: Messages["account_assistant_access_viewer_hint"] = /* @__PURE__ */ localized("account_assistant_access_viewer_hint", () => {
+	return /** @type {LocalizedString} */ (`You have read-only access to this library.`)
+})
+export const account_assistant_access_write: Messages["account_assistant_access_write"] = /* @__PURE__ */ localized("account_assistant_access_write", () => {
+	return /** @type {LocalizedString} */ (`Read and write`)
+})
+export const account_assistant_access_write_hint: Messages["account_assistant_access_write_hint"] = /* @__PURE__ */ localized("account_assistant_access_write_hint", () => {
+	return /** @type {LocalizedString} */ (`Create, import, edit and delete recipes and library information, including permanent deletion.`)
+})
+export const account_assistant_allow: Messages["account_assistant_allow"] = /* @__PURE__ */ localized("account_assistant_allow", () => {
+	return /** @type {LocalizedString} */ (`Allow access`)
+})
+export const account_assistant_check_code: Messages["account_assistant_check_code"] = /* @__PURE__ */ localized("account_assistant_check_code", (i) => {
+	return /** @type {LocalizedString} */ (`Check that your assistant shows this code: ${i?.code}.`)
+})
+export const account_assistant_code: Messages["account_assistant_code"] = /* @__PURE__ */ localized("account_assistant_code", () => {
+	return /** @type {LocalizedString} */ (`Connection code`)
+})
+export const account_assistant_connections: Messages["account_assistant_connections"] = /* @__PURE__ */ localized("account_assistant_connections", () => {
+	return /** @type {LocalizedString} */ (`Connected assistants`)
+})
+export const account_assistant_continue: Messages["account_assistant_continue"] = /* @__PURE__ */ localized("account_assistant_continue", () => {
+	return /** @type {LocalizedString} */ (`Continue`)
+})
+export const account_assistant_done: Messages["account_assistant_done"] = /* @__PURE__ */ localized("account_assistant_done", () => {
+	return /** @type {LocalizedString} */ (`You can return to your assistant.`)
+})
+export const account_assistant_heading: Messages["account_assistant_heading"] = /* @__PURE__ */ localized("account_assistant_heading", () => {
+	return /** @type {LocalizedString} */ (`Connect an assistant`)
+})
+export const account_assistant_prompt_label: Messages["account_assistant_prompt_label"] = /* @__PURE__ */ localized("account_assistant_prompt_label", () => {
+	return /** @type {LocalizedString} */ (`Prompt for your assistant`)
+})
+export const account_assistant_remember: Messages["account_assistant_remember"] = /* @__PURE__ */ localized("account_assistant_remember", () => {
+	return /** @type {LocalizedString} */ (`Remember this connection`)
+})
+export const account_assistant_request_from: Messages["account_assistant_request_from"] = /* @__PURE__ */ localized("account_assistant_request_from", (i) => {
+	return /** @type {LocalizedString} */ (`Connection request from ${i?.name}`)
+})
+export const account_assistant_request_unavailable: Messages["account_assistant_request_unavailable"] = /* @__PURE__ */ localized("account_assistant_request_unavailable", () => {
+	return /** @type {LocalizedString} */ (`This request has expired or is unavailable. Ask your assistant for a new link.`)
+})
+export const account_assistant_setup_hint: Messages["account_assistant_setup_hint"] = /* @__PURE__ */ localized("account_assistant_setup_hint", () => {
+	return /** @type {LocalizedString} */ (`Copy this prompt into your assistant. You approve access in Savorum.`)
+})
+export const account_assistant_setup_prompt: Messages["account_assistant_setup_prompt"] = /* @__PURE__ */ localized("account_assistant_setup_prompt", (i) => {
+	return /** @type {LocalizedString} */ (`Read ${i?.guide} before responding. Follow its connection guidance if access is needed, then help with my requests in this conversation.`)
+})
+export const account_assistant_temporary: Messages["account_assistant_temporary"] = /* @__PURE__ */ localized("account_assistant_temporary", () => {
+	return /** @type {LocalizedString} */ (`Temporary access: 15 minutes.`)
+})
 export const account_audit_activity: Messages["account_audit_activity"] = /* @__PURE__ */ localized("account_audit_activity", () => {
 	return /** @type {LocalizedString} */ (`Activity`)
 })

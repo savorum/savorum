@@ -14,6 +14,8 @@ import { AdminConnectPage } from "./admin-connect-page"
 import { AdminLibrariesPage } from "./admin-libraries-page"
 import { AdminPeoplePage } from "./admin-people-page"
 import { AdminProvidersPage } from "./admin-providers-page"
+import { AssistantApproval } from "./assistant-approval"
+import { AssistantPanel } from "./assistant-panel"
 import { LibraryAccess } from "./library-access-page"
 import { Login } from "./login-page"
 import { SecurityPage } from "./security-page"
@@ -48,7 +50,19 @@ vi.mock("./account-state", async () => {
     administers: () => state.auth_enabled && state.user.instance_admin,
     roleName: () => messages.m.account_role_owner(),
     refreshAccount: vi.fn(),
-    accountRequest: vi.fn(async (path: string) => {
+    accountRequest: vi.fn(async (path: string, method?: string) => {
+      if (path === "/account/connections") return { connections: [] }
+      if (path.startsWith("/account/authorization?"))
+        return {
+          client_name: "Assistant",
+          scope: "read write",
+          user_code: "ABC123",
+          remember_days: 90,
+          verification_required: true,
+        }
+      if (path === "/account/authorization") return { redirect_uri: "" }
+      if (path === "/account/tokens" && method === "POST")
+        return { secret: "svt_example", expires_at: 1800000000 }
       if (path === "/instance/connect")
         return { configured: false, state: "disabled", certificate_ready: false }
       if (path.includes("/audit?")) return { events: [] }
@@ -96,13 +110,17 @@ vi.mock("./account-state", async () => {
 
 afterEach(() => {
   cleanup()
+  window.history.replaceState({}, "", "/")
+  vi.clearAllMocks()
   state.auth_enabled = true
   state.user.instance_admin = true
+  state.libraries = [{ id: "l1", name: "Home", role: "owner" }]
+  state.active_library_id = "l1"
 })
 
 async function verifyInputs(container: HTMLElement) {
-  for (const input of container.querySelectorAll<HTMLInputElement>(
-    'input:not([type="datetime-local"]):not([type="checkbox"]):not([type="number"]):not([readonly])',
+  for (const input of container.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+    'input:not([type="datetime-local"]):not([type="checkbox"]):not([type="number"]):not([readonly]), textarea:not([readonly])',
   )) {
     await waitFor(() => {
       input.focus()
@@ -140,6 +158,7 @@ test("login inputs retain identity, focus, caret, and composed text", async () =
 
 test("security inputs retain identity, focus, caret, and composed text", async () => {
   const screen = render(() => <SecurityPage />)
+  fireEvent.click(await screen.findByRole("button", { name: /Personal key/ }))
   await screen.findByLabelText("Name for Personal key")
   await verifyInputs(screen.container)
 })
@@ -165,6 +184,95 @@ test("administration inputs retain identity, focus, caret, and composed text", a
 test("token inputs retain identity, focus, caret, and composed text", async () => {
   const screen = render(() => <TokensPage />)
   await screen.findByLabelText("Token name")
+  await verifyInputs(screen.container)
+})
+
+test("the setup prompt contains no secret and creates no credential", async () => {
+  const { accountRequest } = await import("./account-state")
+  const screen = render(() => <AssistantPanel />)
+  const prompt = await screen.findByLabelText("Prompt for your assistant")
+  expect((prompt as HTMLInputElement).value).toContain("/llms.txt")
+  expect((prompt as HTMLInputElement).value).not.toMatch(/Bearer|svt_example|savorum_pat_/)
+  expect(vi.mocked(accountRequest).mock.calls.some((call) => call[1] === "POST")).toBe(false)
+})
+
+async function chooseApproval(name: string, option: string) {
+  fireEvent.click(await portal.findByRole("combobox", { name }))
+  fireEvent.click(await portal.findByRole("option", { name: option }))
+}
+
+test("approval defaults to one library and read-only access", async () => {
+  window.history.replaceState({}, "", "/account/authorize?code=ABC123")
+  const { accountRequest } = await import("./account-state")
+  const screen = render(() => <AssistantApproval />)
+  fireEvent.click(await screen.findByRole("button", { name: "Allow access" }))
+  await screen.findByText("You can return to your assistant.")
+  expect(accountRequest).toHaveBeenCalledWith("/account/authorization", "POST", {
+    code: "ABC123",
+    library_id: "l1",
+    access: "read",
+    remember: false,
+    deny: false,
+  })
+})
+
+test("viewer library resets approval to read-only and keeps the selected library", async () => {
+  window.history.replaceState({}, "", "/account/authorize?code=ABC123")
+  state.libraries.push({ id: "l2", name: "Shared", role: "viewer" })
+  const { accountRequest } = await import("./account-state")
+  const screen = render(() => <AssistantApproval />)
+  await chooseApproval("Permissions", "Read and write")
+  await chooseApproval("Library", "Shared")
+  expect(screen.getByRole("combobox", { name: "Permissions" }).textContent).toContain("Read only")
+  fireEvent.click(screen.getByRole("button", { name: "Allow access" }))
+  await screen.findByText("You can return to your assistant.")
+  expect(accountRequest).toHaveBeenCalledWith(
+    "/account/authorization",
+    "POST",
+    expect.objectContaining({ library_id: "l2", access: "read" }),
+  )
+})
+
+test("failed approval preserves choices and retries only on request", async () => {
+  window.history.replaceState({}, "", "/account/authorize?code=ABC123")
+  const { accountRequest } = await import("./account-state")
+  const screen = render(() => <AssistantApproval />)
+  await chooseApproval("Permissions", "Read and write")
+  fireEvent.click(screen.getByRole("checkbox", { name: "Remember this connection" }))
+  vi.mocked(accountRequest).mockRejectedValueOnce(new Error("Connection interrupted"))
+  fireEvent.click(screen.getByRole("button", { name: "Allow access" }))
+  await screen.findByText("Connection interrupted")
+  expect(screen.getByRole("combobox", { name: "Permissions" }).textContent).toContain(
+    "Read and write",
+  )
+  fireEvent.click(screen.getByRole("button", { name: "Allow access" }))
+  await screen.findByText("You can return to your assistant.")
+  expect(accountRequest).toHaveBeenLastCalledWith(
+    "/account/authorization",
+    "POST",
+    expect.objectContaining({ access: "write", remember: true }),
+  )
+})
+
+test("an older session signs in before approval instead of failing after confirmation", async () => {
+  window.history.replaceState({}, "", "/account/authorize?code=ABCDEF123456")
+  const { accountRequest } = await import("./account-state")
+  vi.mocked(accountRequest).mockResolvedValueOnce({
+    client_name: "Assistant",
+    scope: "read",
+    user_code: "ABCDEF123456",
+    remember_days: 90,
+    verification_required: true,
+    reauth_required: true,
+  })
+  const screen = render(() => <AssistantApproval />)
+  await screen.findByLabelText("Password")
+  expect(screen.queryByRole("button", { name: "Allow access" })).toBeNull()
+})
+
+test("approval code retains identity, focus, caret and composed text", async () => {
+  const screen = render(() => <AssistantApproval />)
+  await screen.findByLabelText("Connection code")
   await verifyInputs(screen.container)
 })
 
@@ -236,4 +344,49 @@ test("Connect setup retains its input while typing and composing", async () => {
   expect(document.activeElement).toBe(input)
   expect(input.value).toBe("setup 日本語")
   expect(input.selectionStart).toBe(9)
+})
+
+test("inactive tokens use bounded history pages", async () => {
+  const { accountRequest } = await import("./account-state")
+  vi.mocked(accountRequest).mockResolvedValueOnce({
+    tokens: Array.from({ length: 25 }, (_, i) => ({
+      id: String(i),
+      name: `Old token ${i}`,
+      scopes: ["recipes:read"],
+      libraries: [],
+      created_at: 1,
+      expires_at: 0,
+      last_used_at: 0,
+      revoked_at: 100 + i,
+    })),
+    policy: { default_days: 90, maximum_days: 365, allow_nonexpiring: false },
+  })
+  const screen = render(() => <TokensPage />)
+  fireEvent.click(await screen.findByRole("button", { name: "Revoked (25)" }))
+  expect(screen.getAllByText(/^Old token/)).toHaveLength(10)
+  expect(screen.getByText("Old token 24")).toBeTruthy()
+  fireEvent.click(await screen.findByRole("button", { name: "Next" }))
+  expect(screen.queryByText("Old token 24")).toBeNull()
+  fireEvent.click(await screen.findByRole("button", { name: "Next" }))
+  expect(screen.getAllByText(/^Old token/)).toHaveLength(5)
+  expect(screen.getByRole("button", { name: "Next" }).hasAttribute("disabled")).toBe(true)
+})
+
+test("connection load failure keeps the setup prompt and retry available", async () => {
+  const { accountRequest } = await import("./account-state")
+  vi.mocked(accountRequest).mockRejectedValueOnce(new Error("Connection interrupted"))
+  const screen = render(() => <AssistantPanel />)
+  await screen.findByText("Connection interrupted")
+  expect(screen.getByLabelText("Prompt for your assistant")).toBeTruthy()
+  fireEvent.click(screen.getByRole("button", { name: "Retry" }))
+  await waitFor(() => expect(screen.queryByText("Connection interrupted")).toBeNull())
+})
+
+test("approval lookup failure keeps its retry control usable", async () => {
+  window.history.replaceState({}, "", "/account/authorize?code=ABCDEF123456")
+  const { accountRequest } = await import("./account-state")
+  vi.mocked(accountRequest).mockRejectedValueOnce(new Error("Connection interrupted"))
+  const screen = render(() => <AssistantApproval />)
+  fireEvent.click(await screen.findByRole("button", { name: "Retry" }))
+  await screen.findByRole("button", { name: "Allow access" })
 })

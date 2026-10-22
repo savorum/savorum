@@ -19,6 +19,7 @@ import { Route as ShoppingRouteImport } from './routes/shopping'
 import { Route as TagsRouteImport } from './routes/tags'
 import { Route as TrashRouteImport } from './routes/trash'
 import { Route as AccountIndexRouteImport } from './routes/account.index'
+import { Route as AccountAuthorizeRouteImport } from './routes/account.authorize'
 import { Route as AccountIntegrationsRouteImport } from './routes/account.integrations'
 import { Route as AccountSecurityRouteImport } from './routes/account.security'
 import { Route as AccountTokensRouteImport } from './routes/account.tokens'
@@ -92,6 +93,11 @@ const TrashRoute = TrashRouteImport.update({
 const AccountIndexRoute = AccountIndexRouteImport.update({
   id: '/account/',
   path: '/account/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountAuthorizeRoute = AccountAuthorizeRouteImport.update({
+  id: '/account/authorize',
+  path: '/account/authorize',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AccountIntegrationsRoute = AccountIntegrationsRouteImport.update({
@@ -227,6 +233,7 @@ export interface FileRoutesByFullPath {
   '/shopping': typeof ShoppingRoute
   '/tags': typeof TagsRoute
   '/trash': typeof TrashRoute
+  '/account/authorize': typeof AccountAuthorizeRoute
   '/account/integrations': typeof AccountIntegrationsRoute
   '/account/security': typeof AccountSecurityRoute
   '/account/tokens': typeof AccountTokensRoute
@@ -263,6 +270,7 @@ export interface FileRoutesByTo {
   '/shopping': typeof ShoppingRoute
   '/tags': typeof TagsRoute
   '/trash': typeof TrashRoute
+  '/account/authorize': typeof AccountAuthorizeRoute
   '/account/integrations': typeof AccountIntegrationsRoute
   '/account/security': typeof AccountSecurityRoute
   '/account/tokens': typeof AccountTokensRoute
@@ -300,6 +308,7 @@ export interface FileRoutesById {
   '/shopping': typeof ShoppingRoute
   '/tags': typeof TagsRoute
   '/trash': typeof TrashRoute
+  '/account/authorize': typeof AccountAuthorizeRoute
   '/account/integrations': typeof AccountIntegrationsRoute
   '/account/security': typeof AccountSecurityRoute
   '/account/tokens': typeof AccountTokensRoute
@@ -338,6 +347,7 @@ export interface FileRouteTypes {
     | '/shopping'
     | '/tags'
     | '/trash'
+    | '/account/authorize'
     | '/account/integrations'
     | '/account/security'
     | '/account/tokens'
@@ -374,6 +384,7 @@ export interface FileRouteTypes {
     | '/shopping'
     | '/tags'
     | '/trash'
+    | '/account/authorize'
     | '/account/integrations'
     | '/account/security'
     | '/account/tokens'
@@ -410,6 +421,7 @@ export interface FileRouteTypes {
     | '/shopping'
     | '/tags'
     | '/trash'
+    | '/account/authorize'
     | '/account/integrations'
     | '/account/security'
     | '/account/tokens'
@@ -447,6 +459,7 @@ export interface RootRouteChildren {
   ShoppingRoute: typeof ShoppingRoute
   TagsRoute: typeof TagsRoute
   TrashRoute: typeof TrashRoute
+  AccountAuthorizeRoute: typeof AccountAuthorizeRoute
   AccountIntegrationsRoute: typeof AccountIntegrationsRoute
   AccountSecurityRoute: typeof AccountSecurityRoute
   AccountTokensRoute: typeof AccountTokensRoute
@@ -544,6 +557,13 @@ declare module '@tanstack/solid-router' {
       path: '/account'
       fullPath: '/account/'
       preLoaderRoute: typeof AccountIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account/authorize': {
+      id: '/account/authorize'
+      path: '/account/authorize'
+      fullPath: '/account/authorize'
+      preLoaderRoute: typeof AccountAuthorizeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/account/integrations': {
@@ -727,6 +747,7 @@ const rootRouteChildren: RootRouteChildren = {
   ShoppingRoute: ShoppingRoute,
   TagsRoute: TagsRoute,
   TrashRoute: TrashRoute,
+  AccountAuthorizeRoute: AccountAuthorizeRoute,
   AccountIntegrationsRoute: AccountIntegrationsRoute,
   AccountSecurityRoute: AccountSecurityRoute,
   AccountTokensRoute: AccountTokensRoute,

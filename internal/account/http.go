@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/savorum/savorum/internal/access"
+	"github.com/savorum/savorum/internal/discovery"
 	"github.com/savorum/savorum/internal/httpsecurity"
 	"github.com/savorum/savorum/internal/identity"
 	"github.com/savorum/savorum/internal/routecatalog"
@@ -49,9 +50,11 @@ type Repository interface {
 
 // Options controls authentication deployment policy.
 type Options struct {
+	Schema               func() any
 	Cookies              identity.BrowserCookies
 	TokenPolicy          identity.TokenPolicy
 	Enabled              bool
+	AllowLANHTTP         bool
 	IdleLifetime         time.Duration
 	AbsoluteLifetime     time.Duration
 	PublicURL            func(context.Context) (string, error)
@@ -83,6 +86,7 @@ const (
 // New constructs the browser account and library authorization boundary.
 func New(store Repository, options Options, next http.Handler) *Handler {
 	h := &Handler{store: store, options: options, next: next, routes: routecatalog.New()}
+	h.registerAssistantRoutes()
 	h.registerPasskeyRecoveryRoutes()
 	h.registerProvisioningRoutes()
 	h.routes.HandleFunc("GET /api/v1/account/tokens", h.tokenList)
@@ -113,6 +117,10 @@ func New(store Repository, options Options, next http.Handler) *Handler {
 }
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if h.assistantPublic(w, r) {
+		return
+	}
+
 	if !strings.HasPrefix(r.URL.Path, "/api/") || r.URL.Path == "/api/v1/health" {
 		h.next.ServeHTTP(w, r)
 		return
@@ -132,19 +140,14 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ctx := identity.WithCorrelation(r.Context(), hex.EncodeToString(correlation))
-	if b.principal.UserID != "" {
-		ctx = identity.WithPrincipal(ctx, b.principal)
-	}
-
-	ctx = context.WithValue(ctx, browserKey{}, b)
+	ctx := withBrowser(identity.WithCorrelation(r.Context(), hex.EncodeToString(correlation)), b)
 	r = r.WithContext(ctx)
 
 	capabilities := (r.Method == http.MethodGet || r.Method == http.MethodHead) && r.URL.Path == "/api/v1/capabilities"
 
 	public := capabilities || publicPasskeyRecoveryRoute(r) || (r.Method == http.MethodPost && r.URL.Path == "/api/v1/account/invitations/register") || (r.Method == http.MethodGet && r.URL.Path == "/api/v1/account") || (r.Method == http.MethodPost && r.URL.Path == "/api/v1/account/login")
 	if !public && b.principal.UserID == "" {
-		problem(w, 401, problemAuthenticationRequired)
+		challenge(w, problemAuthenticationRequired, "Sign in, or send a personal API token as \"Authorization: Bearer <token>\". Create a token in Savorum under Account, API tokens (/account/tokens). /llms.txt explains the API.")
 		return
 	}
 
@@ -233,6 +236,18 @@ func (h *Handler) selectedLibrary(r *http.Request, libs []access.Library) string
 	}
 
 	return ""
+}
+
+func withBrowser(ctx context.Context, b browser) context.Context {
+	if b.principal.UserID != "" {
+		ctx = identity.WithPrincipal(ctx, b.principal)
+	}
+
+	if b.personalToken != nil {
+		ctx = identity.WithPersonalToken(ctx, *b.personalToken)
+	}
+
+	return context.WithValue(ctx, browserKey{}, b)
 }
 
 func getBrowser(r *http.Request) browser { b, _ := r.Context().Value(browserKey{}).(browser); return b }
@@ -669,6 +684,12 @@ func problem(w http.ResponseWriter, status int, kind problemKind) {
 	httpsecurity.WriteProblem(w, status, code, code)
 }
 
+// challenge writes a 401 that tells the client how to authenticate.
+func challenge(w http.ResponseWriter, kind problemKind, detail string) {
+	w.Header().Set("WWW-Authenticate", `Bearer realm="Savorum"`)
+	httpsecurity.WriteProblem(w, http.StatusUnauthorized, kind.String(), detail)
+}
+
 func operationError(w http.ResponseWriter, err error) {
 	switch {
 	case errors.Is(err, identity.ErrPasswordBusy):
@@ -696,6 +717,10 @@ func summaryLookup(r *http.Request) bool {
 	return r.Method == http.MethodPost && (r.URL.Path == "/api/v1/recipes/lookup" || r.URL.Path == "/api/v1/books/lookup")
 }
 
+func ingredientLinePreview(r *http.Request) bool {
+	return r.Method == http.MethodPost && r.URL.Path == "/api/v1/ingredient-lines/parse"
+}
+
 // Personal writes and document rendering are explicitly permitted for readers;
 // every new unsafe content route requires editor authority by default.
 func unsafeLibraryMutation(r *http.Request) bool {
@@ -704,7 +729,7 @@ func unsafeLibraryMutation(r *http.Request) bool {
 	}
 
 	path := r.URL.Path
-	if summaryLookup(r) {
+	if summaryLookup(r) || ingredientLinePreview(r) {
 		return false
 	}
 
@@ -740,8 +765,13 @@ func (h *Handler) resolveBrowser(w http.ResponseWriter, r *http.Request) (browse
 
 	if authorization := r.Header.Get("Authorization"); authorization != "" {
 		store, ok := h.store.(tokenRepository)
-		if !ok || !h.options.Enabled || !strings.HasPrefix(authorization, "Bearer ") {
-			problem(w, 401, problemInvalidCredentials)
+		if !ok || !h.options.Enabled {
+			challenge(w, problemInvalidCredentials, "This instance runs in local mode and accepts no API tokens. Send requests without an Authorization header.")
+			return b, false
+		}
+
+		if !strings.HasPrefix(authorization, "Bearer ") {
+			challenge(w, problemInvalidCredentials, "Send a personal API token as \"Authorization: Bearer <token>\". Create one in Savorum under Account, API tokens (/account/tokens).")
 			return b, false
 		}
 
@@ -749,12 +779,23 @@ func (h *Handler) resolveBrowser(w http.ResponseWriter, r *http.Request) (browse
 
 		b.principal, token, err = store.ResolvePersonalToken(r.Context(), strings.TrimPrefix(authorization, "Bearer "))
 		if err != nil {
-			problem(w, 401, problemInvalidCredentials)
+			challenge(w, problemInvalidCredentials, "This API token is not valid. It may have expired or been revoked. Create a new one in Savorum under Account, API tokens (/account/tokens).")
+			return b, false
+		}
+
+		if token.Audience != "" && token.Audience != discovery.Origin(r.Context())+"/mcp" {
+			challenge(w, problemInvalidCredentials, "This connection belongs to another Savorum address.")
 			return b, false
 		}
 
 		if !tokenAllows(r, token) {
-			problem(w, 403, problemTokenScopeRequired)
+			detail := "This API token cannot use this operation. GET /api/v1/capabilities lists the token's permissions."
+			if capability := tokenCapability(r); capability != "" && capability != "scoped" {
+				detail = "This API token needs the " + capability + " permission. Create a token that includes it in Savorum under Account, API tokens (/account/tokens)."
+			}
+
+			httpsecurity.WriteProblem(w, http.StatusForbidden, problemTokenScopeRequired.String(), detail)
+
 			return b, false
 		}
 

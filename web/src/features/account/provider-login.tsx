@@ -11,6 +11,7 @@ import { settled } from "@/lib/settled"
 import { m } from "../../lib/messages.ts"
 import { accountStyles as styles } from "./account-layout"
 import { accountRequest } from "./account-state"
+import { rememberAssistantApproval } from "./assistant-return"
 import { invitationToken } from "./invitations"
 import { readProviders, type Provider } from "./sign-in-methods"
 
@@ -45,8 +46,10 @@ function ProviderOption(props: { provider: Provider }) {
       })
       setPassword("")
       if (result.invitation_accepted) sessionStorage.removeItem("savorum.invitation")
-      if (result.authorization_url) window.location.assign(result.authorization_url)
-      else window.location.reload()
+      if (result.authorization_url) {
+        rememberAssistantApproval()
+        window.location.assign(result.authorization_url)
+      } else window.location.reload()
     } catch (failure) {
       setError(failure)
       setBusy(false)
