@@ -53,10 +53,17 @@ type Importer interface {
 type Limits struct {
 	ConcurrentJobs int
 	BatchSize      int
+	// AcceptedJobs and RetainedBytes include running and waiting jobs.
+	AcceptedJobs  int
+	RetainedBytes int64
+	ActorJobs     int
+	ActorBytes    int64
 }
 
-// DefaultLimits returns the standard worker count and import batch size.
-func DefaultLimits() Limits { return Limits{ConcurrentJobs: 2, BatchSize: 25} }
+// DefaultLimits bounds concurrent and retained import work.
+func DefaultLimits() Limits {
+	return Limits{ConcurrentJobs: 2, BatchSize: 25, AcceptedJobs: 8, RetainedBytes: 256 << 20, ActorJobs: 4, ActorBytes: 128 << 20}
+}
 
 func (limits Limits) normalized() Limits {
 	defaults := DefaultLimits()
@@ -66,6 +73,22 @@ func (limits Limits) normalized() Limits {
 
 	if limits.BatchSize <= 0 {
 		limits.BatchSize = defaults.BatchSize
+	}
+
+	if limits.AcceptedJobs <= 0 {
+		limits.AcceptedJobs = defaults.AcceptedJobs
+	}
+
+	if limits.RetainedBytes <= 0 {
+		limits.RetainedBytes = defaults.RetainedBytes
+	}
+
+	if limits.ActorJobs <= 0 {
+		limits.ActorJobs = defaults.ActorJobs
+	}
+
+	if limits.ActorBytes <= 0 {
+		limits.ActorBytes = defaults.ActorBytes
 	}
 
 	return limits
@@ -98,10 +121,11 @@ type Service struct {
 	now        func() time.Time
 	logger     *slog.Logger
 
-	mu      sync.Mutex
-	active  map[string]*activeRun
-	closed  bool
-	running sync.WaitGroup
+	mu            sync.Mutex
+	active        map[string]*activeRun
+	retainedBytes int64
+	closed        bool
+	running       sync.WaitGroup
 
 	// lifetime is cancelled when the service closes. It bounds the commit
 	// contexts of background runs, which have no request to inherit from.
@@ -115,6 +139,8 @@ type Service struct {
 // scheduled, and cancelStaging stops the current batch reaching out to the
 // network without touching the commit it is inside.
 type activeRun struct {
+	bytes         int64
+	actor         string
 	cancelled     atomic.Bool
 	mu            sync.Mutex
 	cancelStaging context.CancelFunc
@@ -248,6 +274,18 @@ func (s *Service) Start(ctx context.Context, request StartRequest) (Job, error) 
 		}
 	}
 
+	run, err := s.reserve(job, request.Items)
+	if err != nil {
+		return Job{}, err
+	}
+
+	submitted := false
+	defer func() {
+		if !submitted {
+			s.release(job.ID, run)
+		}
+	}()
+
 	items := make([]Item, 0, len(request.Items))
 	for position, planned := range request.Items {
 		items = append(items, Item{
@@ -262,9 +300,14 @@ func (s *Service) Start(ctx context.Context, request StartRequest) (Job, error) 
 		return Job{}, err
 	}
 
-	if err := s.enqueue(job, request.Items); err != nil {
-		return Job{}, err
+	positions := make([]int, len(request.Items))
+	for i := range positions {
+		positions[i] = i
 	}
+
+	submitted = true
+
+	go s.execute(job, request.Items, positions, run)
 
 	resumable := 0
 
@@ -279,42 +322,83 @@ func (s *Service) Start(ctx context.Context, request StartRequest) (Job, error) 
 	return job, nil
 }
 
-func (s *Service) enqueue(job Job, planned []exchange.PlannedImport) error {
+func (s *Service) reserve(job Job, planned []exchange.PlannedImport) (*activeRun, error) {
+	charged := exchange.PlannedRetainedBytes(planned)
+	if charged > min(s.limits.RetainedBytes, s.limits.ActorBytes) {
+		return nil, ErrTooLarge
+	}
+
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
 	if s.closed {
-		return fmt.Errorf("%w: Savorum is shutting down", ErrJobState)
+		return nil, fmt.Errorf("%w: Savorum is shutting down", ErrJobState)
 	}
 
-	if _, already := s.active[job.ID]; already {
-		return fmt.Errorf("%w: this import is already running", ErrJobState)
+	if _, exists := s.active[job.ID]; exists {
+		return nil, fmt.Errorf("%w: this import is already running", ErrJobState)
 	}
 
-	run := &activeRun{}
+	actorJobs, actorBytes := 0, int64(0)
+
+	for _, run := range s.active {
+		if run.actor == job.Actor.UserID {
+			actorJobs++
+			actorBytes += run.bytes
+		}
+	}
+
+	if len(s.active) >= s.limits.AcceptedJobs || charged > s.limits.RetainedBytes-s.retainedBytes || actorJobs >= s.limits.ActorJobs || charged > s.limits.ActorBytes-actorBytes {
+		return nil, ErrCapacity
+	}
+
+	run := &activeRun{bytes: charged, actor: job.Actor.UserID}
 	s.active[job.ID] = run
+	s.retainedBytes += charged
 	s.running.Add(1)
 
-	positions := make([]int, len(planned))
+	return run, nil
+}
 
-	for index := range positions {
-		positions[index] = index
+func (s *Service) charge(run *activeRun, charged int64) error {
+	if charged > min(s.limits.RetainedBytes, s.limits.ActorBytes) {
+		return ErrTooLarge
 	}
-	go s.execute(job, planned, positions, run)
+
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	var actorBytes int64
+
+	for _, current := range s.active {
+		if current.actor == run.actor {
+			actorBytes += current.bytes
+		}
+	}
+
+	if charged > s.limits.RetainedBytes-s.retainedBytes || charged > s.limits.ActorBytes-actorBytes {
+		return ErrCapacity
+	}
+
+	run.bytes += charged
+	s.retainedBytes += charged
 
 	return nil
+}
+
+func (s *Service) release(id string, run *activeRun) {
+	s.mu.Lock()
+	delete(s.active, id)
+	s.retainedBytes -= run.bytes
+	s.mu.Unlock()
+	s.running.Done()
 }
 
 // execute is the whole life of one run, running planned[i] as the job's item
 // at positions[i]. A resume runs a subset and keeps each recipe's original
 // row. It returns no error: a job's outcome is recorded, not returned.
 func (s *Service) execute(job Job, planned []exchange.PlannedImport, positions []int, run *activeRun) {
-	defer s.running.Done()
-	defer func() {
-		s.mu.Lock()
-		delete(s.active, job.ID)
-		s.mu.Unlock()
-	}()
+	defer s.release(job.ID, run)
 
 	select {
 	case s.slots <- struct{}{}:
@@ -753,6 +837,18 @@ func (s *Service) Resume(ctx context.Context, id string) (Job, error) {
 		return Job{}, fmt.Errorf("%w: this import is still running", ErrJobState)
 	}
 
+	run, err := s.reserve(job, nil)
+	if err != nil {
+		return Job{}, err
+	}
+
+	submitted := false
+	defer func() {
+		if !submitted {
+			s.release(job.ID, run)
+		}
+	}()
+
 	items, err := s.repository.LoadImportJobItems(ctx, id, []ItemState{
 		ItemPending, ItemRunning, ItemCancelled, ItemFailed,
 	})
@@ -813,15 +909,19 @@ func (s *Service) Resume(ctx context.Context, id string) (Job, error) {
 		return Job{}, ErrNotResumable
 	}
 
+	if err := s.charge(run, exchange.PlannedRetainedBytes(planned)); err != nil {
+		return Job{}, err
+	}
+
 	if err := s.repository.UpdateImportJobState(ctx, id, JobStateUpdate{State: StatePending}); err != nil {
 		return Job{}, err
 	}
 	// The resumed run addresses its items by their original positions, so a
 	// second attempt writes to the same rows rather than appending a parallel
 	// history of the same recipes.
-	if err := s.enqueueAt(job, planned, positions); err != nil {
-		return Job{}, err
-	}
+	submitted = true
+
+	go s.execute(job, planned, positions, run)
 
 	return s.repository.GetImportJob(ctx, id)
 }
@@ -837,29 +937,6 @@ func unresumableReason(item Item) string {
 	default:
 		return "Savorum did not keep a copy of this recipe, so it cannot be run again from here. Import it again from its source."
 	}
-}
-
-// enqueueAt runs a subset of a job's items, keeping each one's recorded
-// position. Contiguous work is the ordinary case; a resume is not.
-func (s *Service) enqueueAt(job Job, planned []exchange.PlannedImport, positions []int) error {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-
-	if s.closed {
-		return fmt.Errorf("%w: Savorum is shutting down", ErrJobState)
-	}
-
-	if _, already := s.active[job.ID]; already {
-		return fmt.Errorf("%w: this import is already running", ErrJobState)
-	}
-
-	run := &activeRun{}
-	s.active[job.ID] = run
-
-	s.running.Add(1)
-	go s.execute(job, planned, positions, run)
-
-	return nil
 }
 
 // Recover marks every job a stopped process left mid-flight. It runs once at

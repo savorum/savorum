@@ -25,6 +25,10 @@ func (s *Store) ResolveExternalIdentity(ctx context.Context, providerID, subject
 	}
 	defer tx.Rollback()
 
+	if err := authorizeLinkSession(ctx, tx, linkUserID); err != nil {
+		return p, err
+	}
+
 	var enabled bool
 	if err = tx.QueryRowContext(ctx, `SELECT enabled FROM auth_providers WHERE id=?`, providerID).Scan(&enabled); err != nil || !enabled {
 		return p, identity.ErrCredentials

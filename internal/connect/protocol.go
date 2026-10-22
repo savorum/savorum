@@ -1,6 +1,7 @@
 package connect
 
 type assignment struct {
-	ID   string `json:"id"`
-	Kind string `json:"kind"`
+	ClientAddress string `json:"client_address,omitempty"`
+	ID            string `json:"id"`
+	Kind          string `json:"kind"`
 }

@@ -653,3 +653,112 @@ func TestProgressCountsWhatCanActuallyBeRunAgain(t *testing.T) {
 		t.Fatalf("a finished import reported %d recipes to run again", finished.Progress.Resumable)
 	}
 }
+
+func TestJobAdmissionBoundsCountAndBytesBeforePersistence(t *testing.T) {
+	for _, kind := range []string{"count", "bytes", "actor-count", "actor-bytes"} {
+		t.Run(kind, func(t *testing.T) {
+			suite := newHarness(t)
+			planned := suite.plan(t, 1)
+			charge := exchange.PlannedRetainedBytes(planned)
+			limits := importjob.Limits{ConcurrentJobs: 1, AcceptedJobs: 4, ActorJobs: 4, RetainedBytes: charge * 4, ActorBytes: charge * 4}
+
+			switch kind {
+			case "count":
+				limits.AcceptedJobs = 1
+			case "bytes":
+				limits.RetainedBytes = charge
+			case "actor-count":
+				limits.ActorJobs = 1
+			case "actor-bytes":
+				limits.ActorBytes = charge
+			}
+
+			gate := &gatedImporter{inner: suite.exchanger, entered: make(chan struct{}, 1), release: make(chan struct{})}
+
+			service, err := importjob.NewService(suite.store, gate, importjob.WithLimits(limits))
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			t.Cleanup(service.Close)
+
+			first, err := service.Start(t.Context(), importjob.StartRequest{Items: planned})
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			<-gate.entered
+
+			if _, err := service.Start(t.Context(), importjob.StartRequest{Items: planned}); !errors.Is(err, importjob.ErrCapacity) {
+				t.Fatalf("admission=%v", err)
+			}
+
+			_, total, err := service.List(t.Context(), importjob.ListOptions{})
+			if err != nil || total != 1 {
+				t.Fatalf("rejected job persisted: total=%d err=%v", total, err)
+			}
+
+			close(gate.release)
+			waitFor(t, service, first.ID, finished)
+		})
+	}
+}
+
+type failingJobCreation struct {
+	importjob.Repository
+	fail bool
+}
+
+func (r *failingJobCreation) CreateImportJob(ctx context.Context, job importjob.Job, items []importjob.Item) error {
+	if r.fail {
+		r.fail = false
+		return errors.New("temporary storage failure")
+	}
+
+	return r.Repository.CreateImportJob(ctx, job, items)
+}
+
+func TestFailedPersistenceReleasesJobAdmission(t *testing.T) {
+	suite := newHarness(t)
+	planned := suite.plan(t, 1)
+	repository := &failingJobCreation{Repository: suite.store, fail: true}
+
+	service, err := importjob.NewService(repository, suite.exchanger, importjob.WithLimits(importjob.Limits{AcceptedJobs: 1}))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Cleanup(service.Close)
+
+	if _, err := service.Start(t.Context(), importjob.StartRequest{Items: planned}); err == nil {
+		t.Fatal("storage failure was lost")
+	}
+
+	job, err := service.Start(t.Context(), importjob.StartRequest{Items: planned})
+	if err != nil {
+		t.Fatalf("failed write retained admission: %v", err)
+	}
+
+	waitFor(t, service, job.ID, finished)
+}
+
+func TestOversizedJobIsRejectedBeforePersistence(t *testing.T) {
+	suite := newHarness(t)
+	planned := suite.plan(t, 1)
+
+	service, err := importjob.NewService(suite.store, suite.exchanger, importjob.WithLimits(importjob.Limits{RetainedBytes: exchange.PlannedRetainedBytes(planned) - 1}))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Cleanup(service.Close)
+
+	if _, err := service.Start(t.Context(), importjob.StartRequest{Items: planned}); !errors.Is(err, importjob.ErrTooLarge) {
+		t.Fatalf("oversized selection=%v", err)
+	}
+
+	_, total, err := service.List(t.Context(), importjob.ListOptions{})
+	if err != nil || total != 0 {
+		t.Fatalf("oversized job persisted: total=%d error=%v", total, err)
+	}
+}

@@ -445,6 +445,10 @@ func mapImportJobError(err error) error {
 	}
 
 	switch {
+	case errors.Is(err, importjob.ErrTooLarge):
+		return problem(http.StatusRequestEntityTooLarge, "import-too-large", "Choose fewer recipes for this import; the selection exceeds the available memory allowance.")
+	case errors.Is(err, importjob.ErrCapacity):
+		return problem(http.StatusServiceUnavailable, "import-busy", "Other imports are using the available capacity. Try again shortly.")
 	case errors.Is(err, importjob.ErrNotFound):
 		return problem(http.StatusNotFound, "import-job-not-found", "That import does not exist.")
 	case errors.Is(err, importjob.ErrNotResumable):
@@ -508,27 +512,33 @@ func registerImportJobStart(api huma.API, exchanger ExchangeService, jobs Import
 			return nil, err
 		}
 
-		var plan exchange.ImportPlan
-		if planner, ok := exchanger.(interface {
-			PlanPreviewImportWithOptions(context.Context, string, []exchange.PreviewResolution, bool, exchange.PreviewCommitOptions) (exchange.ImportPlan, error)
-		}); ok {
-			plan, err = planner.PlanPreviewImportWithOptions(ctx, input.PreviewID, selections, resolved, exchange.PreviewCommitOptions{RetainSourceItemIDs: input.Body.RetainSourceItemIDs})
-		} else {
-			plan, err = exchanger.PlanPreviewImport(ctx, input.PreviewID, selections, resolved)
-		}
-
-		if err != nil {
-			return nil, mapImportError(err)
-		}
-
 		policy := library.DuplicatePolicy(input.Body.OnDuplicate)
 		if policy == "" {
 			policy = library.DuplicateSkip
 		}
 
-		job, err := jobs.Start(ctx, importjob.StartRequest{
-			Importer: plan.Importer, Source: plan.Source, Policy: policy, Items: plan.Items,
-		})
+		var job importjob.Job
+
+		start := func(plan exchange.ImportPlan) error {
+			var err error
+
+			job, err = jobs.Start(ctx, importjob.StartRequest{Importer: plan.Importer, Source: plan.Source, Policy: policy, Items: plan.Items})
+
+			return err
+		}
+
+		var plan exchange.ImportPlan
+		if planner, ok := exchanger.(interface {
+			PlanPreviewImportWithOptions(context.Context, string, []exchange.PreviewResolution, bool, exchange.PreviewCommitOptions) (exchange.ImportPlan, error)
+		}); ok {
+			plan, err = planner.PlanPreviewImportWithOptions(ctx, input.PreviewID, selections, resolved, exchange.PreviewCommitOptions{RetainSourceItemIDs: input.Body.RetainSourceItemIDs, AcceptPlan: start})
+		} else {
+			plan, err = exchanger.PlanPreviewImport(ctx, input.PreviewID, selections, resolved)
+			if err == nil {
+				err = start(plan)
+			}
+		}
+
 		if err != nil {
 			return nil, mapImportJobError(err)
 		}

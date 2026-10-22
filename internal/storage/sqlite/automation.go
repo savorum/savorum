@@ -21,10 +21,7 @@ func (s *Store) CreateAutomationJob(ctx context.Context, record automation.Recor
 	}
 	defer tx.Rollback()
 
-	role := access.Editor
-	if record.Job.Kind == "export" || record.Job.Kind == "bulk-read" {
-		role = access.Viewer
-	}
+	role := automationRole(record.Job.Kind)
 
 	if err := s.authorizeScopeWith(ctx, tx, role); err != nil {
 		return operationError("CreateAutomationJob", err)
@@ -105,7 +102,7 @@ func (s *Store) SaveAutomationJob(ctx context.Context, record *automation.Record
 	}
 	defer tx.Rollback()
 
-	if err := s.authorizeScopeWith(ctx, tx, access.Viewer); err != nil {
+	if err := s.authorizeScopeWith(ctx, tx, automationSaveRole(record)); err != nil {
 		return operationError("SaveAutomationJob", err)
 	}
 
@@ -258,4 +255,20 @@ func (s *Store) FailAutomationJob(ctx context.Context, id string, revision uint6
 	}
 
 	return operationError("commit refused job", tx.Commit())
+}
+
+func automationRole(kind string) access.Role {
+	if kind == "export" || kind == "bulk-read" {
+		return access.Viewer
+	}
+
+	return access.Editor
+}
+
+func automationSaveRole(record *automation.Record) access.Role {
+	if record.Job.State == "cancelled" {
+		return access.Viewer
+	}
+
+	return automationRole(record.Job.Kind)
 }

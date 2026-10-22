@@ -59,7 +59,7 @@ func publicPasskeyRecoveryRoute(r *http.Request) bool {
 
 func recentAuthentication(w http.ResponseWriter, r *http.Request) bool {
 	b := getBrowser(r)
-	if b.session.ID == "" || b.session.CreatedAt.Before(time.Now().Add(-5*time.Minute)) || b.session.CreatedAt.After(time.Now().Add(time.Minute)) {
+	if !identity.RecentlyAuthenticated(b.session, time.Now()) {
 		problem(w, 403, problemRecentAuthenticationRequired)
 		return false
 	}

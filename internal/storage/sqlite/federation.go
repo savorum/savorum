@@ -252,7 +252,7 @@ func (s *Store) ClaimFederationAssertion(ctx context.Context, provider, id strin
 func (s *Store) FederationLinkSessionActive(ctx context.Context, userID, sessionID string) bool {
 	var count int
 
-	err := s.db.QueryRowContext(ctx, `SELECT count(*) FROM browser_sessions b JOIN users u ON u.id=b.user_id WHERE b.id=? AND b.user_id=? AND b.revoked_at IS NULL AND b.idle_expires>unixepoch() AND b.absolute_expires>unixepoch() AND u.status='active'`, sessionID, userID).Scan(&count)
+	err := s.db.QueryRowContext(ctx, `SELECT count(*) FROM browser_sessions b JOIN users u ON u.id=b.user_id WHERE b.id=? AND b.user_id=? AND b.revoked_at IS NULL AND b.idle_expires>unixepoch() AND b.absolute_expires>unixepoch() AND u.status='active' AND b.created_at>=unixepoch()-300 AND b.created_at<=unixepoch()+60`, sessionID, userID).Scan(&count)
 
 	return err == nil && count == 1
 }

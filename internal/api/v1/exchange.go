@@ -33,11 +33,11 @@ type ImportInput struct {
 // by the importer registry while batching, validation, duplicate policy, and
 // result reporting stay identical for every brand and file type.
 func streamExternalRecipeImport(service ExchangeService) http.HandlerFunc {
-	return func(response http.ResponseWriter, request *http.Request) {
+	return limitImportBody(func(response http.ResponseWriter, request *http.Request) {
 		request.Body = http.MaxBytesReader(response, request.Body, httpsecurity.ExternalImportBodyBytes)
 		// The reader above caps the body before anything parses it, so the
 		// parse cannot be asked for more memory than that limit.
-		if err := request.ParseMultipartForm(httpsecurity.ExternalImportBodyBytes); err != nil { //nolint:gosec // bounded by MaxBytesReader above
+		if err := request.ParseMultipartForm(httpsecurity.ExternalImportBodyBytes); err != nil {
 			writeAssetHTTPError(response, http.StatusBadRequest, "recipe-import-invalid", "Choose a supported recipe export.")
 			return
 		}
@@ -101,7 +101,7 @@ func streamExternalRecipeImport(service ExchangeService) http.HandlerFunc {
 
 		formatNames := uniqueFormatNames(selectedFormats)
 		_ = json.NewEncoder(response).Encode(map[string]any{"items": importResults(results).Body.Items, "formats": formatNames})
-	}
+	})
 }
 
 func uniqueFormatNames(formats []importer.Format) []string {
@@ -124,11 +124,11 @@ func uniqueFormatNames(formats []importer.Format) []string {
 // understands, including SREF documents, packages, bundles, saved recipe pages,
 // and third-party exports. It stages a review session and writes nothing.
 func streamImportPreview(service ExchangeService) http.HandlerFunc {
-	return func(response http.ResponseWriter, request *http.Request) {
+	return limitImportBody(func(response http.ResponseWriter, request *http.Request) {
 		request.Body = http.MaxBytesReader(response, request.Body, httpsecurity.ExternalImportBodyBytes)
 		// The reader above caps the body before anything parses it, so the
 		// parse cannot be asked for more memory than that limit.
-		if err := request.ParseMultipartForm(httpsecurity.ExternalImportBodyBytes); err != nil { //nolint:gosec // bounded by MaxBytesReader above
+		if err := request.ParseMultipartForm(httpsecurity.ExternalImportBodyBytes); err != nil {
 			writeAssetHTTPError(response, http.StatusBadRequest, "recipe-import-invalid", "Choose one or more supported recipe files.")
 			return
 		}
@@ -166,7 +166,7 @@ func streamImportPreview(service ExchangeService) http.HandlerFunc {
 
 		response.Header().Set("Content-Type", "application/json")
 		_ = json.NewEncoder(response).Encode(importPreviewResponse(preview))
-	}
+	})
 }
 
 // ImportPreviewCommitInput supplies selections for committing an import preview.
@@ -1087,7 +1087,7 @@ func previewRecipe(document recipe.Document, fallback string) ImportPreviewRecip
 // streamPackageImport accepts an uploaded `.sref` package. It is a raw handler
 // because the body is an archive rather than JSON.
 func streamPackageImport(exchanger ExchangeService) http.HandlerFunc {
-	return func(response http.ResponseWriter, request *http.Request) {
+	return limitImportBody(func(response http.ResponseWriter, request *http.Request) {
 		contentType := strings.TrimSpace(strings.Split(request.Header.Get("Content-Type"), ";")[0])
 		if contentType != "application/zip" && contentType != "application/octet-stream" {
 			writeAssetHTTPError(response, http.StatusUnsupportedMediaType, "package-content-type",
@@ -1119,7 +1119,7 @@ func streamPackageImport(exchanger ExchangeService) http.HandlerFunc {
 
 		response.Header().Set("Content-Type", "application/json")
 		_ = json.NewEncoder(response).Encode(importResults(results).Body)
-	}
+	})
 }
 
 type importErrorFormatter[T any] func(status int, kind, detail string, params map[string]any) T
