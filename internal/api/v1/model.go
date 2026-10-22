@@ -902,12 +902,18 @@ func toDomainQuantity(value *Quantity) *recipe.Quantity {
 
 	result := &recipe.Quantity{Kind: recipe.QuantityKind(value.Kind), Amount: toDomainAmount(value.Amount), Unit: value.Unit, Text: value.Text}
 
-	result.Terms = make([]recipe.SimpleQuantity, len(value.Terms))
+	if len(value.Terms) > 0 {
+		result.Terms = make([]recipe.SimpleQuantity, len(value.Terms))
+	}
+
 	for index := range value.Terms {
 		result.Terms[index] = *toDomainSimpleQuantity(&value.Terms[index])
 	}
 
-	result.Options = make([]recipe.AlternativeOption, len(value.Options))
+	if len(value.Options) > 0 {
+		result.Options = make([]recipe.AlternativeOption, len(value.Options))
+	}
+
 	for index := range value.Options {
 		result.Options[index] = *toDomainAlternativeOption(&value.Options[index])
 	}
@@ -942,7 +948,10 @@ func toDomainAlternativeOption(value *AlternativeOption) *recipe.AlternativeOpti
 
 	result := &recipe.AlternativeOption{Kind: recipe.QuantityKind(value.Kind), Amount: toDomainAmount(value.Amount), Unit: value.Unit}
 
-	result.Terms = make([]recipe.SimpleQuantity, len(value.Terms))
+	if len(value.Terms) > 0 {
+		result.Terms = make([]recipe.SimpleQuantity, len(value.Terms))
+	}
+
 	for index := range value.Terms {
 		result.Terms[index] = *toDomainSimpleQuantity(&value.Terms[index])
 	}

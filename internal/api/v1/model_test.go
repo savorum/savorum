@@ -103,3 +103,48 @@ func TestOpaqueTemperatureAPIJSONOmitsEmptyNumericAmount(t *testing.T) {
 		t.Fatalf("zero temperature API JSON = %s", numeric)
 	}
 }
+
+func TestUnrelatedRecipeEditPreservesImportedMeasurementInference(t *testing.T) {
+	amount := &recipe.Amount{Value: new(recipe.Rational("1/2"))}
+	for name, quantity := range map[string]*recipe.Quantity{
+		"simple": {Kind: recipe.QuantitySimple, Amount: amount, Unit: "volume.cup.us.customary"},
+		"sum": {Kind: recipe.QuantitySum, Terms: []recipe.SimpleQuantity{
+			{Kind: recipe.QuantitySimple, Amount: *amount, Unit: "volume.cup.us.customary"},
+			{Kind: recipe.QuantitySimple, Amount: *amount, Unit: "volume.tablespoon.us.customary"},
+		}},
+		"alternatives": {Kind: recipe.QuantityAlternatives, Options: []recipe.AlternativeOption{
+			{Kind: recipe.QuantitySimple, Amount: amount, Unit: "volume.cup.us.customary"},
+			{Kind: recipe.QuantitySimple, Amount: amount, Unit: "mass.gram"},
+		}},
+	} {
+		t.Run(name, func(t *testing.T) {
+			inference := &recipe.Normalization{
+				Method: recipe.NormalizationInferred, Review: recipe.ReviewCorrected,
+				Warnings: []string{recipe.ImportReviewUnitPrefix + " US measures were selected during import."},
+			}
+			current := recipe.Document{Title: "Imported recipe", IngredientSections: []recipe.IngredientSection{{
+				ID: "ingredients", Ingredients: []recipe.Ingredient{{
+					ID: "flour", Name: "flour", SourceText: "1/2 cup flour", Quantity: quantity, Normalization: inference,
+				}},
+			}}}
+
+			encoded, err := json.Marshal(fromDomain(current))
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			var body RecipeDocument
+			if err := json.Unmarshal(encoded, &body); err != nil {
+				t.Fatal(err)
+			}
+
+			body.Title = "Cleaned title"
+			replacement := recipe.ReconcileIngredientDiagnostics(current, toDomain(body))
+
+			got := replacement.IngredientSections[0].Ingredients[0].Normalization
+			if !reflect.DeepEqual(got, inference) {
+				t.Fatalf("unrelated edit rewrote import inference: got %#v, want %#v", got, inference)
+			}
+		})
+	}
+}
