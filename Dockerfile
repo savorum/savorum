@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 
-ARG GO_VERSION=1.27.2
+ARG GO_VERSION=1.27.3
 ARG NODE_VERSION=26.9.0
 
 # The frontend is built here rather than committed. Its output is
