@@ -262,6 +262,7 @@ func TestHostingMigrationPreservesExistingLocalAuthentication(t *testing.T) {
 	}
 
 	for _, query := range []string{
+		`DROP TABLE assistant_refresh_tokens`, `DROP TABLE assistant_connections`, `DROP TABLE assistant_requests`, `DROP TABLE assistant_clients`, `DELETE FROM schema_migrations WHERE version=19`,
 		`ALTER TABLE native_sign_in_grants DROP COLUMN identity_id`, `DELETE FROM schema_migrations WHERE version=18`,
 		`DROP TRIGGER recipe_ingredient_search_insert`, `DROP TRIGGER recipe_ingredient_search_update`,
 		`DROP TRIGGER recipe_ingredient_names_insert`, `DROP TRIGGER recipe_ingredient_names_delete`,

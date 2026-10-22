@@ -68,5 +68,7 @@
   "editor_more_details": "Heading above the recipe's optional details: nutrition, dietary statements, source and keywords.",
   "ingredient_row_line_example": "A sample ingredient line shown in an empty ingredient field: an amount, a unit, the ingredient, and a note after a comma. Write it the way a cook writes an ingredient in this language, with this language's unit words and word order, because the field reads what is typed with the same rules.",
   "creation_retry_reconcile": "Shown when a creation request is too old to retry safely. The reader checks the library before submitting a new request.",
-  "creation_retry_allow_new": "Button confirming that the reader checked whether an expired creation request succeeded and permits a new submission."
+  "creation_retry_allow_new": "Button confirming that the reader checked whether an expired creation request succeeded and permits a new submission.",
+  "account_assistant_setup_prompt": "Machine-facing bootstrap instructions, intentionally in English to match the instance guide. This prompt contains no credentials.",
+  "account_assistant_check_code": "The user compares this short code with the code their assistant displays before approving a device authorization request."
 }

@@ -48,6 +48,70 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/account/authorization": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read an approval request
+         * @description Requires the user_code returned by device authorization or the code in the browser approval URL. The code identifies a pending request, not an access credential. Uses the persisted local-mode user when authentication is disabled. Otherwise an authenticated browser session is required, except for the current account and sign-in. Modifying authenticated requests require the current X-CSRF-Token. Credentials and responses must not be cached.
+         */
+        get: operations["get-assistant-authorization"];
+        put?: never;
+        /**
+         * Approve or deny a connection
+         * @description Requires browser sign-in within five minutes and CSRF. Access is limited to the selected library and read/write choice. Remember permits rotating refresh credentials until the instance policy's expiry. The browser never receives access or refresh tokens. Uses the persisted local-mode user when authentication is disabled. Otherwise an authenticated browser session is required, except for the current account and sign-in. Modifying authenticated requests require the current X-CSRF-Token. Credentials and responses must not be cached.
+         */
+        post: operations["approve-assistant-authorization"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/account/connections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List connected assistants
+         * @description Lists current grants without credentials. Refreshing access does not add another connection. Uses the persisted local-mode user when authentication is disabled. Otherwise an authenticated browser session is required, except for the current account and sign-in. Modifying authenticated requests require the current X-CSRF-Token. Credentials and responses must not be cached.
+         */
+        get: operations["list-assistant-connections"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/account/connections/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Disconnect an assistant
+         * @description Revokes the connection's access and refresh credentials immediately. Uses the persisted local-mode user when authentication is disabled. Otherwise an authenticated browser session is required, except for the current account and sign-in. Modifying authenticated requests require the current X-CSRF-Token. Credentials and responses must not be cached.
+         */
+        delete: operations["disconnect-assistant"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/account/group-mappings": {
         parameters: {
             query?: never;
@@ -1173,7 +1237,7 @@ export interface paths {
         };
         /**
          * Discover capabilities
-         * @description Unauthenticated requests return product, API compatibility, interactive sign-in methods, and sign-in features only. `auth.native_sign_in` means a native app can complete OIDC, SAML, and managed sign-in through `begin-native-provider-login` and `finish-native-provider-login`. `auth.native_link` means a signed-in native app can link an OIDC or SAML identity through `create-native-link-ticket`, `begin-native-provider-login`, and `finish-native-provider-link`. `auth.managed_session` means a managed provider is configured and its web and native sign-in use short-lived, tenant-audienced grants after PKCE code redemption. `auth.managed_native_session` means a native client can redeem a scoped hosting grant through `finish-managed-native-login` for an ordinary local session. Authenticated requests add registered formats, optional features, and enforced bounds. `recipes.search.ingredient` means ingredient: queries match indexed ingredient names, including optional and alternative names, with original-line fallback only when the name is absent. All words in one qualifier must match the same ingredient. Capabilities describe availability, not a grant of authorization. Schema version 1 permits additive optional fields and new IDs; clients ignore unknown IDs. Cache for the current session and refresh after reconnect or configuration changes.
+         * @description Unauthenticated requests return product, API compatibility, interactive sign-in methods, and sign-in features only. `auth.native_sign_in` means a native app can complete OIDC, SAML, and managed sign-in through `begin-native-provider-login` and `finish-native-provider-login`. `auth.native_link` means a signed-in native app can link an OIDC or SAML identity through `create-native-link-ticket`, `begin-native-provider-login`, and `finish-native-provider-link`. `auth.managed_session` means a managed provider is configured and its web and native sign-in use short-lived, tenant-audienced grants after PKCE code redemption. `auth.managed_native_session` means a native client can redeem a scoped hosting grant through `finish-managed-native-login` for an ordinary local session. Every response links to this instance's guide, OpenAPI description, and token page. Authenticated requests add registered formats, optional features, and enforced bounds, and a request made with a personal API token adds that token's scopes, libraries, and expiry. `recipes.search.ingredient` means ingredient: queries match indexed ingredient names, including optional and alternative names, with original-line fallback only when the name is absent. All words in one qualifier must match the same ingredient. Capabilities describe availability, not a grant of authorization. Schema version 1 permits additive optional fields and new IDs; clients ignore unknown IDs. Cache for the current session and refresh after reconnect or configuration changes.
          */
         get: operations["get-capabilities"];
         put?: never;
@@ -3620,6 +3684,36 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        AssistantApprovalDetails: {
+            client_name: string;
+            client_origin: string;
+            reauth_required: boolean;
+            /** Format: int64 */
+            remember_days: number;
+            scope: string;
+            user_code: string;
+            verification_required: boolean;
+        } & {
+            [key: string]: unknown;
+        };
+        AssistantApprovalRequest: {
+            /** @enum {string} */
+            access: "read" | "write";
+            code: string;
+            deny: boolean;
+            library_id: string;
+            remember: boolean;
+        };
+        AssistantApprovalResponse: {
+            redirect_uri: string;
+        } & {
+            [key: string]: unknown;
+        };
+        AssistantConnectionsResponse: {
+            connections: components["schemas"]["Connection"][] | null;
+        } & {
+            [key: string]: unknown;
+        };
         Attempt: {
             /** Format: date-time */
             at: string;
@@ -3700,8 +3794,11 @@ export interface components {
             note?: string;
             /** Format: int64 */
             position: number;
-            /** @enum {string} */
-            recipe_state: "active" | "trash";
+            /**
+             * @description Derived recipe state. Omit this field from book write entries.
+             * @enum {string}
+             */
+            readonly recipe_state: "active" | "trash";
             section_id?: string;
         } & {
             [key: string]: unknown;
@@ -3911,11 +4008,14 @@ export interface components {
             features?: string[] | null;
             importers?: components["schemas"]["CapabilityAdapter"][] | null;
             limits?: components["schemas"]["CapabilityLimits"];
+            links: components["schemas"]["CapabilityLinks"];
             product: string;
             /** Format: int64 */
             schema_version: number;
             sref_read?: string[] | null;
             sref_write?: string[] | null;
+            /** @description The personal API token that authenticated this request */
+            token?: components["schemas"]["CapabilityToken"];
             version: string;
         } & {
             [key: string]: unknown;
@@ -3971,6 +4071,28 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        CapabilityLinks: {
+            /** @description Guide for agents and integrations, written for this instance's version */
+            guide: string;
+            /** @description OpenAPI description of this API */
+            openapi: string;
+            /** @description Page where a signed-in person creates personal API tokens */
+            tokens: string;
+        } & {
+            [key: string]: unknown;
+        };
+        CapabilityToken: {
+            /**
+             * Format: int64
+             * @description Unix time the token expires; absent when it does not expire
+             */
+            expires_at?: number;
+            /** @description Library IDs the token is limited to; empty means every library its owner can reach */
+            libraries: string[] | null;
+            scopes: string[] | null;
+        } & {
+            [key: string]: unknown;
+        };
         ChangedEntriesOutputBody: {
             /** @description The recipes that received a new revision */
             items: components["schemas"]["LibraryEntry"][] | null;
@@ -3980,6 +4102,23 @@ export interface components {
         "Commit-automation-importRequest": {
             /** @enum {string} */
             policy: "require-no-warnings" | "allow-warnings";
+        };
+        Connection: {
+            client_id: string;
+            /** Format: int64 */
+            created_at: number;
+            /** Format: int64 */
+            expires_at: number;
+            id: string;
+            /** Format: int64 */
+            last_used_at: number;
+            libraries: string[] | null;
+            name: string;
+            /** Format: int64 */
+            revoked_at: number;
+            scopes: string[] | null;
+        } & {
+            [key: string]: unknown;
         };
         CookingHistory: {
             imported_baselines?: components["schemas"]["ImportedCookCountBaseline"][] | null;
@@ -5025,6 +5164,7 @@ export interface components {
             display_name: string;
             entry_id?: string;
             id?: string;
+            /** @description Source dish ID for leftovers. Omit entry_id on this dish to avoid repeating the recipe requirement. */
             leftover_of?: string;
             notes?: string;
             /** @description Only for a dish without entry_id. */
@@ -5034,6 +5174,7 @@ export interface components {
             recipe_revision?: number;
             /** @enum {string} */
             readonly recipe_status?: "available" | "trashed" | "removed";
+            /** @description Positive rational string multiplying the recipe quantities, such as 1/2 for half a batch. This is not a serving count. */
             scale?: string;
             readonly shopping_choices?: string[] | null;
         };
@@ -6499,6 +6640,172 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["AuditResponse"];
+                };
+            };
+            /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Stable account problem code; authentication, authority, validation or lifecycle conflict. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+        };
+    };
+    "get-assistant-authorization": {
+        parameters: {
+            query: {
+                code: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Operation completed. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssistantApprovalDetails"];
+                };
+            };
+            /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Stable account problem code; authentication, authority, validation or lifecycle conflict. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+        };
+    };
+    "approve-assistant-authorization": {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Required with an authenticated browser session; read from current-account. */
+                "X-CSRF-Token"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssistantApprovalRequest"];
+            };
+        };
+        responses: {
+            /** @description Operation completed. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssistantApprovalResponse"];
+                };
+            };
+            /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Stable account problem code; authentication, authority, validation or lifecycle conflict. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+        };
+    };
+    "list-assistant-connections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Operation completed. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssistantConnectionsResponse"];
+                };
+            };
+            /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Stable account problem code; authentication, authority, validation or lifecycle conflict. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+        };
+    };
+    "disconnect-assistant": {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Required with an authenticated browser session; read from current-account. */
+                "X-CSRF-Token"?: string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Operation completed. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
                 };
             };
             /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
@@ -13936,6 +14243,7 @@ export interface operations {
         parameters: {
             query?: never;
             header?: {
+                /** @description The current response body revision in double quotes, such as "4". Do not use the GET response ETag or put revision in the body. */
                 "If-Match"?: string;
             };
             path: {
@@ -14029,6 +14337,7 @@ export interface operations {
         parameters: {
             query?: never;
             header?: {
+                /** @description The current response body revision in double quotes, such as "4". Do not use the GET response ETag or put revision in the body. */
                 "If-Match"?: string;
             };
             path: {
@@ -18834,6 +19143,7 @@ export interface operations {
         parameters: {
             query?: never;
             header?: {
+                /** @description The current response body revision in double quotes, such as "4". Do not use the GET response ETag or put revision in the body. */
                 "If-Match"?: string;
             };
             path: {
@@ -18927,6 +19237,7 @@ export interface operations {
         parameters: {
             query?: never;
             header?: {
+                /** @description The current response body revision in double quotes, such as "4". Do not use the GET response ETag or put revision in the body. */
                 "If-Match"?: string;
             };
             path: {

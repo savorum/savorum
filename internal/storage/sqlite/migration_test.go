@@ -78,7 +78,7 @@ func TestFreshDatabaseIsTheCompleteCurrentSchema(t *testing.T) {
 	want := []string{
 		"hosting_tenant", "hosting_erasures", "hosting_member_operations",
 		"api_idempotency", "automation_jobs", "automation_results", "domain_events", "event_consumers", "event_horizons", "pantry_entries", "webhook_attempts", "webhook_deliveries", "webhook_subscriptions",
-		"assets", "audit_events", "auth_providers", "federation_transactions", "federation_replays", "native_sign_in_grants", "native_link_tickets", "native_link_grants", "passkeys", "webauthn_ceremonies", "recovery_codes", "credential_rate_limits", "invitations", "provider_group_mappings", "personal_tokens", "book_entries", "book_head_revisions", "book_revisions",
+		"assistant_clients", "assistant_requests", "assistant_connections", "assistant_refresh_tokens", "assets", "audit_events", "auth_providers", "federation_transactions", "federation_replays", "native_sign_in_grants", "native_link_tickets", "native_link_grants", "passkeys", "webauthn_ceremonies", "recovery_codes", "credential_rate_limits", "invitations", "provider_group_mappings", "personal_tokens", "book_entries", "book_head_revisions", "book_revisions",
 		"book_sections", "books", "facets", "import_events", "import_job_items", "import_jobs", "instance_identity", "instance_settings",
 		"library_recipes", "library_recipes_fts", "recipe_cookings", "recipe_facets", "recipe_imported_cook_count_baselines", "recipe_source_import_baseline_assets", "recipe_source_import_baselines",
 		"recipe_head_revisions", "recipe_organization_state", "recipe_revision_assets",

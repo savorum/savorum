@@ -77,6 +77,25 @@
 /** @typedef {{ name: NonNullable<unknown> }} Account_Admin_Reset_PasswordInputs */
 /** @typedef {{}} Account_Admin_Reset_SubmitInputs */
 /** @typedef {{}} Account_Admin_UnavailableInputs */
+/** @typedef {{}} Account_Assistant_Access_ReadInputs */
+/** @typedef {{}} Account_Assistant_Access_Read_HintInputs */
+/** @typedef {{}} Account_Assistant_Access_Viewer_HintInputs */
+/** @typedef {{}} Account_Assistant_Access_WriteInputs */
+/** @typedef {{}} Account_Assistant_Access_Write_HintInputs */
+/** @typedef {{}} Account_Assistant_AllowInputs */
+/** @typedef {{ code: NonNullable<unknown> }} Account_Assistant_Check_CodeInputs */
+/** @typedef {{}} Account_Assistant_CodeInputs */
+/** @typedef {{}} Account_Assistant_ConnectionsInputs */
+/** @typedef {{}} Account_Assistant_ContinueInputs */
+/** @typedef {{}} Account_Assistant_DoneInputs */
+/** @typedef {{}} Account_Assistant_HeadingInputs */
+/** @typedef {{}} Account_Assistant_Prompt_LabelInputs */
+/** @typedef {{}} Account_Assistant_RememberInputs */
+/** @typedef {{ name: NonNullable<unknown> }} Account_Assistant_Request_FromInputs */
+/** @typedef {{}} Account_Assistant_Request_UnavailableInputs */
+/** @typedef {{}} Account_Assistant_Setup_HintInputs */
+/** @typedef {{ guide: NonNullable<unknown> }} Account_Assistant_Setup_PromptInputs */
+/** @typedef {{}} Account_Assistant_TemporaryInputs */
 /** @typedef {{}} Account_Audit_ActivityInputs */
 /** @typedef {{}} Account_Audit_ActorInputs */
 /** @typedef {{}} Account_Audit_AllInputs */
@@ -2663,6 +2682,82 @@ export const account_admin_reset_submit = /** @type {(inputs: Account_Admin_Rese
 
 export const account_admin_unavailable = /** @type {(inputs: Account_Admin_UnavailableInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Instance administration is available to administrators when authentication is enabled.`)
+};
+
+export const account_assistant_access_read = /** @type {(inputs: Account_Assistant_Access_ReadInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Read only`)
+};
+
+export const account_assistant_access_read_hint = /** @type {(inputs: Account_Assistant_Access_Read_HintInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`View recipes and library information. No changes.`)
+};
+
+export const account_assistant_access_viewer_hint = /** @type {(inputs: Account_Assistant_Access_Viewer_HintInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`You have read-only access to this library.`)
+};
+
+export const account_assistant_access_write = /** @type {(inputs: Account_Assistant_Access_WriteInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Read and write`)
+};
+
+export const account_assistant_access_write_hint = /** @type {(inputs: Account_Assistant_Access_Write_HintInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Create, import, edit and delete recipes and library information, including permanent deletion.`)
+};
+
+export const account_assistant_allow = /** @type {(inputs: Account_Assistant_AllowInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Allow access`)
+};
+
+export const account_assistant_check_code = /** @type {(inputs: Account_Assistant_Check_CodeInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`Check that your assistant shows this code: ${i?.code}.`)
+};
+
+export const account_assistant_code = /** @type {(inputs: Account_Assistant_CodeInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Connection code`)
+};
+
+export const account_assistant_connections = /** @type {(inputs: Account_Assistant_ConnectionsInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Connected assistants`)
+};
+
+export const account_assistant_continue = /** @type {(inputs: Account_Assistant_ContinueInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Continue`)
+};
+
+export const account_assistant_done = /** @type {(inputs: Account_Assistant_DoneInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`You can return to your assistant.`)
+};
+
+export const account_assistant_heading = /** @type {(inputs: Account_Assistant_HeadingInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Connect an assistant`)
+};
+
+export const account_assistant_prompt_label = /** @type {(inputs: Account_Assistant_Prompt_LabelInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Prompt for your assistant`)
+};
+
+export const account_assistant_remember = /** @type {(inputs: Account_Assistant_RememberInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Remember this connection`)
+};
+
+export const account_assistant_request_from = /** @type {(inputs: Account_Assistant_Request_FromInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`Connection request from ${i?.name}`)
+};
+
+export const account_assistant_request_unavailable = /** @type {(inputs: Account_Assistant_Request_UnavailableInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`This request has expired or is unavailable. Ask your assistant for a new link.`)
+};
+
+export const account_assistant_setup_hint = /** @type {(inputs: Account_Assistant_Setup_HintInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Copy this prompt into your assistant. You approve access in Savorum.`)
+};
+
+export const account_assistant_setup_prompt = /** @type {(inputs: Account_Assistant_Setup_PromptInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`Read ${i?.guide} before responding. Follow its connection guidance if access is needed, then help with my requests in this conversation.`)
+};
+
+export const account_assistant_temporary = /** @type {(inputs: Account_Assistant_TemporaryInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Temporary access: 15 minutes.`)
 };
 
 export const account_audit_activity = /** @type {(inputs: Account_Audit_ActivityInputs) => LocalizedString} */ () => {

@@ -565,6 +565,12 @@ func requestBodyLimit(request *http.Request) int64 {
 }
 
 func applyForwarded(request *http.Request, trusted []netip.Prefix) error {
+	// Absolute-form request targets cannot assert transport security.
+	request.URL.Scheme = "http"
+	if request.TLS != nil {
+		request.URL.Scheme = "https"
+	}
+
 	peer, peerOK := remoteAddress(request.RemoteAddr)
 
 	isTrusted := peerOK && contains(trusted, peer)
@@ -801,4 +807,22 @@ func withConnectOrigin(request *http.Request, origin string) *http.Request {
 	}
 
 	return request.WithContext(context.WithValue(request.Context(), connectOriginKey{}, origin))
+}
+
+// PublicOrigin is the origin clients reach this request through: the Connect
+// origin, else the configured public URL, else the effective request origin.
+func PublicOrigin(request *http.Request, configured string) string {
+	if origin := ConnectOrigin(request.Context()); origin != "" {
+		return strings.TrimSuffix(origin, "/")
+	}
+
+	if parsed, err := parseOrigin(strings.TrimSuffix(strings.TrimSpace(configured), "/")); err == nil {
+		return parsed.Scheme + "://" + parsed.Host
+	}
+
+	if effective, err := effectiveRequestOrigin(request); err == nil {
+		return effective.Scheme + "://" + effective.Host
+	}
+
+	return ""
 }

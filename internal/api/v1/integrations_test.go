@@ -130,6 +130,23 @@ func TestIntegrationHTTPContractsAndCapabilityPrivacy(t *testing.T) {
 		t.Fatalf("missing discovery: %s", authorized.Body.String())
 	}
 
+	if complete.Token != nil || complete.Links.Guide != "/llms.txt" || complete.Links.Tokens != "/account/tokens" {
+		t.Fatalf("capability links: %s", authorized.Body.String())
+	}
+
+	tokenRequest := httptest.NewRequestWithContext(identity.WithPersonalToken(t.Context(), identity.PersonalToken{Scopes: []string{"recipes:read"}, Libraries: []string{"default"}, ExpiresAt: 1800000000}), http.MethodGet, "/api/v1/capabilities", nil)
+	tokenResponse := httptest.NewRecorder()
+	handler.ServeHTTP(tokenResponse, tokenRequest)
+
+	var withToken Capabilities
+	if err := json.Unmarshal(tokenResponse.Body.Bytes(), &withToken); err != nil {
+		t.Fatal(err)
+	}
+
+	if withToken.Token == nil || len(withToken.Token.Scopes) != 1 || withToken.Token.Libraries[0] != "default" || withToken.Token.ExpiresAt != 1800000000 {
+		t.Fatalf("token capabilities: %s", tokenResponse.Body.String())
+	}
+
 	body := []byte(`{"name":"Flour","amount":"half a bag"}`)
 
 	missing := request(t, handler, http.MethodPut, "/api/v1/pantry/flour", body)

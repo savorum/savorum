@@ -33,6 +33,7 @@ vi.mock("./account-state", async () => {
       active_library_id: library(),
       libraries: [{ id: library(), name: "Home", role: "owner" }],
     }),
+    accountRequest: async () => ({ connections: [] }),
     authEnabled: () => true,
     administers: () => false,
     libraries: () => [{ id: "home", name: "Home", role: "owner" }],

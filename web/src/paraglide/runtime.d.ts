@@ -560,7 +560,7 @@ export const trailingSlash: "always" | "never" | undefined;
 export let serverAsyncLocalStorage: ParaglideAsyncLocalStorage | undefined;
 export const disableAsyncLocalStorage: false;
 export const experimentalMiddlewareLocaleSplitting: false;
-export const isServer: boolean;
+export const isServer: any;
 /** @type {Locale | undefined} */
 export const experimentalStaticLocale: Locale | undefined;
 export function getLocale(): Locale;

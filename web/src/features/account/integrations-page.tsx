@@ -20,7 +20,8 @@ import { latestUnlessFailed } from "@/lib/settled"
 
 import { m } from "../../lib/messages.ts"
 import { AccountNav, ScopePage, accountStyles as styles } from "./account-layout"
-import { account } from "./account-state"
+import { account, authEnabled } from "./account-state"
+import { AssistantPanel } from "./assistant-panel"
 
 const developer = {
   stack: css({ display: "grid", gap: "6", paddingTop: "2" }),
@@ -205,6 +206,9 @@ function ScopedIntegrationsPage(props: { libraryID: string }) {
   return (
     <ScopePage title={m.integrations_title()} description={m.integrations_lede()}>
       <AccountNav />
+      <Show when={authEnabled()}>
+        <AssistantPanel />
+      </Show>
       <ChangeError error={error() ?? available.error ?? subscriptions.error ?? history.error} />
       <Notice message={notice()} />
       <section class={styles.section}>

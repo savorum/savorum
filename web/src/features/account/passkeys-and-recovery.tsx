@@ -1,4 +1,5 @@
 import { For, Show, createResource, createSignal, onCleanup, onMount, untrack } from "solid-js"
+import { css } from "styled-system/css"
 
 import { Callout, ChangeError, Notice, Problem } from "@/components/status"
 import { Button } from "@/components/ui/button"
@@ -106,83 +107,95 @@ function PasskeyRow(props: {
   const [name, setName] = createSignal(untrack(() => props.passkey.name))
   const [confirm, setConfirm] = createSignal(false)
   return (
-    <li class={styles.card}>
-      <form
-        class={styles.row}
-        onSubmit={(event) => {
-          event.preventDefault()
-          const id = props.passkey.id
-          const staticName = name()
-          const reload = props.onReload
-          void props.run(async () => {
-            await accountRequest(`/account/passkeys/${encodeURIComponent(id)}`, "PUT", {
-              name: staticName,
-            })
-            await reload()
-          }, m.account_passkeys_renamed())
-        }}
-      >
-        <FormField label={m.account_passkeys_name()} required>
-          <Input
-            aria-label={m.account_passkeys_name_for({ name: props.passkey.name })}
-            value={name()}
-            onInput={(event) => setName(event.currentTarget.value)}
-            required
-            maxLength={100}
-            autocomplete="off"
-          />
-        </FormField>
-        <Button
-          type="submit"
-          variant="outline"
-          disabled={props.busy || name() === props.passkey.name || !name().trim()}
-        >
-          {m.account_passkeys_save_name()}
-        </Button>
-      </form>
-      <Show when={props.passkey.rp_id}>
-        <p class={styles.muted}>{props.passkey.rp_id}</p>
-      </Show>
-      <p class={styles.muted}>
-        {props.passkey.last_used_at
-          ? m.account_passkeys_last_used({ date: formatDate(props.passkey.last_used_at) })
-          : m.account_passkeys_never_used()}
-      </p>
-      <Show
-        when={confirm()}
-        fallback={
-          <div class={styles.actions}>
-            <Button
-              variant="outline"
-              disabled={props.busy}
-              aria-label={m.account_passkeys_remove_named({ name: props.passkey.name })}
-              onClick={() => setConfirm(true)}
-            >
-              {m.account_passkeys_remove()}
-            </Button>
-          </div>
+    <li>
+      <Disclosure
+        label={props.passkey.name}
+        hint={
+          props.passkey.last_used_at
+            ? m.account_passkeys_last_used({ date: formatDate(props.passkey.last_used_at) })
+            : m.account_passkeys_never_used()
         }
       >
-        <p>{m.account_passkeys_remove_confirm()}</p>
-        <div class={styles.actions}>
-          <Button
-            disabled={props.busy}
-            onClick={() => {
+        <div class={styles.form}>
+          <form
+            class={css({
+              display: "grid",
+              gap: "3",
+              gridTemplateColumns: { base: "1fr", sm: "minmax(0, 1fr) auto" },
+              alignItems: "end",
+              "& > button": { justifySelf: "start" },
+            })}
+            onSubmit={(event) => {
+              event.preventDefault()
               const id = props.passkey.id
+              const staticName = name()
               const reload = props.onReload
               void props.run(async () => {
-                await accountRequest(`/account/passkeys/${encodeURIComponent(id)}`, "DELETE")
+                await accountRequest(`/account/passkeys/${encodeURIComponent(id)}`, "PUT", {
+                  name: staticName,
+                })
                 await reload()
-              }, m.account_passkeys_removed())
+              }, m.account_passkeys_renamed())
             }}
           >
-            {m.account_confirm_removal()}
-          </Button>
-          <Button variant="outline" disabled={props.busy} onClick={() => setConfirm(false)}>
-            {m.common_cancel()}
-          </Button>
+            <FormField label={m.account_passkeys_name()} required>
+              <Input
+                aria-label={m.account_passkeys_name_for({ name: props.passkey.name })}
+                value={name()}
+                onInput={(event) => setName(event.currentTarget.value)}
+                required
+                maxLength={100}
+                autocomplete="off"
+              />
+            </FormField>
+            <Button
+              type="submit"
+              variant="outline"
+              disabled={props.busy || name() === props.passkey.name || !name().trim()}
+            >
+              {m.account_passkeys_save_name()}
+            </Button>
+          </form>
+          <Show when={props.passkey.rp_id}>
+            <p class={styles.muted}>{props.passkey.rp_id}</p>
+          </Show>
+          <Show
+            when={confirm()}
+            fallback={
+              <div class={styles.actions}>
+                <Button
+                  variant="outline"
+                  disabled={props.busy}
+                  aria-label={m.account_passkeys_remove_named({ name: props.passkey.name })}
+                  onClick={() => setConfirm(true)}
+                >
+                  {m.account_passkeys_remove()}
+                </Button>
+              </div>
+            }
+          >
+            <p>{m.account_passkeys_remove_confirm()}</p>
+            <div class={styles.actions}>
+              <Button
+                disabled={props.busy}
+                onClick={() => {
+                  const id = props.passkey.id
+                  const reload = props.onReload
+                  void props.run(async () => {
+                    await accountRequest(`/account/passkeys/${encodeURIComponent(id)}`, "DELETE")
+                    await reload()
+                  }, m.account_passkeys_removed())
+                }}
+              >
+                {m.account_confirm_removal()}
+              </Button>
+              <Button variant="outline" disabled={props.busy} onClick={() => setConfirm(false)}>
+                {m.common_cancel()}
+              </Button>
+            </div>
+          </Show>
         </div>
-      </Show>
+      </Disclosure>
     </li>
   )
 }

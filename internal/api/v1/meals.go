@@ -67,9 +67,9 @@ type MealDish struct {
 	EntryID         *string         `json:"entry_id,omitempty"`
 	RecipeRevision  *uint64         `json:"recipe_revision,omitempty" minimum:"1"`
 	ShoppingChoices []string        `json:"shopping_choices,omitempty" readOnly:"true"`
-	LeftoverOf      string          `json:"leftover_of,omitempty" maxLength:"201"`
+	LeftoverOf      string          `json:"leftover_of,omitempty" maxLength:"201" doc:"Source dish ID for leftovers. Omit entry_id on this dish to avoid repeating the recipe requirement."`
 	DisplayName     string          `json:"display_name" minLength:"1" maxLength:"200"`
-	Scale           *string         `json:"scale,omitempty" maxLength:"100"`
+	Scale           *string         `json:"scale,omitempty" maxLength:"100" doc:"Positive rational string multiplying the recipe quantities, such as 1/2 for half a batch. This is not a serving count."`
 	Notes           string          `json:"notes,omitempty" maxLength:"5000"`
 	PlainItems      []MealPlainItem `json:"plain_items,omitempty" maxItems:"100" doc:"Only for a dish without entry_id."`
 	RecipeStatus    string          `json:"recipe_status,omitempty" enum:"available,trashed,removed" readOnly:"true"`
@@ -137,14 +137,14 @@ type (
 	}
 	mealWriteInput struct {
 		ID      string `path:"id"`
-		IfMatch string `header:"If-Match"`
+		IfMatch string `header:"If-Match" doc:"The current response body revision in double quotes, such as \"4\". Do not use the GET response ETag or put revision in the body."`
 		Body    MealInput
 	}
 )
 
 type mealDeleteInput struct {
 	ID      string `path:"id"`
-	IfMatch string `header:"If-Match"`
+	IfMatch string `header:"If-Match" doc:"The current response body revision in double quotes, such as \"4\". Do not use the GET response ETag or put revision in the body."`
 }
 type mealPlacementInput struct {
 	Date     *string `json:"date,omitempty" pattern:"^[0-9]{4}-[0-9]{2}-[0-9]{2}$"`
@@ -163,7 +163,7 @@ type listMealsInput struct {
 }
 type savedMealWriteInput struct {
 	ID      string `path:"id"`
-	IfMatch string `header:"If-Match"`
+	IfMatch string `header:"If-Match" doc:"The current response body revision in double quotes, such as \"4\". Do not use the GET response ETag or put revision in the body."`
 	Body    SavedMealInput
 }
 type instantiateSavedMealInput struct {

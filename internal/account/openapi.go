@@ -16,6 +16,32 @@ type tokenListResponse struct {
 	Policy identity.TokenPolicy     `json:"policy"`
 }
 
+type (
+	assistantConnectionsResponse struct {
+		Connections []identity.Connection `json:"connections"`
+	}
+	assistantApprovalRequest struct {
+		Code      string `json:"code"`
+		LibraryID string `json:"library_id"`
+		Access    string `json:"access" enum:"read,write"`
+		Remember  bool   `json:"remember"`
+		Deny      bool   `json:"deny"`
+	}
+)
+
+type assistantApprovalDetails struct {
+	ReauthRequired       bool   `json:"reauth_required"`
+	ClientOrigin         string `json:"client_origin"`
+	ClientName           string `json:"client_name"`
+	Scope                string `json:"scope"`
+	UserCode             string `json:"user_code"`
+	RememberDays         int    `json:"remember_days"`
+	VerificationRequired bool   `json:"verification_required"`
+}
+type assistantApprovalResponse struct {
+	RedirectURI string `json:"redirect_uri"`
+}
+
 type auditResponse struct {
 	Events []identity.AuditEvent `json:"events"`
 }
@@ -135,6 +161,10 @@ func RegisterOpenAPI(api huma.API) {
 		method, path, id, tag, summary, detail string
 		request, response                      reflect.Type
 	}{
+		{http.MethodGet, "/api/v1/account/connections", "list-assistant-connections", "Assistant connections", "List connected assistants", "Lists current grants without credentials. Refreshing access does not add another connection.", nil, reflect.TypeFor[assistantConnectionsResponse]()},
+		{http.MethodDelete, "/api/v1/account/connections/{id}", "disconnect-assistant", "Assistant connections", "Disconnect an assistant", "Revokes the connection's access and refresh credentials immediately.", nil, nil},
+		{http.MethodGet, "/api/v1/account/authorization", "get-assistant-authorization", "Assistant connections", "Read an approval request", "Requires the user_code returned by device authorization or the code in the browser approval URL. The code identifies a pending request, not an access credential.", nil, reflect.TypeFor[assistantApprovalDetails]()},
+		{http.MethodPost, "/api/v1/account/authorization", "approve-assistant-authorization", "Assistant connections", "Approve or deny a connection", "Requires browser sign-in within five minutes and CSRF. Access is limited to the selected library and read/write choice. Remember permits rotating refresh credentials until the instance policy's expiry. The browser never receives access or refresh tokens.", reflect.TypeFor[assistantApprovalRequest](), reflect.TypeFor[assistantApprovalResponse]()},
 		{http.MethodGet, "/api/v1/account/tokens", "list-account-tokens", "API tokens", "List API tokens", "Returns safe metadata and the instance token policy, never a token secret.", nil, reflect.TypeFor[tokenListResponse]()},
 		{http.MethodPost, "/api/v1/account/tokens", "create-account-token", "API tokens", "Create an API token", "Requires authentication within the last five minutes. The secret appears once in this response and cannot be retrieved again.", reflect.TypeFor[identity.TokenRequest](), reflect.TypeFor[identity.TokenGrant]()},
 		{http.MethodDelete, "/api/v1/account/tokens/{id}", "revoke-account-token", "API tokens", "Revoke an API token", "Takes effect immediately; the token is not reissued.", nil, nil},
@@ -170,6 +200,10 @@ func RegisterOpenAPI(api huma.API) {
 
 		if route.method != http.MethodGet && route.id != "login-account" {
 			operation.Parameters = append(operation.Parameters, &huma.Param{Name: "X-CSRF-Token", In: "header", Description: "Required with an authenticated browser session; read from current-account.", Schema: &huma.Schema{Type: huma.TypeString}})
+		}
+
+		if route.id == "get-assistant-authorization" {
+			operation.Parameters = append(operation.Parameters, &huma.Param{Name: "code", In: "query", Required: true, Schema: &huma.Schema{Type: huma.TypeString}})
 		}
 
 		if route.id == "list-audit-events" {

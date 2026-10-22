@@ -38,6 +38,7 @@ var serveEnvironment = map[string]string{ //nolint:gosec // G101: these are envi
 	"token-maximum-days":       "SAVORUM_TOKEN_MAXIMUM_DAYS",
 	"token-allow-nonexpiring":  "SAVORUM_TOKEN_ALLOW_NONEXPIRING",
 	"auth-enabled":             "SAVORUM_AUTH_ENABLED",
+	"assistant-allow-lan-http": "SAVORUM_ASSISTANT_ALLOW_LAN_HTTP",
 	"session-idle":             "SAVORUM_SESSION_IDLE",
 	"session-absolute":         "SAVORUM_SESSION_ABSOLUTE",
 	"database":                 "SAVORUM_DATABASE",
@@ -77,30 +78,31 @@ const trustedProxyEnvironment = "SAVORUM_TRUSTED_PROXIES"
 // Deployment is restart-bound process configuration, including secrets. It is
 // never persisted or exposed by the public configuration endpoint.
 type Deployment struct {
-	DurableByteLimit     int64
-	SQLiteMemoryLimit    int64
-	BulkLimit            int
-	SuggestionLimit      int
-	LookupLimit          int
-	GroceryAdditionLimit int
-	WebhookNetworks      []netip.Prefix
-	WebhookFailureLimit  int
-	Providers            federation.Config
-	TokenPolicy          identity.TokenPolicy
-	AuthEnabled          bool
-	SessionIdle          time.Duration
-	SessionAbsolute      time.Duration
-	DatabasePath         string
-	AssetPath            string
-	ListenAddress        string
-	ConnectOrigin        string
-	TrustedProxies       []netip.Prefix
-	StoragePolicy        filepolicy.Policy
-	Overrides            InstanceOverrides
-	DNSSDEnabled         bool
-	IdleTimeout          time.Duration
-	MaintenanceSocket    string
-	HostingBootstrapFile string
+	DurableByteLimit      int64
+	SQLiteMemoryLimit     int64
+	BulkLimit             int
+	SuggestionLimit       int
+	LookupLimit           int
+	GroceryAdditionLimit  int
+	WebhookNetworks       []netip.Prefix
+	WebhookFailureLimit   int
+	Providers             federation.Config
+	TokenPolicy           identity.TokenPolicy
+	AuthEnabled           bool
+	AssistantAllowLANHTTP bool
+	SessionIdle           time.Duration
+	SessionAbsolute       time.Duration
+	DatabasePath          string
+	AssetPath             string
+	ListenAddress         string
+	ConnectOrigin         string
+	TrustedProxies        []netip.Prefix
+	StoragePolicy         filepolicy.Policy
+	Overrides             InstanceOverrides
+	DNSSDEnabled          bool
+	IdleTimeout           time.Duration
+	MaintenanceSocket     string
+	HostingBootstrapFile  string
 	// Backup is set when a hosting service may collect backups.
 	Backup BackupCollection
 	// PrintCacheDirectory is empty when the environment names no cache
@@ -121,39 +123,40 @@ type BackupCollection struct {
 
 // ServeFlags holds the deployment options bound to a command's flag set.
 type ServeFlags struct {
-	durableByteLimit     int64
-	sqliteMemoryLimit    int64
-	bulkLimit            int
-	suggestionLimit      int
-	lookupLimit          int
-	groceryAdditionLimit int
-	printRecipeLimit     int
-	webhookNetworks      []string
-	webhookFailureLimit  int
-	flags                *pflag.FlagSet
-	providerFile         string
-	tokenDays            int
-	tokenMaximum         int
-	tokenNonexpiring     bool
-	authEnabled          bool
-	sessionIdle          time.Duration
-	sessionAbsolute      time.Duration
-	databasePath         string
-	assetPath            string
-	listenAddress        string
-	displayName          string
-	publicURL            string
-	connectOrigin        string
-	defaultLocale        string
-	defaultMeasurement   string
-	storageAccess        string
-	trustedProxies       []string
-	dnssdEnabled         bool
-	idleTimeout          time.Duration
-	maintenanceSocket    string
-	backupKeysFile       string
-	backupIssuer         string
-	hostingBootstrapFile string
+	durableByteLimit      int64
+	sqliteMemoryLimit     int64
+	bulkLimit             int
+	suggestionLimit       int
+	lookupLimit           int
+	groceryAdditionLimit  int
+	printRecipeLimit      int
+	webhookNetworks       []string
+	webhookFailureLimit   int
+	flags                 *pflag.FlagSet
+	providerFile          string
+	tokenDays             int
+	tokenMaximum          int
+	tokenNonexpiring      bool
+	authEnabled           bool
+	assistantAllowLANHTTP bool
+	sessionIdle           time.Duration
+	sessionAbsolute       time.Duration
+	databasePath          string
+	assetPath             string
+	listenAddress         string
+	displayName           string
+	publicURL             string
+	connectOrigin         string
+	defaultLocale         string
+	defaultMeasurement    string
+	storageAccess         string
+	trustedProxies        []string
+	dnssdEnabled          bool
+	idleTimeout           time.Duration
+	maintenanceSocket     string
+	backupKeysFile        string
+	backupIssuer          string
+	hostingBootstrapFile  string
 }
 
 // BindServeFlags registers the deployment options on a command's flag set with
@@ -173,6 +176,7 @@ func BindServeFlags(flags *pflag.FlagSet) *ServeFlags {
 	flags.IntVar(&options.tokenDays, "token-default-days", 90, "default personal token lifetime in days")
 	flags.IntVar(&options.tokenMaximum, "token-maximum-days", 365, "maximum personal token lifetime in days")
 	flags.BoolVar(&options.tokenNonexpiring, "token-allow-nonexpiring", false, "allow explicitly nonexpiring personal tokens")
+	flags.BoolVar(&options.assistantAllowLANHTTP, "assistant-allow-lan-http", false, "allow assistant authorization over unencrypted HTTP on private IP addresses for LAN testing")
 	flags.BoolVar(&options.authEnabled, "auth-enabled", false, "require account authentication (bootstrap administrator with savorum user create-admin)")
 	flags.DurationVar(&options.sessionIdle, "session-idle", 720*time.Hour, "browser session idle lifetime")
 	flags.DurationVar(&options.sessionAbsolute, "session-absolute", 4320*time.Hour, "browser session maximum lifetime")
@@ -281,7 +285,7 @@ func (options *ServeFlags) Deployment(environment []string) (Deployment, error) 
 		TokenPolicy: identity.TokenPolicy{
 			DefaultDays: options.tokenDays, MaximumDays: options.tokenMaximum, AllowNonexpiring: options.tokenNonexpiring,
 		},
-		AuthEnabled: options.authEnabled, SessionIdle: options.sessionIdle, SessionAbsolute: options.sessionAbsolute,
+		AssistantAllowLANHTTP: options.assistantAllowLANHTTP, AuthEnabled: options.authEnabled, SessionIdle: options.sessionIdle, SessionAbsolute: options.sessionAbsolute,
 		DatabasePath:         filepath.Clean(strings.TrimSpace(options.databasePath)),
 		AssetPath:            filepath.Clean(resolvedAssets),
 		ListenAddress:        strings.TrimSpace(options.listenAddress),

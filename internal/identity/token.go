@@ -1,6 +1,9 @@
 package identity
 
-import "slices"
+import (
+	"context"
+	"slices"
+)
 
 // TokenPolicy controls personal automation credential lifetimes.
 type TokenPolicy struct {
@@ -11,6 +14,7 @@ type TokenPolicy struct {
 
 // PersonalToken contains only safe credential metadata.
 type PersonalToken struct {
+	Audience   string   `json:"-"`
 	ID         string   `json:"id"`
 	Name       string   `json:"name"`
 	CreatedAt  int64    `json:"created_at"`
@@ -39,4 +43,17 @@ type TokenGrant struct {
 // ValidTokenScope recognizes the initial coarse automation capability set.
 func ValidTokenScope(scope string) bool {
 	return slices.Contains([]string{"recipes:read", "recipes:write", "library:read", "library:write", "imports:write"}, scope)
+}
+
+type personalTokenKey struct{}
+
+// WithPersonalToken records the token that authenticated a request.
+func WithPersonalToken(ctx context.Context, token PersonalToken) context.Context {
+	return context.WithValue(ctx, personalTokenKey{}, token)
+}
+
+// PersonalTokenFromContext returns the token that authenticated the request, if any.
+func PersonalTokenFromContext(ctx context.Context) (PersonalToken, bool) {
+	token, ok := ctx.Value(personalTokenKey{}).(PersonalToken)
+	return token, ok
 }

@@ -18,6 +18,10 @@ const tokenProviderAuthority = `(source_provider='' OR EXISTS(SELECT 1 FROM auth
 
 // CreatePersonalToken creates a secret once, retaining only its SHA-256 digest.
 func (s *Store) CreatePersonalToken(ctx context.Context, in identity.TokenRequest, policy identity.TokenPolicy) (identity.TokenGrant, error) {
+	return s.createPersonalToken(ctx, in, policy, nil)
+}
+
+func (s *Store) createPersonalToken(ctx context.Context, in identity.TokenRequest, policy identity.TokenPolicy, bind func(*sql.Tx, string) error) (identity.TokenGrant, error) {
 	p, ok := identity.FromContext(ctx)
 	if !ok || strings.HasPrefix(p.CredentialID, "pat:") {
 		return identity.TokenGrant{}, access.ErrForbidden
@@ -107,6 +111,12 @@ func (s *Store) CreatePersonalToken(ctx context.Context, in identity.TokenReques
 		return identity.TokenGrant{}, access.ErrForbidden
 	}
 
+	if bind != nil {
+		if err := bind(tx, grant.ID); err != nil {
+			return identity.TokenGrant{}, err
+		}
+	}
+
 	if err := appendAudit(ctx, tx, identity.AuditEvent{ActorID: p.UserID, Action: "token.created", TargetType: "token", TargetID: grant.ID}); err != nil {
 		return identity.TokenGrant{}, operationError("CreatePersonalToken", err)
 	}
@@ -125,7 +135,7 @@ func (s *Store) PersonalTokens(ctx context.Context) ([]identity.PersonalToken, e
 		return nil, access.ErrForbidden
 	}
 
-	rows, err := s.db.QueryContext(ctx, `SELECT id,name,created_at,expires_at,last_used_at,revoked_at,scopes,libraries FROM personal_tokens WHERE user_id=? ORDER BY created_at DESC,id`, p.UserID)
+	rows, err := s.db.QueryContext(ctx, `SELECT id,name,created_at,expires_at,last_used_at,revoked_at,scopes,libraries FROM personal_tokens WHERE user_id=? AND NOT EXISTS(SELECT 1 FROM assistant_connections c WHERE c.token_id=personal_tokens.id) ORDER BY created_at DESC,id`, p.UserID)
 	if err != nil {
 		return nil, fmt.Errorf("list tokens: %w", err)
 	}
@@ -180,7 +190,7 @@ func (s *Store) ResolvePersonalToken(ctx context.Context, secret string) (identi
 
 	var scopes, libraries string
 
-	err := s.db.QueryRowContext(ctx, `SELECT u.id,u.display_name,t.id,t.scopes,t.libraries FROM personal_tokens t JOIN users u ON u.id=t.user_id WHERE token_hash=? AND revoked_at=0 AND (expires_at=0 OR expires_at>unixepoch()) AND u.status='active' AND `+tokenProviderAuthority, tokenHash(secret)).Scan(&p.UserID, &p.DisplayName, &t.ID, &scopes, &libraries)
+	err := s.db.QueryRowContext(ctx, `SELECT u.id,u.display_name,t.id,t.scopes,t.libraries,t.expires_at,COALESCE((SELECT resource FROM assistant_connections WHERE token_id=t.id),'') FROM personal_tokens t JOIN users u ON u.id=t.user_id WHERE token_hash=? AND revoked_at=0 AND (expires_at=0 OR expires_at>unixepoch()) AND u.status='active' AND `+tokenProviderAuthority, tokenHash(secret)).Scan(&p.UserID, &p.DisplayName, &t.ID, &scopes, &libraries, &t.ExpiresAt, &t.Audience)
 	if errors.Is(err, sql.ErrNoRows) {
 		return p, t, identity.ErrCredentials
 	}
