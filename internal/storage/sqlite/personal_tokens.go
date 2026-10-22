@@ -87,6 +87,12 @@ func (s *Store) CreatePersonalToken(ctx context.Context, in identity.TokenReques
 		}
 	}
 
+	if p.CredentialID != "" {
+		if err := requireRecentSession(ctx, tx, p.UserID, p.CredentialID); err != nil {
+			return identity.TokenGrant{}, err
+		}
+	}
+
 	result, err := tx.ExecContext(ctx, `INSERT INTO personal_tokens(id,user_id,token_hash,name,created_at,expires_at,scopes,libraries,source_provider) SELECT ?,id,?,?,?,?,?,?,? FROM users WHERE id=? AND status='active'`, grant.ID, tokenHash(grant.Secret), grant.Name, now, grant.ExpiresAt, string(scopeJSON), string(librariesJSON), source, p.UserID)
 	if err != nil {
 		return identity.TokenGrant{}, fmt.Errorf("create token: %w", err)

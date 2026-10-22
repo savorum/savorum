@@ -519,7 +519,7 @@ export interface paths {
         put?: never;
         /**
          * Create an API token
-         * @description The secret appears once in this response and cannot be retrieved again. Uses the persisted local-mode user when authentication is disabled. Otherwise an authenticated browser session is required, except for the current account and sign-in. Modifying authenticated requests require the current X-CSRF-Token. Credentials and responses must not be cached.
+         * @description Requires authentication within the last five minutes. The secret appears once in this response and cannot be retrieved again. Uses the persisted local-mode user when authentication is disabled. Otherwise an authenticated browser session is required, except for the current account and sign-in. Modifying authenticated requests require the current X-CSRF-Token. Credentials and responses must not be cached.
          */
         post: operations["create-account-token"];
         delete?: never;
@@ -7802,7 +7802,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description The provider identity is linked to the current account. Linking ends the account's sessions, so the current session is replaced by a new one, returned in the instance's session cookie. */
+            /** @description Requires authentication within the last five minutes. The provider identity is linked to the current account. Linking ends the account's sessions, so the current session is replaced by a new one, returned in the instance's session cookie. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -8338,7 +8338,7 @@ export interface operations {
             content: {
                 "application/json": {
                     invitation_token?: string;
-                    /** @description Requires a current browser session and CSRF proof; callback rechecks that session. */
+                    /** @description Requires a browser session authenticated within the last five minutes and CSRF proof; callback rechecks session validity and freshness. */
                     link?: boolean;
                     login?: string;
                     password?: string;
@@ -8775,7 +8775,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description A one-minute, single-use ticket bound to the current session and the PKCE challenge. Pass it as `link_ticket` to `begin-native-provider-login` with the same challenge. */
+            /** @description Requires authentication within the last five minutes. Returns a one-minute, single-use ticket bound to the current session and the PKCE challenge. Pass it as `link_ticket` to `begin-native-provider-login` with the same challenge. */
             200: {
                 headers: {
                     [name: string]: unknown;

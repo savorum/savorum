@@ -12,6 +12,7 @@ Notable changes to Savorum Core. Each release publishes
 - Confirm removal of nonempty groups.
 - Fix recipe pages and long imports failing behind some proxies.
 - Fetch photos deferred during import.
+- Security: Fix import denial-of-service risks, preserve Connect login rate limits, and strengthen import authorization and credential creation.
 
 ## 0.2.2
 

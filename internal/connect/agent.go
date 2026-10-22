@@ -15,6 +15,7 @@ import (
 	"net"
 	"net/http"
 	"net/http/httputil"
+	"net/netip"
 	"net/url"
 	"os"
 	"strings"
@@ -135,6 +136,8 @@ func (a Agent) Run(ctx context.Context) error {
 		for _, key := range []string{"Forwarded", "X-Forwarded-For", "X-Forwarded-Host", "X-Forwarded-Proto", "X-Forwarded-Port", "X-Real-IP"} {
 			pr.Out.Header.Del(key)
 		}
+
+		pr.SetXForwarded()
 	}, ModifyResponse: func(response *http.Response) error {
 		response.Header.Set("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 		return nil
@@ -472,6 +475,12 @@ func (a Agent) attach(ctx context.Context, relay *url.URL, base, runID string, w
 		return
 	}
 
+	// Client identity comes from the authenticated relay.
+	clientAddress, err := netip.ParseAddrPort(work.ClientAddress)
+	if err != nil || clientAddress.Addr().Zone() != "" || clientAddress.Addr().IsUnspecified() || clientAddress.Addr().IsMulticast() {
+		return
+	}
+
 	conn, err := dialControl(ctx, relay, a.RelayTLSConfig)
 	if err != nil {
 		return
@@ -512,7 +521,7 @@ func (a Agent) attach(ctx context.Context, relay *url.URL, base, runID string, w
 	live.Store(conn, struct{}{})
 	tracked.bindContext(ctx)
 
-	upstream := net.Conn(&bufferedConn{Conn: tracked, reader: reader})
+	upstream := net.Conn(&clientAddressConn{Conn: &bufferedConn{Conn: tracked, reader: reader}, address: net.TCPAddrFromAddrPort(clientAddress)})
 	selected := listener
 
 	if work.Kind == "tls" {
@@ -751,3 +760,10 @@ func validRemoteHostname(host string) bool {
 
 	return true
 }
+
+type clientAddressConn struct {
+	net.Conn
+	address net.Addr
+}
+
+func (c *clientAddressConn) RemoteAddr() net.Addr { return c.address }

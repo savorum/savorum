@@ -133,6 +133,8 @@ type UploadedImport struct {
 // selected preview items.
 type PreviewCommitOptions struct {
 	RetainSourceItemIDs []string
+	// AcceptPlan admits work before retiring the selection; errors preserve it.
+	AcceptPlan func(ImportPlan) error
 }
 
 // ImportCommitResult reports committed library mutations and the assets retained with them.

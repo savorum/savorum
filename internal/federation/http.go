@@ -304,6 +304,10 @@ func (h *Handler) begin(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		if !recentLinkAuthentication(w, session) {
+			return
+		}
+
 		t.LinkUserID = user.UserID
 		t.LinkSessionID = session.ID
 	}
@@ -407,7 +411,12 @@ func (h *Handler) complete(w http.ResponseWriter, r *http.Request, p Provider, t
 		return
 	}
 
-	user, e := h.store.ResolveExternalIdentity(r.Context(), p.ID, subject, display, email, p.AutoProvision, p.DefaultLibrary, p.DefaultRole, t.InvitationToken, t.LinkUserID)
+	ctx := r.Context()
+	if t.LinkUserID != "" {
+		ctx = identity.WithPrincipal(ctx, identity.Principal{UserID: t.LinkUserID, CredentialID: t.LinkSessionID})
+	}
+
+	user, e := h.store.ResolveExternalIdentity(ctx, p.ID, subject, display, email, p.AutoProvision, p.DefaultLibrary, p.DefaultRole, t.InvitationToken, t.LinkUserID)
 	if e != nil {
 		h.failAfter(w, r, t, "authentication_failed")
 		return

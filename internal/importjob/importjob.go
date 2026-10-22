@@ -18,6 +18,10 @@ import (
 )
 
 var (
+	// ErrCapacity reports a full in-process import queue.
+	ErrCapacity = errors.New("import queue capacity exhausted")
+	// ErrTooLarge reports a selection larger than the retained-work allowance.
+	ErrTooLarge = errors.New("import selection exceeds the retained-work allowance")
 	// ErrNotFound reports an import job identity absent from the repository.
 	ErrNotFound = errors.New("import job not found")
 	// ErrJobState is the answer to asking a job for something its current

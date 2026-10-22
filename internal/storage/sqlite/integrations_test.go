@@ -678,3 +678,51 @@ func TestEventCursorResyncsOnlyForMissedHistory(t *testing.T) {
 		read(t, s, ctx, resynced.Cursor, 1, false)
 	})
 }
+
+func TestAutomationWorkerRechecksTheJobRoleAfterDemotion(t *testing.T) {
+	s, ownerCtx, _ := integrationFixture(t)
+	owner, _ := identity.FromContext(ownerCtx)
+
+	editor, err := s.CreateLocalUser(ownerCtx, owner.UserID, "job-editor", "Editor", "a sufficiently long editor password")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if err := s.SetLibraryMember(ownerCtx, "default", editor.UserID, access.Editor, false); err != nil {
+		t.Fatal(err)
+	}
+
+	ctx := access.WithLibrary(identity.WithPrincipal(t.Context(), editor), "default")
+
+	var records []automation.Record
+
+	for _, kind := range []string{"import", "bulk-trash", "bulk-read", "export"} {
+		record := automation.Record{Job: automation.Job{ID: "role-" + kind, Kind: kind, State: "pending", Revision: 1, CreatedAt: time.Now(), ExpiresAt: time.Now().Add(time.Hour)}, Input: json.RawMessage(`{}`)}
+		if err := s.CreateAutomationJob(ctx, record); err != nil {
+			t.Fatal(err)
+		}
+
+		records = append(records, record)
+	}
+
+	if err := s.SetLibraryMember(ownerCtx, "default", editor.UserID, access.Viewer, false); err != nil {
+		t.Fatal(err)
+	}
+
+	for _, record := range records {
+		record.Job.State = "running"
+		err := s.SaveAutomationJob(ctx, &record)
+
+		forbidden := record.Job.Kind == "import" || record.Job.Kind == "bulk-trash"
+		if forbidden != errors.Is(err, access.ErrForbidden) || (!forbidden && err != nil) {
+			t.Fatalf("kind=%s error=%v", record.Job.Kind, err)
+		}
+
+		if forbidden {
+			record.Job.State = "cancelled"
+			if err := s.SaveAutomationJob(ctx, &record); err != nil {
+				t.Fatalf("demoted creator could not cancel %s: %v", record.Job.Kind, err)
+			}
+		}
+	}
+}

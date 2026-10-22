@@ -1117,7 +1117,7 @@ func (s *Service) queueRemoteAssets(remotes []importer.RemoteAsset, staged map[s
 
 		if allowed >= s.remoteLimits.AssetsPerRecipe {
 			if _, seen := outcomes[identity]; !seen {
-				outcomes[identity] = remoteDeferred
+				outcomes[identity] = remoteFailed
 			}
 
 			continue
@@ -1265,13 +1265,8 @@ func admissionRefused(err error) bool {
 	return errors.Is(err, assets.ErrBusy) || errors.Is(err, assets.ErrCapacity)
 }
 
-// retainRemoteReferences records photographs the import did not store, so the
-// recipe still knows what it names. Deferred and unresolved are kept apart
-// because one is worth retrying and the other is a link that has rotted.
-//
-// This is a namespaced extension rather than a core member: SREF has no model
-// for a photograph an application has not fetched, and inventing one in the
-// recipe body would be asserting something the source never said.
+// retainRemoteReferences preserves unmaterialized photographs in a Savorum extension.
+// Only deferred references are retried automatically.
 func retainRemoteReferences(document *recipe.Document, deferred, unresolved []importer.RemoteAsset) {
 	if len(deferred) == 0 && len(unresolved) == 0 {
 		return

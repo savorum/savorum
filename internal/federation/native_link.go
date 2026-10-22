@@ -81,6 +81,10 @@ func (h *Handler) nativeLinkTicket(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if !recentLinkAuthentication(w, session) {
+		return
+	}
+
 	ticket, err := randomToken()
 	if err == nil {
 		err = h.store.SaveNativeLinkTicket(r.Context(), ticket, NativeLinkTicket{UserID: user.UserID, SessionID: session.ID, Provider: p.ID, Challenge: in.CodeChallenge}, time.Now().Add(nativeLinkTicketLifetime))
@@ -167,6 +171,10 @@ func (h *Handler) nativeLinkFinish(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if !recentLinkAuthentication(w, session) {
+		return
+	}
+
 	grant, err := h.store.RedeemNativeLinkGrant(r.Context(), in.Code)
 	if err != nil && !errors.Is(err, identity.ErrCredentials) {
 		httpsecurity.WriteProblem(w, http.StatusInternalServerError, "authentication_unavailable", "authentication_unavailable")
@@ -179,7 +187,7 @@ func (h *Handler) nativeLinkFinish(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	linked, err := h.store.ResolveExternalIdentity(r.Context(), p.ID, grant.Subject, grant.DisplayName, grant.Email, p.AutoProvision, p.DefaultLibrary, p.DefaultRole, "", user.UserID)
+	linked, err := h.store.ResolveExternalIdentity(identity.WithPrincipal(r.Context(), user), p.ID, grant.Subject, grant.DisplayName, grant.Email, p.AutoProvision, p.DefaultLibrary, p.DefaultRole, "", user.UserID)
 
 	switch {
 	case errors.Is(err, identity.ErrConflict):
@@ -203,4 +211,14 @@ func (h *Handler) nativeLinkFinish(w http.ResponseWriter, r *http.Request) {
 	}
 
 	h.startSession(w, r, p.ID, linked, false, false)
+}
+
+func recentLinkAuthentication(w http.ResponseWriter, session identity.Session) bool {
+	if identity.RecentlyAuthenticated(session, time.Now()) {
+		return true
+	}
+
+	httpsecurity.WriteProblem(w, http.StatusForbidden, "recent-authentication-required", "Sign in again before adding a sign-in method.")
+
+	return false
 }

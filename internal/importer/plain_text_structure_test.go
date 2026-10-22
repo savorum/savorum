@@ -184,3 +184,38 @@ func TestCaptionKeepsUnmeasuredIngredientAndPromotionalNotes(t *testing.T) {
 		t.Fatalf("caption split: %+v", doc)
 	}
 }
+
+func TestInferredHeadingLengthBoundaries(t *testing.T) {
+	for _, tc := range []struct {
+		name, heading string
+		titled        bool
+	}{
+		{"short", strings.Repeat("A", 58) + ":", true},
+		{"colon boundary", strings.Repeat("A", 59) + ":", true},
+		{"reported crash", strings.Repeat("A", 64), true},
+		{"maximum", strings.Repeat("A", 80), true},
+		{"multibyte", strings.Repeat("界", 80), true},
+		{"over maximum", strings.Repeat("A", 81), false},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			batch, err := DefaultRegistry().Import(t.Context(), Input{Name: "recipe.txt", Data: []byte("Title\n\n" + tc.heading + "\n2 eggs\n1 tbsp oil\n\nMix.")}, Options{})
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			doc := batch.Recipes[0].Document
+			if len(doc.IngredientSections) != 1 || len(doc.IngredientSections[0].Ingredients) != 2 || len(doc.InstructionSections) != 1 {
+				t.Fatalf("sections=%+v", doc)
+			}
+
+			title := ""
+			if tc.titled {
+				title = strings.TrimSuffix(tc.heading, ":")
+			}
+
+			if doc.IngredientSections[0].Title != title {
+				t.Fatalf("title=%q, want %q", doc.IngredientSections[0].Title, title)
+			}
+		})
+	}
+}

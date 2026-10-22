@@ -47,10 +47,10 @@ func RegisterOpenAPI(api huma.API) {
 			"200": {Description: "The one-time code and its PKCE verifier are exchanged for an ordinary session, returned in the instance's session cookie. A presented earlier session is revoked.", Content: jsonBody(session)},
 		}},
 		{http.MethodPost, "/api/v1/auth/{provider}/native-link-tickets", "create-native-link-ticket", "Start a native link", map[string]*huma.Response{
-			"200": {Description: "A one-minute, single-use ticket bound to the current session and the PKCE challenge. Pass it as `link_ticket` to `begin-native-provider-login` with the same challenge.", Content: jsonBody(&huma.Schema{Type: huma.TypeObject, Required: []string{"link_ticket"}, Properties: map[string]*huma.Schema{"link_ticket": str}})},
+			"200": {Description: "Requires authentication within the last five minutes. Returns a one-minute, single-use ticket bound to the current session and the PKCE challenge. Pass it as `link_ticket` to `begin-native-provider-login` with the same challenge.", Content: jsonBody(&huma.Schema{Type: huma.TypeObject, Required: []string{"link_ticket"}, Properties: map[string]*huma.Schema{"link_ticket": str}})},
 		}},
 		{http.MethodPost, "/api/v1/auth/native-links", "finish-native-provider-link", "Finish a native link", map[string]*huma.Response{
-			"200": {Description: "The provider identity is linked to the current account. Linking ends the account's sessions, so the current session is replaced by a new one, returned in the instance's session cookie.", Content: jsonBody(session)},
+			"200": {Description: "Requires authentication within the last five minutes. The provider identity is linked to the current account. Linking ends the account's sessions, so the current session is replaced by a new one, returned in the instance's session cookie.", Content: jsonBody(session)},
 			"400": {Description: "`invalid_grant`: the code is unknown, expired, already used, issued to another session, or does not match the verifier. Nothing is linked and the current session remains.", Content: problem},
 			"409": {Description: "`identity_conflict`: the provider identity belongs to another account. Nothing is linked and the current session remains.", Content: problem},
 		}},
@@ -70,7 +70,7 @@ func RegisterOpenAPI(api huma.API) {
 			op.RequestBody = &huma.RequestBody{Required: true, Content: jsonBody(&huma.Schema{Type: huma.TypeObject, AdditionalProperties: false, Required: []string{"grant", "code_verifier"}, Properties: map[string]*huma.Schema{"grant": {Type: huma.TypeString, WriteOnly: true}, "code_verifier": {Type: huma.TypeString, WriteOnly: true}}})}
 		case "begin-provider-login":
 			op.Parameters = append(op.Parameters, &huma.Param{Name: "Origin", In: "header", Required: true, Schema: str}, &huma.Param{Name: "X-CSRF-Token", In: "header", Description: "Required when explicitly linking to the current account.", Schema: str})
-			op.RequestBody = &huma.RequestBody{Required: true, Content: jsonBody(&huma.Schema{Type: huma.TypeObject, AdditionalProperties: false, Properties: map[string]*huma.Schema{"login": str, "password": {Type: huma.TypeString, WriteOnly: true}, "invitation_token": {Type: huma.TypeString, WriteOnly: true}, "link": {Type: huma.TypeBoolean, Description: "Requires a current browser session and CSRF proof; callback rechecks that session."}}})}
+			op.RequestBody = &huma.RequestBody{Required: true, Content: jsonBody(&huma.Schema{Type: huma.TypeObject, AdditionalProperties: false, Properties: map[string]*huma.Schema{"login": str, "password": {Type: huma.TypeString, WriteOnly: true}, "invitation_token": {Type: huma.TypeString, WriteOnly: true}, "link": {Type: huma.TypeBoolean, Description: "Requires a browser session authenticated within the last five minutes and CSRF proof; callback rechecks session validity and freshness."}}})}
 		case "begin-native-provider-login":
 			op.Parameters = append(op.Parameters,
 				&huma.Param{Name: "redirect_uri", In: "query", Required: true, Description: "An exactly permitted return target: `savorum://auth/callback`.", Schema: str},

@@ -7,6 +7,7 @@ import (
 	"io"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -292,5 +293,91 @@ func TestDeferredPhotographCompletionFailuresDoNotDiscardOtherRecipes(t *testing
 				t.Fatalf("revised %d recipes in %d attempts, want %d in %d", recipes.revised, recipes.completionAttempts, test.wantRevised, test.wantAttempts)
 			}
 		})
+	}
+}
+
+type countedPhotographs struct{ calls atomic.Int64 }
+
+func (f *countedPhotographs) Fetch(context.Context, string) (exchange.FetchedAsset, error) {
+	f.calls.Add(1)
+	return exchange.FetchedAsset{Body: io.NopCloser(strings.NewReader("jpeg")), MediaType: "image/jpeg", Size: 4}, nil
+}
+
+func TestPhotographAllowanceSurvivesRoundsAndRestarts(t *testing.T) {
+	fetcher := &countedPhotographs{}
+	recipes := &pendingLibrary{entries: map[library.EntryID]library.Entry{}}
+	limits := exchange.DefaultRemoteImportLimits()
+	limits.AssetsPerRecipe = 3
+	limits.Requests = 1
+	service := exchange.NewService(recipes, &countingAssets{}, exchange.WithRemoteAssetFetcher(fetcher), exchange.WithRemoteImportLimits(limits))
+	t.Cleanup(service.Close)
+
+	var urls []string
+	for i := range 20 {
+		urls = append(urls, fmt.Sprintf("\"https://images.example/%d.jpg\"", i))
+	}
+
+	body := fmt.Sprintf(`{"@type":"Recipe","name":"Many photographs","image":[%s],"recipeIngredient":["water"],"recipeInstructions":["Cook."]}`, strings.Join(urls, ","))
+
+	preview, err := service.PreviewFiles(t.Context(), []exchange.UploadedImport{{Filename: "recipe.jsonld", Data: []byte(body)}})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	commitWithin(t, service, preview, 5*time.Second)
+	waitForPhotographs(t, service)
+	service.Close()
+
+	restarted := exchange.NewService(recipes, &countingAssets{}, exchange.WithRemoteAssetFetcher(fetcher), exchange.WithRemoteImportLimits(limits))
+	t.Cleanup(restarted.Close)
+
+	if err := restarted.FetchPendingPhotographs(t.Context()); err != nil {
+		t.Fatal(err)
+	}
+
+	waitForPhotographs(t, restarted)
+
+	entry := recipes.only(t)
+	if fetcher.calls.Load() != 3 || len(entry.Recipe.Assets) != 3 {
+		t.Fatalf("fetches=%d assets=%d", fetcher.calls.Load(), len(entry.Recipe.Assets))
+	}
+
+	retained, ok := entry.Recipe.Extensions["x-org.savorum.pending-images"].(map[string]any)
+	if !ok {
+		t.Fatal("missing retained references")
+	}
+
+	unresolved, ok := retained["unresolved"].([]any)
+	if !ok {
+		t.Fatal("missing unresolved references")
+	}
+
+	if len(unresolved) != 17 || retained["deferred"] != nil {
+		t.Fatalf("references=%+v", retained)
+	}
+}
+
+func TestLegacyDeferredPhotographsCannotRenewTheAllowance(t *testing.T) {
+	fetcher := &countedPhotographs{}
+
+	var refs []any
+	for i := range 20 {
+		refs = append(refs, map[string]any{"url": fmt.Sprintf("https://images.example/%d.jpg", i), "recipe_image": true})
+	}
+
+	recipes := &pendingLibrary{entries: map[library.EntryID]library.Entry{"recipe": {ID: "recipe", Revision: 1, Recipe: recipe.Document{Assets: []recipe.Asset{{ID: "embedded", Path: "assets/embedded.jpg", MediaType: "image/jpeg"}}, Extensions: map[string]any{"x-org.savorum.pending-images": map[string]any{"deferred": refs}}}}}}
+	limits := exchange.DefaultRemoteImportLimits()
+	limits.AssetsPerRecipe = 3
+	service := exchange.NewService(recipes, &countingAssets{}, exchange.WithRemoteAssetFetcher(fetcher), exchange.WithRemoteImportLimits(limits))
+	t.Cleanup(service.Close)
+
+	if err := service.FetchPendingPhotographs(t.Context()); err != nil {
+		t.Fatal(err)
+	}
+
+	waitForPhotographs(t, service)
+
+	if fetcher.calls.Load() != 3 || len(recipes.only(t).Recipe.Assets) != 4 {
+		t.Fatalf("fetches=%d", fetcher.calls.Load())
 	}
 }

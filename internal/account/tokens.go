@@ -48,6 +48,10 @@ func (h *Handler) tokenCreate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if !recentAuthentication(w, r) {
+		return
+	}
+
 	var in identity.TokenRequest
 	if !decode(w, r, &in) {
 		return

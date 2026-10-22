@@ -42,7 +42,7 @@ func TestUnlinkingAnIdentityRevokesWhatItsProviderGranted(t *testing.T) {
 				t.Fatal(err)
 			}
 
-			if _, err = s.ResolveExternalIdentity(ctx, "other", "subject-two", "One", "", false, "", access.Viewer, "", user.UserID); err != nil {
+			if _, err = s.ResolveExternalIdentity(freshLinkContext(ctx, t, s, user.UserID), "other", "subject-two", "One", "", false, "", access.Viewer, "", user.UserID); err != nil {
 				t.Fatal(err)
 			}
 
@@ -104,7 +104,7 @@ func TestUnlinkingOneOfTwoIdentitiesAtAProviderKeepsItsGrants(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if _, err = s.ResolveExternalIdentity(ctx, "company", "subject-two", "One", "", false, "", access.Viewer, "", user.UserID); err != nil {
+	if _, err = s.ResolveExternalIdentity(freshLinkContext(ctx, t, s, user.UserID), "company", "subject-two", "One", "", false, "", access.Viewer, "", user.UserID); err != nil {
 		t.Fatal(err)
 	}
 

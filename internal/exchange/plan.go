@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"math"
 	"slices"
 	"sort"
 	"strings"
@@ -135,6 +136,13 @@ func (s *Service) PlanPreviewImportWithOptions(ctx context.Context, previewID st
 		plan.Source = plan.Importer
 	}
 
+	if options.AcceptPlan != nil {
+		if err := options.AcceptPlan(plan); err != nil {
+			s.releasePreviewClaim(previewID, claim.session)
+			return ImportPlan{}, err
+		}
+	}
+
 	remaining := s.retirePlannedCandidates(previewID, claim)
 	plan.Remaining = remaining
 
@@ -210,6 +218,10 @@ func buildPlannedImport(candidate *previewCandidate, retainedIDs []string) (Plan
 		item:           candidate.item, metadata: candidate.metadata, diagnostics: candidate.diagnostics, importerMetadata: metadata,
 	}
 	if !slices.Contains(retainedIDs, candidate.view.ID) {
+		planned.item.SourceBytes = nil
+		planned.item.SourceFilename = ""
+		planned.item.SourceMediaType = ""
+
 		return planned, nil
 	}
 
@@ -399,4 +411,32 @@ func joinNames(names map[string]bool) string {
 	default:
 		return fmt.Sprintf("%s and %d others", ordered[0], len(ordered)-1)
 	}
+}
+
+// PlannedRetainedBytes charges decoded work, durable payloads and shared photographs.
+func PlannedRetainedBytes(items []PlannedImport) int64 {
+	var total int64
+
+	seen := map[*byte]bool{}
+
+	add := func(n int64) {
+		if n > math.MaxInt64-total {
+			total = math.MaxInt64
+		} else {
+			total += n
+		}
+	}
+	for _, planned := range items {
+		add(retainedCandidateBytes(&previewCandidate{item: planned.item, metadata: planned.metadata, importerMetadata: planned.importerMetadata, diagnostics: planned.diagnostics}))
+		add(int64(len(planned.payload)))
+
+		for _, asset := range planned.item.stagedRemote {
+			if len(asset.bytes) > 0 && !seen[&asset.bytes[0]] {
+				seen[&asset.bytes[0]] = true
+				add(int64(len(asset.bytes)))
+			}
+		}
+	}
+
+	return total
 }

@@ -136,7 +136,7 @@ func RegisterOpenAPI(api huma.API) {
 		request, response                      reflect.Type
 	}{
 		{http.MethodGet, "/api/v1/account/tokens", "list-account-tokens", "API tokens", "List API tokens", "Returns safe metadata and the instance token policy, never a token secret.", nil, reflect.TypeFor[tokenListResponse]()},
-		{http.MethodPost, "/api/v1/account/tokens", "create-account-token", "API tokens", "Create an API token", "The secret appears once in this response and cannot be retrieved again.", reflect.TypeFor[identity.TokenRequest](), reflect.TypeFor[identity.TokenGrant]()},
+		{http.MethodPost, "/api/v1/account/tokens", "create-account-token", "API tokens", "Create an API token", "Requires authentication within the last five minutes. The secret appears once in this response and cannot be retrieved again.", reflect.TypeFor[identity.TokenRequest](), reflect.TypeFor[identity.TokenGrant]()},
 		{http.MethodDelete, "/api/v1/account/tokens/{id}", "revoke-account-token", "API tokens", "Revoke an API token", "Takes effect immediately; the token is not reissued.", nil, nil},
 		{http.MethodGet, "/api/v1/account/audit", "list-audit-events", "Account", "List audit events", "Instance history for an administrator, or owned-library history for a library owner.", nil, reflect.TypeFor[auditResponse]()},
 		{http.MethodGet, "/api/v1/account", "get-current-account", "Account", "Get the current account", "Includes the libraries this account can reach.", nil, reflect.TypeFor[accountState]()},

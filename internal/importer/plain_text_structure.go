@@ -76,7 +76,7 @@ func inferRecipeSections(item *ImportedRecipe, text, locale string) {
 
 		clean := recipeTextLine(line)
 		if textIngredientHeading(lines, ingredients, i) {
-			parser.readInferredHeading(clean, i)
+			parser.readInferredHeading(clean)
 
 			explicit = plainModeIngredients
 
@@ -132,13 +132,14 @@ func (p *plainTextParser) markInferred() {
 	}
 }
 
-func (p *plainTextParser) readInferredHeading(line string, index int) {
+func (p *plainTextParser) readInferredHeading(line string) {
 	if len(p.item.Document.IngredientSections) == 0 && looksPlainSubheading(line) && p.item.Document.Title == "" {
 		p.item.Document.Title = strings.TrimSuffix(line, ":")
 		return
 	}
 
-	p.readIngredient(strings.TrimSuffix(line, ":")+":", index)
+	p.ingredientSection = len(p.item.Document.IngredientSections) + 1
+	p.ingredientTitle = strings.TrimSuffix(line, ":")
 	p.mode = plainModeIngredients
 }
 

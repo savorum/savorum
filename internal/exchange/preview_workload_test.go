@@ -407,3 +407,24 @@ func TestPreviewCancellationCannotCrossAuthorizationScope(t *testing.T) {
 		t.Fatalf("cancelled preview survived: %v", err)
 	}
 }
+
+func TestRejectedJobLeavesPreviewSelectionAvailable(t *testing.T) {
+	service := exchange.NewService(&importLibrary{}, &countingAssets{})
+	preview := imagePreview(t, service, 1)
+	rejected := errors.New("queue full")
+
+	_, err := service.PlanPreviewImportWithOptions(t.Context(), preview.ID, []exchange.PreviewResolution{{ItemID: preview.Items[0].ID}}, false, exchange.PreviewCommitOptions{AcceptPlan: func(exchange.ImportPlan) error { return rejected }})
+	if !errors.Is(err, rejected) {
+		t.Fatalf("admission=%v", err)
+	}
+
+	remaining, err := service.Preview(t.Context(), preview.ID)
+	if err != nil || len(remaining.Items) != 1 {
+		t.Fatalf("selection lost after rejection: %+v %v", remaining, err)
+	}
+
+	plan, err := service.PlanPreviewImport(t.Context(), preview.ID, []exchange.PreviewResolution{{ItemID: preview.Items[0].ID}}, false)
+	if err != nil || len(plan.Items) != 1 {
+		t.Fatalf("retry=%+v %v", plan, err)
+	}
+}

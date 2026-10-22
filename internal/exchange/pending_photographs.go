@@ -176,7 +176,15 @@ func (s *Service) fetchPendingPhotographs(ctx context.Context, targets []library
 			return nil, fmt.Errorf("read recipe %s with deferred photographs: %w", target.EntryID, err)
 		}
 
-		deferred, unresolved := pendingRemoteAssets(entry.Recipe)
+		entry, deferred, unresolved, err := s.limitPendingPhotographs(scope, pending, entry)
+		if _, stale := errors.AsType[*library.PreconditionError](err); stale || errors.Is(err, library.ErrNotFound) || errors.Is(err, library.ErrInvalidState) {
+			continue
+		}
+
+		if err != nil {
+			return nil, fmt.Errorf("limit pending photographs for recipe %s: %w", target.EntryID, err)
+		}
+
 		if len(deferred) == 0 {
 			continue
 		}
@@ -308,4 +316,31 @@ func nameUnnamedAssets(document *recipe.Document, remotes []importer.RemoteAsset
 		remotes[index].LogicalID = fmt.Sprintf("imported-image-%d", next)
 		taken[remotes[index].LogicalID] = true
 	}
+}
+
+func (s *Service) limitPendingPhotographs(ctx context.Context, pending PendingPhotographLibrary, entry library.Entry) (library.Entry, []importer.RemoteAsset, []importer.RemoteAsset, error) {
+	deferred, unresolved := pendingRemoteAssets(entry.Recipe)
+
+	fetched := 0
+
+	for _, asset := range entry.Recipe.Assets {
+		if _, err := canonicalRemoteURL(asset.SourceURL); err == nil {
+			fetched++
+		}
+	}
+
+	remaining := max(0, s.remoteLimits.AssetsPerRecipe-fetched)
+	if len(deferred) <= remaining {
+		return entry, deferred, unresolved, nil
+	}
+
+	unresolved = append(unresolved, deferred[remaining:]...)
+	deferred = deferred[:remaining]
+	document := entry.Recipe
+	document.Extensions = maps.Clone(document.Extensions)
+	delete(document.Extensions, pendingImagesExtension)
+	retainRemoteReferences(&document, deferred, unresolved)
+	updated, err := pending.CompletePendingPhotographs(ctx, entry.ID, entry.Revision, document)
+
+	return updated, deferred, unresolved, err
 }

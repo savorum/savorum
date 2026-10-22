@@ -141,11 +141,11 @@ func TestExternalIdentityLinkingAndManagedGroupProvenance(t *testing.T) {
 		t.Fatal("email automatically linked")
 	}
 
-	if _, err = s.ResolveExternalIdentity(ctx, "company", "subject-one", "One", "", false, "", access.Viewer, "", second.UserID); !errors.Is(err, identity.ErrConflict) {
+	if _, err = s.ResolveExternalIdentity(freshLinkContext(ctx, t, s, second.UserID), "company", "subject-one", "One", "", false, "", access.Viewer, "", second.UserID); !errors.Is(err, identity.ErrConflict) {
 		t.Fatalf("stole identity: %v", err)
 	}
 
-	if _, err = s.ResolveExternalIdentity(ctx, "other", "subject-one", "One", "", false, "", access.Viewer, "", first.UserID); err != nil {
+	if _, err = s.ResolveExternalIdentity(freshLinkContext(ctx, t, s, first.UserID), "other", "subject-one", "One", "", false, "", access.Viewer, "", first.UserID); err != nil {
 		t.Fatal(err)
 	}
 
@@ -162,7 +162,7 @@ func TestExternalIdentityLinkingAndManagedGroupProvenance(t *testing.T) {
 		t.Fatalf("removed last path: %v", err)
 	}
 
-	if _, err = s.ResolveExternalIdentity(ctx, "company", "subject-one", "One", "", false, "", access.Viewer, "", first.UserID); err != nil {
+	if _, err = s.ResolveExternalIdentity(freshLinkContext(ctx, t, s, first.UserID), "company", "subject-one", "One", "", false, "", access.Viewer, "", first.UserID); err != nil {
 		t.Fatal(err)
 	}
 
@@ -286,7 +286,7 @@ func TestIdentityHandlesAreNotReusedAfterUnlink(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if _, err = s.ResolveExternalIdentity(ctx, "company", "old-subject", "Admin", "", false, "", access.Viewer, "", admin.UserID); err != nil {
+	if _, err = s.ResolveExternalIdentity(freshLinkContext(ctx, t, s, admin.UserID), "company", "old-subject", "Admin", "", false, "", access.Viewer, "", admin.UserID); err != nil {
 		t.Fatal(err)
 	}
 
@@ -311,7 +311,7 @@ func TestIdentityHandlesAreNotReusedAfterUnlink(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if _, err = s.ResolveExternalIdentity(ctx, "company", "new-subject", "Admin", "", false, "", access.Viewer, "", admin.UserID); err != nil {
+	if _, err = s.ResolveExternalIdentity(freshLinkContext(ctx, t, s, admin.UserID), "company", "new-subject", "Admin", "", false, "", access.Viewer, "", admin.UserID); err != nil {
 		t.Fatal(err)
 	}
 

@@ -97,3 +97,29 @@ func TestAgentTrackedAttachmentCancellation(t *testing.T) {
 		t.Fatalf("attachment releases=%d", releases.Load())
 	}
 }
+
+func TestMissingOrInvalidRelayIdentityIsRejectedBeforeDial(t *testing.T) {
+	var requests atomic.Int64
+
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		requests.Add(1)
+		w.WriteHeader(http.StatusInternalServerError)
+	}))
+	defer server.Close()
+
+	origin, _ := url.Parse(server.URL)
+
+	for _, address := range []string{"", "unknown", "0.0.0.0:123", "[::]:123", "224.0.0.1:123", "[fe80::1%en0]:123"} {
+		var (
+			live     sync.Map
+			releases atomic.Int64
+		)
+
+		agent := Agent{Credential: "disposable"}
+		agent.attach(t.Context(), origin, server.URL, "run", assignment{ID: "tls", Kind: "tls", ClientAddress: address}, nil, newAgentListener(), nil, &live, func() { releases.Add(1) })
+
+		if releases.Load() != 1 || requests.Load() != 0 {
+			t.Fatalf("identity %q was admitted", address)
+		}
+	}
+}
