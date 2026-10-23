@@ -106,6 +106,69 @@ func TestAssistantDeviceApprovalRotationAndReplay(t *testing.T) {
 	}
 }
 
+func TestAssistantRefreshIsSingleUseConcurrently(t *testing.T) {
+	s := openStore(t.Context(), t)
+
+	user, err := s.BootstrapAdmin(t.Context(), "admin", "Admin", "a sufficiently long password")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	ctx := identity.WithPrincipal(t.Context(), user)
+
+	req, secret, err := s.CreateAssistantRequest(ctx, identity.AuthorizationRequest{ClientID: "savorum-device", Name: "Assistant", Kind: "device", Scope: "read", Resource: "https://recipes.example/mcp"})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if _, _, err := s.ApproveAssistantRequest(ctx, req.UserCode, "default", false, true, false, identity.TokenPolicy{}); err != nil {
+		t.Fatal(err)
+	}
+
+	grant, code, err := s.ExchangeAssistantCredential(ctx, "urn:ietf:params:oauth:grant-type:device_code", secret, "savorum-device", "https://recipes.example/mcp", "", "")
+	if err != nil || code != "" || grant.RefreshToken == "" {
+		t.Fatalf("device exchange: code=%s err=%v", code, err)
+	}
+
+	type result struct {
+		grant identity.ConnectionCredentials
+		code  string
+		err   error
+	}
+
+	start, results := make(chan struct{}), make(chan result, 2)
+
+	for range 2 {
+		go func() {
+			<-start
+
+			grant, code, err := s.ExchangeAssistantCredential(ctx, "refresh_token", grant.RefreshToken, "savorum-device", "https://recipes.example/mcp", "", "")
+			results <- result{grant, code, err}
+		}()
+	}
+
+	close(start)
+
+	succeeded := 0
+
+	for range 2 {
+		r := <-results
+		if r.err != nil {
+			t.Fatal(r.err)
+		}
+
+		if r.code == "" && r.grant.RefreshToken != "" && r.grant.RefreshToken != grant.RefreshToken {
+			succeeded++
+		} else if r.code != "invalid_grant" || r.grant.RefreshToken != "" || r.grant.AccessToken != "" {
+			t.Fatalf("unexpected refresh result: code=%s", r.code)
+		}
+	}
+
+	if succeeded != 1 {
+		t.Fatalf("concurrent refresh succeeded %d times", succeeded)
+	}
+}
+
 func TestAssistantCodePKCEAndDisconnect(t *testing.T) {
 	s := openStore(t.Context(), t)
 
