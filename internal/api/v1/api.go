@@ -384,6 +384,7 @@ func describeTags(document *huma.OpenAPI) {
 		{"Passkeys", "WebAuthn registration and usernameless sign-in."},
 		{"Recovery codes", "Single-use codes for regaining access to an account."},
 		{"API tokens", "Personal bearer credentials for integrations."},
+		{"Assistant connections", "Approve assistant access to a library and manage connected assistants."},
 		{"Library members", "Who holds a role in a library, and administrator recovery of its ownership."},
 		{"Invitations", "Inviting someone to a library and accepting the invitation."},
 		{"Sign-in methods", "The identities attached to an account, and the providers they depend on."},

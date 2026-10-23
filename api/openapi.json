@@ -32433,6 +32433,10 @@
       "name": "API tokens"
     },
     {
+      "description": "Approve assistant access to a library and manage connected assistants.",
+      "name": "Assistant connections"
+    },
+    {
       "description": "Who holds a role in a library, and administrator recovery of its ownership.",
       "name": "Library members"
     },
