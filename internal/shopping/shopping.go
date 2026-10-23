@@ -363,7 +363,13 @@ func merge(list *ShoppingList, index int, change ShoppingChange) error {
 		}
 	}
 
-	notes := map[string]bool{strings.TrimSpace(target.Note): true}
+	notes := map[string]bool{}
+
+	for note := range strings.SplitSeq(target.Note, "\n") {
+		if note = strings.TrimSpace(note); note != "" {
+			notes[note] = true
+		}
+	}
 
 	for _, id := range change.MergeItemIDs {
 		other := &list.Items[slices.IndexFunc(list.Items, func(row ShoppingItem) bool { return row.ID == id })]
@@ -382,10 +388,12 @@ func merge(list *ShoppingList, index int, change ShoppingChange) error {
 			target.Fields["buy"] = revision
 		}
 
-		if note := strings.TrimSpace(other.Note); note != "" && !notes[note] {
-			notes[note] = true
-			target.Note = strings.TrimSpace(strings.Join([]string{target.Note, other.Note}, "\n"))
-			target.Fields["note"] = revision
+		for note := range strings.SplitSeq(other.Note, "\n") {
+			if note = strings.TrimSpace(note); note != "" && !notes[note] {
+				notes[note] = true
+				target.Note = strings.TrimSpace(strings.Join([]string{target.Note, note}, "\n"))
+				target.Fields["note"] = revision
+			}
 		}
 
 		list.Items[index].Sources = append(list.Items[index].Sources, other.Sources...)

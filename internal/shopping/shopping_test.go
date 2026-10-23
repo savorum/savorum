@@ -241,6 +241,7 @@ func TestMergeKeepsDistinctNotes(t *testing.T) {
 		{ID: "b", Name: "Milk", Note: "whole milk", Revision: 1},
 		{ID: "c", Name: "Milk", Note: "for guests", Revision: 1},
 		{ID: "d", Name: "Milk", Note: "whole milk", Revision: 1},
+		{ID: "e", Name: "Milk", Note: "whole milk\nfor guests\n organic \n", Revision: 1},
 	}}
 	if err := Apply(&list, ShoppingChange{ID: "merge", Kind: "merge", ItemID: "a", MergeItemIDs: []string{"b", "c", "d"}, BaseRevision: 1}); err != nil {
 		t.Fatal(err)
@@ -248,5 +249,15 @@ func TestMergeKeepsDistinctNotes(t *testing.T) {
 
 	if list.Items[0].Note != "for guests\nwhole milk" || list.Items[0].Fields["note"] != 2 {
 		t.Fatalf("merged note=%#v", list.Items[0])
+	}
+
+	list.Revision++
+
+	if err := Apply(&list, ShoppingChange{ID: "merge-again", Kind: "merge", ItemID: "a", MergeItemIDs: []string{"e"}, BaseRevision: list.Revision}); err != nil {
+		t.Fatal(err)
+	}
+
+	if list.Items[0].Note != "for guests\nwhole milk\norganic" {
+		t.Fatalf("repeated merge duplicated notes: %#v", list.Items[0])
 	}
 }
