@@ -1,5 +1,5 @@
 import { cleanup, fireEvent, render, waitFor } from "@solidjs/testing-library"
-import { createSignal } from "solid-js"
+import { createSignal, untrack } from "solid-js"
 import { afterEach, expect, test, vi } from "vitest"
 
 import { readIngredientLine } from "@/api/ingredient-lines"
@@ -7,11 +7,14 @@ import type { components } from "@/api/schema"
 import { IngredientReadingContext } from "@/components/ingredient-reading"
 import { readingsPending, readingsSettled } from "@/lib/line-readings"
 
+import { IngredientChoice } from "./ingredient-choice"
 import { IngredientRow } from "./ingredient-row"
 
 vi.mock("@/api/ingredient-lines", () => ({ readIngredientLine: vi.fn() }))
 
 type Ingredient = components["schemas"]["Ingredient"]
+
+const measurementStyle = "us"
 
 afterEach(() => {
   cleanup()
@@ -24,7 +27,7 @@ function row(ingredient: Ingredient, onChange: (next: Ingredient) => void) {
       <IngredientRow
         ingredient={ingredient}
         position={2}
-        style="us"
+        style={measurementStyle}
         first={false}
         last
         removable
@@ -145,7 +148,7 @@ test("an older completion cannot discard a newer pending line during an ingredie
     <IngredientRow
       ingredient={ingredient()}
       position={2}
-      style="us"
+      style={measurementStyle}
       first={false}
       last
       removable
@@ -170,3 +173,64 @@ test("an older completion cannot discard a newer pending line during an ingredie
     expect.objectContaining({ source_text: "300 g flour", optional: true }),
   )
 })
+
+test.each(["move", "remove"] as const)(
+  "a pending reading stays with its alternative after %s",
+  async (change) => {
+    let answer!: (value: Ingredient) => void
+    vi.mocked(readIngredientLine).mockReturnValue(
+      new Promise<Ingredient>((resolve) => {
+        answer = resolve
+      }),
+    )
+    const [ingredient, setIngredient] = createSignal<Ingredient>({
+      id: "choice",
+      relation: "or",
+      alternatives: [
+        { id: "flour", name: "Flour" },
+        { id: "milk", name: "Milk" },
+        { id: "water", name: "Water" },
+      ],
+    })
+    const screen = render(() => (
+      <IngredientChoice
+        ingredient={ingredient()}
+        position={1}
+        style={measurementStyle}
+        first
+        last
+        removable
+        onChange={setIngredient}
+        onMove={() => {}}
+        onRemove={() => {}}
+      />
+    ))
+    const input = screen.getAllByRole("textbox", { name: "Ingredient" })[0]
+    fireEvent.input(input, { target: { value: "2 cups Flour" } })
+    fireEvent.blur(input)
+    setIngredient((current) => ({
+      ...current,
+      alternatives:
+        change === "move"
+          ? [current.alternatives![1], current.alternatives![0], current.alternatives![2]]
+          : current.alternatives!.slice(1),
+    }))
+    answer({
+      id: "parsed",
+      name: "Flour",
+      quantity: { kind: "simple", amount: { value: "2" }, unit: "volume.cup.us.customary" },
+    })
+    await readingsSettled()
+    const alternatives = untrack(ingredient).alternatives
+    expect(alternatives?.find((item) => item.id === "milk")).toEqual({
+      id: "milk",
+      name: "Milk",
+    })
+    expect(
+      (screen.getAllByRole("textbox", { name: "Ingredient" })[0] as HTMLInputElement).value,
+    ).toBe("Milk")
+    const flour = alternatives?.find((item) => item.id === "flour")
+    if (change === "move") expect(flour?.quantity?.amount?.value).toBe("2")
+    else expect(flour).toBeUndefined()
+  },
+)
