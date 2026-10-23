@@ -7,6 +7,8 @@ import { promisify } from "node:util"
 
 import { expect, test, type Page } from "@playwright/test"
 
+import { openSection } from "./controls"
+
 let server: ChildProcess
 let directory: string
 let origin: string
@@ -122,10 +124,12 @@ test("roaming discoverable passkey verifies real assertions, rejects tampering a
     expect(credentials.credentials).toHaveLength(1)
     expect(credentials.credentials[0]?.isResidentCredential).toBe(true)
     expect(credentials.credentials[0]?.rpId).toBe("localhost")
+    await openSection(page, /^Roaming key\b/)
     const rename = page.getByRole("textbox", { name: "Name for Roaming key" })
     await rename.fill("")
     await rename.pressSequentially("Travel security key")
     await page.getByRole("button", { name: "Save name", exact: true }).click()
+    await openSection(page, /^Travel security key\b/)
     await expect(page.getByRole("textbox", { name: "Name for Travel security key" })).toHaveValue(
       "Travel security key",
     )
