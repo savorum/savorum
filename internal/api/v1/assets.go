@@ -293,7 +293,7 @@ func registerAssets(api huma.API, references AssetReferenceService, service Asse
 }
 
 func registerRecipeSources(api huma.API, sources SourceAttachmentService, service AssetService) {
-	huma.Register(api, huma.Operation{OperationID: "list-recipe-sources", Method: http.MethodGet, Path: "/api/v1/recipes/{recipe_id}/sources", Summary: "List retained original import sources", Tags: []string{"Assets"}, Errors: []int{http.StatusNotFound}}, func(ctx context.Context, input *sourceAttachmentListInput) (*sourceAttachmentListOutput, error) {
+	huma.Register(api, huma.Operation{OperationID: "list-recipe-sources", Method: http.MethodGet, Path: "/api/v1/recipes/{recipe_id}/sources", Summary: "List retained recipe sources", Tags: []string{"Assets"}, Errors: []int{http.StatusNotFound}}, func(ctx context.Context, input *sourceAttachmentListInput) (*sourceAttachmentListOutput, error) {
 		attachments, err := sources.ListSourceAttachments(ctx, library.EntryID(input.RecipeID), 0)
 		if err != nil {
 			return nil, problem(http.StatusNotFound, "source-not-found", "The requested recipe source does not exist")
@@ -301,7 +301,7 @@ func registerRecipeSources(api huma.API, sources SourceAttachmentService, servic
 
 		return &sourceAttachmentListOutput{Body: sourceAttachmentResources(attachments, input.RecipeID)}, nil
 	})
-	huma.Register(api, huma.Operation{OperationID: "list-recipe-revision-sources", Method: http.MethodGet, Path: "/api/v1/recipes/{recipe_id}/revisions/{revision}/sources", Summary: "List retained sources for a recipe revision", Tags: []string{"Assets"}, Errors: []int{http.StatusNotFound}}, func(ctx context.Context, input *sourceAttachmentRevisionListInput) (*sourceAttachmentListOutput, error) {
+	huma.Register(api, huma.Operation{OperationID: "list-recipe-revision-sources", Method: http.MethodGet, Path: "/api/v1/recipes/{recipe_id}/revisions/{revision}/sources", Summary: "List retained revision sources", Tags: []string{"Assets"}, Errors: []int{http.StatusNotFound}}, func(ctx context.Context, input *sourceAttachmentRevisionListInput) (*sourceAttachmentListOutput, error) {
 		attachments, err := sources.ListSourceAttachments(ctx, library.EntryID(input.RecipeID), input.Revision)
 		if err != nil {
 			return nil, problem(http.StatusNotFound, "source-not-found", "The requested recipe revision source does not exist")
@@ -309,10 +309,10 @@ func registerRecipeSources(api huma.API, sources SourceAttachmentService, servic
 
 		return &sourceAttachmentListOutput{Body: sourceAttachmentResources(attachments, input.RecipeID)}, nil
 	})
-	huma.Register(api, huma.Operation{OperationID: "get-recipe-source", Method: http.MethodGet, Path: "/api/v1/recipes/{recipe_id}/sources/{id}", Summary: "Download a retained original import source", Tags: []string{"Assets"}, Errors: []int{http.StatusNotFound}}, func(ctx context.Context, input *sourceAttachmentPathInput) (*huma.StreamResponse, error) {
+	huma.Register(api, huma.Operation{OperationID: "get-recipe-source", Method: http.MethodGet, Path: "/api/v1/recipes/{recipe_id}/sources/{id}", Summary: "Download a recipe source", Tags: []string{"Assets"}, Errors: []int{http.StatusNotFound}}, func(ctx context.Context, input *sourceAttachmentPathInput) (*huma.StreamResponse, error) {
 		return streamRecipeSource(ctx, sources, service, input.RecipeID, 0, input.ID)
 	})
-	huma.Register(api, huma.Operation{OperationID: "get-recipe-revision-source", Method: http.MethodGet, Path: "/api/v1/recipes/{recipe_id}/revisions/{revision}/sources/{id}", Summary: "Download a retained source from recipe history", Tags: []string{"Assets"}, Errors: []int{http.StatusNotFound}}, func(ctx context.Context, input *sourceAttachmentRevisionPathInput) (*huma.StreamResponse, error) {
+	huma.Register(api, huma.Operation{OperationID: "get-recipe-revision-source", Method: http.MethodGet, Path: "/api/v1/recipes/{recipe_id}/revisions/{revision}/sources/{id}", Summary: "Download a revision source", Tags: []string{"Assets"}, Errors: []int{http.StatusNotFound}}, func(ctx context.Context, input *sourceAttachmentRevisionPathInput) (*huma.StreamResponse, error) {
 		return streamRecipeSource(ctx, sources, service, input.RecipeID, input.Revision, input.ID)
 	})
 }
