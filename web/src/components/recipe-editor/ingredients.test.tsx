@@ -10,6 +10,8 @@ import { deferred } from "@/test/import-fixtures"
 
 import { RecipeIngredientsEditor } from "./ingredients"
 
+const measurementStyle = "us"
+
 afterEach(cleanup)
 
 function editor() {
@@ -24,7 +26,7 @@ function editor() {
     <RecipeIngredientsEditor
       draft={draft}
       setDraft={setDraft}
-      style="us"
+      style={measurementStyle}
       convention=""
       onAnnounce={() => {}}
       onFocus={() => {}}
@@ -73,7 +75,7 @@ test("a reading follows its ingredient when rows move before the response", asyn
     <RecipeIngredientsEditor
       draft={draft}
       setDraft={setDraft}
-      style="us"
+      style={measurementStyle}
       convention="us"
       onAnnounce={() => {}}
       onFocus={() => {}}

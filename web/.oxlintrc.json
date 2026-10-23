@@ -44,6 +44,23 @@
       }
     },
     {
+      "files": ["src/**/*.test.ts"],
+      "rules": {
+        "typescript/no-floating-promises": [
+          "error",
+          {
+            "allowForKnownSafeCalls": [
+              {
+                "from": "package",
+                "name": "test",
+                "package": "node:test"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
       "files": ["src/features/**/*"],
       "rules": {
         "no-restricted-imports": [
