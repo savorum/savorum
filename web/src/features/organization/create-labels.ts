@@ -33,14 +33,14 @@ async function countFiledUnder(filters: Partial<LibraryFilters>): Promise<number
 export function createLabels() {
   const [tags, { refetch: refetchTags }] = createResource(listTags)
   const [facets, { refetch: refetchFacets }] = createResource(() => listFacets())
-  const action = createAsyncAction()
-  const { busy, error } = action
-  const run = (change: () => Promise<unknown>) =>
-    action.run(async () => {
-      await change()
+  const action = createAsyncAction({
+    onSettled: () => {
       void refetchTags()
       void refetchFacets()
-    })
+    },
+  })
+  const { busy, error } = action
+  const run = (change: () => Promise<unknown>) => action.run(change)
 
   const groups = createMemo<Group[]>(() => [
     {

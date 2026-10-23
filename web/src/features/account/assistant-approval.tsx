@@ -27,8 +27,9 @@ export function AssistantApproval() {
   const initialCode = new URLSearchParams(window.location.search).get("code") ?? ""
   const [code, setCode] = createSignal(initialCode)
   const [lookup, setLookup] = createSignal(initialCode)
-  const [request, { refetch }] = createResource(lookup, (value) =>
-    accountRequest<Approval>(`/account/authorization?code=${encodeURIComponent(value)}`),
+  const [request, { refetch, mutate }] = createResource(
+    () => lookup() || false,
+    (value) => accountRequest<Approval>(`/account/authorization?code=${encodeURIComponent(value)}`),
   )
   const [libraryID, setLibraryID] = createSignal(
     account()?.active_library_id ?? libraries()[0]?.id ?? "",
@@ -78,6 +79,15 @@ export function AssistantApproval() {
                 <p role="alert">{m.account_assistant_request_unavailable()}</p>
                 <Button variant="outline" onClick={() => void refetch()}>
                   {m.account_retry()}
+                </Button>
+                <Button
+                  variant="plain"
+                  onClick={() => {
+                    mutate(undefined)
+                    setLookup("")
+                  }}
+                >
+                  {m.account_assistant_code()}
                 </Button>
               </>
             }
@@ -137,7 +147,9 @@ export function AssistantApproval() {
                     hint={
                       access() === "write"
                         ? m.account_assistant_access_write_hint()
-                        : m.account_assistant_access_read_hint()
+                        : library()?.role === "viewer"
+                          ? m.account_assistant_access_viewer_hint()
+                          : m.account_assistant_access_read_hint()
                     }
                   >
                     <Select

@@ -41,7 +41,11 @@ export function SignOutDialog(props: { open: boolean; onClose: () => void }) {
         cancelLabel={m.common_cancel()}
         title={m.account_overview_sign_out()}
         confirmLabel={m.account_overview_sign_out()}
-        onClose={() => props.onClose()}
+        onClose={() => {
+          if (busy()) return
+          setError(undefined)
+          props.onClose()
+        }}
         onConfirm={signOut}
       >
         {m.account_sign_out_local_work()}

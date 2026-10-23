@@ -49,8 +49,10 @@ export function LabelGroup(props: {
       await untrack(() =>
         props.group.create(staticValue, props.group.colored ? color() : undefined),
       )
-      setName("")
-      setAdding(false)
+      if (untrack(name).trim() === staticValue) {
+        setName("")
+        setAdding(false)
+      }
     })
   }
 
@@ -125,7 +127,7 @@ export function LabelGroup(props: {
         {(label) => (
           <LabelEditor
             group={props.group}
-            label={label}
+            label={props.group.labels.find((entry) => entry.id === label.id) ?? label}
             busy={props.busy}
             onRun={props.onRun}
             onClose={() => setEditing(undefined)}

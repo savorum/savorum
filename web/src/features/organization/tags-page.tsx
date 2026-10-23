@@ -1,4 +1,4 @@
-import { For } from "solid-js"
+import { Index } from "solid-js"
 import { css, cx } from "styled-system/css"
 import { pageShell } from "styled-system/recipes"
 
@@ -39,9 +39,9 @@ export function TagsPage() {
             }}
           >
             {() => (
-              <For each={groups()}>
-                {(group) => <LabelGroup group={group} busy={busy()} onRun={run} />}
-              </For>
+              <Index each={groups()}>
+                {(group) => <LabelGroup group={group()} busy={busy()} onRun={run} />}
+              </Index>
             )}
           </ResourceState>
         )}

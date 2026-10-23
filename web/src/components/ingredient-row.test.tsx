@@ -1,10 +1,11 @@
 import { cleanup, fireEvent, render, waitFor } from "@solidjs/testing-library"
+import { createSignal } from "solid-js"
 import { afterEach, expect, test, vi } from "vitest"
 
 import { readIngredientLine } from "@/api/ingredient-lines"
 import type { components } from "@/api/schema"
 import { IngredientReadingContext } from "@/components/ingredient-reading"
-import { readingsSettled } from "@/lib/line-readings"
+import { readingsPending, readingsSettled } from "@/lib/line-readings"
 
 import { IngredientRow } from "./ingredient-row"
 
@@ -122,4 +123,50 @@ test("an answer for text that was typed over is dropped", async () => {
   await readingsSettled()
 
   expect(onChange).not.toHaveBeenCalled()
+})
+
+test("an older completion cannot discard a newer pending line during an ingredient update", async () => {
+  let first!: (value: Ingredient) => void
+  let second!: (value: Ingredient) => void
+  vi.mocked(readIngredientLine)
+    .mockReturnValueOnce(
+      new Promise<Ingredient>((resolve) => {
+        first = resolve
+      }),
+    )
+    .mockReturnValueOnce(
+      new Promise<Ingredient>((resolve) => {
+        second = resolve
+      }),
+    )
+  const [ingredient, setIngredient] = createSignal<Ingredient>({ id: "flour", name: "flour" })
+  const onChange = vi.fn()
+  const screen = render(() => (
+    <IngredientRow
+      ingredient={ingredient()}
+      position={2}
+      style="us"
+      first={false}
+      last
+      removable
+      onChange={onChange}
+      onMove={() => {}}
+      onRemove={() => {}}
+    />
+  ))
+  const field = screen.getByRole("textbox", { name: "Ingredient" }) as HTMLInputElement
+  fireEvent.input(field, { target: { value: "200 g flour" } })
+  fireEvent.blur(field)
+  fireEvent.input(field, { target: { value: "300 g flour" } })
+  fireEvent.blur(field)
+  first({ id: "line", name: "flour" })
+  await waitFor(() => expect(readingsPending()).toBe(1))
+  setIngredient((current) => ({ ...current, note: "sifted", optional: true }))
+  expect(field.value).toBe("300 g flour")
+  second({ id: "line", name: "flour" })
+  await readingsSettled()
+  expect(onChange).toHaveBeenCalledTimes(1)
+  expect(onChange).toHaveBeenCalledWith(
+    expect.objectContaining({ source_text: "300 g flour", optional: true }),
+  )
 })

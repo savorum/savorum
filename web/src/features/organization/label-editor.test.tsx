@@ -62,3 +62,33 @@ test("a refused label creation retains its entry form", async () => {
   expect(input.isConnected).toBe(true)
   expect((input as HTMLInputElement).value).toBe("Weeknight")
 })
+
+test("a successful label creation retains a name typed while it was pending", async () => {
+  const value = group()
+  let finish!: () => void
+  let completed = Promise.resolve()
+  vi.mocked(value.create).mockReturnValueOnce(
+    new Promise<void>((resolve) => {
+      finish = resolve
+    }),
+  )
+  const view = render(() => {
+    const action = createAsyncAction()
+    return (
+      <LabelGroup
+        group={value}
+        busy={action.busy()}
+        onRun={(change) => (completed = action.run(change))}
+      />
+    )
+  })
+  fireEvent.click(screen.getByRole("button", { name: "Add" }))
+  const input = screen.getByRole("textbox", { name: /New tag/ }) as HTMLInputElement
+  fireEvent.input(input, { target: { value: "Weeknight" } })
+  fireEvent.submit(view.container.querySelector("form")!)
+  fireEvent.input(input, { target: { value: "Weekend" } })
+  finish()
+  await completed
+  expect(input.isConnected).toBe(true)
+  expect(input.value).toBe("Weekend")
+})
