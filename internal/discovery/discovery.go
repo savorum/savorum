@@ -112,6 +112,30 @@ func Guide(origin string) string {
 	return strings.NewReplacer("{{origin}}", origin, "{{version}}", buildinfo.CurrentVersion()).Replace(guide)
 }
 
+// AssistantGuide returns the guide for a connected MCP client, without the
+// connection setup that ConnectionGuide returns.
+func AssistantGuide(origin string) string {
+	text := Guide(origin)
+	start, end := connectionSection(text)
+
+	return text[:start] + text[end:]
+}
+
+// ConnectionGuide returns the guide's connection setup for one origin.
+func ConnectionGuide(origin string) string {
+	text := Guide(origin)
+	start, end := connectionSection(text)
+
+	return text[start:end]
+}
+
+// connectionSection spans the connection setup heading up to the next heading.
+func connectionSection(text string) (int, int) {
+	start := strings.Index(text, "\n## Connecting without a key\n") + 1
+
+	return start, start + 2 + strings.Index(text[start+1:], "\n## ")
+}
+
 func serveGuide(w http.ResponseWriter, r *http.Request, origin string) {
 	w.Header().Set("Content-Type", "text/markdown; charset=utf-8")
 	w.Header().Set("Cache-Control", "no-cache")

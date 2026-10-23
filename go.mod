@@ -14,6 +14,7 @@ require (
 	github.com/go-jose/go-jose/v4 v4.1.5
 	github.com/go-ldap/ldap/v3 v3.4.15
 	github.com/go-webauthn/webauthn v0.18.2
+	github.com/google/jsonschema-go v0.4.3
 	github.com/grandcat/zeroconf v1.0.0
 	github.com/modelcontextprotocol/go-sdk v1.8.0
 	github.com/russellhaering/goxmldsig v1.6.1
@@ -45,7 +46,6 @@ require (
 	github.com/go-webauthn/x v0.3.1 // indirect
 	github.com/golang-jwt/jwt/v5 v5.3.1 // indirect
 	github.com/google/go-tpm v0.9.8 // indirect
-	github.com/google/jsonschema-go v0.4.3 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jonboulle/clockwork v0.5.0 // indirect
