@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func TestRetainedSourceContractsArePublished(t *testing.T) {
 	definition, err := schemaDefinition()
@@ -17,6 +20,22 @@ func TestRetainedSourceContractsArePublished(t *testing.T) {
 		operation := definition.OpenAPI().Paths[path]
 		if operation == nil || operation.Get == nil || operation.Get.OperationID != id {
 			t.Errorf("retained source operation %q missing at %s", id, path)
+			continue
+		}
+
+		if !strings.HasPrefix(id, "get-") {
+			continue
+		}
+
+		response := operation.Get.Responses["200"]
+		if response == nil || response.Content["*/*"] == nil {
+			t.Errorf("retained source download %q has no binary success body", id)
+			continue
+		}
+
+		schema := response.Content["*/*"].Schema
+		if schema == nil || schema.Type != "string" || schema.Format != "binary" {
+			t.Errorf("retained source download %q has an invalid binary success schema: %+v", id, schema)
 		}
 	}
 }
