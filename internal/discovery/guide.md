@@ -43,7 +43,7 @@ Send `Authorization: Bearer <token>` and `X-Savorum-Library: <library-id>` on li
 
 Authenticated capabilities returns features and limits. A personal token also returns `token.scopes`, `token.libraries` and optional `token.expires_at`. Features describe availability, not permission. Check request and response schemas, including document fields, before declaring a feature unsupported. Fetch the API description once, cache it for the session, and extract only relevant operations and referenced schemas. Avoid dumping the full schema into context. Handle independent request failures separately; inspect a 403 problem response before retrying or assuming its cause. Unavailable account preferences need not block library work.
 
-Browser approval offers Read only or Read and write for one library; the separate API token form offers individual scopes. Write scopes do not include read scopes.
+Assistant authorization requests include `read`, with optional `write`. Browser approval offers Read only or Read and write for one library; the separate API token form offers individual scopes. Write scopes do not include read scopes.
 
 | Scope | Operations |
 | --- | --- |

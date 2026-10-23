@@ -290,9 +290,14 @@ func TestAssistantTemporaryDenialExpiryAndScope(t *testing.T) {
 	}
 
 	ctx := identity.WithPrincipal(t.Context(), user)
-	for _, scenario := range []string{"temporary", "denied", "expired", "scope"} {
+	for _, scenario := range []string{"temporary", "denied", "expired", "write-scope", "read-scope"} {
 		t.Run(scenario, func(t *testing.T) {
-			req, secret, err := s.CreateAssistantRequest(ctx, identity.AuthorizationRequest{ClientID: "savorum-device", Name: "Assistant", Kind: "device", Scope: "read", Resource: "https://recipes.example/mcp"})
+			scope := "read"
+			if scenario == "read-scope" {
+				scope = "write"
+			}
+
+			req, secret, err := s.CreateAssistantRequest(ctx, identity.AuthorizationRequest{ClientID: "savorum-device", Name: "Assistant", Kind: "device", Scope: scope, Resource: "https://recipes.example/mcp"})
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -303,8 +308,8 @@ func TestAssistantTemporaryDenialExpiryAndScope(t *testing.T) {
 				}
 			}
 
-			_, _, err = s.ApproveAssistantRequest(ctx, req.UserCode, "default", scenario == "scope", false, scenario == "denied", identity.TokenPolicy{})
-			if scenario == "scope" || scenario == "expired" {
+			_, _, err = s.ApproveAssistantRequest(ctx, req.UserCode, "default", scenario == "write-scope", false, scenario == "denied", identity.TokenPolicy{})
+			if scenario == "write-scope" || scenario == "read-scope" || scenario == "expired" {
 				if !errors.Is(err, identity.ErrConflict) {
 					t.Fatal(err)
 				}

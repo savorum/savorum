@@ -156,6 +156,11 @@ func beginAssistantAuthorization(w http.ResponseWriter, r *http.Request, store a
 		}
 	}
 
+	if !slices.Contains(scope, "read") {
+		oauthError(w, 400, "invalid_scope")
+		return
+	}
+
 	resource := r.Form.Get("resource")
 	if resource == "" && path == "/oauth/device" {
 		resource = origin + "/mcp"
