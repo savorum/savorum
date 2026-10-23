@@ -45,7 +45,25 @@ func TestAssistantOAuthApprovalAndMCPBoundary(t *testing.T) {
 
 	next := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"ok":true}`))
+
+		if r.Method == http.MethodGet {
+			_, _ = w.Write([]byte(`{"ok":true}`))
+			return
+		}
+
+		var body map[string]any
+		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+			w.WriteHeader(http.StatusUnprocessableEntity)
+			_, _ = w.Write([]byte(`{"detail":"expected object"}`))
+
+			return
+		}
+
+		w.Header().Set("ETag", `"2"`)
+
+		if err := json.NewEncoder(w).Encode(map[string]any{"received": body, "if_match": r.Header.Get("If-Match"), "idempotency_key": r.Header.Get("Idempotency-Key")}); err != nil {
+			t.Error(err)
+		}
 	})
 	handler := discovery.Handler(account.New(store, account.Options{Enabled: true}, next), discovery.Options{})
 
@@ -228,6 +246,17 @@ func TestAssistantOAuthApprovalAndMCPBoundary(t *testing.T) {
 		t.Fatalf("SDK tool discovery: %v", err)
 	}
 
+	for topic, want := range map[string]bool{"": false, "connect": true} {
+		help, err := sdkSession.CallTool(t.Context(), &mcp.CallToolParams{Name: "savorum_help", Arguments: map[string]any{"topic": topic}})
+		if err != nil || help.IsError {
+			t.Fatalf("savorum_help topic %q: %v", topic, err)
+		}
+
+		if text, ok := help.Content[0].(*mcp.TextContent); !ok || strings.Contains(text.Text, "/oauth/device") != want {
+			t.Fatalf("savorum_help topic %q returned the wrong guide", topic)
+		}
+	}
+
 	result, err := sdkSession.CallTool(t.Context(), &mcp.CallToolParams{Name: "savorum_read", Arguments: map[string]any{"path": "/api/v1/recipes"}})
 	if err != nil || result.IsError {
 		t.Fatalf("SDK read: %v", err)
@@ -246,9 +275,9 @@ func TestAssistantOAuthApprovalAndMCPBoundary(t *testing.T) {
 		t.Fatalf("MCP read failed: %d %s", response.Code, response.Body.String())
 	}
 
-	response = call("POST", "/mcp", `{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"savorum_write","arguments":{"path":"/api/v1/recipes","method":"POST","body":{}}}}`, grant.AccessToken, false, false)
-	if response.Code != 200 || !strings.Contains(response.Body.String(), `"isError":true`) {
-		t.Fatal("MCP bypassed write permissions")
+	response = call("POST", "/mcp", `{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"savorum_write","arguments":{"path":"/api/v1/recipes","method":"POST","body":{"title":"Soup"}}}}`, grant.AccessToken, false, false)
+	if response.Code != 200 || !strings.Contains(response.Body.String(), `"isError":true`) || !strings.Contains(response.Body.String(), `\"status\":403`) || !strings.Contains(response.Body.String(), "recipes:write") {
+		t.Fatalf("MCP bypassed write permissions: %s", response.Body.String())
 	}
 
 	if out := call("GET", "/api/v1/recipes?x=1", "", grant.AccessToken, false, false); out.Code != 200 {
@@ -272,5 +301,69 @@ func TestAssistantOAuthApprovalAndMCPBoundary(t *testing.T) {
 
 	if out := call("POST", "/mcp", `{}`, grant.AccessToken, false, false); out.Code != 401 {
 		t.Fatal("disconnected MCP accepted")
+	}
+
+	query.Set("state", "write-state")
+
+	response = call("GET", "/oauth/authorize?"+query.Encode(), "", "", false, false)
+	if response.Code != 303 {
+		t.Fatalf("write authorize: %d", response.Code)
+	}
+
+	if location, err = url.Parse(response.Header().Get("Location")); err != nil {
+		t.Fatal(err)
+	}
+
+	response = call("POST", "/api/v1/account/authorization", fmt.Sprintf(`{"code":%q,"library_id":"default","access":"write","remember":true}`, location.Query().Get("code")), "", true, true)
+	if response.Code != 200 {
+		t.Fatalf("write approve: %d", response.Code)
+	}
+
+	if err = json.Unmarshal(response.Body.Bytes(), &approved); err != nil {
+		t.Fatal(err)
+	}
+
+	if redirect, err = url.Parse(approved.RedirectURI); err != nil {
+		t.Fatal(err)
+	}
+
+	values.Set("code", redirect.Query().Get("code"))
+
+	response = call("POST", "/oauth/token", values.Encode(), "", false, false)
+	if response.Code != 200 {
+		t.Fatalf("write exchange: %d", response.Code)
+	}
+
+	var writeGrant identity.ConnectionCredentials
+	if err = json.Unmarshal(response.Body.Bytes(), &writeGrant); err != nil {
+		t.Fatal(err)
+	}
+
+	writeSession, err := sdk.Connect(t.Context(), &mcp.StreamableClientTransport{Endpoint: "https://recipes.example/mcp", HTTPClient: &http.Client{Transport: assistantRoundTripper(func(req *http.Request) (*http.Response, error) {
+		req = req.Clone(req.Context())
+		req.Header.Set("Authorization", "Bearer "+writeGrant.AccessToken)
+		req.TLS = &tls.ConnectionState{}
+		recorder := httptest.NewRecorder()
+		handler.ServeHTTP(recorder, req)
+
+		return recorder.Result(), nil
+	})}}, nil)
+	if err != nil {
+		t.Fatalf("SDK write connection: %v", err)
+	}
+	defer writeSession.Close()
+
+	result, err = writeSession.CallTool(t.Context(), &mcp.CallToolParams{Name: "savorum_write", Arguments: map[string]any{"path": "/api/v1/recipes/r1", "method": "PUT", "revision": "1", "idempotency_key": "retry-1", "body": map[string]any{"title": "Soup", "servings": 4}}})
+	if err != nil || result.IsError {
+		t.Fatalf("SDK object write: %v %+v", err, result)
+	}
+
+	written, err := json.Marshal(result.StructuredContent)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !strings.Contains(string(written), `"status":200`) || !strings.Contains(string(written), `"received":{"servings":4,"title":"Soup"}`) || !strings.Contains(string(written), `"if_match":"\"1\""`) || !strings.Contains(string(written), `"etag":"\"2\""`) || !strings.Contains(string(written), `"idempotency_key":"retry-1"`) {
+		t.Fatalf("object body not forwarded: %s", written)
 	}
 }

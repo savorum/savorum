@@ -67,6 +67,22 @@ func TestGuideIsWrittenForTheConfiguredOrigin(t *testing.T) {
 	}
 }
 
+func TestAssistantGuideOffersConnectionSetupSeparately(t *testing.T) {
+	t.Parallel()
+
+	full := discovery.Guide("https://cook.example.org")
+	assistant := discovery.AssistantGuide("https://cook.example.org")
+	connection := discovery.ConnectionGuide("https://cook.example.org")
+
+	if !strings.HasPrefix(connection, "## Connecting without a key\n") || !strings.Contains(connection, "/oauth/device") || strings.Contains(connection, "\n## MCP tools") {
+		t.Fatalf("connection section = %q", connection)
+	}
+
+	if strings.Contains(assistant, "/oauth/device") || !strings.Contains(assistant, "\n## MCP tools\n") || len(assistant)+len(connection) != len(full) {
+		t.Fatalf("assistant guide kept connection setup or lost content")
+	}
+}
+
 func TestSpecNamesTheRequestOrigin(t *testing.T) {
 	t.Parallel()
 

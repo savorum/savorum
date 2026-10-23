@@ -6,6 +6,8 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+- Fix assistant JSON and idempotent writes.
+
 ## 0.2.4
 
 - Add assistant connections through MCP and device authorization, with browser approval and an agent guide.
