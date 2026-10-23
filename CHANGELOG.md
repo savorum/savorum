@@ -6,8 +6,12 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+## 0.2.4
+
 - Add assistant connections through MCP and device authorization, with browser approval and an agent guide.
+- Preserve inferred measurements across recipe edits.
 - Fix lost edits and stale updates in recipes, shopping lists, and book ordering.
+- Require Go 1.27.3 or later for source builds.
 
 ## 0.2.3
 
