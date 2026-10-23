@@ -65,18 +65,19 @@ func run(arguments []string) error {
 // are optional at run time, so the document describes the complete API.
 func schemaDefinition() (huma.API, error) {
 	_, definition, err := api.New(schemaService{}, schemaHealth{}, schemaPrinter{}, api.Options{
-		Selection:     schemaSelections{},
-		Automation:    &automation.Service{},
-		Webhooks:      &webhook.Service{},
-		Events:        schemaEvents{},
-		Pantry:        schemaPantry{},
-		Assets:        schemaService{},
-		Configuration: schemaConfiguration{},
-		Preferences:   schemaPreferences{},
-		ImportJobs:    schemaImportJobs{},
-		Meals:         schemaMealService{},
-		Shopping:      schemaShoppingService{},
-		MealCalendar:  schemaMealCalendarService{},
+		Selection:         schemaSelections{},
+		Automation:        &automation.Service{},
+		Webhooks:          &webhook.Service{},
+		Events:            schemaEvents{},
+		Pantry:            schemaPantry{},
+		Assets:            schemaService{},
+		SourceAttachments: schemaSourceAttachments{},
+		Configuration:     schemaConfiguration{},
+		Preferences:       schemaPreferences{},
+		ImportJobs:        schemaImportJobs{},
+		Meals:             schemaMealService{},
+		Shopping:          schemaShoppingService{},
+		MealCalendar:      schemaMealCalendarService{},
 	})
 	if err != nil {
 		return nil, fmt.Errorf("construct API schema: %w", err)
@@ -103,3 +104,5 @@ func (schemaEvents) ReadEvents(context.Context, string, int) (event.Page, error)
 }
 
 type schemaSelections struct{ api.SelectionService }
+
+type schemaSourceAttachments struct{ api.SourceAttachmentService }
