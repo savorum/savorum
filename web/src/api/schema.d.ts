@@ -19061,12 +19061,14 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description OK */
+            /** @description The retained original bytes as an attachment with the source filename. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "*/*": string;
+                };
             };
             /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
             401: {
@@ -19176,12 +19178,14 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description OK */
+            /** @description The retained original bytes as an attachment with the source filename. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "*/*": string;
+                };
             };
             /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
             401: {

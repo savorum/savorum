@@ -309,10 +309,10 @@ func registerRecipeSources(api huma.API, sources SourceAttachmentService, servic
 
 		return &sourceAttachmentListOutput{Body: sourceAttachmentResources(attachments, input.RecipeID)}, nil
 	})
-	huma.Register(api, huma.Operation{OperationID: "get-recipe-source", Method: http.MethodGet, Path: "/api/v1/recipes/{recipe_id}/sources/{id}", Summary: "Download a recipe source", Tags: []string{"Assets"}, Errors: []int{http.StatusNotFound}}, func(ctx context.Context, input *sourceAttachmentPathInput) (*huma.StreamResponse, error) {
+	huma.Register(api, huma.Operation{OperationID: "get-recipe-source", Method: http.MethodGet, Path: "/api/v1/recipes/{recipe_id}/sources/{id}", Summary: "Download a recipe source", Tags: []string{"Assets"}, Errors: []int{http.StatusNotFound}, Responses: binaryResponse("The retained original bytes as an attachment with the source filename.", "*/*")}, func(ctx context.Context, input *sourceAttachmentPathInput) (*huma.StreamResponse, error) {
 		return streamRecipeSource(ctx, sources, service, input.RecipeID, 0, input.ID)
 	})
-	huma.Register(api, huma.Operation{OperationID: "get-recipe-revision-source", Method: http.MethodGet, Path: "/api/v1/recipes/{recipe_id}/revisions/{revision}/sources/{id}", Summary: "Download a revision source", Tags: []string{"Assets"}, Errors: []int{http.StatusNotFound}}, func(ctx context.Context, input *sourceAttachmentRevisionPathInput) (*huma.StreamResponse, error) {
+	huma.Register(api, huma.Operation{OperationID: "get-recipe-revision-source", Method: http.MethodGet, Path: "/api/v1/recipes/{recipe_id}/revisions/{revision}/sources/{id}", Summary: "Download a revision source", Tags: []string{"Assets"}, Errors: []int{http.StatusNotFound}, Responses: binaryResponse("The retained original bytes as an attachment with the source filename.", "*/*")}, func(ctx context.Context, input *sourceAttachmentRevisionPathInput) (*huma.StreamResponse, error) {
 		return streamRecipeSource(ctx, sources, service, input.RecipeID, input.Revision, input.ID)
 	})
 }

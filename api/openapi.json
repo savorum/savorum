@@ -28307,7 +28307,16 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "content": {
+              "*/*": {
+                "schema": {
+                  "contentMediaType": "application/octet-stream",
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The retained original bytes as an attachment with the source filename."
           },
           "401": {
             "content": {
@@ -28451,7 +28460,16 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "content": {
+              "*/*": {
+                "schema": {
+                  "contentMediaType": "application/octet-stream",
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The retained original bytes as an attachment with the source filename."
           },
           "401": {
             "content": {
