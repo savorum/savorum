@@ -551,7 +551,7 @@ func mergeStableArray(base, local, remote []any, path string) ([]any, []RefreshC
 		chosenOrder, otherOrder = remote, local
 	}
 
-	result := make([]any, 0, len(lm)+len(rm))
+	result := make([]any, 0, len(lm))
 
 	var conflicts []RefreshConflict
 	if localChanged && remoteChanged && !sharedStableOrderEqual(local, remote) {
