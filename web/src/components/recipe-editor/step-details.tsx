@@ -346,12 +346,11 @@ export function StepDetails(props: {
                         const [typedAmount, setTypedAmount] = createSignal(
                           untrack(() => amountFieldValue(use().quantity)),
                         )
+                        const enteredQuantity = () =>
+                          parseAmountField(typedAmount(), use().quantity?.unit)
                         const commitAmount = () => {
                           if (typedAmount() !== amountFieldValue(use().quantity))
-                            setIngredientQuantity(
-                              ingredient().id,
-                              parseAmountField(typedAmount(), use().quantity?.unit),
-                            )
+                            setIngredientQuantity(ingredient().id, enteredQuantity())
                         }
                         return (
                           <>
@@ -379,11 +378,7 @@ export function StepDetails(props: {
                               aria-label={m.step_details_measure_for_used({
                                 value1: ingredient().name,
                               })}
-                              disabled={
-                                ingredient().choice ||
-                                !use().quantity ||
-                                use().quantity?.kind !== "simple"
-                              }
+                              disabled={ingredient().choice || enteredQuantity()?.kind !== "simple"}
                               value={
                                 use().quantity?.kind === "simple"
                                   ? (use().quantity?.unit ?? "")

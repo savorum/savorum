@@ -630,7 +630,8 @@ test("signing out removes the recipes the worker kept for offline reading", asyn
     await context.setOffline(false)
 
     await page.goto(`${origin}/account`)
-    await page.getByRole("button", { name: "Sign out", exact: true }).click()
+    await page.getByRole("button", { name: "More", exact: true }).click()
+    await page.getByRole("menuitem", { name: "Sign out", exact: true }).click()
     await page.getByRole("dialog").getByRole("button", { name: "Sign out", exact: true }).click()
     await expect(page.getByLabel("Login name", { exact: true })).toBeVisible()
     await expect.poll(dataCaches).toEqual([])
