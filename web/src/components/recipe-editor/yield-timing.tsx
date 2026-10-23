@@ -1,5 +1,13 @@
 import { Plus, X } from "lucide-solid"
-import { Index, Show, createMemo, createSignal, createUniqueId, untrack } from "solid-js"
+import {
+  Index,
+  Show,
+  createEffect,
+  createMemo,
+  createSignal,
+  createUniqueId,
+  untrack,
+} from "solid-js"
 import type { SetStoreFunction } from "solid-js/store"
 import { css } from "styled-system/css"
 
@@ -47,6 +55,11 @@ function YieldRow(props: {
   const complex = () => needsAdvancedAmount(current().quantity)
   const primaryValue = () => amountFieldValue(current().quantity) || current().text || ""
   const [typed, setTyped] = createSignal(untrack(primaryValue))
+  let amountInput: HTMLInputElement | undefined
+  createEffect(() => {
+    const value = primaryValue()
+    if (!amountInput || document.activeElement !== amountInput) setTyped(value)
+  })
   const commitYield = () => {
     if (typed() === primaryValue()) return
     const initialText = typed()
@@ -62,6 +75,9 @@ function YieldRow(props: {
       <Show when={!complex()} fallback={<p class={styles.reading}>{summary()}</p>}>
         <Input
           size="sm"
+          ref={(node) => {
+            amountInput = node
+          }}
           aria-label={m.yield_timing_how_many()}
           placeholder="12"
           value={typed()}

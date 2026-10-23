@@ -55,7 +55,7 @@ func (s *Service) ApplyReview(ctx context.Context, input ShoppingApplyInput) (Sh
 		return ShoppingList{}, err
 	}
 
-	return s.store.EditShoppingList(ctx, selectedList(ctx), Edit{OperationID: input.ID, Digest: hex.EncodeToString(digest[:]), Role: access.Editor, Activity: ActivityReview, MealPins: mealPins(review.Requirements), Mutate: func(list *ShoppingList) error {
+	return s.store.EditShoppingList(ctx, selectedList(ctx), Edit{OperationID: input.ID, Digest: hex.EncodeToString(digest[:]), Role: access.Editor, Activity: ActivityReview, MealPins: mealPins(review.Requirements), MealRevisions: review.mealRevisions, Mutate: func(list *ShoppingList) error {
 		if input.Token != review.Token || list.Revision != review.Revision {
 			return ErrConflict
 		}

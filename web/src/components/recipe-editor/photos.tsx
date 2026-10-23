@@ -149,6 +149,7 @@ export function RecipePhotosEditor(props: {
   draft: Recipe
   setDraft: SetStoreFunction<Recipe>
   entryID?: string
+  onAttachPhotos?: (files: FileList | null) => Promise<string[]>
   onAnnounce?: (message: string) => void
 }) {
   const [uploadError, setUploadError] = createSignal<unknown>()
@@ -203,7 +204,9 @@ export function RecipePhotosEditor(props: {
     setUploadError(undefined)
     setUploading(true)
     try {
-      await attachRecipeImages(props.setDraft, files)
+      await (props.onAttachPhotos
+        ? props.onAttachPhotos(files)
+        : attachRecipeImages(props.setDraft, files))
     } catch (error) {
       setUploadError(error)
     } finally {

@@ -1,5 +1,5 @@
 import { ChevronDown, ChevronUp, Plus } from "lucide-solid"
-import { For, Index, Show, createSignal, createUniqueId, untrack } from "solid-js"
+import { For, Show, createSignal, createUniqueId, untrack } from "solid-js"
 import type { JSX } from "solid-js"
 import type { SetStoreFunction } from "solid-js/store"
 import { css } from "styled-system/css"
@@ -251,60 +251,72 @@ export function RecipeIngredientsEditor(props: {
                   </div>
                 </div>
               </Show>
-              {/* Index preserves active ingredient fields as controlled values change. */}
-              <Index each={section.ingredients ?? []}>
-                {(ingredient, ingredientIndex) => (
-                  <div
-                    class={reorderRow}
-                    {...reorder.row(
-                      () => ({ group: sectionIndex(), index: ingredientIndex }),
-                      () => ingredient().id,
-                    )}
-                  >
-                    <IngredientChoice
-                      dragHandleProps={reorder.handle(
-                        () => ({ group: sectionIndex(), index: ingredientIndex }),
+              {/* Ingredient IDs preserve pending readings across row moves. */}
+              <For each={(section.ingredients ?? []).map((item) => item.id)}>
+                {(id, ingredientIndex) => {
+                  const initial = untrack(() =>
+                    section.ingredients!.find((item) => item.id === id)!,
+                  )
+                  const ingredient = () =>
+                    section.ingredients?.find((item) => item.id === id) ?? initial
+                  return (
+                    <div
+                      class={reorderRow}
+                      {...reorder.row(
+                        () => ({ group: sectionIndex(), index: ingredientIndex() }),
                         () => ingredient().id,
                       )}
-                      onAnnounce={props.onAnnounce}
-                      onFocus={props.onFocus}
-                      ingredient={ingredient()}
-                      position={ingredientIndex + 1}
-                      style={props.style}
-                      first={
-                        !reorder.canMoveBy({ group: sectionIndex(), index: ingredientIndex }, -1)
-                      }
-                      last={
-                        !reorder.canMoveBy({ group: sectionIndex(), index: ingredientIndex }, 1)
-                      }
-                      removable={(section.ingredients?.length ?? 0) > 1}
-                      // Replace rather than merge, since reverting removes fields.
-                      onChange={(next) => replaceIngredient(ingredient().id, next)}
-                      onMove={(offset) =>
-                        reorder.moveBy(
-                          { group: untrack(sectionIndex), index: ingredientIndex },
-                          offset,
-                        )
-                      }
-                      onRemove={() => {
-                        const items = section.ingredients ?? []
-                        const survivor = items[ingredientIndex + 1] ?? items[ingredientIndex - 1]
-                        const removedName = ingredient().name || m.editor_ingredient_fallback()
-                        props.setDraft(
-                          "ingredient_sections",
-                          sectionIndex(),
-                          "ingredients",
-                          (items) => removeAt(items ?? [], ingredientIndex),
-                        )
-                        props.onAnnounce(
-                          m.editor_ingredient_removed({ name: isolate(removedName) }),
-                        )
-                        if (survivor) props.onFocus(survivor.id)
-                      }}
-                    />
-                  </div>
-                )}
-              </Index>
+                    >
+                      <IngredientChoice
+                        dragHandleProps={reorder.handle(
+                          () => ({ group: sectionIndex(), index: ingredientIndex() }),
+                          () => ingredient().id,
+                        )}
+                        onAnnounce={props.onAnnounce}
+                        onFocus={props.onFocus}
+                        ingredient={ingredient()}
+                        position={ingredientIndex() + 1}
+                        style={props.style}
+                        first={
+                          !reorder.canMoveBy(
+                            { group: sectionIndex(), index: ingredientIndex() },
+                            -1,
+                          )
+                        }
+                        last={
+                          !reorder.canMoveBy({ group: sectionIndex(), index: ingredientIndex() }, 1)
+                        }
+                        removable={(section.ingredients?.length ?? 0) > 1}
+                        // Replace rather than merge, since reverting removes fields.
+                        onChange={(next) => replaceIngredient(id, next)}
+                        onMove={(offset) =>
+                          reorder.moveBy(
+                            { group: untrack(sectionIndex), index: ingredientIndex() },
+                            offset,
+                          )
+                        }
+                        onRemove={() => {
+                          const position = ingredientIndex()
+                          const items = section.ingredients ?? []
+                          const survivor =
+                            items[ingredientIndex() + 1] ?? items[ingredientIndex() - 1]
+                          const removedName = ingredient().name || m.editor_ingredient_fallback()
+                          props.setDraft(
+                            "ingredient_sections",
+                            sectionIndex(),
+                            "ingredients",
+                            (items) => removeAt(items ?? [], position),
+                          )
+                          props.onAnnounce(
+                            m.editor_ingredient_removed({ name: isolate(removedName) }),
+                          )
+                          if (survivor) props.onFocus(survivor.id)
+                        }}
+                      />
+                    </div>
+                  )
+                }}
+              </For>
               <div class={styles.inline}>
                 <Button
                   size="sm"

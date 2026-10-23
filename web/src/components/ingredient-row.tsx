@@ -102,7 +102,7 @@ export const IngredientRow = (props: IngredientRowProps) => {
   let input: HTMLInputElement | undefined
   createEffect(() => {
     const next = writtenLine(props.ingredient)
-    if (!input || document.activeElement !== input) setTyped(next)
+    if (!requested && (!input || document.activeElement !== input)) setTyped(next)
   })
 
   let requested: string | undefined

@@ -103,12 +103,26 @@ func (s *Store) MergeEntries(ctx context.Context, command library.MergeMutation)
 		return library.Entry{}, fmt.Errorf("merge imported cooking counts: %w", err)
 	}
 
-	if _, err := tx.ExecContext(ctx, `INSERT OR IGNORE INTO recipe_user_state(entry_id,user_id,favorite,rating,personal_note,last_cooked,times_cooked,preferred_yield,preferred_scale) SELECT ?,user_id,favorite,rating,personal_note,last_cooked,times_cooked,preferred_yield,preferred_scale FROM recipe_user_state WHERE entry_id=?`, command.Survivor, command.Duplicate); err != nil {
+	if _, err := tx.ExecContext(ctx, `INSERT OR IGNORE INTO recipe_user_state(entry_id,user_id,favorite,rating,personal_note,last_cooked,times_cooked,preferred_yield,preferred_scale,preferred_yield_assertion) SELECT ?,user_id,favorite,rating,personal_note,last_cooked,times_cooked,preferred_yield,preferred_scale,preferred_yield_assertion FROM recipe_user_state WHERE entry_id=?`, command.Survivor, command.Duplicate); err != nil {
 		return library.Entry{}, fmt.Errorf("copy duplicate user preferences: %w", err)
 	}
 	// Keep the survivor's explicit state where present, filling missing values
 	// from the duplicate and OR-ing the favorite flag.
-	if _, err := tx.ExecContext(ctx, `UPDATE recipe_user_state AS survivor_state SET favorite=MAX(favorite,COALESCE((SELECT favorite FROM recipe_user_state WHERE entry_id=? AND user_id=survivor_state.user_id),0)),rating=COALESCE(rating,(SELECT rating FROM recipe_user_state WHERE entry_id=? AND user_id=survivor_state.user_id)),personal_note=CASE WHEN trim(personal_note)='' THEN COALESCE((SELECT personal_note FROM recipe_user_state WHERE entry_id=? AND user_id=survivor_state.user_id),'') ELSE personal_note END,preferred_yield=CASE WHEN preferred_yield IS NULL AND preferred_scale IS NULL THEN (SELECT preferred_yield FROM recipe_user_state WHERE entry_id=? AND user_id=survivor_state.user_id) ELSE preferred_yield END,preferred_scale=CASE WHEN preferred_yield IS NULL AND preferred_scale IS NULL THEN (SELECT preferred_scale FROM recipe_user_state WHERE entry_id=? AND user_id=survivor_state.user_id) ELSE preferred_scale END WHERE entry_id=?`, command.Duplicate, command.Duplicate, command.Duplicate, command.Duplicate, command.Duplicate, command.Survivor); err != nil {
+	if _, err := tx.ExecContext(ctx, `UPDATE recipe_user_state AS kept SET
+        favorite=MAX(kept.favorite,duplicate.favorite),
+        rating=COALESCE(kept.rating,duplicate.rating),
+        personal_note=CASE WHEN trim(kept.personal_note)='' THEN duplicate.personal_note ELSE kept.personal_note END,
+        preferred_yield_assertion=CASE
+            WHEN kept.preferred_yield IS NULL AND kept.preferred_scale IS NULL
+              AND kept.preferred_yield_assertion IS NULL
+            THEN duplicate.preferred_yield_assertion
+            ELSE kept.preferred_yield_assertion END,
+        preferred_yield=CASE WHEN kept.preferred_yield IS NULL AND kept.preferred_scale IS NULL AND kept.preferred_yield_assertion IS NULL
+            THEN duplicate.preferred_yield ELSE kept.preferred_yield END,
+        preferred_scale=CASE WHEN kept.preferred_yield IS NULL AND kept.preferred_scale IS NULL AND kept.preferred_yield_assertion IS NULL
+            THEN duplicate.preferred_scale ELSE kept.preferred_scale END
+        FROM recipe_user_state AS duplicate
+        WHERE duplicate.entry_id=? AND duplicate.user_id=kept.user_id AND kept.entry_id=?`, command.Duplicate, command.Survivor); err != nil {
 		return library.Entry{}, fmt.Errorf("combine user preferences: %w", err)
 	}
 

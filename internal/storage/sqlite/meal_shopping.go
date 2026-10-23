@@ -3,6 +3,7 @@ package sqlite
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
 	"sort"
 	"time"
@@ -104,6 +105,23 @@ func pinMealDishes(ctx context.Context, tx *sql.Tx, libraryID string, pins []sho
 
 		if err := appendDomainEvent(ctx, tx, "meal_plan.entry.updated", libraryID, "meal", mealID, event.Payload{Revision: revision}); err != nil {
 			return err
+		}
+	}
+
+	return nil
+}
+
+func checkReviewedMeals(ctx context.Context, tx *sql.Tx, libraryID string, revisions map[string]uint64) error {
+	for id, expected := range revisions {
+		var revision uint64
+
+		err := tx.QueryRowContext(ctx, "SELECT revision FROM meals WHERE id=? AND library_id=?", id, libraryID).Scan(&revision)
+		if err != nil && !errors.Is(err, sql.ErrNoRows) {
+			return fmt.Errorf("read reviewed meal: %w", err)
+		}
+
+		if revision != expected {
+			return shopping.ErrConflict
 		}
 	}
 

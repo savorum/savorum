@@ -45,11 +45,13 @@ export function LabelGroup(props: {
     event.preventDefault()
     const staticValue = name().trim()
     if (!staticValue) return
-    await props.onRun(() =>
-      untrack(() => props.group.create(staticValue, props.group.colored ? color() : undefined)),
-    )
-    setName("")
-    setAdding(false)
+    await props.onRun(async () => {
+      await untrack(() =>
+        props.group.create(staticValue, props.group.colored ? color() : undefined),
+      )
+      setName("")
+      setAdding(false)
+    })
   }
 
   return (

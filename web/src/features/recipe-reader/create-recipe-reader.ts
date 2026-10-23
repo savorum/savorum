@@ -85,6 +85,10 @@ export function createRecipeReader(props: CreateRecipeReaderOptions) {
       batchApplied()
     )
       return
+    if (parseRational(props.batch() ?? "")) {
+      setBatchApplied(true)
+      return
+    }
     const wanted = rememberedYield()
     const written = wanted
       ? yieldAmount(displayYield(loaded.value.recipe, preferredYield()).value)
@@ -186,15 +190,17 @@ export function createRecipeReader(props: CreateRecipeReaderOptions) {
   const [trashError, setTrashError] = createSignal<unknown>()
 
   const moveToTrash = async (revision: number) => {
-    if (trashing()) return
+    const loaded = latestUnlessFailed(entry)
+    if (trashing() || !loaded || loaded.value.id !== props.recipeID()) return
+    const id = loaded.value.id
+    const title = loaded.value.recipe.title
     setTrashing(true)
     setTrashError(undefined)
     try {
-      const title = latestUnlessFailed(entry)?.value.recipe.title ?? ""
-      const trashed = await trashRecipe(props.recipeID(), revision)
+      const trashed = await trashRecipe(id, revision)
       // The revision trashing returned is what a restore has to name, so the
       // library can offer the way back without reading the recipe again.
-      props.onTrashed({ id: props.recipeID(), title, revision: trashed.revision })
+      props.onTrashed({ id, title, revision: trashed.revision })
     } catch (failure) {
       setTrashError(failure)
       setConfirmTrash(false)

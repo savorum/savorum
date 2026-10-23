@@ -138,6 +138,8 @@ type Edit struct {
 	// MealPins are written to the planned meals in the same transaction as
 	// the list, so a meal cooks the recipe versions it was shopped for.
 	MealPins []MealPin
+	// MealRevisions are checked inside the write transaction before applying a review.
+	MealRevisions map[string]uint64
 }
 
 // MealPin fixes a planned dish to the recipe revision a review read.
@@ -352,13 +354,40 @@ func merge(list *ShoppingList, index int, change ShoppingChange) error {
 			return ErrDeleted
 		}
 
+		if list.Items[other].Bought != target.Bought {
+			return ErrInvalid
+		}
+
 		if list.Items[other].Revision > change.BaseRevision {
 			return ErrConflict
 		}
 	}
 
+	notes := map[string]bool{strings.TrimSpace(target.Note): true}
+
 	for _, id := range change.MergeItemIDs {
 		other := &list.Items[slices.IndexFunc(list.Items, func(row ShoppingItem) bool { return row.ID == id })]
+
+		if target.Fields == nil {
+			target.Fields = map[string]uint64{}
+		}
+
+		if other.Buy != "" {
+			if target.Buy == "" {
+				target.Buy = other.Buy
+			} else {
+				target.Buy += " + " + other.Buy
+			}
+
+			target.Fields["buy"] = revision
+		}
+
+		if note := strings.TrimSpace(other.Note); note != "" && !notes[note] {
+			notes[note] = true
+			target.Note = strings.TrimSpace(strings.Join([]string{target.Note, other.Note}, "\n"))
+			target.Fields["note"] = revision
+		}
+
 		list.Items[index].Sources = append(list.Items[index].Sources, other.Sources...)
 		other.Sources = []ShoppingSource{}
 		other.Deleted = true
@@ -416,7 +445,7 @@ func split(list *ShoppingList, index int, change ShoppingChange) error {
 		}
 
 		rows = append(rows, ShoppingItem{
-			ID: hex.EncodeToString(digest[:16]), Name: name, Note: source.Note, Category: item.Category,
+			ID: hex.EncodeToString(digest[:16]), Name: name, Note: source.Note, Category: item.Category, Bought: item.Bought,
 			Revision: revision, Fields: map[string]uint64{}, Sources: []ShoppingSource{source}, Arranged: true,
 		})
 	}

@@ -198,3 +198,55 @@ func TestShoppingAddAgainKeepsTheEarlierContribution(t *testing.T) {
 		t.Fatal("adding again must leave the original contribution alone")
 	}
 }
+
+func TestManualMergePreservesPurchaseText(t *testing.T) {
+	list := ShoppingList{Revision: 1, Items: []ShoppingItem{
+		{ID: "a", Name: "Milk", Buy: "1 carton", Revision: 1, Fields: map[string]uint64{"buy": 1}},
+		{ID: "b", Name: "Milk", Buy: "2 cartons", Note: "for guests", Revision: 1, Fields: map[string]uint64{"buy": 1, "note": 1}},
+	}}
+	if err := Apply(&list, ShoppingChange{ID: "merge", Kind: "merge", ItemID: "a", MergeItemIDs: []string{"b"}, BaseRevision: 1}); err != nil {
+		t.Fatal(err)
+	}
+
+	if list.Items[0].Buy != "1 carton + 2 cartons" || list.Items[0].Note != "for guests" {
+		t.Fatalf("manual details lost: %#v", list.Items[0])
+	}
+}
+
+func TestMergeRejectsMixedPurchaseStates(t *testing.T) {
+	for _, bought := range []bool{false, true} {
+		list := ShoppingList{Revision: 1, Items: []ShoppingItem{{ID: "a", Revision: 1, Bought: bought}, {ID: "b", Revision: 1, Bought: !bought}}}
+		if err := Apply(&list, ShoppingChange{ID: "merge", Kind: "merge", ItemID: "a", MergeItemIDs: []string{"b"}, BaseRevision: 1}); !errors.Is(err, ErrInvalid) {
+			t.Fatalf("mixed purchase states accepted: %v", err)
+		}
+	}
+}
+
+func TestSplitPreservesPurchaseState(t *testing.T) {
+	list := ShoppingList{Revision: 1, Items: []ShoppingItem{{ID: "a", Name: "Milk", Revision: 1, Bought: true, Sources: []ShoppingSource{{ID: "one"}, {ID: "two"}}}}}
+	if err := Apply(&list, ShoppingChange{ID: "split", Kind: "split", ItemID: "a", BaseRevision: 1}); err != nil {
+		t.Fatal(err)
+	}
+
+	for _, item := range list.Items {
+		if !item.Bought {
+			t.Fatalf("purchased source reopened: %#v", item)
+		}
+	}
+}
+
+func TestMergeKeepsDistinctNotes(t *testing.T) {
+	list := ShoppingList{Revision: 1, Items: []ShoppingItem{
+		{ID: "a", Name: "Milk", Note: "for guests", Revision: 1},
+		{ID: "b", Name: "Milk", Note: "whole milk", Revision: 1},
+		{ID: "c", Name: "Milk", Note: "for guests", Revision: 1},
+		{ID: "d", Name: "Milk", Note: "whole milk", Revision: 1},
+	}}
+	if err := Apply(&list, ShoppingChange{ID: "merge", Kind: "merge", ItemID: "a", MergeItemIDs: []string{"b", "c", "d"}, BaseRevision: 1}); err != nil {
+		t.Fatal(err)
+	}
+
+	if list.Items[0].Note != "for guests\nwhole milk" || list.Items[0].Fields["note"] != 2 {
+		t.Fatalf("merged note=%#v", list.Items[0])
+	}
+}

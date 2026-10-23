@@ -85,6 +85,10 @@ func (s *Store) EditShoppingList(ctx context.Context, id string, edit shopping.E
 		return list, fmt.Errorf("read shopping receipt: %w", err)
 	}
 
+	if err := checkReviewedMeals(ctx, tx, libraryID, edit.MealRevisions); err != nil {
+		return list, err
+	}
+
 	before := map[string]uint64{}
 	for _, item := range list.Items {
 		before[item.ID] = item.Revision

@@ -1,8 +1,12 @@
 package sqlite
 
 import (
+	"context"
 	"errors"
 	"testing"
+	"time"
+
+	"github.com/savorum/savorum/internal/meal"
 
 	"github.com/savorum/savorum/internal/access"
 	"github.com/savorum/savorum/internal/identity"
@@ -162,5 +166,66 @@ func TestShoppingViewersTickOffAndHistoryNamesWhoChangedWhat(t *testing.T) {
 
 	if _, err := service.Get(weekend); !errors.Is(err, shopping.ErrNotFound) {
 		t.Fatalf("deleted list = %v", err)
+	}
+}
+
+type interleavedShoppingStore struct {
+	*Store
+	beforeEdit func()
+}
+
+func (s *interleavedShoppingStore) GetMeal(ctx context.Context, id string) (meal.Meal, error) {
+	return s.Store.GetMeal(ctx, "default", id)
+}
+
+func (s *interleavedShoppingStore) EditShoppingList(ctx context.Context, id string, edit shopping.Edit) (shopping.ShoppingList, error) {
+	if s.beforeEdit != nil {
+		s.beforeEdit()
+	}
+
+	return s.Store.EditShoppingList(ctx, id, edit)
+}
+
+func TestShoppingConfirmationRejectsMealChangedBeforeTransaction(t *testing.T) {
+	ctx := t.Context()
+	store := openStore(ctx, t)
+	now := time.Now()
+
+	planned := meal.Meal{ID: "dinner", Name: "Dinner", Revision: 1, CreatedAt: now, UpdatedAt: now, Dishes: []meal.Dish{{ID: "salad", MealID: "dinner", DisplayName: "Salad", PlainItems: []meal.PlainItem{{ID: "lettuce", Name: "Lettuce", Quantity: "1 head"}}}}}
+	if err := store.CreateMeal(ctx, "default", planned); err != nil {
+		t.Fatal(err)
+	}
+
+	wrapped := &interleavedShoppingStore{Store: store}
+	service := shopping.NewService(wrapped).WithSources(nil, wrapped)
+	input := shopping.ShoppingReviewInput{MealIDs: []string{"dinner"}}
+
+	review, err := service.Review(ctx, input)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	selections := []shopping.ShoppingSelection{}
+	for _, requirement := range review.Requirements {
+		selections = append(selections, shopping.ShoppingSelection{ID: requirement.ID, ChoiceID: requirement.ChoiceID, Selected: true})
+	}
+
+	wrapped.beforeEdit = func() {
+		if _, err := store.db.ExecContext(ctx, `UPDATE meals SET revision=revision+1 WHERE id='dinner'`); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	if _, err := service.ApplyReview(ctx, shopping.ShoppingApplyInput{ID: "review", Input: input, Token: review.Token, Selections: selections}); !errors.Is(err, shopping.ErrConflict) {
+		t.Fatalf("stale review committed: %v", err)
+	}
+
+	current, err := service.Get(ctx)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if len(current.Items) != 0 {
+		t.Fatal("stale confirmation wrote groceries")
 	}
 }

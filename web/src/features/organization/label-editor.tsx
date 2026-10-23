@@ -62,20 +62,21 @@ export function LabelEditor(props: {
   const others = () => props.group.labels.filter((entry) => entry.id !== props.label.id)
   const destination = () => others().find((entry) => entry.id === mergeInto())
 
-  const save = async () => {
-    await props.onRun(() =>
+  const finish = (action: () => Promise<unknown>) =>
+    props.onRun(async () => {
+      await action()
+      untrack(() => props.onClose())
+    })
+  const save = () =>
+    finish(() =>
       untrack(() =>
         props.group.rename(props.label, name().trim(), props.group.colored ? color() : undefined),
       ),
     )
-    props.onClose()
-  }
-
-  const combine = async () => {
+  const combine = () => {
     const target = untrack(mergeInto)
     if (!target) return
-    await props.onRun(() => untrack(() => props.group.merge(props.label, target)))
-    props.onClose()
+    return finish(() => untrack(() => props.group.merge(props.label, target)))
   }
 
   /** An unused label goes at once; one on recipes asks first. */
@@ -84,10 +85,7 @@ export function LabelEditor(props: {
     else void remove()
   }
 
-  const remove = async () => {
-    await props.onRun(() => untrack(() => props.group.remove(props.label)))
-    props.onClose()
-  }
+  const remove = () => finish(() => untrack(() => props.group.remove(props.label)))
 
   /** Back leaves the name and colour exactly as the editor had them. */
   const back = () => {

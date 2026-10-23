@@ -97,7 +97,13 @@ export function EditRecipePage(props: { recipeID: () => string; onReturn: () => 
                 error={error()}
                 onSubmit={(recipe) => void submit(recipe, loaded().revision)}
                 onCancel={() => props.onReturn()}
-                onReload={() => void refetch()}
+                onReload={() => {
+                  recovery.forget()
+                  setRestored(undefined)
+                  setDirty(false)
+                  setError(undefined)
+                  void refetch()
+                }}
               />
             )}
           </Show>

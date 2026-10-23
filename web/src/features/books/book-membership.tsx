@@ -20,7 +20,7 @@ export function BookMembership(props: BookViewProps & { editor: BookEditor; onAd
     untrack(() => props.editor)
   const entryRow = (
     entry: NonNullable<BookInput["entries"]>[number],
-    group: NonNullable<BookInput["entries"]>,
+    group: () => NonNullable<BookInput["entries"]>,
   ) => (
     <li
       class={`${styles.row} ${(draft.sections ?? []).length > 0 ? styles.chapterRow : ""}`}
@@ -70,8 +70,8 @@ export function BookMembership(props: BookViewProps & { editor: BookEditor; onAd
           })}
           size="xs"
           variant="plain"
-          disabled={group[0]?.library_entry_id === entry.library_entry_id}
-          onClick={() => moveWithin(group, entry.library_entry_id, -1)}
+          disabled={group()[0]?.library_entry_id === entry.library_entry_id}
+          onClick={() => moveWithin(group(), entry.library_entry_id, -1)}
         >
           <ChevronUp aria-hidden="true" size={15} />
         </IconButton>
@@ -81,8 +81,8 @@ export function BookMembership(props: BookViewProps & { editor: BookEditor; onAd
           })}
           size="xs"
           variant="plain"
-          disabled={group[group.length - 1]?.library_entry_id === entry.library_entry_id}
-          onClick={() => moveWithin(group, entry.library_entry_id, 1)}
+          disabled={group()[group().length - 1]?.library_entry_id === entry.library_entry_id}
+          onClick={() => moveWithin(group(), entry.library_entry_id, 1)}
         >
           <ChevronDown aria-hidden="true" size={15} />
         </IconButton>
@@ -92,7 +92,7 @@ export function BookMembership(props: BookViewProps & { editor: BookEditor; onAd
           })}
           size="xs"
           variant="plain"
-          onClick={() => removeEntry(group, entry.library_entry_id)}
+          onClick={() => removeEntry(group(), entry.library_entry_id)}
         >
           <X aria-hidden="true" size={15} />
         </IconButton>
@@ -114,7 +114,7 @@ export function BookMembership(props: BookViewProps & { editor: BookEditor; onAd
       </Show>
       <Show when={grouped().loose.length > 0}>
         <ul class={styles.list}>
-          <For each={grouped().loose}>{(entry) => entryRow(entry, grouped().loose)}</For>
+          <For each={grouped().loose}>{(entry) => entryRow(entry, () => grouped().loose)}</For>
         </ul>
       </Show>
       <Index each={draft.sections ?? []}>
@@ -153,7 +153,7 @@ export function BookMembership(props: BookViewProps & { editor: BookEditor; onAd
                 </IconButton>
               </div>
               <ul class={styles.list}>
-                <For each={entries()}>{(entry) => entryRow(entry, entries())}</For>
+                <For each={entries()}>{(entry) => entryRow(entry, entries)}</For>
               </ul>
               <Show when={entries().length === 0}>
                 <p class={styles.empty}>{m.book_membership_nothing_in_this_chapter_yet()}</p>
