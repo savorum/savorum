@@ -10525,7 +10525,7 @@
       },
       "post": {
         "description": "Requires browser sign-in within five minutes and CSRF. Access is limited to the selected library and read/write choice. Remember permits rotating refresh credentials until the instance policy's expiry. The browser never receives access or refresh tokens. Uses the persisted local-mode user when authentication is disabled. Otherwise an authenticated browser session is required, except for the current account and sign-in. Modifying authenticated requests require the current X-CSRF-Token. Credentials and responses must not be cached.",
-        "operationId": "approve-assistant-authorization",
+        "operationId": "update-assistant-authorization",
         "parameters": [
           {
             "description": "Required with an authenticated browser session; read from current-account.",
@@ -10629,7 +10629,7 @@
     "/api/v1/account/connections/{id}": {
       "delete": {
         "description": "Revokes the connection's access and refresh credentials immediately. Uses the persisted local-mode user when authentication is disabled. Otherwise an authenticated browser session is required, except for the current account and sign-in. Modifying authenticated requests require the current X-CSRF-Token. Credentials and responses must not be cached.",
-        "operationId": "disconnect-assistant",
+        "operationId": "revoke-assistant-connection",
         "parameters": [
           {
             "in": "path",
