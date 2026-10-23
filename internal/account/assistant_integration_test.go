@@ -133,6 +133,22 @@ func TestAssistantOAuthApprovalAndMCPBoundary(t *testing.T) {
 	digest := sha256.Sum256([]byte(verifier))
 	query := url.Values{"client_id": {client.ClientID}, "redirect_uri": {"https://client.example/callback"}, "scope": {"read write"}, "response_type": {"code"}, "resource": {"https://recipes.example/mcp"}, "code_challenge_method": {"S256"}, "code_challenge": {base64.RawURLEncoding.EncodeToString(digest[:])}, "state": {"client-state"}}
 
+	for _, scope := range []string{"write", "offline_access", "write offline_access"} {
+		query.Set("scope", scope)
+
+		for _, request := range []struct{ method, path, body string }{
+			{"GET", "/oauth/authorize?" + query.Encode(), ""},
+			{"POST", "/oauth/device", url.Values{"scope": {scope}}.Encode()},
+		} {
+			out := call(request.method, request.path, request.body, "", false, false)
+			if out.Code != 400 || !strings.Contains(out.Body.String(), "invalid_scope") {
+				t.Errorf("%s with scope %q: got %d %s", request.path, scope, out.Code, out.Body.String())
+			}
+		}
+	}
+
+	query.Set("scope", "read write")
+
 	response = call("GET", "/oauth/authorize?"+query.Encode(), "", "", false, false)
 	if response.Code != 303 {
 		t.Fatalf("authorize: %d", response.Code)

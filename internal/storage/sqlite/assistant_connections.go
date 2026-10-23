@@ -7,6 +7,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"slices"
 	"strings"
 	"time"
 
@@ -177,7 +178,8 @@ func (s *Store) ApproveAssistantRequest(ctx context.Context, code, library strin
 		return in, "", nil
 	}
 
-	if library == "" || write && !strings.Contains(" "+in.Scope+" ", " write ") {
+	requested := strings.Fields(in.Scope)
+	if library == "" || !slices.Contains(requested, "read") || write && !slices.Contains(requested, "write") {
 		return in, "", identity.ErrConflict
 	}
 
