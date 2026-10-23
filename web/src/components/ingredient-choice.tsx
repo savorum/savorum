@@ -1,5 +1,5 @@
 import { GripVertical } from "lucide-solid"
-import { Index, Show } from "solid-js"
+import { For, Show, untrack } from "solid-js"
 import { css } from "styled-system/css"
 
 import { IngredientRow, type IngredientRowProps } from "@/components/ingredient-row"
@@ -101,38 +101,43 @@ export function IngredientChoice(
             },
           ]}
         />
-        {/* Index keeps each active field mounted while branch values change. */}
-        <Index each={branches()}>
-          {(branch, index) => (
-            <IngredientRow
-              ingredient={branch()}
-              position={index + 1}
-              style={props.style}
-              first={index === 0}
-              last={index === branches().length - 1}
-              removable={branches().length > 2}
-              onChange={(next) =>
-                changeBranches(branches().map((item, at) => (at === index ? next : item)))
-              }
-              onMove={(offset) => {
-                const id = branch().id
-                changeBranches(moveItem(branches(), index, index + offset))
-                props.onAnnounce?.(
-                  m.editor_alternative_moved({ position: formatNumber(index + offset + 1) }),
-                )
-                props.onFocus?.(id)
-              }}
-              onRemove={() => {
-                const survivor = branches()[index + 1] ?? branches()[index - 1]
-                changeBranches(removeAt(branches(), index))
-                props.onAnnounce?.(
-                  m.editor_alternative_removed({ position: formatNumber(index + 1) }),
-                )
-                if (survivor) props.onFocus?.(survivor.id)
-              }}
-            />
-          )}
-        </Index>
+        {/* Ingredient IDs keep pending readings attached to their alternatives. */}
+        <For each={branches().map((branch) => branch.id)}>
+          {(id, index) => {
+            const initial = untrack(() => branches().find((item) => item.id === id)!)
+            const branch = () => branches().find((item) => item.id === id) ?? initial
+            return (
+              <IngredientRow
+                ingredient={branch()}
+                position={index() + 1}
+                style={props.style}
+                first={index() === 0}
+                last={index() === branches().length - 1}
+                removable={branches().length > 2}
+                onChange={(next) =>
+                  changeBranches(branches().map((item) => (item.id === id ? next : item)))
+                }
+                onMove={(offset) => {
+                  const position = index()
+                  changeBranches(moveItem(branches(), position, position + offset))
+                  props.onAnnounce?.(
+                    m.editor_alternative_moved({ position: formatNumber(position + offset + 1) }),
+                  )
+                  props.onFocus?.(id)
+                }}
+                onRemove={() => {
+                  const position = index()
+                  const survivor = branches()[position + 1] ?? branches()[position - 1]
+                  changeBranches(removeAt(branches(), position))
+                  props.onAnnounce?.(
+                    m.editor_alternative_removed({ position: formatNumber(position + 1) }),
+                  )
+                  if (survivor) props.onFocus?.(survivor.id)
+                }}
+              />
+            )
+          }}
+        </For>
         <Input
           aria-label={m.ingredient_choice_shared_choice_note()}
           placeholder={m.ingredient_choice_note_applying_to_the_whole_choice()}
