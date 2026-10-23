@@ -65,7 +65,8 @@ test("dietary and allergen wording keeps row identity during composition", async
 test("yield labels keep focus when the first yield is created and more yields are added", async () => {
   const screen = render(() => {
     const [draft, setDraft] = createStore(recipe())
-    return <RecipeYieldTiming draft={draft} setDraft={setDraft} style={"metric"} />
+    const measurementStyle = "metric"
+    return <RecipeYieldTiming draft={draft} setDraft={setDraft} style={measurementStyle} />
   })
   fireEvent.click(screen.getByRole("button", { name: /^Yield and timing/ }))
   const input = screen.getByLabelText("Of what") as HTMLInputElement
@@ -114,7 +115,10 @@ test("removing a yield refreshes the surviving amount before blur", async () => 
       ],
     }),
   )
-  const screen = render(() => <RecipeYieldTiming draft={draft} setDraft={setDraft} style="us" />)
+  const measurementStyle = "us"
+  const screen = render(() => (
+    <RecipeYieldTiming draft={draft} setDraft={setDraft} style={measurementStyle} />
+  ))
   fireEvent.click(screen.getByRole("button", { name: /^Yield and timing/ }))
   fireEvent.click((await screen.findAllByRole("button", { name: /Remove this yield/ }))[0])
   const amount = screen.getByRole("textbox", { name: "How many" }) as HTMLInputElement

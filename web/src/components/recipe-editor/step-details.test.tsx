@@ -2,6 +2,8 @@ import { cleanup, fireEvent, render, screen } from "@solidjs/testing-library"
 import { afterEach, expect, test, vi } from "vitest"
 
 import { StepDetails } from "./step-details"
+const measurementStyle = "us"
+
 afterEach(cleanup)
 
 test("step quantities keep decimals and their unit through typing and composition", async () => {
@@ -22,7 +24,7 @@ test("step quantities keep decimals and their unit through typing and compositio
       recipeID="cake"
       photos={[]}
       ingredients={[{ id: "flour", name: "Flour", label: "Flour" }]}
-      style="us"
+      style={measurementStyle}
       onChange={changed}
       onClose={() => {}}
       onAttachPhotos={() => Promise.resolve([])}

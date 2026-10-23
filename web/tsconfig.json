@@ -1,6 +1,5 @@
 {
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["**/*.test.ts", "**/*.test.tsx"],
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"],
