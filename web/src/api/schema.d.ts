@@ -65,7 +65,7 @@ export interface paths {
          * Approve or deny a connection
          * @description Requires browser sign-in within five minutes and CSRF. Access is limited to the selected library and read/write choice. Remember permits rotating refresh credentials until the instance policy's expiry. The browser never receives access or refresh tokens. Uses the persisted local-mode user when authentication is disabled. Otherwise an authenticated browser session is required, except for the current account and sign-in. Modifying authenticated requests require the current X-CSRF-Token. Credentials and responses must not be cached.
          */
-        post: operations["approve-assistant-authorization"];
+        post: operations["update-assistant-authorization"];
         delete?: never;
         options?: never;
         head?: never;
@@ -106,7 +106,7 @@ export interface paths {
          * Disconnect an assistant
          * @description Revokes the connection's access and refresh credentials immediately. Uses the persisted local-mode user when authentication is disabled. Otherwise an authenticated browser session is required, except for the current account and sign-in. Modifying authenticated requests require the current X-CSRF-Token. Credentials and responses must not be cached.
          */
-        delete: operations["disconnect-assistant"];
+        delete: operations["revoke-assistant-connection"];
         options?: never;
         head?: never;
         patch?: never;
@@ -6702,7 +6702,7 @@ export interface operations {
             };
         };
     };
-    "approve-assistant-authorization": {
+    "update-assistant-authorization": {
         parameters: {
             query?: never;
             header?: {
@@ -6785,7 +6785,7 @@ export interface operations {
             };
         };
     };
-    "disconnect-assistant": {
+    "revoke-assistant-connection": {
         parameters: {
             query?: never;
             header?: {
