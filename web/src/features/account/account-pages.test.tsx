@@ -6,7 +6,7 @@ import {
   waitFor,
   within,
 } from "@solidjs/testing-library"
-import type { JSX } from "solid-js"
+import { createSignal, type JSX } from "solid-js"
 import { afterEach, expect, test, vi } from "vitest"
 
 import { AccountOverview } from "./account-overview"
@@ -19,6 +19,7 @@ import { AssistantPanel } from "./assistant-panel"
 import { LibraryAccess } from "./library-access-page"
 import { Login } from "./login-page"
 import { SecurityPage } from "./security-page"
+import { SignOutDialog } from "./sign-out-dialog"
 import { TokensPage } from "./token-panel"
 
 const state = vi.hoisted(() => ({
@@ -224,6 +225,7 @@ test("viewer library resets approval to read-only and keeps the selected library
   await chooseApproval("Permissions", "Read and write")
   await chooseApproval("Library", "Shared")
   expect(screen.getByRole("combobox", { name: "Permissions" }).textContent).toContain("Read only")
+  expect(screen.getByText("You have read-only access to this library.")).toBeTruthy()
   fireEvent.click(screen.getByRole("button", { name: "Allow access" }))
   await screen.findByText("You can return to your assistant.")
   expect(accountRequest).toHaveBeenCalledWith(
@@ -389,4 +391,65 @@ test("approval lookup failure keeps its retry control usable", async () => {
   const screen = render(() => <AssistantApproval />)
   fireEvent.click(await screen.findByRole("button", { name: "Retry" }))
   await screen.findByRole("button", { name: "Allow access" })
+})
+
+test("a mistyped approval code can be corrected without reloading", async () => {
+  const { accountRequest } = await import("./account-state")
+  const screen = render(() => <AssistantApproval />)
+  const code = screen.getByLabelText("Connection code")
+  expect(accountRequest).not.toHaveBeenCalled()
+  vi.mocked(accountRequest).mockRejectedValueOnce(new Error("Unknown code"))
+  fireEvent.input(code, { target: { value: "MISTYPED" } })
+  fireEvent.click(screen.getByRole("button", { name: "Continue" }))
+  fireEvent.click(await screen.findByRole("button", { name: "Connection code" }))
+  const corrected = screen.getByLabelText("Connection code") as HTMLInputElement
+  expect(corrected.value).toBe("MISTYPED")
+  fireEvent.input(corrected, { target: { value: "ABC123" } })
+  fireEvent.click(screen.getByRole("button", { name: "Continue" }))
+  await screen.findByRole("button", { name: "Allow access" })
+  expect(accountRequest).toHaveBeenLastCalledWith("/account/authorization?code=ABC123")
+})
+
+test("connections with nullable restrictions still render", async () => {
+  const { accountRequest } = await import("./account-state")
+  vi.mocked(accountRequest).mockResolvedValueOnce({
+    connections: [
+      {
+        id: "assistant",
+        name: "Assistant",
+        scopes: null,
+        libraries: null,
+        expires_at: 1800000000,
+        last_used_at: 0,
+      },
+    ],
+  })
+  const screen = render(() => <AssistantPanel />)
+  await screen.findByRole("heading", { name: "Assistant", level: 4 })
+  expect(screen.getByRole("button", { name: "Disconnect" })).toBeTruthy()
+})
+
+test("sign-out stays open while pending and clears an error when closed", async () => {
+  const { accountRequest } = await import("./account-state")
+  let reject!: (error: Error) => void
+  vi.mocked(accountRequest).mockImplementationOnce(
+    () =>
+      new Promise<never>((_, fail) => {
+        reject = fail
+      }),
+  )
+  const [open, setOpen] = createSignal(true)
+  const closed = vi.fn(() => setOpen(false))
+  render(() => <SignOutDialog open={open()} onClose={closed} />)
+  fireEvent.click(await portal.findByRole("button", { name: "Sign out" }))
+  fireEvent.click(portal.getByRole("button", { name: "Cancel" }))
+  fireEvent.keyDown(document.activeElement ?? document.body, { key: "Escape" })
+  expect(closed).not.toHaveBeenCalled()
+  reject(new Error("Sign-out interrupted"))
+  await portal.findByText("Sign-out interrupted")
+  fireEvent.click(portal.getByRole("button", { name: "Cancel" }))
+  await waitFor(() => expect(closed).toHaveBeenCalledTimes(1))
+  setOpen(true)
+  await portal.findByRole("button", { name: "Sign out" })
+  expect(portal.queryByText("Sign-out interrupted")).toBeNull()
 })

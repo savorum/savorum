@@ -80,7 +80,8 @@ async function readRow(
 ): Promise<Ingredient | undefined> {
   let next: Ingredient
   try {
-    next = withReading(current(), await readIngredientLine(line, reading), line)
+    const read = await readIngredientLine(line, reading)
+    next = withReading(current(), read, line)
   } catch {
     next = asWrittenOnly(current(), line)
   }
@@ -100,16 +101,17 @@ export const IngredientRow = (props: IngredientRowProps) => {
     typed().trim() ||
     m.editor_ingredient_position({ position: formatNumber(props.position) })
   let input: HTMLInputElement | undefined
+  let requested: { line: string } | undefined
   createEffect(() => {
     const next = writtenLine(props.ingredient)
     if (!requested && (!input || document.activeElement !== input)) setTyped(next)
   })
 
-  let requested: string | undefined
   const commit = () => {
     const line = untrack(typed).trim()
-    if (line === writtenLine(props.ingredient) || line === requested) return
+    if (line === writtenLine(props.ingredient) || line === requested?.line) return
     if (line === "") {
+      requested = undefined
       props.onChange({
         ...props.ingredient,
         name: "",
@@ -120,7 +122,8 @@ export const IngredientRow = (props: IngredientRowProps) => {
       })
       return
     }
-    requested = line
+    const request = { line }
+    requested = request
     const onChange = untrack(() => props.onChange)
     const row = readRow(
       line,
@@ -131,6 +134,7 @@ export const IngredientRow = (props: IngredientRowProps) => {
       () => untrack(typed).trim() !== line,
     )
     void trackReading(row).then((next) => {
+      if (requested !== request) return
       requested = undefined
       if (next) onChange(next)
     })

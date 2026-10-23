@@ -1,5 +1,6 @@
 import { For, Show, createResource, createSignal } from "solid-js"
 
+import type { components } from "@/api/schema"
 import { ChangeError } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import { CopyField } from "@/components/ui/clipboard"
@@ -10,14 +11,7 @@ import { accountStyles as styles } from "./account-layout"
 import { accountRequest, libraries } from "./account-state"
 import { formatEpoch } from "./formats"
 
-type Connection = {
-  id: string
-  name: string
-  scopes: string[]
-  libraries: string[]
-  expires_at: number
-  last_used_at: number
-}
+type Connection = components["schemas"]["Connection"]
 
 export function AssistantPanel() {
   const [data, { refetch }] = createResource(() =>
@@ -64,7 +58,7 @@ export function AssistantPanel() {
               <li class={styles.card}>
                 <h4>{connection.name}</h4>
                 <p>
-                  {connection.libraries
+                  {(connection.libraries ?? [])
                     .map(
                       (id) =>
                         libraries().find((l) => l.id === id)?.name ??
@@ -72,7 +66,7 @@ export function AssistantPanel() {
                     )
                     .join(", ")}{" "}
                   ·{" "}
-                  {connection.scopes.includes("recipes:write")
+                  {(connection.scopes ?? []).includes("recipes:write")
                     ? m.account_assistant_access_write()
                     : m.account_assistant_access_read()}
                 </p>

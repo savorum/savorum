@@ -124,6 +124,8 @@ export interface ConfirmDialogProps {
 export const ConfirmDialog = (props: ConfirmDialogProps) => (
   <Dialog
     open
+    closeOnEscape={!props.busy}
+    closeOnInteractOutside={!props.busy}
     onClose={props.onClose}
     title={props.title}
     description={props.description}
@@ -131,7 +133,7 @@ export const ConfirmDialog = (props: ConfirmDialogProps) => (
       <>
         <DialogClose>
           {(closeProps) => (
-            <Button {...closeProps()} variant="outline">
+            <Button {...closeProps()} variant="outline" disabled={props.busy}>
               {props.cancelLabel}
             </Button>
           )}
