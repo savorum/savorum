@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"maps"
 	"reflect"
+	"slices"
 	"sort"
 	"strings"
 
@@ -543,67 +544,63 @@ func stableArray(values []any) bool {
 func mergeStableArray(base, local, remote []any, path string) ([]any, []RefreshConflict) {
 	bm, lm, rm := indexStableArray(base), indexStableArray(local), indexStableArray(remote)
 
-	ids := map[string]bool{}
-	for id := range bm {
-		ids[id] = true
-	}
+	localChanged, remoteChanged := !sharedStableOrderEqual(local, base), !sharedStableOrderEqual(remote, base)
 
-	for id := range lm {
-		ids[id] = true
-	}
-
-	for id := range rm {
-		ids[id] = true
-	}
-
-	localChanged, remoteChanged := !semanticAnyEqual(local, base), !semanticAnyEqual(remote, base)
-
-	chosenOrder := local
+	chosenOrder, otherOrder := local, remote
 	if !localChanged && remoteChanged {
-		chosenOrder = remote
+		chosenOrder, otherOrder = remote, local
 	}
 
-	result := make([]any, 0, len(ids))
-	used := map[string]bool{}
+	result := make([]any, 0, len(lm)+len(rm))
 
 	var conflicts []RefreshConflict
-	if localChanged && remoteChanged && !stableOrderEqual(local, remote) && stableMembersEqual(local, remote) {
+	if localChanged && remoteChanged && !sharedStableOrderEqual(local, remote) {
 		conflicts = append(conflicts, RefreshConflict{Path: path, Area: fieldArea(path), Base: base, Local: local, Remote: remote})
 	}
 
-	for _, value := range chosenOrder {
-		item, isObject := value.(map[string]any)
-		if !isObject {
-			continue
-		}
-
-		id := fmt.Sprint(item["id"])
-
-		merged, c := mergeStableArrayItem(id, path, bm, lm, rm)
-
+	for _, id := range combinedStableOrder(chosenOrder, otherOrder) {
+		merged, itemConflicts := mergeStableArrayItem(id, path, bm, lm, rm)
 		if merged != nil {
 			result = append(result, merged)
 		}
 
-		conflicts = append(conflicts, c...)
-		used[id] = true
-	}
-
-	for id := range ids {
-		if used[id] {
-			continue
-		}
-
-		merged, c := mergeStableArrayItem(id, path, bm, lm, rm)
-
-		if merged != nil {
-			result = append(result, merged)
-		}
-
-		conflicts = append(conflicts, c...)
+		conflicts = append(conflicts, itemConflicts...)
 	}
 
 	return result, conflicts
+}
+
+// Missing members retain their position relative to the next surviving neighbor.
+func combinedStableOrder(chosen, other []any) []string {
+	ids := func(values []any) []string {
+		result := make([]string, 0, len(values))
+		for _, value := range values {
+			if item, ok := value.(map[string]any); ok {
+				result = append(result, fmt.Sprint(item["id"]))
+			}
+		}
+
+		return result
+	}
+
+	order, additions := ids(chosen), ids(other)
+	for index, id := range additions {
+		if slices.Contains(order, id) {
+			continue
+		}
+
+		position := len(order)
+		for _, next := range additions[index+1:] {
+			if found := slices.Index(order, next); found >= 0 {
+				position = found
+				break
+			}
+		}
+
+		order = slices.Insert(order, position, id)
+	}
+
+	return order
 }
 
 func indexStableArray(values []any) map[string]any {
@@ -637,6 +634,23 @@ func mergeStableArrayItem(id, path string, base, local, remote map[string]any) (
 	return base[id], conflicts
 }
 
+// Membership changes do not reorder the members shared by both arrays.
+func sharedStableOrderEqual(left, right []any) bool {
+	shared := func(values []any, other map[string]any) []any {
+		result := make([]any, 0, len(values))
+		for _, value := range values {
+			item, ok := value.(map[string]any)
+			if ok && other[fmt.Sprint(item["id"])] != nil {
+				result = append(result, value)
+			}
+		}
+
+		return result
+	}
+
+	return stableOrderEqual(shared(left, indexStableArray(right)), shared(right, indexStableArray(left)))
+}
+
 func stableOrderEqual(left, right []any) bool {
 	if len(left) != len(right) {
 		return false
@@ -647,40 +661,6 @@ func stableOrderEqual(left, right []any) bool {
 
 		rm, rok := right[index].(map[string]any)
 		if !lok || !rok || fmt.Sprint(lm["id"]) != fmt.Sprint(rm["id"]) {
-			return false
-		}
-	}
-
-	return true
-}
-
-func stableMembersEqual(left, right []any) bool {
-	if len(left) != len(right) {
-		return false
-	}
-
-	byID := func(values []any) map[string]any {
-		result := make(map[string]any, len(values))
-		for _, value := range values {
-			member, ok := value.(map[string]any)
-			if !ok {
-				return nil
-			}
-
-			result[fmt.Sprint(member["id"])] = member
-		}
-
-		return result
-	}
-
-	leftByID, rightByID := byID(left), byID(right)
-	if leftByID == nil || rightByID == nil {
-		return false
-	}
-
-	for id, member := range leftByID {
-		other, ok := rightByID[id]
-		if !ok || !semanticAnyEqual(member, other) {
 			return false
 		}
 	}

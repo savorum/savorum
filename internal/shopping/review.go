@@ -59,10 +59,11 @@ type ShoppingRequirement struct {
 
 // ShoppingReview binds the confirmation to the exact source and list revisions.
 type ShoppingReview struct {
-	Revision     uint64                `json:"revision"`
-	Token        string                `json:"token"`
-	Requirements []ShoppingRequirement `json:"requirements"`
-	Removed      []ShoppingSource      `json:"removed"`
+	mealRevisions map[string]uint64
+	Revision      uint64                `json:"revision"`
+	Token         string                `json:"token"`
+	Requirements  []ShoppingRequirement `json:"requirements"`
+	Removed       []ShoppingSource      `json:"removed"`
 	// Outdated reports that a requirement was read from an earlier version of
 	// its recipe than the library now holds.
 	Outdated bool `json:"outdated,omitempty"`
@@ -85,12 +86,14 @@ type ShoppingApplyInput struct {
 
 // Review expands declared ingredients centrally, excluding instruction references.
 func (s *Service) Review(ctx context.Context, input ShoppingReviewInput) (ShoppingReview, error) {
-	result := ShoppingReview{Requirements: []ShoppingRequirement{}}
+	result := ShoppingReview{Requirements: []ShoppingRequirement{}, mealRevisions: map[string]uint64{}}
 	if len(input.MealIDs)+len(input.Portions) == 0 || len(input.MealIDs) > 50 || len(input.Portions) > 50 {
 		return result, ErrInvalid
 	}
 
 	for _, id := range input.MealIDs {
+		result.mealRevisions[id] = 0
+
 		planned, err := s.meals.GetMeal(ctx, id)
 		if errors.Is(err, meal.ErrNotFound) || errors.Is(err, library.ErrNotFound) {
 			continue
@@ -99,6 +102,8 @@ func (s *Service) Review(ctx context.Context, input ShoppingReviewInput) (Shoppi
 		if err != nil {
 			return result, err
 		}
+
+		result.mealRevisions[id] = planned.Revision
 
 		if planned.Skipped {
 			continue
@@ -163,7 +168,8 @@ func (s *Service) Review(ctx context.Context, input ShoppingReviewInput) (Shoppi
 		Input        ShoppingReviewInput   `json:"input"`
 		Requirements []ShoppingRequirement `json:"requirements"`
 		Revision     uint64                `json:"revision"`
-	}{input, result.Requirements, list.Revision})
+		Meals        map[string]uint64     `json:"meals"`
+	}{input, result.Requirements, list.Revision, result.mealRevisions})
 	if err != nil {
 		return result, fmt.Errorf("encode ingredient review: %w", err)
 	}

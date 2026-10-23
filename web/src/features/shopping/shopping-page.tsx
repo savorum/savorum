@@ -167,7 +167,9 @@ function ShoppingListView(props: { owner: string }) {
   })
   function move(item: ShoppingItem, direction: -1 | 1) {
     const all = rows()
-    const peers = all.filter((row) => row.category.trim() === item.category.trim())
+    const current = all.find((row) => row.id === item.id)
+    if (!current) return
+    const peers = all.filter((row) => row.category.trim() === current.category.trim())
     const neighbour = peers[peers.findIndex((row) => row.id === item.id) + direction]
     if (!neighbour) return
     const index = all.findIndex((row) => row.id === neighbour.id)
@@ -175,7 +177,7 @@ function ShoppingListView(props: { owner: string }) {
     store.enqueue({
       kind: "move",
       item_id: item.id,
-      base_revision: item.revision,
+      base_revision: current.revision,
       after_item_id: after,
     })
   }
@@ -371,7 +373,7 @@ function ShoppingListView(props: { owner: string }) {
         {(item) => (
           <ItemEditor
             item={item}
-            others={rows().filter((row) => row.id !== item.id && !row.bought)}
+            others={rows().filter((row) => row.id !== item.id && row.bought === item.bought)}
             canEdit={canEdit()}
             move={(direction) => move(item, direction)}
             merge={(ids) => {

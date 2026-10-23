@@ -290,3 +290,51 @@ func TestTwoWayMergeDefaultsEmptyFieldAndRequiresMaterialChoice(t *testing.T) {
 		t.Fatalf("conflicts=%#v", conflicts)
 	}
 }
+
+func TestRefreshStepOrderIgnoresTextOnlyEdits(t *testing.T) {
+	base := []any{map[string]any{"id": "a", "text": "Mix"}, map[string]any{"id": "b", "text": "Bake"}}
+
+	local := []any{map[string]any{"id": "a", "text": "Mix gently"}, base[1]}
+	for _, remote := range [][]any{
+		{map[string]any{"id": "preheat", "text": "Preheat"}, base[0], base[1]},
+		{base[1], base[0]},
+	} {
+		merged, conflicts := mergeStableArray(base, local, remote, "instruction_sections[method].steps")
+		if len(conflicts) > 0 {
+			t.Fatalf("text edit conflicts with source order: %#v", conflicts)
+		}
+
+		if !stableOrderEqual(merged, remote) {
+			t.Fatalf("source order lost: %#v", merged)
+		}
+
+		step, ok := indexStableArray(merged)["a"].(map[string]any)
+		if !ok || step["text"] != "Mix gently" {
+			t.Fatal("local text lost")
+		}
+	}
+}
+
+func TestRefreshMergesIndependentStepMembershipChanges(t *testing.T) {
+	a := map[string]any{"id": "a", "text": "Mix"}
+	b := map[string]any{"id": "b", "text": "Bake"}
+	c := map[string]any{"id": "c", "text": "Serve"}
+	x := map[string]any{"id": "x", "text": "Preheat"}
+
+	y := map[string]any{"id": "y", "text": "Cool"}
+	for _, tc := range []struct {
+		name                string
+		local, remote, want []any
+	}{
+		{"insertions", []any{x, a, b, c}, []any{a, b, y, c}, []any{x, a, b, y, c}},
+		{"deletions", []any{a, c}, []any{a, b}, []any{a}},
+		{"insertion and reorder", []any{x, a, b, c}, []any{b, a, c}, []any{b, x, a, c}},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			merged, conflicts := mergeStableArray([]any{a, b, c}, tc.local, tc.remote, "instruction_sections[method].steps")
+			if len(conflicts) != 0 || !semanticAnyEqual(merged, tc.want) {
+				t.Fatalf("merged=%#v conflicts=%#v", merged, conflicts)
+			}
+		})
+	}
+}

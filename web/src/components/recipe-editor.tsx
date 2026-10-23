@@ -60,10 +60,19 @@ export const RecipeEditor = (props: RecipeEditorProps) => {
   const [draft, setDraft] = createStore<Recipe>(structuredClone(props.initial))
   const initialSnapshot = untrack(() => JSON.stringify(props.baseline ?? props.initial))
   const [uncommitted, setUncommitted] = createSignal(false)
+  const [uploads, setUploads] = createSignal(0)
+  const attachImages = async (files: FileList | null) => {
+    setUploads((count) => count + 1)
+    try {
+      return await attachRecipeImages(setDraft, files)
+    } finally {
+      setUploads((count) => count - 1)
+    }
+  }
   const [validation, setValidation] = createSignal(false)
   createEffect(() => {
     const changed = JSON.stringify(draft) !== initialSnapshot
-    props.onDirtyChange?.(uncommitted() || changed || readingsPending() > 0)
+    props.onDirtyChange?.(uncommitted() || changed || readingsPending() > 0 || uploads() > 0)
     props.onDraftChange?.(changed ? draft : undefined)
   })
 
@@ -163,9 +172,14 @@ export const RecipeEditor = (props: RecipeEditorProps) => {
 
   const submit = (event: SubmitEvent) => {
     event.preventDefault()
+    if (uploads() > 0) return
     setValidation(false)
     // A line still being read into its amount and name is part of the recipe.
-    void readingsSettled().then(() => untrack(() => props.onSubmit(prepareRecipe(draft))))
+    void readingsSettled().then(() =>
+      untrack(() => {
+        if (uploads() === 0) props.onSubmit(prepareRecipe(draft))
+      }),
+    )
   }
 
   return (
@@ -281,6 +295,7 @@ export const RecipeEditor = (props: RecipeEditorProps) => {
 
       <div>
         <RecipePhotosEditor
+          onAttachPhotos={attachImages}
           draft={draft}
           setDraft={setDraft}
           entryID={props.entryID}
@@ -335,7 +350,7 @@ export const RecipeEditor = (props: RecipeEditorProps) => {
             photos={assets()}
             ingredients={ingredientChoices()}
             style={style()}
-            onAttachPhotos={(files) => attachRecipeImages(setDraft, files)}
+            onAttachPhotos={attachImages}
             onChange={(step) =>
               setDraft("instruction_sections", edited.section, "steps", edited.index, step)
             }
@@ -356,7 +371,12 @@ export const RecipeEditor = (props: RecipeEditorProps) => {
             {m.editor_see_the_problem()}
           </Button>
         </Show>
-        <Button type="submit" colorPalette="accent" loading={props.pending}>
+        <Button
+          type="submit"
+          disabled={uploads() > 0}
+          colorPalette="accent"
+          loading={props.pending}
+        >
           {props.submitLabel}
         </Button>
         <Button variant="plain" onClick={props.onCancel}>

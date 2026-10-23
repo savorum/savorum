@@ -275,3 +275,29 @@ test("returning to the browser refreshes bought items cleared on another device"
     store.dispose()
   }
 })
+
+test("repeated moves from an open editor use the current row revision", async () => {
+  server.revision = 1
+  server.items = ["Milk", "Bread"].map((name) => ({
+    id: name,
+    name,
+    buy: "",
+    needed: "",
+    note: "",
+    category: "",
+    bought: false,
+    deleted: false,
+    revision: 1,
+    fields: {},
+    sources: [],
+  }))
+  const view = render(() => <ShoppingPage />)
+  fireEvent.click(await view.findByRole("button", { name: "Milk" }))
+  const move = await portal.findByRole("button", { name: /Move Milk down/ })
+  fireEvent.click(move)
+  await waitFor(() => expect(calls).toHaveLength(1))
+  await waitFor(() => expect(server.revision).toBe(2))
+  fireEvent.click(move)
+  await waitFor(() => expect(calls).toHaveLength(2))
+  expect(calls[1].base_revision).toBe(2)
+})

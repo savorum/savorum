@@ -267,3 +267,58 @@ func TestMergeEntriesPreservesPersonalStateIsolation(t *testing.T) {
 		}
 	}
 }
+
+func TestMergeCopiesPreferredYieldSelectionWithAmount(t *testing.T) {
+	amount := library.UserState{PreferredYield: new(recipe.Rational("24")), PreferredYieldAssertion: new(1)}
+
+	selection := library.UserState{PreferredYieldAssertion: new(1)}
+	for _, tc := range []struct {
+		name            string
+		kept            *library.UserState
+		duplicate, want library.UserState
+	}{
+		{"new state", nil, amount, amount},
+		{"existing state", &library.UserState{}, amount, amount},
+		{"assertion only", &library.UserState{}, selection, selection},
+		{"keep explicit selection", &library.UserState{PreferredYieldAssertion: new(0)}, amount, library.UserState{PreferredYieldAssertion: new(0)}},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			ctx := t.Context()
+			store := openStore(ctx, t)
+			now := time.Now()
+			doc := testfixture.Document()
+
+			doc.Yields = []recipe.Yield{{Label: "servings", Quantity: &recipe.Quantity{Kind: recipe.QuantitySimple, Amount: &recipe.Amount{Value: new(recipe.Rational("4"))}}}, {Label: "cookies", Quantity: &recipe.Quantity{Kind: recipe.QuantitySimple, Amount: &recipe.Amount{Value: new(recipe.Rational("12"))}}}}
+			for _, id := range []library.EntryID{"left", "right"} {
+				doc.ID = recipe.RecipeID(id)
+				if err := store.Create(ctx, library.Entry{ID: id, Recipe: doc, Revision: 1, CreatedAt: now, UpdatedAt: now}, library.RevisionMetadata{Cause: library.RevisionCauseAPI}); err != nil {
+					t.Fatal(err)
+				}
+			}
+
+			if tc.kept != nil {
+				if _, err := store.ReplaceOrganization(ctx, "left", library.DefaultUserID, 1, library.Organization{State: *tc.kept}, nil, now); err != nil {
+					t.Fatal(err)
+				}
+			}
+
+			if _, err := store.ReplaceOrganization(ctx, "right", library.DefaultUserID, 1, library.Organization{State: tc.duplicate}, nil, now); err != nil {
+				t.Fatal(err)
+			}
+
+			doc.ID = "left"
+			if _, err := store.MergeEntries(ctx, library.MergeMutation{Survivor: "left", Duplicate: "right", ExpectedSurvivorRevision: 1, ExpectedDuplicateRevision: 1, Recipe: doc, Timestamp: now}); err != nil {
+				t.Fatal(err)
+			}
+
+			organized, err := store.GetOrganization(ctx, "left", library.DefaultUserID)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			if !reflect.DeepEqual(organized.State, tc.want) {
+				t.Fatalf("state=%#v, want %#v", organized.State, tc.want)
+			}
+		})
+	}
+}

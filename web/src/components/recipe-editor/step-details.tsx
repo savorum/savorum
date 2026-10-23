@@ -342,55 +342,65 @@ export function StepDetails(props: {
                     />
                     <span>{ingredient().label}</span>
                     <Show when={ingredientUse(ingredient().id)}>
-                      {(use) => (
-                        <>
-                          <Input
-                            class={styles.ingredientUseAmount}
-                            size="sm"
-                            aria-label={m.step_details_amount_of_used({
-                              value1: ingredient().name,
-                            })}
-                            placeholder={m.step_details_amount_optional()}
-                            disabled={ingredient().choice || needsAdvancedAmount(use().quantity)}
-                            value={
-                              needsAdvancedAmount(use().quantity)
-                                ? m.ingredient_multiple_amounts()
-                                : amountFieldValue(use().quantity)
-                            }
-                            onInput={(event) =>
-                              setIngredientQuantity(
-                                ingredient().id,
-                                parseAmountField(
-                                  event.currentTarget.value,
-                                  use().quantity?.kind === "simple"
-                                    ? use().quantity?.unit
-                                    : undefined,
-                                ),
-                              )
-                            }
-                          />
-                          <Select
-                            size="sm"
-                            aria-label={m.step_details_measure_for_used({
-                              value1: ingredient().name,
-                            })}
-                            disabled={
-                              ingredient().choice ||
-                              !use().quantity ||
-                              use().quantity?.kind !== "simple"
-                            }
-                            value={
-                              use().quantity?.kind === "simple" ? (use().quantity?.unit ?? "") : ""
-                            }
-                            onValueChange={(value) => setIngredientUnit(ingredient().id, value)}
-                            items={unitOptions(
-                              props.style,
-                              use().quantity?.kind === "simple" ? use().quantity?.unit : undefined,
-                              m.step_details_no_measure(),
-                            )}
-                          />
-                        </>
-                      )}
+                      {(use) => {
+                        const [typedAmount, setTypedAmount] = createSignal(
+                          untrack(() => amountFieldValue(use().quantity)),
+                        )
+                        const commitAmount = () => {
+                          if (typedAmount() !== amountFieldValue(use().quantity))
+                            setIngredientQuantity(
+                              ingredient().id,
+                              parseAmountField(typedAmount(), use().quantity?.unit),
+                            )
+                        }
+                        return (
+                          <>
+                            <Input
+                              class={styles.ingredientUseAmount}
+                              size="sm"
+                              aria-label={m.step_details_amount_of_used({
+                                value1: ingredient().name,
+                              })}
+                              placeholder={m.step_details_amount_optional()}
+                              disabled={ingredient().choice || needsAdvancedAmount(use().quantity)}
+                              value={
+                                needsAdvancedAmount(use().quantity)
+                                  ? m.ingredient_multiple_amounts()
+                                  : typedAmount()
+                              }
+                              onInput={(event) => setTypedAmount(event.currentTarget.value)}
+                              onBlur={commitAmount}
+                              onKeyDown={(event) => {
+                                if (event.key === "Enter" && !event.isComposing) commitAmount()
+                              }}
+                            />
+                            <Select
+                              size="sm"
+                              aria-label={m.step_details_measure_for_used({
+                                value1: ingredient().name,
+                              })}
+                              disabled={
+                                ingredient().choice ||
+                                !use().quantity ||
+                                use().quantity?.kind !== "simple"
+                              }
+                              value={
+                                use().quantity?.kind === "simple"
+                                  ? (use().quantity?.unit ?? "")
+                                  : ""
+                              }
+                              onValueChange={(value) => setIngredientUnit(ingredient().id, value)}
+                              items={unitOptions(
+                                props.style,
+                                use().quantity?.kind === "simple"
+                                  ? use().quantity?.unit
+                                  : undefined,
+                                m.step_details_no_measure(),
+                              )}
+                            />
+                          </>
+                        )
+                      }}
                     </Show>
                   </div>
                 )}

@@ -455,9 +455,10 @@ func (s *Store) UpdateImportJobState(ctx context.Context, id string, update impo
 
 	result, err := tx.ExecContext(ctx, `
 		UPDATE import_jobs
-		SET state = ?, error = ?, started_at = COALESCE(?, started_at), finished_at = ?
+		SET cancellation_requested_at = CASE WHEN ? = 'pending' THEN NULL ELSE cancellation_requested_at END,
+            state = ?, error = ?, started_at = COALESCE(?, started_at), finished_at = ?
 		WHERE id = ?`,
-		string(update.State), nullableText(update.Error),
+		string(update.State), string(update.State), nullableText(update.Error),
 		nullableInstant(update.StartedAt), nullableInstant(update.FinishedAt), id)
 	if err != nil {
 		return fmt.Errorf("record import job state: %w", err)

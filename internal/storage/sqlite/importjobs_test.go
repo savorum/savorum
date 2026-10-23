@@ -545,3 +545,35 @@ func TestImportJobIsNamedByItsFirstRecipe(t *testing.T) {
 		t.Fatalf("listed progress = %#v", listed[0].Progress)
 	}
 }
+
+func TestResumingImportClearsCancellationRequest(t *testing.T) {
+	ctx := t.Context()
+	store := openStore(ctx, t)
+	seedImportJob(ctx, t, store, "resumed", []importjob.Item{pending("one", nil)})
+
+	if err := store.RequestImportJobCancellation(ctx, "resumed", time.Now()); err != nil {
+		t.Fatal(err)
+	}
+
+	assertCancellation := func(want bool) {
+		t.Helper()
+
+		job, err := store.GetImportJob(ctx, "resumed")
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if (job.CancellationRequestedAt != nil) != want {
+			t.Fatalf("state=%s cancellation timestamp=%v, want present=%t", job.State, job.CancellationRequestedAt, want)
+		}
+	}
+	assertCancellation(true)
+
+	for _, state := range []importjob.State{importjob.StateCancelled, importjob.StatePending, importjob.StateRunning} {
+		if err := store.UpdateImportJobState(ctx, "resumed", importjob.JobStateUpdate{State: state}); err != nil {
+			t.Fatal(err)
+		}
+
+		assertCancellation(state == importjob.StateCancelled)
+	}
+}

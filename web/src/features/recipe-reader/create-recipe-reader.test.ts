@@ -202,3 +202,36 @@ test("remember serializes exactly one preferred batch form without dropping orga
     user_state: { ...input.user_state, preferred_yield: undefined, preferred_scale: "5/4" },
   })
 })
+
+test("failed navigation cannot trash either recipe using stale displayed data", async () => {
+  vi.mocked(getRecipe).mockImplementation(async (id) => {
+    if (id === "b") throw new Error("offline")
+    return recipeEntry("a", "Cake")
+  })
+  vi.mocked(createOrganizationController).mockReturnValue(
+    organizationController(() => organizationFor("a")),
+  )
+  const [id, setID] = createSignal("a")
+  const hook = renderHook(() => createRecipeReader(readerOptions(id)))
+  disposers.push(hook.cleanup)
+  await waitFor(() => expect(hook.result.entry()).toBeDefined())
+  setID("b")
+  await waitFor(() => expect(hook.result.entry.error).toBeDefined())
+  await hook.result.moveToTrash(1)
+  expect(trashRecipe).not.toHaveBeenCalled()
+})
+
+test("an explicit return batch takes precedence over saved preferences", async () => {
+  vi.mocked(getRecipe).mockResolvedValue(recipeEntry("a", "Cake", "4"))
+  vi.mocked(createOrganizationController).mockReturnValue(
+    organizationController(() =>
+      organizationFor("a", { favorite: false, preferred_yield: "8", preferred_scale: "2" }),
+    ),
+  )
+  const hook = renderHook(() =>
+    createRecipeReader({ ...readerOptions(() => "a"), batch: () => "3" }),
+  )
+  disposers.push(hook.cleanup)
+  await waitFor(() => expect(hook.result.entry()).toBeDefined())
+  expect(formatRational(hook.result.scale())).toBe("3")
+})

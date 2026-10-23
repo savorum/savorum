@@ -1,4 +1,5 @@
 import { cleanup, fireEvent, render, waitFor, within } from "@solidjs/testing-library"
+import { untrack } from "solid-js"
 import { createStore } from "solid-js/store"
 import { afterEach, expect, test } from "vitest"
 
@@ -102,4 +103,23 @@ test("photo credit fields retain the asset and active input", async () => {
     compose(input)
     expect(dialog.getByRole("textbox", { name })).toBe(input)
   }
+})
+
+test("removing a yield refreshes the surviving amount before blur", async () => {
+  const [draft, setDraft] = createStore(
+    recipe({
+      yields: [
+        { quantity: { kind: "simple", amount: { value: "4" } }, label: "servings" },
+        { quantity: { kind: "simple", amount: { value: "2" } }, label: "loaves" },
+      ],
+    }),
+  )
+  const screen = render(() => <RecipeYieldTiming draft={draft} setDraft={setDraft} style="us" />)
+  fireEvent.click(screen.getByRole("button", { name: /^Yield and timing/ }))
+  fireEvent.click((await screen.findAllByRole("button", { name: /Remove this yield/ }))[0])
+  const amount = screen.getByRole("textbox", { name: "How many" }) as HTMLInputElement
+  expect(amount.value).toBe("2")
+  amount.focus()
+  fireEvent.blur(amount)
+  expect(untrack(() => draft.yields?.[0].quantity?.amount?.value)).toBe("2")
 })
