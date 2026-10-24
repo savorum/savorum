@@ -6,6 +6,7 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+- Fix rare crashes caused by cancelled reads.
 - Fix assistant JSON and idempotent writes.
 
 ## 0.2.4
