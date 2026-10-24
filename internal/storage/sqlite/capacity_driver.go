@@ -547,10 +547,10 @@ func (c *capacityConn) ExecContext(ctx context.Context, q string, args []driver.
 
 	if c.release != nil || readSQL(q) {
 		if c.release == nil {
-			if _, err := c.exec(ctx, "PRAGMA query_only=ON", nil); err != nil {
+			if err := c.enableReadOnly(ctx); err != nil {
 				return nil, c.translate(err)
 			}
-			defer func() { _, _ = c.exec(context.WithoutCancel(ctx), "PRAGMA query_only=OFF", nil) }()
+			defer func() { _ = c.resetReadOnly() }()
 		}
 
 		r, err := c.exec(ctx, q, args)
@@ -754,14 +754,32 @@ func (c *capacityConn) vacuumTempDirectory(ctx context.Context) (string, error) 
 	return path, nil
 }
 
-func (c *capacityConn) readQuery(ctx context.Context, q string, args []driver.NamedValue) (driver.Rows, error) {
+func (c *capacityConn) enableReadOnly(ctx context.Context) error {
 	if _, err := c.exec(ctx, "PRAGMA query_only=ON", nil); err != nil {
+		// Cancellation can report failure after SQLite applies the pragma.
+		return errors.Join(err, c.resetReadOnly())
+	}
+
+	return nil
+}
+
+func (c *capacityConn) resetReadOnly() error {
+	_, err := c.exec(context.Background(), "PRAGMA query_only=OFF", nil)
+	if err != nil {
+		c.discard = true
+	}
+
+	return err
+}
+
+func (c *capacityConn) readQuery(ctx context.Context, q string, args []driver.NamedValue) (driver.Rows, error) {
+	if err := c.enableReadOnly(ctx); err != nil {
 		return nil, c.translate(err)
 	}
 
 	rows, err := c.queryer.QueryContext(ctx, q, args)
 	if err != nil {
-		_, _ = c.exec(context.WithoutCancel(ctx), "PRAGMA query_only=OFF", nil)
+		_ = c.resetReadOnly()
 		return nil, c.translate(err)
 	}
 
@@ -794,10 +812,7 @@ type readonlyRows struct {
 func (r *readonlyRows) Close() error {
 	err := r.Rows.Close()
 
-	_, reset := r.c.exec(context.Background(), "PRAGMA query_only=OFF", nil)
-	if reset != nil {
-		r.c.discard = true
-	}
+	reset := r.c.resetReadOnly()
 
 	return r.c.translate(errors.Join(err, reset))
 }
