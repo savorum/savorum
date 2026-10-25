@@ -14,6 +14,13 @@ import (
 	"github.com/savorum/savorum/internal/library"
 )
 
+const bookPreviewCandidates = `WITH preview_candidates AS (
+    SELECT book_id, entry_id, 0 AS source_order, position, id FROM book_entries
+    UNION ALL
+    SELECT publication_book_id, entry_id, 1, 0, id FROM recipe_sources
+    WHERE publication_book_id IS NOT NULL
+)`
+
 // CreateBook stores a new book and its initial revision.
 func (s *Store) CreateBook(ctx context.Context, book library.Book) error {
 	if book.CoverAssetID != "" {
@@ -74,7 +81,23 @@ func (s *Store) GetBook(ctx context.Context, id string, state library.State) (li
 		return library.Book{}, operationError("GetBook", err)
 	}
 
-	return readBook(ctx, s.db, id, state)
+	book, err := readBook(ctx, s.db, id, state)
+	if err != nil {
+		return library.Book{}, err
+	}
+
+	err = s.db.QueryRowContext(ctx, bookPreviewCandidates+` SELECT recipe.primary_asset_id, recipe.id
+        FROM preview_candidates AS candidate
+        JOIN library_recipes AS recipe ON recipe.id=candidate.entry_id
+        JOIN assets AS photo ON photo.id=recipe.primary_asset_id
+        WHERE candidate.book_id=? AND recipe.library_id=?
+          AND recipe.deleted_at IS NULL AND photo.storage_key IS NOT NULL
+        ORDER BY candidate.source_order, candidate.position, candidate.id LIMIT 1`, id, scopeID(ctx)).Scan(&book.PreviewAssetID, &book.PreviewEntryID)
+	if err != nil && !errors.Is(err, sql.ErrNoRows) {
+		return library.Book{}, fmt.Errorf("read book preview: %w", err)
+	}
+
+	return book, nil
 }
 
 // ListBooks returns book summaries matching options.
@@ -85,11 +108,36 @@ func (s *Store) ListBooks(ctx context.Context, options library.BookListOptions) 
 
 	state := options.State
 
+	// CROSS JOIN keeps this book's candidates ahead of recipe lookups.
 	rows, err := s.db.QueryContext(ctx, `
 		SELECT books.id, books.kind, books.title, COALESCE(books.cover_asset_id, ''),
 		       books.author, COUNT(book_entries.id),
 		       MAX(CASE WHEN book_entries.entry_id = ? THEN 1 ELSE 0 END),
-		       books.revision, books.updated_at, books.deleted_at
+		       books.revision, books.updated_at, books.deleted_at,
+		       COALESCE((SELECT recipe.primary_asset_id FROM (
+                         SELECT entry_id, 0 AS source_order, position, id
+                         FROM book_entries WHERE book_id=books.id
+                         UNION ALL
+                         SELECT entry_id, 1, 0, id
+                         FROM recipe_sources WHERE publication_book_id=books.id
+                       ) AS candidate
+                       CROSS JOIN library_recipes AS recipe ON recipe.id=candidate.entry_id
+                       JOIN assets AS photo ON photo.id=recipe.primary_asset_id
+                       WHERE recipe.library_id=books.library_id
+                         AND recipe.deleted_at IS NULL AND photo.storage_key IS NOT NULL
+                       ORDER BY candidate.source_order, candidate.position, candidate.id LIMIT 1), ''),
+		       COALESCE((SELECT recipe.id FROM (
+                         SELECT entry_id, 0 AS source_order, position, id
+                         FROM book_entries WHERE book_id=books.id
+                         UNION ALL
+                         SELECT entry_id, 1, 0, id
+                         FROM recipe_sources WHERE publication_book_id=books.id
+                       ) AS candidate
+                       CROSS JOIN library_recipes AS recipe ON recipe.id=candidate.entry_id
+                       JOIN assets AS photo ON photo.id=recipe.primary_asset_id
+                       WHERE recipe.library_id=books.library_id
+                         AND recipe.deleted_at IS NULL AND photo.storage_key IS NOT NULL
+                       ORDER BY candidate.source_order, candidate.position, candidate.id LIMIT 1), '')
 		FROM books
 		LEFT JOIN book_entries ON book_entries.book_id = books.id
 		WHERE books.library_id=? AND ((?='active' AND books.deleted_at IS NULL) OR (?='trash' AND books.deleted_at IS NOT NULL))
@@ -109,7 +157,7 @@ func (s *Store) ListBooks(ctx context.Context, options library.BookListOptions) 
 			updated   string
 			deletedAt sql.NullString
 		)
-		if err := rows.Scan(&book.ID, &book.Kind, &book.Title, &book.CoverAssetID, &book.Author, &book.EntryCount, &book.ContainsEntry, &book.Revision, &updated, &deletedAt); err != nil {
+		if err := rows.Scan(&book.ID, &book.Kind, &book.Title, &book.CoverAssetID, &book.Author, &book.EntryCount, &book.ContainsEntry, &book.Revision, &updated, &deletedAt, &book.PreviewAssetID, &book.PreviewEntryID); err != nil {
 			return nil, fmt.Errorf("scan book summary: %w", err)
 		}
 

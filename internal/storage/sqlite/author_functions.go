@@ -4,9 +4,11 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"sync"
 
 	"github.com/savorum/savorum/internal/library"
+	"github.com/savorum/savorum/internal/recipe"
 	sqliteDriver "modernc.org/sqlite"
 )
 
@@ -34,6 +36,14 @@ var registerSearchFunctions = sync.OnceValue(func() error {
 			return string(encoded), nil
 		}},
 		{"savorum_ingredient_names", ingredientSearchNames},
+		{"savorum_duration", func(value string) (string, error) {
+			duration, ok := recipe.ParseDuration(value)
+			if !ok {
+				return "", nil
+			}
+
+			return strconv.FormatInt(int64(duration), 10), nil
+		}},
 	} {
 		if err := sqliteDriver.RegisterDeterministicScalarFunction(function.name, 1, func(_ *sqliteDriver.FunctionContext, args []driver.Value) (driver.Value, error) {
 			value, ok := args[0].(string)

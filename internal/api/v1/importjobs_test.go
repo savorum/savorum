@@ -366,6 +366,38 @@ func TestImportJobItemsFilterByWhatAReaderIsLookingFor(t *testing.T) {
 	}
 }
 
+func TestFailedImportItemNamesARecognizedCause(t *testing.T) {
+	handler := importJobAPI(t, nil)
+	soup := `{"@type":"Recipe","name":"Duplicate soup","recipeIngredient":["water"],"recipeInstructions":["Simmer."]}`
+
+	for attempt, policy := range []string{"", "reject"} {
+		preview := stageImportPreview(t, handler, map[string]string{"soup.jsonld": soup})
+
+		body, err := json.Marshal(ImportJobStartInput{ItemIDs: []string{preview.Items[0].ID}, OnDuplicate: policy})
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		response := request(t, handler, http.MethodPost, "/api/v1/recipes/import-previews/"+preview.ID+"/jobs", body)
+
+		var start ImportJobStartResponse
+		if err := json.Unmarshal(response.Body.Bytes(), &start); err != nil {
+			t.Fatal(err)
+		}
+
+		job := awaitJob(t, handler, start.Job.ID)
+
+		if attempt == 0 {
+			continue
+		}
+
+		failed := readJobItems(t, handler, job.ID, "failed")
+		if len(failed) != 1 || failed[0].ErrorCode != "already-in-library" || failed[0].Error == "" {
+			t.Fatalf("failed items = %#v", failed)
+		}
+	}
+}
+
 func TestCancellingAFinishedImportSaysSoRatherThanPretending(t *testing.T) {
 	handler := importJobAPI(t, nil)
 	preview := stageImportPreview(t, handler, map[string]string{

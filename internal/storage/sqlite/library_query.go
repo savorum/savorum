@@ -264,6 +264,10 @@ func recipeListOrder(value library.ListSort) (string, error) {
 		return "recipes.updated_at DESC, recipes.id", nil
 	case library.ListSortTitleAsc:
 		return "recipes.title COLLATE NOCASE ASC, recipes.id", nil
+	case library.ListSortTotalTimeAsc:
+		return "savorum_duration(COALESCE(recipes.total_time, '')) = '' ASC, CAST(savorum_duration(COALESCE(recipes.total_time, '')) AS INTEGER) ASC, recipes.title COLLATE NOCASE ASC, recipes.id", nil
+	case library.ListSortCookedDesc:
+		return "user_state.last_cooked IS NULL ASC, user_state.last_cooked DESC, recipes.updated_at DESC, recipes.id", nil
 	case library.ListSortRatingDesc:
 		return "user_state.rating IS NULL ASC, user_state.rating DESC, recipes.updated_at DESC, recipes.id", nil
 	default:

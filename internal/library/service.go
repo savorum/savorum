@@ -229,7 +229,7 @@ func normalizeListSort(value ListSort) (ListSort, error) {
 	}
 
 	switch value {
-	case ListSortRelevance, ListSortUpdatedDesc, ListSortTitleAsc, ListSortRatingDesc:
+	case ListSortRelevance, ListSortUpdatedDesc, ListSortTitleAsc, ListSortRatingDesc, ListSortTotalTimeAsc, ListSortCookedDesc:
 		return value, nil
 	default:
 		return "", fmt.Errorf("unsupported recipe list sort %q: %w", value, ErrInvalidSearch)

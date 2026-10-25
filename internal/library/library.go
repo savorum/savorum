@@ -249,10 +249,12 @@ type ListSort string
 
 // Supported orderings of library summaries.
 const (
-	ListSortRelevance   ListSort = "relevance"
-	ListSortUpdatedDesc ListSort = "updated-desc"
-	ListSortTitleAsc    ListSort = "title-asc"
-	ListSortRatingDesc  ListSort = "rating-desc"
+	ListSortRelevance    ListSort = "relevance"
+	ListSortUpdatedDesc  ListSort = "updated-desc"
+	ListSortTitleAsc     ListSort = "title-asc"
+	ListSortRatingDesc   ListSort = "rating-desc"
+	ListSortTotalTimeAsc ListSort = "total-time-asc"
+	ListSortCookedDesc   ListSort = "cooked-desc"
 )
 
 // SearchCriteria combines text, taxonomy, provenance, and user-state filters.
