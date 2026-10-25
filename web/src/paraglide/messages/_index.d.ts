@@ -4636,6 +4636,20 @@ export const account_session_ended_sign_in: ((inputs?: Account_Session_Ended_Sig
 /**
 * | output |
 * | --- |
+* | "App via browser sign-in" |
+*
+* @param {Account_Sessions_Browser_HandoffInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_sessions_browser_handoff: ((inputs?: Account_Sessions_Browser_HandoffInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Sessions_Browser_HandoffInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "{method} · Last active {last} · Signed in {created}" |
 *
 * @param {Account_Sessions_DetailInputs} inputs
@@ -4678,7 +4692,7 @@ export const account_sessions_heading: ((inputs?: Account_Sessions_HeadingInputs
 /**
 * | output |
 * | --- |
-* | "Each browser signed in to your account. Revoke any you do not recognize." |
+* | "Browsers and apps signed in to your account. Revoke any you do not recognize." |
 *
 * @param {Account_Sessions_HintInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -34697,6 +34711,7 @@ export type Account_Security_TitleInputs = {};
 export type Account_Session_EndedInputs = {};
 export type Account_Session_Ended_DismissInputs = {};
 export type Account_Session_Ended_Sign_InInputs = {};
+export type Account_Sessions_Browser_HandoffInputs = {};
 export type Account_Sessions_DetailInputs = {
     method: NonNullable<unknown>;
     last: NonNullable<unknown>;

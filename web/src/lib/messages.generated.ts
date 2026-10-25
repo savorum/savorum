@@ -999,6 +999,9 @@ export const account_session_ended_dismiss: Messages["account_session_ended_dism
 export const account_session_ended_sign_in: Messages["account_session_ended_sign_in"] = /* @__PURE__ */ localized("account_session_ended_sign_in", () => {
 	return /** @type {LocalizedString} */ (`Sign in again`)
 })
+export const account_sessions_browser_handoff: Messages["account_sessions_browser_handoff"] = /* @__PURE__ */ localized("account_sessions_browser_handoff", () => {
+	return /** @type {LocalizedString} */ (`App via browser sign-in`)
+})
 export const account_sessions_detail: Messages["account_sessions_detail"] = /* @__PURE__ */ localized("account_sessions_detail", (i) => {
 	return /** @type {LocalizedString} */ (`${i?.method} · Last active ${i?.last} · Signed in ${i?.created}`)
 })
@@ -1009,7 +1012,7 @@ export const account_sessions_heading: Messages["account_sessions_heading"] = /*
 	return /** @type {LocalizedString} */ (`Active sessions`)
 })
 export const account_sessions_hint: Messages["account_sessions_hint"] = /* @__PURE__ */ localized("account_sessions_hint", () => {
-	return /** @type {LocalizedString} */ (`Each browser signed in to your account. Revoke any you do not recognize.`)
+	return /** @type {LocalizedString} */ (`Browsers and apps signed in to your account. Revoke any you do not recognize.`)
 })
 export const account_sessions_last_active: Messages["account_sessions_last_active"] = /* @__PURE__ */ localized("account_sessions_last_active", (i) => {
 	return /** @type {LocalizedString} */ (`Last active ${i?.date}`)

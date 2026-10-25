@@ -13,6 +13,7 @@ import { accountStyles as styles } from "./account-layout"
 import { accountRequest } from "./account-state"
 import { rememberAssistantApproval } from "./assistant-return"
 import { invitationToken } from "./invitations"
+import { rememberNativeBrowserReturn } from "./native-browser"
 import { readProviders, type Provider } from "./sign-in-methods"
 
 export function ProviderLogin() {
@@ -47,9 +48,13 @@ function ProviderOption(props: { provider: Provider }) {
       setPassword("")
       if (result.invitation_accepted) sessionStorage.removeItem("savorum.invitation")
       if (result.authorization_url) {
+        rememberNativeBrowserReturn()
         rememberAssistantApproval()
         window.location.assign(result.authorization_url)
-      } else window.location.reload()
+      } else {
+        rememberNativeBrowserReturn()
+        window.location.reload()
+      }
     } catch (failure) {
       setError(failure)
       setBusy(false)

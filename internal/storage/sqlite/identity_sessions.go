@@ -38,7 +38,8 @@ func (s *Store) CreateSession(ctx context.Context, userID, provider string, idle
 	}
 
 	now := time.Now().UTC().Truncate(time.Second)
-	session := identity.SessionCredentials{ID: id, UserID: userID, CreatedAt: now, LastSeen: now, IdleExpires: now.Add(idle), AbsoluteExpires: now.Add(absolute), Provider: provider, Token: token, CSRF: csrf}
+	_, browserHandoff := identity.BrowserSession(ctx)
+	session := identity.SessionCredentials{BrowserHandoff: browserHandoff, ID: id, UserID: userID, CreatedAt: now, LastSeen: now, IdleExpires: now.Add(idle), AbsoluteExpires: now.Add(absolute), Provider: provider, Token: token, CSRF: csrf}
 
 	tx, err := s.db.BeginTx(ctx, nil)
 	if err != nil {
@@ -79,7 +80,11 @@ func (s *Store) CreateSession(ctx context.Context, userID, provider string, idle
 		}
 	}
 
-	result, err := tx.ExecContext(ctx, `INSERT INTO browser_sessions(id,user_id,token_hash,csrf_hash,created_at,last_seen,idle_expires,absolute_expires,idle_seconds,provider) SELECT ?,id,?,?,?,?,?,?,?,? FROM users WHERE id=? AND status='active'`, id, tokenHash(token), tokenHash(csrf), now.Unix(), now.Unix(), session.IdleExpires.Unix(), session.AbsoluteExpires.Unix(), int64(idle/time.Second), provider, userID)
+	if err = consumeBrowserSession(ctx, tx, userID, provider); err != nil {
+		return identity.SessionCredentials{}, err
+	}
+
+	result, err := tx.ExecContext(ctx, `INSERT INTO browser_sessions(id,user_id,token_hash,csrf_hash,created_at,last_seen,idle_expires,absolute_expires,idle_seconds,provider,browser_handoff) SELECT ?,id,?,?,?,?,?,?,?,?,? FROM users WHERE id=? AND status='active'`, id, tokenHash(token), tokenHash(csrf), now.Unix(), now.Unix(), session.IdleExpires.Unix(), session.AbsoluteExpires.Unix(), int64(idle/time.Second), provider, browserHandoff, userID)
 	if err != nil {
 		return identity.SessionCredentials{}, fmt.Errorf("create session: %w", err)
 	}
@@ -112,7 +117,7 @@ func (s *Store) ResolveSession(ctx context.Context, token string) (identity.Prin
 
 	var created, seen, idle, absolute int64
 
-	err := s.db.QueryRowContext(ctx, `SELECT u.id,u.display_name,u.instance_admin,b.id,b.created_at,b.last_seen,b.idle_expires,b.absolute_expires,b.provider FROM browser_sessions b JOIN users u ON u.id=b.user_id WHERE b.token_hash=? AND b.revoked_at IS NULL AND b.idle_expires>unixepoch() AND b.absolute_expires>unixepoch() AND u.status='active'`, tokenHash(token)).Scan(&p.UserID, &p.DisplayName, &p.InstanceAdmin, &session.ID, &created, &seen, &idle, &absolute, &session.Provider)
+	err := s.db.QueryRowContext(ctx, `SELECT u.id,u.display_name,u.instance_admin,b.id,b.created_at,b.last_seen,b.idle_expires,b.absolute_expires,b.provider,b.browser_handoff FROM browser_sessions b JOIN users u ON u.id=b.user_id WHERE b.token_hash=? AND b.revoked_at IS NULL AND b.idle_expires>unixepoch() AND b.absolute_expires>unixepoch() AND u.status='active'`, tokenHash(token)).Scan(&p.UserID, &p.DisplayName, &p.InstanceAdmin, &session.ID, &created, &seen, &idle, &absolute, &session.Provider, &session.BrowserHandoff)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return p, session, identity.ErrCredentials
@@ -151,7 +156,7 @@ func (s *Store) CheckCSRF(ctx context.Context, token, csrf string) bool {
 
 // Sessions lists active sessions without any authentication secrets.
 func (s *Store) Sessions(ctx context.Context, userID string) ([]identity.Session, error) {
-	rows, err := s.db.QueryContext(ctx, `SELECT id,created_at,last_seen,idle_expires,absolute_expires,provider FROM browser_sessions WHERE user_id=? AND revoked_at IS NULL AND idle_expires>unixepoch() AND absolute_expires>unixepoch() ORDER BY created_at DESC,id`, userID)
+	rows, err := s.db.QueryContext(ctx, `SELECT id,created_at,last_seen,idle_expires,absolute_expires,provider,browser_handoff FROM browser_sessions WHERE user_id=? AND revoked_at IS NULL AND idle_expires>unixepoch() AND absolute_expires>unixepoch() ORDER BY created_at DESC,id`, userID)
 	if err != nil {
 		return nil, fmt.Errorf("list sessions: %w", err)
 	}
@@ -163,7 +168,7 @@ func (s *Store) Sessions(ctx context.Context, userID string) ([]identity.Session
 		var session identity.Session
 
 		var created, seen, idle, absolute int64
-		if err := rows.Scan(&session.ID, &created, &seen, &idle, &absolute, &session.Provider); err != nil {
+		if err := rows.Scan(&session.ID, &created, &seen, &idle, &absolute, &session.Provider, &session.BrowserHandoff); err != nil {
 			return nil, fmt.Errorf("scan session: %w", err)
 		}
 
@@ -222,6 +227,30 @@ func (s *Store) revokeSessions(ctx context.Context, userID, id string, others bo
 
 	if err := tx.Commit(); err != nil {
 		return fmt.Errorf("commit session revocation: %w", err)
+	}
+
+	return nil
+}
+
+func consumeBrowserSession(ctx context.Context, tx *sql.Tx, userID, provider string) error {
+	if source, bound := identity.BrowserSession(ctx); bound {
+		if source == "" {
+			return identity.ErrCredentials
+		}
+
+		result, e := tx.ExecContext(ctx, `UPDATE browser_sessions SET revoked_at=unixepoch(), revocation_reason='native-exchange' WHERE id=? AND user_id=? AND provider=? AND revoked_at IS NULL AND idle_expires>unixepoch() AND absolute_expires>unixepoch()`, source, userID, provider)
+		if e != nil {
+			return fmt.Errorf("consume browser session: %w", e)
+		}
+
+		n, e := result.RowsAffected()
+		if e != nil {
+			return fmt.Errorf("count browser session: %w", e)
+		}
+
+		if n != 1 {
+			return identity.ErrCredentials
+		}
 	}
 
 	return nil

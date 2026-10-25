@@ -13,7 +13,7 @@ import { InvitedRegistration } from "./invitations"
 import { PasskeyLogin, RecoveryLogin } from "./passkeys-and-recovery"
 import { ProviderLogin } from "./provider-login"
 
-export function Login() {
+export function Login(props: { onSignedIn?: () => Promise<void> } = {}) {
   usePageTitle(() => m.account_sign_in_page_title())
   const [login, setLogin] = createSignal("")
   const [password, setPassword] = createSignal("")
@@ -25,7 +25,8 @@ export function Login() {
     setError("")
     try {
       await accountRequest("/account/login", "POST", { login: login(), password: password() })
-      window.location.reload()
+      if (props.onSignedIn) await props.onSignedIn()
+      else window.location.reload()
     } catch (failure) {
       setError((failure as Error).message)
       setBusy(false)
@@ -34,7 +35,10 @@ export function Login() {
   return (
     <main id="main-content" tabIndex={-1} class={styles.page}>
       <h1 class={styles.heading}>{m.account_sign_in_title()}</h1>
-      <PasskeyLogin available={account()?.passkeys_available ?? false} />
+      <PasskeyLogin
+        available={account()?.passkeys_available ?? false}
+        onSignedIn={props.onSignedIn}
+      />
       <ProviderLogin />
       <form class={styles.form} onSubmit={(event) => void submit(event)}>
         <FormField label={m.account_login_name()} required>
@@ -62,7 +66,7 @@ export function Login() {
           {m.account_sign_in()}
         </Button>
       </form>
-      <RecoveryLogin />
+      <RecoveryLogin onSignedIn={props.onSignedIn} />
       <InvitedRegistration />
     </main>
   )

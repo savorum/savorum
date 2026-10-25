@@ -692,7 +692,7 @@ func TestNativeProviderSignInIsAdvertised(t *testing.T) {
 	var value struct {
 		AuthFeatures []string `json:"auth_features"`
 	}
-	if err := json.NewDecoder(response.Body).Decode(&value); err != nil || strings.Join(value.AuthFeatures, ",") != "auth.native_sign_in,auth.native_link" {
+	if err := json.NewDecoder(response.Body).Decode(&value); err != nil || strings.Join(value.AuthFeatures, ",") != "auth.native_sign_in,auth.native_link,auth.native_browser_sign_in" {
 		t.Fatalf("auth features: %v %v", value.AuthFeatures, err)
 	}
 }

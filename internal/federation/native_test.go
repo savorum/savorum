@@ -118,3 +118,32 @@ func TestNativeLinkTicketAcceptsOnlyRedirectProviders(t *testing.T) {
 		t.Fatalf("status=%d", w.Code)
 	}
 }
+
+func TestNativeBrowserEntryCookieScope(t *testing.T) {
+	for _, hosted := range []bool{false, true} {
+		t.Run(map[bool]string{false: "self-hosted", true: "hosted"}[hosted], func(t *testing.T) {
+			h, _ := testHandler(t, proxyProvider(false))
+			h.options.Cookies.HostPrefix = hosted
+			w := httptest.NewRecorder()
+			h.ServeHTTP(w, httptest.NewRequestWithContext(t.Context(), http.MethodGet, "/api/v1/auth/native-browser?"+nativeEntryQuery(testVerifier), nil))
+
+			if w.Code != http.StatusSeeOther {
+				t.Fatal(w.Code, w.Body.String())
+			}
+
+			cookies := w.Result().Cookies()
+			if len(cookies) != 1 || !cookies[0].Secure || !cookies[0].HttpOnly {
+				t.Fatal("invalid browser transaction cookie")
+			}
+
+			expected := "/api/v1/auth/native-browser/"
+			if hosted {
+				expected = "/"
+			}
+
+			if cookies[0].Path != expected {
+				t.Fatal("incorrect cookie path", cookies[0].Path)
+			}
+		})
+	}
+}

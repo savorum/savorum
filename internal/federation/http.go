@@ -75,16 +75,18 @@ type Handler struct {
 }
 type (
 	transaction struct {
-		Origin          string `json:"origin"`
-		Verifier        string `json:"verifier"`
-		Nonce           string `json:"nonce"`
-		RequestID       string `json:"requestid"`
-		InvitationToken string `json:"invitationtoken"`
-		LinkUserID      string `json:"linkuserid"`
-		LinkSessionID   string `json:"linksessionid"`
-		NativeRedirect  string `json:"nativeredirect,omitempty"`
-		NativeState     string `json:"nativestate,omitempty"`
-		NativeChallenge string `json:"nativechallenge,omitempty"`
+		Origin                 string `json:"origin"`
+		Verifier               string `json:"verifier"`
+		Nonce                  string `json:"nonce"`
+		RequestID              string `json:"requestid"`
+		InvitationToken        string `json:"invitationtoken"`
+		LinkUserID             string `json:"linkuserid"`
+		LinkSessionID          string `json:"linksessionid"`
+		NativeInitialSessionID string `json:"nativeinitialsessionid,omitempty"`
+		NativeStartedAt        int64  `json:"nativestartedat,omitempty"`
+		NativeRedirect         string `json:"nativeredirect,omitempty"`
+		NativeState            string `json:"nativestate,omitempty"`
+		NativeChallenge        string `json:"nativechallenge,omitempty"`
 	}
 	loginInput struct {
 		Login           string `json:"login"`
@@ -139,6 +141,8 @@ func New(store Repository, c Config, o Options, next http.Handler) (*Handler, er
 	h.routes.HandleFunc("POST /api/v1/auth/{provider}/login", h.begin)
 	h.routes.HandleFunc("GET /api/v1/auth/{provider}/native", h.nativeBegin)
 	h.routes.HandleFunc("POST /api/v1/auth/native-sessions", h.nativeRedeem)
+	h.routes.HandleFunc("GET /api/v1/auth/native-browser", h.nativeBrowserBegin)
+	h.routes.HandleFunc("POST /api/v1/auth/native-browser/finish", h.nativeBrowserFinish)
 	h.routes.HandleFunc("POST /api/v1/auth/{provider}/managed-sessions", h.managedNativeSession)
 	h.routes.HandleFunc("POST /api/v1/auth/{provider}/native-link-tickets", h.nativeLinkTicket)
 	h.routes.HandleFunc("POST /api/v1/auth/native-links", h.nativeLinkFinish)
@@ -362,6 +366,10 @@ func (h *Handler) saveTransaction(w http.ResponseWriter, r *http.Request, p Prov
 func (h *Handler) transactionCookiePath(provider string) string {
 	if h.options.Cookies.HostPrefix {
 		return "/"
+	}
+
+	if provider == NativeBrowserProvider {
+		return "/api/v1/auth/native-browser/"
 	}
 
 	return "/api/v1/auth/" + provider + "/"

@@ -385,7 +385,7 @@ export function RecoveryCodesPanel() {
 }
 
 // PasskeyLogin shares the existing login screen; conditional mediation uses its username field.
-export function PasskeyLogin(props: { available: boolean }) {
+export function PasskeyLogin(props: { available: boolean; onSignedIn?: () => Promise<void> }) {
   const [busy, setBusy] = createSignal(false)
   const [error, setError] = createSignal("")
   const controller = new AbortController()
@@ -398,10 +398,12 @@ export function PasskeyLogin(props: { available: boolean }) {
     )
       void PublicKeyCredential.isConditionalMediationAvailable()
         .then(async (supported) => {
-          if (supported && !controller.signal.aborted) {
-            await signInWithPasskey(true, controller.signal)
-            if (!controller.signal.aborted) window.location.reload()
-          }
+          if (!supported || controller.signal.aborted) return
+          await signInWithPasskey(true, controller.signal)
+          if (controller.signal.aborted) return
+          if (props.onSignedIn)
+            await props.onSignedIn().catch((failure: Error) => setError(failure.message))
+          else window.location.reload()
         })
         .catch(() => {})
   })
@@ -415,7 +417,7 @@ export function PasskeyLogin(props: { available: boolean }) {
             setBusy(true)
             setError("")
             void signInWithPasskey()
-              .then(() => window.location.reload())
+              .then(() => (props.onSignedIn ? props.onSignedIn() : window.location.reload()))
               .catch((failure: Error) =>
                 setError(
                   failure.name === "NotAllowedError"
@@ -434,7 +436,7 @@ export function PasskeyLogin(props: { available: boolean }) {
   )
 }
 
-export function RecoveryLogin() {
+export function RecoveryLogin(props: { onSignedIn?: () => Promise<void> } = {}) {
   const [login, setLogin] = createSignal("")
   const [code, setCode] = createSignal("")
   const [busy, setBusy] = createSignal(false)
@@ -448,8 +450,11 @@ export function RecoveryLogin() {
           setBusy(true)
           setError("")
           void accountRequest("/account/recovery/login", "POST", { login: login(), code: code() })
-            .then(() => window.location.assign("/account"))
-            .catch(() => setError(m.account_login_recovery_error()))
+            .then(
+              () => (props.onSignedIn ? props.onSignedIn() : window.location.assign("/account")),
+              () => setError(m.account_login_recovery_error()),
+            )
+            .catch((failure: Error) => setError(failure.message))
             .finally(() => setBusy(false))
         }}
       >

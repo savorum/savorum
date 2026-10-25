@@ -14,6 +14,11 @@ import {
   watchSessionStanding,
 } from "./account-state"
 import { takeAssistantApprovalReturn } from "./assistant-return"
+import { nativeBrowserState } from "./native-browser"
+
+const NativeBrowserLogin = lazy(() =>
+  import("./native-browser-login").then((module) => ({ default: module.NativeBrowserLogin })),
+)
 
 const Login = lazy(() => import("./login-page").then((module) => ({ default: module.Login })))
 
@@ -24,7 +29,7 @@ export function AccountShell(props: ParentProps) {
     setError("")
     void refreshAccount()
       .then(() => {
-        if (account()?.user) {
+        if (account()?.user && !nativeBrowserState()) {
           const target = takeAssistantApprovalReturn()
           if (target) window.location.replace(target)
         }
@@ -50,10 +55,12 @@ export function AccountShell(props: ParentProps) {
       }
     >
       <Show
-        when={!account()?.auth_enabled || account()?.user}
+        when={!nativeBrowserState() && (!account()?.auth_enabled || account()?.user)}
         fallback={
           <Suspense fallback={<AppLoading />}>
-            <Login />
+            <Show when={nativeBrowserState()} fallback={<Login />}>
+              <NativeBrowserLogin />
+            </Show>
           </Suspense>
         }
       >

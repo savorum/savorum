@@ -83,11 +83,12 @@ type deleteAccountRequest struct {
 	Confirmation string `json:"confirmation" enum:"DELETE"`
 }
 type accountSession struct {
-	ID         string    `json:"id"`
-	CreatedAt  time.Time `json:"created_at"`
-	LastSeenAt time.Time `json:"last_seen_at"`
-	AuthMethod string    `json:"auth_method"`
-	Current    bool      `json:"current"`
+	BrowserHandoff bool      `json:"browser_handoff" doc:"True when a native app created the session by exchanging a browser sign-in."`
+	ID             string    `json:"id"`
+	CreatedAt      time.Time `json:"created_at"`
+	LastSeenAt     time.Time `json:"last_seen_at"`
+	AuthMethod     string    `json:"auth_method"`
+	Current        bool      `json:"current"`
 }
 type (
 	sessionsResponse struct {
