@@ -6,12 +6,18 @@ export const ratingGroup = defineSlotRecipe({
   slots: ratingGroupAnatomy.keys(),
   base: {
     root: { display: "inline-flex", alignItems: "center", gap: "2" },
-    control: { display: "flex", gap: "1" },
+    control: { display: "flex", gap: "1", "@media (pointer: coarse)": { gap: "0" } },
     label: { srOnly: true },
     item: {
       // Inked like the heart at rest: 4.95:1 on the canvas, above the 3:1 a
       // non-text control needs.
+      alignItems: "center",
       color: "fg.muted",
+      display: "inline-flex",
+      justifyContent: "center",
+      minHeight: "6",
+      minWidth: "6",
+      "@media (pointer: coarse)": { minHeight: "11", minWidth: "11" },
       "&[data-active]": { color: "rating.default" },
       "& svg": {
         fill: "currentColor",

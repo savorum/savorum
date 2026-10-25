@@ -27,6 +27,9 @@ export const account_access_title: Messages["account_access_title"] = /* @__PURE
 export const account_activity_heading: Messages["account_activity_heading"] = /* @__PURE__ */ localized("account_activity_heading", () => {
 	return /** @type {LocalizedString} */ (`Library activity`)
 })
+export const account_admin_active: Messages["account_admin_active"] = /* @__PURE__ */ localized("account_admin_active", () => {
+	return /** @type {LocalizedString} */ (`Active`)
+})
 export const account_admin_audit_lede: Messages["account_admin_audit_lede"] = /* @__PURE__ */ localized("account_admin_audit_lede", () => {
 	return /** @type {LocalizedString} */ (`Security and destructive operations across this instance.`)
 })
@@ -37,7 +40,7 @@ export const account_admin_audit_title: Messages["account_admin_audit_title"] = 
 	return /** @type {LocalizedString} */ (`Audit history`)
 })
 export const account_admin_create_heading: Messages["account_admin_create_heading"] = /* @__PURE__ */ localized("account_admin_create_heading", () => {
-	return /** @type {LocalizedString} */ (`Create a local account`)
+	return /** @type {LocalizedString} */ (`Add user`)
 })
 export const account_admin_create_hint: Messages["account_admin_create_hint"] = /* @__PURE__ */ localized("account_admin_create_hint", () => {
 	return /** @type {LocalizedString} */ (`The person signs in with this login name and password, and can change the password afterwards.`)
@@ -52,7 +55,7 @@ export const account_admin_create_library_submit: Messages["account_admin_create
 	return /** @type {LocalizedString} */ (`Create library`)
 })
 export const account_admin_create_submit: Messages["account_admin_create_submit"] = /* @__PURE__ */ localized("account_admin_create_submit", () => {
-	return /** @type {LocalizedString} */ (`Create account`)
+	return /** @type {LocalizedString} */ (`Add user`)
 })
 export const account_admin_dependencies_heading: Messages["account_admin_dependencies_heading"] = /* @__PURE__ */ localized("account_admin_dependencies_heading", () => {
 	return /** @type {LocalizedString} */ (`Before you disable a provider`)
@@ -107,6 +110,12 @@ export const account_admin_library_none: Messages["account_admin_library_none"] 
 })
 export const account_admin_library_role: Messages["account_admin_library_role"] = /* @__PURE__ */ localized("account_admin_library_role", () => {
 	return /** @type {LocalizedString} */ (`Library role`)
+})
+export const account_admin_manage: Messages["account_admin_manage"] = /* @__PURE__ */ localized("account_admin_manage", () => {
+	return /** @type {LocalizedString} */ (`Manage`)
+})
+export const account_admin_manage_named: Messages["account_admin_manage_named"] = /* @__PURE__ */ localized("account_admin_manage_named", (i) => {
+	return /** @type {LocalizedString} */ (`Manage ${i?.name}`)
 })
 export const account_admin_mapping_add: Messages["account_admin_mapping_add"] = /* @__PURE__ */ localized("account_admin_mapping_add", () => {
 	return /** @type {LocalizedString} */ (`Add group mapping`)
@@ -164,6 +173,9 @@ export const account_admin_nav_people: Messages["account_admin_nav_people"] = /*
 })
 export const account_admin_nav_providers: Messages["account_admin_nav_providers"] = /* @__PURE__ */ localized("account_admin_nav_providers", () => {
 	return /** @type {LocalizedString} */ (`Sign-in providers`)
+})
+export const account_admin_password_reset_notice: Messages["account_admin_password_reset_notice"] = /* @__PURE__ */ localized("account_admin_password_reset_notice", () => {
+	return /** @type {LocalizedString} */ (`Password reset. This user has been signed out of all sessions.`)
 })
 export const account_admin_people_error: Messages["account_admin_people_error"] = /* @__PURE__ */ localized("account_admin_people_error", () => {
 	return /** @type {LocalizedString} */ (`Could not load accounts.`)
@@ -224,6 +236,12 @@ export const account_admin_recover_submit: Messages["account_admin_recover_submi
 })
 export const account_admin_recovered: Messages["account_admin_recovered"] = /* @__PURE__ */ localized("account_admin_recovered", () => {
 	return /** @type {LocalizedString} */ (`Ownership assigned.`)
+})
+export const account_admin_reset_action: Messages["account_admin_reset_action"] = /* @__PURE__ */ localized("account_admin_reset_action", () => {
+	return /** @type {LocalizedString} */ (`Reset password`)
+})
+export const account_admin_reset_hint: Messages["account_admin_reset_hint"] = /* @__PURE__ */ localized("account_admin_reset_hint", () => {
+	return /** @type {LocalizedString} */ (`Resetting the password signs this user out everywhere.`)
 })
 export const account_admin_reset_password: Messages["account_admin_reset_password"] = /* @__PURE__ */ localized("account_admin_reset_password", (i) => {
 	return /** @type {LocalizedString} */ (`New password for ${i?.name}`)
@@ -291,14 +309,26 @@ export const account_assistant_setup_prompt: Messages["account_assistant_setup_p
 export const account_assistant_temporary: Messages["account_assistant_temporary"] = /* @__PURE__ */ localized("account_assistant_temporary", () => {
 	return /** @type {LocalizedString} */ (`Temporary access: 15 minutes.`)
 })
+export const account_audit_access_changed: Messages["account_audit_access_changed"] = /* @__PURE__ */ localized("account_audit_access_changed", () => {
+	return /** @type {LocalizedString} */ (`Access changed`)
+})
+export const account_audit_action_code: Messages["account_audit_action_code"] = /* @__PURE__ */ localized("account_audit_action_code", () => {
+	return /** @type {LocalizedString} */ (`Action code`)
+})
 export const account_audit_activity: Messages["account_audit_activity"] = /* @__PURE__ */ localized("account_audit_activity", () => {
 	return /** @type {LocalizedString} */ (`Activity`)
 })
 export const account_audit_actor: Messages["account_audit_actor"] = /* @__PURE__ */ localized("account_audit_actor", () => {
 	return /** @type {LocalizedString} */ (`Actor ID`)
 })
+export const account_audit_affected: Messages["account_audit_affected"] = /* @__PURE__ */ localized("account_audit_affected", () => {
+	return /** @type {LocalizedString} */ (`Affected`)
+})
 export const account_audit_all: Messages["account_audit_all"] = /* @__PURE__ */ localized("account_audit_all", () => {
 	return /** @type {LocalizedString} */ (`All activity`)
+})
+export const account_audit_anyone: Messages["account_audit_anyone"] = /* @__PURE__ */ localized("account_audit_anyone", () => {
+	return /** @type {LocalizedString} */ (`Anyone`)
 })
 export const account_audit_apply: Messages["account_audit_apply"] = /* @__PURE__ */ localized("account_audit_apply", () => {
 	return /** @type {LocalizedString} */ (`Apply filters`)
@@ -309,14 +339,38 @@ export const account_audit_auth: Messages["account_audit_auth"] = /* @__PURE__ *
 export const account_audit_books: Messages["account_audit_books"] = /* @__PURE__ */ localized("account_audit_books", () => {
 	return /** @type {LocalizedString} */ (`Books`)
 })
+export const account_audit_by: Messages["account_audit_by"] = /* @__PURE__ */ localized("account_audit_by", () => {
+	return /** @type {LocalizedString} */ (`By`)
+})
+export const account_audit_credential_id: Messages["account_audit_credential_id"] = /* @__PURE__ */ localized("account_audit_credential_id", () => {
+	return /** @type {LocalizedString} */ (`Credential ID`)
+})
+export const account_audit_deleted: Messages["account_audit_deleted"] = /* @__PURE__ */ localized("account_audit_deleted", () => {
+	return /** @type {LocalizedString} */ (`Deleted`)
+})
+export const account_audit_details: Messages["account_audit_details"] = /* @__PURE__ */ localized("account_audit_details", () => {
+	return /** @type {LocalizedString} */ (`Record details`)
+})
 export const account_audit_empty: Messages["account_audit_empty"] = /* @__PURE__ */ localized("account_audit_empty", () => {
 	return /** @type {LocalizedString} */ (`No matching activity.`)
+})
+export const account_audit_enabled: Messages["account_audit_enabled"] = /* @__PURE__ */ localized("account_audit_enabled", () => {
+	return /** @type {LocalizedString} */ (`Enabled`)
 })
 export const account_audit_error: Messages["account_audit_error"] = /* @__PURE__ */ localized("account_audit_error", () => {
 	return /** @type {LocalizedString} */ (`Could not load audit history. Try applying the filters again.`)
 })
 export const account_audit_event_detail: Messages["account_audit_event_detail"] = /* @__PURE__ */ localized("account_audit_event_detail", (i) => {
 	return /** @type {LocalizedString} */ (`${i?.actor} · ${i?.targetType} ${i?.target} · ${i?.outcome}`)
+})
+export const account_audit_event_id: Messages["account_audit_event_id"] = /* @__PURE__ */ localized("account_audit_event_id", () => {
+	return /** @type {LocalizedString} */ (`Event ID`)
+})
+export const account_audit_failed: Messages["account_audit_failed"] = /* @__PURE__ */ localized("account_audit_failed", () => {
+	return /** @type {LocalizedString} */ (`Failed`)
+})
+export const account_audit_forced_unlink: Messages["account_audit_forced_unlink"] = /* @__PURE__ */ localized("account_audit_forced_unlink", () => {
+	return /** @type {LocalizedString} */ (`Forced sign-in method removal`)
 })
 export const account_audit_from: Messages["account_audit_from"] = /* @__PURE__ */ localized("account_audit_from", () => {
 	return /** @type {LocalizedString} */ (`From`)
@@ -333,17 +387,71 @@ export const account_audit_imports: Messages["account_audit_imports"] = /* @__PU
 export const account_audit_library: Messages["account_audit_library"] = /* @__PURE__ */ localized("account_audit_library", () => {
 	return /** @type {LocalizedString} */ (`Library access`)
 })
+export const account_audit_linked: Messages["account_audit_linked"] = /* @__PURE__ */ localized("account_audit_linked", () => {
+	return /** @type {LocalizedString} */ (`Sign-in method added`)
+})
 export const account_audit_loading: Messages["account_audit_loading"] = /* @__PURE__ */ localized("account_audit_loading", () => {
 	return /** @type {LocalizedString} */ (`Loading audit history…`)
+})
+export const account_audit_merged: Messages["account_audit_merged"] = /* @__PURE__ */ localized("account_audit_merged", () => {
+	return /** @type {LocalizedString} */ (`Merged`)
 })
 export const account_audit_older: Messages["account_audit_older"] = /* @__PURE__ */ localized("account_audit_older", () => {
 	return /** @type {LocalizedString} */ (`Older activity`)
 })
+export const account_audit_owner: Messages["account_audit_owner"] = /* @__PURE__ */ localized("account_audit_owner", () => {
+	return /** @type {LocalizedString} */ (`Instance owner`)
+})
+export const account_audit_password_change: Messages["account_audit_password_change"] = /* @__PURE__ */ localized("account_audit_password_change", () => {
+	return /** @type {LocalizedString} */ (`Password change`)
+})
+export const account_audit_paused: Messages["account_audit_paused"] = /* @__PURE__ */ localized("account_audit_paused", () => {
+	return /** @type {LocalizedString} */ (`Paused`)
+})
+export const account_audit_purged: Messages["account_audit_purged"] = /* @__PURE__ */ localized("account_audit_purged", () => {
+	return /** @type {LocalizedString} */ (`Permanently deleted`)
+})
 export const account_audit_recipes: Messages["account_audit_recipes"] = /* @__PURE__ */ localized("account_audit_recipes", () => {
 	return /** @type {LocalizedString} */ (`Recipes`)
 })
+export const account_audit_recovery_replaced: Messages["account_audit_recovery_replaced"] = /* @__PURE__ */ localized("account_audit_recovery_replaced", () => {
+	return /** @type {LocalizedString} */ (`Recovery codes replaced`)
+})
+export const account_audit_recovery_sign_in: Messages["account_audit_recovery_sign_in"] = /* @__PURE__ */ localized("account_audit_recovery_sign_in", () => {
+	return /** @type {LocalizedString} */ (`Recovery sign-in`)
+})
+export const account_audit_redelivery: Messages["account_audit_redelivery"] = /* @__PURE__ */ localized("account_audit_redelivery", () => {
+	return /** @type {LocalizedString} */ (`Redelivery requested`)
+})
+export const account_audit_renamed: Messages["account_audit_renamed"] = /* @__PURE__ */ localized("account_audit_renamed", () => {
+	return /** @type {LocalizedString} */ (`Renamed`)
+})
+export const account_audit_request_id: Messages["account_audit_request_id"] = /* @__PURE__ */ localized("account_audit_request_id", () => {
+	return /** @type {LocalizedString} */ (`Request ID`)
+})
+export const account_audit_result: Messages["account_audit_result"] = /* @__PURE__ */ localized("account_audit_result", () => {
+	return /** @type {LocalizedString} */ (`Result`)
+})
+export const account_audit_retired: Messages["account_audit_retired"] = /* @__PURE__ */ localized("account_audit_retired", () => {
+	return /** @type {LocalizedString} */ (`Retired`)
+})
+export const account_audit_secret_rotated: Messages["account_audit_secret_rotated"] = /* @__PURE__ */ localized("account_audit_secret_rotated", () => {
+	return /** @type {LocalizedString} */ (`Signing secret rotated`)
+})
+export const account_audit_service: Messages["account_audit_service"] = /* @__PURE__ */ localized("account_audit_service", () => {
+	return /** @type {LocalizedString} */ (`Hosting service`)
+})
 export const account_audit_settings: Messages["account_audit_settings"] = /* @__PURE__ */ localized("account_audit_settings", () => {
 	return /** @type {LocalizedString} */ (`Settings`)
+})
+export const account_audit_sign_in: Messages["account_audit_sign_in"] = /* @__PURE__ */ localized("account_audit_sign_in", () => {
+	return /** @type {LocalizedString} */ (`Sign-in`)
+})
+export const account_audit_succeeded: Messages["account_audit_succeeded"] = /* @__PURE__ */ localized("account_audit_succeeded", () => {
+	return /** @type {LocalizedString} */ (`Succeeded`)
+})
+export const account_audit_system: Messages["account_audit_system"] = /* @__PURE__ */ localized("account_audit_system", () => {
+	return /** @type {LocalizedString} */ (`System`)
 })
 export const account_audit_target: Messages["account_audit_target"] = /* @__PURE__ */ localized("account_audit_target", () => {
 	return /** @type {LocalizedString} */ (`Target ID`)
@@ -384,14 +492,26 @@ export const account_audit_target_token: Messages["account_audit_target_token"] 
 export const account_audit_target_user: Messages["account_audit_target_user"] = /* @__PURE__ */ localized("account_audit_target_user", () => {
 	return /** @type {LocalizedString} */ (`Account`)
 })
+export const account_audit_test_requested: Messages["account_audit_test_requested"] = /* @__PURE__ */ localized("account_audit_test_requested", () => {
+	return /** @type {LocalizedString} */ (`Test requested`)
+})
 export const account_audit_tokens: Messages["account_audit_tokens"] = /* @__PURE__ */ localized("account_audit_tokens", () => {
 	return /** @type {LocalizedString} */ (`API tokens`)
+})
+export const account_audit_trashed: Messages["account_audit_trashed"] = /* @__PURE__ */ localized("account_audit_trashed", () => {
+	return /** @type {LocalizedString} */ (`Moved to Trash`)
+})
+export const account_audit_unlinked: Messages["account_audit_unlinked"] = /* @__PURE__ */ localized("account_audit_unlinked", () => {
+	return /** @type {LocalizedString} */ (`Sign-in method removed`)
 })
 export const account_audit_until: Messages["account_audit_until"] = /* @__PURE__ */ localized("account_audit_until", () => {
 	return /** @type {LocalizedString} */ (`Until`)
 })
 export const account_audit_users: Messages["account_audit_users"] = /* @__PURE__ */ localized("account_audit_users", () => {
 	return /** @type {LocalizedString} */ (`Accounts`)
+})
+export const account_audit_webhook: Messages["account_audit_webhook"] = /* @__PURE__ */ localized("account_audit_webhook", () => {
+	return /** @type {LocalizedString} */ (`Webhook`)
 })
 export const account_confirm_removal: Messages["account_confirm_removal"] = /* @__PURE__ */ localized("account_confirm_removal", () => {
 	return /** @type {LocalizedString} */ (`Confirm removal`)
@@ -747,6 +867,12 @@ export const account_passkeys_remove_named: Messages["account_passkeys_remove_na
 export const account_passkeys_removed: Messages["account_passkeys_removed"] = /* @__PURE__ */ localized("account_passkeys_removed", () => {
 	return /** @type {LocalizedString} */ (`Passkey removed.`)
 })
+export const account_passkeys_rename: Messages["account_passkeys_rename"] = /* @__PURE__ */ localized("account_passkeys_rename", () => {
+	return /** @type {LocalizedString} */ (`Rename`)
+})
+export const account_passkeys_rename_named: Messages["account_passkeys_rename_named"] = /* @__PURE__ */ localized("account_passkeys_rename_named", (i) => {
+	return /** @type {LocalizedString} */ (`Rename ${i?.name}`)
+})
 export const account_passkeys_renamed: Messages["account_passkeys_renamed"] = /* @__PURE__ */ localized("account_passkeys_renamed", () => {
 	return /** @type {LocalizedString} */ (`Passkey renamed.`)
 })
@@ -783,6 +909,9 @@ export const account_recovery_disabled: Messages["account_recovery_disabled"] = 
 export const account_recovery_dismiss: Messages["account_recovery_dismiss"] = /* @__PURE__ */ localized("account_recovery_dismiss", () => {
 	return /** @type {LocalizedString} */ (`I saved my codes`)
 })
+export const account_recovery_empty: Messages["account_recovery_empty"] = /* @__PURE__ */ localized("account_recovery_empty", () => {
+	return /** @type {LocalizedString} */ (`No recovery codes available.`)
+})
 export const account_recovery_generate: Messages["account_recovery_generate"] = /* @__PURE__ */ localized("account_recovery_generate", () => {
 	return /** @type {LocalizedString} */ (`Generate 10 recovery codes`)
 })
@@ -795,8 +924,11 @@ export const account_recovery_hidden: Messages["account_recovery_hidden"] = /* @
 export const account_recovery_hint: Messages["account_recovery_hint"] = /* @__PURE__ */ localized("account_recovery_hint", () => {
 	return /** @type {LocalizedString} */ (`Use a code if you lose your other sign-in methods. Each code works once.`)
 })
-export const account_recovery_remaining: Messages["account_recovery_remaining"] = /* @__PURE__ */ localized("account_recovery_remaining", (i) => {
-	return /** @type {LocalizedString} */ (`${i?.count} unused codes remaining.`)
+export const account_recovery_remaining: Messages["account_recovery_remaining"] = /* @__PURE__ */ localized("account_recovery_remaining", (i) => {const countText = registry.number("en", i?.count, {});
+	const plural = registry.plural("en", i?.count, {});
+	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recovery code remaining.`);
+	return /** @type {LocalizedString} */ (`${countText} recovery codes remaining.`)
+	
 })
 export const account_recovery_replace: Messages["account_recovery_replace"] = /* @__PURE__ */ localized("account_recovery_replace", () => {
 	return /** @type {LocalizedString} */ (`Generate replacement codes`)
@@ -879,8 +1011,14 @@ export const account_sessions_heading: Messages["account_sessions_heading"] = /*
 export const account_sessions_hint: Messages["account_sessions_hint"] = /* @__PURE__ */ localized("account_sessions_hint", () => {
 	return /** @type {LocalizedString} */ (`Each browser signed in to your account. Revoke any you do not recognize.`)
 })
+export const account_sessions_last_active: Messages["account_sessions_last_active"] = /* @__PURE__ */ localized("account_sessions_last_active", (i) => {
+	return /** @type {LocalizedString} */ (`Last active ${i?.date}`)
+})
 export const account_sessions_other: Messages["account_sessions_other"] = /* @__PURE__ */ localized("account_sessions_other", () => {
 	return /** @type {LocalizedString} */ (`Another browser`)
+})
+export const account_sessions_other_heading: Messages["account_sessions_other_heading"] = /* @__PURE__ */ localized("account_sessions_other_heading", () => {
+	return /** @type {LocalizedString} */ (`Other sessions`)
 })
 export const account_sessions_others_revoked: Messages["account_sessions_others_revoked"] = /* @__PURE__ */ localized("account_sessions_others_revoked", () => {
 	return /** @type {LocalizedString} */ (`Other sessions revoked.`)
@@ -896,6 +1034,9 @@ export const account_sessions_revoke_others: Messages["account_sessions_revoke_o
 })
 export const account_sessions_revoked: Messages["account_sessions_revoked"] = /* @__PURE__ */ localized("account_sessions_revoked", () => {
 	return /** @type {LocalizedString} */ (`Session revoked.`)
+})
+export const account_sessions_signed_in: Messages["account_sessions_signed_in"] = /* @__PURE__ */ localized("account_sessions_signed_in", (i) => {
+	return /** @type {LocalizedString} */ (`Signed in ${i?.date}`)
 })
 export const account_sessions_this: Messages["account_sessions_this"] = /* @__PURE__ */ localized("account_sessions_this", () => {
 	return /** @type {LocalizedString} */ (`This browser`)
@@ -2021,6 +2162,9 @@ export const common_earlier_versions: Messages["common_earlier_versions"] = /* @
 export const common_keep_it: Messages["common_keep_it"] = /* @__PURE__ */ localized("common_keep_it", () => {
 	return /** @type {LocalizedString} */ (`Keep it`)
 })
+export const common_loading: Messages["common_loading"] = /* @__PURE__ */ localized("common_loading", () => {
+	return /** @type {LocalizedString} */ (`Loading…`)
+})
 export const common_next: Messages["common_next"] = /* @__PURE__ */ localized("common_next", () => {
 	return /** @type {LocalizedString} */ (`Next`)
 })
@@ -2777,6 +2921,15 @@ export const exports_choose_at_least_one_recipe_to_export: Messages["exports_cho
 export const exports_the_export_could_not_be_completed: Messages["exports_the_export_could_not_be_completed"] = /* @__PURE__ */ localized("exports_the_export_could_not_be_completed", () => {
 	return /** @type {LocalizedString} */ (`The export could not be completed.`)
 })
+export const help_imports: Messages["help_imports"] = /* @__PURE__ */ localized("help_imports", () => {
+	return /** @type {LocalizedString} */ (`Help with importing recipes`)
+})
+export const help_plan: Messages["help_plan"] = /* @__PURE__ */ localized("help_plan", () => {
+	return /** @type {LocalizedString} */ (`Help with meal planning`)
+})
+export const help_shopping: Messages["help_shopping"] = /* @__PURE__ */ localized("help_shopping", () => {
+	return /** @type {LocalizedString} */ (`Help with shopping lists`)
+})
 export const import_about_hours: Messages["import_about_hours"] = /* @__PURE__ */ localized("import_about_hours", (i) => {const countText = registry.number("en", i?.count, {});
 	const plural = registry.plural("en", i?.count, {});
 	if (plural === "one") return /** @type {LocalizedString} */ (`about ${countText} hour`);
@@ -3002,17 +3155,14 @@ export const import_job_not_imported: Messages["import_job_not_imported"] = /* @
 	return /** @type {LocalizedString} */ (`${countText} recipes not imported`)
 	
 })
-export const import_job_page_already_in_your_library: Messages["import_job_page_already_in_your_library"] = /* @__PURE__ */ localized("import_job_page_already_in_your_library", (i) => {
-	return /** @type {LocalizedString} */ (`${i?.value1} already in your library`)
+export const import_job_page_back_to_imports: Messages["import_job_page_back_to_imports"] = /* @__PURE__ */ localized("import_job_page_back_to_imports", () => {
+	return /** @type {LocalizedString} */ (`Back to imports`)
 })
 export const import_job_page_back_to_your_library: Messages["import_job_page_back_to_your_library"] = /* @__PURE__ */ localized("import_job_page_back_to_your_library", () => {
 	return /** @type {LocalizedString} */ (`Back to your library`)
 })
 export const import_job_page_batch_of: Messages["import_job_page_batch_of"] = /* @__PURE__ */ localized("import_job_page_batch_of", (i) => {
 	return /** @type {LocalizedString} */ (`Batch ${i?.value1} of${i?.value2} ${i?.value3}`)
-})
-export const import_job_page_could_not_be_imported: Messages["import_job_page_could_not_be_imported"] = /* @__PURE__ */ localized("import_job_page_could_not_be_imported", () => {
-	return /** @type {LocalizedString} */ (`could not be imported`)
 })
 export const import_job_page_elapsed: Messages["import_job_page_elapsed"] = /* @__PURE__ */ localized("import_job_page_elapsed", (i) => {
 	return /** @type {LocalizedString} */ (`Elapsed ${i?.value1}`)
@@ -3038,17 +3188,14 @@ export const import_job_page_import_review_details: Messages["import_job_page_im
 export const import_job_page_import_the_rest: Messages["import_job_page_import_the_rest"] = /* @__PURE__ */ localized("import_job_page_import_the_rest", () => {
 	return /** @type {LocalizedString} */ (`Import the rest`)
 })
-export const import_job_page_imported: Messages["import_job_page_imported"] = /* @__PURE__ */ localized("import_job_page_imported", () => {
-	return /** @type {LocalizedString} */ (`imported`)
-})
 export const import_job_page_left: Messages["import_job_page_left"] = /* @__PURE__ */ localized("import_job_page_left", (i) => {
 	return /** @type {LocalizedString} */ (`${i?.value1} left`)
 })
-export const import_job_page_need_review: Messages["import_job_page_need_review"] = /* @__PURE__ */ localized("import_job_page_need_review", () => {
-	return /** @type {LocalizedString} */ (`need review`)
-})
-export const import_job_page_not_imported: Messages["import_job_page_not_imported"] = /* @__PURE__ */ localized("import_job_page_not_imported", (i) => {
-	return /** @type {LocalizedString} */ (`${i?.value1} not imported`)
+export const import_job_page_need_a_look: Messages["import_job_page_need_a_look"] = /* @__PURE__ */ localized("import_job_page_need_a_look", (i) => {const countText = registry.number("en", i?.count, {});
+	const plural = registry.plural("en", i?.count, {});
+	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recipe needs a look`);
+	return /** @type {LocalizedString} */ (`${countText} recipes need a look`)
+	
 })
 export const import_job_page_of_recipes: Messages["import_job_page_of_recipes"] = /* @__PURE__ */ localized("import_job_page_of_recipes", (i) => {
 	return /** @type {LocalizedString} */ (`${i?.value1} of ${i?.value2} recipes`)
@@ -3059,9 +3206,6 @@ export const import_job_page_reading_this_import: Messages["import_job_page_read
 export const import_job_page_review_details: Messages["import_job_page_review_details"] = /* @__PURE__ */ localized("import_job_page_review_details", () => {
 	return /** @type {LocalizedString} */ (`Review details`)
 })
-export const import_job_page_review_measurements: Messages["import_job_page_review_measurements"] = /* @__PURE__ */ localized("import_job_page_review_measurements", () => {
-	return /** @type {LocalizedString} */ (`Recipes that need a look`)
-})
 export const import_job_page_started: Messages["import_job_page_started"] = /* @__PURE__ */ localized("import_job_page_started", (i) => {
 	return /** @type {LocalizedString} */ (`Started ${i?.value1}`)
 })
@@ -3070,9 +3214,6 @@ export const import_job_page_stop_importing: Messages["import_job_page_stop_impo
 })
 export const import_job_page_to_go: Messages["import_job_page_to_go"] = /* @__PURE__ */ localized("import_job_page_to_go", (i) => {
 	return /** @type {LocalizedString} */ (`${i?.value1} to go`)
-})
-export const import_job_page_with_preserved_details: Messages["import_job_page_with_preserved_details"] = /* @__PURE__ */ localized("import_job_page_with_preserved_details", () => {
-	return /** @type {LocalizedString} */ (`with preserved details`)
 })
 export const import_job_presentation_already_in_your_library: Messages["import_job_presentation_already_in_your_library"] = /* @__PURE__ */ localized("import_job_presentation_already_in_your_library", () => {
 	return /** @type {LocalizedString} */ (`Already in your library`)
@@ -3131,8 +3272,35 @@ export const import_job_results_could_not_be_imported: Messages["import_job_resu
 export const import_job_results_could_not_import: Messages["import_job_results_could_not_import"] = /* @__PURE__ */ localized("import_job_results_could_not_import", () => {
 	return /** @type {LocalizedString} */ (`Could not import`)
 })
+export const import_job_results_error_message: Messages["import_job_results_error_message"] = /* @__PURE__ */ localized("import_job_results_error_message", () => {
+	return /** @type {LocalizedString} */ (`Error message`)
+})
+export const import_job_results_failure_changed: Messages["import_job_results_failure_changed"] = /* @__PURE__ */ localized("import_job_results_failure_changed", () => {
+	return /** @type {LocalizedString} */ (`The matching recipe in your library changed after you reviewed this import.`)
+})
+export const import_job_results_failure_changed_next: Messages["import_job_results_failure_changed_next"] = /* @__PURE__ */ localized("import_job_results_failure_changed_next", () => {
+	return /** @type {LocalizedString} */ (`Import it again to review it against the current version.`)
+})
+export const import_job_results_failure_duplicate: Messages["import_job_results_failure_duplicate"] = /* @__PURE__ */ localized("import_job_results_failure_duplicate", () => {
+	return /** @type {LocalizedString} */ (`This recipe is already in your library.`)
+})
+export const import_job_results_failure_duplicate_next: Messages["import_job_results_failure_duplicate_next"] = /* @__PURE__ */ localized("import_job_results_failure_duplicate_next", () => {
+	return /** @type {LocalizedString} */ (`To keep both, import it again and choose to import it as a separate recipe.`)
+})
+export const import_job_results_failure_source: Messages["import_job_results_failure_source"] = /* @__PURE__ */ localized("import_job_results_failure_source", () => {
+	return /** @type {LocalizedString} */ (`Savorum no longer has the source this recipe came from.`)
+})
+export const import_job_results_failure_source_next: Messages["import_job_results_failure_source_next"] = /* @__PURE__ */ localized("import_job_results_failure_source_next", () => {
+	return /** @type {LocalizedString} */ (`Import it again from the original file or page.`)
+})
+export const import_job_results_failure_unknown_next: Messages["import_job_results_failure_unknown_next"] = /* @__PURE__ */ localized("import_job_results_failure_unknown_next", () => {
+	return /** @type {LocalizedString} */ (`Try importing it again. If it fails again, share the error message in the details below.`)
+})
 export const import_job_results_filter_import_results: Messages["import_job_results_filter_import_results"] = /* @__PURE__ */ localized("import_job_results_filter_import_results", () => {
 	return /** @type {LocalizedString} */ (`Filter import results`)
+})
+export const import_job_results_find_in_library: Messages["import_job_results_find_in_library"] = /* @__PURE__ */ localized("import_job_results_find_in_library", () => {
+	return /** @type {LocalizedString} */ (`Find it in your library`)
 })
 export const import_job_results_import_details: Messages["import_job_results_import_details"] = /* @__PURE__ */ localized("import_job_results_import_details", () => {
 	return /** @type {LocalizedString} */ (`Import details`)
@@ -3179,6 +3347,9 @@ export const import_job_skipped: Messages["import_job_skipped"] = /* @__PURE__ *
 })
 export const import_job_stopping: Messages["import_job_stopping"] = /* @__PURE__ */ localized("import_job_stopping", () => {
 	return /** @type {LocalizedString} */ (`Stopping after the current batch`)
+})
+export const import_job_timing: Messages["import_job_timing"] = /* @__PURE__ */ localized("import_job_timing", () => {
+	return /** @type {LocalizedString} */ (`Timing`)
 })
 export const import_job_waiting: Messages["import_job_waiting"] = /* @__PURE__ */ localized("import_job_waiting", (i) => {const countText = registry.number("en", i?.count, {});
 	const plural = registry.plural("en", i?.count, {});
@@ -3454,8 +3625,8 @@ export const imports_index_imports_savorum: Messages["imports_index_imports_savo
 export const imports_jobId_import_savorum: Messages["imports_jobId_import_savorum"] = /* @__PURE__ */ localized("imports_jobid_import_savorum1", () => {
 	return /** @type {LocalizedString} */ (`Import · Savorum`)
 })
-export const imports_page_and_others: Messages["imports_page_and_others"] = /* @__PURE__ */ localized("imports_page_and_others", (i) => {
-	return /** @type {LocalizedString} */ (`${i?.value1} and ${i?.value2} others`)
+export const imports_page_empty_hint: Messages["imports_page_empty_hint"] = /* @__PURE__ */ localized("imports_page_empty_hint", () => {
+	return /** @type {LocalizedString} */ (`Recipes you bring in from a file, a website or text appear here.`)
 })
 export const imports_page_import: Messages["imports_page_import"] = /* @__PURE__ */ localized("imports_page_import", () => {
 	return /** @type {LocalizedString} */ (`Import`)
@@ -3463,11 +3634,14 @@ export const imports_page_import: Messages["imports_page_import"] = /* @__PURE__
 export const imports_page_import_jobs: Messages["imports_page_import_jobs"] = /* @__PURE__ */ localized("imports_page_import_jobs", () => {
 	return /** @type {LocalizedString} */ (`Import jobs`)
 })
-export const imports_page_import_recipes_from_your_library: Messages["imports_page_import_recipes_from_your_library"] = /* @__PURE__ */ localized("imports_page_import_recipes_from_your_library", () => {
-	return /** @type {LocalizedString} */ (`Import recipes from your library.`)
-})
 export const imports_page_imports: Messages["imports_page_imports"] = /* @__PURE__ */ localized("imports_page_imports", () => {
 	return /** @type {LocalizedString} */ (`Imports`)
+})
+export const imports_page_lead_and_others: Messages["imports_page_lead_and_others"] = /* @__PURE__ */ localized("imports_page_lead_and_others", (i) => {const countText = registry.number("en", i?.count, {});
+	const plural = registry.plural("en", i?.count, {});
+	if (plural === "one") return /** @type {LocalizedString} */ (`${i?.title} and ${countText} other`);
+	return /** @type {LocalizedString} */ (`${i?.title} and ${countText} others`)
+	
 })
 export const imports_page_load_more_imports: Messages["imports_page_load_more_imports"] = /* @__PURE__ */ localized("imports_page_load_more_imports", () => {
 	return /** @type {LocalizedString} */ (`Load more imports`)
@@ -3477,9 +3651,6 @@ export const imports_page_no_imports_yet: Messages["imports_page_no_imports_yet"
 })
 export const imports_page_reading_your_imports: Messages["imports_page_reading_your_imports"] = /* @__PURE__ */ localized("imports_page_reading_your_imports", () => {
 	return /** @type {LocalizedString} */ (`Reading your imports…`)
-})
-export const imports_page_refresh_imports: Messages["imports_page_refresh_imports"] = /* @__PURE__ */ localized("imports_page_refresh_imports", () => {
-	return /** @type {LocalizedString} */ (`Refresh imports`)
 })
 export const imports_page_your_recent_imports_newest_first: Messages["imports_page_your_recent_imports_newest_first"] = /* @__PURE__ */ localized("imports_page_your_recent_imports_newest_first", () => {
 	return /** @type {LocalizedString} */ (`Your recent imports, newest first.`)
@@ -3624,6 +3795,9 @@ export const ingredient_row_preparation_or_note: Messages["ingredient_row_prepar
 })
 export const ingredient_row_remove: Messages["ingredient_row_remove"] = /* @__PURE__ */ localized("ingredient_row_remove", () => {
 	return /** @type {LocalizedString} */ (`Remove`)
+})
+export const ingredient_unit: Messages["ingredient_unit"] = /* @__PURE__ */ localized("ingredient_unit", () => {
+	return /** @type {LocalizedString} */ (`Unit`)
 })
 export const ingredients_added_group: Messages["ingredients_added_group"] = /* @__PURE__ */ localized("ingredients_added_group", () => {
 	return /** @type {LocalizedString} */ (`Added group.`)
@@ -3907,6 +4081,42 @@ export const integrations_unavailable: Messages["integrations_unavailable"] = /*
 export const integrations_webhooks: Messages["integrations_webhooks"] = /* @__PURE__ */ localized("integrations_webhooks", () => {
 	return /** @type {LocalizedString} */ (`Webhooks`)
 })
+export const keyboard_shortcuts_add: Messages["keyboard_shortcuts_add"] = /* @__PURE__ */ localized("keyboard_shortcuts_add", () => {
+	return /** @type {LocalizedString} */ (`Focus the add-item field`)
+})
+export const keyboard_shortcuts_enabled: Messages["keyboard_shortcuts_enabled"] = /* @__PURE__ */ localized("keyboard_shortcuts_enabled", () => {
+	return /** @type {LocalizedString} */ (`Enable shortcuts`)
+})
+export const keyboard_shortcuts_help: Messages["keyboard_shortcuts_help"] = /* @__PURE__ */ localized("keyboard_shortcuts_help", () => {
+	return /** @type {LocalizedString} */ (`Show keyboard shortcuts`)
+})
+export const keyboard_shortcuts_hint: Messages["keyboard_shortcuts_hint"] = /* @__PURE__ */ localized("keyboard_shortcuts_hint", () => {
+	return /** @type {LocalizedString} */ (`Shortcuts pause while you type or use a menu or dialog. This setting is saved in this browser.`)
+})
+export const keyboard_shortcuts_imports: Messages["keyboard_shortcuts_imports"] = /* @__PURE__ */ localized("keyboard_shortcuts_imports", () => {
+	return /** @type {LocalizedString} */ (`In Imports`)
+})
+export const keyboard_shortcuts_library: Messages["keyboard_shortcuts_library"] = /* @__PURE__ */ localized("keyboard_shortcuts_library", () => {
+	return /** @type {LocalizedString} */ (`In your library`)
+})
+export const keyboard_shortcuts_next: Messages["keyboard_shortcuts_next"] = /* @__PURE__ */ localized("keyboard_shortcuts_next", () => {
+	return /** @type {LocalizedString} */ (`Next date range`)
+})
+export const keyboard_shortcuts_plan: Messages["keyboard_shortcuts_plan"] = /* @__PURE__ */ localized("keyboard_shortcuts_plan", () => {
+	return /** @type {LocalizedString} */ (`In Plan`)
+})
+export const keyboard_shortcuts_previous: Messages["keyboard_shortcuts_previous"] = /* @__PURE__ */ localized("keyboard_shortcuts_previous", () => {
+	return /** @type {LocalizedString} */ (`Previous date range`)
+})
+export const keyboard_shortcuts_reading: Messages["keyboard_shortcuts_reading"] = /* @__PURE__ */ localized("keyboard_shortcuts_reading", () => {
+	return /** @type {LocalizedString} */ (`On a recipe`)
+})
+export const keyboard_shortcuts_shopping: Messages["keyboard_shortcuts_shopping"] = /* @__PURE__ */ localized("keyboard_shortcuts_shopping", () => {
+	return /** @type {LocalizedString} */ (`In Shopping`)
+})
+export const keyboard_shortcuts_title: Messages["keyboard_shortcuts_title"] = /* @__PURE__ */ localized("keyboard_shortcuts_title", () => {
+	return /** @type {LocalizedString} */ (`Keyboard shortcuts`)
+})
 export const label_choices_nothing_here_matches_that: Messages["label_choices_nothing_here_matches_that"] = /* @__PURE__ */ localized("label_choices_nothing_here_matches_that", () => {
 	return /** @type {LocalizedString} */ (`Nothing here matches that.`)
 })
@@ -4009,6 +4219,12 @@ export const library_filters_choose_a_tag: Messages["library_filters_choose_a_ta
 export const library_filters_clear_all: Messages["library_filters_clear_all"] = /* @__PURE__ */ localized("library_filters_clear_all", () => {
 	return /** @type {LocalizedString} */ (`Clear all`)
 })
+export const library_filters_diet_hint: Messages["library_filters_diet_hint"] = /* @__PURE__ */ localized("library_filters_diet_hint", () => {
+	return /** @type {LocalizedString} */ (`Dietary labels are ones you assign. Stated is what the recipe itself claims, and Savorum does not check it.`)
+})
+export const library_filters_diet_manual: Messages["library_filters_diet_manual"] = /* @__PURE__ */ localized("library_filters_diet_manual", () => {
+	return /** @type {LocalizedString} */ (`How stated diets work`)
+})
 export const library_filters_every_one_chosen: Messages["library_filters_every_one_chosen"] = /* @__PURE__ */ localized("library_filters_every_one_chosen", () => {
 	return /** @type {LocalizedString} */ (`Every one of these is already chosen.`)
 })
@@ -4027,6 +4243,9 @@ export const library_filters_from_one_import: Messages["library_filters_from_one
 export const library_filters_in_a_book: Messages["library_filters_in_a_book"] = /* @__PURE__ */ localized("library_filters_in_a_book", () => {
 	return /** @type {LocalizedString} */ (`In a book`)
 })
+export const library_filters_more: Messages["library_filters_more"] = /* @__PURE__ */ localized("library_filters_more", () => {
+	return /** @type {LocalizedString} */ (`More filters`)
+})
 export const library_filters_narrow_to: Messages["library_filters_narrow_to"] = /* @__PURE__ */ localized("library_filters_narrow_to", (i) => {
 	return /** @type {LocalizedString} */ (`Narrow to ${i?.value1}`)
 })
@@ -4042,9 +4261,6 @@ export const library_filters_only_show: Messages["library_filters_only_show"] = 
 export const library_filters_stated_by_the_recipe: Messages["library_filters_stated_by_the_recipe"] = /* @__PURE__ */ localized("library_filters_stated_by_the_recipe", () => {
 	return /** @type {LocalizedString} */ (`Stated by the recipe`)
 })
-export const library_filters_stated_hint: Messages["library_filters_stated_hint"] = /* @__PURE__ */ localized("library_filters_stated_hint", () => {
-	return /** @type {LocalizedString} */ (`Only recipes that make the statement without conditions.`)
-})
 export const library_filters_stop_narrowing: Messages["library_filters_stop_narrowing"] = /* @__PURE__ */ localized("library_filters_stop_narrowing", (i) => {
 	return /** @type {LocalizedString} */ (`Stop narrowing to ${i?.value1}`)
 })
@@ -4052,7 +4268,7 @@ export const library_filters_tags: Messages["library_filters_tags"] = /* @__PURE
 	return /** @type {LocalizedString} */ (`Tags`)
 })
 export const library_filters_taken_from_a_cookbook: Messages["library_filters_taken_from_a_cookbook"] = /* @__PURE__ */ localized("library_filters_taken_from_a_cookbook", () => {
-	return /** @type {LocalizedString} */ (`Taken from a cookbook`)
+	return /** @type {LocalizedString} */ (`Cookbook source`)
 })
 export const library_page_add_recipes: Messages["library_page_add_recipes"] = /* @__PURE__ */ localized("library_page_add_recipes", () => {
 	return /** @type {LocalizedString} */ (`Add recipes`)
@@ -4179,6 +4395,9 @@ export const library_selection_bar_selected_recipes: Messages["library_selection
 })
 export const library_selection_bar_sref_bundle: Messages["library_selection_bar_sref_bundle"] = /* @__PURE__ */ localized("library_selection_bar_sref_bundle", () => {
 	return /** @type {LocalizedString} */ (`SREF Bundle`)
+})
+export const library_sort_cooked: Messages["library_sort_cooked"] = /* @__PURE__ */ localized("library_sort_cooked", () => {
+	return /** @type {LocalizedString} */ (`Recently cooked`)
 })
 export const library_sort_rating: Messages["library_sort_rating"] = /* @__PURE__ */ localized("library_sort_rating", () => {
 	return /** @type {LocalizedString} */ (`Highest rated`)
@@ -4547,7 +4766,7 @@ export const nutrition_basis_serving_of: Messages["nutrition_basis_serving_of"] 
 	return /** @type {LocalizedString} */ (`Per serving (${i?.serving})`)
 })
 export const nutrition_basis_unspecified: Messages["nutrition_basis_unspecified"] = /* @__PURE__ */ localized("nutrition_basis_unspecified", () => {
-	return /** @type {LocalizedString} */ (`Basis not stated`)
+	return /** @type {LocalizedString} */ (`The source does not say whether these values are per serving or for the whole recipe`)
 })
 export const nutrition_carbohydrate: Messages["nutrition_carbohydrate"] = /* @__PURE__ */ localized("nutrition_carbohydrate", () => {
 	return /** @type {LocalizedString} */ (`Carbohydrate`)
@@ -4800,9 +5019,6 @@ export const organization_slow_cooker: Messages["organization_slow_cooker"] = /*
 })
 export const organization_summary_library_details: Messages["organization_summary_library_details"] = /* @__PURE__ */ localized("organization_summary_library_details", () => {
 	return /** @type {LocalizedString} */ (`Library details`)
-})
-export const organization_summary_more: Messages["organization_summary_more"] = /* @__PURE__ */ localized("organization_summary_more", (i) => {
-	return /** @type {LocalizedString} */ (`${i?.value1} more`)
 })
 export const organization_summary_not_filed_yet: Messages["organization_summary_not_filed_yet"] = /* @__PURE__ */ localized("organization_summary_not_filed_yet", () => {
 	return /** @type {LocalizedString} */ (`Not in any of your books, tags or categories yet`)
@@ -5141,11 +5357,20 @@ export const plan_delete_title: Messages["plan_delete_title"] = /* @__PURE__ */ 
 export const plan_dinner: Messages["plan_dinner"] = /* @__PURE__ */ localized("plan_dinner", () => {
 	return /** @type {LocalizedString} */ (`Dinner`)
 })
+export const plan_dish_batches: Messages["plan_dish_batches"] = /* @__PURE__ */ localized("plan_dish_batches", (i) => {
+	return /** @type {LocalizedString} */ (`${i?.name} (${i?.amount} batches)`)
+})
 export const plan_dish_name: Messages["plan_dish_name"] = /* @__PURE__ */ localized("plan_dish_name", () => {
 	return /** @type {LocalizedString} */ (`Dish name`)
 })
+export const plan_dish_part_batch: Messages["plan_dish_part_batch"] = /* @__PURE__ */ localized("plan_dish_part_batch", (i) => {
+	return /** @type {LocalizedString} */ (`${i?.name} (${i?.amount} batch)`)
+})
 export const plan_dishes: Messages["plan_dishes"] = /* @__PURE__ */ localized("plan_dishes", () => {
 	return /** @type {LocalizedString} */ (`Dishes`)
+})
+export const plan_earlier_this_week: Messages["plan_earlier_this_week"] = /* @__PURE__ */ localized("plan_earlier_this_week", () => {
+	return /** @type {LocalizedString} */ (`Earlier this week`)
 })
 export const plan_edit: Messages["plan_edit"] = /* @__PURE__ */ localized("plan_edit", () => {
 	return /** @type {LocalizedString} */ (`Edit`)
@@ -5185,6 +5410,9 @@ export const plan_lunch: Messages["plan_lunch"] = /* @__PURE__ */ localized("pla
 })
 export const plan_meal_actions: Messages["plan_meal_actions"] = /* @__PURE__ */ localized("plan_meal_actions", (i) => {
 	return /** @type {LocalizedString} */ (`Actions for ${i?.name}`)
+})
+export const plan_meal_tray: Messages["plan_meal_tray"] = /* @__PURE__ */ localized("plan_meal_tray", () => {
+	return /** @type {LocalizedString} */ (`Meal tray`)
 })
 export const plan_meal_type: Messages["plan_meal_type"] = /* @__PURE__ */ localized("plan_meal_type", () => {
 	return /** @type {LocalizedString} */ (`Meal`)
@@ -6001,6 +6229,9 @@ export const recipe_fields_source_locale: Messages["recipe_fields_source_locale"
 export const recipe_format_prefer: Messages["recipe_format_prefer"] = /* @__PURE__ */ localized("recipe_format_prefer", () => {
 	return /** @type {LocalizedString} */ (`Prefer `)
 })
+export const recipe_from_source_page: Messages["recipe_from_source_page"] = /* @__PURE__ */ localized("recipe_from_source_page", () => {
+	return /** @type {LocalizedString} */ (`From the source page`)
+})
 export const recipe_history_page_a_recipe_in_it_changed: Messages["recipe_history_page_a_recipe_in_it_changed"] = /* @__PURE__ */ localized("recipe_history_page_a_recipe_in_it_changed", () => {
 	return /** @type {LocalizedString} */ (`A recipe in it changed`)
 })
@@ -6481,6 +6712,12 @@ export const shopping_alternative: Messages["shopping_alternative"] = /* @__PURE
 export const shopping_apply: Messages["shopping_apply"] = /* @__PURE__ */ localized("shopping_apply", () => {
 	return /** @type {LocalizedString} */ (`Update shopping list`)
 })
+export const shopping_arrange: Messages["shopping_arrange"] = /* @__PURE__ */ localized("shopping_arrange", () => {
+	return /** @type {LocalizedString} */ (`Arrange items`)
+})
+export const shopping_arrange_hint: Messages["shopping_arrange_hint"] = /* @__PURE__ */ localized("shopping_arrange_hint", () => {
+	return /** @type {LocalizedString} */ (`Move items within their section, or select items to combine under one name.`)
+})
 export const shopping_bought: Messages["shopping_bought"] = /* @__PURE__ */ localized("shopping_bought", () => {
 	return /** @type {LocalizedString} */ (`Bought`)
 })
@@ -6570,9 +6807,6 @@ export const shopping_keep_theirs: Messages["shopping_keep_theirs"] = /* @__PURE
 })
 export const shopping_list: Messages["shopping_list"] = /* @__PURE__ */ localized("shopping_list", () => {
 	return /** @type {LocalizedString} */ (`Shopping list`)
-})
-export const shopping_list_actions: Messages["shopping_list_actions"] = /* @__PURE__ */ localized("shopping_list_actions", () => {
-	return /** @type {LocalizedString} */ (`List actions`)
 })
 export const shopping_list_changed_failed: Messages["shopping_list_changed_failed"] = /* @__PURE__ */ localized("shopping_list_changed_failed", () => {
 	return /** @type {LocalizedString} */ (`The list could not be changed.`)
@@ -6697,6 +6931,9 @@ export const site_header_active_library: Messages["site_header_active_library"] 
 export const site_header_books: Messages["site_header_books"] = /* @__PURE__ */ localized("site_header_books", () => {
 	return /** @type {LocalizedString} */ (`Books`)
 })
+export const site_header_help: Messages["site_header_help"] = /* @__PURE__ */ localized("site_header_help", () => {
+	return /** @type {LocalizedString} */ (`Help`)
+})
 export const site_header_imports: Messages["site_header_imports"] = /* @__PURE__ */ localized("site_header_imports", () => {
 	return /** @type {LocalizedString} */ (`Imports`)
 })
@@ -6798,6 +7035,9 @@ export const source_refresh_page_recorded_source: Messages["source_refresh_page_
 })
 export const source_refresh_page_review_before_replacing: Messages["source_refresh_page_review_before_replacing"] = /* @__PURE__ */ localized("source_refresh_page_review_before_replacing", () => {
 	return /** @type {LocalizedString} */ (`Checking fetches the page and shows what differs; nothing replaces your copy until you choose it.`)
+})
+export const status_loading_slow: Messages["status_loading_slow"] = /* @__PURE__ */ localized("status_loading_slow", () => {
+	return /** @type {LocalizedString} */ (`This is taking longer than usual. You can keep waiting or reload the page.`)
 })
 export const status_nothing_was_overwritten_reloading_replaces_what_is_on_s: Messages["status_nothing_was_overwritten_reloading_replaces_what_is_on_s"] = /* @__PURE__ */ localized("status_nothing_was_overwritten_reloading_replaces_what_is_on_s", () => {
 	return /** @type {LocalizedString} */ (`Nothing was overwritten. Reloading replaces what is on screen with the saved version, so copy anything you want to keep first.`)

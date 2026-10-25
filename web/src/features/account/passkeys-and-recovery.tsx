@@ -1,9 +1,19 @@
-import { For, Show, createResource, createSignal, onCleanup, onMount, untrack } from "solid-js"
+import {
+  For,
+  Show,
+  createMemo,
+  createResource,
+  createSignal,
+  onCleanup,
+  onMount,
+  untrack,
+} from "solid-js"
 import { css } from "styled-system/css"
 
 import { Callout, ChangeError, Notice, Problem } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import { CopyButton } from "@/components/ui/clipboard"
+import { ConfirmDialog } from "@/components/ui/dialog"
 import { Disclosure } from "@/components/ui/disclosure"
 import { FormField } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
@@ -26,8 +36,8 @@ type Passkey = {
 type Run = (action: () => Promise<void>, message: string) => Promise<void>
 
 function useTask() {
-  const { busy, error, notice, setNotice, run } = createAsyncAction()
-  return { busy, error, notice, setNotice, run: run as Run }
+  const { busy, error, setError, notice, setNotice, run } = createAsyncAction()
+  return { busy, error, setError, notice, setNotice, run: run as Run }
 }
 
 function TaskMessages(props: { error: unknown; notice: string }) {
@@ -43,6 +53,7 @@ export function PasskeysPanel() {
   const [keys, { refetch }] = createResource(async () =>
     accountRequest<{ passkeys: Passkey[]; available: boolean }>("/account/passkeys"),
   )
+  const passkeys = createMemo<Passkey[]>((previous) => settled(keys)?.passkeys ?? previous, [])
   const [name, setName] = createSignal("")
   const task = useTask()
   async function reload() {
@@ -54,21 +65,50 @@ export function PasskeysPanel() {
       <p class={styles.muted}>{m.account_passkeys_hint()}</p>
       <TaskMessages error={task.error()} notice={task.notice()} />
       <Show when={keys.error}>
-        <Callout tone="danger">{m.account_load_error()}</Callout>
+        <Callout
+          tone="danger"
+          actions={
+            <Button variant="outline" onClick={() => void refetch()}>
+              {m.account_retry()}
+            </Button>
+          }
+        >
+          {m.account_load_error()}
+        </Callout>
       </Show>
-      <ul class={styles.list}>
-        <For each={settled(keys)?.passkeys ?? []}>
-          {(key) => (
-            <PasskeyRow passkey={key} busy={task.busy()} run={task.run} onReload={reload} />
-          )}
+      <ul class={styles.rows}>
+        <For each={passkeys().map((key) => key.id)}>
+          {(id) => {
+            const initial = passkeys().find((key) => key.id === id)!
+            return (
+              <PasskeyRow
+                passkey={passkeys().find((key) => key.id === id) ?? initial}
+                busy={task.busy()}
+                error={task.error()}
+                onStart={() => task.setError(undefined)}
+                run={task.run}
+                onReload={reload}
+              />
+            )
+          }}
         </For>
       </ul>
       <Show
         when={settled(keys)?.available && passkeysSupported()}
-        fallback={<p class={styles.muted}>{m.account_passkeys_unavailable()}</p>}
+        fallback={
+          <Show when={settled(keys)}>
+            <p class={styles.muted}>{m.account_passkeys_unavailable()}</p>
+          </Show>
+        }
       >
         <form
-          class={styles.form}
+          class={css({
+            display: "grid",
+            gap: "3",
+            gridTemplateColumns: { base: "1fr", sm: "minmax(0, 1fr) auto" },
+            alignItems: "end",
+            "& > button": { justifySelf: "start" },
+          })}
           onSubmit={(event) => {
             event.preventDefault()
             const staticName = name()
@@ -101,101 +141,143 @@ export function PasskeysPanel() {
 function PasskeyRow(props: {
   passkey: Passkey
   busy: boolean
+  error: unknown
+  onStart: () => void
   run: Run
   onReload: () => Promise<void>
 }) {
   const [name, setName] = createSignal(untrack(() => props.passkey.name))
+  const [editing, setEditing] = createSignal(false)
   const [confirm, setConfirm] = createSignal(false)
+  let renameButton: HTMLButtonElement | undefined
+  let input: HTMLInputElement | undefined
+  const cancelRename = () => {
+    setEditing(false)
+    queueMicrotask(() => renameButton?.focus())
+  }
   return (
-    <li>
-      <Disclosure
-        label={props.passkey.name}
-        hint={
-          props.passkey.last_used_at
-            ? m.account_passkeys_last_used({ date: formatDate(props.passkey.last_used_at) })
-            : m.account_passkeys_never_used()
-        }
-      >
-        <div class={styles.form}>
+    <li class={styles.listRow}>
+      <div class={styles.rowBody}>
+        <Show when={editing()} fallback={<h3>{props.passkey.name}</h3>}>
           <form
-            class={css({
-              display: "grid",
-              gap: "3",
-              gridTemplateColumns: { base: "1fr", sm: "minmax(0, 1fr) auto" },
-              alignItems: "end",
-              "& > button": { justifySelf: "start" },
-            })}
+            class={css({ display: "flex", flexWrap: "wrap", gap: "2", alignItems: "end" })}
             onSubmit={(event) => {
               event.preventDefault()
               const id = props.passkey.id
-              const staticName = name()
+              const nextName = name()
               const reload = props.onReload
-              void props.run(async () => {
-                await accountRequest(`/account/passkeys/${encodeURIComponent(id)}`, "PUT", {
-                  name: staticName,
+              void props
+                .run(async () => {
+                  await accountRequest(`/account/passkeys/${encodeURIComponent(id)}`, "PUT", {
+                    name: nextName,
+                  })
+                  setEditing(false)
+                  await reload()
+                }, m.account_passkeys_renamed())
+                .then(() => {
+                  if (editing()) input?.focus()
+                  else renameButton?.focus()
                 })
-                await reload()
-              }, m.account_passkeys_renamed())
             }}
           >
             <FormField label={m.account_passkeys_name()} required>
               <Input
+                ref={(element) => {
+                  input = element
+                }}
                 aria-label={m.account_passkeys_name_for({ name: props.passkey.name })}
                 value={name()}
                 onInput={(event) => setName(event.currentTarget.value)}
+                onKeyDown={(event) => {
+                  if (event.key === "Escape" && !props.busy) {
+                    event.preventDefault()
+                    cancelRename()
+                  }
+                }}
                 required
                 maxLength={100}
                 autocomplete="off"
+                disabled={props.busy}
               />
             </FormField>
             <Button
+              size="sm"
               type="submit"
-              variant="outline"
-              disabled={props.busy || name() === props.passkey.name || !name().trim()}
+              disabled={props.busy || !name().trim() || name() === props.passkey.name}
             >
               {m.account_passkeys_save_name()}
             </Button>
+            <Button size="sm" variant="plain" disabled={props.busy} onClick={cancelRename}>
+              {m.common_cancel()}
+            </Button>
           </form>
-          <Show when={props.passkey.rp_id}>
-            <p class={styles.muted}>{props.passkey.rp_id}</p>
-          </Show>
-          <Show
-            when={confirm()}
-            fallback={
-              <div class={styles.actions}>
-                <Button
-                  variant="outline"
-                  disabled={props.busy}
-                  aria-label={m.account_passkeys_remove_named({ name: props.passkey.name })}
-                  onClick={() => setConfirm(true)}
-                >
-                  {m.account_passkeys_remove()}
-                </Button>
-              </div>
-            }
+        </Show>
+        <p class={styles.muted}>
+          {props.passkey.last_used_at
+            ? m.account_passkeys_last_used({ date: formatDate(props.passkey.last_used_at) })
+            : m.account_passkeys_never_used()}
+        </p>
+        <Show when={props.passkey.rp_id}>
+          <p class={styles.muted}>{props.passkey.rp_id}</p>
+        </Show>
+      </div>
+      <div class={styles.actions}>
+        <Show when={!editing()}>
+          <Button
+            ref={(element) => {
+              renameButton = element
+            }}
+            size="sm"
+            variant="outline"
+            disabled={props.busy}
+            aria-label={m.account_passkeys_rename_named({ name: props.passkey.name })}
+            onClick={() => {
+              props.onStart()
+              setName(props.passkey.name)
+              setEditing(true)
+              queueMicrotask(() => {
+                input?.focus()
+                input?.select()
+              })
+            }}
           >
-            <p>{m.account_passkeys_remove_confirm()}</p>
-            <div class={styles.actions}>
-              <Button
-                disabled={props.busy}
-                onClick={() => {
-                  const id = props.passkey.id
-                  const reload = props.onReload
-                  void props.run(async () => {
-                    await accountRequest(`/account/passkeys/${encodeURIComponent(id)}`, "DELETE")
-                    await reload()
-                  }, m.account_passkeys_removed())
-                }}
-              >
-                {m.account_confirm_removal()}
-              </Button>
-              <Button variant="outline" disabled={props.busy} onClick={() => setConfirm(false)}>
-                {m.common_cancel()}
-              </Button>
-            </div>
-          </Show>
-        </div>
-      </Disclosure>
+            {m.account_passkeys_rename()}
+          </Button>
+        </Show>
+        <Button
+          size="sm"
+          variant="plain"
+          disabled={props.busy}
+          aria-label={m.account_passkeys_remove_named({ name: props.passkey.name })}
+          onClick={() => {
+            props.onStart()
+            setConfirm(true)
+          }}
+        >
+          {m.account_passkeys_remove()}
+        </Button>
+      </div>
+      <Show when={confirm()}>
+        <ConfirmDialog
+          title={m.account_passkeys_remove_named({ name: props.passkey.name })}
+          description={m.account_passkeys_remove_confirm()}
+          confirmLabel={m.account_confirm_removal()}
+          cancelLabel={m.common_cancel()}
+          busy={props.busy}
+          onClose={() => setConfirm(false)}
+          onConfirm={() => {
+            const id = props.passkey.id
+            const reload = props.onReload
+            void props.run(async () => {
+              await accountRequest(`/account/passkeys/${encodeURIComponent(id)}`, "DELETE")
+              setConfirm(false)
+              await reload()
+            }, m.account_passkeys_removed())
+          }}
+        >
+          <ChangeError error={props.error} />
+        </ConfirmDialog>
+      </Show>
     </li>
   )
 }
@@ -229,7 +311,14 @@ export function RecoveryCodesPanel() {
         }
       >
         <p class={styles.muted}>{m.account_recovery_hint()}</p>
-        <p>{m.account_recovery_remaining({ count: settled(recovery)?.remaining ?? 0 })}</p>
+        <p>
+          <Show
+            when={(settled(recovery)?.remaining ?? 0) > 0}
+            fallback={m.account_recovery_empty()}
+          >
+            {m.account_recovery_remaining({ count: settled(recovery)?.remaining ?? 0 })}
+          </Show>
+        </p>
         <Show when={codes().length === 0}>
           <Show
             when={!replace()}

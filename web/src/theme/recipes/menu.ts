@@ -25,8 +25,6 @@ export const menu = defineSlotRecipe({
       _closed: { animationStyle: "scale-fade-out", animationDuration: "faster" },
     },
     item: {
-      // A row, so an item with an icon reads as one line rather than stacking
-      // the icon above its own label.
       alignItems: "center",
       borderRadius: "l1",
       color: "fg.default",
@@ -36,11 +34,13 @@ export const menu = defineSlotRecipe({
       textStyle: "sm",
       textDecoration: "none",
       whiteSpace: "nowrap",
-      _highlighted: { background: "bg.muted" },
+      _highlighted: {
+        background: "accent.subtle.bg",
+        "& [data-part=item-description]": { color: "inherit" },
+        "& [data-part=item-media]": { color: "inherit" },
+      },
       _disabled: { layerStyle: "disabled", cursor: "not-allowed" },
-      // An item that explains itself is a block, not a line: the description
-      // wraps, so the row grows downwards and the media column aligns to the
-      // name rather than to the middle of a paragraph.
+      "@media (pointer: coarse)": { minHeight: "11" },
       "&:has([data-part=item-description])": {
         alignItems: "flex-start",
         gap: "3",
@@ -56,7 +56,6 @@ export const menu = defineSlotRecipe({
       gap: "1",
       minWidth: "0",
       textAlign: "start",
-      // The name leads the block it stands over, the way a heading does.
       "&:has([data-part=item-description])": { fontWeight: "medium" },
     },
     itemDescription: {
@@ -65,14 +64,12 @@ export const menu = defineSlotRecipe({
       textStyle: "xs",
     },
     itemMedia: {
-      background: "accent.subtle.bg",
-      borderRadius: "l2",
-      color: "accent.default",
+      color: "fg.muted",
       display: "grid",
       flexShrink: "0",
-      height: "2.5rem",
+      height: "6",
       placeItems: "center",
-      width: "2.5rem",
+      width: "6",
     },
     itemIndicator: {
       alignItems: "center",
@@ -85,7 +82,6 @@ export const menu = defineSlotRecipe({
       // written here would otherwise override.
       "&[hidden]": { display: "none" },
     },
-    // Styled here so a group name does not inherit body typography.
     itemGroup: {
       display: "flex",
       flexDirection: "column",
@@ -94,8 +90,6 @@ export const menu = defineSlotRecipe({
     itemGroupLabel: {
       color: "fg.muted",
       fontWeight: "medium",
-      // The items' own indent, so the name and what it covers line up and the
-      // group reads as one block.
       paddingBlock: "1.5",
       paddingInline: "2.5",
       textStyle: "xs",
@@ -106,7 +100,6 @@ export const menu = defineSlotRecipe({
       marginBlock: "1",
     },
     indicator: {
-      // The arrow takes its control's colour.
       color: "inherit",
       display: "inline-flex",
       transformOrigin: "center",

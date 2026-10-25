@@ -24,8 +24,3 @@ export function TileImages(props: { dishes: { recipe_image_url?: string | null }
     </Show>
   )
 }
-
-/** A dish's name with its batch when it is not the recipe as written. */
-export function scaledDish(dish: { display_name: string; scale?: string | null }): string {
-  return `${dish.display_name}${dish.scale && dish.scale !== "1" ? ` (×${dish.scale})` : ""}`
-}

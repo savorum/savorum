@@ -12,6 +12,14 @@ export const keyframes = defineKeyframes({
     from: { backgroundPosition: "0 0" },
     to: { backgroundPosition: "1rem 0" },
   },
+  "skeleton-pulse": {
+    "0%, 100%": { opacity: "1" },
+    "50%": { opacity: "0.55" },
+  },
+  "route-progress": {
+    "0%": { transform: "translateX(-100%)" },
+    "100%": { transform: "translateX(250%)" },
+  },
   "expand-height": {
     from: { height: "0" },
     to: { height: "var(--height)" },

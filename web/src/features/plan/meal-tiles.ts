@@ -1,6 +1,5 @@
 import { css } from "styled-system/css"
 
-/** The shared look of meals kept outside the calendar: unscheduled and saved. */
 export const tiles = {
   lede: css({ color: "fg.muted", marginBottom: "4", maxWidth: "40rem" }),
   grid: css({
@@ -43,7 +42,7 @@ export const tiles = {
     width: "11",
   }),
   heading: css({ display: "grid", gap: "0.5", minWidth: "0" }),
-  title: css({ fontSize: "md", fontWeight: "semibold", lineHeight: "1.3" }),
+  title: css({ fontFamily: "editorial", fontSize: "lg", fontWeight: "normal", lineHeight: "1.3" }),
   meta: css({ color: "fg.muted", fontSize: "sm" }),
   dishes: css({
     color: "fg.default",
@@ -75,6 +74,11 @@ export const tiles = {
     gap: "1",
     marginInline: "-1",
     paddingTop: "3",
+    "@media (pointer: coarse)": { "& button": { minHeight: "11", minWidth: "11" } },
+  }),
+  destructive: css({
+    color: "red.outline.fg",
+    _highlighted: { background: "red.subtle.bg", color: "red.outline.fg" },
   }),
 }
 

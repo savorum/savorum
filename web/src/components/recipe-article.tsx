@@ -1,4 +1,4 @@
-import { For, type JSX, Show, createMemo } from "solid-js"
+import { For, type JSX, Show, createMemo, createUniqueId } from "solid-js"
 import { css } from "styled-system/css"
 import { recipePage } from "styled-system/recipes"
 
@@ -24,7 +24,24 @@ import { summarizeTimes, timeSummaryLine, timingLine } from "@/lib/timing-summar
 import { m } from "../lib/messages.ts"
 
 const styles = {
-  dot: css({ color: "border.default" }),
+  metaClip: css({ minWidth: "0", overflowX: "clip", width: "100%" }),
+  metaItems: css({
+    columnGap: "0.6em",
+    display: "flex",
+    flexWrap: "wrap",
+    marginInlineStart: "-1em",
+    rowGap: "1",
+  }),
+  metaItem: css({
+    _before: {
+      color: "border.default",
+      content: "attr(data-separator) / ''",
+      display: "inline-block",
+      paddingInlineEnd: "0.6em",
+      textAlign: "end",
+      width: "1em",
+    },
+  }),
   link: css({
     textDecoration: "underline",
     textDecorationColor: "border.default",
@@ -121,6 +138,11 @@ export interface RecipeArticleProps {
 
 /** The reading presentation of a recipe. Everything here is recipe content. */
 export const RecipeArticle = (props: RecipeArticleProps) => {
+  const sectionID = createUniqueId()
+  const sectionIDs = {
+    ingredients: `${sectionID}-ingredients`,
+    instructions: `${sectionID}-instructions`,
+  }
   const recipe = () => props.recipe
   const scale = () => props.scale ?? rational(1n)
   const presentation = (): Presentation => ({
@@ -184,15 +206,18 @@ export const RecipeArticle = (props: RecipeArticleProps) => {
     }
     if (recipe().courses?.length) entries.push(recipe().courses!.join(", "))
     if (recipe().cuisines?.length) entries.push(recipe().cuisines!.join(", "))
-    if (recipe().authors?.length)
-      entries.push(
-        recipe()
-          .authors!.map((author) => author.name)
-          .join(", "),
-      )
     const written = region()
     if (written && measurementSystem() === "original") entries.push(regionNames[written]())
     return entries
+  })
+  const byline = createMemo((): MetaEntry[] => {
+    const authors = (recipe().authors ?? []).map((author) => author.name).join(", ")
+    const name = sourceName()
+    return [
+      ...meta(),
+      ...(authors ? [authors] : []),
+      ...(name ? [{ text: name, href: sourceURL() }] : []),
+    ]
   })
 
   return (
@@ -207,45 +232,34 @@ export const RecipeArticle = (props: RecipeArticleProps) => {
           <h1 class={layout().title} dir={textDir()}>
             {recipe().title}
           </h1>
+          <nav
+            class={css({
+              display: { base: "flex", md: "none" },
+              gap: "4",
+              marginTop: "2",
+              "& a": {
+                display: "inline-flex",
+                alignItems: "center",
+                minHeight: "11",
+                color: "accent.default",
+                textUnderlineOffset: "0.2em",
+              },
+            })}
+          >
+            <Show when={recipe().ingredient_sections?.length}>
+              <a href={`#${sectionIDs.ingredients}`}>{m.body_ingredients()}</a>
+            </Show>
+            <Show when={recipe().instruction_sections?.length}>
+              <a href={`#${sectionIDs.instructions}`}>{m.body_method()}</a>
+            </Show>
+          </nav>
           <Show when={recipe().description}>
             <p class={layout().description} dir={textDir()}>
               {recipe().description}
             </p>
           </Show>
 
-          <div class={layout().meta}>
-            <For each={meta()}>
-              {(entry, index) => (
-                <>
-                  <Show when={index() > 0}>
-                    <span class={styles.dot} aria-hidden="true">
-                      {" "}
-                      {m.common_dot_separator()}{" "}
-                    </span>
-                  </Show>
-                  {/* Formatted values such as "10 min" keep their own order in either direction. */}
-                  <bdi>{entry}</bdi>
-                </>
-              )}
-            </For>
-            <Show when={sourceName()}>
-              {(name) => (
-                <>
-                  <Show when={meta().length > 0}>
-                    <span class={styles.dot} aria-hidden="true">
-                      {" "}
-                      {m.common_dot_separator()}{" "}
-                    </span>
-                  </Show>
-                  <Show when={sourceURL()} fallback={<span>{name()}</span>}>
-                    <a class={styles.link} href={sourceURL()} target="_blank" rel="noreferrer">
-                      {name()}
-                    </a>
-                  </Show>
-                </>
-              )}
-            </Show>
-          </div>
+          <MetaLine class={layout().meta} entries={byline()} />
 
           <Show when={props.readOnly && alsoMakes().length > 0}>
             <p class={styles.alsoMakes}>
@@ -306,6 +320,7 @@ export const RecipeArticle = (props: RecipeArticleProps) => {
       </header>
 
       <RecipeArticleBody
+        sectionIDs={sectionIDs}
         content={content()}
         textDir={textDir()}
         recipe={recipe()}
@@ -347,5 +362,35 @@ export const RecipeArticle = (props: RecipeArticleProps) => {
       {/* Wrapped so the footer takes an explicit order in the column. */}
       <div class={styles.footer}>{props.footer}</div>
     </article>
+  )
+}
+
+type MetaEntry = string | { text: string; href?: string }
+
+function MetaLine(props: { class: string; entries: MetaEntry[] }) {
+  return (
+    <Show when={props.entries.length > 0}>
+      <div class={props.class}>
+        <div class={styles.metaClip}>
+          <div class={styles.metaItems}>
+            <For each={props.entries}>
+              {(entry) => (
+                <span class={styles.metaItem} data-separator={m.common_dot_separator()}>
+                  {typeof entry === "string" ? (
+                    <bdi>{entry}</bdi>
+                  ) : (
+                    <Show when={entry.href} fallback={<span>{entry.text}</span>}>
+                      <a class={styles.link} href={entry.href} target="_blank" rel="noreferrer">
+                        {entry.text}
+                      </a>
+                    </Show>
+                  )}
+                </span>
+              )}
+            </For>
+          </div>
+        </div>
+      </div>
+    </Show>
   )
 }

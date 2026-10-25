@@ -1,8 +1,9 @@
 import { Link, useLocation, useNavigate } from "@tanstack/solid-router"
-import { MoreHorizontal } from "lucide-solid"
+import { CircleHelp, Keyboard, MoreHorizontal } from "lucide-solid"
 import { createSignal, For, Show } from "solid-js"
 import { css } from "styled-system/css"
 
+import { KeyboardShortcuts } from "@/components/keyboard-shortcuts"
 import { Problem } from "@/components/status"
 import { IconButton } from "@/components/ui/icon-button"
 import {
@@ -45,6 +46,7 @@ const styles = {
     display: "inline-flex",
     alignItems: "center",
     flexShrink: "0",
+    "@media (pointer: coarse)": { minHeight: "11", minWidth: "11" },
     textDecoration: "none",
     _focusVisible: { outline: "2px solid", outlineColor: "accent.default", outlineOffset: "3px" },
   }),
@@ -63,20 +65,25 @@ const styles = {
   nav: css({
     alignItems: "center",
     color: "fg.muted",
+    columnGap: { base: "2", md: "5" },
     display: "flex",
-    flex: "1",
+    flex: "1 0 auto",
+    flexWrap: "wrap",
     fontSize: { base: "sm", md: "md" },
     lineHeight: "1",
+    maxWidth: "100%",
     minHeight: "8",
-    gap: { base: "2", md: "5" },
+    rowGap: "1",
   }),
   actions: css({
-    display: "flex",
     alignItems: "center",
+    display: "flex",
     gap: "2",
+    maxWidth: "100%",
     minHeight: "8",
+    minWidth: "0",
   }),
-  library: css({ minWidth: "12rem" }),
+  library: css({ minWidth: "0", width: "min(12rem, 60vw)" }),
   link: css({
     display: "inline-flex",
     alignItems: "center",
@@ -86,16 +93,30 @@ const styles = {
     textDecoration: "none",
     _hover: { color: "accent.default" },
     _focusVisible: { outline: "2px solid", outlineColor: "accent.default", outlineOffset: "3px" },
-    "&[data-status=active]": { color: "fg.default", fontWeight: "medium" },
+    "@media (pointer: coarse)": { minHeight: "11" },
+    "&[data-status=active], &[aria-current=true], &[aria-current=page]": {
+      color: "fg.default",
+      fontWeight: "medium",
+      textDecorationColor: "accent.default",
+      textDecorationLine: "underline",
+      textDecorationThickness: "2px",
+      textUnderlineOffset: "0.45em",
+    },
   }),
 }
 
-/** The three independent stages of the everyday cooking workflow. */
 const destinations = [
   {
     to: "/",
+    within: ["/recipes", "/imports", "/tags", "/saved-searches", "/trash"],
     get label() {
       return m.site_header_recipes()
+    },
+  },
+  {
+    to: "/books",
+    get label() {
+      return m.site_header_books()
     },
   },
   {
@@ -114,6 +135,7 @@ const destinations = [
 
 export function SiteHeader() {
   const [signingOut, setSigningOut] = createSignal(false)
+  const [shortcutsOpen, setShortcutsOpen] = createSignal(false)
   const navigate = useNavigate()
   const location = useLocation()
   const [switchFailed, setSwitchFailed] = createSignal<string>()
@@ -121,6 +143,11 @@ export function SiteHeader() {
   return (
     <header class={styles.banner}>
       <SignOutDialog open={signingOut()} onClose={() => setSigningOut(false)} />
+      <KeyboardShortcuts
+        open={shortcutsOpen()}
+        onOpen={() => setShortcutsOpen(true)}
+        onClose={() => setShortcutsOpen(false)}
+      />
       <div class={styles.header}>
         <Link class={styles.brand} to="/" aria-label={m.site_header_savorum()}>
           <img class={styles.logo} src="/brand/icon-mono.svg" width="32" height="32" alt="" />
@@ -133,6 +160,12 @@ export function SiteHeader() {
                 class={styles.link}
                 to={destination.to}
                 activeOptions={{ exact: destination.to === "/" }}
+                aria-current={
+                  "within" in destination &&
+                  destination.within.some((path) => location().pathname.startsWith(path))
+                    ? "true"
+                    : undefined
+                }
               >
                 {destination.label}
               </Link>
@@ -161,6 +194,9 @@ export function SiteHeader() {
           <Menu
             onSelect={(details) => {
               if (details.value === "sign-out") setSigningOut(true)
+              else if (details.value === "shortcuts") setShortcutsOpen(true)
+              else if (details.value === "help")
+                window.open("https://docs.savorum.app/", "_blank", "noopener")
               else void navigate({ to: details.value })
             }}
             trigger={(triggerProps) => (
@@ -190,6 +226,15 @@ export function SiteHeader() {
                 <MenuItem value="/admin">{m.account_admin_nav_label()}</MenuItem>
               </Show>
             </MenuItemGroup>
+            <MenuSeparator />
+            <MenuItem value="shortcuts">
+              <Keyboard aria-hidden="true" size={16} />
+              {m.keyboard_shortcuts_title()}
+            </MenuItem>
+            <MenuItem value="help">
+              <CircleHelp aria-hidden="true" size={16} />
+              {m.site_header_help()}
+            </MenuItem>
             <Show when={authEnabled() && account()?.user}>
               <MenuSeparator />
               <MenuItem value="sign-out">{m.account_overview_sign_out()}</MenuItem>

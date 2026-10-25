@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/solid-router"
+import { createFileRoute, useLocation } from "@tanstack/solid-router"
 
 import { ImportJobPage } from "@/features/import-job/import-job-page"
 
@@ -16,5 +16,12 @@ export const Route = createFileRoute("/imports/$jobId")({
 function ImportJobRoute() {
   const params = Route.useParams()
   const search = Route.useSearch()
-  return <ImportJobPage jobID={() => params().jobId} remaining={() => search().remaining} />
+  const location = useLocation()
+  return (
+    <ImportJobPage
+      jobID={() => params().jobId}
+      remaining={() => search().remaining}
+      fromImports={() => location().state.fromImports === true}
+    />
+  )
 }

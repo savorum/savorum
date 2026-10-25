@@ -1,30 +1,67 @@
-import { ChevronLeft, ChevronRight } from "lucide-solid"
+import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-solid"
 import { Show } from "solid-js"
 import { css } from "styled-system/css"
 import { pageShell } from "styled-system/recipes"
 
+import { ContextHelp } from "@/components/context-help"
 import { Button } from "@/components/ui/button"
 import { directionalIcon } from "@/components/ui/directional"
 import { IconButton } from "@/components/ui/icon-button"
-import { Menu, MenuItem } from "@/components/ui/menu"
+import { Menu, MenuIndicator, MenuItem } from "@/components/ui/menu"
 import { Segmented } from "@/components/ui/segmented"
+import { Select } from "@/components/ui/select"
 import { formatLocalDay, formatLocalDays } from "@/lib/date-format"
+import { shortcutAria } from "@/lib/keyboard-shortcuts"
 
 import { m } from "../../lib/messages.ts"
-import type { PlanView } from "./plan-calendar"
+import { type PlanView, planViews } from "./plan-calendar"
 
 const layout = pageShell({ width: "wide" })
+const touch = { "@media (pointer: coarse)": { minHeight: "11", minWidth: "11" } }
 const styles = {
   subtitle: css({ color: "fg.muted", margin: "0", marginBlockStart: "1" }),
   header: css({
-    display: "flex",
-    justifyContent: "space-between",
-    gap: "4",
     alignItems: "center",
+    columnGap: "4",
+    display: { base: "grid", md: "flex" },
     flexWrap: "wrap",
+    gridTemplateColumns: "minmax(0, 1fr) auto",
+    justifyContent: "space-between",
+    marginBottom: "5",
+    rowGap: "3",
+  }),
+  controls: css({
+    alignItems: "center",
+    display: { base: "contents", md: "flex" },
+    flexWrap: "wrap",
+    gap: "3",
+  }),
+  secondary: css({
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "1",
+    gridColumn: "1 / -1",
+    gridRow: "2",
+    marginInlineStart: { base: "-3", md: "0" },
+  }),
+  primary: css({
+    ...touch,
+    alignSelf: { base: "start", md: "auto" },
+    gridColumn: "2",
+    gridRow: "1",
+  }),
+  button: css(touch),
+  toolbar: css({
+    alignItems: "center",
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "3",
+    justifyContent: "space-between",
     marginBottom: "5",
   }),
-  controls: css({ display: "flex", gap: "2", flexWrap: "wrap" }),
+  switcher: css({ display: { base: "none", md: "block" } }),
+  chooser: css({ display: { base: "block", md: "none" }, flex: "1", minWidth: "9rem" }),
+  pager: css({ alignItems: "center", display: "flex", gap: "2" }),
   actions: css({ display: "flex", gap: "1", flexWrap: "wrap", marginTop: "2" }),
 }
 
@@ -32,7 +69,15 @@ const styles = {
 export const isCalendarView = (view: PlanView): boolean =>
   view === "week" || view === "month" || view === "agenda"
 
-/** The title and date range, and the buttons for shopping, the calendar, and a new meal. */
+const viewLabel = (view: PlanView): string =>
+  ({
+    week: m.plan_week(),
+    month: m.plan_month(),
+    agenda: m.plan_agenda(),
+    unscheduled: m.plan_unscheduled(),
+    saved: m.plan_saved(),
+  })[view]
+
 export function PlanHeader(props: {
   view: PlanView
   days: Date[]
@@ -49,88 +94,140 @@ export function PlanHeader(props: {
   return (
     <div class={styles.header}>
       <div>
-        <h1 class={layout.title}>{m.plan_title()}</h1>
-        <Show when={props.view === "week" || props.view === "agenda"}>
-          <p class={styles.subtitle}>
-            {formatLocalDays(props.days[0]!, props.days.at(-1)!, {
-              month: "long",
-              day: "numeric",
-              year: "numeric",
-            })}
-          </p>
-        </Show>
-        <Show when={props.view === "month"}>
-          <p class={styles.subtitle}>
-            {formatLocalDay(props.anchor, { month: "long", year: "numeric" })}
-          </p>
-        </Show>
+        <div class={css({ display: "flex", alignItems: "baseline", gap: "3" })}>
+          <h1 class={layout.title}>{m.plan_title()}</h1>
+          <ContextHelp guide="plan-meals" label={m.help_plan()} />
+        </div>
+        <p class={styles.subtitle} aria-live="polite">
+          <Show when={isCalendarView(props.view)} fallback={"\u00a0"}>
+            {props.view === "month"
+              ? formatLocalDay(props.anchor, { month: "long", year: "numeric" })
+              : formatLocalDays(props.days[0]!, props.days.at(-1)!, {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+          </Show>
+        </p>
       </div>
       <div class={styles.controls}>
-        <Show when={props.view !== "saved"}>
-          <Button disabled={!props.canSelect} variant="outline" onClick={props.onToggleSelecting}>
-            {props.selecting ? m.plan_cancel() : m.shopping_shop_meals()}
-          </Button>
-        </Show>
-        <Show when={props.selecting}>
-          <Button disabled={!props.selectedCount} onClick={props.onReviewSelected}>
+        <Show
+          when={props.selecting}
+          fallback={
+            <>
+              <div class={styles.secondary}>
+                <Show when={props.view !== "saved"}>
+                  <Button
+                    class={styles.button}
+                    disabled={!props.canSelect}
+                    variant="plain"
+                    onClick={props.onToggleSelecting}
+                  >
+                    {m.shopping_shop_meals()}
+                  </Button>
+                </Show>
+                <Show
+                  when={isCalendarView(props.view)}
+                  fallback={
+                    <Button class={styles.button} variant="plain" onClick={props.onFeeds}>
+                      {m.plan_calendar_feeds()}
+                    </Button>
+                  }
+                >
+                  <Menu
+                    onSelect={({ value }) => {
+                      if (value === "export") props.onExport()
+                      else props.onFeeds()
+                    }}
+                    trigger={(trigger) => (
+                      <Button {...trigger()} class={styles.button} variant="plain">
+                        {m.plan_calendar()}
+                        <MenuIndicator>
+                          <ChevronDown aria-hidden="true" size={16} />
+                        </MenuIndicator>
+                      </Button>
+                    )}
+                  >
+                    <MenuItem value="export">{m.plan_calendar_export()}</MenuItem>
+                    <MenuItem value="feeds">{m.plan_calendar_feeds()}</MenuItem>
+                  </Menu>
+                </Show>
+              </div>
+              <Button
+                class={styles.primary}
+                colorPalette="accent"
+                onClick={props.onNewMeal}
+                data-shortcut="plan-new"
+                aria-keyshortcuts={shortcutAria("plan-new")}
+              >
+                {m.plan_new_meal()}
+              </Button>
+            </>
+          }
+        >
+          <div class={styles.secondary}>
+            <Button class={styles.button} variant="plain" onClick={props.onToggleSelecting}>
+              {m.plan_cancel()}
+            </Button>
+          </div>
+          <Button
+            class={styles.primary}
+            colorPalette="accent"
+            disabled={!props.selectedCount}
+            onClick={props.onReviewSelected}
+          >
             {m.shopping_review()}
           </Button>
         </Show>
-        <Menu
-          onSelect={({ value }) => {
-            if (value === "export") props.onExport()
-            else props.onFeeds()
-          }}
-          trigger={(trigger) => (
-            <Button {...trigger()} variant="outline">
-              {m.plan_calendar()}
-            </Button>
-          )}
-        >
-          <Show when={isCalendarView(props.view)}>
-            <MenuItem value="export">{m.plan_calendar_export()}</MenuItem>
-          </Show>
-          <MenuItem value="feeds">{m.plan_calendar_feeds()}</MenuItem>
-        </Menu>
-        <Button colorPalette="accent" onClick={props.onNewMeal}>
-          {m.plan_new_meal()}
-        </Button>
       </div>
     </div>
   )
 }
 
-/** The view switcher, and for a calendar view the buttons that step through it. */
 export function PlanNavigator(props: {
   view: PlanView
   onView: (view: PlanView) => void
   onStep: (direction: -1 | 1) => void
   onToday: () => void
+  onTray?: () => void
 }) {
+  const options = () =>
+    planViews.filter(isCalendarView).map((value) => ({ value, label: viewLabel(value) }))
   return (
-    <>
-      <div class={css({ marginBottom: "4" })}>
+    <div class={styles.toolbar}>
+      <div class={styles.switcher}>
         <Segmented
           label={m.plan_sections()}
           size="md"
           value={props.view}
-          options={[
-            { value: "week", label: m.plan_week() },
-            { value: "month", label: m.plan_month() },
-            { value: "agenda", label: m.plan_agenda() },
-            { value: "unscheduled", label: m.plan_unscheduled() },
-            { value: "saved", label: m.plan_saved() },
-          ]}
+          options={options()}
           onChange={props.onView}
         />
       </div>
-      <Show when={isCalendarView(props.view)}>
-        <nav
-          aria-label={m.plan_title()}
-          class={css({ display: "flex", gap: "2", alignItems: "center", marginBottom: "5" })}
+      <Select
+        class={styles.chooser}
+        size="lg"
+        aria-label={m.plan_sections()}
+        value={props.view}
+        items={options()}
+        onValueChange={(value) => props.onView(value as PlanView)}
+      />
+      <Show when={props.onTray}>
+        <Button
+          variant="plain"
+          class={css({ display: { base: "inline-flex", xl: "none" }, minHeight: "11" })}
+          onClick={() => props.onTray?.()}
         >
+          {m.plan_meal_tray()} <ChevronDown aria-hidden="true" size={16} />
+        </Button>
+      </Show>
+      <Show when={isCalendarView(props.view)}>
+        <nav aria-label={m.plan_title()} class={styles.pager}>
           <IconButton
+            class={styles.button}
             variant="outline"
+            data-shortcut="plan-previous"
+            aria-keyshortcuts={shortcutAria("plan-previous")}
             aria-label={
               props.view === "month"
                 ? m.plan_previous_month()
@@ -142,11 +239,20 @@ export function PlanNavigator(props: {
           >
             <ChevronLeft class={directionalIcon} />
           </IconButton>
-          <Button variant="outline" onClick={props.onToday}>
+          <Button
+            class={styles.button}
+            variant="outline"
+            onClick={props.onToday}
+            data-shortcut="plan-today"
+            aria-keyshortcuts={shortcutAria("plan-today")}
+          >
             {m.plan_today()}
           </Button>
           <IconButton
+            class={styles.button}
             variant="outline"
+            data-shortcut="plan-next"
+            aria-keyshortcuts={shortcutAria("plan-next")}
             aria-label={
               props.view === "month"
                 ? m.plan_next_month()
@@ -160,7 +266,7 @@ export function PlanNavigator(props: {
           </IconButton>
         </nav>
       </Show>
-    </>
+    </div>
   )
 }
 

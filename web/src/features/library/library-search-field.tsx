@@ -13,6 +13,8 @@ import { css } from "styled-system/css"
 
 import { LabelSwatch } from "@/components/label-swatch"
 import { Input } from "@/components/ui/input"
+import { Kbd } from "@/components/ui/kbd"
+import { shortcutAria, shortcutsEnabled } from "@/lib/keyboard-shortcuts"
 import type { LibraryFilters } from "@/lib/library-query"
 import { type SearchSuggestion, searchSuggestions, withSuggestion } from "@/lib/search-suggestions"
 import { latestUnlessFailed } from "@/lib/settled"
@@ -172,6 +174,8 @@ export function LibrarySearchField(props: {
         maxLength={200}
         role="combobox"
         aria-label={m.library_search_field_search_recipes()}
+        data-shortcut="search"
+        aria-keyshortcuts={shortcutAria("search")}
         aria-autocomplete="list"
         aria-expanded={open()}
         aria-controls={listboxID}
@@ -188,6 +192,11 @@ export function LibrarySearchField(props: {
         }}
         onBlur={finishSearchEditing}
       />
+      <Show when={shortcutsEnabled() && !searchFocused() && typed() === ""}>
+        <Kbd class={styles.shortcut} size="sm" variant="outline" aria-hidden="true">
+          /
+        </Kbd>
+      </Show>
       <Show when={open()}>
         <ul
           class={styles.suggestions}
@@ -231,7 +240,7 @@ const styles = {
     order: { base: "1", md: "0" },
     gridColumn: { base: "1 / -1", md: "auto" },
     gridRow: { base: "2", md: "auto" },
-    gridTemplateColumns: "1.75rem minmax(0, 1fr)",
+    gridTemplateColumns: "1.75rem minmax(0, 1fr) auto",
   }),
   searchIcon: css({
     color: "fg.muted",
@@ -244,8 +253,19 @@ const styles = {
   searchInput: css({
     gridColumn: "1 / -1",
     gridRow: "1",
-    paddingInlineEnd: "4!",
+    paddingInlineEnd: "10!",
     paddingInlineStart: "11!",
+  }),
+  shortcut: css({
+    borderColor: "border.default",
+    color: "fg.muted",
+    fontFamily: "body",
+    gridColumn: "3",
+    gridRow: "1",
+    marginInlineEnd: "3",
+    pointerEvents: "none",
+    zIndex: "1",
+    "@media (hover: none), (pointer: coarse)": { display: "none" },
   }),
   suggestions: css({
     background: "bg.surface",
@@ -283,5 +303,5 @@ const styles = {
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
   }),
-  suggestionGroup: css({ color: "fg.muted", fontSize: "2xs", marginInlineStart: "auto" }),
+  suggestionGroup: css({ color: "fg.muted", fontSize: "xs", marginInlineStart: "auto" }),
 }

@@ -218,6 +218,29 @@ export interface ConvertedAmount {
   approximate: boolean
 }
 
+/** Returns undefined for incompatible dimensions or units without physical conversion factors. */
+export function convertToUnit(
+  amount: Rational,
+  source: string,
+  target: string,
+): ConvertedAmount | undefined {
+  const from = units[source]
+  const to = units[target]
+  if (!from?.factor || !to?.factor || from.dimension !== to.dimension) return undefined
+  if (source === target) return { amount, unit: target, approximate: false }
+  const base = toBase(amount, source)
+  const exact = base && fromBase(base, target)
+  if (!exact) return undefined
+  const kitchenFraction = [1n, 2n, 3n, 4n, 6n, 8n].includes(exact.denominator)
+  const rounded = kitchenFraction ? exact : roundToStep(exact, rational(1n, 100n))
+  const shown = rounded.numerator === 0n && exact.numerator !== 0n ? exact : rounded
+  return {
+    amount: shown,
+    unit: target,
+    approximate: compare(shown, exact) !== 0 || !from.exact || !to.exact,
+  }
+}
+
 interface VolumeCandidate {
   amount: Rational
   unit: string

@@ -75,7 +75,7 @@ const basisKinds: { value: BasisKind; label: () => string }[] = [
   { value: "serving", label: m.nutrition_basis_serving },
   { value: "recipe", label: m.nutrition_basis_recipe },
   { value: "quantity", label: m.nutrition_basis_quantity },
-  { value: "unspecified", label: m.nutrition_basis_unspecified },
+  { value: "unspecified", label: m.nutrition_editor_unit_unstated },
 ]
 
 function newNutrient(nutrient: NutrientKind): Nutrient {

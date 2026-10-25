@@ -476,10 +476,7 @@ test("identity choices scale every branch and preserve authored relationships an
     ],
   }
   const shown = ingredientLine(choice, { system: "original", scale: rational(2n) })
-  assert.match(
-    shown.text,
-    /Prefer 2 cups butter; alternatively, 1½ cups oil, neutral — If unavailable \(optional\)/,
-  )
+  assert.match(shown.text, /2 cups butter or 1½ cups oil, neutral — If unavailable \(optional\)/)
   assert.equal(choice.alternatives[1].quantity.amount.value, "3/4")
   assert.match(
     ingredientLine({ ...choice, relation: "and_or" }, { system: "original", scale: rational(1n) })
@@ -519,8 +516,8 @@ test("an authored shared exact branch quantity moves to the amount column", () =
     },
     { system: "original", scale: rational(2n) },
   )
-  assert.equal(preferred.amount, "Prefer 2 cups")
-  assert.equal(preferred.text, "butter; alternatively, margarine")
+  assert.equal(preferred.amount, "2 cups")
+  assert.equal(preferred.text, "butter or margarine")
 
   const andOr = ingredientLine(
     {
@@ -731,7 +728,7 @@ test("a choice reports its branches as separate lines beside the sentence", () =
   assert.equal(different.amount, "")
   assert.deepEqual(different.choice, {
     sharedAmount: false,
-    lead: "",
+    preferred: false,
     joiner: "or",
     branches: [
       { amount: "325 g", text: "wheat flour" },
@@ -754,8 +751,8 @@ test("a choice reports its branches as separate lines beside the sentence", () =
     asWritten,
   )
   assert.equal(shared.choice?.sharedAmount, true)
-  assert.equal(shared.choice?.lead, "")
-  assert.equal(shared.choice?.joiner, "alternatively")
+  assert.equal(shared.choice?.preferred, true)
+  assert.equal(shared.choice?.joiner, "or")
   assert.deepEqual(shared.choice?.branches, [
     { amount: "", text: "butter" },
     { amount: "", text: "margarine (optional)" },
@@ -773,7 +770,7 @@ test("a choice reports its branches as separate lines beside the sentence", () =
     },
     asWritten,
   )
-  assert.equal(leading.choice?.lead, "Prefer")
+  assert.equal(leading.choice?.preferred, true)
 
   assert.equal(ingredientLine({ id: "salt", name: "salt" }, asWritten).choice, undefined)
 })

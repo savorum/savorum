@@ -36,9 +36,7 @@ export function AccountOverview() {
         </Callout>
       </Show>
       <Show when={authEnabled()}>
-        <section class={styles.section}>
-          <h2>{m.account_overview_details()}</h2>
-          <p>{account()?.user?.display_name}</p>
+        <div class={styles.details}>
           <CopyField
             label={m.account_overview_user_id()}
             value={account()?.user?.id ?? ""}
@@ -46,18 +44,20 @@ export function AccountOverview() {
             copiedLabel={m.account_copied()}
           />
           <p class={styles.muted}>{m.account_overview_user_id_hint()}</p>
-        </section>
+        </div>
       </Show>
       <Show when={authEnabled() || libraries().length > 1}>
         <section class={styles.section}>
           <h2>{m.account_overview_libraries()}</h2>
           <Show when={libraries().length} fallback={<p>{m.account_overview_libraries_empty()}</p>}>
-            <ul class={styles.list}>
+            <ul class={styles.rows}>
               <For each={libraries()}>
                 {(library) => (
-                  <li class={styles.card}>
-                    <h3>{library.name}</h3>
-                    <p class={styles.muted}>{roleName(library.role)}</p>
+                  <li class={styles.listRow}>
+                    <div class={styles.rowBody}>
+                      <h3>{library.name}</h3>
+                      <p class={styles.muted}>{roleName(library.role)}</p>
+                    </div>
                     <Show when={authEnabled() && library.role === "owner"}>
                       <Link
                         class={styles.back}

@@ -2,7 +2,13 @@ import { expect, test } from "vitest"
 
 import { filterQuery, parseFilterQuery } from "@/lib/library-query"
 
-import { filterSearch, searchFilters, validateLibrarySearch } from "./library-search"
+import {
+  effectiveSort,
+  filterSearch,
+  searchFilters,
+  sortChoices,
+  validateLibrarySearch,
+} from "./library-search"
 
 test("needs-review survives URL validation, effective filters, query grammar and URL serialization", () => {
   const search = validateLibrarySearch({ review: "true", q: "soup", tags: ["tag"], offset: "36" })
@@ -28,4 +34,15 @@ test("restored browse extents use bounded complete batches", () => {
   for (const shown of ["0", "36", "37", "216", "NaN", "Infinity"]) {
     expect(validateLibrarySearch({ shown }).shown).toBeUndefined()
   }
+})
+
+test("best match is offered and used only while words are searched", () => {
+  expect(sortChoices("")).not.toContain("relevance")
+  expect(sortChoices("  ")).not.toContain("relevance")
+  expect(sortChoices("soup")).toContain("relevance")
+  expect(effectiveSort(undefined, "")).toBe("updated-desc")
+  expect(effectiveSort(undefined, "soup")).toBe("relevance")
+  expect(effectiveSort("relevance", "")).toBe("updated-desc")
+  expect(effectiveSort("title-asc", "")).toBe("title-asc")
+  expect(effectiveSort("rating-desc", "soup")).toBe("rating-desc")
 })

@@ -1,6 +1,6 @@
 import { Heart } from "lucide-solid"
 import { Show, createSignal, untrack } from "solid-js"
-import { css, cva, cx } from "styled-system/css"
+import { cva, cx } from "styled-system/css"
 import { mark } from "styled-system/recipes"
 
 import { IconButton } from "@/components/ui/icon-button"
@@ -51,59 +51,41 @@ export const FavoriteMark = (props: { controller: OrganizationController }) => {
   )
 }
 
-/** What this cook thought of the recipe, shown with the cooking log. */
 export const RecipeRating = (props: { controller: OrganizationController }) => {
   const [pendingRating, setPendingRating] = createSignal<{ value: number | undefined }>()
   const state = () => props.controller.value()?.user_state
   return (
     <Show when={state()}>
       {(userState) => (
-        <div class={styles.bar}>
-          {/* The rating group already carries this as its accessible name. */}
-          <span class={styles.ratingLabel} aria-hidden="true">
-            {m.organization_bar_your_rating()}
-          </span>
-          <Rating
-            label={m.organization_bar_your_rating()}
-            size={16}
-            clearable={false}
-            value={pendingRating() ? pendingRating()!.value : userState().rating}
-            disabled={props.controller.saving() && !pendingRating()}
-            onChange={(staticRating) => {
-              const change = { value: staticRating }
-              setPendingRating(change)
-              quietly(
-                props.controller
-                  .update((input) =>
-                    untrack(() => ({
-                      ...input,
-                      user_state: { ...input.user_state, rating: staticRating },
-                    })),
-                  )
-                  .finally(() => {
-                    if (untrack(pendingRating) === change) setPendingRating(undefined)
-                  }),
-              )
-            }}
-          />
-        </div>
+        <Rating
+          label={m.organization_bar_your_rating()}
+          size={16}
+          clearable={false}
+          value={pendingRating() ? pendingRating()!.value : userState().rating}
+          disabled={props.controller.saving() && !pendingRating()}
+          onChange={(staticRating) => {
+            const change = { value: staticRating }
+            setPendingRating(change)
+            quietly(
+              props.controller
+                .update((input) =>
+                  untrack(() => ({
+                    ...input,
+                    user_state: { ...input.user_state, rating: staticRating },
+                  })),
+                )
+                .finally(() => {
+                  if (untrack(pendingRating) === change) setPendingRating(undefined)
+                }),
+            )
+          }}
+        />
       )}
     </Show>
   )
 }
 
 const styles = {
-  bar: css({
-    alignItems: "center",
-    display: "flex",
-    gap: "2",
-  }),
-  ratingLabel: css({
-    color: "fg.muted",
-    fontSize: "xs",
-    fontWeight: "semibold",
-    letterSpacing: "0.04em",
-  }),
   heart: cva({
     base: {
       _hover: { color: "favorite.preview" },

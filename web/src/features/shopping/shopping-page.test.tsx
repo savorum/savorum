@@ -145,8 +145,9 @@ async function type(
   view: Pick<ReturnType<typeof render>, "getByRole">,
   label: string,
   text: string,
+  role = "textbox",
 ) {
-  const input = view.getByRole("textbox", { name: label }) as HTMLInputElement
+  const input = view.getByRole(role, { name: label }) as HTMLInputElement
   input.focus()
   for (const length of [1, text.length]) {
     fireEvent.input(input, { target: { value: text.slice(0, length) } })
@@ -159,7 +160,7 @@ async function type(
   fireEvent.input(input, { target: { value: `${text}茶` }, isComposing: true })
   fireEvent.compositionEnd(input, { data: "茶" })
   expect(input.value).toBe(`${text}茶`)
-  expect(view.getByRole("textbox", { name: label })).toBe(input)
+  expect(view.getByRole(role, { name: label })).toBe(input)
   expect(document.activeElement).toBe(input)
 }
 
@@ -181,12 +182,50 @@ test("grocery entry and all edit fields preserve typing, composition and focus",
   for (const [label, value] of [
     ["Amount to buy", "2 cartons"],
     ["Note", "Notes"],
-    ["Section or aisle", "Dairy"],
   ])
     await type(dialog, label!, value!)
+  await type(dialog, "Section or aisle", "Dairy", "combobox")
   fireEvent.click(portal.getByRole("button", { name: "Save changes" }))
   await waitFor(() => expect(server.items?.[0]?.name).toBe("Whole milk茶"), { interval: 10 })
   expect(server.items?.[0]?.buy).toBe("2 cartons茶")
+})
+
+test("a viewer can tick shopping items but cannot edit their details", async () => {
+  server.items = [
+    {
+      id: "milk",
+      name: "Milk",
+      buy: "",
+      needed: "",
+      note: "",
+      category: "",
+      bought: false,
+      deleted: false,
+      revision: 1,
+      fields: {},
+      sources: [],
+    },
+  ]
+  setAccount({
+    auth_enabled: true,
+    user: { id: "cook", display_name: "Cook", instance_admin: false },
+    csrf_token: "",
+    active_library_id: "home",
+    libraries: [{ id: "home", name: "Home", role: "viewer" }],
+  })
+  const view = render(() => <ShoppingPage />)
+  const check = (await view.findByRole("checkbox", { name: /Milk/ })) as HTMLInputElement
+  expect(check.disabled).toBe(false)
+  fireEvent.click(check)
+  await waitFor(() => expect(calls).toHaveLength(1))
+  expect(calls[0]).toMatchObject({ kind: "edit", item_id: "milk", bought: true })
+  expect(view.queryByRole("button", { name: "Arrange items" })).toBeNull()
+  fireEvent.click(view.getByRole("button", { name: "Milk" }))
+  const dialog = within(await portal.findByRole("dialog"))
+  expect((dialog.getByRole("textbox", { name: "Item name" }) as HTMLInputElement).disabled).toBe(
+    true,
+  )
+  expect(dialog.queryByRole("button", { name: "Save changes" })).toBeNull()
 })
 
 test("offline add, edit and check survive reopening and sync in dependency order", async () => {
@@ -225,7 +264,7 @@ test("unreadable saved changes are preserved instead of overwritten by sync", as
 
 test("new list name preserves multi-character typing, composition and caret", async () => {
   const view = render(() => <ShoppingPage />)
-  fireEvent.click(await view.findByRole("button", { name: "List actions" }))
+  fireEvent.click(await view.findByRole("button", { name: "Groceries" }))
   const newList = await portal.findByRole("menuitem", { name: "New list" })
   fireEvent.pointerDown(newList)
   fireEvent.click(newList)
@@ -278,7 +317,7 @@ test("returning to the browser refreshes bought items cleared on another device"
 
 test("repeated moves from an open editor use the current row revision", async () => {
   server.revision = 1
-  server.items = ["Milk", "Bread"].map((name) => ({
+  server.items = ["Milk", "Cream"].map((name) => ({
     id: name,
     name,
     buy: "",

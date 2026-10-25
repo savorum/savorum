@@ -1,5 +1,5 @@
 import { Dialog as ArkDialog } from "@ark-ui/solid/dialog"
-import { type ComponentProps, type JSX, Show, onCleanup, onMount, splitProps } from "solid-js"
+import { type ComponentProps, type JSX, Show, onCleanup, splitProps } from "solid-js"
 import { Portal } from "solid-js/web"
 import { createSlotRecipeContext } from "styled-system/jsx"
 import { dialog } from "styled-system/recipes"
@@ -48,10 +48,12 @@ function openerOf(active: HTMLElement): HTMLElement {
  */
 export const Dialog = (props: DialogProps) => {
   let returnFocus: HTMLElement | undefined
-  onMount(() => {
+  const captureFocus = () => {
+    if (typeof document === "undefined") return
     const active = document.activeElement
     if (active instanceof HTMLElement) returnFocus = openerOf(active)
-  })
+  }
+  captureFocus()
   onCleanup(() => {
     queueMicrotask(() => {
       if (returnFocus?.isConnected) returnFocus.focus()
@@ -71,6 +73,7 @@ export const Dialog = (props: DialogProps) => {
     <Root
       {...rootProps}
       onOpenChange={(details) => {
+        if (details.open) captureFocus()
         local.onOpenChange?.(details)
         if (!details.open) local.onClose?.()
       }}

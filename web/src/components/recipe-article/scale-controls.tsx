@@ -1,4 +1,4 @@
-import { Minus, Plus } from "lucide-solid"
+import { Info, Minus, Plus } from "lucide-solid"
 import { For, Show, createMemo } from "solid-js"
 import { css } from "styled-system/css"
 import { recipePage } from "styled-system/recipes"
@@ -6,14 +6,16 @@ import { recipePage } from "styled-system/recipes"
 import type { Recipe } from "@/api/client"
 import { IconButton } from "@/components/ui/icon-button"
 import { Input } from "@/components/ui/input"
+import { Popover } from "@/components/ui/popover"
 import { Select } from "@/components/ui/select"
-import { normalizeNumericInput } from "@/lib/locale-format"
+import { formatNumber, normalizeNumericInput } from "@/lib/locale-format"
 import { measurementSystem, setMeasurementSystem } from "@/lib/preferences"
 import { type Rational, compare, divide, multiply, rational } from "@/lib/rational"
 import { displayYield, otherYields } from "@/lib/recipe-facts"
 import {
   cookNumber,
   ingredientsKeptAsWritten,
+  ingredientsWithUnscaledAmounts,
   yieldAmount,
   yieldLine,
   yieldNoun,
@@ -43,7 +45,19 @@ const styles = {
     fontSize: "xs",
     lineHeight: "1.4",
     margin: "0",
-    maxWidth: "24rem",
+    alignItems: "center",
+    background: "transparent",
+    borderRadius: "l1",
+    cursor: "pointer",
+    display: "inline-flex",
+    gap: "1.5",
+    minHeight: "6",
+    textDecoration: "underline",
+    textDecorationColor: "border.default",
+    textUnderlineOffset: "0.2em",
+    "@media (pointer: coarse)": { minHeight: "11" },
+    _hover: { color: "fg.default" },
+    _focusVisible: { outline: "2px solid", outlineColor: "accent.default", outlineOffset: "2px" },
   }),
   batchGroup: css({ alignItems: "center", flexDirection: "row", columnGap: "3", rowGap: "1.5" }),
   batchLine: css({ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "2" }),
@@ -202,6 +216,12 @@ export function RecipeScaleControls(props: {
       scale: scale(),
     }),
   )
+  const unscaledAmounts = createMemo(() =>
+    ingredientsWithUnscaledAmounts(props.recipe, {
+      system: measurementSystem(),
+      scale: scale(),
+    }),
+  )
 
   const remembered = () => props.rememberedYield ?? props.rememberedScale
   const rememberedIsCurrent = () => {
@@ -326,9 +346,24 @@ export function RecipeScaleControls(props: {
         </Show>
 
         <Show when={keptAsWritten() > 0}>
-          <p class={styles.kept} role="status">
-            {m.scale_controls_kept_as_written({ count: keptAsWritten() })}
-          </p>
+          <span role="status">
+            <Popover
+              title={m.measurement_decisions_title()}
+              trigger={(trigger) => (
+                <button {...trigger()} type="button" class={styles.kept}>
+                  <Info aria-hidden="true" size={14} />
+                  {m.measurement_decisions_title()} ({formatNumber(keptAsWritten())})
+                </button>
+              )}
+            >
+              <Show when={unscaledAmounts() > 0}>
+                <p>{m.body_amount_as_written_hint()}</p>
+              </Show>
+              <Show when={keptAsWritten() > unscaledAmounts()}>
+                <p>{m.body_wording_as_written_hint()}</p>
+              </Show>
+            </Popover>
+          </span>
         </Show>
 
         <Show when={props.onRemember && (scaled() || remembered())}>

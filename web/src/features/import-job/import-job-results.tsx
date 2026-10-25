@@ -3,12 +3,14 @@ import { For, Index, Show } from "solid-js"
 import { untrack } from "solid-js"
 import { css } from "styled-system/css"
 
-import { type ImportJobItemFilter } from "@/api/import-jobs"
+import { type ImportJob, type ImportJobItemFilter, importJobFinished } from "@/api/import-jobs"
 import { Callout } from "@/components/status"
 import { Button } from "@/components/ui/button"
+import { buttonLink } from "@/components/ui/button-link"
 import { Disclosure } from "@/components/ui/disclosure"
 import { uniqueImportDiagnostics } from "@/lib/import-diagnostics"
 import {
+  describeImportFailure,
   describeImportItem,
   diagnosticFields,
   showImportItemFilename,
@@ -16,47 +18,75 @@ import {
 
 import { m } from "../../lib/messages.ts"
 import type { ImportJobController } from "./create-import-job"
-const filters: { value: ImportJobItemFilter | "all"; label: string }[] = [
+type FilterChoice = {
+  value: ImportJobItemFilter | "all"
+  label: string
+  count: (progress: ImportJob["progress"]) => number
+}
+
+const filters: FilterChoice[] = [
   {
     value: "all",
     get label() {
       return m.import_job_results_all_recipes()
     },
-  },
-  {
-    value: "imported",
-    get label() {
-      return m.import_job_results_imported()
-    },
-  },
-  {
-    value: "review-required",
-    get label() {
-      return m.import_job_results_needs_review()
-    },
-  },
-  {
-    value: "informational",
-    get label() {
-      return m.import_job_results_preserved_details()
-    },
-  },
-  {
-    value: "skipped",
-    get label() {
-      return m.import_job_results_already_in_library()
-    },
+    count: (progress) => progress.total,
   },
   {
     value: "failed",
     get label() {
       return m.import_job_results_could_not_import()
     },
+    count: (progress) => progress.failed,
+  },
+  {
+    value: "review-required",
+    get label() {
+      return m.import_job_results_needs_review()
+    },
+    count: (progress) => progress.review_required,
+  },
+  {
+    value: "imported",
+    get label() {
+      return m.import_job_results_imported()
+    },
+    count: (progress) => progress.imported,
+  },
+  {
+    value: "skipped",
+    get label() {
+      return m.import_job_results_already_in_library()
+    },
+    count: (progress) => progress.skipped,
+  },
+  {
+    value: "informational",
+    get label() {
+      return m.import_job_results_preserved_details()
+    },
+    count: (progress) => progress.informational_preservation,
   },
 ]
 
+/** Keep filter controls stable while a job runs, including temporarily empty outcomes. */
+export function offeredFilters(
+  progress: ImportJob["progress"],
+  current: ImportJobItemFilter | "all",
+  finished = true,
+): FilterChoice[] {
+  if (!finished) return filters
+  return filters.filter(
+    (choice) => choice.value === "all" || choice.value === current || choice.count(progress) > 0,
+  )
+}
+
 export function ImportJobResults(props: { controller: ImportJobController }) {
   const { job, items, filter, chooseFilter, loaded, loadMore } = untrack(() => props.controller)
+  const offered = () => {
+    const current = job()
+    return current ? offeredFilters(current.progress, filter(), importJobFinished(current)) : []
+  }
   return (
     <Show when={job()}>
       <section class={styles.results} aria-labelledby="import-results">
@@ -70,7 +100,7 @@ export function ImportJobResults(props: { controller: ImportJobController }) {
             role="group"
             aria-label={m.import_job_results_filter_import_results()}
           >
-            <For each={filters}>
+            <For each={offered()}>
               {(choice) => (
                 <Button
                   size="sm"
@@ -136,15 +166,36 @@ export function ImportJobResults(props: { controller: ImportJobController }) {
                       </Show>
                     </p>
                   </Show>
-                  <Show when={item().error}>
-                    <div class={styles.rowProblem}>
-                      <Callout tone="danger">
-                        <strong>{m.import_job_results_could_not_be_imported()}</strong>{" "}
-                        {item().error}
-                      </Callout>
-                    </div>
+                  <Show when={item().state === "failed" && describeImportFailure(item())}>
+                    {(failure) => (
+                      <div class={styles.rowProblem}>
+                        <Callout
+                          tone={
+                            item().error_code === "already-in-library"
+                              ? "neutral"
+                              : failure().findInLibrary
+                                ? "warning"
+                                : "danger"
+                          }
+                          role={null}
+                          actions={
+                            failure().findInLibrary && item().title ? (
+                              <Link
+                                class={buttonLink({ size: "sm", variant: "outline" })}
+                                to="/"
+                                search={{ q: item().title }}
+                              >
+                                {m.import_job_results_find_in_library()}
+                              </Link>
+                            ) : undefined
+                          }
+                        >
+                          <strong>{failure().headline}</strong> {failure().next}
+                        </Callout>
+                      </div>
+                    )}
                   </Show>
-                  <Show when={(item().diagnostics?.length ?? 0) > 0}>
+                  <Show when={(item().diagnostics?.length ?? 0) > 0 || item().error}>
                     <div class={styles.rowDetails}>
                       <Disclosure
                         label={
@@ -217,6 +268,16 @@ export function ImportJobResults(props: { controller: ImportJobController }) {
                               )
                             }}
                           </For>
+                          <Show when={item().error}>
+                            {(error) => (
+                              <li class={styles.diagnostic}>
+                                <p class={styles.errorLabel}>
+                                  {m.import_job_results_error_message()}
+                                </p>
+                                <p class={styles.errorText}>{error()}</p>
+                              </li>
+                            )}
+                          </Show>
                         </ul>
                       </Disclosure>
                     </div>
@@ -247,7 +308,12 @@ const styles = {
 
   resultsTitle: css({ fontFamily: "editorial", fontSize: "xl", fontWeight: "normal", margin: "0" }),
 
-  filters: css({ display: "flex", flexWrap: "wrap", gap: "2" }),
+  filters: css({
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "2",
+    "@media (pointer: coarse)": { "& button": { minHeight: "11" } },
+  }),
 
   rows: css({
     display: "flex",
@@ -277,7 +343,14 @@ const styles = {
     justifyContent: "space-between",
   }),
 
-  rowTitle: css({ fontSize: "md", fontWeight: "semibold", margin: "0" }),
+  rowTitle: css({
+    fontSize: "md",
+    fontWeight: "semibold",
+    margin: "0",
+    "@media (pointer: coarse)": {
+      "& a": { alignItems: "center", display: "inline-flex", minHeight: "11" },
+    },
+  }),
 
   rowState: css({ color: "fg.muted", fontSize: "sm", whiteSpace: "nowrap" }),
 
@@ -293,7 +366,10 @@ const styles = {
 
   rowFilename: css({ maxWidth: "100%", overflowWrap: "anywhere" }),
 
-  rowProblem: css({ marginTop: "2" }),
+  rowProblem: css({
+    marginTop: "2",
+    "@media (pointer: coarse)": { "& a": { minHeight: "11" } },
+  }),
 
   rowNotes: css({
     display: "grid",
@@ -307,7 +383,9 @@ const styles = {
 
   diagnosticMessage: css({ color: "fg.default", fontSize: "sm", margin: "0" }),
 
-  diagnosticCode: css({ color: "fg.muted", fontFamily: "mono", fontSize: "xs", margin: "0" }),
+  errorLabel: css({ color: "fg.default", fontSize: "sm", fontWeight: "medium", margin: "0" }),
+
+  errorText: css({ color: "fg.muted", fontSize: "sm", margin: "0", overflowWrap: "anywhere" }),
 
   // The fields one sentence covers, indented under it rather than interleaved
   // with repeats of it.

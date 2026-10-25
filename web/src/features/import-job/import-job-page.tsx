@@ -1,28 +1,40 @@
 import { Link } from "@tanstack/solid-router"
-import { ArrowLeft, CircleAlert, CircleCheck, CircleSlash, RotateCw, X } from "lucide-solid"
+import { ArrowLeft, RotateCw, X } from "lucide-solid"
 import { For, Show } from "solid-js"
 import type { Accessor } from "solid-js"
 import { css, cx } from "styled-system/css"
 import { pageShell } from "styled-system/recipes"
 
-import { importJobFinished, importJobResumable } from "@/api/import-jobs"
+import { importJobFinished, importJobResumable, type ImportJob } from "@/api/import-jobs"
 import { createLiveRefresh } from "@/api/live-events"
-import { ChangeError, Loading, ResourceState } from "@/components/status"
+import { ContextHelp } from "@/components/context-help"
+import { SkeletonBlock, SkeletonGroup, SkeletonLine, SkeletonRows } from "@/components/skeleton"
+import { ChangeError, ResourceState } from "@/components/status"
 import { Button } from "@/components/ui/button"
+import { buttonLink } from "@/components/ui/button-link"
 import { directionalIcon } from "@/components/ui/directional"
 import { Disclosure } from "@/components/ui/disclosure"
 import { Progress } from "@/components/ui/progress"
 import { formatDateTime } from "@/lib/date-format"
-import { describeImportDiagnostic } from "@/lib/import-job-presentation"
+import {
+  describeImportDiagnostic,
+  importJobLabel,
+  importJobNeedsALook,
+  importJobOutcome,
+  importJobSegments,
+} from "@/lib/import-job-presentation"
 import { formatNumber } from "@/lib/locale-format"
+import { usePageTitle } from "@/lib/page-title"
 
 import { m } from "../../lib/messages.ts"
 import { createImportJob } from "./create-import-job"
 import { ImportJobResults } from "./import-job-results"
+import { ImportOutcomeMark, ImportOutcomeShares } from "./import-outcome"
 export function ImportJobPage(props: {
   jobID: Accessor<string>
   /** A staged review this import left recipes behind in, if it did. */
   remaining?: Accessor<string | undefined>
+  fromImports?: Accessor<boolean>
 }) {
   const controller = createImportJob(
     () => props.jobID(),
@@ -58,16 +70,52 @@ export function ImportJobPage(props: {
     stop,
     resume,
   } = controller
+  usePageTitle(() => (job() ? m.page_title_named({ name: importJobLabel(job()!) }) : undefined))
+  const timing = (current: ImportJob) => (
+    <p class={styles.timing}>
+      <span>
+        {m.import_job_page_started({
+          value1: formatDateTime(current.started_at || current.created_at),
+        })}
+      </span>
+      <span>{m.import_job_page_elapsed({ value1: elapsed() })}</span>
+      <Show when={current.finished_at}>
+        {(finished) => (
+          <span>
+            {m.import_job_page_finished({
+              value1: formatDateTime(finished()),
+            })}
+          </span>
+        )}
+      </Show>
+    </p>
+  )
   return (
     <main class={layout.page}>
-      <Link class={layout.back} to="/">
-        <ArrowLeft class={directionalIcon} aria-hidden="true" size={16} />{" "}
-        {m.import_job_page_back_to_your_library()}{" "}
-      </Link>
+      <Show
+        when={props.fromImports?.()}
+        fallback={
+          <Link class={styles.back} to="/">
+            <ArrowLeft class={directionalIcon} aria-hidden="true" size={16} />{" "}
+            {m.import_job_page_back_to_your_library()}
+          </Link>
+        }
+      >
+        <Link class={styles.back} to="/imports">
+          <ArrowLeft class={directionalIcon} aria-hidden="true" size={16} />{" "}
+          {m.import_job_page_back_to_imports()}
+        </Link>
+      </Show>
 
       <ResourceState
         resource={loaded}
-        loading={<Loading>{m.import_job_page_reading_this_import()}</Loading>}
+        loading={
+          <SkeletonGroup label={m.import_job_page_reading_this_import()} class={styles.skeleton}>
+            <SkeletonLine width="30%" size="lg" />
+            <SkeletonBlock height="9rem" />
+            <SkeletonRows count={3} />
+          </SkeletonGroup>
+        }
         onRetry={() => void reload()}
       >
         {() => (
@@ -75,10 +123,19 @@ export function ImportJobPage(props: {
             <Show when={job()}>
               {(current) => (
                 <>
-                  <h1 class={styles.title}>{m.import_job_page_import()}</h1>
+                  <div class={css({ display: "flex", alignItems: "baseline", gap: "3" })}>
+                    <h1 class={styles.title}>{importJobLabel(current())}</h1>
+                    <ContextHelp guide="import-recipes" label={m.help_imports()} />
+                  </div>
                   <Show when={current().progress.total > 1}>
                     <p class={styles.source}>
-                      <Show when={current().source}>
+                      <Show
+                        when={
+                          current().source !== importJobLabel(current())
+                            ? current().source
+                            : undefined
+                        }
+                      >
                         {(source) => (
                           <span class={styles.sourceName} title={source()}>
                             {source()}
@@ -95,6 +152,7 @@ export function ImportJobPage(props: {
 
                   <section class={styles.progressRegion} aria-labelledby="import-status">
                     <div class={styles.summary}>
+                      <ImportOutcomeMark outcome={importJobOutcome(current())} />
                       <div class={styles.headline}>
                         <h2 id="import-status" class={styles.state}>
                           {presentation()?.headline}
@@ -102,26 +160,18 @@ export function ImportJobPage(props: {
                         <Show when={presentation()?.guidance}>
                           {(guidance) => <p class={styles.explain}>{guidance()}</p>}
                         </Show>
-                        <Show when={current().progress.total > 1}>
-                          <p class={styles.timing}>
-                            <span>
-                              {m.import_job_page_started({
-                                value1: formatDateTime(
-                                  current().started_at || current().created_at,
-                                ),
-                              })}
-                            </span>
-                            <span>{m.import_job_page_elapsed({ value1: elapsed() })}</span>
-                            <Show when={current().finished_at}>
-                              {(finished) => (
-                                <span>
-                                  {m.import_job_page_finished({
-                                    value1: formatDateTime(finished()),
-                                  })}
-                                </span>
-                              )}
-                            </Show>
-                          </p>
+                        <Show when={current().state === "failed" && current().error}>
+                          {(error) => (
+                            <Disclosure
+                              class={styles.jobError}
+                              label={m.import_job_results_import_details()}
+                            >
+                              <p class={styles.errorText}>{error()}</p>
+                            </Disclosure>
+                          )}
+                        </Show>
+                        <Show when={current().progress.total > 1 && !importJobFinished(current())}>
+                          {timing(current())}
                         </Show>
                         <Show
                           when={
@@ -173,23 +223,23 @@ export function ImportJobPage(props: {
                         <Show when={importJobResumable(current())}>
                           <Button
                             size="sm"
-                            colorPalette="accent"
+                            variant="outline"
                             loading={working()}
                             onClick={() => void resume()}
                           >
                             <RotateCw aria-hidden="true" size={15} />{" "}
-                            {m.import_job_page_import_the_rest()}
+                            {m.import_job_page_import_the_rest()} (
+                            {formatNumber(current().progress.resumable)})
                           </Button>
                         </Show>
                       </div>
                     </div>
 
-                    {/* One import, one way of showing progress from upload to commit. */}
-                    <Show when={!importJobFinished(current()) || current().progress.total > 1}>
+                    <Show when={!importJobFinished(current())}>
                       <Progress
                         label={m.import_job_page_import_progress()}
                         size="lg"
-                        running={!importJobFinished(current())}
+                        running
                         value={measuredProgress()}
                         max={Math.max(1, current().progress.total)}
                         valueText={
@@ -213,83 +263,30 @@ export function ImportJobPage(props: {
                     </span>
 
                     <Show when={current().progress.total > 1}>
-                      <ul class={styles.counts}>
-                        <Show when={current().progress.imported > 0}>
-                          <li class={styles.count}>
-                            <CircleCheck aria-hidden="true" size={15} />
-                            {formatNumber(current().progress.imported)}{" "}
-                            {m.import_job_page_imported()}{" "}
-                          </li>
-                        </Show>
-                        <Show when={current().progress.review_required > 0}>
-                          <li class={styles.count}>
-                            <CircleAlert aria-hidden="true" size={15} />
-                            {formatNumber(current().progress.review_required)}{" "}
-                            {m.import_job_page_need_review()}{" "}
-                          </li>
-                        </Show>
-                        <Show when={current().progress.informational_preservation > 0}>
-                          <li class={styles.count}>
-                            <CircleCheck aria-hidden="true" size={15} />
-                            {formatNumber(current().progress.informational_preservation)}{" "}
-                            {m.import_job_page_with_preserved_details()}{" "}
-                          </li>
-                        </Show>
-                        <Show when={current().progress.skipped > 0}>
-                          <li class={styles.count}>
-                            {m.import_job_page_already_in_your_library({
-                              value1: formatNumber(current().progress.skipped),
-                            })}
-                          </li>
-                        </Show>
-                        <Show when={current().progress.failed > 0}>
-                          <li class={styles.count}>
-                            <CircleSlash aria-hidden="true" size={15} />
-                            {formatNumber(current().progress.failed)}{" "}
-                            {m.import_job_page_could_not_be_imported()}{" "}
-                          </li>
-                        </Show>
-                        <Show when={current().progress.cancelled > 0}>
-                          <li class={styles.count}>
-                            {m.import_job_page_not_imported({
-                              value1: formatNumber(current().progress.cancelled),
-                            })}
-                          </li>
-                        </Show>
-                        <Show when={current().progress.pending + current().progress.running > 0}>
-                          <li class={styles.count}>
-                            {m.import_job_page_to_go({
-                              value1: formatNumber(
-                                current().progress.pending + current().progress.running,
-                              ),
-                            })}
-                          </li>
-                        </Show>
-                      </ul>
+                      <ImportOutcomeShares
+                        segments={importJobSegments(current())}
+                        bar={importJobFinished(current())}
+                      />
                     </Show>
 
-                    <Show
-                      when={
-                        props.remaining?.() ||
-                        (current().progress.total > 1 &&
-                          importJobFinished(current()) &&
-                          current().progress.imported > 0)
-                      }
-                    >
-                      <p class={styles.completion}>
-                        <Show when={props.remaining?.()}>
-                          {(previewID) => (
-                            <Link
-                              class={styles.completionLink}
-                              to="/"
-                              search={{ preview: previewID() }}
-                            >
-                              {m.import_job_page_finish_the_rest()}
-                            </Link>
-                          )}
+                    <Show when={importJobFinished(current())}>
+                      <div class={styles.actions}>
+                        <Show when={importJobNeedsALook(current()) > 0}>
+                          <Link
+                            class={cx(
+                              buttonLink({ variant: "solid", colorPalette: "accent" }),
+                              css({ whiteSpace: "normal", textAlign: "start" }),
+                            )}
+                            to="/"
+                            search={{ imported: props.jobID(), review: true }}
+                          >
+                            {m.import_job_page_need_a_look({
+                              count: importJobNeedsALook(current()),
+                            })}
+                          </Link>
                         </Show>
                         <Show
-                          when={importJobFinished(current()) && current().progress.imported > 0}
+                          when={current().progress.imported > 0 && current().progress.total > 1}
                         >
                           <Link
                             class={styles.completionLink}
@@ -299,20 +296,19 @@ export function ImportJobPage(props: {
                             {m.import_job_page_find_these_recipes()}
                           </Link>
                         </Show>
-                        <Show
-                          when={
-                            importJobFinished(current()) && current().progress.review_required > 0
-                          }
-                        >
-                          <Link
-                            class={styles.completionLink}
-                            to="/"
-                            search={{ imported: props.jobID(), review: true }}
-                          >
-                            {m.import_job_page_review_measurements()}
-                          </Link>
+                        <Show when={props.remaining?.()}>
+                          {(previewID) => (
+                            <Link
+                              class={styles.completionLink}
+                              to="/"
+                              search={{ preview: previewID() }}
+                              state={{ fromImports: props.fromImports?.() }}
+                            >
+                              {m.import_job_page_finish_the_rest()}
+                            </Link>
+                          )}
                         </Show>
-                      </p>
+                      </div>
                     </Show>
 
                     <Show
@@ -323,7 +319,7 @@ export function ImportJobPage(props: {
                     >
                       <Disclosure
                         class={styles.diagnosticSummary}
-                        label={m.import_job_page_review_details()}
+                        label={m.import_job_page_import_review_details()}
                       >
                         <ul
                           class={styles.diagnosticSummaryList}
@@ -345,6 +341,11 @@ export function ImportJobPage(props: {
                         </ul>
                       </Disclosure>
                     </Show>
+                    <Show when={current().progress.total > 1 && importJobFinished(current())}>
+                      <Disclosure variant="inline" label={m.import_job_timing()}>
+                        {timing(current())}
+                      </Disclosure>
+                    </Show>
                   </section>
                 </>
               )}
@@ -360,7 +361,9 @@ export function ImportJobPage(props: {
 const layout = pageShell({ width: "medium" })
 
 const styles = {
-  title: cx(layout.title, css({ marginBottom: "1" })),
+  title: cx(layout.title, css({ marginBottom: "1", overflowWrap: "anywhere" })),
+
+  back: cx(layout.back, css({ "@media (pointer: coarse)": { minHeight: "11" } })),
 
   source: css({
     color: "fg.muted",
@@ -400,7 +403,13 @@ const styles = {
     justifyContent: "space-between",
   }),
 
-  headline: css({ display: "flex", flexDirection: "column", gap: "1" }),
+  headline: css({
+    display: "flex",
+    flex: "1 1 12rem",
+    flexDirection: "column",
+    gap: "1",
+    minWidth: "0",
+  }),
 
   state: css({ fontSize: "lg", fontWeight: "semibold", margin: "0" }),
 
@@ -416,40 +425,30 @@ const styles = {
     marginTop: "2",
   }),
 
-  actions: css({ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "2" }),
-
-  counts: css({
-    color: "fg.muted",
+  actions: css({
+    alignItems: "center",
     display: "flex",
     flexWrap: "wrap",
-    fontSize: "sm",
-    gap: "3",
-    listStyle: "none",
-    margin: "0",
-    padding: "0",
+    gap: "2",
+    "@media (pointer: coarse)": { "& button": { minHeight: "11" } },
   }),
 
-  count: css({ alignItems: "center", display: "inline-flex", gap: "1.5" }),
+  jobError: css({ marginTop: "2" }),
 
-  completion: css({
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "4",
-    margin: "0",
-  }),
+  errorText: css({ color: "fg.muted", fontSize: "sm", margin: "0", overflowWrap: "anywhere" }),
 
   completionLink: css({
+    alignItems: "center",
     color: "accent.default",
+    display: "inline-flex",
+    "@media (pointer: coarse)": { minHeight: "11" },
     fontSize: "sm",
     fontWeight: "semibold",
     textDecoration: "none",
     _hover: { textDecoration: "underline" },
   }),
 
-  teach: css({ color: "fg.muted", fontSize: "sm", margin: "0", marginTop: "4" }),
   diagnosticSummary: css({ display: "grid", gap: "2" }),
-
-  diagnosticSummaryTitle: css({ fontSize: "sm", fontWeight: "semibold", margin: "0" }),
 
   diagnosticSummaryList: css({
     display: "flex",
@@ -459,6 +458,8 @@ const styles = {
     margin: "0",
     padding: "0",
   }),
+
+  skeleton: css({ display: "grid", gap: "6" }),
 
   visuallyHidden: css({
     border: "0",

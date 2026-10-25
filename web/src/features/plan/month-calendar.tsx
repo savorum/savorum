@@ -1,8 +1,10 @@
 import { UtensilsCrossed } from "lucide-solid"
-import { For, Show } from "solid-js"
+import { For, Show, createSignal } from "solid-js"
 import { css } from "styled-system/css"
 
-import type { Meal } from "@/api/client"
+import { fallbackToOriginalImage, type Meal } from "@/api/client"
+import { Button } from "@/components/ui/button"
+import { Popover, PopoverClose } from "@/components/ui/popover"
 import { formatLocalDay } from "@/lib/date-format"
 
 import { m } from "../../lib/messages.ts"
@@ -22,11 +24,11 @@ const styles = {
       borderColor: "border.subtle",
       borderRadius: "l2",
       borderWidth: "1px",
-      height: "8rem",
+      height: "3.5rem",
       padding: "1.5",
       verticalAlign: "top",
     },
-    '& td[data-outside="true"]': { background: "bg.subtle", "& > *": { opacity: "0.55" } },
+    '& td[data-outside="true"]': { background: "bg.subtle", "& > button": { color: "fg.muted" } },
     '& td[data-today="true"]': { borderColor: "accent.default" },
   }),
   monthDay: css({
@@ -41,6 +43,7 @@ const styles = {
     marginBottom: "1",
     minWidth: "7",
     paddingInline: "1",
+    "@media (pointer: coarse)": { height: "11", minWidth: "11" },
     _hover: { background: "bg.muted" },
     _focusVisible: { outline: "2px solid", outlineColor: "accent.default" },
   }),
@@ -65,9 +68,10 @@ const styles = {
     width: "full",
     _hover: { color: "accent.default" },
     _focusVisible: { outline: "2px solid", outlineColor: "accent.default" },
-    '&[data-skipped="true"]': { opacity: "0.6", textDecoration: "line-through" },
+    '&[data-skipped="true"]': { textDecoration: "line-through" },
   }),
   monthThumb: css({
+    display: { base: "none", xl: "block" },
     borderRadius: "l1",
     flexShrink: "0",
     height: "6",
@@ -79,15 +83,15 @@ const styles = {
     background: "bg.surface",
     borderRadius: "l1",
     color: "fg.muted",
-    display: "inline-flex",
+    display: { base: "none", xl: "inline-flex" },
     flexShrink: "0",
     height: "6",
     justifyContent: "center",
     width: "6",
   }),
   monthText: css({ display: "grid", minWidth: "0" }),
-  monthSlot: css({ color: "fg.muted", fontSize: "2xs" }),
-  monthTitle: css({ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }),
+  monthSlot: css({ color: "fg.muted", fontSize: "xs" }),
+  monthTitle: css({ lineClamp: "2", overflowWrap: "anywhere" }),
 }
 
 export function MonthCalendar(props: {
@@ -144,45 +148,111 @@ export function MonthCalendar(props: {
                         {formatLocalDay(day, { day: "numeric" })}
                       </button>
                       <div class={styles.monthMeals}>
-                        <For each={props.plannedOn(date)}>
-                          {(meal) => {
-                            const image = () => dishImages(meal.dishes ?? [])[0]
+                        <For each={props.plannedOn(date).map((meal) => meal.id)}>
+                          {(id) => {
+                            const meal = () => props.plannedOn(date).find((meal) => meal.id === id)!
+                            const [previewOpen, setPreviewOpen] = createSignal(false)
+                            let previewTrigger: HTMLButtonElement | undefined
+                            const image = () => dishImages(meal().dishes ?? [])[0]
                             const slot = () =>
-                              [meal.skipped ? m.plan_skipped() : "", mealType(meal.meal_type)]
+                              [meal().skipped ? m.plan_skipped() : "", mealType(meal().meal_type)]
                                 .filter(Boolean)
                                 .join(", ")
                             const title = () =>
-                              meal.name || (meal.dishes ?? []).map(scaled).join(", ")
+                              meal().name || (meal().dishes ?? []).map(scaled).join(", ")
                             return (
-                              <button
-                                type="button"
-                                class={styles.monthMeal}
-                                data-skipped={meal.skipped ? "true" : undefined}
-                                title={slot() ? `${slot()}: ${title()}` : title()}
-                                onClick={() => props.onEdit(meal)}
-                              >
-                                <Show
-                                  when={image()}
-                                  fallback={
-                                    <span class={styles.monthMark}>
-                                      <UtensilsCrossed aria-hidden="true" size={12} />
+                              <Popover
+                                open={previewOpen()}
+                                finalFocusEl={() => previewTrigger ?? null}
+                                onOpenChange={(details) => setPreviewOpen(details.open)}
+                                title={
+                                  meal().name ||
+                                  [slot(), formatLocalDay(day, { month: "short", day: "numeric" })]
+                                    .filter(Boolean)
+                                    .join(" · ")
+                                }
+                                positioning={{ placement: "bottom-start", gutter: 6 }}
+                                trigger={(triggerProps) => (
+                                  <button
+                                    {...triggerProps()}
+                                    ref={(element) => {
+                                      previewTrigger = element
+                                    }}
+                                    type="button"
+                                    class={styles.monthMeal}
+                                    data-skipped={meal().skipped ? "true" : undefined}
+                                    title={slot() ? `${slot()}: ${title()}` : title()}
+                                  >
+                                    <Show
+                                      when={image()}
+                                      fallback={
+                                        <span class={styles.monthMark}>
+                                          <UtensilsCrossed aria-hidden="true" size={12} />
+                                        </span>
+                                      }
+                                    >
+                                      <img
+                                        class={styles.monthThumb}
+                                        src={`${image()}/derivatives/thumb`}
+                                        onError={(event) =>
+                                          fallbackToOriginalImage(event.currentTarget)
+                                        }
+                                        alt=""
+                                        loading="lazy"
+                                      />
+                                    </Show>
+                                    <span class={styles.monthText}>
+                                      <Show when={slot()}>
+                                        <span class={styles.monthSlot}>{slot()}: </span>
+                                      </Show>
+                                      <span class={styles.monthTitle}>{title()}</span>
                                     </span>
-                                  }
+                                  </button>
+                                )}
+                              >
+                                <div
+                                  class={css({
+                                    width: "20rem",
+                                    maxWidth: "calc(100vw - 4rem)",
+                                    overflowWrap: "anywhere",
+                                  })}
                                 >
-                                  <img
-                                    class={styles.monthThumb}
-                                    src={`${image()}/derivatives/thumb`}
-                                    alt=""
-                                    loading="lazy"
-                                  />
-                                </Show>
-                                <span class={styles.monthText}>
-                                  <Show when={slot()}>
-                                    <span class={styles.monthSlot}>{slot()}: </span>
-                                  </Show>
-                                  <span class={styles.monthTitle}>{title()}</span>
-                                </span>
-                              </button>
+                                  <ul
+                                    class={css({
+                                      display: "grid",
+                                      gap: "2",
+                                      paddingInlineStart: "4",
+                                      marginBlock: "3",
+                                    })}
+                                  >
+                                    <For each={meal().dishes ?? []}>
+                                      {(dish) => <li>{scaled(dish)}</li>}
+                                    </For>
+                                  </ul>
+                                  <div class={css({ display: "flex", gap: "2", flexWrap: "wrap" })}>
+                                    <Button
+                                      variant="outline"
+                                      onClick={() => {
+                                        setPreviewOpen(false)
+                                        props.onEdit(meal())
+                                      }}
+                                    >
+                                      {m.plan_edit()}
+                                    </Button>
+                                    <PopoverClose>
+                                      {(close) => (
+                                        <Button
+                                          {...close()}
+                                          variant="plain"
+                                          aria-label={m.dialog_done()}
+                                        >
+                                          {m.dialog_done()}
+                                        </Button>
+                                      )}
+                                    </PopoverClose>
+                                  </div>
+                                </div>
+                              </Popover>
                             )
                           }}
                         </For>

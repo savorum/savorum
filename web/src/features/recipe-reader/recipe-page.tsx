@@ -35,6 +35,7 @@ import { TranslationsDialog } from "@/features/recipe-translations/translations-
 import { ShoppingReview } from "@/features/shopping/shopping-review"
 import { calendarDate } from "@/lib/date-format"
 import { isolate } from "@/lib/direction"
+import { shortcutAria } from "@/lib/keyboard-shortcuts"
 import { usePageTitle } from "@/lib/page-title"
 import { formatRational } from "@/lib/rational"
 import { latestUnlessFailed } from "@/lib/settled"
@@ -58,6 +59,7 @@ const styles = {
     gap: "2",
     marginBottom: { base: "4", md: "0" },
     padding: "0",
+    "@media (pointer: coarse)": { minHeight: "11" },
     textDecoration: "none",
     _hover: { color: "accent.default" },
     _focusVisible: { outline: "2px solid", outlineColor: "accent.default", outlineOffset: "4px" },
@@ -229,12 +231,20 @@ export function RecipePage(props: CreateRecipeReaderOptions) {
                 </Show>
                 <div class={layout.toolbarActions}>
                   <div class={layout.toolbarGroup} role="group" aria-label={m.reader_cook_group()}>
-                    <Button size="sm" colorPalette="accent" onClick={() => void enterCooking()}>
+                    <Button
+                      size="sm"
+                      colorPalette="accent"
+                      onClick={() => void enterCooking()}
+                      data-shortcut="recipe-cook"
+                      aria-keyshortcuts={shortcutAria("recipe-cook")}
+                    >
                       <Utensils aria-hidden="true" size={14} />
                       {cookingActionLabel()}
                     </Button>
                     <Link
                       class={buttonLink({ size: "sm", variant: "outline", colorPalette: "accent" })}
+                      data-shortcut="recipe-print"
+                      aria-keyshortcuts={shortcutAria("recipe-print")}
                       to="/recipes/$recipeId/print"
                       params={{ recipeId: props.recipeID() }}
                       search={{ batch: printedBatch() }}
@@ -251,6 +261,8 @@ export function RecipePage(props: CreateRecipeReaderOptions) {
                     <FavoriteMark controller={organization} />
                     <Link
                       class={buttonLink({ size: "sm", variant: "plain" })}
+                      data-shortcut="recipe-edit"
+                      aria-keyshortcuts={shortcutAria("recipe-edit")}
                       to="/recipes/$recipeId/edit"
                       params={{ recipeId: props.recipeID() }}
                       state={{ libraryReturn: props.libraryReturn() }}

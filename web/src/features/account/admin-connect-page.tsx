@@ -1,5 +1,8 @@
+import { ArrowUpRight, Plug } from "lucide-solid"
 import { createResource, createSignal, onCleanup, onMount, Show } from "solid-js"
+import { css } from "styled-system/css"
 
+import { SkeletonRows } from "@/components/skeleton"
 import { ChangeError } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import { FormField } from "@/components/ui/field"
@@ -94,40 +97,102 @@ function ConnectSettings() {
     }
   }
   return (
-    <section class={styles.section}>
+    <div class={css({ display: "grid", gap: "6" })}>
       <ChangeError error={error() ?? status.error} />
-      <p role="status">{stateLabel()}</p>
-      <Show when={settled(status)?.remote_origin}>
-        {(origin) => <a href={origin()}>{origin()}</a>}
+      <Show when={status.error}>
+        <div>
+          <Button variant="outline" onClick={() => void refetch()}>
+            {m.account_retry()}
+          </Button>
+        </div>
       </Show>
-      <Show when={settled(status)?.configured}>
-        <p class={styles.muted}>{m.connect_disconnect_hint()}</p>
-        <Button variant="outline" disabled={busy()} onClick={() => void disconnect()}>
-          {m.connect_disconnect()}
-        </Button>
+      <Show when={status.loading && !settled(status)}>
+        <SkeletonRows count={1} />
       </Show>
-      <form class={styles.form} onSubmit={(event) => void save(event)}>
-        <p>
-          <a href="https://cloud.savorum.app/connect" target="_blank" rel="noreferrer">
-            {m.connect_get_setup()}
-          </a>
-        </p>
+      <Show when={settled(status)}>
+        <section class={css({ display: "flex", flexWrap: "wrap", alignItems: "start", gap: "4" })}>
+          <Plug aria-hidden="true" size={20} class={css({ color: "fg.muted", marginTop: "1" })} />
+          <div class={css({ display: "grid", gap: "2", flex: "1 1 16rem", minWidth: "0" })}>
+            <h2 class={css({ fontSize: "md", fontWeight: "medium" })}>
+              <span role="status">{stateLabel()}</span>
+            </h2>
+            <Show when={settled(status)?.remote_origin}>
+              {(origin) => (
+                <a class={styles.back} href={origin()}>
+                  {origin()}
+                </a>
+              )}
+            </Show>
+            <Show when={settled(status)?.configured}>
+              <p class={styles.muted}>{m.connect_disconnect_hint()}</p>
+            </Show>
+          </div>
+          <Show when={settled(status)?.configured}>
+            <Button
+              size="sm"
+              variant="outline"
+              colorPalette="red"
+              disabled={busy()}
+              onClick={() => void disconnect()}
+            >
+              {m.connect_disconnect()}
+            </Button>
+          </Show>
+        </section>
+      </Show>
+      <form
+        class={css({
+          display: "grid",
+          gap: "4",
+          borderTopWidth: "1px",
+          borderColor: "border.subtle",
+          paddingTop: "6",
+        })}
+        onSubmit={(event) => void save(event)}
+      >
+        <a
+          class={styles.back}
+          href="https://cloud.savorum.app/connect"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {m.connect_get_setup()}{" "}
+          <ArrowUpRight aria-hidden="true" size={16} class={css({ marginInlineStart: "1" })} />
+        </a>
         <FormField label={m.connect_setup()} hint={m.connect_setup_hint()} required>
           <Textarea
             required
-            rows={6}
+            rows={4}
             maxLength={8192}
             autocomplete="off"
             spellcheck={false}
+            class={css({
+              fontFamily: "mono",
+              fontSize: "sm",
+              lineHeight: "1.6",
+              resize: "vertical",
+            })}
             value={setup()}
             onInput={(event) => setSetup(event.currentTarget.value)}
           />
         </FormField>
-        <Button type="submit" disabled={busy() || !setup().trim()}>
-          {m.connect_save()}
-        </Button>
+        <div>
+          <Button type="submit" loading={busy()} disabled={busy() || !setup().trim()}>
+            {m.connect_save()}
+          </Button>
+        </div>
       </form>
-      <p class={styles.muted}>{m.connect_privacy()}</p>
-    </section>
+      <p
+        class={css({
+          color: "fg.muted",
+          fontSize: "sm",
+          borderTopWidth: "1px",
+          borderColor: "border.subtle",
+          paddingTop: "4",
+        })}
+      >
+        {m.connect_privacy()}
+      </p>
+    </div>
   )
 }

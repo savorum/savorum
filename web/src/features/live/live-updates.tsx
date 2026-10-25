@@ -18,12 +18,14 @@ export function LiveUpdates() {
       let stopped = false
       let cursor = ""
       let failures = 0
+      let connected = false
       let controller: AbortController | undefined
       let timer: ReturnType<typeof setTimeout> | undefined
       const connect = async () => {
         if (stopped || !isPageActive()) return
         controller = new AbortController()
         const active = controller
+        connected = true
         try {
           const available = await loadCapabilities(failures > 0)
           if (stopped || active.signal.aborted) return
@@ -88,6 +90,7 @@ export function LiveUpdates() {
         } catch {
           if (!active.signal.aborted) failures = Math.min(failures + 1, 6)
         } finally {
+          if (controller === active) connected = false
           if (!stopped && !active.signal.aborted && isPageActive())
             timer = setTimeout(
               () => void connect(),
@@ -95,14 +98,18 @@ export function LiveUpdates() {
             )
         }
       }
+      // Focus and visibility reconnect only a closed stream; an open one already delivers changes.
       const resume = () => {
+        if (!isPageActive()) {
+          clearTimeout(timer)
+          controller?.abort()
+          return
+        }
+        if (connected && !controller?.signal.aborted) return
         clearTimeout(timer)
         controller?.abort()
-        if (isPageActive()) {
-          publish()
-          void loadCapabilities(true).catch(() => undefined)
-          void connect()
-        }
+        publish()
+        void connect()
       }
       const fallback = setInterval(() => {
         if (isPageActive()) publish()

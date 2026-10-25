@@ -4,7 +4,8 @@ import { css } from "styled-system/css"
 
 import { ImportMenu } from "@/components/import-menu"
 import { RecipeCard } from "@/components/recipe-card"
-import { Loading, ResourceState } from "@/components/status"
+import { SkeletonCards } from "@/components/skeleton"
+import { ResourceState } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import { buttonLink } from "@/components/ui/button-link"
 import { emptyFilters } from "@/lib/library-query"
@@ -68,7 +69,13 @@ export function LibraryResults(props: {
     >
       <ResourceState
         resource={page}
-        loading={<Loading>{m.library_results_loading_recipes()}</Loading>}
+        loading={
+          <SkeletonCards
+            class={styles.loading}
+            aspect="4 / 3"
+            label={m.library_results_loading_recipes()}
+          />
+        }
         fallback={m.recipes_the_recipe_library_could_not_be_loaded()}
         onRetry={() => void refetch()}
         isEmpty={() => entries().length === 0}
@@ -145,6 +152,7 @@ function StartLibrary(props: { start: StartChoices }) {
 
 const styles = {
   results: css({ scrollMarginBlockStart: "5", outline: "none" }),
+  loading: css({ marginTop: "7" }),
   grid: css({
     display: "grid",
     "& > li": { minWidth: "0" },

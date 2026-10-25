@@ -2,7 +2,7 @@ import { batch, createMemo, createResource, createSignal } from "solid-js"
 import { createStore, reconcile, unwrap } from "solid-js/store"
 
 import { bookInput, deleteBook, replaceBook } from "@/api/books"
-import { type BookInput } from "@/api/client"
+import { type BookInput, type RecipeSummary } from "@/api/client"
 import { lookupRecipes } from "@/api/selections"
 import { settled } from "@/lib/settled"
 
@@ -18,15 +18,12 @@ export function createBookEditor(props: BookViewProps, onFocus: (id?: string) =>
   const [error, setError] = createSignal<unknown>()
   const [announcement, setAnnouncement] = createSignal("")
   // Candidate search is intentionally a narrow page. Existing members still
-  // need their names even when they are outside that page.
-  const [memberTitles] = createResource(
+  // need their names and pictures even when they are outside that page.
+  const [members] = createResource(
     () => base().value.entries ?? [],
     async (entries) => {
       const items = (await lookupRecipes(entries.map((entry) => entry.library_entry_id))).items
-      const titles: Record<string, string> = Object.fromEntries(
-        items.map((item) => [item.id, item.title]),
-      )
-      return titles
+      return new Map(items.map((item) => [item.id, item]))
     },
   )
 
@@ -38,9 +35,13 @@ export function createBookEditor(props: BookViewProps, onFocus: (id?: string) =>
   const entryState = (entryID: string) =>
     (base().value.entries ?? []).find((entry) => entry.library_entry_id === entryID)
       ?.recipe_state ?? "active"
+  const membersRead = () => members.state !== "pending" && members.state !== "unresolved"
+  const recipeSummary = (entryID: string): RecipeSummary | undefined =>
+    settled(members)?.get(entryID) ??
+    props.candidatePage?.items.find((candidate) => candidate.id === entryID)
   const recipeTitle = (entryID: string) =>
     props.candidatePage?.items.find((candidate) => candidate.id === entryID)?.title ??
-    settled(memberTitles)?.[entryID] ??
+    settled(members)?.get(entryID)?.title ??
     m.common_untitled_recipe()
 
   const credits = createMemo(() =>
@@ -189,6 +190,8 @@ export function createBookEditor(props: BookViewProps, onFocus: (id?: string) =>
     published,
     dirty,
     entryState,
+    membersRead,
+    recipeSummary,
     recipeTitle,
     credits,
     grouped,

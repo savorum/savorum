@@ -6,6 +6,7 @@ import { recipePage } from "styled-system/recipes"
 import type { Recipe } from "@/api/client"
 import { RecipeScaleControls } from "@/components/recipe-article/scale-controls"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Popover } from "@/components/ui/popover"
 import type { Rational } from "@/lib/rational"
 
@@ -28,12 +29,6 @@ const styles = {
     gap: "3",
     lineHeight: "1.5",
     minHeight: "2.75rem",
-  }),
-  checkbox: css({
-    accentColor: "accent.default",
-    flex: "0 0 auto",
-    height: "1.25rem",
-    width: "1.25rem",
   }),
   note: css({ color: "fg.muted", fontSize: "xs", lineHeight: "1.5", margin: "0" }),
   restart: css({ justifySelf: "start" }),
@@ -77,9 +72,7 @@ export function CookingOptions(props: {
         <div class={styles.group}>
           <h3 class={styles.groupTitle}>{m.cooking_options_while_you_cook()}</h3>
           <label class={styles.check}>
-            <input
-              class={styles.checkbox}
-              type="checkbox"
+            <Checkbox
               checked={props.keepAwake}
               onChange={(event) => props.onKeepAwake(event.currentTarget.checked)}
             />

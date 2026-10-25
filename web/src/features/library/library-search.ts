@@ -5,9 +5,31 @@ import { type LibraryFilters } from "@/lib/library-query"
 import { m } from "../../lib/messages.ts"
 import { libraryPageSize, libraryWindowSize } from "./library-pages"
 
-export const sorts: RecipeSort[] = ["relevance", "updated-desc", "title-asc", "rating-desc"]
+export const sorts: RecipeSort[] = [
+  "relevance",
+  "updated-desc",
+  "title-asc",
+  "rating-desc",
+  "total-time-asc",
+  "cooked-desc",
+]
+
+export const sortChoices = (text: string): RecipeSort[] =>
+  text.trim() === "" ? sorts.filter((sort) => sort !== "relevance") : sorts
+
+export function effectiveSort(requested: RecipeSort | undefined, text: string): RecipeSort {
+  const searching = text.trim() !== ""
+  const sort = requested ?? (searching ? "relevance" : "updated-desc")
+  return sort === "relevance" && !searching ? "updated-desc" : sort
+}
 
 export const sortLabels: Record<RecipeSort, string> = {
+  get "total-time-asc"() {
+    return m.timing_total_time()
+  },
+  get "cooked-desc"() {
+    return m.library_sort_cooked()
+  },
   get relevance() {
     return m.library_sort_relevance()
   },

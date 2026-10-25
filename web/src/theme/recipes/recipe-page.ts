@@ -33,10 +33,6 @@ export const recipePage = defineSlotRecipe({
     "stepNumber",
   ],
   base: {
-    // A column, so the order of its parts can differ from the order they are
-    // written in. On a narrow screen the recipe has to come before the things
-    // a reader might do to it; on a wide one the row of controls fits above
-    // the title without pushing it anywhere.
     root: {
       display: "flex",
       flexDirection: "column",
@@ -45,9 +41,6 @@ export const recipePage = defineSlotRecipe({
       paddingBlock: { base: "6", md: "8" },
       paddingInline: { base: "5", md: "8", lg: "10" },
     },
-    // One row above the recipe where there is room. Narrow, the box dissolves:
-    // the way back stays at the top and the actions follow the recipe. Groups
-    // are separated by a rule so the order survives wrapping.
     toolbar: {
       alignItems: "center",
       display: { base: "contents", md: "flex" },
@@ -63,7 +56,7 @@ export const recipePage = defineSlotRecipe({
       gap: "2",
       justifyContent: { base: "flex-start", md: "flex-end" },
       marginBottom: { base: "6", md: "0" },
-      order: 3,
+      order: 1,
     },
     toolbarGroup: {
       alignItems: "center",
@@ -119,6 +112,7 @@ export const recipePage = defineSlotRecipe({
       marginTop: "4",
     },
     image: {
+      maxHeight: { base: "10rem", md: "none" },
       aspectRatio: "4 / 3",
       borderRadius: "l2",
       display: "block",
@@ -147,7 +141,6 @@ export const recipePage = defineSlotRecipe({
       color: "fg.muted",
       fontSize: "xs",
       fontWeight: "semibold",
-      letterSpacing: "0.04em",
     },
     controlRule: {
       alignSelf: "stretch",
@@ -188,9 +181,8 @@ export const recipePage = defineSlotRecipe({
     columnTitle: {
       gridColumn: "1 / -1",
       color: "fg.muted",
-      fontSize: "xs",
+      fontSize: "xl",
       fontWeight: "semibold",
-      letterSpacing: "0.04em",
       margin: "0",
       marginBottom: "4",
       textTransform: "none",

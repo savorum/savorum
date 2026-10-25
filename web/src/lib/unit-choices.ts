@@ -20,6 +20,7 @@ export interface UnitGroup {
 const volumeByStyle: Record<MeasurementStyle, UnitId[]> = {
   metric: [
     "volume.teaspoon.metric.culinary",
+    "volume.tablespoon.metric.culinary",
     "volume.cup.metric.culinary",
     "volume.milliliter",
     "volume.liter",

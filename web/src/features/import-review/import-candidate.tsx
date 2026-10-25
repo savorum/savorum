@@ -6,6 +6,7 @@ import type { ImportPreviewItem } from "@/api/import-previews"
 import { ImportThumbnail } from "@/components/import-thumbnail"
 import { Callout } from "@/components/status"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Disclosure } from "@/components/ui/disclosure"
 import { Select } from "@/components/ui/select"
 import {
@@ -55,7 +56,7 @@ const styles = {
     gap: "3",
     gridTemplateColumns: "5rem minmax(0, 1fr)",
   }),
-  checkbox: css({ accentColor: "accent.default", height: "4", marginTop: "1", width: "4" }),
+  checkbox: css({ marginTop: "0.5" }),
   thumbnail: css({
     alignItems: "center",
     aspectRatio: "4 / 3",
@@ -202,9 +203,8 @@ export function ImportCandidate(props: ImportCandidateProps) {
         class={props.sole ? styles.headingSingle : implied() ? styles.headingAlone : styles.heading}
       >
         <Show when={!props.sole && !implied()}>
-          <input
+          <Checkbox
             class={styles.checkbox}
-            type="checkbox"
             aria-label={m.import_candidate_import({ value1: title() })}
             checked={props.selected}
             disabled={!props.item.can_commit}
@@ -253,8 +253,7 @@ export function ImportCandidate(props: ImportCandidateProps) {
           </Show>
           <Show when={props.item.source.can_retain}>
             <label class={styles.retention}>
-              <input
-                type="checkbox"
+              <Checkbox
                 aria-label={m.import_candidate_keep_original({
                   value1: props.item.source.filename || m.import_candidate_source_file(),
                 })}

@@ -34,6 +34,7 @@ export const pageShell = defineSlotRecipe({
       gap: "2",
       marginBottom: "5",
       textDecoration: "none",
+      "@media (pointer: coarse)": { minHeight: "11" },
       _hover: { color: "accent.default" },
       _focusVisible: {
         outline: "2px solid",
@@ -46,8 +47,8 @@ export const pageShell = defineSlotRecipe({
   variants: {
     width: {
       list: { page: { maxWidth: "48rem" } },
-      narrow: { page: { maxWidth: "58rem" } },
-      form: { page: { maxWidth: "62rem" } },
+      narrow: { page: { maxWidth: "48rem" } },
+      form: { page: { maxWidth: "72rem" } },
       medium: { page: { maxWidth: "72rem" } },
       wide: { page: { maxWidth: "92rem" } },
     },

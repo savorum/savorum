@@ -39,6 +39,7 @@ vi.mock("@/api/meals", async (original) => ({
 }))
 
 import { ApiError } from "@/api/client"
+import { getSavedMeal } from "@/api/meals"
 
 import { MealEditor } from "./meal-editor"
 import { SaveMeal } from "./saved-meals"
@@ -206,8 +207,7 @@ test("a missing dish is explained without saving, and a refused save replaces th
   ))
   const save = await portal.findByRole("button", { name: "Save meal" })
 
-  fireEvent.click(save)
-  expect(await portal.findByText("Add at least one named dish.")).toBeTruthy()
+  expect(save.hasAttribute("disabled")).toBe(true)
   expect(onSave).not.toHaveBeenCalled()
 
   fireEvent.input(portal.getByRole("textbox", { name: "Dish name" }), {
@@ -227,6 +227,8 @@ test("a saved meal found by one of its dishes adds copies of every dish", async 
   const onSave = vi.fn(async () => {})
   render(() => <MealEditor recipes={[]} onSave={onSave} onClose={() => {}} />)
   const search = await portal.findByRole("textbox", { name: "Find a recipe or saved meal" })
+  expect(portal.queryByRole("button", { name: "Add the dishes from Curry night" })).toBeNull()
+  fireEvent.click(portal.getByRole("button", { name: "Saved meals" }))
   fireEvent.input(search, { target: { value: "naan" } })
 
   fireEvent.click(await portal.findByRole("button", { name: "Add the dishes from Curry night" }))
@@ -251,4 +253,52 @@ test("a saved meal found by one of its dishes adds copies of every dish", async 
       ],
     }),
   ])
+})
+
+test("meal name retains its input, focus and caret while typing and composing", async () => {
+  render(() => <MealEditor recipes={[]} onSave={() => Promise.resolve()} onClose={() => {}} />)
+  const input = (await portal.findByRole("textbox", { name: "Meal name" })) as HTMLInputElement
+  input.focus()
+  for (const value of ["S", "Soup night"]) {
+    fireEvent.input(input, { target: { value } })
+    input.setSelectionRange(value.length, value.length)
+    expect(portal.getByRole("textbox", { name: "Meal name" })).toBe(input)
+    expect(document.activeElement).toBe(input)
+    expect(input.selectionStart).toBe(value.length)
+    expect(input.value).toBe(value)
+  }
+  fireEvent.compositionStart(input)
+  fireEvent.input(input, { target: { value: "Soup night 茶" }, isComposing: true })
+  fireEvent.compositionEnd(input, { data: "茶" })
+  expect(portal.getByRole("textbox", { name: "Meal name" })).toBe(input)
+  expect(document.activeElement).toBe(input)
+  expect(input.value).toBe("Soup night 茶")
+})
+
+test("a saved meal can only be added once while its dishes are loading", async () => {
+  let finish!: (meal: Awaited<ReturnType<typeof getSavedMeal>>) => void
+  vi.mocked(getSavedMeal).mockImplementationOnce(
+    () =>
+      new Promise((resolve) => {
+        finish = resolve
+      }),
+  )
+  render(() => <MealEditor recipes={[]} onSave={() => Promise.resolve()} onClose={() => {}} />)
+  fireEvent.click(await portal.findByRole("button", { name: "Saved meals" }))
+  const add = (await portal.findByRole("button", {
+    name: "Add the dishes from Curry night",
+  })) as HTMLButtonElement
+  add.click()
+  expect(add.disabled).toBe(true)
+  add.click()
+  finish({
+    id: "saved-1",
+    name: "Curry night",
+    revision: 1,
+    created_at: "2026-09-20T00:00:00Z",
+    updated_at: "2026-09-20T00:00:00Z",
+    dishes: [{ display_name: "Chicken curry", scale: "1" }],
+  })
+  await portal.findByDisplayValue("Chicken curry")
+  expect(portal.getAllByRole("textbox", { name: "Dish name" })).toHaveLength(1)
 })

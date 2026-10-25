@@ -136,8 +136,9 @@ test("editing authored metadata keeps list identity, ordering, and source chrono
 
   await page.getByRole("button", { name: "Save changes" }).click()
   await expect(page).toHaveURL(new RegExp(`/recipes/${recipe.id}$`))
-  await expect(page.getByText("Layer cake 茶, Celebration cake")).toBeVisible()
   const details = page.getByRole("complementary", { name: "Recipe details" })
+  await details.getByRole("button", { name: "From the source page" }).click()
+  await expect(page.getByText("Layer cake 茶, Celebration cake")).toBeVisible()
   await expect(details.getByRole("definition")).toHaveText([
     "Layer cake 茶, Celebration cake",
     "Baking",
@@ -319,8 +320,14 @@ test("editing a compound quantity alternative keeps its identity and complete ty
   await page.getByRole("button", { name: "More options for oil" }).click()
   await page.getByRole("menuitem", { name: "Details, oil", exact: true }).click()
 
-  const amount = page.getByRole("textbox", { name: "Alternative 1 amount 1" })
+  const dialog = page.getByRole("dialog")
+  await expect
+    .poll(() => dialog.evaluate((element) => element.contains(document.activeElement)))
+    .toBe(true)
+  const amount = dialog.getByRole("textbox", { name: "Alternative 1 amount 1" })
+  await expect(amount).toHaveValue("2")
   await amount.fill("")
+  await expect(amount).toHaveValue("")
   await amount.pressSequentially("12")
   await expect(amount).toBeFocused()
   await expect(amount).toHaveValue("12")

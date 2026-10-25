@@ -1,12 +1,11 @@
 import type { ImportJob, ImportJobItem } from "@/api/import-jobs"
 
+import { formatNumber } from "./locale-format.ts"
 import { m } from "./messages.ts"
 
 type ImportJobDiagnostic = NonNullable<ImportJobItem["diagnostics"]>[number]
 type ImportJobDiagnosticTarget = NonNullable<ImportJobDiagnostic["targets"]>[number]
 
-/** A field one diagnostic covers, ready to render: what it is, and what the
- *  source said there. */
 export interface DiagnosticField {
   label: string
   detail?: string
@@ -15,7 +14,6 @@ export interface DiagnosticField {
   named?: boolean
 }
 
-/** How many fields are listed under one sentence before the rest are counted. */
 export const maximumListedDiagnosticFields = 6
 
 /**
@@ -59,8 +57,12 @@ function completedParts(job: ImportJob): string[] {
   if (job.progress.imported > 0) {
     parts.push(m.import_job_imported({ count: job.progress.imported }))
   }
-  if (job.progress.skipped > 0) {
-    parts.push(m.import_job_skipped({ count: job.progress.skipped }))
+  if (job.progress.skipped + (job.progress.already_in_library ?? 0) > 0) {
+    parts.push(
+      m.import_job_skipped({
+        count: job.progress.skipped + (job.progress.already_in_library ?? 0),
+      }),
+    )
   }
   return parts
 }
@@ -72,6 +74,13 @@ function completedParts(job: ImportJob): string[] {
 export function describeImportJob(job: ImportJob): ImportJobPresentation {
   const total = job.progress.total
   const finished = job.progress.finished
+  if (
+    (job.state === "completed" || job.state === "completed-with-errors") &&
+    job.progress.failed > 0 &&
+    job.progress.failed === job.progress.already_in_library &&
+    finished === total
+  )
+    return { headline: completedParts(job).join(", ") }
   switch (job.state) {
     case "pending":
       return {
@@ -94,16 +103,27 @@ export function describeImportJob(job: ImportJob): ImportJobPresentation {
     }
     case "completed-with-errors": {
       const parts = completedParts(job)
-      if (job.progress.failed > 0) {
-        parts.push(m.import_job_failed({ count: job.progress.failed }))
+      if (job.progress.failed > (job.progress.already_in_library ?? 0)) {
+        parts.push(
+          m.import_job_failed({
+            count: job.progress.failed - (job.progress.already_in_library ?? 0),
+          }),
+        )
       }
       return {
         headline: parts.join(", ") || m.import_job_presentation_import_completed_with_problems(),
-        guidance: m.import_job_review_failed(),
+        guidance:
+          job.progress.failed > (job.progress.already_in_library ?? 0)
+            ? m.import_job_review_failed()
+            : undefined,
       }
     }
     case "cancelled": {
-      const notImported = job.progress.pending + job.progress.cancelled + job.progress.failed
+      const notImported =
+        job.progress.pending +
+        job.progress.cancelled +
+        job.progress.failed -
+        (job.progress.already_in_library ?? 0)
       const parts = completedParts(job)
       if (notImported > 0) parts.push(m.import_job_not_imported({ count: notImported }))
       return {
@@ -122,7 +142,130 @@ export function describeImportJob(job: ImportJob): ImportJobPresentation {
     case "failed":
       return {
         headline: m.import_job_failed_headline(),
-        guidance: job.error || m.import_job_presentation_no_further_recipes_were_imported(),
+        guidance: m.import_job_presentation_no_further_recipes_were_imported(),
+      }
+  }
+}
+
+export type ImportJobOutcome =
+  | "running"
+  | "complete"
+  | "partial"
+  | "failed"
+  | "stopped"
+  | "unchanged"
+
+export function importJobOutcome(job: ImportJob): ImportJobOutcome {
+  if (
+    (job.state === "completed" || job.state === "completed-with-errors") &&
+    job.progress.failed > 0 &&
+    job.progress.failed === job.progress.already_in_library &&
+    job.progress.finished === job.progress.total
+  )
+    return job.progress.imported ? "complete" : "unchanged"
+  switch (job.state) {
+    case "pending":
+    case "running":
+      return "running"
+    case "completed":
+      return "complete"
+    case "completed-with-errors":
+    case "interrupted":
+      return "partial"
+    case "failed":
+      return "failed"
+    case "cancelled":
+      return "stopped"
+  }
+}
+
+export function importJobLabel(job: ImportJob): string {
+  const lead = job.lead_title?.trim()
+  if (!lead) return job.source || job.importer || m.imports_page_import()
+  const others = job.total_items - 1
+  if (others <= 0) return lead
+  return m.imports_page_lead_and_others({ title: lead, count: others })
+}
+
+export interface ImportJobSegment {
+  kind: "imported" | "skipped" | "failed" | "cancelled" | "remaining"
+  count: number
+  label: string
+}
+
+/** Each recipe counted once by outcome, so the shares add up to the total. */
+export function importJobSegments(job: ImportJob): ImportJobSegment[] {
+  const progress = job.progress
+  const finished = job.state !== "pending" && job.state !== "running"
+  const unfinished = progress.pending + progress.running
+  const remaining = finished ? 0 : unfinished
+  const notImported = progress.cancelled + (finished ? unfinished : 0)
+  const segments: ImportJobSegment[] = [
+    {
+      kind: "imported",
+      count: progress.imported,
+      label: m.import_job_imported({ count: progress.imported }),
+    },
+    {
+      kind: "skipped",
+      count: progress.skipped + (progress.already_in_library ?? 0),
+      label: m.import_job_skipped({ count: progress.skipped + (progress.already_in_library ?? 0) }),
+    },
+    {
+      kind: "failed",
+      count: progress.failed - (progress.already_in_library ?? 0),
+      label: m.import_job_failed({ count: progress.failed - (progress.already_in_library ?? 0) }),
+    },
+    {
+      kind: "cancelled",
+      count: notImported,
+      label: m.import_job_not_imported({ count: notImported }),
+    },
+    {
+      kind: "remaining",
+      count: remaining,
+      label: m.import_job_page_to_go({ value1: formatNumber(remaining) }),
+    },
+  ]
+  return segments.filter((segment) => segment.count > 0)
+}
+
+/** Failed items also carry review flags; exclude them from links to imported recipes needing review. */
+export function importJobNeedsALook(job: ImportJob): number {
+  return Math.max(0, job.progress.review_required - job.progress.failed)
+}
+
+export interface ImportFailure {
+  headline: string
+  next: string
+  findInLibrary: boolean
+}
+
+export function describeImportFailure(item: ImportJobItem): ImportFailure {
+  switch (item.error_code) {
+    case "already-in-library":
+      return {
+        headline: m.import_job_results_failure_duplicate(),
+        next: m.import_job_results_failure_duplicate_next(),
+        findInLibrary: true,
+      }
+    case "changed-since-review":
+      return {
+        headline: m.import_job_results_failure_changed(),
+        next: m.import_job_results_failure_changed_next(),
+        findInLibrary: true,
+      }
+    case "source-unavailable":
+      return {
+        headline: m.import_job_results_failure_source(),
+        next: m.import_job_results_failure_source_next(),
+        findInLibrary: false,
+      }
+    default:
+      return {
+        headline: m.import_job_results_could_not_be_imported(),
+        next: m.import_job_results_failure_unknown_next(),
+        findInLibrary: false,
       }
   }
 }
@@ -140,7 +283,9 @@ export function describeImportItem(item: ImportJobItem): string {
     case "skipped":
       return m.import_job_presentation_already_in_your_library()
     case "failed":
-      return m.import_job_presentation_could_not_be_imported()
+      return item.error_code === "already-in-library"
+        ? m.import_job_presentation_already_in_your_library()
+        : m.import_job_presentation_could_not_be_imported()
     case "cancelled":
       return m.import_job_presentation_not_imported()
   }

@@ -3,6 +3,7 @@ import { css } from "styled-system/css"
 
 import type { Recipe } from "@/api/client"
 import type { components } from "@/api/schema"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Disclosure } from "@/components/ui/disclosure"
 import { compare, rational } from "@/lib/rational"
 import {
@@ -56,13 +57,7 @@ const styles = {
     minHeight: "2.75rem",
     paddingBlock: "2",
   }),
-  checkbox: css({
-    accentColor: "accent.default",
-    flex: "0 0 auto",
-    height: "1.25rem",
-    marginTop: "0.15rem",
-    width: "1.25rem",
-  }),
+  checkbox: css({ marginTop: "0.15rem" }),
   // A checked ingredient keeps its full contrast: the mark carries the state,
   // and a cook who has to re-read an amount should not have to read it faint.
   checked: css({ color: "fg.muted", textDecoration: "line-through" }),
@@ -72,6 +67,7 @@ const styles = {
   asWritten: css({ color: "fg.muted", fontSize: "xs", marginInlineStart: "1.5" }),
   visuallyHidden: css({ srOnly: true }),
   branch: css({ display: "block" }),
+  alternative: css({ color: "fg.muted" }),
   joiner: css({ color: "fg.muted", display: "block", fontSize: "sm", fontStyle: "italic" }),
   choiceNote: css({ color: "fg.muted", display: "block", fontSize: "sm" }),
   equipment: css({ color: "fg.muted", fontSize: "sm", margin: "0", paddingInlineStart: "5" }),
@@ -86,21 +82,30 @@ function ingredientDisplay(line: IngredientLine): string {
  * Branches that share one amount stay on one line under it.
  */
 function ChoiceLines(props: { line: IngredientLine; choice: IngredientChoiceLine }) {
-  const shared = () =>
-    [
-      props.line.amount,
-      props.choice.branches.map((branch) => branch.text).join(` ${props.choice.joiner} `),
-    ]
-      .filter(Boolean)
-      .join(" ")
   return (
     <>
-      <Show when={props.choice.lead && !props.choice.sharedAmount}>
-        <span class={styles.joiner}>{props.choice.lead}</span>
-      </Show>
       <Show
         when={!props.choice.sharedAmount}
-        fallback={<span class={styles.branch}>{shared()}</span>}
+        fallback={
+          <span class={styles.branch}>
+            {props.line.amount}{" "}
+            <For each={props.choice.branches}>
+              {(branch, index) => (
+                <>
+                  <Show when={index() > 0}> {props.choice.joiner} </Show>
+                  <span
+                    class={props.choice.preferred && index() > 0 ? styles.alternative : undefined}
+                  >
+                    <Show when={props.choice.preferred && index() === 0}>
+                      <span class={styles.visuallyHidden}>{m.recipe_format_prefer()}</span>
+                    </Show>
+                    {branch.text}
+                  </span>
+                </>
+              )}
+            </For>
+          </span>
+        }
       >
         <For each={props.choice.branches}>
           {(branch, index) => (
@@ -108,7 +113,12 @@ function ChoiceLines(props: { line: IngredientLine; choice: IngredientChoiceLine
               <Show when={index() > 0}>
                 <span class={styles.joiner}>{props.choice.joiner}</span>
               </Show>
-              <span class={styles.branch}>
+              <span
+                class={`${styles.branch} ${props.choice.preferred && index() > 0 ? styles.alternative : ""}`}
+              >
+                <Show when={props.choice.preferred && index() === 0}>
+                  <span class={styles.visuallyHidden}>{m.recipe_format_prefer()}</span>
+                </Show>
                 {[branch.amount, branch.text].filter(Boolean).join(" ")}
               </span>
             </>
@@ -197,9 +207,8 @@ export function CookingIngredients(props: {
           return (
             <li>
               <label class={styles.check}>
-                <input
+                <Checkbox
                   class={styles.checkbox}
-                  type="checkbox"
                   checked={checked(ingredient)}
                   onChange={() => props.onToggle(ingredient.id)}
                 />

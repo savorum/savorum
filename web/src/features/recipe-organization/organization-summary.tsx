@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/solid-router"
 import { For, Show, createMemo, createResource, createSignal } from "solid-js"
 import { css } from "styled-system/css"
 
@@ -7,20 +8,22 @@ import { suggestBooks, lookupBooks, lookupRecipes } from "@/api/selections"
 import { LabelSwatch } from "@/components/label-swatch"
 import { ChangeError } from "@/components/status"
 import { Button } from "@/components/ui/button"
-import { Disclosure } from "@/components/ui/disclosure"
 import { CookingLog } from "@/features/recipe-organization/cooking-log"
 import type { OrganizationController } from "@/features/recipe-organization/create-organization-controller"
 import { RecipeRating } from "@/features/recipe-organization/organization-bar"
 import { OrganizationEditor } from "@/features/recipe-organization/organization-editor"
 import { facetGroups } from "@/lib/library-query"
-import { formatNumber } from "@/lib/locale-format"
 import type { Rational } from "@/lib/rational"
 import { latestUnlessFailed } from "@/lib/settled"
 
 import { m } from "../../lib/messages.ts"
 
-/** What a category is called where it is shown beside books and tags. */
-const facetKind = (kind: string) => facetGroups.find((group) => group.kind === kind)?.label
+type Filing = {
+  name: string
+  color?: string
+  bookID?: string
+  search?: Record<string, string[]>
+}
 
 export const OrganizationSummary = (props: {
   entryID: string
@@ -51,73 +54,81 @@ export const OrganizationSummary = (props: {
     },
   )
   const organization = () => props.controller.value()
-  /** Everything this recipe has been filed under, including categories. */
-  const labels = createMemo(() => {
-    const staticCurrent = organization()
-    return [
-      ...(latestUnlessFailed(books) ?? [])
-        .filter((book) => book.contains_entry)
-        .map((book) => ({
-          name: book.title,
-          kind: m.organization_label_book(),
-          color: undefined as string | undefined,
-        })),
-      ...(latestUnlessFailed(tags) ?? [])
-        .filter((tag) => staticCurrent?.tag_ids?.includes(tag.id))
-        .map((tag) => ({ name: tag.name, kind: m.organization_label_tag(), color: tag.color })),
-      ...(latestUnlessFailed(facets) ?? [])
-        .filter((facet) => staticCurrent?.facet_ids?.includes(facet.id))
-        .map((facet) => ({ name: facet.value, kind: facetKind(facet.kind), color: undefined })),
+  const groups = createMemo(() => {
+    const current = organization()
+    const filed = [
+      {
+        label: m.organization_editor_books(),
+        entries: (latestUnlessFailed(books) ?? [])
+          .filter((book) => book.contains_entry)
+          .map((book): Filing => ({ name: book.title, bookID: book.id })),
+      },
+      {
+        label: m.organization_editor_tags(),
+        entries: (latestUnlessFailed(tags) ?? [])
+          .filter((tag) => current?.tag_ids?.includes(tag.id))
+          .map((tag): Filing => ({
+            name: tag.name,
+            color: tag.color,
+            search: { tags: [tag.id] },
+          })),
+      },
+      ...facetGroups.map((group) => ({
+        label: group.label,
+        entries: (latestUnlessFailed(facets) ?? [])
+          .filter((facet) => facet.kind === group.kind && current?.facet_ids?.includes(facet.id))
+          .map((facet): Filing => ({ name: facet.value, search: { [group.key]: [facet.id] } })),
+      })),
     ]
+    return filed.filter((group) => group.entries.length > 0)
   })
   return (
     <Show when={organization()}>
       <section class={styles.band} aria-label={m.organization_summary_your_library()}>
         <ChangeError error={props.controller.error()} onReload={props.controller.reload} />
         <div class={styles.utility}>
-          <div class={styles.summary} aria-label={m.organization_summary_library_details()}>
-            <Show
-              when={labels().length}
-              fallback={<span class={styles.note}>{m.organization_summary_not_filed_yet()}</span>}
-            >
-              <For each={labels().slice(0, 6)}>
-                {(label) => (
-                  <span class={styles.chip} title={label.kind}>
-                    <LabelSwatch color={label.color} size="sm" />
-                    {label.name}
-                  </span>
+          <div class={styles.details}>
+            <Show when={!groups().length}>
+              <span class={styles.note}>{m.organization_summary_not_filed_yet()}</span>
+            </Show>
+            <dl class={styles.filing} aria-label={m.organization_summary_library_details()}>
+              <For each={groups()}>
+                {(group) => (
+                  <>
+                    <dt class={styles.term}>{group.label}</dt>
+                    <dd class={styles.values}>
+                      <For each={group.entries}>
+                        {(entry) =>
+                          entry.bookID ? (
+                            <Link
+                              class={styles.value}
+                              to="/books/$bookId"
+                              params={{ bookId: entry.bookID }}
+                            >
+                              {entry.name}
+                            </Link>
+                          ) : (
+                            <Link class={styles.value} to="/" search={entry.search}>
+                              <LabelSwatch color={entry.color} size="sm" />
+                              {entry.name}
+                            </Link>
+                          )
+                        }
+                      </For>
+                    </dd>
+                  </>
                 )}
               </For>
-              <Show when={labels().length > 6}>
-                <Disclosure
-                  label={m.organization_summary_more({
-                    value1: formatNumber(labels().length - 6),
-                  })}
-                >
-                  <div
-                    class={css({
-                      maxHeight: "12rem",
-                      overflowY: "auto",
-                      display: "flex",
-                      flexWrap: "wrap",
-                      gap: "2",
-                      paddingBlock: "2",
-                    })}
-                  >
-                    <For each={labels().slice(6)}>
-                      {(label) => (
-                        <span class={styles.chip} title={label.kind}>
-                          <LabelSwatch color={label.color} size="sm" />
-                          {label.name}
-                        </span>
-                      )}
-                    </For>
-                  </div>
-                </Disclosure>
-              </Show>
-            </Show>
+              <dt class={styles.term} aria-hidden="true">
+                {m.organization_bar_your_rating()}
+              </dt>
+              <dd class={styles.values}>
+                <RecipeRating controller={props.controller} />
+              </dd>
+            </dl>
           </div>
           <Button
+            class={styles.organize}
             size="sm"
             variant="plain"
             disabled={
@@ -156,7 +167,6 @@ export const OrganizationSummary = (props: {
         <Show when={organization()?.user_state.personal_note}>
           <p class={styles.note}>{organization()?.user_state.personal_note}</p>
         </Show>
-        <RecipeRating controller={props.controller} />
         <CookingLog entryID={props.entryID} scale={props.scale} />
         <Show when={editing()}>
           <OrganizationEditor
@@ -183,31 +193,52 @@ const styles = {
     paddingTop: "3",
   }),
   utility: css({
-    alignItems: "center",
+    alignItems: "start",
     display: "flex",
     flexWrap: "wrap",
     gap: "2",
+    justifyContent: "space-between",
     minHeight: "2rem",
   }),
-  summary: css({
-    alignItems: "center",
-    display: "flex",
-    flex: "1 1 14rem",
-    flexWrap: "wrap",
-    gap: "1.5",
+  details: css({
+    display: "grid",
+    flex: { base: "1 1 100%", md: "1 1 20rem" },
+    gap: "2",
     minWidth: "0",
+    paddingTop: "1.5",
   }),
-  chip: css({
-    alignItems: "center",
-    background: "bg.muted",
-    borderRadius: "l1",
+  filing: css({
     color: "fg.muted",
-    display: "inline-flex",
+    columnGap: "4",
+    display: "grid",
     fontSize: "xs",
-    gap: "1.5",
-    paddingBlock: "0.5",
-    paddingInline: "2",
+    gridTemplateColumns: "max-content minmax(0, 1fr)",
+    lineHeight: { base: "2", md: "1.55" },
+    margin: "0",
+    maxWidth: "46rem",
+    rowGap: "1",
   }),
+  term: css({ fontWeight: "semibold" }),
+  values: css({
+    columnGap: "3",
+    display: "flex",
+    flexWrap: "wrap",
+    margin: "0",
+    minWidth: "0",
+    rowGap: "0.5",
+  }),
+  value: css({
+    alignItems: "center",
+    borderRadius: "l1",
+    display: "inline-flex",
+    gap: "1.5",
+    textDecoration: "underline",
+    textDecorationColor: "border.default",
+    textUnderlineOffset: "3px",
+    _hover: { color: "accent.default", textDecorationColor: "currentColor" },
+    _focusVisible: { outline: "2px solid", outlineColor: "accent.default", outlineOffset: "2px" },
+  }),
+  organize: css({ marginInlineStart: { base: "-3", md: "0" } }),
   note: css({
     color: "fg.muted",
     fontSize: "xs",

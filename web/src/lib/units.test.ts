@@ -10,6 +10,7 @@ import { unitGroups } from "./unit-choices.ts"
 import { unitRegistry } from "./unit-registry.generated.ts"
 import {
   convertAmount,
+  convertToUnit,
   isRegionallyAmbiguous,
   knownUnits,
   measurementConvention,
@@ -455,4 +456,23 @@ test("a measure that belongs to a convention can be put back to its words", () =
   assert.equal(isRegionallyAmbiguous("volume.milliliter"), false)
   assert.equal(isRegionallyAmbiguous("count.clove"), false)
   assert.equal(isRegionallyAmbiguous(undefined), false)
+})
+
+test("an explicit unit conversion stays in its physical dimension and marks rounded amounts", () => {
+  const grams = convertToUnit(rational(1n), "mass.kilogram", "mass.gram")!
+  assert.equal(formatRational(grams.amount), "1000")
+  assert.equal(grams.approximate, false)
+  const milliliters = convertToUnit(
+    rational(1n, 2n),
+    "volume.cup.us.customary",
+    "volume.milliliter",
+  )!
+  assert.equal(formatRational(milliliters.amount), "11829/100")
+  assert.equal(milliliters.approximate, true)
+  assert.equal(convertToUnit(rational(1n), "volume.cup.us.customary", "mass.gram"), undefined)
+  assert.equal(convertToUnit(rational(1n), "count.egg", "mass.gram"), undefined)
+  assert.equal(
+    cookNumber(convertToUnit(rational(1n), "mass.gram", "mass.kilogram")!.amount),
+    "1/1000",
+  )
 })

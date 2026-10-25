@@ -11,6 +11,7 @@ import { css, cx } from "styled-system/css"
 
 import { ApiError } from "@/api/client"
 import { RetryExpiredError } from "@/api/creation-intents"
+import { SkeletonRows } from "@/components/skeleton"
 import { StorageContactSupport } from "@/components/status/storage-notice"
 import * as Alert from "@/components/ui/alert"
 import type { AlertStatus } from "@/components/ui/alert"
@@ -37,7 +38,11 @@ const styles = {
 }
 
 export const Loading = (props: { children?: JSX.Element }) => (
-  <p class={styles.status}>{props.children ?? "Loading…"}</p>
+  <Show when={props.children} fallback={<SkeletonRows count={3} />}>
+    <p class={styles.status} role="status">
+      {props.children}
+    </p>
+  </Show>
 )
 
 export const Empty = (props: { children: JSX.Element }) => (

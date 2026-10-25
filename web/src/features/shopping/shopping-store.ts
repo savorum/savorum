@@ -144,6 +144,15 @@ export function createShoppingStore(scope: string) {
             const merged = rows.find((row) => row.id === id)
             if (!merged) continue
             item.sources = [...(item.sources ?? []), ...(merged.sources ?? [])]
+            item.buy = [item.buy, merged.buy].filter(Boolean).join(" + ")
+            item.needed = [item.needed, merged.needed].filter(Boolean).join(" + ")
+            item.note = [
+              ...new Set(
+                [...item.note.split("\n"), ...merged.note.split("\n")]
+                  .map((line) => line.trim())
+                  .filter(Boolean),
+              ),
+            ].join("\n")
             merged.deleted = true
           }
         } else if (change.kind === "split") continue

@@ -27,10 +27,10 @@ export const red = defineSemanticTokens.colors({
   a12: { value: { _light: "#55000de8", _dark: "#ffd1d9" } },
   solid: {
     bg: {
-      DEFAULT: { value: { _light: "{colors.red.9}", _dark: "{colors.red.9}" } },
-      hover: { value: { _light: "{colors.red.10}", _dark: "{colors.red.10}" } },
+      DEFAULT: { value: { _light: "{colors.red.11}", _dark: "{colors.red.11}" } },
+      hover: { value: { _light: "{colors.red.12}", _dark: "{colors.red.12}" } },
     },
-    fg: { DEFAULT: { value: { _light: "white", _dark: "white" } } },
+    fg: { DEFAULT: { value: { _light: "white", _dark: "{colors.red.1}" } } },
   },
   subtle: {
     bg: {

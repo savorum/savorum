@@ -45,7 +45,12 @@ function LibraryRoute() {
         })
       }}
       onJob={(jobId, remaining) =>
-        navigate({ to: "/imports/$jobId", params: { jobId }, search: { remaining } })
+        navigate({
+          to: "/imports/$jobId",
+          params: { jobId },
+          search: { remaining },
+          state: { fromImports: location().state.fromImports === true },
+        })
       }
       onHistory={() => {
         void navigate({ to: "/imports" })
