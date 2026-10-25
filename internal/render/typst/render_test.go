@@ -1438,3 +1438,55 @@ func fontPrograms(t *testing.T, pdf []byte) []string {
 
 	return programs
 }
+
+func TestIngredientChoiceBranchesKeepSeparateAlignedAmounts(t *testing.T) {
+	document := testfixture.Document()
+	document.Title = "Alternative ingredient layout"
+	document.IngredientSections = []recipe.IngredientSection{{Ingredients: []recipe.Ingredient{{
+		ID: "fat-choice", Relation: "preferred", Alternatives: []recipe.Ingredient{
+			{ID: "choice-butter", Name: "butter", Quantity: &recipe.Quantity{Kind: recipe.QuantitySimple, Amount: &recipe.Amount{Value: testfixture.Rational("1")}, Unit: "volume.cup.us.customary"}},
+			{ID: "choice-oil", Name: "neutral oil", Quantity: &recipe.Quantity{Kind: recipe.QuantitySimple, Amount: &recipe.Amount{Value: testfixture.Rational("3/4")}, Unit: "volume.cup.us.customary"}},
+		},
+	}}}}
+	document.InstructionSections = []recipe.InstructionSection{{Steps: []recipe.Step{{ID: "mix", Text: "Mix the ingredients."}}}}
+
+	for _, size := range []print.Size{print.SizeLetter, print.SizeCard58} {
+		t.Run(string(size), func(t *testing.T) {
+			artifact := renderOne(t, document, optionsFor(size))
+
+			runs, err := pdfinspect.TextRuns(artifact.PDF, 0)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			var butter, oil *pdfinspect.TextRun
+
+			for index := range runs {
+				if strings.Contains(runs[index].Text, "butter") {
+					butter = &runs[index]
+				}
+
+				if strings.Contains(runs[index].Text, "neutral oil") {
+					oil = &runs[index]
+				}
+			}
+
+			if butter == nil || oil == nil || math.Abs(butter.X-oil.X) > 0.1 || math.Abs(butter.Y-oil.Y) < 1 {
+				t.Fatalf("branches do not occupy separate aligned rows: butter=%#v oil=%#v", butter, oil)
+			}
+
+			if distance := math.Abs(butter.Y - oil.Y); distance < 2*butter.Size || distance > 2.5*butter.Size {
+				t.Fatalf("alternative rows need readable, grouped spacing: butter=%#v oil=%#v", butter, oil)
+			}
+
+			text := documentText(t, artifact)
+			requireText(t, text, "or")
+
+			for _, unwanted := range []string{"Prefer", "alternatively", "Use whichever"} {
+				if strings.Contains(text, unwanted) {
+					t.Fatalf("ordinary alternatives include %q", unwanted)
+				}
+			}
+		})
+	}
+}

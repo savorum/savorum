@@ -1,9 +1,7 @@
 package print
 
-// PrintDocument is the complete, presentation-ready description of one printed
-// artifact. A renderer arranges it; it does not interpret it.
+// PrintDocument contains presentation-ready content; renderers only arrange it.
 type PrintDocument struct {
-	// Title names the artifact itself: one recipe, a book, or a selection.
 	Title string `json:"title"`
 	// Language and Digits describe application labels and page counters.
 	Language string `json:"language,omitempty"`
@@ -13,7 +11,6 @@ type PrintDocument struct {
 	// Labels are application UI text resolved independently of authored recipe language.
 	Labels map[string]string `json:"labels"`
 
-	// Format is the physical composition environment.
 	Format PrintFormat `json:"format"`
 	// Sheet is present only when exact-size cards are imposed onto sheets.
 	Sheet *SheetPlan `json:"sheet,omitempty"`
@@ -24,53 +21,37 @@ type PrintDocument struct {
 	// may open exactly these and nothing else.
 	Assets map[string][]byte `json:"-"`
 
-	// Warnings record what degraded without invalidating the document, such as
-	// an optional image this library no longer holds bytes for.
+	// Warnings report recoverable omissions, such as unavailable images.
 	Warnings []string `json:"-"`
 
-	// Options are carried so a renderer can honour the composition choices it
-	// is responsible for, such as full-page layout and image placement.
 	Options Options `json:"options"`
 }
 
-// PrintFormat states the physical page the renderer typesets onto. Lengths
-// keep the unit their size is defined in.
+// PrintFormat preserves physical units. For imposed cards, Width and Height
+// describe the sheet and Card retains the unscaled card dimensions.
 type PrintFormat struct {
-	Size   string `json:"size"`
-	Family string `json:"family"`
-	Width  Length `json:"width"`
-	Height Length `json:"height"`
-	// Card is the exact card size when cards are imposed onto a larger sheet,
-	// where Width and Height describe the sheet. A card is never scaled to
-	// fill the sheet it is printed on.
-	Card *Dimensions `json:"card,omitempty"`
+	Size   string      `json:"size"`
+	Family string      `json:"family"`
+	Width  Length      `json:"width"`
+	Height Length      `json:"height"`
+	Card   *Dimensions `json:"card,omitempty"`
 }
 
-// SheetPlan is the imposition of exact-size cards onto a printable sheet. The
-// grid is computed from the sheet's printer-safe area rather than assumed, so
-// a combination that would leave impractical outer margins carries fewer cards
-// instead of smaller ones.
+// SheetPlan permits rotation to fit more cards, but never scales their dimensions.
 type SheetPlan struct {
-	Columns int `json:"columns"`
-	Rows    int `json:"rows"`
-	// Gutter separates adjacent cards.
-	Gutter Length `json:"gutter"`
+	Columns int    `json:"columns"`
+	Rows    int    `json:"rows"`
+	Gutter  Length `json:"gutter"`
 	// MarginX and MarginY centre the card grid on the sheet.
-	MarginX Length `json:"margin_x"`
-	MarginY Length `json:"margin_y"`
-	// Rotated places each card turned a quarter turn on the sheet. Rotation
-	// preserves the card's exact dimensions, so it is used when it fits more
-	// cards on a sheet, or when the card would not fit at all otherwise.
-	Rotated bool `json:"rotated"`
-	// CropMarks draws subtle trim guides outside each card.
-	CropMarks bool `json:"crop_marks"`
-	// CalibrationMark draws a one-inch and one-centimetre rule so a reader can
-	// confirm the sheet printed at actual size.
+	MarginX   Length `json:"margin_x"`
+	MarginY   Length `json:"margin_y"`
+	Rotated   bool   `json:"rotated"`
+	CropMarks bool   `json:"crop_marks"`
+	// CalibrationMark adds one-inch and one-centimetre rules for checking print scale.
 	CalibrationMark bool `json:"calibration_mark"`
 }
 
-// PrintRecipe is one recipe as it will be read on paper. Every string here is
-// final.
+// PrintRecipe contains final display strings for one recipe.
 type PrintRecipe struct {
 	EntryID  string `json:"entry_id"`
 	RecipeID string `json:"recipe_id"`
@@ -83,12 +64,10 @@ type PrintRecipe struct {
 	// language is unknown.
 	Direction string `json:"direction"`
 
-	Yield       *PrintYield   `json:"yield,omitempty"`
-	OtherYields []PrintYield  `json:"other_yields,omitempty"`
-	Timings     []PrintTiming `json:"timings,omitempty"`
-	// Classifications is concise cuisine/course context chosen for the quiet
-	// metadata line. Broader categories and discovery keywords stay off paper.
-	Classifications []string `json:"classifications,omitempty"`
+	Yield           *PrintYield   `json:"yield,omitempty"`
+	OtherYields     []PrintYield  `json:"other_yields,omitempty"`
+	Timings         []PrintTiming `json:"timings,omitempty"`
+	Classifications []string      `json:"classifications,omitempty"`
 
 	IngredientGroups []PrintIngredientGroup `json:"ingredient_groups"`
 	Equipment        []PrintIngredient      `json:"equipment,omitempty"`
@@ -100,8 +79,6 @@ type PrintRecipe struct {
 	Attribution *PrintAttribution `json:"attribution,omitempty"`
 	Image       *PrintImage       `json:"image,omitempty"`
 
-	// Convention states once that a recipe was written in a regional set of
-	// measures, rather than repeating it on every line.
 	Convention string `json:"convention,omitempty"`
 	// Batch states the amount being printed when it is not the recipe's own.
 	Batch string `json:"batch,omitempty"`
@@ -110,12 +87,13 @@ type PrintRecipe struct {
 	KeptAsWritten string `json:"kept_as_written,omitempty"`
 }
 
-// PrintYield is how much the printed batch makes, already recalculated.
+// PrintYield has batch scaling applied; renderers must not scale Text again.
 type PrintYield struct {
 	Text string `json:"text"`
 }
 
-// PrintNutrition is one authored nutrition statement.
+// PrintNutrition scales whole-recipe values with the batch; per-serving and
+// unspecified bases retain their authored values and set AsWritten when the batch changes.
 type PrintNutrition struct {
 	Basis     string          `json:"basis"`
 	Values    []PrintNutrient `json:"values"`
@@ -123,44 +101,50 @@ type PrintNutrition struct {
 	AsWritten bool            `json:"as_written,omitempty"`
 }
 
-// PrintNutrient is one nutrient and its value.
+// PrintNutrient preserves an authored label when present; Value includes its unit.
 type PrintNutrient struct {
 	Label string `json:"label"`
 	Value string `json:"value"`
 }
 
-// PrintTiming is one line of planning information.
+// PrintTiming has its label localized and duration formatted before rendering.
 type PrintTiming struct {
 	Label string `json:"label"`
 	Value string `json:"value"`
 }
 
-// PrintIngredientGroup is a titled group of ingredients ready for layout.
+// PrintIngredientGroup preserves authored ingredient order, including untitled sections.
 type PrintIngredientGroup struct {
 	Title       string            `json:"title,omitempty"`
 	Ingredients []PrintIngredient `json:"ingredients"`
 }
 
-// PrintIngredient is one line of the ingredient list, split where a cook's eye
-// splits it: the measure on the left and what to get on the right.
+// PrintIngredient retains Text as a plain-text fallback when Choice provides
+// structured alternatives for layout.
 type PrintIngredient struct {
-	Amount PrintAmount `json:"amount"`
-	Text   string      `json:"text"`
-	// AsWritten marks a row that still reads as the recipe wrote it beside
-	// rows the batch recalculated, and says which part of it did: the amount,
-	// or numbers the source left in the wording. Empty at the recipe's own
-	// batch, where there is nothing to distinguish.
+	Amount PrintAmount            `json:"amount"`
+	Text   string                 `json:"text"`
+	Choice *PrintIngredientChoice `json:"choice,omitempty"`
+	// AsWritten identifies an amount or wording retained at a changed batch size.
 	AsWritten string `json:"as_written,omitempty"`
 }
 
-// PrintAmount is one measure written out. Segments preserve enough structure
-// for a typesetter to set a real fraction without knowing anything about units
-// or conversion; Text is the same amount as plain characters.
+// PrintIngredientChoice leaves branch amounts empty when SharedAmount is true;
+// the containing PrintIngredient owns that amount. Preferred marks the first branch.
+type PrintIngredientChoice struct {
+	Preferred    bool              `json:"preferred,omitempty"`
+	SharedAmount bool              `json:"shared_amount,omitempty"`
+	Joiner       string            `json:"joiner"`
+	Branches     []PrintIngredient `json:"branches"`
+	Note         string            `json:"note,omitempty"`
+}
+
+// PrintAmount provides structured fractions in Segments and the same amount
+// in Text for renderers that cannot typeset fractions.
 type PrintAmount struct {
-	Segments []PrintSegment `json:"segments,omitempty"`
-	Text     string         `json:"text,omitempty"`
-	// Approximate marks an amount that reaching a measurable quantity moved.
-	Approximate bool `json:"approximate,omitempty"`
+	Segments    []PrintSegment `json:"segments,omitempty"`
+	Text        string         `json:"text,omitempty"`
+	Approximate bool           `json:"approximate,omitempty"`
 }
 
 // PrintSegment is one piece of an amount. A segment carrying a denominator is
@@ -172,30 +156,31 @@ type PrintSegment struct {
 	Denominator string `json:"denominator,omitempty"`
 }
 
-// Empty reports an amount with nothing to print, which is ordinary: "salt to
-// taste" has no measure.
+// Empty treats an amount as absent only when both Segments and Text are empty.
 func (a PrintAmount) Empty() bool {
 	return len(a.Segments) == 0 && a.Text == ""
 }
 
-// PrintStepGroup is a titled group of instructions ready for layout.
+// PrintStepGroup preserves an authored instruction section; numbering restarts
+// at one in each group.
 type PrintStepGroup struct {
 	Title string      `json:"title,omitempty"`
 	Steps []PrintStep `json:"steps"`
 }
 
-// PrintStep is one instruction. Number is the number a cook reads, already
-// resolved, so a renderer never has to decide where numbering restarts.
+// PrintStep carries its section-relative Number and localized NumberText;
+// renderers must preserve both when paginating.
 type PrintStep struct {
 	Number     int    `json:"number"`
 	NumberText string `json:"number_text,omitempty"`
 	Title      string `json:"title,omitempty"`
 	Text       string `json:"text,omitempty"`
-	// Phases names the recipe-wide time phases that apply to this instruction.
+	// Phases contains supplemental timing text omitted when the step already states it.
 	Phases []string `json:"phases,omitempty"`
 }
 
-// PrintAttribution is where the recipe came from, as it should be credited.
+// PrintAttribution retains authors even without a source URL; URL accepts only
+// absolute HTTP or HTTPS addresses.
 type PrintAttribution struct {
 	Name    string   `json:"name,omitempty"`
 	URL     string   `json:"url,omitempty"`
@@ -207,8 +192,7 @@ type PrintAttribution struct {
 // original is never embedded unchanged.
 type PrintImage struct {
 	Name string `json:"name"`
-	// Width and Height are the derivative's pixel dimensions, which the
-	// renderer uses to keep the printed box in proportion.
+	// Width and Height are pixel dimensions.
 	Width  int    `json:"width"`
 	Height int    `json:"height"`
 	Alt    string `json:"alt,omitempty"`

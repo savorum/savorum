@@ -199,5 +199,5 @@ func mergeNeed(list *ShoppingList, need shoppingNeed) bool {
 
 // sameIngredient deliberately never fuzzy-matches names.
 func sameIngredient(item ShoppingItem, choice ShoppingChoice) bool {
-	return strings.EqualFold(strings.TrimSpace(item.Name), strings.TrimSpace(choice.Name)) && item.Note == choice.Note
+	return strings.EqualFold(strings.TrimSpace(item.Name), strings.TrimSpace(choice.Name))
 }

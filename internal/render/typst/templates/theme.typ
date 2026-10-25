@@ -173,7 +173,7 @@
 ])
 
 #let group-title(sizes, body) = heading-block(block(
-  width: 100%, inset: (top: 0.7em, bottom: 0.15em),
+  width: 100%, inset: (top: 1.2em, bottom: 0.15em),
 )[
   #text(font: sans, size: sizes.group, weight: "semibold", fill: ink)[#body]
 ])
@@ -184,10 +184,14 @@
   let widest = 0pt
   for group in printed.at("ingredient_groups", default: ()) {
     for row in group.at("ingredients", default: ()) {
-      let shown = measure(text(
-        font: sans, size: sizes.amount, weight: "semibold",
-      )[#amount-text(row.amount)]).width
-      if shown > widest { widest = shown }
+      let choice = row.at("choice", default: none)
+      let rows = if choice == none or choice.at("shared_amount", default: false) { (row,) } else { choice.branches }
+      for branch in rows {
+        let shown = measure(text(
+          font: sans, size: sizes.amount, weight: "semibold",
+        )[#amount-text(branch.amount)]).width
+        if shown > widest { widest = shown }
+      }
     }
   }
   calc.min(widest, limit)
@@ -196,33 +200,67 @@
 // Inside beats outside: within a listed item (measure, step, note) lines sit
 // closer than the space to the next item. Each pair below is an item's
 // internal leading and the space after it; the second is always larger.
-#let ingredient-leading = 0.34em
+#let ingredient-leading = 0.48em
 #let ingredient-gap = 0.58em
 #let step-leading = 0.62em
 #let step-gap = 1.05em
 #let note-leading = 0.58em
 #let note-gap = 0.95em
 
-#let ingredient-row(sizes, ingredient, amount-width) = block(breakable: false, width: 100%)[
+#let ingredient-row(sizes, ingredient, amount-width, secondary: false) = block(breakable: false, width: 100%)[
   #set par(leading: ingredient-leading)
   #let kept = ingredient.at("as_written", default: "")
-  #grid(
-    columns: (amount-width, 1fr),
-    column-gutter: 0.5em,
-    align(end + top, text(
-      font: sans,
-      size: sizes.amount,
-      weight: "semibold",
-      fill: ink,
-    )[#amount-text(ingredient.amount)]),
-    {
-      text(font: serif, size: sizes.body, fill: ink)[#ingredient.text]
-      // Marks a row the batch could not recalculate.
-      if kept != "" {
-        text(font: sans, size: sizes.meta, fill: quiet)[ (#kept)]
+  #let choice = ingredient.at("choice", default: none)
+  #let colour = if secondary { quiet } else { ink }
+  #let amount-cell = align(end + top, text(
+    font: sans, size: sizes.amount, weight: "semibold", fill: colour,
+  )[#amount-text(ingredient.amount)])
+  #if choice != none and not choice.at("shared_amount", default: false) {
+    set text(bottom-edge: "descender")
+    let parts = ()
+    let qualifier(value) = grid(
+      columns: (amount-width, 1fr), column-gutter: 0.5em,
+      [], text(font: sans, size: sizes.meta, fill: quiet)[#value],
+    )
+    for (index, branch) in choice.branches.enumerate() {
+      if index > 0 {
+        parts.push(grid(
+          columns: (amount-width, 1fr), column-gutter: 0.5em,
+          [], text(font: serif, size: sizes.body, style: "italic", fill: quiet)[#choice.joiner],
+        ))
       }
-    },
-  )
+      parts.push(ingredient-row(sizes, branch, amount-width,
+        secondary: choice.at("preferred", default: false) and index > 0,
+      ))
+    }
+    if choice.at("note", default: "") != "" { parts.push(qualifier(choice.note)) }
+    if kept != "" { parts.push(qualifier(kept)) }
+    stack(dir: ttb, spacing: 0.24em, ..parts)
+  } else {
+    grid(
+      columns: (amount-width, 1fr), column-gutter: 0.5em,
+      amount-cell,
+      {
+        if choice == none {
+          text(font: serif, size: sizes.body, fill: colour)[#ingredient.text]
+        } else {
+          for (index, branch) in choice.branches.enumerate() {
+            if index > 0 { [ #text(fill: quiet)[#choice.joiner] ] }
+            text(font: serif, size: sizes.body,
+              fill: if choice.at("preferred", default: false) and index > 0 { quiet } else { ink },
+            )[#branch.text]
+          }
+          if choice.at("note", default: "") != "" {
+            linebreak()
+            text(font: sans, size: sizes.meta, fill: quiet)[#choice.note]
+          }
+        }
+        if kept != "" {
+          text(font: sans, size: sizes.meta, fill: quiet)[ (#kept)]
+        }
+      },
+    )
+  }
 ]
 
 #let step-row(sizes, step, continued: false) = block(breakable: false, width: 100%)[

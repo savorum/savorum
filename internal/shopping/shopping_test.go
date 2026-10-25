@@ -91,9 +91,15 @@ func TestShoppingNeverMergesNearMatchNames(t *testing.T) {
 		}
 	}
 
-	list := ShoppingList{Items: []ShoppingItem{{ID: "row", Name: "Onion", Note: "diced", Fields: map[string]uint64{}, Sources: []ShoppingSource{{ID: "a", Amount: "1"}}}}}
-	if mergeNeed(&list, shoppingNeed{source: ShoppingSource{ID: "b", Amount: "2"}, choice: ShoppingChoice{Name: "Onion", Note: "sliced"}}) {
-		t.Error("a different preparation joined without being asked")
+	list := ShoppingList{Items: []ShoppingItem{{ID: "row", Name: "Onion", Note: "diced", Fields: map[string]uint64{}, Sources: []ShoppingSource{{ID: "a", Amount: "1", Note: "diced"}}}}}
+	if !mergeNeed(&list, shoppingNeed{source: ShoppingSource{ID: "b", Amount: "2", Note: "sliced"}, choice: ShoppingChoice{Name: "Onion", Note: "sliced"}}) {
+		t.Fatal("the same ingredient should combine across preparations")
+	}
+
+	RefreshAmounts(&list)
+
+	if list.Items[0].Needed != "3" || list.Items[0].Sources[0].Note != "diced" || list.Items[0].Sources[1].Note != "sliced" {
+		t.Fatal("merge lost exact amounts or preparation notes")
 	}
 }
 

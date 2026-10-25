@@ -211,14 +211,25 @@ func TestAuthoredIdentityChoicesScaleEveryBranch(t *testing.T) {
 	}}
 
 	printed := newPresenter(units.DefaultCatalog(), units.MeasureAsWritten, big.NewRat(2, 1)).presentIngredient(choice)
-	for _, expected := range []string{"Prefer", "2 cups butter", "1½ cups oil", "neutral", "If butter is unavailable", "optional"} {
+	for _, expected := range []string{"2 cups butter", "1½ cups oil", "neutral", "If butter is unavailable", "optional"} {
 		if !strings.Contains(printed.Text, expected) {
 			t.Fatalf("print %q lacks %q", printed.Text, expected)
 		}
 	}
 
+	if printed.Choice == nil || len(printed.Choice.Branches) != 2 || !printed.Choice.Preferred || printed.Choice.Branches[0].Amount.Text != "2 cups" || printed.Choice.Branches[1].Amount.Text != "1½ cups" {
+		t.Fatalf("branch layout = %#v", printed.Choice)
+	}
+
 	if *choice.Alternatives[1].Quantity.Amount.Value != "3/4" {
 		t.Fatal("scaling mutated the authored amount")
+	}
+
+	choice.Note = ""
+
+	printed = newPresenter(units.DefaultCatalog(), units.MeasureAsWritten, big.NewRat(1, 1)).presentIngredient(choice)
+	if printed.Choice.Note != "(optional)" {
+		t.Fatalf("standalone choice note = %q", printed.Choice.Note)
 	}
 }
 
@@ -231,7 +242,7 @@ func TestSharedAlternativeAmountOccupiesAmountLane(t *testing.T) {
 	for _, test := range []struct{ relation, amount, text string }{
 		{"or", "2", "lemon or lime"},
 		{"and_or", "2", "lemon and/or lime"},
-		{"preferred", "Prefer 2", "lemon; alternatively, lime"},
+		{"preferred", "2", "lemon or lime"},
 	} {
 		t.Run(test.relation, func(t *testing.T) {
 			choice := recipe.Ingredient{Relation: test.relation, Alternatives: []recipe.Ingredient{
@@ -240,6 +251,10 @@ func TestSharedAlternativeAmountOccupiesAmountLane(t *testing.T) {
 			}}
 
 			got := newPresenter(units.DefaultCatalog(), units.MeasureAsWritten, big.NewRat(2, 1)).presentIngredient(choice)
+			if got.Choice == nil || !got.Choice.SharedAmount {
+				t.Fatalf("shared amount layout lost: %#v", got.Choice)
+			}
+
 			if got.Amount.Text != test.amount || got.Text != test.text {
 				t.Fatalf("got amount %q and text %q; want %q and %q", got.Amount.Text, got.Text, test.amount, test.text)
 			}
@@ -274,6 +289,10 @@ func TestAlternativeAmountsKeepTheirBranchMeaning(t *testing.T) {
 
 			p := newPresenter(units.DefaultCatalog(), units.MeasureAsWritten, big.NewRat(1, 1))
 			got := p.presentIngredient(choice)
+
+			if got.Choice == nil || len(got.Choice.Branches) != 2 || got.Choice.Joiner != "or" {
+				t.Fatalf("separate branch layout lost: %#v", got.Choice)
+			}
 
 			second := p.presentIngredient(choice.Alternatives[1])
 			if !got.Amount.Empty() || !strings.Contains(got.Text, second.Amount.Text+" "+second.Text) || !strings.Contains(got.Text, "1 lemon") {
