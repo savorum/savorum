@@ -68,6 +68,7 @@ func exactAmountsMatch(leftKind recipe.QuantityKind, left *recipe.Amount, leftUn
 
 func (p presenter) presentIngredientAlternatives(ingredient recipe.Ingredient) PrintIngredient {
 	parts := make([]string, 0, len(ingredient.Alternatives))
+	branches := make([]PrintIngredient, 0, len(ingredient.Alternatives))
 
 	shared := sharedAlternativeQuantity(ingredient)
 
@@ -91,14 +92,18 @@ func (p presenter) presentIngredientAlternatives(ingredient recipe.Ingredient) P
 		amount := shown.Amount.Text
 		if shared != nil {
 			amount = ""
+			shown.Amount = PrintAmount{}
 		}
 
 		text := strings.TrimSpace(amount + " " + shown.Text)
 		if branch.Optional {
 			text += p.label("optional")
+			shown.Text += p.label("optional")
 		}
 
 		parts = append(parts, text)
+		shown.AsWritten = ""
+		branches = append(branches, shown)
 	}
 
 	joiner := p.label("or")
@@ -106,20 +111,7 @@ func (p presenter) presentIngredientAlternatives(ingredient recipe.Ingredient) P
 		joiner = p.label("and_or")
 	}
 
-	if ingredient.Relation == "preferred" {
-		joiner = p.label("alternatively")
-	}
-
 	text := strings.Join(parts, joiner)
-
-	if ingredient.Relation == "preferred" {
-		if shared != nil {
-			sharedAmount.Text = p.label("prefer") + sharedAmount.Text
-			sharedAmount.Segments = append([]PrintSegment{{Text: p.label("prefer")}}, sharedAmount.Segments...)
-		} else {
-			text = p.label("prefer") + text
-		}
-	}
 
 	if ingredient.Note != "" {
 		text += " — " + ingredient.Note
@@ -133,6 +125,19 @@ func (p presenter) presentIngredientAlternatives(ingredient recipe.Ingredient) P
 	// the batch. A shared amount answers for all of them; otherwise a branch
 	// that kept its own amount makes the whole row a retained one.
 	row := PrintIngredient{Amount: sharedAmount, Text: text}
+
+	choice := &PrintIngredientChoice{
+		Preferred:    ingredient.Relation == "preferred",
+		SharedAmount: shared != nil,
+		Joiner:       strings.Trim(joiner, " \t\n\r;,，；、،؛:："),
+		Branches:     branches,
+		Note:         ingredient.Note,
+	}
+	if ingredient.Optional {
+		choice.Note = strings.TrimSpace(choice.Note + p.label("optional"))
+	}
+
+	row.Choice = choice
 
 	if p.scaled() {
 		if shared != nil {
