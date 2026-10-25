@@ -111,7 +111,7 @@ function RouteAccessibility() {
       active !== navigationFocus &&
       active !== content &&
       (content?.contains(active) ||
-        active.closest('[role="dialog"], [role="alertdialog"], [role="menu"]'))
+        active.closest('header, [role="dialog"], [role="alertdialog"], [role="menu"]'))
     )
   }
 
