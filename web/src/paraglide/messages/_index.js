@@ -10,6 +10,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Account_Access_Page_TitleInputs */
 /** @typedef {{ library: NonNullable<unknown> }} Account_Access_TitleInputs */
 /** @typedef {{}} Account_Activity_HeadingInputs */
+/** @typedef {{}} Account_Admin_ActiveInputs */
 /** @typedef {{}} Account_Admin_Audit_LedeInputs */
 /** @typedef {{}} Account_Admin_Audit_Page_TitleInputs */
 /** @typedef {{}} Account_Admin_Audit_TitleInputs */
@@ -37,6 +38,8 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Account_Admin_Library_NameInputs */
 /** @typedef {{}} Account_Admin_Library_NoneInputs */
 /** @typedef {{}} Account_Admin_Library_RoleInputs */
+/** @typedef {{}} Account_Admin_ManageInputs */
+/** @typedef {{ name: NonNullable<unknown> }} Account_Admin_Manage_NamedInputs */
 /** @typedef {{}} Account_Admin_Mapping_AddInputs */
 /** @typedef {{}} Account_Admin_Mapping_Choose_LibraryInputs */
 /** @typedef {{}} Account_Admin_Mapping_Choose_ProviderInputs */
@@ -56,6 +59,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Account_Admin_Nav_LibrariesInputs */
 /** @typedef {{}} Account_Admin_Nav_PeopleInputs */
 /** @typedef {{}} Account_Admin_Nav_ProvidersInputs */
+/** @typedef {{}} Account_Admin_Password_Reset_NoticeInputs */
 /** @typedef {{}} Account_Admin_People_ErrorInputs */
 /** @typedef {{}} Account_Admin_People_HeadingInputs */
 /** @typedef {{}} Account_Admin_People_LedeInputs */
@@ -76,6 +80,8 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Account_Admin_Recover_OwnerInputs */
 /** @typedef {{}} Account_Admin_Recover_SubmitInputs */
 /** @typedef {{}} Account_Admin_RecoveredInputs */
+/** @typedef {{}} Account_Admin_Reset_ActionInputs */
+/** @typedef {{}} Account_Admin_Reset_HintInputs */
 /** @typedef {{ name: NonNullable<unknown> }} Account_Admin_Reset_PasswordInputs */
 /** @typedef {{}} Account_Admin_Reset_SubmitInputs */
 /** @typedef {{}} Account_Admin_UnavailableInputs */
@@ -98,24 +104,54 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Account_Assistant_Setup_HintInputs */
 /** @typedef {{ guide: NonNullable<unknown> }} Account_Assistant_Setup_PromptInputs */
 /** @typedef {{}} Account_Assistant_TemporaryInputs */
+/** @typedef {{}} Account_Audit_Access_ChangedInputs */
+/** @typedef {{}} Account_Audit_Action_CodeInputs */
 /** @typedef {{}} Account_Audit_ActivityInputs */
 /** @typedef {{}} Account_Audit_ActorInputs */
+/** @typedef {{}} Account_Audit_AffectedInputs */
 /** @typedef {{}} Account_Audit_AllInputs */
+/** @typedef {{}} Account_Audit_AnyoneInputs */
 /** @typedef {{}} Account_Audit_ApplyInputs */
 /** @typedef {{}} Account_Audit_AuthInputs */
 /** @typedef {{}} Account_Audit_BooksInputs */
+/** @typedef {{}} Account_Audit_ByInputs */
+/** @typedef {{}} Account_Audit_Credential_IdInputs */
+/** @typedef {{}} Account_Audit_DeletedInputs */
+/** @typedef {{}} Account_Audit_DetailsInputs */
 /** @typedef {{}} Account_Audit_EmptyInputs */
+/** @typedef {{}} Account_Audit_EnabledInputs */
 /** @typedef {{}} Account_Audit_ErrorInputs */
 /** @typedef {{ actor: NonNullable<unknown>, targetType: NonNullable<unknown>, target: NonNullable<unknown>, outcome: NonNullable<unknown> }} Account_Audit_Event_DetailInputs */
+/** @typedef {{}} Account_Audit_Event_IdInputs */
+/** @typedef {{}} Account_Audit_FailedInputs */
+/** @typedef {{}} Account_Audit_Forced_UnlinkInputs */
 /** @typedef {{}} Account_Audit_FromInputs */
 /** @typedef {{}} Account_Audit_HintInputs */
 /** @typedef {{}} Account_Audit_Identifier_HintInputs */
 /** @typedef {{}} Account_Audit_ImportsInputs */
 /** @typedef {{}} Account_Audit_LibraryInputs */
+/** @typedef {{}} Account_Audit_LinkedInputs */
 /** @typedef {{}} Account_Audit_LoadingInputs */
+/** @typedef {{}} Account_Audit_MergedInputs */
 /** @typedef {{}} Account_Audit_OlderInputs */
+/** @typedef {{}} Account_Audit_OwnerInputs */
+/** @typedef {{}} Account_Audit_Password_ChangeInputs */
+/** @typedef {{}} Account_Audit_PausedInputs */
+/** @typedef {{}} Account_Audit_PurgedInputs */
 /** @typedef {{}} Account_Audit_RecipesInputs */
+/** @typedef {{}} Account_Audit_Recovery_ReplacedInputs */
+/** @typedef {{}} Account_Audit_Recovery_Sign_InInputs */
+/** @typedef {{}} Account_Audit_RedeliveryInputs */
+/** @typedef {{}} Account_Audit_RenamedInputs */
+/** @typedef {{}} Account_Audit_Request_IdInputs */
+/** @typedef {{}} Account_Audit_ResultInputs */
+/** @typedef {{}} Account_Audit_RetiredInputs */
+/** @typedef {{}} Account_Audit_Secret_RotatedInputs */
+/** @typedef {{}} Account_Audit_ServiceInputs */
 /** @typedef {{}} Account_Audit_SettingsInputs */
+/** @typedef {{}} Account_Audit_Sign_InInputs */
+/** @typedef {{}} Account_Audit_SucceededInputs */
+/** @typedef {{}} Account_Audit_SystemInputs */
 /** @typedef {{}} Account_Audit_TargetInputs */
 /** @typedef {{}} Account_Audit_Target_AuthenticationInputs */
 /** @typedef {{}} Account_Audit_Target_BookInputs */
@@ -129,9 +165,13 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Account_Audit_Target_SettingsInputs */
 /** @typedef {{}} Account_Audit_Target_TokenInputs */
 /** @typedef {{}} Account_Audit_Target_UserInputs */
+/** @typedef {{}} Account_Audit_Test_RequestedInputs */
 /** @typedef {{}} Account_Audit_TokensInputs */
+/** @typedef {{}} Account_Audit_TrashedInputs */
+/** @typedef {{}} Account_Audit_UnlinkedInputs */
 /** @typedef {{}} Account_Audit_UntilInputs */
 /** @typedef {{}} Account_Audit_UsersInputs */
+/** @typedef {{}} Account_Audit_WebhookInputs */
 /** @typedef {{}} Account_Confirm_RemovalInputs */
 /** @typedef {{}} Account_CopiedInputs */
 /** @typedef {{}} Account_CopyInputs */
@@ -250,6 +290,8 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Account_Passkeys_Remove_ConfirmInputs */
 /** @typedef {{ name: NonNullable<unknown> }} Account_Passkeys_Remove_NamedInputs */
 /** @typedef {{}} Account_Passkeys_RemovedInputs */
+/** @typedef {{}} Account_Passkeys_RenameInputs */
+/** @typedef {{ name: NonNullable<unknown> }} Account_Passkeys_Rename_NamedInputs */
 /** @typedef {{}} Account_Passkeys_RenamedInputs */
 /** @typedef {{}} Account_Passkeys_Save_NameInputs */
 /** @typedef {{}} Account_Passkeys_UnavailableInputs */
@@ -262,6 +304,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Account_Recovery_Codes_LabelInputs */
 /** @typedef {{}} Account_Recovery_DisabledInputs */
 /** @typedef {{}} Account_Recovery_DismissInputs */
+/** @typedef {{}} Account_Recovery_EmptyInputs */
 /** @typedef {{}} Account_Recovery_GenerateInputs */
 /** @typedef {{}} Account_Recovery_HeadingInputs */
 /** @typedef {{}} Account_Recovery_HiddenInputs */
@@ -294,12 +337,15 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Account_Sessions_ErrorInputs */
 /** @typedef {{}} Account_Sessions_HeadingInputs */
 /** @typedef {{}} Account_Sessions_HintInputs */
+/** @typedef {{ date: NonNullable<unknown> }} Account_Sessions_Last_ActiveInputs */
 /** @typedef {{}} Account_Sessions_OtherInputs */
+/** @typedef {{}} Account_Sessions_Other_HeadingInputs */
 /** @typedef {{}} Account_Sessions_Others_RevokedInputs */
 /** @typedef {{}} Account_Sessions_RevokeInputs */
 /** @typedef {{ last: NonNullable<unknown> }} Account_Sessions_Revoke_NamedInputs */
 /** @typedef {{}} Account_Sessions_Revoke_OthersInputs */
 /** @typedef {{}} Account_Sessions_RevokedInputs */
+/** @typedef {{ date: NonNullable<unknown> }} Account_Sessions_Signed_InInputs */
 /** @typedef {{}} Account_Sessions_ThisInputs */
 /** @typedef {{}} Account_Sign_InInputs */
 /** @typedef {{}} Account_Sign_In_Page_TitleInputs */
@@ -673,6 +719,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Common_Dot_SeparatorInputs */
 /** @typedef {{}} Common_Earlier_VersionsInputs */
 /** @typedef {{}} Common_Keep_ItInputs */
+/** @typedef {{}} Common_LoadingInputs */
 /** @typedef {{}} Common_NextInputs */
 /** @typedef {{ value1: NonNullable<unknown>, value2: NonNullable<unknown>, value3: NonNullable<unknown> }} Common_Pagination_RangeInputs */
 /** @typedef {{}} Common_Plus_SymbolInputs */
@@ -922,6 +969,9 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Export_Menu_The_Export_Could_Not_Be_CompletedInputs */
 /** @typedef {{}} Exports_Choose_At_Least_One_Recipe_To_ExportInputs */
 /** @typedef {{}} Exports_The_Export_Could_Not_Be_CompletedInputs */
+/** @typedef {{}} Help_ImportsInputs */
+/** @typedef {{}} Help_PlanInputs */
+/** @typedef {{}} Help_ShoppingInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Import_About_HoursInputs */
 /** @typedef {{}} Import_Candidate_Already_HereInputs */
 /** @typedef {{}} Import_Candidate_BlockedInputs */
@@ -967,10 +1017,9 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Import_Job_InterruptedInputs */
 /** @typedef {{}} Import_Job_Interrupted_GuidanceInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Import_Job_Not_ImportedInputs */
-/** @typedef {{ value1: NonNullable<unknown> }} Import_Job_Page_Already_In_Your_LibraryInputs */
+/** @typedef {{}} Import_Job_Page_Back_To_ImportsInputs */
 /** @typedef {{}} Import_Job_Page_Back_To_Your_LibraryInputs */
 /** @typedef {{ value1: NonNullable<unknown>, value2: NonNullable<unknown>, value3: NonNullable<unknown> }} Import_Job_Page_Batch_OfInputs */
-/** @typedef {{}} Import_Job_Page_Could_Not_Be_ImportedInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Import_Job_Page_ElapsedInputs */
 /** @typedef {{}} Import_Job_Page_Find_These_RecipesInputs */
 /** @typedef {{}} Import_Job_Page_Finish_The_RestInputs */
@@ -979,18 +1028,14 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Import_Job_Page_Import_ProgressInputs */
 /** @typedef {{}} Import_Job_Page_Import_Review_DetailsInputs */
 /** @typedef {{}} Import_Job_Page_Import_The_RestInputs */
-/** @typedef {{}} Import_Job_Page_ImportedInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Import_Job_Page_LeftInputs */
-/** @typedef {{}} Import_Job_Page_Need_ReviewInputs */
-/** @typedef {{ value1: NonNullable<unknown> }} Import_Job_Page_Not_ImportedInputs */
+/** @typedef {{ count: NonNullable<unknown> }} Import_Job_Page_Need_A_LookInputs */
 /** @typedef {{ value1: NonNullable<unknown>, value2: NonNullable<unknown> }} Import_Job_Page_Of_RecipesInputs */
 /** @typedef {{}} Import_Job_Page_Reading_This_ImportInputs */
 /** @typedef {{}} Import_Job_Page_Review_DetailsInputs */
-/** @typedef {{}} Import_Job_Page_Review_MeasurementsInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Import_Job_Page_StartedInputs */
 /** @typedef {{}} Import_Job_Page_Stop_ImportingInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Import_Job_Page_To_GoInputs */
-/** @typedef {{}} Import_Job_Page_With_Preserved_DetailsInputs */
 /** @typedef {{}} Import_Job_Presentation_Already_In_Your_LibraryInputs */
 /** @typedef {{}} Import_Job_Presentation_Could_Not_Be_ImportedInputs */
 /** @typedef {{}} Import_Job_Presentation_Import_CompleteInputs */
@@ -1009,7 +1054,16 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Import_Job_Results_Already_In_LibraryInputs */
 /** @typedef {{}} Import_Job_Results_Could_Not_Be_ImportedInputs */
 /** @typedef {{}} Import_Job_Results_Could_Not_ImportInputs */
+/** @typedef {{}} Import_Job_Results_Error_MessageInputs */
+/** @typedef {{}} Import_Job_Results_Failure_ChangedInputs */
+/** @typedef {{}} Import_Job_Results_Failure_Changed_NextInputs */
+/** @typedef {{}} Import_Job_Results_Failure_DuplicateInputs */
+/** @typedef {{}} Import_Job_Results_Failure_Duplicate_NextInputs */
+/** @typedef {{}} Import_Job_Results_Failure_SourceInputs */
+/** @typedef {{}} Import_Job_Results_Failure_Source_NextInputs */
+/** @typedef {{}} Import_Job_Results_Failure_Unknown_NextInputs */
 /** @typedef {{}} Import_Job_Results_Filter_Import_ResultsInputs */
+/** @typedef {{}} Import_Job_Results_Find_In_LibraryInputs */
 /** @typedef {{}} Import_Job_Results_Import_DetailsInputs */
 /** @typedef {{}} Import_Job_Results_ImportedInputs */
 /** @typedef {{}} Import_Job_Results_Load_More_RecipesInputs */
@@ -1023,6 +1077,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{ count: NonNullable<unknown>, finished: NonNullable<unknown> }} Import_Job_RunningInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Import_Job_SkippedInputs */
 /** @typedef {{}} Import_Job_StoppingInputs */
+/** @typedef {{}} Import_Job_TimingInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Import_Job_WaitingInputs */
 /** @typedef {{}} Import_Jobs_That_Import_Could_Not_Be_ReadInputs */
 /** @typedef {{}} Import_Jobs_The_Recipes_In_This_Import_Could_Not_Be_ReadInputs */
@@ -1099,15 +1154,14 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Import_Source_Dialogs_Update_PreviewInputs */
 /** @typedef {{}} Imports_Index_Imports_SavorumInputs */
 /** @typedef {{}} Imports_Jobid_Import_Savorum1Inputs */
-/** @typedef {{ value1: NonNullable<unknown>, value2: NonNullable<unknown> }} Imports_Page_And_OthersInputs */
+/** @typedef {{}} Imports_Page_Empty_HintInputs */
 /** @typedef {{}} Imports_Page_ImportInputs */
 /** @typedef {{}} Imports_Page_Import_JobsInputs */
-/** @typedef {{}} Imports_Page_Import_Recipes_From_Your_LibraryInputs */
 /** @typedef {{}} Imports_Page_ImportsInputs */
+/** @typedef {{ title: NonNullable<unknown>, count: NonNullable<unknown> }} Imports_Page_Lead_And_OthersInputs */
 /** @typedef {{}} Imports_Page_Load_More_ImportsInputs */
 /** @typedef {{}} Imports_Page_No_Imports_YetInputs */
 /** @typedef {{}} Imports_Page_Reading_Your_ImportsInputs */
-/** @typedef {{}} Imports_Page_Refresh_ImportsInputs */
 /** @typedef {{}} Imports_Page_Your_Recent_Imports_Newest_FirstInputs */
 /** @typedef {{}} Index_Recipes_SavorumInputs */
 /** @typedef {{}} Ingredient_Choice_Add_AlternativeInputs */
@@ -1156,6 +1210,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Ingredient_Row_Move_UpInputs */
 /** @typedef {{}} Ingredient_Row_Preparation_Or_NoteInputs */
 /** @typedef {{}} Ingredient_Row_RemoveInputs */
+/** @typedef {{}} Ingredient_UnitInputs */
 /** @typedef {{}} Ingredients_Added_GroupInputs */
 /** @typedef {{}} Ingredients_Added_IngredientInputs */
 /** @typedef {{}} Ingredients_Group_NameInputs */
@@ -1250,6 +1305,18 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Integrations_TitleInputs */
 /** @typedef {{}} Integrations_UnavailableInputs */
 /** @typedef {{}} Integrations_WebhooksInputs */
+/** @typedef {{}} Keyboard_Shortcuts_AddInputs */
+/** @typedef {{}} Keyboard_Shortcuts_EnabledInputs */
+/** @typedef {{}} Keyboard_Shortcuts_HelpInputs */
+/** @typedef {{}} Keyboard_Shortcuts_HintInputs */
+/** @typedef {{}} Keyboard_Shortcuts_ImportsInputs */
+/** @typedef {{}} Keyboard_Shortcuts_LibraryInputs */
+/** @typedef {{}} Keyboard_Shortcuts_NextInputs */
+/** @typedef {{}} Keyboard_Shortcuts_PlanInputs */
+/** @typedef {{}} Keyboard_Shortcuts_PreviousInputs */
+/** @typedef {{}} Keyboard_Shortcuts_ReadingInputs */
+/** @typedef {{}} Keyboard_Shortcuts_ShoppingInputs */
+/** @typedef {{}} Keyboard_Shortcuts_TitleInputs */
 /** @typedef {{}} Label_Choices_Nothing_Here_Matches_ThatInputs */
 /** @typedef {{}} Label_Choices_Show_FewerInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Label_Choices_Show_MoreInputs */
@@ -1284,18 +1351,20 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Library_Filters_Choose_A_CookbookInputs */
 /** @typedef {{}} Library_Filters_Choose_A_TagInputs */
 /** @typedef {{}} Library_Filters_Clear_AllInputs */
+/** @typedef {{}} Library_Filters_Diet_HintInputs */
+/** @typedef {{}} Library_Filters_Diet_ManualInputs */
 /** @typedef {{}} Library_Filters_Every_One_ChosenInputs */
 /** @typedef {{}} Library_Filters_FavoritesInputs */
 /** @typedef {{}} Library_Filters_FiltersInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Library_Filters_FromInputs */
 /** @typedef {{}} Library_Filters_From_One_ImportInputs */
 /** @typedef {{}} Library_Filters_In_A_BookInputs */
+/** @typedef {{}} Library_Filters_MoreInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Library_Filters_Narrow_ToInputs */
 /** @typedef {{}} Library_Filters_Needs_Ingredient_ReviewInputs */
 /** @typedef {{}} Library_Filters_Not_Cooked_YetInputs */
 /** @typedef {{}} Library_Filters_Only_ShowInputs */
 /** @typedef {{}} Library_Filters_Stated_By_The_RecipeInputs */
-/** @typedef {{}} Library_Filters_Stated_HintInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Library_Filters_Stop_NarrowingInputs */
 /** @typedef {{}} Library_Filters_TagsInputs */
 /** @typedef {{}} Library_Filters_Taken_From_A_CookbookInputs */
@@ -1341,6 +1410,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{ value1: NonNullable<unknown> }} Library_Selection_Bar_SelectedInputs */
 /** @typedef {{}} Library_Selection_Bar_Selected_RecipesInputs */
 /** @typedef {{}} Library_Selection_Bar_Sref_BundleInputs */
+/** @typedef {{}} Library_Sort_CookedInputs */
 /** @typedef {{}} Library_Sort_RatingInputs */
 /** @typedef {{}} Library_Sort_RelevanceInputs */
 /** @typedef {{}} Library_Sort_TitleInputs */
@@ -1536,7 +1606,6 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Organization_Recipe_Organization_Could_Not_Be_SavedInputs */
 /** @typedef {{}} Organization_Slow_CookerInputs */
 /** @typedef {{}} Organization_Summary_Library_DetailsInputs */
-/** @typedef {{ value1: NonNullable<unknown> }} Organization_Summary_MoreInputs */
 /** @typedef {{}} Organization_Summary_Not_Filed_YetInputs */
 /** @typedef {{}} Organization_Summary_OrganizeInputs */
 /** @typedef {{}} Organization_Summary_Try_AgainInputs */
@@ -1645,8 +1714,11 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Plan_Delete_Saved_HintInputs */
 /** @typedef {{}} Plan_Delete_TitleInputs */
 /** @typedef {{}} Plan_DinnerInputs */
+/** @typedef {{ name: NonNullable<unknown>, amount: NonNullable<unknown> }} Plan_Dish_BatchesInputs */
 /** @typedef {{}} Plan_Dish_NameInputs */
+/** @typedef {{ name: NonNullable<unknown>, amount: NonNullable<unknown> }} Plan_Dish_Part_BatchInputs */
 /** @typedef {{}} Plan_DishesInputs */
+/** @typedef {{}} Plan_Earlier_This_WeekInputs */
 /** @typedef {{}} Plan_EditInputs */
 /** @typedef {{}} Plan_Edit_SavedInputs */
 /** @typedef {{}} Plan_Editor_EditInputs */
@@ -1660,6 +1732,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Plan_Load_FailedInputs */
 /** @typedef {{}} Plan_LunchInputs */
 /** @typedef {{ name: NonNullable<unknown> }} Plan_Meal_ActionsInputs */
+/** @typedef {{}} Plan_Meal_TrayInputs */
 /** @typedef {{}} Plan_Meal_TypeInputs */
 /** @typedef {{}} Plan_Meal_Type_UnspecifiedInputs */
 /** @typedef {{}} Plan_MonthInputs */
@@ -1931,6 +2004,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Recipe_Fields_SourceInputs */
 /** @typedef {{}} Recipe_Fields_Source_LocaleInputs */
 /** @typedef {{}} Recipe_Format_PreferInputs */
+/** @typedef {{}} Recipe_From_Source_PageInputs */
 /** @typedef {{}} Recipe_History_Page_A_Recipe_In_It_ChangedInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Recipe_History_Page_As_It_Was_OnInputs */
 /** @typedef {{}} Recipe_History_Page_Back_To_The_RecipeInputs */
@@ -2089,6 +2163,8 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Shopping_Added_HintInputs */
 /** @typedef {{}} Shopping_AlternativeInputs */
 /** @typedef {{}} Shopping_ApplyInputs */
+/** @typedef {{}} Shopping_ArrangeInputs */
+/** @typedef {{}} Shopping_Arrange_HintInputs */
 /** @typedef {{}} Shopping_BoughtInputs */
 /** @typedef {{}} Shopping_BuyInputs */
 /** @typedef {{}} Shopping_CancelInputs */
@@ -2119,7 +2195,6 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Shopping_Keep_MineInputs */
 /** @typedef {{}} Shopping_Keep_TheirsInputs */
 /** @typedef {{}} Shopping_ListInputs */
-/** @typedef {{}} Shopping_List_ActionsInputs */
 /** @typedef {{}} Shopping_List_Changed_FailedInputs */
 /** @typedef {{}} Shopping_List_NameInputs */
 /** @typedef {{}} Shopping_Load_FailedInputs */
@@ -2161,6 +2236,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Shopping_View_OnlyInputs */
 /** @typedef {{}} Site_Header_Active_LibraryInputs */
 /** @typedef {{}} Site_Header_BooksInputs */
+/** @typedef {{}} Site_Header_HelpInputs */
 /** @typedef {{}} Site_Header_ImportsInputs */
 /** @typedef {{}} Site_Header_MoreInputs */
 /** @typedef {{}} Site_Header_PlanInputs */
@@ -2195,6 +2271,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Source_Refresh_Page_Recipe_Source_UrlInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Source_Refresh_Page_Recorded_SourceInputs */
 /** @typedef {{}} Source_Refresh_Page_Review_Before_ReplacingInputs */
+/** @typedef {{}} Status_Loading_SlowInputs */
 /** @typedef {{}} Status_Nothing_Was_Overwritten_Reloading_Replaces_What_Is_On_SInputs */
 /** @typedef {{}} Status_Reload_The_Current_VersionInputs */
 /** @typedef {{}} Status_Storage_AdminInputs */
@@ -2735,6 +2812,47 @@ export const account_activity_heading = /** @type {((inputs?: Account_Activity_H
 /**
 * | output |
 * | --- |
+* | "Active" |
+*
+* @param {Account_Admin_ActiveInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_admin_active = /** @type {((inputs?: Account_Admin_ActiveInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Admin_ActiveInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_admin_active(inputs)
+	if (locale === "cs") return __cs.account_admin_active(inputs)
+	if (locale === "da") return __da.account_admin_active(inputs)
+	if (locale === "de") return __de.account_admin_active(inputs)
+	if (locale === "el") return __el.account_admin_active(inputs)
+	if (locale === "es") return __es.account_admin_active(inputs)
+	if (locale === "fi") return __fi.account_admin_active(inputs)
+	if (locale === "fr") return __fr.account_admin_active(inputs)
+	if (locale === "he") return __he.account_admin_active(inputs)
+	if (locale === "hu") return __hu.account_admin_active(inputs)
+	if (locale === "id") return __id.account_admin_active(inputs)
+	if (locale === "it") return __it.account_admin_active(inputs)
+	if (locale === "ja") return __ja.account_admin_active(inputs)
+	if (locale === "ko") return __ko.account_admin_active(inputs)
+	if (locale === "nb") return __nb.account_admin_active(inputs)
+	if (locale === "nl") return __nl.account_admin_active(inputs)
+	if (locale === "pl") return __pl.account_admin_active(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_admin_active(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_admin_active(inputs)
+	if (locale === "ro") return __ro.account_admin_active(inputs)
+	if (locale === "ru") return __ru.account_admin_active(inputs)
+	if (locale === "sv") return __sv.account_admin_active(inputs)
+	if (locale === "th") return __th.account_admin_active(inputs)
+	if (locale === "tr") return __tr.account_admin_active(inputs)
+	if (locale === "uk") return __uk.account_admin_active(inputs)
+	if (locale === "vi") return __vi.account_admin_active(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_admin_active(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_admin_active(inputs)
+	return __en.account_admin_active(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Security and destructive operations across this instance." |
 *
 * @param {Account_Admin_Audit_LedeInputs} inputs
@@ -2858,7 +2976,7 @@ export const account_admin_audit_title = /** @type {((inputs?: Account_Admin_Aud
 /**
 * | output |
 * | --- |
-* | "Create a local account" |
+* | "Add user" |
 *
 * @param {Account_Admin_Create_HeadingInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -3063,7 +3181,7 @@ export const account_admin_create_library_submit = /** @type {((inputs?: Account
 /**
 * | output |
 * | --- |
-* | "Create account" |
+* | "Add user" |
 *
 * @param {Account_Admin_Create_SubmitInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -3838,6 +3956,88 @@ export const account_admin_library_role = /** @type {((inputs?: Account_Admin_Li
 	if (locale === "zh-Hans") return __zh_hans1.account_admin_library_role(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_admin_library_role(inputs)
 	return __en.account_admin_library_role(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Manage" |
+*
+* @param {Account_Admin_ManageInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_admin_manage = /** @type {((inputs?: Account_Admin_ManageInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Admin_ManageInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_admin_manage(inputs)
+	if (locale === "cs") return __cs.account_admin_manage(inputs)
+	if (locale === "da") return __da.account_admin_manage(inputs)
+	if (locale === "de") return __de.account_admin_manage(inputs)
+	if (locale === "el") return __el.account_admin_manage(inputs)
+	if (locale === "es") return __es.account_admin_manage(inputs)
+	if (locale === "fi") return __fi.account_admin_manage(inputs)
+	if (locale === "fr") return __fr.account_admin_manage(inputs)
+	if (locale === "he") return __he.account_admin_manage(inputs)
+	if (locale === "hu") return __hu.account_admin_manage(inputs)
+	if (locale === "id") return __id.account_admin_manage(inputs)
+	if (locale === "it") return __it.account_admin_manage(inputs)
+	if (locale === "ja") return __ja.account_admin_manage(inputs)
+	if (locale === "ko") return __ko.account_admin_manage(inputs)
+	if (locale === "nb") return __nb.account_admin_manage(inputs)
+	if (locale === "nl") return __nl.account_admin_manage(inputs)
+	if (locale === "pl") return __pl.account_admin_manage(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_admin_manage(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_admin_manage(inputs)
+	if (locale === "ro") return __ro.account_admin_manage(inputs)
+	if (locale === "ru") return __ru.account_admin_manage(inputs)
+	if (locale === "sv") return __sv.account_admin_manage(inputs)
+	if (locale === "th") return __th.account_admin_manage(inputs)
+	if (locale === "tr") return __tr.account_admin_manage(inputs)
+	if (locale === "uk") return __uk.account_admin_manage(inputs)
+	if (locale === "vi") return __vi.account_admin_manage(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_admin_manage(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_admin_manage(inputs)
+	return __en.account_admin_manage(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Manage {name}" |
+*
+* @param {Account_Admin_Manage_NamedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_admin_manage_named = /** @type {((inputs: Account_Admin_Manage_NamedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Admin_Manage_NamedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_admin_manage_named(inputs)
+	if (locale === "cs") return __cs.account_admin_manage_named(inputs)
+	if (locale === "da") return __da.account_admin_manage_named(inputs)
+	if (locale === "de") return __de.account_admin_manage_named(inputs)
+	if (locale === "el") return __el.account_admin_manage_named(inputs)
+	if (locale === "es") return __es.account_admin_manage_named(inputs)
+	if (locale === "fi") return __fi.account_admin_manage_named(inputs)
+	if (locale === "fr") return __fr.account_admin_manage_named(inputs)
+	if (locale === "he") return __he.account_admin_manage_named(inputs)
+	if (locale === "hu") return __hu.account_admin_manage_named(inputs)
+	if (locale === "id") return __id.account_admin_manage_named(inputs)
+	if (locale === "it") return __it.account_admin_manage_named(inputs)
+	if (locale === "ja") return __ja.account_admin_manage_named(inputs)
+	if (locale === "ko") return __ko.account_admin_manage_named(inputs)
+	if (locale === "nb") return __nb.account_admin_manage_named(inputs)
+	if (locale === "nl") return __nl.account_admin_manage_named(inputs)
+	if (locale === "pl") return __pl.account_admin_manage_named(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_admin_manage_named(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_admin_manage_named(inputs)
+	if (locale === "ro") return __ro.account_admin_manage_named(inputs)
+	if (locale === "ru") return __ru.account_admin_manage_named(inputs)
+	if (locale === "sv") return __sv.account_admin_manage_named(inputs)
+	if (locale === "th") return __th.account_admin_manage_named(inputs)
+	if (locale === "tr") return __tr.account_admin_manage_named(inputs)
+	if (locale === "uk") return __uk.account_admin_manage_named(inputs)
+	if (locale === "vi") return __vi.account_admin_manage_named(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_admin_manage_named(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_admin_manage_named(inputs)
+	return __en.account_admin_manage_named(inputs)
 });
 /**
 * | output |
@@ -4617,6 +4817,47 @@ export const account_admin_nav_providers = /** @type {((inputs?: Account_Admin_N
 	if (locale === "zh-Hans") return __zh_hans1.account_admin_nav_providers(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_admin_nav_providers(inputs)
 	return __en.account_admin_nav_providers(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Password reset. This user has been signed out of all sessions." |
+*
+* @param {Account_Admin_Password_Reset_NoticeInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_admin_password_reset_notice = /** @type {((inputs?: Account_Admin_Password_Reset_NoticeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Admin_Password_Reset_NoticeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_admin_password_reset_notice(inputs)
+	if (locale === "cs") return __cs.account_admin_password_reset_notice(inputs)
+	if (locale === "da") return __da.account_admin_password_reset_notice(inputs)
+	if (locale === "de") return __de.account_admin_password_reset_notice(inputs)
+	if (locale === "el") return __el.account_admin_password_reset_notice(inputs)
+	if (locale === "es") return __es.account_admin_password_reset_notice(inputs)
+	if (locale === "fi") return __fi.account_admin_password_reset_notice(inputs)
+	if (locale === "fr") return __fr.account_admin_password_reset_notice(inputs)
+	if (locale === "he") return __he.account_admin_password_reset_notice(inputs)
+	if (locale === "hu") return __hu.account_admin_password_reset_notice(inputs)
+	if (locale === "id") return __id.account_admin_password_reset_notice(inputs)
+	if (locale === "it") return __it.account_admin_password_reset_notice(inputs)
+	if (locale === "ja") return __ja.account_admin_password_reset_notice(inputs)
+	if (locale === "ko") return __ko.account_admin_password_reset_notice(inputs)
+	if (locale === "nb") return __nb.account_admin_password_reset_notice(inputs)
+	if (locale === "nl") return __nl.account_admin_password_reset_notice(inputs)
+	if (locale === "pl") return __pl.account_admin_password_reset_notice(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_admin_password_reset_notice(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_admin_password_reset_notice(inputs)
+	if (locale === "ro") return __ro.account_admin_password_reset_notice(inputs)
+	if (locale === "ru") return __ru.account_admin_password_reset_notice(inputs)
+	if (locale === "sv") return __sv.account_admin_password_reset_notice(inputs)
+	if (locale === "th") return __th.account_admin_password_reset_notice(inputs)
+	if (locale === "tr") return __tr.account_admin_password_reset_notice(inputs)
+	if (locale === "uk") return __uk.account_admin_password_reset_notice(inputs)
+	if (locale === "vi") return __vi.account_admin_password_reset_notice(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_admin_password_reset_notice(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_admin_password_reset_notice(inputs)
+	return __en.account_admin_password_reset_notice(inputs)
 });
 /**
 * | output |
@@ -5437,6 +5678,88 @@ export const account_admin_recovered = /** @type {((inputs?: Account_Admin_Recov
 	if (locale === "zh-Hans") return __zh_hans1.account_admin_recovered(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_admin_recovered(inputs)
 	return __en.account_admin_recovered(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Reset password" |
+*
+* @param {Account_Admin_Reset_ActionInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_admin_reset_action = /** @type {((inputs?: Account_Admin_Reset_ActionInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Admin_Reset_ActionInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_admin_reset_action(inputs)
+	if (locale === "cs") return __cs.account_admin_reset_action(inputs)
+	if (locale === "da") return __da.account_admin_reset_action(inputs)
+	if (locale === "de") return __de.account_admin_reset_action(inputs)
+	if (locale === "el") return __el.account_admin_reset_action(inputs)
+	if (locale === "es") return __es.account_admin_reset_action(inputs)
+	if (locale === "fi") return __fi.account_admin_reset_action(inputs)
+	if (locale === "fr") return __fr.account_admin_reset_action(inputs)
+	if (locale === "he") return __he.account_admin_reset_action(inputs)
+	if (locale === "hu") return __hu.account_admin_reset_action(inputs)
+	if (locale === "id") return __id.account_admin_reset_action(inputs)
+	if (locale === "it") return __it.account_admin_reset_action(inputs)
+	if (locale === "ja") return __ja.account_admin_reset_action(inputs)
+	if (locale === "ko") return __ko.account_admin_reset_action(inputs)
+	if (locale === "nb") return __nb.account_admin_reset_action(inputs)
+	if (locale === "nl") return __nl.account_admin_reset_action(inputs)
+	if (locale === "pl") return __pl.account_admin_reset_action(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_admin_reset_action(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_admin_reset_action(inputs)
+	if (locale === "ro") return __ro.account_admin_reset_action(inputs)
+	if (locale === "ru") return __ru.account_admin_reset_action(inputs)
+	if (locale === "sv") return __sv.account_admin_reset_action(inputs)
+	if (locale === "th") return __th.account_admin_reset_action(inputs)
+	if (locale === "tr") return __tr.account_admin_reset_action(inputs)
+	if (locale === "uk") return __uk.account_admin_reset_action(inputs)
+	if (locale === "vi") return __vi.account_admin_reset_action(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_admin_reset_action(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_admin_reset_action(inputs)
+	return __en.account_admin_reset_action(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Resetting the password signs this user out everywhere." |
+*
+* @param {Account_Admin_Reset_HintInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_admin_reset_hint = /** @type {((inputs?: Account_Admin_Reset_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Admin_Reset_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_admin_reset_hint(inputs)
+	if (locale === "cs") return __cs.account_admin_reset_hint(inputs)
+	if (locale === "da") return __da.account_admin_reset_hint(inputs)
+	if (locale === "de") return __de.account_admin_reset_hint(inputs)
+	if (locale === "el") return __el.account_admin_reset_hint(inputs)
+	if (locale === "es") return __es.account_admin_reset_hint(inputs)
+	if (locale === "fi") return __fi.account_admin_reset_hint(inputs)
+	if (locale === "fr") return __fr.account_admin_reset_hint(inputs)
+	if (locale === "he") return __he.account_admin_reset_hint(inputs)
+	if (locale === "hu") return __hu.account_admin_reset_hint(inputs)
+	if (locale === "id") return __id.account_admin_reset_hint(inputs)
+	if (locale === "it") return __it.account_admin_reset_hint(inputs)
+	if (locale === "ja") return __ja.account_admin_reset_hint(inputs)
+	if (locale === "ko") return __ko.account_admin_reset_hint(inputs)
+	if (locale === "nb") return __nb.account_admin_reset_hint(inputs)
+	if (locale === "nl") return __nl.account_admin_reset_hint(inputs)
+	if (locale === "pl") return __pl.account_admin_reset_hint(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_admin_reset_hint(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_admin_reset_hint(inputs)
+	if (locale === "ro") return __ro.account_admin_reset_hint(inputs)
+	if (locale === "ru") return __ru.account_admin_reset_hint(inputs)
+	if (locale === "sv") return __sv.account_admin_reset_hint(inputs)
+	if (locale === "th") return __th.account_admin_reset_hint(inputs)
+	if (locale === "tr") return __tr.account_admin_reset_hint(inputs)
+	if (locale === "uk") return __uk.account_admin_reset_hint(inputs)
+	if (locale === "vi") return __vi.account_admin_reset_hint(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_admin_reset_hint(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_admin_reset_hint(inputs)
+	return __en.account_admin_reset_hint(inputs)
 });
 /**
 * | output |
@@ -6343,6 +6666,88 @@ export const account_assistant_temporary = /** @type {((inputs?: Account_Assista
 /**
 * | output |
 * | --- |
+* | "Access changed" |
+*
+* @param {Account_Audit_Access_ChangedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_access_changed = /** @type {((inputs?: Account_Audit_Access_ChangedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_Access_ChangedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_access_changed(inputs)
+	if (locale === "cs") return __cs.account_audit_access_changed(inputs)
+	if (locale === "da") return __da.account_audit_access_changed(inputs)
+	if (locale === "de") return __de.account_audit_access_changed(inputs)
+	if (locale === "el") return __el.account_audit_access_changed(inputs)
+	if (locale === "es") return __es.account_audit_access_changed(inputs)
+	if (locale === "fi") return __fi.account_audit_access_changed(inputs)
+	if (locale === "fr") return __fr.account_audit_access_changed(inputs)
+	if (locale === "he") return __he.account_audit_access_changed(inputs)
+	if (locale === "hu") return __hu.account_audit_access_changed(inputs)
+	if (locale === "id") return __id.account_audit_access_changed(inputs)
+	if (locale === "it") return __it.account_audit_access_changed(inputs)
+	if (locale === "ja") return __ja.account_audit_access_changed(inputs)
+	if (locale === "ko") return __ko.account_audit_access_changed(inputs)
+	if (locale === "nb") return __nb.account_audit_access_changed(inputs)
+	if (locale === "nl") return __nl.account_audit_access_changed(inputs)
+	if (locale === "pl") return __pl.account_audit_access_changed(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_access_changed(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_access_changed(inputs)
+	if (locale === "ro") return __ro.account_audit_access_changed(inputs)
+	if (locale === "ru") return __ru.account_audit_access_changed(inputs)
+	if (locale === "sv") return __sv.account_audit_access_changed(inputs)
+	if (locale === "th") return __th.account_audit_access_changed(inputs)
+	if (locale === "tr") return __tr.account_audit_access_changed(inputs)
+	if (locale === "uk") return __uk.account_audit_access_changed(inputs)
+	if (locale === "vi") return __vi.account_audit_access_changed(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_access_changed(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_access_changed(inputs)
+	return __en.account_audit_access_changed(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Action code" |
+*
+* @param {Account_Audit_Action_CodeInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_action_code = /** @type {((inputs?: Account_Audit_Action_CodeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_Action_CodeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_action_code(inputs)
+	if (locale === "cs") return __cs.account_audit_action_code(inputs)
+	if (locale === "da") return __da.account_audit_action_code(inputs)
+	if (locale === "de") return __de.account_audit_action_code(inputs)
+	if (locale === "el") return __el.account_audit_action_code(inputs)
+	if (locale === "es") return __es.account_audit_action_code(inputs)
+	if (locale === "fi") return __fi.account_audit_action_code(inputs)
+	if (locale === "fr") return __fr.account_audit_action_code(inputs)
+	if (locale === "he") return __he.account_audit_action_code(inputs)
+	if (locale === "hu") return __hu.account_audit_action_code(inputs)
+	if (locale === "id") return __id.account_audit_action_code(inputs)
+	if (locale === "it") return __it.account_audit_action_code(inputs)
+	if (locale === "ja") return __ja.account_audit_action_code(inputs)
+	if (locale === "ko") return __ko.account_audit_action_code(inputs)
+	if (locale === "nb") return __nb.account_audit_action_code(inputs)
+	if (locale === "nl") return __nl.account_audit_action_code(inputs)
+	if (locale === "pl") return __pl.account_audit_action_code(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_action_code(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_action_code(inputs)
+	if (locale === "ro") return __ro.account_audit_action_code(inputs)
+	if (locale === "ru") return __ru.account_audit_action_code(inputs)
+	if (locale === "sv") return __sv.account_audit_action_code(inputs)
+	if (locale === "th") return __th.account_audit_action_code(inputs)
+	if (locale === "tr") return __tr.account_audit_action_code(inputs)
+	if (locale === "uk") return __uk.account_audit_action_code(inputs)
+	if (locale === "vi") return __vi.account_audit_action_code(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_action_code(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_action_code(inputs)
+	return __en.account_audit_action_code(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Activity" |
 *
 * @param {Account_Audit_ActivityInputs} inputs
@@ -6425,6 +6830,47 @@ export const account_audit_actor = /** @type {((inputs?: Account_Audit_ActorInpu
 /**
 * | output |
 * | --- |
+* | "Affected" |
+*
+* @param {Account_Audit_AffectedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_affected = /** @type {((inputs?: Account_Audit_AffectedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_AffectedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_affected(inputs)
+	if (locale === "cs") return __cs.account_audit_affected(inputs)
+	if (locale === "da") return __da.account_audit_affected(inputs)
+	if (locale === "de") return __de.account_audit_affected(inputs)
+	if (locale === "el") return __el.account_audit_affected(inputs)
+	if (locale === "es") return __es.account_audit_affected(inputs)
+	if (locale === "fi") return __fi.account_audit_affected(inputs)
+	if (locale === "fr") return __fr.account_audit_affected(inputs)
+	if (locale === "he") return __he.account_audit_affected(inputs)
+	if (locale === "hu") return __hu.account_audit_affected(inputs)
+	if (locale === "id") return __id.account_audit_affected(inputs)
+	if (locale === "it") return __it.account_audit_affected(inputs)
+	if (locale === "ja") return __ja.account_audit_affected(inputs)
+	if (locale === "ko") return __ko.account_audit_affected(inputs)
+	if (locale === "nb") return __nb.account_audit_affected(inputs)
+	if (locale === "nl") return __nl.account_audit_affected(inputs)
+	if (locale === "pl") return __pl.account_audit_affected(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_affected(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_affected(inputs)
+	if (locale === "ro") return __ro.account_audit_affected(inputs)
+	if (locale === "ru") return __ru.account_audit_affected(inputs)
+	if (locale === "sv") return __sv.account_audit_affected(inputs)
+	if (locale === "th") return __th.account_audit_affected(inputs)
+	if (locale === "tr") return __tr.account_audit_affected(inputs)
+	if (locale === "uk") return __uk.account_audit_affected(inputs)
+	if (locale === "vi") return __vi.account_audit_affected(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_affected(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_affected(inputs)
+	return __en.account_audit_affected(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "All activity" |
 *
 * @param {Account_Audit_AllInputs} inputs
@@ -6462,6 +6908,47 @@ export const account_audit_all = /** @type {((inputs?: Account_Audit_AllInputs, 
 	if (locale === "zh-Hans") return __zh_hans1.account_audit_all(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_audit_all(inputs)
 	return __en.account_audit_all(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Anyone" |
+*
+* @param {Account_Audit_AnyoneInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_anyone = /** @type {((inputs?: Account_Audit_AnyoneInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_AnyoneInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_anyone(inputs)
+	if (locale === "cs") return __cs.account_audit_anyone(inputs)
+	if (locale === "da") return __da.account_audit_anyone(inputs)
+	if (locale === "de") return __de.account_audit_anyone(inputs)
+	if (locale === "el") return __el.account_audit_anyone(inputs)
+	if (locale === "es") return __es.account_audit_anyone(inputs)
+	if (locale === "fi") return __fi.account_audit_anyone(inputs)
+	if (locale === "fr") return __fr.account_audit_anyone(inputs)
+	if (locale === "he") return __he.account_audit_anyone(inputs)
+	if (locale === "hu") return __hu.account_audit_anyone(inputs)
+	if (locale === "id") return __id.account_audit_anyone(inputs)
+	if (locale === "it") return __it.account_audit_anyone(inputs)
+	if (locale === "ja") return __ja.account_audit_anyone(inputs)
+	if (locale === "ko") return __ko.account_audit_anyone(inputs)
+	if (locale === "nb") return __nb.account_audit_anyone(inputs)
+	if (locale === "nl") return __nl.account_audit_anyone(inputs)
+	if (locale === "pl") return __pl.account_audit_anyone(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_anyone(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_anyone(inputs)
+	if (locale === "ro") return __ro.account_audit_anyone(inputs)
+	if (locale === "ru") return __ru.account_audit_anyone(inputs)
+	if (locale === "sv") return __sv.account_audit_anyone(inputs)
+	if (locale === "th") return __th.account_audit_anyone(inputs)
+	if (locale === "tr") return __tr.account_audit_anyone(inputs)
+	if (locale === "uk") return __uk.account_audit_anyone(inputs)
+	if (locale === "vi") return __vi.account_audit_anyone(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_anyone(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_anyone(inputs)
+	return __en.account_audit_anyone(inputs)
 });
 /**
 * | output |
@@ -6589,6 +7076,170 @@ export const account_audit_books = /** @type {((inputs?: Account_Audit_BooksInpu
 /**
 * | output |
 * | --- |
+* | "By" |
+*
+* @param {Account_Audit_ByInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_by = /** @type {((inputs?: Account_Audit_ByInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_ByInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_by(inputs)
+	if (locale === "cs") return __cs.account_audit_by(inputs)
+	if (locale === "da") return __da.account_audit_by(inputs)
+	if (locale === "de") return __de.account_audit_by(inputs)
+	if (locale === "el") return __el.account_audit_by(inputs)
+	if (locale === "es") return __es.account_audit_by(inputs)
+	if (locale === "fi") return __fi.account_audit_by(inputs)
+	if (locale === "fr") return __fr.account_audit_by(inputs)
+	if (locale === "he") return __he.account_audit_by(inputs)
+	if (locale === "hu") return __hu.account_audit_by(inputs)
+	if (locale === "id") return __id.account_audit_by(inputs)
+	if (locale === "it") return __it.account_audit_by(inputs)
+	if (locale === "ja") return __ja.account_audit_by(inputs)
+	if (locale === "ko") return __ko.account_audit_by(inputs)
+	if (locale === "nb") return __nb.account_audit_by(inputs)
+	if (locale === "nl") return __nl.account_audit_by(inputs)
+	if (locale === "pl") return __pl.account_audit_by(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_by(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_by(inputs)
+	if (locale === "ro") return __ro.account_audit_by(inputs)
+	if (locale === "ru") return __ru.account_audit_by(inputs)
+	if (locale === "sv") return __sv.account_audit_by(inputs)
+	if (locale === "th") return __th.account_audit_by(inputs)
+	if (locale === "tr") return __tr.account_audit_by(inputs)
+	if (locale === "uk") return __uk.account_audit_by(inputs)
+	if (locale === "vi") return __vi.account_audit_by(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_by(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_by(inputs)
+	return __en.account_audit_by(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Credential ID" |
+*
+* @param {Account_Audit_Credential_IdInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_credential_id = /** @type {((inputs?: Account_Audit_Credential_IdInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_Credential_IdInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_credential_id(inputs)
+	if (locale === "cs") return __cs.account_audit_credential_id(inputs)
+	if (locale === "da") return __da.account_audit_credential_id(inputs)
+	if (locale === "de") return __de.account_audit_credential_id(inputs)
+	if (locale === "el") return __el.account_audit_credential_id(inputs)
+	if (locale === "es") return __es.account_audit_credential_id(inputs)
+	if (locale === "fi") return __fi.account_audit_credential_id(inputs)
+	if (locale === "fr") return __fr.account_audit_credential_id(inputs)
+	if (locale === "he") return __he.account_audit_credential_id(inputs)
+	if (locale === "hu") return __hu.account_audit_credential_id(inputs)
+	if (locale === "id") return __id.account_audit_credential_id(inputs)
+	if (locale === "it") return __it.account_audit_credential_id(inputs)
+	if (locale === "ja") return __ja.account_audit_credential_id(inputs)
+	if (locale === "ko") return __ko.account_audit_credential_id(inputs)
+	if (locale === "nb") return __nb.account_audit_credential_id(inputs)
+	if (locale === "nl") return __nl.account_audit_credential_id(inputs)
+	if (locale === "pl") return __pl.account_audit_credential_id(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_credential_id(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_credential_id(inputs)
+	if (locale === "ro") return __ro.account_audit_credential_id(inputs)
+	if (locale === "ru") return __ru.account_audit_credential_id(inputs)
+	if (locale === "sv") return __sv.account_audit_credential_id(inputs)
+	if (locale === "th") return __th.account_audit_credential_id(inputs)
+	if (locale === "tr") return __tr.account_audit_credential_id(inputs)
+	if (locale === "uk") return __uk.account_audit_credential_id(inputs)
+	if (locale === "vi") return __vi.account_audit_credential_id(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_credential_id(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_credential_id(inputs)
+	return __en.account_audit_credential_id(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Deleted" |
+*
+* @param {Account_Audit_DeletedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_deleted = /** @type {((inputs?: Account_Audit_DeletedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_DeletedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_deleted(inputs)
+	if (locale === "cs") return __cs.account_audit_deleted(inputs)
+	if (locale === "da") return __da.account_audit_deleted(inputs)
+	if (locale === "de") return __de.account_audit_deleted(inputs)
+	if (locale === "el") return __el.account_audit_deleted(inputs)
+	if (locale === "es") return __es.account_audit_deleted(inputs)
+	if (locale === "fi") return __fi.account_audit_deleted(inputs)
+	if (locale === "fr") return __fr.account_audit_deleted(inputs)
+	if (locale === "he") return __he.account_audit_deleted(inputs)
+	if (locale === "hu") return __hu.account_audit_deleted(inputs)
+	if (locale === "id") return __id.account_audit_deleted(inputs)
+	if (locale === "it") return __it.account_audit_deleted(inputs)
+	if (locale === "ja") return __ja.account_audit_deleted(inputs)
+	if (locale === "ko") return __ko.account_audit_deleted(inputs)
+	if (locale === "nb") return __nb.account_audit_deleted(inputs)
+	if (locale === "nl") return __nl.account_audit_deleted(inputs)
+	if (locale === "pl") return __pl.account_audit_deleted(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_deleted(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_deleted(inputs)
+	if (locale === "ro") return __ro.account_audit_deleted(inputs)
+	if (locale === "ru") return __ru.account_audit_deleted(inputs)
+	if (locale === "sv") return __sv.account_audit_deleted(inputs)
+	if (locale === "th") return __th.account_audit_deleted(inputs)
+	if (locale === "tr") return __tr.account_audit_deleted(inputs)
+	if (locale === "uk") return __uk.account_audit_deleted(inputs)
+	if (locale === "vi") return __vi.account_audit_deleted(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_deleted(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_deleted(inputs)
+	return __en.account_audit_deleted(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Record details" |
+*
+* @param {Account_Audit_DetailsInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_details = /** @type {((inputs?: Account_Audit_DetailsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_DetailsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_details(inputs)
+	if (locale === "cs") return __cs.account_audit_details(inputs)
+	if (locale === "da") return __da.account_audit_details(inputs)
+	if (locale === "de") return __de.account_audit_details(inputs)
+	if (locale === "el") return __el.account_audit_details(inputs)
+	if (locale === "es") return __es.account_audit_details(inputs)
+	if (locale === "fi") return __fi.account_audit_details(inputs)
+	if (locale === "fr") return __fr.account_audit_details(inputs)
+	if (locale === "he") return __he.account_audit_details(inputs)
+	if (locale === "hu") return __hu.account_audit_details(inputs)
+	if (locale === "id") return __id.account_audit_details(inputs)
+	if (locale === "it") return __it.account_audit_details(inputs)
+	if (locale === "ja") return __ja.account_audit_details(inputs)
+	if (locale === "ko") return __ko.account_audit_details(inputs)
+	if (locale === "nb") return __nb.account_audit_details(inputs)
+	if (locale === "nl") return __nl.account_audit_details(inputs)
+	if (locale === "pl") return __pl.account_audit_details(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_details(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_details(inputs)
+	if (locale === "ro") return __ro.account_audit_details(inputs)
+	if (locale === "ru") return __ru.account_audit_details(inputs)
+	if (locale === "sv") return __sv.account_audit_details(inputs)
+	if (locale === "th") return __th.account_audit_details(inputs)
+	if (locale === "tr") return __tr.account_audit_details(inputs)
+	if (locale === "uk") return __uk.account_audit_details(inputs)
+	if (locale === "vi") return __vi.account_audit_details(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_details(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_details(inputs)
+	return __en.account_audit_details(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "No matching activity." |
 *
 * @param {Account_Audit_EmptyInputs} inputs
@@ -6626,6 +7277,47 @@ export const account_audit_empty = /** @type {((inputs?: Account_Audit_EmptyInpu
 	if (locale === "zh-Hans") return __zh_hans1.account_audit_empty(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_audit_empty(inputs)
 	return __en.account_audit_empty(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Enabled" |
+*
+* @param {Account_Audit_EnabledInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_enabled = /** @type {((inputs?: Account_Audit_EnabledInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_EnabledInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_enabled(inputs)
+	if (locale === "cs") return __cs.account_audit_enabled(inputs)
+	if (locale === "da") return __da.account_audit_enabled(inputs)
+	if (locale === "de") return __de.account_audit_enabled(inputs)
+	if (locale === "el") return __el.account_audit_enabled(inputs)
+	if (locale === "es") return __es.account_audit_enabled(inputs)
+	if (locale === "fi") return __fi.account_audit_enabled(inputs)
+	if (locale === "fr") return __fr.account_audit_enabled(inputs)
+	if (locale === "he") return __he.account_audit_enabled(inputs)
+	if (locale === "hu") return __hu.account_audit_enabled(inputs)
+	if (locale === "id") return __id.account_audit_enabled(inputs)
+	if (locale === "it") return __it.account_audit_enabled(inputs)
+	if (locale === "ja") return __ja.account_audit_enabled(inputs)
+	if (locale === "ko") return __ko.account_audit_enabled(inputs)
+	if (locale === "nb") return __nb.account_audit_enabled(inputs)
+	if (locale === "nl") return __nl.account_audit_enabled(inputs)
+	if (locale === "pl") return __pl.account_audit_enabled(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_enabled(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_enabled(inputs)
+	if (locale === "ro") return __ro.account_audit_enabled(inputs)
+	if (locale === "ru") return __ru.account_audit_enabled(inputs)
+	if (locale === "sv") return __sv.account_audit_enabled(inputs)
+	if (locale === "th") return __th.account_audit_enabled(inputs)
+	if (locale === "tr") return __tr.account_audit_enabled(inputs)
+	if (locale === "uk") return __uk.account_audit_enabled(inputs)
+	if (locale === "vi") return __vi.account_audit_enabled(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_enabled(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_enabled(inputs)
+	return __en.account_audit_enabled(inputs)
 });
 /**
 * | output |
@@ -6708,6 +7400,129 @@ export const account_audit_event_detail = /** @type {((inputs: Account_Audit_Eve
 	if (locale === "zh-Hans") return __zh_hans1.account_audit_event_detail(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_audit_event_detail(inputs)
 	return __en.account_audit_event_detail(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Event ID" |
+*
+* @param {Account_Audit_Event_IdInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_event_id = /** @type {((inputs?: Account_Audit_Event_IdInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_Event_IdInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_event_id(inputs)
+	if (locale === "cs") return __cs.account_audit_event_id(inputs)
+	if (locale === "da") return __da.account_audit_event_id(inputs)
+	if (locale === "de") return __de.account_audit_event_id(inputs)
+	if (locale === "el") return __el.account_audit_event_id(inputs)
+	if (locale === "es") return __es.account_audit_event_id(inputs)
+	if (locale === "fi") return __fi.account_audit_event_id(inputs)
+	if (locale === "fr") return __fr.account_audit_event_id(inputs)
+	if (locale === "he") return __he.account_audit_event_id(inputs)
+	if (locale === "hu") return __hu.account_audit_event_id(inputs)
+	if (locale === "id") return __id.account_audit_event_id(inputs)
+	if (locale === "it") return __it.account_audit_event_id(inputs)
+	if (locale === "ja") return __ja.account_audit_event_id(inputs)
+	if (locale === "ko") return __ko.account_audit_event_id(inputs)
+	if (locale === "nb") return __nb.account_audit_event_id(inputs)
+	if (locale === "nl") return __nl.account_audit_event_id(inputs)
+	if (locale === "pl") return __pl.account_audit_event_id(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_event_id(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_event_id(inputs)
+	if (locale === "ro") return __ro.account_audit_event_id(inputs)
+	if (locale === "ru") return __ru.account_audit_event_id(inputs)
+	if (locale === "sv") return __sv.account_audit_event_id(inputs)
+	if (locale === "th") return __th.account_audit_event_id(inputs)
+	if (locale === "tr") return __tr.account_audit_event_id(inputs)
+	if (locale === "uk") return __uk.account_audit_event_id(inputs)
+	if (locale === "vi") return __vi.account_audit_event_id(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_event_id(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_event_id(inputs)
+	return __en.account_audit_event_id(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Failed" |
+*
+* @param {Account_Audit_FailedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_failed = /** @type {((inputs?: Account_Audit_FailedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_FailedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_failed(inputs)
+	if (locale === "cs") return __cs.account_audit_failed(inputs)
+	if (locale === "da") return __da.account_audit_failed(inputs)
+	if (locale === "de") return __de.account_audit_failed(inputs)
+	if (locale === "el") return __el.account_audit_failed(inputs)
+	if (locale === "es") return __es.account_audit_failed(inputs)
+	if (locale === "fi") return __fi.account_audit_failed(inputs)
+	if (locale === "fr") return __fr.account_audit_failed(inputs)
+	if (locale === "he") return __he.account_audit_failed(inputs)
+	if (locale === "hu") return __hu.account_audit_failed(inputs)
+	if (locale === "id") return __id.account_audit_failed(inputs)
+	if (locale === "it") return __it.account_audit_failed(inputs)
+	if (locale === "ja") return __ja.account_audit_failed(inputs)
+	if (locale === "ko") return __ko.account_audit_failed(inputs)
+	if (locale === "nb") return __nb.account_audit_failed(inputs)
+	if (locale === "nl") return __nl.account_audit_failed(inputs)
+	if (locale === "pl") return __pl.account_audit_failed(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_failed(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_failed(inputs)
+	if (locale === "ro") return __ro.account_audit_failed(inputs)
+	if (locale === "ru") return __ru.account_audit_failed(inputs)
+	if (locale === "sv") return __sv.account_audit_failed(inputs)
+	if (locale === "th") return __th.account_audit_failed(inputs)
+	if (locale === "tr") return __tr.account_audit_failed(inputs)
+	if (locale === "uk") return __uk.account_audit_failed(inputs)
+	if (locale === "vi") return __vi.account_audit_failed(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_failed(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_failed(inputs)
+	return __en.account_audit_failed(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Forced sign-in method removal" |
+*
+* @param {Account_Audit_Forced_UnlinkInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_forced_unlink = /** @type {((inputs?: Account_Audit_Forced_UnlinkInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_Forced_UnlinkInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_forced_unlink(inputs)
+	if (locale === "cs") return __cs.account_audit_forced_unlink(inputs)
+	if (locale === "da") return __da.account_audit_forced_unlink(inputs)
+	if (locale === "de") return __de.account_audit_forced_unlink(inputs)
+	if (locale === "el") return __el.account_audit_forced_unlink(inputs)
+	if (locale === "es") return __es.account_audit_forced_unlink(inputs)
+	if (locale === "fi") return __fi.account_audit_forced_unlink(inputs)
+	if (locale === "fr") return __fr.account_audit_forced_unlink(inputs)
+	if (locale === "he") return __he.account_audit_forced_unlink(inputs)
+	if (locale === "hu") return __hu.account_audit_forced_unlink(inputs)
+	if (locale === "id") return __id.account_audit_forced_unlink(inputs)
+	if (locale === "it") return __it.account_audit_forced_unlink(inputs)
+	if (locale === "ja") return __ja.account_audit_forced_unlink(inputs)
+	if (locale === "ko") return __ko.account_audit_forced_unlink(inputs)
+	if (locale === "nb") return __nb.account_audit_forced_unlink(inputs)
+	if (locale === "nl") return __nl.account_audit_forced_unlink(inputs)
+	if (locale === "pl") return __pl.account_audit_forced_unlink(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_forced_unlink(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_forced_unlink(inputs)
+	if (locale === "ro") return __ro.account_audit_forced_unlink(inputs)
+	if (locale === "ru") return __ru.account_audit_forced_unlink(inputs)
+	if (locale === "sv") return __sv.account_audit_forced_unlink(inputs)
+	if (locale === "th") return __th.account_audit_forced_unlink(inputs)
+	if (locale === "tr") return __tr.account_audit_forced_unlink(inputs)
+	if (locale === "uk") return __uk.account_audit_forced_unlink(inputs)
+	if (locale === "vi") return __vi.account_audit_forced_unlink(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_forced_unlink(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_forced_unlink(inputs)
+	return __en.account_audit_forced_unlink(inputs)
 });
 /**
 * | output |
@@ -6917,6 +7732,47 @@ export const account_audit_library = /** @type {((inputs?: Account_Audit_Library
 /**
 * | output |
 * | --- |
+* | "Sign-in method added" |
+*
+* @param {Account_Audit_LinkedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_linked = /** @type {((inputs?: Account_Audit_LinkedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_LinkedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_linked(inputs)
+	if (locale === "cs") return __cs.account_audit_linked(inputs)
+	if (locale === "da") return __da.account_audit_linked(inputs)
+	if (locale === "de") return __de.account_audit_linked(inputs)
+	if (locale === "el") return __el.account_audit_linked(inputs)
+	if (locale === "es") return __es.account_audit_linked(inputs)
+	if (locale === "fi") return __fi.account_audit_linked(inputs)
+	if (locale === "fr") return __fr.account_audit_linked(inputs)
+	if (locale === "he") return __he.account_audit_linked(inputs)
+	if (locale === "hu") return __hu.account_audit_linked(inputs)
+	if (locale === "id") return __id.account_audit_linked(inputs)
+	if (locale === "it") return __it.account_audit_linked(inputs)
+	if (locale === "ja") return __ja.account_audit_linked(inputs)
+	if (locale === "ko") return __ko.account_audit_linked(inputs)
+	if (locale === "nb") return __nb.account_audit_linked(inputs)
+	if (locale === "nl") return __nl.account_audit_linked(inputs)
+	if (locale === "pl") return __pl.account_audit_linked(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_linked(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_linked(inputs)
+	if (locale === "ro") return __ro.account_audit_linked(inputs)
+	if (locale === "ru") return __ru.account_audit_linked(inputs)
+	if (locale === "sv") return __sv.account_audit_linked(inputs)
+	if (locale === "th") return __th.account_audit_linked(inputs)
+	if (locale === "tr") return __tr.account_audit_linked(inputs)
+	if (locale === "uk") return __uk.account_audit_linked(inputs)
+	if (locale === "vi") return __vi.account_audit_linked(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_linked(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_linked(inputs)
+	return __en.account_audit_linked(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Loading audit history…" |
 *
 * @param {Account_Audit_LoadingInputs} inputs
@@ -6954,6 +7810,47 @@ export const account_audit_loading = /** @type {((inputs?: Account_Audit_Loading
 	if (locale === "zh-Hans") return __zh_hans1.account_audit_loading(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_audit_loading(inputs)
 	return __en.account_audit_loading(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Merged" |
+*
+* @param {Account_Audit_MergedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_merged = /** @type {((inputs?: Account_Audit_MergedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_MergedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_merged(inputs)
+	if (locale === "cs") return __cs.account_audit_merged(inputs)
+	if (locale === "da") return __da.account_audit_merged(inputs)
+	if (locale === "de") return __de.account_audit_merged(inputs)
+	if (locale === "el") return __el.account_audit_merged(inputs)
+	if (locale === "es") return __es.account_audit_merged(inputs)
+	if (locale === "fi") return __fi.account_audit_merged(inputs)
+	if (locale === "fr") return __fr.account_audit_merged(inputs)
+	if (locale === "he") return __he.account_audit_merged(inputs)
+	if (locale === "hu") return __hu.account_audit_merged(inputs)
+	if (locale === "id") return __id.account_audit_merged(inputs)
+	if (locale === "it") return __it.account_audit_merged(inputs)
+	if (locale === "ja") return __ja.account_audit_merged(inputs)
+	if (locale === "ko") return __ko.account_audit_merged(inputs)
+	if (locale === "nb") return __nb.account_audit_merged(inputs)
+	if (locale === "nl") return __nl.account_audit_merged(inputs)
+	if (locale === "pl") return __pl.account_audit_merged(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_merged(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_merged(inputs)
+	if (locale === "ro") return __ro.account_audit_merged(inputs)
+	if (locale === "ru") return __ru.account_audit_merged(inputs)
+	if (locale === "sv") return __sv.account_audit_merged(inputs)
+	if (locale === "th") return __th.account_audit_merged(inputs)
+	if (locale === "tr") return __tr.account_audit_merged(inputs)
+	if (locale === "uk") return __uk.account_audit_merged(inputs)
+	if (locale === "vi") return __vi.account_audit_merged(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_merged(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_merged(inputs)
+	return __en.account_audit_merged(inputs)
 });
 /**
 * | output |
@@ -6999,6 +7896,170 @@ export const account_audit_older = /** @type {((inputs?: Account_Audit_OlderInpu
 /**
 * | output |
 * | --- |
+* | "Instance owner" |
+*
+* @param {Account_Audit_OwnerInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_owner = /** @type {((inputs?: Account_Audit_OwnerInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_OwnerInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_owner(inputs)
+	if (locale === "cs") return __cs.account_audit_owner(inputs)
+	if (locale === "da") return __da.account_audit_owner(inputs)
+	if (locale === "de") return __de.account_audit_owner(inputs)
+	if (locale === "el") return __el.account_audit_owner(inputs)
+	if (locale === "es") return __es.account_audit_owner(inputs)
+	if (locale === "fi") return __fi.account_audit_owner(inputs)
+	if (locale === "fr") return __fr.account_audit_owner(inputs)
+	if (locale === "he") return __he.account_audit_owner(inputs)
+	if (locale === "hu") return __hu.account_audit_owner(inputs)
+	if (locale === "id") return __id.account_audit_owner(inputs)
+	if (locale === "it") return __it.account_audit_owner(inputs)
+	if (locale === "ja") return __ja.account_audit_owner(inputs)
+	if (locale === "ko") return __ko.account_audit_owner(inputs)
+	if (locale === "nb") return __nb.account_audit_owner(inputs)
+	if (locale === "nl") return __nl.account_audit_owner(inputs)
+	if (locale === "pl") return __pl.account_audit_owner(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_owner(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_owner(inputs)
+	if (locale === "ro") return __ro.account_audit_owner(inputs)
+	if (locale === "ru") return __ru.account_audit_owner(inputs)
+	if (locale === "sv") return __sv.account_audit_owner(inputs)
+	if (locale === "th") return __th.account_audit_owner(inputs)
+	if (locale === "tr") return __tr.account_audit_owner(inputs)
+	if (locale === "uk") return __uk.account_audit_owner(inputs)
+	if (locale === "vi") return __vi.account_audit_owner(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_owner(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_owner(inputs)
+	return __en.account_audit_owner(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Password change" |
+*
+* @param {Account_Audit_Password_ChangeInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_password_change = /** @type {((inputs?: Account_Audit_Password_ChangeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_Password_ChangeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_password_change(inputs)
+	if (locale === "cs") return __cs.account_audit_password_change(inputs)
+	if (locale === "da") return __da.account_audit_password_change(inputs)
+	if (locale === "de") return __de.account_audit_password_change(inputs)
+	if (locale === "el") return __el.account_audit_password_change(inputs)
+	if (locale === "es") return __es.account_audit_password_change(inputs)
+	if (locale === "fi") return __fi.account_audit_password_change(inputs)
+	if (locale === "fr") return __fr.account_audit_password_change(inputs)
+	if (locale === "he") return __he.account_audit_password_change(inputs)
+	if (locale === "hu") return __hu.account_audit_password_change(inputs)
+	if (locale === "id") return __id.account_audit_password_change(inputs)
+	if (locale === "it") return __it.account_audit_password_change(inputs)
+	if (locale === "ja") return __ja.account_audit_password_change(inputs)
+	if (locale === "ko") return __ko.account_audit_password_change(inputs)
+	if (locale === "nb") return __nb.account_audit_password_change(inputs)
+	if (locale === "nl") return __nl.account_audit_password_change(inputs)
+	if (locale === "pl") return __pl.account_audit_password_change(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_password_change(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_password_change(inputs)
+	if (locale === "ro") return __ro.account_audit_password_change(inputs)
+	if (locale === "ru") return __ru.account_audit_password_change(inputs)
+	if (locale === "sv") return __sv.account_audit_password_change(inputs)
+	if (locale === "th") return __th.account_audit_password_change(inputs)
+	if (locale === "tr") return __tr.account_audit_password_change(inputs)
+	if (locale === "uk") return __uk.account_audit_password_change(inputs)
+	if (locale === "vi") return __vi.account_audit_password_change(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_password_change(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_password_change(inputs)
+	return __en.account_audit_password_change(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Paused" |
+*
+* @param {Account_Audit_PausedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_paused = /** @type {((inputs?: Account_Audit_PausedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_PausedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_paused(inputs)
+	if (locale === "cs") return __cs.account_audit_paused(inputs)
+	if (locale === "da") return __da.account_audit_paused(inputs)
+	if (locale === "de") return __de.account_audit_paused(inputs)
+	if (locale === "el") return __el.account_audit_paused(inputs)
+	if (locale === "es") return __es.account_audit_paused(inputs)
+	if (locale === "fi") return __fi.account_audit_paused(inputs)
+	if (locale === "fr") return __fr.account_audit_paused(inputs)
+	if (locale === "he") return __he.account_audit_paused(inputs)
+	if (locale === "hu") return __hu.account_audit_paused(inputs)
+	if (locale === "id") return __id.account_audit_paused(inputs)
+	if (locale === "it") return __it.account_audit_paused(inputs)
+	if (locale === "ja") return __ja.account_audit_paused(inputs)
+	if (locale === "ko") return __ko.account_audit_paused(inputs)
+	if (locale === "nb") return __nb.account_audit_paused(inputs)
+	if (locale === "nl") return __nl.account_audit_paused(inputs)
+	if (locale === "pl") return __pl.account_audit_paused(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_paused(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_paused(inputs)
+	if (locale === "ro") return __ro.account_audit_paused(inputs)
+	if (locale === "ru") return __ru.account_audit_paused(inputs)
+	if (locale === "sv") return __sv.account_audit_paused(inputs)
+	if (locale === "th") return __th.account_audit_paused(inputs)
+	if (locale === "tr") return __tr.account_audit_paused(inputs)
+	if (locale === "uk") return __uk.account_audit_paused(inputs)
+	if (locale === "vi") return __vi.account_audit_paused(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_paused(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_paused(inputs)
+	return __en.account_audit_paused(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Permanently deleted" |
+*
+* @param {Account_Audit_PurgedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_purged = /** @type {((inputs?: Account_Audit_PurgedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_PurgedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_purged(inputs)
+	if (locale === "cs") return __cs.account_audit_purged(inputs)
+	if (locale === "da") return __da.account_audit_purged(inputs)
+	if (locale === "de") return __de.account_audit_purged(inputs)
+	if (locale === "el") return __el.account_audit_purged(inputs)
+	if (locale === "es") return __es.account_audit_purged(inputs)
+	if (locale === "fi") return __fi.account_audit_purged(inputs)
+	if (locale === "fr") return __fr.account_audit_purged(inputs)
+	if (locale === "he") return __he.account_audit_purged(inputs)
+	if (locale === "hu") return __hu.account_audit_purged(inputs)
+	if (locale === "id") return __id.account_audit_purged(inputs)
+	if (locale === "it") return __it.account_audit_purged(inputs)
+	if (locale === "ja") return __ja.account_audit_purged(inputs)
+	if (locale === "ko") return __ko.account_audit_purged(inputs)
+	if (locale === "nb") return __nb.account_audit_purged(inputs)
+	if (locale === "nl") return __nl.account_audit_purged(inputs)
+	if (locale === "pl") return __pl.account_audit_purged(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_purged(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_purged(inputs)
+	if (locale === "ro") return __ro.account_audit_purged(inputs)
+	if (locale === "ru") return __ru.account_audit_purged(inputs)
+	if (locale === "sv") return __sv.account_audit_purged(inputs)
+	if (locale === "th") return __th.account_audit_purged(inputs)
+	if (locale === "tr") return __tr.account_audit_purged(inputs)
+	if (locale === "uk") return __uk.account_audit_purged(inputs)
+	if (locale === "vi") return __vi.account_audit_purged(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_purged(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_purged(inputs)
+	return __en.account_audit_purged(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Recipes" |
 *
 * @param {Account_Audit_RecipesInputs} inputs
@@ -7040,6 +8101,375 @@ export const account_audit_recipes = /** @type {((inputs?: Account_Audit_Recipes
 /**
 * | output |
 * | --- |
+* | "Recovery codes replaced" |
+*
+* @param {Account_Audit_Recovery_ReplacedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_recovery_replaced = /** @type {((inputs?: Account_Audit_Recovery_ReplacedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_Recovery_ReplacedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_recovery_replaced(inputs)
+	if (locale === "cs") return __cs.account_audit_recovery_replaced(inputs)
+	if (locale === "da") return __da.account_audit_recovery_replaced(inputs)
+	if (locale === "de") return __de.account_audit_recovery_replaced(inputs)
+	if (locale === "el") return __el.account_audit_recovery_replaced(inputs)
+	if (locale === "es") return __es.account_audit_recovery_replaced(inputs)
+	if (locale === "fi") return __fi.account_audit_recovery_replaced(inputs)
+	if (locale === "fr") return __fr.account_audit_recovery_replaced(inputs)
+	if (locale === "he") return __he.account_audit_recovery_replaced(inputs)
+	if (locale === "hu") return __hu.account_audit_recovery_replaced(inputs)
+	if (locale === "id") return __id.account_audit_recovery_replaced(inputs)
+	if (locale === "it") return __it.account_audit_recovery_replaced(inputs)
+	if (locale === "ja") return __ja.account_audit_recovery_replaced(inputs)
+	if (locale === "ko") return __ko.account_audit_recovery_replaced(inputs)
+	if (locale === "nb") return __nb.account_audit_recovery_replaced(inputs)
+	if (locale === "nl") return __nl.account_audit_recovery_replaced(inputs)
+	if (locale === "pl") return __pl.account_audit_recovery_replaced(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_recovery_replaced(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_recovery_replaced(inputs)
+	if (locale === "ro") return __ro.account_audit_recovery_replaced(inputs)
+	if (locale === "ru") return __ru.account_audit_recovery_replaced(inputs)
+	if (locale === "sv") return __sv.account_audit_recovery_replaced(inputs)
+	if (locale === "th") return __th.account_audit_recovery_replaced(inputs)
+	if (locale === "tr") return __tr.account_audit_recovery_replaced(inputs)
+	if (locale === "uk") return __uk.account_audit_recovery_replaced(inputs)
+	if (locale === "vi") return __vi.account_audit_recovery_replaced(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_recovery_replaced(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_recovery_replaced(inputs)
+	return __en.account_audit_recovery_replaced(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Recovery sign-in" |
+*
+* @param {Account_Audit_Recovery_Sign_InInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_recovery_sign_in = /** @type {((inputs?: Account_Audit_Recovery_Sign_InInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_Recovery_Sign_InInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_recovery_sign_in(inputs)
+	if (locale === "cs") return __cs.account_audit_recovery_sign_in(inputs)
+	if (locale === "da") return __da.account_audit_recovery_sign_in(inputs)
+	if (locale === "de") return __de.account_audit_recovery_sign_in(inputs)
+	if (locale === "el") return __el.account_audit_recovery_sign_in(inputs)
+	if (locale === "es") return __es.account_audit_recovery_sign_in(inputs)
+	if (locale === "fi") return __fi.account_audit_recovery_sign_in(inputs)
+	if (locale === "fr") return __fr.account_audit_recovery_sign_in(inputs)
+	if (locale === "he") return __he.account_audit_recovery_sign_in(inputs)
+	if (locale === "hu") return __hu.account_audit_recovery_sign_in(inputs)
+	if (locale === "id") return __id.account_audit_recovery_sign_in(inputs)
+	if (locale === "it") return __it.account_audit_recovery_sign_in(inputs)
+	if (locale === "ja") return __ja.account_audit_recovery_sign_in(inputs)
+	if (locale === "ko") return __ko.account_audit_recovery_sign_in(inputs)
+	if (locale === "nb") return __nb.account_audit_recovery_sign_in(inputs)
+	if (locale === "nl") return __nl.account_audit_recovery_sign_in(inputs)
+	if (locale === "pl") return __pl.account_audit_recovery_sign_in(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_recovery_sign_in(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_recovery_sign_in(inputs)
+	if (locale === "ro") return __ro.account_audit_recovery_sign_in(inputs)
+	if (locale === "ru") return __ru.account_audit_recovery_sign_in(inputs)
+	if (locale === "sv") return __sv.account_audit_recovery_sign_in(inputs)
+	if (locale === "th") return __th.account_audit_recovery_sign_in(inputs)
+	if (locale === "tr") return __tr.account_audit_recovery_sign_in(inputs)
+	if (locale === "uk") return __uk.account_audit_recovery_sign_in(inputs)
+	if (locale === "vi") return __vi.account_audit_recovery_sign_in(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_recovery_sign_in(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_recovery_sign_in(inputs)
+	return __en.account_audit_recovery_sign_in(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Redelivery requested" |
+*
+* @param {Account_Audit_RedeliveryInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_redelivery = /** @type {((inputs?: Account_Audit_RedeliveryInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_RedeliveryInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_redelivery(inputs)
+	if (locale === "cs") return __cs.account_audit_redelivery(inputs)
+	if (locale === "da") return __da.account_audit_redelivery(inputs)
+	if (locale === "de") return __de.account_audit_redelivery(inputs)
+	if (locale === "el") return __el.account_audit_redelivery(inputs)
+	if (locale === "es") return __es.account_audit_redelivery(inputs)
+	if (locale === "fi") return __fi.account_audit_redelivery(inputs)
+	if (locale === "fr") return __fr.account_audit_redelivery(inputs)
+	if (locale === "he") return __he.account_audit_redelivery(inputs)
+	if (locale === "hu") return __hu.account_audit_redelivery(inputs)
+	if (locale === "id") return __id.account_audit_redelivery(inputs)
+	if (locale === "it") return __it.account_audit_redelivery(inputs)
+	if (locale === "ja") return __ja.account_audit_redelivery(inputs)
+	if (locale === "ko") return __ko.account_audit_redelivery(inputs)
+	if (locale === "nb") return __nb.account_audit_redelivery(inputs)
+	if (locale === "nl") return __nl.account_audit_redelivery(inputs)
+	if (locale === "pl") return __pl.account_audit_redelivery(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_redelivery(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_redelivery(inputs)
+	if (locale === "ro") return __ro.account_audit_redelivery(inputs)
+	if (locale === "ru") return __ru.account_audit_redelivery(inputs)
+	if (locale === "sv") return __sv.account_audit_redelivery(inputs)
+	if (locale === "th") return __th.account_audit_redelivery(inputs)
+	if (locale === "tr") return __tr.account_audit_redelivery(inputs)
+	if (locale === "uk") return __uk.account_audit_redelivery(inputs)
+	if (locale === "vi") return __vi.account_audit_redelivery(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_redelivery(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_redelivery(inputs)
+	return __en.account_audit_redelivery(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Renamed" |
+*
+* @param {Account_Audit_RenamedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_renamed = /** @type {((inputs?: Account_Audit_RenamedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_RenamedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_renamed(inputs)
+	if (locale === "cs") return __cs.account_audit_renamed(inputs)
+	if (locale === "da") return __da.account_audit_renamed(inputs)
+	if (locale === "de") return __de.account_audit_renamed(inputs)
+	if (locale === "el") return __el.account_audit_renamed(inputs)
+	if (locale === "es") return __es.account_audit_renamed(inputs)
+	if (locale === "fi") return __fi.account_audit_renamed(inputs)
+	if (locale === "fr") return __fr.account_audit_renamed(inputs)
+	if (locale === "he") return __he.account_audit_renamed(inputs)
+	if (locale === "hu") return __hu.account_audit_renamed(inputs)
+	if (locale === "id") return __id.account_audit_renamed(inputs)
+	if (locale === "it") return __it.account_audit_renamed(inputs)
+	if (locale === "ja") return __ja.account_audit_renamed(inputs)
+	if (locale === "ko") return __ko.account_audit_renamed(inputs)
+	if (locale === "nb") return __nb.account_audit_renamed(inputs)
+	if (locale === "nl") return __nl.account_audit_renamed(inputs)
+	if (locale === "pl") return __pl.account_audit_renamed(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_renamed(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_renamed(inputs)
+	if (locale === "ro") return __ro.account_audit_renamed(inputs)
+	if (locale === "ru") return __ru.account_audit_renamed(inputs)
+	if (locale === "sv") return __sv.account_audit_renamed(inputs)
+	if (locale === "th") return __th.account_audit_renamed(inputs)
+	if (locale === "tr") return __tr.account_audit_renamed(inputs)
+	if (locale === "uk") return __uk.account_audit_renamed(inputs)
+	if (locale === "vi") return __vi.account_audit_renamed(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_renamed(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_renamed(inputs)
+	return __en.account_audit_renamed(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Request ID" |
+*
+* @param {Account_Audit_Request_IdInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_request_id = /** @type {((inputs?: Account_Audit_Request_IdInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_Request_IdInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_request_id(inputs)
+	if (locale === "cs") return __cs.account_audit_request_id(inputs)
+	if (locale === "da") return __da.account_audit_request_id(inputs)
+	if (locale === "de") return __de.account_audit_request_id(inputs)
+	if (locale === "el") return __el.account_audit_request_id(inputs)
+	if (locale === "es") return __es.account_audit_request_id(inputs)
+	if (locale === "fi") return __fi.account_audit_request_id(inputs)
+	if (locale === "fr") return __fr.account_audit_request_id(inputs)
+	if (locale === "he") return __he.account_audit_request_id(inputs)
+	if (locale === "hu") return __hu.account_audit_request_id(inputs)
+	if (locale === "id") return __id.account_audit_request_id(inputs)
+	if (locale === "it") return __it.account_audit_request_id(inputs)
+	if (locale === "ja") return __ja.account_audit_request_id(inputs)
+	if (locale === "ko") return __ko.account_audit_request_id(inputs)
+	if (locale === "nb") return __nb.account_audit_request_id(inputs)
+	if (locale === "nl") return __nl.account_audit_request_id(inputs)
+	if (locale === "pl") return __pl.account_audit_request_id(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_request_id(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_request_id(inputs)
+	if (locale === "ro") return __ro.account_audit_request_id(inputs)
+	if (locale === "ru") return __ru.account_audit_request_id(inputs)
+	if (locale === "sv") return __sv.account_audit_request_id(inputs)
+	if (locale === "th") return __th.account_audit_request_id(inputs)
+	if (locale === "tr") return __tr.account_audit_request_id(inputs)
+	if (locale === "uk") return __uk.account_audit_request_id(inputs)
+	if (locale === "vi") return __vi.account_audit_request_id(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_request_id(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_request_id(inputs)
+	return __en.account_audit_request_id(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Result" |
+*
+* @param {Account_Audit_ResultInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_result = /** @type {((inputs?: Account_Audit_ResultInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_ResultInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_result(inputs)
+	if (locale === "cs") return __cs.account_audit_result(inputs)
+	if (locale === "da") return __da.account_audit_result(inputs)
+	if (locale === "de") return __de.account_audit_result(inputs)
+	if (locale === "el") return __el.account_audit_result(inputs)
+	if (locale === "es") return __es.account_audit_result(inputs)
+	if (locale === "fi") return __fi.account_audit_result(inputs)
+	if (locale === "fr") return __fr.account_audit_result(inputs)
+	if (locale === "he") return __he.account_audit_result(inputs)
+	if (locale === "hu") return __hu.account_audit_result(inputs)
+	if (locale === "id") return __id.account_audit_result(inputs)
+	if (locale === "it") return __it.account_audit_result(inputs)
+	if (locale === "ja") return __ja.account_audit_result(inputs)
+	if (locale === "ko") return __ko.account_audit_result(inputs)
+	if (locale === "nb") return __nb.account_audit_result(inputs)
+	if (locale === "nl") return __nl.account_audit_result(inputs)
+	if (locale === "pl") return __pl.account_audit_result(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_result(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_result(inputs)
+	if (locale === "ro") return __ro.account_audit_result(inputs)
+	if (locale === "ru") return __ru.account_audit_result(inputs)
+	if (locale === "sv") return __sv.account_audit_result(inputs)
+	if (locale === "th") return __th.account_audit_result(inputs)
+	if (locale === "tr") return __tr.account_audit_result(inputs)
+	if (locale === "uk") return __uk.account_audit_result(inputs)
+	if (locale === "vi") return __vi.account_audit_result(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_result(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_result(inputs)
+	return __en.account_audit_result(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Retired" |
+*
+* @param {Account_Audit_RetiredInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_retired = /** @type {((inputs?: Account_Audit_RetiredInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_RetiredInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_retired(inputs)
+	if (locale === "cs") return __cs.account_audit_retired(inputs)
+	if (locale === "da") return __da.account_audit_retired(inputs)
+	if (locale === "de") return __de.account_audit_retired(inputs)
+	if (locale === "el") return __el.account_audit_retired(inputs)
+	if (locale === "es") return __es.account_audit_retired(inputs)
+	if (locale === "fi") return __fi.account_audit_retired(inputs)
+	if (locale === "fr") return __fr.account_audit_retired(inputs)
+	if (locale === "he") return __he.account_audit_retired(inputs)
+	if (locale === "hu") return __hu.account_audit_retired(inputs)
+	if (locale === "id") return __id.account_audit_retired(inputs)
+	if (locale === "it") return __it.account_audit_retired(inputs)
+	if (locale === "ja") return __ja.account_audit_retired(inputs)
+	if (locale === "ko") return __ko.account_audit_retired(inputs)
+	if (locale === "nb") return __nb.account_audit_retired(inputs)
+	if (locale === "nl") return __nl.account_audit_retired(inputs)
+	if (locale === "pl") return __pl.account_audit_retired(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_retired(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_retired(inputs)
+	if (locale === "ro") return __ro.account_audit_retired(inputs)
+	if (locale === "ru") return __ru.account_audit_retired(inputs)
+	if (locale === "sv") return __sv.account_audit_retired(inputs)
+	if (locale === "th") return __th.account_audit_retired(inputs)
+	if (locale === "tr") return __tr.account_audit_retired(inputs)
+	if (locale === "uk") return __uk.account_audit_retired(inputs)
+	if (locale === "vi") return __vi.account_audit_retired(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_retired(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_retired(inputs)
+	return __en.account_audit_retired(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Signing secret rotated" |
+*
+* @param {Account_Audit_Secret_RotatedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_secret_rotated = /** @type {((inputs?: Account_Audit_Secret_RotatedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_Secret_RotatedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_secret_rotated(inputs)
+	if (locale === "cs") return __cs.account_audit_secret_rotated(inputs)
+	if (locale === "da") return __da.account_audit_secret_rotated(inputs)
+	if (locale === "de") return __de.account_audit_secret_rotated(inputs)
+	if (locale === "el") return __el.account_audit_secret_rotated(inputs)
+	if (locale === "es") return __es.account_audit_secret_rotated(inputs)
+	if (locale === "fi") return __fi.account_audit_secret_rotated(inputs)
+	if (locale === "fr") return __fr.account_audit_secret_rotated(inputs)
+	if (locale === "he") return __he.account_audit_secret_rotated(inputs)
+	if (locale === "hu") return __hu.account_audit_secret_rotated(inputs)
+	if (locale === "id") return __id.account_audit_secret_rotated(inputs)
+	if (locale === "it") return __it.account_audit_secret_rotated(inputs)
+	if (locale === "ja") return __ja.account_audit_secret_rotated(inputs)
+	if (locale === "ko") return __ko.account_audit_secret_rotated(inputs)
+	if (locale === "nb") return __nb.account_audit_secret_rotated(inputs)
+	if (locale === "nl") return __nl.account_audit_secret_rotated(inputs)
+	if (locale === "pl") return __pl.account_audit_secret_rotated(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_secret_rotated(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_secret_rotated(inputs)
+	if (locale === "ro") return __ro.account_audit_secret_rotated(inputs)
+	if (locale === "ru") return __ru.account_audit_secret_rotated(inputs)
+	if (locale === "sv") return __sv.account_audit_secret_rotated(inputs)
+	if (locale === "th") return __th.account_audit_secret_rotated(inputs)
+	if (locale === "tr") return __tr.account_audit_secret_rotated(inputs)
+	if (locale === "uk") return __uk.account_audit_secret_rotated(inputs)
+	if (locale === "vi") return __vi.account_audit_secret_rotated(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_secret_rotated(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_secret_rotated(inputs)
+	return __en.account_audit_secret_rotated(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Hosting service" |
+*
+* @param {Account_Audit_ServiceInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_service = /** @type {((inputs?: Account_Audit_ServiceInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_ServiceInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_service(inputs)
+	if (locale === "cs") return __cs.account_audit_service(inputs)
+	if (locale === "da") return __da.account_audit_service(inputs)
+	if (locale === "de") return __de.account_audit_service(inputs)
+	if (locale === "el") return __el.account_audit_service(inputs)
+	if (locale === "es") return __es.account_audit_service(inputs)
+	if (locale === "fi") return __fi.account_audit_service(inputs)
+	if (locale === "fr") return __fr.account_audit_service(inputs)
+	if (locale === "he") return __he.account_audit_service(inputs)
+	if (locale === "hu") return __hu.account_audit_service(inputs)
+	if (locale === "id") return __id.account_audit_service(inputs)
+	if (locale === "it") return __it.account_audit_service(inputs)
+	if (locale === "ja") return __ja.account_audit_service(inputs)
+	if (locale === "ko") return __ko.account_audit_service(inputs)
+	if (locale === "nb") return __nb.account_audit_service(inputs)
+	if (locale === "nl") return __nl.account_audit_service(inputs)
+	if (locale === "pl") return __pl.account_audit_service(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_service(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_service(inputs)
+	if (locale === "ro") return __ro.account_audit_service(inputs)
+	if (locale === "ru") return __ru.account_audit_service(inputs)
+	if (locale === "sv") return __sv.account_audit_service(inputs)
+	if (locale === "th") return __th.account_audit_service(inputs)
+	if (locale === "tr") return __tr.account_audit_service(inputs)
+	if (locale === "uk") return __uk.account_audit_service(inputs)
+	if (locale === "vi") return __vi.account_audit_service(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_service(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_service(inputs)
+	return __en.account_audit_service(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Settings" |
 *
 * @param {Account_Audit_SettingsInputs} inputs
@@ -7077,6 +8507,129 @@ export const account_audit_settings = /** @type {((inputs?: Account_Audit_Settin
 	if (locale === "zh-Hans") return __zh_hans1.account_audit_settings(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_audit_settings(inputs)
 	return __en.account_audit_settings(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Sign-in" |
+*
+* @param {Account_Audit_Sign_InInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_sign_in = /** @type {((inputs?: Account_Audit_Sign_InInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_Sign_InInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_sign_in(inputs)
+	if (locale === "cs") return __cs.account_audit_sign_in(inputs)
+	if (locale === "da") return __da.account_audit_sign_in(inputs)
+	if (locale === "de") return __de.account_audit_sign_in(inputs)
+	if (locale === "el") return __el.account_audit_sign_in(inputs)
+	if (locale === "es") return __es.account_audit_sign_in(inputs)
+	if (locale === "fi") return __fi.account_audit_sign_in(inputs)
+	if (locale === "fr") return __fr.account_audit_sign_in(inputs)
+	if (locale === "he") return __he.account_audit_sign_in(inputs)
+	if (locale === "hu") return __hu.account_audit_sign_in(inputs)
+	if (locale === "id") return __id.account_audit_sign_in(inputs)
+	if (locale === "it") return __it.account_audit_sign_in(inputs)
+	if (locale === "ja") return __ja.account_audit_sign_in(inputs)
+	if (locale === "ko") return __ko.account_audit_sign_in(inputs)
+	if (locale === "nb") return __nb.account_audit_sign_in(inputs)
+	if (locale === "nl") return __nl.account_audit_sign_in(inputs)
+	if (locale === "pl") return __pl.account_audit_sign_in(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_sign_in(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_sign_in(inputs)
+	if (locale === "ro") return __ro.account_audit_sign_in(inputs)
+	if (locale === "ru") return __ru.account_audit_sign_in(inputs)
+	if (locale === "sv") return __sv.account_audit_sign_in(inputs)
+	if (locale === "th") return __th.account_audit_sign_in(inputs)
+	if (locale === "tr") return __tr.account_audit_sign_in(inputs)
+	if (locale === "uk") return __uk.account_audit_sign_in(inputs)
+	if (locale === "vi") return __vi.account_audit_sign_in(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_sign_in(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_sign_in(inputs)
+	return __en.account_audit_sign_in(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Succeeded" |
+*
+* @param {Account_Audit_SucceededInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_succeeded = /** @type {((inputs?: Account_Audit_SucceededInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_SucceededInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_succeeded(inputs)
+	if (locale === "cs") return __cs.account_audit_succeeded(inputs)
+	if (locale === "da") return __da.account_audit_succeeded(inputs)
+	if (locale === "de") return __de.account_audit_succeeded(inputs)
+	if (locale === "el") return __el.account_audit_succeeded(inputs)
+	if (locale === "es") return __es.account_audit_succeeded(inputs)
+	if (locale === "fi") return __fi.account_audit_succeeded(inputs)
+	if (locale === "fr") return __fr.account_audit_succeeded(inputs)
+	if (locale === "he") return __he.account_audit_succeeded(inputs)
+	if (locale === "hu") return __hu.account_audit_succeeded(inputs)
+	if (locale === "id") return __id.account_audit_succeeded(inputs)
+	if (locale === "it") return __it.account_audit_succeeded(inputs)
+	if (locale === "ja") return __ja.account_audit_succeeded(inputs)
+	if (locale === "ko") return __ko.account_audit_succeeded(inputs)
+	if (locale === "nb") return __nb.account_audit_succeeded(inputs)
+	if (locale === "nl") return __nl.account_audit_succeeded(inputs)
+	if (locale === "pl") return __pl.account_audit_succeeded(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_succeeded(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_succeeded(inputs)
+	if (locale === "ro") return __ro.account_audit_succeeded(inputs)
+	if (locale === "ru") return __ru.account_audit_succeeded(inputs)
+	if (locale === "sv") return __sv.account_audit_succeeded(inputs)
+	if (locale === "th") return __th.account_audit_succeeded(inputs)
+	if (locale === "tr") return __tr.account_audit_succeeded(inputs)
+	if (locale === "uk") return __uk.account_audit_succeeded(inputs)
+	if (locale === "vi") return __vi.account_audit_succeeded(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_succeeded(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_succeeded(inputs)
+	return __en.account_audit_succeeded(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "System" |
+*
+* @param {Account_Audit_SystemInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_system = /** @type {((inputs?: Account_Audit_SystemInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_SystemInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_system(inputs)
+	if (locale === "cs") return __cs.account_audit_system(inputs)
+	if (locale === "da") return __da.account_audit_system(inputs)
+	if (locale === "de") return __de.account_audit_system(inputs)
+	if (locale === "el") return __el.account_audit_system(inputs)
+	if (locale === "es") return __es.account_audit_system(inputs)
+	if (locale === "fi") return __fi.account_audit_system(inputs)
+	if (locale === "fr") return __fr.account_audit_system(inputs)
+	if (locale === "he") return __he.account_audit_system(inputs)
+	if (locale === "hu") return __hu.account_audit_system(inputs)
+	if (locale === "id") return __id.account_audit_system(inputs)
+	if (locale === "it") return __it.account_audit_system(inputs)
+	if (locale === "ja") return __ja.account_audit_system(inputs)
+	if (locale === "ko") return __ko.account_audit_system(inputs)
+	if (locale === "nb") return __nb.account_audit_system(inputs)
+	if (locale === "nl") return __nl.account_audit_system(inputs)
+	if (locale === "pl") return __pl.account_audit_system(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_system(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_system(inputs)
+	if (locale === "ro") return __ro.account_audit_system(inputs)
+	if (locale === "ru") return __ru.account_audit_system(inputs)
+	if (locale === "sv") return __sv.account_audit_system(inputs)
+	if (locale === "th") return __th.account_audit_system(inputs)
+	if (locale === "tr") return __tr.account_audit_system(inputs)
+	if (locale === "uk") return __uk.account_audit_system(inputs)
+	if (locale === "vi") return __vi.account_audit_system(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_system(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_system(inputs)
+	return __en.account_audit_system(inputs)
 });
 /**
 * | output |
@@ -7614,6 +9167,47 @@ export const account_audit_target_user = /** @type {((inputs?: Account_Audit_Tar
 /**
 * | output |
 * | --- |
+* | "Test requested" |
+*
+* @param {Account_Audit_Test_RequestedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_test_requested = /** @type {((inputs?: Account_Audit_Test_RequestedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_Test_RequestedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_test_requested(inputs)
+	if (locale === "cs") return __cs.account_audit_test_requested(inputs)
+	if (locale === "da") return __da.account_audit_test_requested(inputs)
+	if (locale === "de") return __de.account_audit_test_requested(inputs)
+	if (locale === "el") return __el.account_audit_test_requested(inputs)
+	if (locale === "es") return __es.account_audit_test_requested(inputs)
+	if (locale === "fi") return __fi.account_audit_test_requested(inputs)
+	if (locale === "fr") return __fr.account_audit_test_requested(inputs)
+	if (locale === "he") return __he.account_audit_test_requested(inputs)
+	if (locale === "hu") return __hu.account_audit_test_requested(inputs)
+	if (locale === "id") return __id.account_audit_test_requested(inputs)
+	if (locale === "it") return __it.account_audit_test_requested(inputs)
+	if (locale === "ja") return __ja.account_audit_test_requested(inputs)
+	if (locale === "ko") return __ko.account_audit_test_requested(inputs)
+	if (locale === "nb") return __nb.account_audit_test_requested(inputs)
+	if (locale === "nl") return __nl.account_audit_test_requested(inputs)
+	if (locale === "pl") return __pl.account_audit_test_requested(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_test_requested(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_test_requested(inputs)
+	if (locale === "ro") return __ro.account_audit_test_requested(inputs)
+	if (locale === "ru") return __ru.account_audit_test_requested(inputs)
+	if (locale === "sv") return __sv.account_audit_test_requested(inputs)
+	if (locale === "th") return __th.account_audit_test_requested(inputs)
+	if (locale === "tr") return __tr.account_audit_test_requested(inputs)
+	if (locale === "uk") return __uk.account_audit_test_requested(inputs)
+	if (locale === "vi") return __vi.account_audit_test_requested(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_test_requested(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_test_requested(inputs)
+	return __en.account_audit_test_requested(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "API tokens" |
 *
 * @param {Account_Audit_TokensInputs} inputs
@@ -7651,6 +9245,88 @@ export const account_audit_tokens = /** @type {((inputs?: Account_Audit_TokensIn
 	if (locale === "zh-Hans") return __zh_hans1.account_audit_tokens(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_audit_tokens(inputs)
 	return __en.account_audit_tokens(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Moved to Trash" |
+*
+* @param {Account_Audit_TrashedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_trashed = /** @type {((inputs?: Account_Audit_TrashedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_TrashedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_trashed(inputs)
+	if (locale === "cs") return __cs.account_audit_trashed(inputs)
+	if (locale === "da") return __da.account_audit_trashed(inputs)
+	if (locale === "de") return __de.account_audit_trashed(inputs)
+	if (locale === "el") return __el.account_audit_trashed(inputs)
+	if (locale === "es") return __es.account_audit_trashed(inputs)
+	if (locale === "fi") return __fi.account_audit_trashed(inputs)
+	if (locale === "fr") return __fr.account_audit_trashed(inputs)
+	if (locale === "he") return __he.account_audit_trashed(inputs)
+	if (locale === "hu") return __hu.account_audit_trashed(inputs)
+	if (locale === "id") return __id.account_audit_trashed(inputs)
+	if (locale === "it") return __it.account_audit_trashed(inputs)
+	if (locale === "ja") return __ja.account_audit_trashed(inputs)
+	if (locale === "ko") return __ko.account_audit_trashed(inputs)
+	if (locale === "nb") return __nb.account_audit_trashed(inputs)
+	if (locale === "nl") return __nl.account_audit_trashed(inputs)
+	if (locale === "pl") return __pl.account_audit_trashed(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_trashed(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_trashed(inputs)
+	if (locale === "ro") return __ro.account_audit_trashed(inputs)
+	if (locale === "ru") return __ru.account_audit_trashed(inputs)
+	if (locale === "sv") return __sv.account_audit_trashed(inputs)
+	if (locale === "th") return __th.account_audit_trashed(inputs)
+	if (locale === "tr") return __tr.account_audit_trashed(inputs)
+	if (locale === "uk") return __uk.account_audit_trashed(inputs)
+	if (locale === "vi") return __vi.account_audit_trashed(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_trashed(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_trashed(inputs)
+	return __en.account_audit_trashed(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Sign-in method removed" |
+*
+* @param {Account_Audit_UnlinkedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_unlinked = /** @type {((inputs?: Account_Audit_UnlinkedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_UnlinkedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_unlinked(inputs)
+	if (locale === "cs") return __cs.account_audit_unlinked(inputs)
+	if (locale === "da") return __da.account_audit_unlinked(inputs)
+	if (locale === "de") return __de.account_audit_unlinked(inputs)
+	if (locale === "el") return __el.account_audit_unlinked(inputs)
+	if (locale === "es") return __es.account_audit_unlinked(inputs)
+	if (locale === "fi") return __fi.account_audit_unlinked(inputs)
+	if (locale === "fr") return __fr.account_audit_unlinked(inputs)
+	if (locale === "he") return __he.account_audit_unlinked(inputs)
+	if (locale === "hu") return __hu.account_audit_unlinked(inputs)
+	if (locale === "id") return __id.account_audit_unlinked(inputs)
+	if (locale === "it") return __it.account_audit_unlinked(inputs)
+	if (locale === "ja") return __ja.account_audit_unlinked(inputs)
+	if (locale === "ko") return __ko.account_audit_unlinked(inputs)
+	if (locale === "nb") return __nb.account_audit_unlinked(inputs)
+	if (locale === "nl") return __nl.account_audit_unlinked(inputs)
+	if (locale === "pl") return __pl.account_audit_unlinked(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_unlinked(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_unlinked(inputs)
+	if (locale === "ro") return __ro.account_audit_unlinked(inputs)
+	if (locale === "ru") return __ru.account_audit_unlinked(inputs)
+	if (locale === "sv") return __sv.account_audit_unlinked(inputs)
+	if (locale === "th") return __th.account_audit_unlinked(inputs)
+	if (locale === "tr") return __tr.account_audit_unlinked(inputs)
+	if (locale === "uk") return __uk.account_audit_unlinked(inputs)
+	if (locale === "vi") return __vi.account_audit_unlinked(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_unlinked(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_unlinked(inputs)
+	return __en.account_audit_unlinked(inputs)
 });
 /**
 * | output |
@@ -7733,6 +9409,47 @@ export const account_audit_users = /** @type {((inputs?: Account_Audit_UsersInpu
 	if (locale === "zh-Hans") return __zh_hans1.account_audit_users(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_audit_users(inputs)
 	return __en.account_audit_users(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Webhook" |
+*
+* @param {Account_Audit_WebhookInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_webhook = /** @type {((inputs?: Account_Audit_WebhookInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Audit_WebhookInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_audit_webhook(inputs)
+	if (locale === "cs") return __cs.account_audit_webhook(inputs)
+	if (locale === "da") return __da.account_audit_webhook(inputs)
+	if (locale === "de") return __de.account_audit_webhook(inputs)
+	if (locale === "el") return __el.account_audit_webhook(inputs)
+	if (locale === "es") return __es.account_audit_webhook(inputs)
+	if (locale === "fi") return __fi.account_audit_webhook(inputs)
+	if (locale === "fr") return __fr.account_audit_webhook(inputs)
+	if (locale === "he") return __he.account_audit_webhook(inputs)
+	if (locale === "hu") return __hu.account_audit_webhook(inputs)
+	if (locale === "id") return __id.account_audit_webhook(inputs)
+	if (locale === "it") return __it.account_audit_webhook(inputs)
+	if (locale === "ja") return __ja.account_audit_webhook(inputs)
+	if (locale === "ko") return __ko.account_audit_webhook(inputs)
+	if (locale === "nb") return __nb.account_audit_webhook(inputs)
+	if (locale === "nl") return __nl.account_audit_webhook(inputs)
+	if (locale === "pl") return __pl.account_audit_webhook(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_audit_webhook(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_audit_webhook(inputs)
+	if (locale === "ro") return __ro.account_audit_webhook(inputs)
+	if (locale === "ru") return __ru.account_audit_webhook(inputs)
+	if (locale === "sv") return __sv.account_audit_webhook(inputs)
+	if (locale === "th") return __th.account_audit_webhook(inputs)
+	if (locale === "tr") return __tr.account_audit_webhook(inputs)
+	if (locale === "uk") return __uk.account_audit_webhook(inputs)
+	if (locale === "vi") return __vi.account_audit_webhook(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_audit_webhook(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_audit_webhook(inputs)
+	return __en.account_audit_webhook(inputs)
 });
 /**
 * | output |
@@ -12575,6 +14292,88 @@ export const account_passkeys_removed = /** @type {((inputs?: Account_Passkeys_R
 /**
 * | output |
 * | --- |
+* | "Rename" |
+*
+* @param {Account_Passkeys_RenameInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_passkeys_rename = /** @type {((inputs?: Account_Passkeys_RenameInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Passkeys_RenameInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_passkeys_rename(inputs)
+	if (locale === "cs") return __cs.account_passkeys_rename(inputs)
+	if (locale === "da") return __da.account_passkeys_rename(inputs)
+	if (locale === "de") return __de.account_passkeys_rename(inputs)
+	if (locale === "el") return __el.account_passkeys_rename(inputs)
+	if (locale === "es") return __es.account_passkeys_rename(inputs)
+	if (locale === "fi") return __fi.account_passkeys_rename(inputs)
+	if (locale === "fr") return __fr.account_passkeys_rename(inputs)
+	if (locale === "he") return __he.account_passkeys_rename(inputs)
+	if (locale === "hu") return __hu.account_passkeys_rename(inputs)
+	if (locale === "id") return __id.account_passkeys_rename(inputs)
+	if (locale === "it") return __it.account_passkeys_rename(inputs)
+	if (locale === "ja") return __ja.account_passkeys_rename(inputs)
+	if (locale === "ko") return __ko.account_passkeys_rename(inputs)
+	if (locale === "nb") return __nb.account_passkeys_rename(inputs)
+	if (locale === "nl") return __nl.account_passkeys_rename(inputs)
+	if (locale === "pl") return __pl.account_passkeys_rename(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_passkeys_rename(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_passkeys_rename(inputs)
+	if (locale === "ro") return __ro.account_passkeys_rename(inputs)
+	if (locale === "ru") return __ru.account_passkeys_rename(inputs)
+	if (locale === "sv") return __sv.account_passkeys_rename(inputs)
+	if (locale === "th") return __th.account_passkeys_rename(inputs)
+	if (locale === "tr") return __tr.account_passkeys_rename(inputs)
+	if (locale === "uk") return __uk.account_passkeys_rename(inputs)
+	if (locale === "vi") return __vi.account_passkeys_rename(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_passkeys_rename(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_passkeys_rename(inputs)
+	return __en.account_passkeys_rename(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Rename {name}" |
+*
+* @param {Account_Passkeys_Rename_NamedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_passkeys_rename_named = /** @type {((inputs: Account_Passkeys_Rename_NamedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Passkeys_Rename_NamedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_passkeys_rename_named(inputs)
+	if (locale === "cs") return __cs.account_passkeys_rename_named(inputs)
+	if (locale === "da") return __da.account_passkeys_rename_named(inputs)
+	if (locale === "de") return __de.account_passkeys_rename_named(inputs)
+	if (locale === "el") return __el.account_passkeys_rename_named(inputs)
+	if (locale === "es") return __es.account_passkeys_rename_named(inputs)
+	if (locale === "fi") return __fi.account_passkeys_rename_named(inputs)
+	if (locale === "fr") return __fr.account_passkeys_rename_named(inputs)
+	if (locale === "he") return __he.account_passkeys_rename_named(inputs)
+	if (locale === "hu") return __hu.account_passkeys_rename_named(inputs)
+	if (locale === "id") return __id.account_passkeys_rename_named(inputs)
+	if (locale === "it") return __it.account_passkeys_rename_named(inputs)
+	if (locale === "ja") return __ja.account_passkeys_rename_named(inputs)
+	if (locale === "ko") return __ko.account_passkeys_rename_named(inputs)
+	if (locale === "nb") return __nb.account_passkeys_rename_named(inputs)
+	if (locale === "nl") return __nl.account_passkeys_rename_named(inputs)
+	if (locale === "pl") return __pl.account_passkeys_rename_named(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_passkeys_rename_named(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_passkeys_rename_named(inputs)
+	if (locale === "ro") return __ro.account_passkeys_rename_named(inputs)
+	if (locale === "ru") return __ru.account_passkeys_rename_named(inputs)
+	if (locale === "sv") return __sv.account_passkeys_rename_named(inputs)
+	if (locale === "th") return __th.account_passkeys_rename_named(inputs)
+	if (locale === "tr") return __tr.account_passkeys_rename_named(inputs)
+	if (locale === "uk") return __uk.account_passkeys_rename_named(inputs)
+	if (locale === "vi") return __vi.account_passkeys_rename_named(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_passkeys_rename_named(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_passkeys_rename_named(inputs)
+	return __en.account_passkeys_rename_named(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Passkey renamed." |
 *
 * @param {Account_Passkeys_RenamedInputs} inputs
@@ -13067,6 +14866,47 @@ export const account_recovery_dismiss = /** @type {((inputs?: Account_Recovery_D
 /**
 * | output |
 * | --- |
+* | "No recovery codes available." |
+*
+* @param {Account_Recovery_EmptyInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_recovery_empty = /** @type {((inputs?: Account_Recovery_EmptyInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Recovery_EmptyInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_recovery_empty(inputs)
+	if (locale === "cs") return __cs.account_recovery_empty(inputs)
+	if (locale === "da") return __da.account_recovery_empty(inputs)
+	if (locale === "de") return __de.account_recovery_empty(inputs)
+	if (locale === "el") return __el.account_recovery_empty(inputs)
+	if (locale === "es") return __es.account_recovery_empty(inputs)
+	if (locale === "fi") return __fi.account_recovery_empty(inputs)
+	if (locale === "fr") return __fr.account_recovery_empty(inputs)
+	if (locale === "he") return __he.account_recovery_empty(inputs)
+	if (locale === "hu") return __hu.account_recovery_empty(inputs)
+	if (locale === "id") return __id.account_recovery_empty(inputs)
+	if (locale === "it") return __it.account_recovery_empty(inputs)
+	if (locale === "ja") return __ja.account_recovery_empty(inputs)
+	if (locale === "ko") return __ko.account_recovery_empty(inputs)
+	if (locale === "nb") return __nb.account_recovery_empty(inputs)
+	if (locale === "nl") return __nl.account_recovery_empty(inputs)
+	if (locale === "pl") return __pl.account_recovery_empty(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_recovery_empty(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_recovery_empty(inputs)
+	if (locale === "ro") return __ro.account_recovery_empty(inputs)
+	if (locale === "ru") return __ru.account_recovery_empty(inputs)
+	if (locale === "sv") return __sv.account_recovery_empty(inputs)
+	if (locale === "th") return __th.account_recovery_empty(inputs)
+	if (locale === "tr") return __tr.account_recovery_empty(inputs)
+	if (locale === "uk") return __uk.account_recovery_empty(inputs)
+	if (locale === "vi") return __vi.account_recovery_empty(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_recovery_empty(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_recovery_empty(inputs)
+	return __en.account_recovery_empty(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Generate 10 recovery codes" |
 *
 * @param {Account_Recovery_GenerateInputs} inputs
@@ -13229,9 +15069,10 @@ export const account_recovery_hint = /** @type {((inputs?: Account_Recovery_Hint
 	return __en.account_recovery_hint(inputs)
 });
 /**
-* | output |
-* | --- |
-* | "{count} unused codes remaining." |
+* | plural | output |
+* | --- | --- |
+* | "one" | "{countText} recovery code remaining." |
+* | * | "{countText} recovery codes remaining." |
 *
 * @param {Account_Recovery_RemainingInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -14379,6 +16220,47 @@ export const account_sessions_hint = /** @type {((inputs?: Account_Sessions_Hint
 /**
 * | output |
 * | --- |
+* | "Last active {date}" |
+*
+* @param {Account_Sessions_Last_ActiveInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_sessions_last_active = /** @type {((inputs: Account_Sessions_Last_ActiveInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Sessions_Last_ActiveInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_sessions_last_active(inputs)
+	if (locale === "cs") return __cs.account_sessions_last_active(inputs)
+	if (locale === "da") return __da.account_sessions_last_active(inputs)
+	if (locale === "de") return __de.account_sessions_last_active(inputs)
+	if (locale === "el") return __el.account_sessions_last_active(inputs)
+	if (locale === "es") return __es.account_sessions_last_active(inputs)
+	if (locale === "fi") return __fi.account_sessions_last_active(inputs)
+	if (locale === "fr") return __fr.account_sessions_last_active(inputs)
+	if (locale === "he") return __he.account_sessions_last_active(inputs)
+	if (locale === "hu") return __hu.account_sessions_last_active(inputs)
+	if (locale === "id") return __id.account_sessions_last_active(inputs)
+	if (locale === "it") return __it.account_sessions_last_active(inputs)
+	if (locale === "ja") return __ja.account_sessions_last_active(inputs)
+	if (locale === "ko") return __ko.account_sessions_last_active(inputs)
+	if (locale === "nb") return __nb.account_sessions_last_active(inputs)
+	if (locale === "nl") return __nl.account_sessions_last_active(inputs)
+	if (locale === "pl") return __pl.account_sessions_last_active(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_sessions_last_active(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_sessions_last_active(inputs)
+	if (locale === "ro") return __ro.account_sessions_last_active(inputs)
+	if (locale === "ru") return __ru.account_sessions_last_active(inputs)
+	if (locale === "sv") return __sv.account_sessions_last_active(inputs)
+	if (locale === "th") return __th.account_sessions_last_active(inputs)
+	if (locale === "tr") return __tr.account_sessions_last_active(inputs)
+	if (locale === "uk") return __uk.account_sessions_last_active(inputs)
+	if (locale === "vi") return __vi.account_sessions_last_active(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_sessions_last_active(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_sessions_last_active(inputs)
+	return __en.account_sessions_last_active(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Another browser" |
 *
 * @param {Account_Sessions_OtherInputs} inputs
@@ -14416,6 +16298,47 @@ export const account_sessions_other = /** @type {((inputs?: Account_Sessions_Oth
 	if (locale === "zh-Hans") return __zh_hans1.account_sessions_other(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_sessions_other(inputs)
 	return __en.account_sessions_other(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Other sessions" |
+*
+* @param {Account_Sessions_Other_HeadingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_sessions_other_heading = /** @type {((inputs?: Account_Sessions_Other_HeadingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Sessions_Other_HeadingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_sessions_other_heading(inputs)
+	if (locale === "cs") return __cs.account_sessions_other_heading(inputs)
+	if (locale === "da") return __da.account_sessions_other_heading(inputs)
+	if (locale === "de") return __de.account_sessions_other_heading(inputs)
+	if (locale === "el") return __el.account_sessions_other_heading(inputs)
+	if (locale === "es") return __es.account_sessions_other_heading(inputs)
+	if (locale === "fi") return __fi.account_sessions_other_heading(inputs)
+	if (locale === "fr") return __fr.account_sessions_other_heading(inputs)
+	if (locale === "he") return __he.account_sessions_other_heading(inputs)
+	if (locale === "hu") return __hu.account_sessions_other_heading(inputs)
+	if (locale === "id") return __id.account_sessions_other_heading(inputs)
+	if (locale === "it") return __it.account_sessions_other_heading(inputs)
+	if (locale === "ja") return __ja.account_sessions_other_heading(inputs)
+	if (locale === "ko") return __ko.account_sessions_other_heading(inputs)
+	if (locale === "nb") return __nb.account_sessions_other_heading(inputs)
+	if (locale === "nl") return __nl.account_sessions_other_heading(inputs)
+	if (locale === "pl") return __pl.account_sessions_other_heading(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_sessions_other_heading(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_sessions_other_heading(inputs)
+	if (locale === "ro") return __ro.account_sessions_other_heading(inputs)
+	if (locale === "ru") return __ru.account_sessions_other_heading(inputs)
+	if (locale === "sv") return __sv.account_sessions_other_heading(inputs)
+	if (locale === "th") return __th.account_sessions_other_heading(inputs)
+	if (locale === "tr") return __tr.account_sessions_other_heading(inputs)
+	if (locale === "uk") return __uk.account_sessions_other_heading(inputs)
+	if (locale === "vi") return __vi.account_sessions_other_heading(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_sessions_other_heading(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_sessions_other_heading(inputs)
+	return __en.account_sessions_other_heading(inputs)
 });
 /**
 * | output |
@@ -14621,6 +16544,47 @@ export const account_sessions_revoked = /** @type {((inputs?: Account_Sessions_R
 	if (locale === "zh-Hans") return __zh_hans1.account_sessions_revoked(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_sessions_revoked(inputs)
 	return __en.account_sessions_revoked(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Signed in {date}" |
+*
+* @param {Account_Sessions_Signed_InInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_sessions_signed_in = /** @type {((inputs: Account_Sessions_Signed_InInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Sessions_Signed_InInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_sessions_signed_in(inputs)
+	if (locale === "cs") return __cs.account_sessions_signed_in(inputs)
+	if (locale === "da") return __da.account_sessions_signed_in(inputs)
+	if (locale === "de") return __de.account_sessions_signed_in(inputs)
+	if (locale === "el") return __el.account_sessions_signed_in(inputs)
+	if (locale === "es") return __es.account_sessions_signed_in(inputs)
+	if (locale === "fi") return __fi.account_sessions_signed_in(inputs)
+	if (locale === "fr") return __fr.account_sessions_signed_in(inputs)
+	if (locale === "he") return __he.account_sessions_signed_in(inputs)
+	if (locale === "hu") return __hu.account_sessions_signed_in(inputs)
+	if (locale === "id") return __id.account_sessions_signed_in(inputs)
+	if (locale === "it") return __it.account_sessions_signed_in(inputs)
+	if (locale === "ja") return __ja.account_sessions_signed_in(inputs)
+	if (locale === "ko") return __ko.account_sessions_signed_in(inputs)
+	if (locale === "nb") return __nb.account_sessions_signed_in(inputs)
+	if (locale === "nl") return __nl.account_sessions_signed_in(inputs)
+	if (locale === "pl") return __pl.account_sessions_signed_in(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_sessions_signed_in(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_sessions_signed_in(inputs)
+	if (locale === "ro") return __ro.account_sessions_signed_in(inputs)
+	if (locale === "ru") return __ru.account_sessions_signed_in(inputs)
+	if (locale === "sv") return __sv.account_sessions_signed_in(inputs)
+	if (locale === "th") return __th.account_sessions_signed_in(inputs)
+	if (locale === "tr") return __tr.account_sessions_signed_in(inputs)
+	if (locale === "uk") return __uk.account_sessions_signed_in(inputs)
+	if (locale === "vi") return __vi.account_sessions_signed_in(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_sessions_signed_in(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_sessions_signed_in(inputs)
+	return __en.account_sessions_signed_in(inputs)
 });
 /**
 * | output |
@@ -29925,6 +31889,47 @@ export const common_keep_it = /** @type {((inputs?: Common_Keep_ItInputs, option
 /**
 * | output |
 * | --- |
+* | "Loading…" |
+*
+* @param {Common_LoadingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const common_loading = /** @type {((inputs?: Common_LoadingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Common_LoadingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.common_loading(inputs)
+	if (locale === "cs") return __cs.common_loading(inputs)
+	if (locale === "da") return __da.common_loading(inputs)
+	if (locale === "de") return __de.common_loading(inputs)
+	if (locale === "el") return __el.common_loading(inputs)
+	if (locale === "es") return __es.common_loading(inputs)
+	if (locale === "fi") return __fi.common_loading(inputs)
+	if (locale === "fr") return __fr.common_loading(inputs)
+	if (locale === "he") return __he.common_loading(inputs)
+	if (locale === "hu") return __hu.common_loading(inputs)
+	if (locale === "id") return __id.common_loading(inputs)
+	if (locale === "it") return __it.common_loading(inputs)
+	if (locale === "ja") return __ja.common_loading(inputs)
+	if (locale === "ko") return __ko.common_loading(inputs)
+	if (locale === "nb") return __nb.common_loading(inputs)
+	if (locale === "nl") return __nl.common_loading(inputs)
+	if (locale === "pl") return __pl.common_loading(inputs)
+	if (locale === "pt-BR") return __pt_br2.common_loading(inputs)
+	if (locale === "pt-PT") return __pt_pt2.common_loading(inputs)
+	if (locale === "ro") return __ro.common_loading(inputs)
+	if (locale === "ru") return __ru.common_loading(inputs)
+	if (locale === "sv") return __sv.common_loading(inputs)
+	if (locale === "th") return __th.common_loading(inputs)
+	if (locale === "tr") return __tr.common_loading(inputs)
+	if (locale === "uk") return __uk.common_loading(inputs)
+	if (locale === "vi") return __vi.common_loading(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.common_loading(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.common_loading(inputs)
+	return __en.common_loading(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Next" |
 *
 * @param {Common_NextInputs} inputs
@@ -40135,6 +42140,129 @@ export const exports_the_export_could_not_be_completed = /** @type {((inputs?: E
 	return __en.exports_the_export_could_not_be_completed(inputs)
 });
 /**
+* | output |
+* | --- |
+* | "Help with importing recipes" |
+*
+* @param {Help_ImportsInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const help_imports = /** @type {((inputs?: Help_ImportsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Help_ImportsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.help_imports(inputs)
+	if (locale === "cs") return __cs.help_imports(inputs)
+	if (locale === "da") return __da.help_imports(inputs)
+	if (locale === "de") return __de.help_imports(inputs)
+	if (locale === "el") return __el.help_imports(inputs)
+	if (locale === "es") return __es.help_imports(inputs)
+	if (locale === "fi") return __fi.help_imports(inputs)
+	if (locale === "fr") return __fr.help_imports(inputs)
+	if (locale === "he") return __he.help_imports(inputs)
+	if (locale === "hu") return __hu.help_imports(inputs)
+	if (locale === "id") return __id.help_imports(inputs)
+	if (locale === "it") return __it.help_imports(inputs)
+	if (locale === "ja") return __ja.help_imports(inputs)
+	if (locale === "ko") return __ko.help_imports(inputs)
+	if (locale === "nb") return __nb.help_imports(inputs)
+	if (locale === "nl") return __nl.help_imports(inputs)
+	if (locale === "pl") return __pl.help_imports(inputs)
+	if (locale === "pt-BR") return __pt_br2.help_imports(inputs)
+	if (locale === "pt-PT") return __pt_pt2.help_imports(inputs)
+	if (locale === "ro") return __ro.help_imports(inputs)
+	if (locale === "ru") return __ru.help_imports(inputs)
+	if (locale === "sv") return __sv.help_imports(inputs)
+	if (locale === "th") return __th.help_imports(inputs)
+	if (locale === "tr") return __tr.help_imports(inputs)
+	if (locale === "uk") return __uk.help_imports(inputs)
+	if (locale === "vi") return __vi.help_imports(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.help_imports(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.help_imports(inputs)
+	return __en.help_imports(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Help with meal planning" |
+*
+* @param {Help_PlanInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const help_plan = /** @type {((inputs?: Help_PlanInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Help_PlanInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.help_plan(inputs)
+	if (locale === "cs") return __cs.help_plan(inputs)
+	if (locale === "da") return __da.help_plan(inputs)
+	if (locale === "de") return __de.help_plan(inputs)
+	if (locale === "el") return __el.help_plan(inputs)
+	if (locale === "es") return __es.help_plan(inputs)
+	if (locale === "fi") return __fi.help_plan(inputs)
+	if (locale === "fr") return __fr.help_plan(inputs)
+	if (locale === "he") return __he.help_plan(inputs)
+	if (locale === "hu") return __hu.help_plan(inputs)
+	if (locale === "id") return __id.help_plan(inputs)
+	if (locale === "it") return __it.help_plan(inputs)
+	if (locale === "ja") return __ja.help_plan(inputs)
+	if (locale === "ko") return __ko.help_plan(inputs)
+	if (locale === "nb") return __nb.help_plan(inputs)
+	if (locale === "nl") return __nl.help_plan(inputs)
+	if (locale === "pl") return __pl.help_plan(inputs)
+	if (locale === "pt-BR") return __pt_br2.help_plan(inputs)
+	if (locale === "pt-PT") return __pt_pt2.help_plan(inputs)
+	if (locale === "ro") return __ro.help_plan(inputs)
+	if (locale === "ru") return __ru.help_plan(inputs)
+	if (locale === "sv") return __sv.help_plan(inputs)
+	if (locale === "th") return __th.help_plan(inputs)
+	if (locale === "tr") return __tr.help_plan(inputs)
+	if (locale === "uk") return __uk.help_plan(inputs)
+	if (locale === "vi") return __vi.help_plan(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.help_plan(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.help_plan(inputs)
+	return __en.help_plan(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Help with shopping lists" |
+*
+* @param {Help_ShoppingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const help_shopping = /** @type {((inputs?: Help_ShoppingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Help_ShoppingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.help_shopping(inputs)
+	if (locale === "cs") return __cs.help_shopping(inputs)
+	if (locale === "da") return __da.help_shopping(inputs)
+	if (locale === "de") return __de.help_shopping(inputs)
+	if (locale === "el") return __el.help_shopping(inputs)
+	if (locale === "es") return __es.help_shopping(inputs)
+	if (locale === "fi") return __fi.help_shopping(inputs)
+	if (locale === "fr") return __fr.help_shopping(inputs)
+	if (locale === "he") return __he.help_shopping(inputs)
+	if (locale === "hu") return __hu.help_shopping(inputs)
+	if (locale === "id") return __id.help_shopping(inputs)
+	if (locale === "it") return __it.help_shopping(inputs)
+	if (locale === "ja") return __ja.help_shopping(inputs)
+	if (locale === "ko") return __ko.help_shopping(inputs)
+	if (locale === "nb") return __nb.help_shopping(inputs)
+	if (locale === "nl") return __nl.help_shopping(inputs)
+	if (locale === "pl") return __pl.help_shopping(inputs)
+	if (locale === "pt-BR") return __pt_br2.help_shopping(inputs)
+	if (locale === "pt-PT") return __pt_pt2.help_shopping(inputs)
+	if (locale === "ro") return __ro.help_shopping(inputs)
+	if (locale === "ru") return __ru.help_shopping(inputs)
+	if (locale === "sv") return __sv.help_shopping(inputs)
+	if (locale === "th") return __th.help_shopping(inputs)
+	if (locale === "tr") return __tr.help_shopping(inputs)
+	if (locale === "uk") return __uk.help_shopping(inputs)
+	if (locale === "vi") return __vi.help_shopping(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.help_shopping(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.help_shopping(inputs)
+	return __en.help_shopping(inputs)
+});
+/**
 * | plural | output |
 * | --- | --- |
 * | "one" | "about {countText} hour" |
@@ -42058,43 +44186,43 @@ export const import_job_not_imported = /** @type {((inputs: Import_Job_Not_Impor
 /**
 * | output |
 * | --- |
-* | "{value1} already in your library" |
+* | "Back to imports" |
 *
-* @param {Import_Job_Page_Already_In_Your_LibraryInputs} inputs
+* @param {Import_Job_Page_Back_To_ImportsInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
 * @returns {LocalizedString}
 */
-export const import_job_page_already_in_your_library = /** @type {((inputs: Import_Job_Page_Already_In_Your_LibraryInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_Page_Already_In_Your_LibraryInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+export const import_job_page_back_to_imports = /** @type {((inputs?: Import_Job_Page_Back_To_ImportsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_Page_Back_To_ImportsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
 	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.import_job_page_already_in_your_library(inputs)
-	if (locale === "cs") return __cs.import_job_page_already_in_your_library(inputs)
-	if (locale === "da") return __da.import_job_page_already_in_your_library(inputs)
-	if (locale === "de") return __de.import_job_page_already_in_your_library(inputs)
-	if (locale === "el") return __el.import_job_page_already_in_your_library(inputs)
-	if (locale === "es") return __es.import_job_page_already_in_your_library(inputs)
-	if (locale === "fi") return __fi.import_job_page_already_in_your_library(inputs)
-	if (locale === "fr") return __fr.import_job_page_already_in_your_library(inputs)
-	if (locale === "he") return __he.import_job_page_already_in_your_library(inputs)
-	if (locale === "hu") return __hu.import_job_page_already_in_your_library(inputs)
-	if (locale === "id") return __id.import_job_page_already_in_your_library(inputs)
-	if (locale === "it") return __it.import_job_page_already_in_your_library(inputs)
-	if (locale === "ja") return __ja.import_job_page_already_in_your_library(inputs)
-	if (locale === "ko") return __ko.import_job_page_already_in_your_library(inputs)
-	if (locale === "nb") return __nb.import_job_page_already_in_your_library(inputs)
-	if (locale === "nl") return __nl.import_job_page_already_in_your_library(inputs)
-	if (locale === "pl") return __pl.import_job_page_already_in_your_library(inputs)
-	if (locale === "pt-BR") return __pt_br2.import_job_page_already_in_your_library(inputs)
-	if (locale === "pt-PT") return __pt_pt2.import_job_page_already_in_your_library(inputs)
-	if (locale === "ro") return __ro.import_job_page_already_in_your_library(inputs)
-	if (locale === "ru") return __ru.import_job_page_already_in_your_library(inputs)
-	if (locale === "sv") return __sv.import_job_page_already_in_your_library(inputs)
-	if (locale === "th") return __th.import_job_page_already_in_your_library(inputs)
-	if (locale === "tr") return __tr.import_job_page_already_in_your_library(inputs)
-	if (locale === "uk") return __uk.import_job_page_already_in_your_library(inputs)
-	if (locale === "vi") return __vi.import_job_page_already_in_your_library(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.import_job_page_already_in_your_library(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.import_job_page_already_in_your_library(inputs)
-	return __en.import_job_page_already_in_your_library(inputs)
+	if (locale === "ar") return __ar.import_job_page_back_to_imports(inputs)
+	if (locale === "cs") return __cs.import_job_page_back_to_imports(inputs)
+	if (locale === "da") return __da.import_job_page_back_to_imports(inputs)
+	if (locale === "de") return __de.import_job_page_back_to_imports(inputs)
+	if (locale === "el") return __el.import_job_page_back_to_imports(inputs)
+	if (locale === "es") return __es.import_job_page_back_to_imports(inputs)
+	if (locale === "fi") return __fi.import_job_page_back_to_imports(inputs)
+	if (locale === "fr") return __fr.import_job_page_back_to_imports(inputs)
+	if (locale === "he") return __he.import_job_page_back_to_imports(inputs)
+	if (locale === "hu") return __hu.import_job_page_back_to_imports(inputs)
+	if (locale === "id") return __id.import_job_page_back_to_imports(inputs)
+	if (locale === "it") return __it.import_job_page_back_to_imports(inputs)
+	if (locale === "ja") return __ja.import_job_page_back_to_imports(inputs)
+	if (locale === "ko") return __ko.import_job_page_back_to_imports(inputs)
+	if (locale === "nb") return __nb.import_job_page_back_to_imports(inputs)
+	if (locale === "nl") return __nl.import_job_page_back_to_imports(inputs)
+	if (locale === "pl") return __pl.import_job_page_back_to_imports(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_job_page_back_to_imports(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_job_page_back_to_imports(inputs)
+	if (locale === "ro") return __ro.import_job_page_back_to_imports(inputs)
+	if (locale === "ru") return __ru.import_job_page_back_to_imports(inputs)
+	if (locale === "sv") return __sv.import_job_page_back_to_imports(inputs)
+	if (locale === "th") return __th.import_job_page_back_to_imports(inputs)
+	if (locale === "tr") return __tr.import_job_page_back_to_imports(inputs)
+	if (locale === "uk") return __uk.import_job_page_back_to_imports(inputs)
+	if (locale === "vi") return __vi.import_job_page_back_to_imports(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_job_page_back_to_imports(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_job_page_back_to_imports(inputs)
+	return __en.import_job_page_back_to_imports(inputs)
 });
 /**
 * | output |
@@ -42177,47 +44305,6 @@ export const import_job_page_batch_of = /** @type {((inputs: Import_Job_Page_Bat
 	if (locale === "zh-Hans") return __zh_hans1.import_job_page_batch_of(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.import_job_page_batch_of(inputs)
 	return __en.import_job_page_batch_of(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "could not be imported" |
-*
-* @param {Import_Job_Page_Could_Not_Be_ImportedInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const import_job_page_could_not_be_imported = /** @type {((inputs?: Import_Job_Page_Could_Not_Be_ImportedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_Page_Could_Not_Be_ImportedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.import_job_page_could_not_be_imported(inputs)
-	if (locale === "cs") return __cs.import_job_page_could_not_be_imported(inputs)
-	if (locale === "da") return __da.import_job_page_could_not_be_imported(inputs)
-	if (locale === "de") return __de.import_job_page_could_not_be_imported(inputs)
-	if (locale === "el") return __el.import_job_page_could_not_be_imported(inputs)
-	if (locale === "es") return __es.import_job_page_could_not_be_imported(inputs)
-	if (locale === "fi") return __fi.import_job_page_could_not_be_imported(inputs)
-	if (locale === "fr") return __fr.import_job_page_could_not_be_imported(inputs)
-	if (locale === "he") return __he.import_job_page_could_not_be_imported(inputs)
-	if (locale === "hu") return __hu.import_job_page_could_not_be_imported(inputs)
-	if (locale === "id") return __id.import_job_page_could_not_be_imported(inputs)
-	if (locale === "it") return __it.import_job_page_could_not_be_imported(inputs)
-	if (locale === "ja") return __ja.import_job_page_could_not_be_imported(inputs)
-	if (locale === "ko") return __ko.import_job_page_could_not_be_imported(inputs)
-	if (locale === "nb") return __nb.import_job_page_could_not_be_imported(inputs)
-	if (locale === "nl") return __nl.import_job_page_could_not_be_imported(inputs)
-	if (locale === "pl") return __pl.import_job_page_could_not_be_imported(inputs)
-	if (locale === "pt-BR") return __pt_br2.import_job_page_could_not_be_imported(inputs)
-	if (locale === "pt-PT") return __pt_pt2.import_job_page_could_not_be_imported(inputs)
-	if (locale === "ro") return __ro.import_job_page_could_not_be_imported(inputs)
-	if (locale === "ru") return __ru.import_job_page_could_not_be_imported(inputs)
-	if (locale === "sv") return __sv.import_job_page_could_not_be_imported(inputs)
-	if (locale === "th") return __th.import_job_page_could_not_be_imported(inputs)
-	if (locale === "tr") return __tr.import_job_page_could_not_be_imported(inputs)
-	if (locale === "uk") return __uk.import_job_page_could_not_be_imported(inputs)
-	if (locale === "vi") return __vi.import_job_page_could_not_be_imported(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.import_job_page_could_not_be_imported(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.import_job_page_could_not_be_imported(inputs)
-	return __en.import_job_page_could_not_be_imported(inputs)
 });
 /**
 * | output |
@@ -42550,47 +44637,6 @@ export const import_job_page_import_the_rest = /** @type {((inputs?: Import_Job_
 /**
 * | output |
 * | --- |
-* | "imported" |
-*
-* @param {Import_Job_Page_ImportedInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const import_job_page_imported = /** @type {((inputs?: Import_Job_Page_ImportedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_Page_ImportedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.import_job_page_imported(inputs)
-	if (locale === "cs") return __cs.import_job_page_imported(inputs)
-	if (locale === "da") return __da.import_job_page_imported(inputs)
-	if (locale === "de") return __de.import_job_page_imported(inputs)
-	if (locale === "el") return __el.import_job_page_imported(inputs)
-	if (locale === "es") return __es.import_job_page_imported(inputs)
-	if (locale === "fi") return __fi.import_job_page_imported(inputs)
-	if (locale === "fr") return __fr.import_job_page_imported(inputs)
-	if (locale === "he") return __he.import_job_page_imported(inputs)
-	if (locale === "hu") return __hu.import_job_page_imported(inputs)
-	if (locale === "id") return __id.import_job_page_imported(inputs)
-	if (locale === "it") return __it.import_job_page_imported(inputs)
-	if (locale === "ja") return __ja.import_job_page_imported(inputs)
-	if (locale === "ko") return __ko.import_job_page_imported(inputs)
-	if (locale === "nb") return __nb.import_job_page_imported(inputs)
-	if (locale === "nl") return __nl.import_job_page_imported(inputs)
-	if (locale === "pl") return __pl.import_job_page_imported(inputs)
-	if (locale === "pt-BR") return __pt_br2.import_job_page_imported(inputs)
-	if (locale === "pt-PT") return __pt_pt2.import_job_page_imported(inputs)
-	if (locale === "ro") return __ro.import_job_page_imported(inputs)
-	if (locale === "ru") return __ru.import_job_page_imported(inputs)
-	if (locale === "sv") return __sv.import_job_page_imported(inputs)
-	if (locale === "th") return __th.import_job_page_imported(inputs)
-	if (locale === "tr") return __tr.import_job_page_imported(inputs)
-	if (locale === "uk") return __uk.import_job_page_imported(inputs)
-	if (locale === "vi") return __vi.import_job_page_imported(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.import_job_page_imported(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.import_job_page_imported(inputs)
-	return __en.import_job_page_imported(inputs)
-});
-/**
-* | output |
-* | --- |
 * | "{value1} left" |
 *
 * @param {Import_Job_Page_LeftInputs} inputs
@@ -42630,86 +44676,46 @@ export const import_job_page_left = /** @type {((inputs: Import_Job_Page_LeftInp
 	return __en.import_job_page_left(inputs)
 });
 /**
-* | output |
-* | --- |
-* | "need review" |
+* | plural | output |
+* | --- | --- |
+* | "one" | "{countText} recipe needs a look" |
+* | * | "{countText} recipes need a look" |
 *
-* @param {Import_Job_Page_Need_ReviewInputs} inputs
+* @param {Import_Job_Page_Need_A_LookInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
 * @returns {LocalizedString}
 */
-export const import_job_page_need_review = /** @type {((inputs?: Import_Job_Page_Need_ReviewInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_Page_Need_ReviewInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+export const import_job_page_need_a_look = /** @type {((inputs: Import_Job_Page_Need_A_LookInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_Page_Need_A_LookInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
 	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.import_job_page_need_review(inputs)
-	if (locale === "cs") return __cs.import_job_page_need_review(inputs)
-	if (locale === "da") return __da.import_job_page_need_review(inputs)
-	if (locale === "de") return __de.import_job_page_need_review(inputs)
-	if (locale === "el") return __el.import_job_page_need_review(inputs)
-	if (locale === "es") return __es.import_job_page_need_review(inputs)
-	if (locale === "fi") return __fi.import_job_page_need_review(inputs)
-	if (locale === "fr") return __fr.import_job_page_need_review(inputs)
-	if (locale === "he") return __he.import_job_page_need_review(inputs)
-	if (locale === "hu") return __hu.import_job_page_need_review(inputs)
-	if (locale === "id") return __id.import_job_page_need_review(inputs)
-	if (locale === "it") return __it.import_job_page_need_review(inputs)
-	if (locale === "ja") return __ja.import_job_page_need_review(inputs)
-	if (locale === "ko") return __ko.import_job_page_need_review(inputs)
-	if (locale === "nb") return __nb.import_job_page_need_review(inputs)
-	if (locale === "nl") return __nl.import_job_page_need_review(inputs)
-	if (locale === "pl") return __pl.import_job_page_need_review(inputs)
-	if (locale === "pt-BR") return __pt_br2.import_job_page_need_review(inputs)
-	if (locale === "pt-PT") return __pt_pt2.import_job_page_need_review(inputs)
-	if (locale === "ro") return __ro.import_job_page_need_review(inputs)
-	if (locale === "ru") return __ru.import_job_page_need_review(inputs)
-	if (locale === "sv") return __sv.import_job_page_need_review(inputs)
-	if (locale === "th") return __th.import_job_page_need_review(inputs)
-	if (locale === "tr") return __tr.import_job_page_need_review(inputs)
-	if (locale === "uk") return __uk.import_job_page_need_review(inputs)
-	if (locale === "vi") return __vi.import_job_page_need_review(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.import_job_page_need_review(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.import_job_page_need_review(inputs)
-	return __en.import_job_page_need_review(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "{value1} not imported" |
-*
-* @param {Import_Job_Page_Not_ImportedInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const import_job_page_not_imported = /** @type {((inputs: Import_Job_Page_Not_ImportedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_Page_Not_ImportedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.import_job_page_not_imported(inputs)
-	if (locale === "cs") return __cs.import_job_page_not_imported(inputs)
-	if (locale === "da") return __da.import_job_page_not_imported(inputs)
-	if (locale === "de") return __de.import_job_page_not_imported(inputs)
-	if (locale === "el") return __el.import_job_page_not_imported(inputs)
-	if (locale === "es") return __es.import_job_page_not_imported(inputs)
-	if (locale === "fi") return __fi.import_job_page_not_imported(inputs)
-	if (locale === "fr") return __fr.import_job_page_not_imported(inputs)
-	if (locale === "he") return __he.import_job_page_not_imported(inputs)
-	if (locale === "hu") return __hu.import_job_page_not_imported(inputs)
-	if (locale === "id") return __id.import_job_page_not_imported(inputs)
-	if (locale === "it") return __it.import_job_page_not_imported(inputs)
-	if (locale === "ja") return __ja.import_job_page_not_imported(inputs)
-	if (locale === "ko") return __ko.import_job_page_not_imported(inputs)
-	if (locale === "nb") return __nb.import_job_page_not_imported(inputs)
-	if (locale === "nl") return __nl.import_job_page_not_imported(inputs)
-	if (locale === "pl") return __pl.import_job_page_not_imported(inputs)
-	if (locale === "pt-BR") return __pt_br2.import_job_page_not_imported(inputs)
-	if (locale === "pt-PT") return __pt_pt2.import_job_page_not_imported(inputs)
-	if (locale === "ro") return __ro.import_job_page_not_imported(inputs)
-	if (locale === "ru") return __ru.import_job_page_not_imported(inputs)
-	if (locale === "sv") return __sv.import_job_page_not_imported(inputs)
-	if (locale === "th") return __th.import_job_page_not_imported(inputs)
-	if (locale === "tr") return __tr.import_job_page_not_imported(inputs)
-	if (locale === "uk") return __uk.import_job_page_not_imported(inputs)
-	if (locale === "vi") return __vi.import_job_page_not_imported(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.import_job_page_not_imported(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.import_job_page_not_imported(inputs)
-	return __en.import_job_page_not_imported(inputs)
+	if (locale === "ar") return __ar.import_job_page_need_a_look(inputs)
+	if (locale === "cs") return __cs.import_job_page_need_a_look(inputs)
+	if (locale === "da") return __da.import_job_page_need_a_look(inputs)
+	if (locale === "de") return __de.import_job_page_need_a_look(inputs)
+	if (locale === "el") return __el.import_job_page_need_a_look(inputs)
+	if (locale === "es") return __es.import_job_page_need_a_look(inputs)
+	if (locale === "fi") return __fi.import_job_page_need_a_look(inputs)
+	if (locale === "fr") return __fr.import_job_page_need_a_look(inputs)
+	if (locale === "he") return __he.import_job_page_need_a_look(inputs)
+	if (locale === "hu") return __hu.import_job_page_need_a_look(inputs)
+	if (locale === "id") return __id.import_job_page_need_a_look(inputs)
+	if (locale === "it") return __it.import_job_page_need_a_look(inputs)
+	if (locale === "ja") return __ja.import_job_page_need_a_look(inputs)
+	if (locale === "ko") return __ko.import_job_page_need_a_look(inputs)
+	if (locale === "nb") return __nb.import_job_page_need_a_look(inputs)
+	if (locale === "nl") return __nl.import_job_page_need_a_look(inputs)
+	if (locale === "pl") return __pl.import_job_page_need_a_look(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_job_page_need_a_look(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_job_page_need_a_look(inputs)
+	if (locale === "ro") return __ro.import_job_page_need_a_look(inputs)
+	if (locale === "ru") return __ru.import_job_page_need_a_look(inputs)
+	if (locale === "sv") return __sv.import_job_page_need_a_look(inputs)
+	if (locale === "th") return __th.import_job_page_need_a_look(inputs)
+	if (locale === "tr") return __tr.import_job_page_need_a_look(inputs)
+	if (locale === "uk") return __uk.import_job_page_need_a_look(inputs)
+	if (locale === "vi") return __vi.import_job_page_need_a_look(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_job_page_need_a_look(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_job_page_need_a_look(inputs)
+	return __en.import_job_page_need_a_look(inputs)
 });
 /**
 * | output |
@@ -42837,47 +44843,6 @@ export const import_job_page_review_details = /** @type {((inputs?: Import_Job_P
 /**
 * | output |
 * | --- |
-* | "Recipes that need a look" |
-*
-* @param {Import_Job_Page_Review_MeasurementsInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const import_job_page_review_measurements = /** @type {((inputs?: Import_Job_Page_Review_MeasurementsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_Page_Review_MeasurementsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.import_job_page_review_measurements(inputs)
-	if (locale === "cs") return __cs.import_job_page_review_measurements(inputs)
-	if (locale === "da") return __da.import_job_page_review_measurements(inputs)
-	if (locale === "de") return __de.import_job_page_review_measurements(inputs)
-	if (locale === "el") return __el.import_job_page_review_measurements(inputs)
-	if (locale === "es") return __es.import_job_page_review_measurements(inputs)
-	if (locale === "fi") return __fi.import_job_page_review_measurements(inputs)
-	if (locale === "fr") return __fr.import_job_page_review_measurements(inputs)
-	if (locale === "he") return __he.import_job_page_review_measurements(inputs)
-	if (locale === "hu") return __hu.import_job_page_review_measurements(inputs)
-	if (locale === "id") return __id.import_job_page_review_measurements(inputs)
-	if (locale === "it") return __it.import_job_page_review_measurements(inputs)
-	if (locale === "ja") return __ja.import_job_page_review_measurements(inputs)
-	if (locale === "ko") return __ko.import_job_page_review_measurements(inputs)
-	if (locale === "nb") return __nb.import_job_page_review_measurements(inputs)
-	if (locale === "nl") return __nl.import_job_page_review_measurements(inputs)
-	if (locale === "pl") return __pl.import_job_page_review_measurements(inputs)
-	if (locale === "pt-BR") return __pt_br2.import_job_page_review_measurements(inputs)
-	if (locale === "pt-PT") return __pt_pt2.import_job_page_review_measurements(inputs)
-	if (locale === "ro") return __ro.import_job_page_review_measurements(inputs)
-	if (locale === "ru") return __ru.import_job_page_review_measurements(inputs)
-	if (locale === "sv") return __sv.import_job_page_review_measurements(inputs)
-	if (locale === "th") return __th.import_job_page_review_measurements(inputs)
-	if (locale === "tr") return __tr.import_job_page_review_measurements(inputs)
-	if (locale === "uk") return __uk.import_job_page_review_measurements(inputs)
-	if (locale === "vi") return __vi.import_job_page_review_measurements(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.import_job_page_review_measurements(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.import_job_page_review_measurements(inputs)
-	return __en.import_job_page_review_measurements(inputs)
-});
-/**
-* | output |
-* | --- |
 * | "Started {value1}" |
 *
 * @param {Import_Job_Page_StartedInputs} inputs
@@ -42997,47 +44962,6 @@ export const import_job_page_to_go = /** @type {((inputs: Import_Job_Page_To_GoI
 	if (locale === "zh-Hans") return __zh_hans1.import_job_page_to_go(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.import_job_page_to_go(inputs)
 	return __en.import_job_page_to_go(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "with preserved details" |
-*
-* @param {Import_Job_Page_With_Preserved_DetailsInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const import_job_page_with_preserved_details = /** @type {((inputs?: Import_Job_Page_With_Preserved_DetailsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_Page_With_Preserved_DetailsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.import_job_page_with_preserved_details(inputs)
-	if (locale === "cs") return __cs.import_job_page_with_preserved_details(inputs)
-	if (locale === "da") return __da.import_job_page_with_preserved_details(inputs)
-	if (locale === "de") return __de.import_job_page_with_preserved_details(inputs)
-	if (locale === "el") return __el.import_job_page_with_preserved_details(inputs)
-	if (locale === "es") return __es.import_job_page_with_preserved_details(inputs)
-	if (locale === "fi") return __fi.import_job_page_with_preserved_details(inputs)
-	if (locale === "fr") return __fr.import_job_page_with_preserved_details(inputs)
-	if (locale === "he") return __he.import_job_page_with_preserved_details(inputs)
-	if (locale === "hu") return __hu.import_job_page_with_preserved_details(inputs)
-	if (locale === "id") return __id.import_job_page_with_preserved_details(inputs)
-	if (locale === "it") return __it.import_job_page_with_preserved_details(inputs)
-	if (locale === "ja") return __ja.import_job_page_with_preserved_details(inputs)
-	if (locale === "ko") return __ko.import_job_page_with_preserved_details(inputs)
-	if (locale === "nb") return __nb.import_job_page_with_preserved_details(inputs)
-	if (locale === "nl") return __nl.import_job_page_with_preserved_details(inputs)
-	if (locale === "pl") return __pl.import_job_page_with_preserved_details(inputs)
-	if (locale === "pt-BR") return __pt_br2.import_job_page_with_preserved_details(inputs)
-	if (locale === "pt-PT") return __pt_pt2.import_job_page_with_preserved_details(inputs)
-	if (locale === "ro") return __ro.import_job_page_with_preserved_details(inputs)
-	if (locale === "ru") return __ru.import_job_page_with_preserved_details(inputs)
-	if (locale === "sv") return __sv.import_job_page_with_preserved_details(inputs)
-	if (locale === "th") return __th.import_job_page_with_preserved_details(inputs)
-	if (locale === "tr") return __tr.import_job_page_with_preserved_details(inputs)
-	if (locale === "uk") return __uk.import_job_page_with_preserved_details(inputs)
-	if (locale === "vi") return __vi.import_job_page_with_preserved_details(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.import_job_page_with_preserved_details(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.import_job_page_with_preserved_details(inputs)
-	return __en.import_job_page_with_preserved_details(inputs)
 });
 /**
 * | output |
@@ -43781,6 +45705,334 @@ export const import_job_results_could_not_import = /** @type {((inputs?: Import_
 /**
 * | output |
 * | --- |
+* | "Error message" |
+*
+* @param {Import_Job_Results_Error_MessageInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_results_error_message = /** @type {((inputs?: Import_Job_Results_Error_MessageInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_Results_Error_MessageInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_job_results_error_message(inputs)
+	if (locale === "cs") return __cs.import_job_results_error_message(inputs)
+	if (locale === "da") return __da.import_job_results_error_message(inputs)
+	if (locale === "de") return __de.import_job_results_error_message(inputs)
+	if (locale === "el") return __el.import_job_results_error_message(inputs)
+	if (locale === "es") return __es.import_job_results_error_message(inputs)
+	if (locale === "fi") return __fi.import_job_results_error_message(inputs)
+	if (locale === "fr") return __fr.import_job_results_error_message(inputs)
+	if (locale === "he") return __he.import_job_results_error_message(inputs)
+	if (locale === "hu") return __hu.import_job_results_error_message(inputs)
+	if (locale === "id") return __id.import_job_results_error_message(inputs)
+	if (locale === "it") return __it.import_job_results_error_message(inputs)
+	if (locale === "ja") return __ja.import_job_results_error_message(inputs)
+	if (locale === "ko") return __ko.import_job_results_error_message(inputs)
+	if (locale === "nb") return __nb.import_job_results_error_message(inputs)
+	if (locale === "nl") return __nl.import_job_results_error_message(inputs)
+	if (locale === "pl") return __pl.import_job_results_error_message(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_job_results_error_message(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_job_results_error_message(inputs)
+	if (locale === "ro") return __ro.import_job_results_error_message(inputs)
+	if (locale === "ru") return __ru.import_job_results_error_message(inputs)
+	if (locale === "sv") return __sv.import_job_results_error_message(inputs)
+	if (locale === "th") return __th.import_job_results_error_message(inputs)
+	if (locale === "tr") return __tr.import_job_results_error_message(inputs)
+	if (locale === "uk") return __uk.import_job_results_error_message(inputs)
+	if (locale === "vi") return __vi.import_job_results_error_message(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_job_results_error_message(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_job_results_error_message(inputs)
+	return __en.import_job_results_error_message(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "The matching recipe in your library changed after you reviewed this import." |
+*
+* @param {Import_Job_Results_Failure_ChangedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_results_failure_changed = /** @type {((inputs?: Import_Job_Results_Failure_ChangedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_Results_Failure_ChangedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_job_results_failure_changed(inputs)
+	if (locale === "cs") return __cs.import_job_results_failure_changed(inputs)
+	if (locale === "da") return __da.import_job_results_failure_changed(inputs)
+	if (locale === "de") return __de.import_job_results_failure_changed(inputs)
+	if (locale === "el") return __el.import_job_results_failure_changed(inputs)
+	if (locale === "es") return __es.import_job_results_failure_changed(inputs)
+	if (locale === "fi") return __fi.import_job_results_failure_changed(inputs)
+	if (locale === "fr") return __fr.import_job_results_failure_changed(inputs)
+	if (locale === "he") return __he.import_job_results_failure_changed(inputs)
+	if (locale === "hu") return __hu.import_job_results_failure_changed(inputs)
+	if (locale === "id") return __id.import_job_results_failure_changed(inputs)
+	if (locale === "it") return __it.import_job_results_failure_changed(inputs)
+	if (locale === "ja") return __ja.import_job_results_failure_changed(inputs)
+	if (locale === "ko") return __ko.import_job_results_failure_changed(inputs)
+	if (locale === "nb") return __nb.import_job_results_failure_changed(inputs)
+	if (locale === "nl") return __nl.import_job_results_failure_changed(inputs)
+	if (locale === "pl") return __pl.import_job_results_failure_changed(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_job_results_failure_changed(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_job_results_failure_changed(inputs)
+	if (locale === "ro") return __ro.import_job_results_failure_changed(inputs)
+	if (locale === "ru") return __ru.import_job_results_failure_changed(inputs)
+	if (locale === "sv") return __sv.import_job_results_failure_changed(inputs)
+	if (locale === "th") return __th.import_job_results_failure_changed(inputs)
+	if (locale === "tr") return __tr.import_job_results_failure_changed(inputs)
+	if (locale === "uk") return __uk.import_job_results_failure_changed(inputs)
+	if (locale === "vi") return __vi.import_job_results_failure_changed(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_job_results_failure_changed(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_job_results_failure_changed(inputs)
+	return __en.import_job_results_failure_changed(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Import it again to review it against the current version." |
+*
+* @param {Import_Job_Results_Failure_Changed_NextInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_results_failure_changed_next = /** @type {((inputs?: Import_Job_Results_Failure_Changed_NextInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_Results_Failure_Changed_NextInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_job_results_failure_changed_next(inputs)
+	if (locale === "cs") return __cs.import_job_results_failure_changed_next(inputs)
+	if (locale === "da") return __da.import_job_results_failure_changed_next(inputs)
+	if (locale === "de") return __de.import_job_results_failure_changed_next(inputs)
+	if (locale === "el") return __el.import_job_results_failure_changed_next(inputs)
+	if (locale === "es") return __es.import_job_results_failure_changed_next(inputs)
+	if (locale === "fi") return __fi.import_job_results_failure_changed_next(inputs)
+	if (locale === "fr") return __fr.import_job_results_failure_changed_next(inputs)
+	if (locale === "he") return __he.import_job_results_failure_changed_next(inputs)
+	if (locale === "hu") return __hu.import_job_results_failure_changed_next(inputs)
+	if (locale === "id") return __id.import_job_results_failure_changed_next(inputs)
+	if (locale === "it") return __it.import_job_results_failure_changed_next(inputs)
+	if (locale === "ja") return __ja.import_job_results_failure_changed_next(inputs)
+	if (locale === "ko") return __ko.import_job_results_failure_changed_next(inputs)
+	if (locale === "nb") return __nb.import_job_results_failure_changed_next(inputs)
+	if (locale === "nl") return __nl.import_job_results_failure_changed_next(inputs)
+	if (locale === "pl") return __pl.import_job_results_failure_changed_next(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_job_results_failure_changed_next(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_job_results_failure_changed_next(inputs)
+	if (locale === "ro") return __ro.import_job_results_failure_changed_next(inputs)
+	if (locale === "ru") return __ru.import_job_results_failure_changed_next(inputs)
+	if (locale === "sv") return __sv.import_job_results_failure_changed_next(inputs)
+	if (locale === "th") return __th.import_job_results_failure_changed_next(inputs)
+	if (locale === "tr") return __tr.import_job_results_failure_changed_next(inputs)
+	if (locale === "uk") return __uk.import_job_results_failure_changed_next(inputs)
+	if (locale === "vi") return __vi.import_job_results_failure_changed_next(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_job_results_failure_changed_next(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_job_results_failure_changed_next(inputs)
+	return __en.import_job_results_failure_changed_next(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "This recipe is already in your library." |
+*
+* @param {Import_Job_Results_Failure_DuplicateInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_results_failure_duplicate = /** @type {((inputs?: Import_Job_Results_Failure_DuplicateInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_Results_Failure_DuplicateInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_job_results_failure_duplicate(inputs)
+	if (locale === "cs") return __cs.import_job_results_failure_duplicate(inputs)
+	if (locale === "da") return __da.import_job_results_failure_duplicate(inputs)
+	if (locale === "de") return __de.import_job_results_failure_duplicate(inputs)
+	if (locale === "el") return __el.import_job_results_failure_duplicate(inputs)
+	if (locale === "es") return __es.import_job_results_failure_duplicate(inputs)
+	if (locale === "fi") return __fi.import_job_results_failure_duplicate(inputs)
+	if (locale === "fr") return __fr.import_job_results_failure_duplicate(inputs)
+	if (locale === "he") return __he.import_job_results_failure_duplicate(inputs)
+	if (locale === "hu") return __hu.import_job_results_failure_duplicate(inputs)
+	if (locale === "id") return __id.import_job_results_failure_duplicate(inputs)
+	if (locale === "it") return __it.import_job_results_failure_duplicate(inputs)
+	if (locale === "ja") return __ja.import_job_results_failure_duplicate(inputs)
+	if (locale === "ko") return __ko.import_job_results_failure_duplicate(inputs)
+	if (locale === "nb") return __nb.import_job_results_failure_duplicate(inputs)
+	if (locale === "nl") return __nl.import_job_results_failure_duplicate(inputs)
+	if (locale === "pl") return __pl.import_job_results_failure_duplicate(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_job_results_failure_duplicate(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_job_results_failure_duplicate(inputs)
+	if (locale === "ro") return __ro.import_job_results_failure_duplicate(inputs)
+	if (locale === "ru") return __ru.import_job_results_failure_duplicate(inputs)
+	if (locale === "sv") return __sv.import_job_results_failure_duplicate(inputs)
+	if (locale === "th") return __th.import_job_results_failure_duplicate(inputs)
+	if (locale === "tr") return __tr.import_job_results_failure_duplicate(inputs)
+	if (locale === "uk") return __uk.import_job_results_failure_duplicate(inputs)
+	if (locale === "vi") return __vi.import_job_results_failure_duplicate(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_job_results_failure_duplicate(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_job_results_failure_duplicate(inputs)
+	return __en.import_job_results_failure_duplicate(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "To keep both, import it again and choose to import it as a separate recipe." |
+*
+* @param {Import_Job_Results_Failure_Duplicate_NextInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_results_failure_duplicate_next = /** @type {((inputs?: Import_Job_Results_Failure_Duplicate_NextInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_Results_Failure_Duplicate_NextInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "cs") return __cs.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "da") return __da.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "de") return __de.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "el") return __el.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "es") return __es.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "fi") return __fi.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "fr") return __fr.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "he") return __he.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "hu") return __hu.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "id") return __id.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "it") return __it.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "ja") return __ja.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "ko") return __ko.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "nb") return __nb.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "nl") return __nl.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "pl") return __pl.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "ro") return __ro.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "ru") return __ru.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "sv") return __sv.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "th") return __th.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "tr") return __tr.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "uk") return __uk.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "vi") return __vi.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_job_results_failure_duplicate_next(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_job_results_failure_duplicate_next(inputs)
+	return __en.import_job_results_failure_duplicate_next(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Savorum no longer has the source this recipe came from." |
+*
+* @param {Import_Job_Results_Failure_SourceInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_results_failure_source = /** @type {((inputs?: Import_Job_Results_Failure_SourceInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_Results_Failure_SourceInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_job_results_failure_source(inputs)
+	if (locale === "cs") return __cs.import_job_results_failure_source(inputs)
+	if (locale === "da") return __da.import_job_results_failure_source(inputs)
+	if (locale === "de") return __de.import_job_results_failure_source(inputs)
+	if (locale === "el") return __el.import_job_results_failure_source(inputs)
+	if (locale === "es") return __es.import_job_results_failure_source(inputs)
+	if (locale === "fi") return __fi.import_job_results_failure_source(inputs)
+	if (locale === "fr") return __fr.import_job_results_failure_source(inputs)
+	if (locale === "he") return __he.import_job_results_failure_source(inputs)
+	if (locale === "hu") return __hu.import_job_results_failure_source(inputs)
+	if (locale === "id") return __id.import_job_results_failure_source(inputs)
+	if (locale === "it") return __it.import_job_results_failure_source(inputs)
+	if (locale === "ja") return __ja.import_job_results_failure_source(inputs)
+	if (locale === "ko") return __ko.import_job_results_failure_source(inputs)
+	if (locale === "nb") return __nb.import_job_results_failure_source(inputs)
+	if (locale === "nl") return __nl.import_job_results_failure_source(inputs)
+	if (locale === "pl") return __pl.import_job_results_failure_source(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_job_results_failure_source(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_job_results_failure_source(inputs)
+	if (locale === "ro") return __ro.import_job_results_failure_source(inputs)
+	if (locale === "ru") return __ru.import_job_results_failure_source(inputs)
+	if (locale === "sv") return __sv.import_job_results_failure_source(inputs)
+	if (locale === "th") return __th.import_job_results_failure_source(inputs)
+	if (locale === "tr") return __tr.import_job_results_failure_source(inputs)
+	if (locale === "uk") return __uk.import_job_results_failure_source(inputs)
+	if (locale === "vi") return __vi.import_job_results_failure_source(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_job_results_failure_source(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_job_results_failure_source(inputs)
+	return __en.import_job_results_failure_source(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Import it again from the original file or page." |
+*
+* @param {Import_Job_Results_Failure_Source_NextInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_results_failure_source_next = /** @type {((inputs?: Import_Job_Results_Failure_Source_NextInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_Results_Failure_Source_NextInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_job_results_failure_source_next(inputs)
+	if (locale === "cs") return __cs.import_job_results_failure_source_next(inputs)
+	if (locale === "da") return __da.import_job_results_failure_source_next(inputs)
+	if (locale === "de") return __de.import_job_results_failure_source_next(inputs)
+	if (locale === "el") return __el.import_job_results_failure_source_next(inputs)
+	if (locale === "es") return __es.import_job_results_failure_source_next(inputs)
+	if (locale === "fi") return __fi.import_job_results_failure_source_next(inputs)
+	if (locale === "fr") return __fr.import_job_results_failure_source_next(inputs)
+	if (locale === "he") return __he.import_job_results_failure_source_next(inputs)
+	if (locale === "hu") return __hu.import_job_results_failure_source_next(inputs)
+	if (locale === "id") return __id.import_job_results_failure_source_next(inputs)
+	if (locale === "it") return __it.import_job_results_failure_source_next(inputs)
+	if (locale === "ja") return __ja.import_job_results_failure_source_next(inputs)
+	if (locale === "ko") return __ko.import_job_results_failure_source_next(inputs)
+	if (locale === "nb") return __nb.import_job_results_failure_source_next(inputs)
+	if (locale === "nl") return __nl.import_job_results_failure_source_next(inputs)
+	if (locale === "pl") return __pl.import_job_results_failure_source_next(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_job_results_failure_source_next(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_job_results_failure_source_next(inputs)
+	if (locale === "ro") return __ro.import_job_results_failure_source_next(inputs)
+	if (locale === "ru") return __ru.import_job_results_failure_source_next(inputs)
+	if (locale === "sv") return __sv.import_job_results_failure_source_next(inputs)
+	if (locale === "th") return __th.import_job_results_failure_source_next(inputs)
+	if (locale === "tr") return __tr.import_job_results_failure_source_next(inputs)
+	if (locale === "uk") return __uk.import_job_results_failure_source_next(inputs)
+	if (locale === "vi") return __vi.import_job_results_failure_source_next(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_job_results_failure_source_next(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_job_results_failure_source_next(inputs)
+	return __en.import_job_results_failure_source_next(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Try importing it again. If it fails again, share the error message in the details below." |
+*
+* @param {Import_Job_Results_Failure_Unknown_NextInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_results_failure_unknown_next = /** @type {((inputs?: Import_Job_Results_Failure_Unknown_NextInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_Results_Failure_Unknown_NextInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_job_results_failure_unknown_next(inputs)
+	if (locale === "cs") return __cs.import_job_results_failure_unknown_next(inputs)
+	if (locale === "da") return __da.import_job_results_failure_unknown_next(inputs)
+	if (locale === "de") return __de.import_job_results_failure_unknown_next(inputs)
+	if (locale === "el") return __el.import_job_results_failure_unknown_next(inputs)
+	if (locale === "es") return __es.import_job_results_failure_unknown_next(inputs)
+	if (locale === "fi") return __fi.import_job_results_failure_unknown_next(inputs)
+	if (locale === "fr") return __fr.import_job_results_failure_unknown_next(inputs)
+	if (locale === "he") return __he.import_job_results_failure_unknown_next(inputs)
+	if (locale === "hu") return __hu.import_job_results_failure_unknown_next(inputs)
+	if (locale === "id") return __id.import_job_results_failure_unknown_next(inputs)
+	if (locale === "it") return __it.import_job_results_failure_unknown_next(inputs)
+	if (locale === "ja") return __ja.import_job_results_failure_unknown_next(inputs)
+	if (locale === "ko") return __ko.import_job_results_failure_unknown_next(inputs)
+	if (locale === "nb") return __nb.import_job_results_failure_unknown_next(inputs)
+	if (locale === "nl") return __nl.import_job_results_failure_unknown_next(inputs)
+	if (locale === "pl") return __pl.import_job_results_failure_unknown_next(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_job_results_failure_unknown_next(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_job_results_failure_unknown_next(inputs)
+	if (locale === "ro") return __ro.import_job_results_failure_unknown_next(inputs)
+	if (locale === "ru") return __ru.import_job_results_failure_unknown_next(inputs)
+	if (locale === "sv") return __sv.import_job_results_failure_unknown_next(inputs)
+	if (locale === "th") return __th.import_job_results_failure_unknown_next(inputs)
+	if (locale === "tr") return __tr.import_job_results_failure_unknown_next(inputs)
+	if (locale === "uk") return __uk.import_job_results_failure_unknown_next(inputs)
+	if (locale === "vi") return __vi.import_job_results_failure_unknown_next(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_job_results_failure_unknown_next(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_job_results_failure_unknown_next(inputs)
+	return __en.import_job_results_failure_unknown_next(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Filter import results" |
 *
 * @param {Import_Job_Results_Filter_Import_ResultsInputs} inputs
@@ -43818,6 +46070,47 @@ export const import_job_results_filter_import_results = /** @type {((inputs?: Im
 	if (locale === "zh-Hans") return __zh_hans1.import_job_results_filter_import_results(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.import_job_results_filter_import_results(inputs)
 	return __en.import_job_results_filter_import_results(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Find it in your library" |
+*
+* @param {Import_Job_Results_Find_In_LibraryInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_results_find_in_library = /** @type {((inputs?: Import_Job_Results_Find_In_LibraryInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_Results_Find_In_LibraryInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_job_results_find_in_library(inputs)
+	if (locale === "cs") return __cs.import_job_results_find_in_library(inputs)
+	if (locale === "da") return __da.import_job_results_find_in_library(inputs)
+	if (locale === "de") return __de.import_job_results_find_in_library(inputs)
+	if (locale === "el") return __el.import_job_results_find_in_library(inputs)
+	if (locale === "es") return __es.import_job_results_find_in_library(inputs)
+	if (locale === "fi") return __fi.import_job_results_find_in_library(inputs)
+	if (locale === "fr") return __fr.import_job_results_find_in_library(inputs)
+	if (locale === "he") return __he.import_job_results_find_in_library(inputs)
+	if (locale === "hu") return __hu.import_job_results_find_in_library(inputs)
+	if (locale === "id") return __id.import_job_results_find_in_library(inputs)
+	if (locale === "it") return __it.import_job_results_find_in_library(inputs)
+	if (locale === "ja") return __ja.import_job_results_find_in_library(inputs)
+	if (locale === "ko") return __ko.import_job_results_find_in_library(inputs)
+	if (locale === "nb") return __nb.import_job_results_find_in_library(inputs)
+	if (locale === "nl") return __nl.import_job_results_find_in_library(inputs)
+	if (locale === "pl") return __pl.import_job_results_find_in_library(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_job_results_find_in_library(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_job_results_find_in_library(inputs)
+	if (locale === "ro") return __ro.import_job_results_find_in_library(inputs)
+	if (locale === "ru") return __ru.import_job_results_find_in_library(inputs)
+	if (locale === "sv") return __sv.import_job_results_find_in_library(inputs)
+	if (locale === "th") return __th.import_job_results_find_in_library(inputs)
+	if (locale === "tr") return __tr.import_job_results_find_in_library(inputs)
+	if (locale === "uk") return __uk.import_job_results_find_in_library(inputs)
+	if (locale === "vi") return __vi.import_job_results_find_in_library(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_job_results_find_in_library(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_job_results_find_in_library(inputs)
+	return __en.import_job_results_find_in_library(inputs)
 });
 /**
 * | output |
@@ -44353,6 +46646,47 @@ export const import_job_stopping = /** @type {((inputs?: Import_Job_StoppingInpu
 	if (locale === "zh-Hans") return __zh_hans1.import_job_stopping(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.import_job_stopping(inputs)
 	return __en.import_job_stopping(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Timing" |
+*
+* @param {Import_Job_TimingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_timing = /** @type {((inputs?: Import_Job_TimingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Job_TimingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_job_timing(inputs)
+	if (locale === "cs") return __cs.import_job_timing(inputs)
+	if (locale === "da") return __da.import_job_timing(inputs)
+	if (locale === "de") return __de.import_job_timing(inputs)
+	if (locale === "el") return __el.import_job_timing(inputs)
+	if (locale === "es") return __es.import_job_timing(inputs)
+	if (locale === "fi") return __fi.import_job_timing(inputs)
+	if (locale === "fr") return __fr.import_job_timing(inputs)
+	if (locale === "he") return __he.import_job_timing(inputs)
+	if (locale === "hu") return __hu.import_job_timing(inputs)
+	if (locale === "id") return __id.import_job_timing(inputs)
+	if (locale === "it") return __it.import_job_timing(inputs)
+	if (locale === "ja") return __ja.import_job_timing(inputs)
+	if (locale === "ko") return __ko.import_job_timing(inputs)
+	if (locale === "nb") return __nb.import_job_timing(inputs)
+	if (locale === "nl") return __nl.import_job_timing(inputs)
+	if (locale === "pl") return __pl.import_job_timing(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_job_timing(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_job_timing(inputs)
+	if (locale === "ro") return __ro.import_job_timing(inputs)
+	if (locale === "ru") return __ru.import_job_timing(inputs)
+	if (locale === "sv") return __sv.import_job_timing(inputs)
+	if (locale === "th") return __th.import_job_timing(inputs)
+	if (locale === "tr") return __tr.import_job_timing(inputs)
+	if (locale === "uk") return __uk.import_job_timing(inputs)
+	if (locale === "vi") return __vi.import_job_timing(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_job_timing(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_job_timing(inputs)
+	return __en.import_job_timing(inputs)
 });
 /**
 * | plural | output |
@@ -47491,43 +49825,43 @@ export { imports_jobid_import_savorum1 as "imports_jobId_import_savorum" }
 /**
 * | output |
 * | --- |
-* | "{value1} and {value2} others" |
+* | "Recipes you bring in from a file, a website or text appear here." |
 *
-* @param {Imports_Page_And_OthersInputs} inputs
+* @param {Imports_Page_Empty_HintInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
 * @returns {LocalizedString}
 */
-export const imports_page_and_others = /** @type {((inputs: Imports_Page_And_OthersInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Imports_Page_And_OthersInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+export const imports_page_empty_hint = /** @type {((inputs?: Imports_Page_Empty_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Imports_Page_Empty_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
 	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.imports_page_and_others(inputs)
-	if (locale === "cs") return __cs.imports_page_and_others(inputs)
-	if (locale === "da") return __da.imports_page_and_others(inputs)
-	if (locale === "de") return __de.imports_page_and_others(inputs)
-	if (locale === "el") return __el.imports_page_and_others(inputs)
-	if (locale === "es") return __es.imports_page_and_others(inputs)
-	if (locale === "fi") return __fi.imports_page_and_others(inputs)
-	if (locale === "fr") return __fr.imports_page_and_others(inputs)
-	if (locale === "he") return __he.imports_page_and_others(inputs)
-	if (locale === "hu") return __hu.imports_page_and_others(inputs)
-	if (locale === "id") return __id.imports_page_and_others(inputs)
-	if (locale === "it") return __it.imports_page_and_others(inputs)
-	if (locale === "ja") return __ja.imports_page_and_others(inputs)
-	if (locale === "ko") return __ko.imports_page_and_others(inputs)
-	if (locale === "nb") return __nb.imports_page_and_others(inputs)
-	if (locale === "nl") return __nl.imports_page_and_others(inputs)
-	if (locale === "pl") return __pl.imports_page_and_others(inputs)
-	if (locale === "pt-BR") return __pt_br2.imports_page_and_others(inputs)
-	if (locale === "pt-PT") return __pt_pt2.imports_page_and_others(inputs)
-	if (locale === "ro") return __ro.imports_page_and_others(inputs)
-	if (locale === "ru") return __ru.imports_page_and_others(inputs)
-	if (locale === "sv") return __sv.imports_page_and_others(inputs)
-	if (locale === "th") return __th.imports_page_and_others(inputs)
-	if (locale === "tr") return __tr.imports_page_and_others(inputs)
-	if (locale === "uk") return __uk.imports_page_and_others(inputs)
-	if (locale === "vi") return __vi.imports_page_and_others(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.imports_page_and_others(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.imports_page_and_others(inputs)
-	return __en.imports_page_and_others(inputs)
+	if (locale === "ar") return __ar.imports_page_empty_hint(inputs)
+	if (locale === "cs") return __cs.imports_page_empty_hint(inputs)
+	if (locale === "da") return __da.imports_page_empty_hint(inputs)
+	if (locale === "de") return __de.imports_page_empty_hint(inputs)
+	if (locale === "el") return __el.imports_page_empty_hint(inputs)
+	if (locale === "es") return __es.imports_page_empty_hint(inputs)
+	if (locale === "fi") return __fi.imports_page_empty_hint(inputs)
+	if (locale === "fr") return __fr.imports_page_empty_hint(inputs)
+	if (locale === "he") return __he.imports_page_empty_hint(inputs)
+	if (locale === "hu") return __hu.imports_page_empty_hint(inputs)
+	if (locale === "id") return __id.imports_page_empty_hint(inputs)
+	if (locale === "it") return __it.imports_page_empty_hint(inputs)
+	if (locale === "ja") return __ja.imports_page_empty_hint(inputs)
+	if (locale === "ko") return __ko.imports_page_empty_hint(inputs)
+	if (locale === "nb") return __nb.imports_page_empty_hint(inputs)
+	if (locale === "nl") return __nl.imports_page_empty_hint(inputs)
+	if (locale === "pl") return __pl.imports_page_empty_hint(inputs)
+	if (locale === "pt-BR") return __pt_br2.imports_page_empty_hint(inputs)
+	if (locale === "pt-PT") return __pt_pt2.imports_page_empty_hint(inputs)
+	if (locale === "ro") return __ro.imports_page_empty_hint(inputs)
+	if (locale === "ru") return __ru.imports_page_empty_hint(inputs)
+	if (locale === "sv") return __sv.imports_page_empty_hint(inputs)
+	if (locale === "th") return __th.imports_page_empty_hint(inputs)
+	if (locale === "tr") return __tr.imports_page_empty_hint(inputs)
+	if (locale === "uk") return __uk.imports_page_empty_hint(inputs)
+	if (locale === "vi") return __vi.imports_page_empty_hint(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.imports_page_empty_hint(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.imports_page_empty_hint(inputs)
+	return __en.imports_page_empty_hint(inputs)
 });
 /**
 * | output |
@@ -47614,47 +49948,6 @@ export const imports_page_import_jobs = /** @type {((inputs?: Imports_Page_Impor
 /**
 * | output |
 * | --- |
-* | "Import recipes from your library." |
-*
-* @param {Imports_Page_Import_Recipes_From_Your_LibraryInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const imports_page_import_recipes_from_your_library = /** @type {((inputs?: Imports_Page_Import_Recipes_From_Your_LibraryInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Imports_Page_Import_Recipes_From_Your_LibraryInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "cs") return __cs.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "da") return __da.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "de") return __de.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "el") return __el.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "es") return __es.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "fi") return __fi.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "fr") return __fr.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "he") return __he.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "hu") return __hu.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "id") return __id.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "it") return __it.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "ja") return __ja.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "ko") return __ko.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "nb") return __nb.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "nl") return __nl.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "pl") return __pl.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "pt-BR") return __pt_br2.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "pt-PT") return __pt_pt2.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "ro") return __ro.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "ru") return __ru.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "sv") return __sv.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "th") return __th.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "tr") return __tr.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "uk") return __uk.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "vi") return __vi.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.imports_page_import_recipes_from_your_library(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.imports_page_import_recipes_from_your_library(inputs)
-	return __en.imports_page_import_recipes_from_your_library(inputs)
-});
-/**
-* | output |
-* | --- |
 * | "Imports" |
 *
 * @param {Imports_Page_ImportsInputs} inputs
@@ -47692,6 +49985,48 @@ export const imports_page_imports = /** @type {((inputs?: Imports_Page_ImportsIn
 	if (locale === "zh-Hans") return __zh_hans1.imports_page_imports(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.imports_page_imports(inputs)
 	return __en.imports_page_imports(inputs)
+});
+/**
+* | plural | output |
+* | --- | --- |
+* | "one" | "{title} and {countText} other" |
+* | * | "{title} and {countText} others" |
+*
+* @param {Imports_Page_Lead_And_OthersInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const imports_page_lead_and_others = /** @type {((inputs: Imports_Page_Lead_And_OthersInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Imports_Page_Lead_And_OthersInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.imports_page_lead_and_others(inputs)
+	if (locale === "cs") return __cs.imports_page_lead_and_others(inputs)
+	if (locale === "da") return __da.imports_page_lead_and_others(inputs)
+	if (locale === "de") return __de.imports_page_lead_and_others(inputs)
+	if (locale === "el") return __el.imports_page_lead_and_others(inputs)
+	if (locale === "es") return __es.imports_page_lead_and_others(inputs)
+	if (locale === "fi") return __fi.imports_page_lead_and_others(inputs)
+	if (locale === "fr") return __fr.imports_page_lead_and_others(inputs)
+	if (locale === "he") return __he.imports_page_lead_and_others(inputs)
+	if (locale === "hu") return __hu.imports_page_lead_and_others(inputs)
+	if (locale === "id") return __id.imports_page_lead_and_others(inputs)
+	if (locale === "it") return __it.imports_page_lead_and_others(inputs)
+	if (locale === "ja") return __ja.imports_page_lead_and_others(inputs)
+	if (locale === "ko") return __ko.imports_page_lead_and_others(inputs)
+	if (locale === "nb") return __nb.imports_page_lead_and_others(inputs)
+	if (locale === "nl") return __nl.imports_page_lead_and_others(inputs)
+	if (locale === "pl") return __pl.imports_page_lead_and_others(inputs)
+	if (locale === "pt-BR") return __pt_br2.imports_page_lead_and_others(inputs)
+	if (locale === "pt-PT") return __pt_pt2.imports_page_lead_and_others(inputs)
+	if (locale === "ro") return __ro.imports_page_lead_and_others(inputs)
+	if (locale === "ru") return __ru.imports_page_lead_and_others(inputs)
+	if (locale === "sv") return __sv.imports_page_lead_and_others(inputs)
+	if (locale === "th") return __th.imports_page_lead_and_others(inputs)
+	if (locale === "tr") return __tr.imports_page_lead_and_others(inputs)
+	if (locale === "uk") return __uk.imports_page_lead_and_others(inputs)
+	if (locale === "vi") return __vi.imports_page_lead_and_others(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.imports_page_lead_and_others(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.imports_page_lead_and_others(inputs)
+	return __en.imports_page_lead_and_others(inputs)
 });
 /**
 * | output |
@@ -47815,47 +50150,6 @@ export const imports_page_reading_your_imports = /** @type {((inputs?: Imports_P
 	if (locale === "zh-Hans") return __zh_hans1.imports_page_reading_your_imports(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.imports_page_reading_your_imports(inputs)
 	return __en.imports_page_reading_your_imports(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "Refresh imports" |
-*
-* @param {Imports_Page_Refresh_ImportsInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const imports_page_refresh_imports = /** @type {((inputs?: Imports_Page_Refresh_ImportsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Imports_Page_Refresh_ImportsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.imports_page_refresh_imports(inputs)
-	if (locale === "cs") return __cs.imports_page_refresh_imports(inputs)
-	if (locale === "da") return __da.imports_page_refresh_imports(inputs)
-	if (locale === "de") return __de.imports_page_refresh_imports(inputs)
-	if (locale === "el") return __el.imports_page_refresh_imports(inputs)
-	if (locale === "es") return __es.imports_page_refresh_imports(inputs)
-	if (locale === "fi") return __fi.imports_page_refresh_imports(inputs)
-	if (locale === "fr") return __fr.imports_page_refresh_imports(inputs)
-	if (locale === "he") return __he.imports_page_refresh_imports(inputs)
-	if (locale === "hu") return __hu.imports_page_refresh_imports(inputs)
-	if (locale === "id") return __id.imports_page_refresh_imports(inputs)
-	if (locale === "it") return __it.imports_page_refresh_imports(inputs)
-	if (locale === "ja") return __ja.imports_page_refresh_imports(inputs)
-	if (locale === "ko") return __ko.imports_page_refresh_imports(inputs)
-	if (locale === "nb") return __nb.imports_page_refresh_imports(inputs)
-	if (locale === "nl") return __nl.imports_page_refresh_imports(inputs)
-	if (locale === "pl") return __pl.imports_page_refresh_imports(inputs)
-	if (locale === "pt-BR") return __pt_br2.imports_page_refresh_imports(inputs)
-	if (locale === "pt-PT") return __pt_pt2.imports_page_refresh_imports(inputs)
-	if (locale === "ro") return __ro.imports_page_refresh_imports(inputs)
-	if (locale === "ru") return __ru.imports_page_refresh_imports(inputs)
-	if (locale === "sv") return __sv.imports_page_refresh_imports(inputs)
-	if (locale === "th") return __th.imports_page_refresh_imports(inputs)
-	if (locale === "tr") return __tr.imports_page_refresh_imports(inputs)
-	if (locale === "uk") return __uk.imports_page_refresh_imports(inputs)
-	if (locale === "vi") return __vi.imports_page_refresh_imports(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.imports_page_refresh_imports(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.imports_page_refresh_imports(inputs)
-	return __en.imports_page_refresh_imports(inputs)
 });
 /**
 * | output |
@@ -49824,6 +52118,47 @@ export const ingredient_row_remove = /** @type {((inputs?: Ingredient_Row_Remove
 	if (locale === "zh-Hans") return __zh_hans1.ingredient_row_remove(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.ingredient_row_remove(inputs)
 	return __en.ingredient_row_remove(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Unit" |
+*
+* @param {Ingredient_UnitInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const ingredient_unit = /** @type {((inputs?: Ingredient_UnitInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Ingredient_UnitInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.ingredient_unit(inputs)
+	if (locale === "cs") return __cs.ingredient_unit(inputs)
+	if (locale === "da") return __da.ingredient_unit(inputs)
+	if (locale === "de") return __de.ingredient_unit(inputs)
+	if (locale === "el") return __el.ingredient_unit(inputs)
+	if (locale === "es") return __es.ingredient_unit(inputs)
+	if (locale === "fi") return __fi.ingredient_unit(inputs)
+	if (locale === "fr") return __fr.ingredient_unit(inputs)
+	if (locale === "he") return __he.ingredient_unit(inputs)
+	if (locale === "hu") return __hu.ingredient_unit(inputs)
+	if (locale === "id") return __id.ingredient_unit(inputs)
+	if (locale === "it") return __it.ingredient_unit(inputs)
+	if (locale === "ja") return __ja.ingredient_unit(inputs)
+	if (locale === "ko") return __ko.ingredient_unit(inputs)
+	if (locale === "nb") return __nb.ingredient_unit(inputs)
+	if (locale === "nl") return __nl.ingredient_unit(inputs)
+	if (locale === "pl") return __pl.ingredient_unit(inputs)
+	if (locale === "pt-BR") return __pt_br2.ingredient_unit(inputs)
+	if (locale === "pt-PT") return __pt_pt2.ingredient_unit(inputs)
+	if (locale === "ro") return __ro.ingredient_unit(inputs)
+	if (locale === "ru") return __ru.ingredient_unit(inputs)
+	if (locale === "sv") return __sv.ingredient_unit(inputs)
+	if (locale === "th") return __th.ingredient_unit(inputs)
+	if (locale === "tr") return __tr.ingredient_unit(inputs)
+	if (locale === "uk") return __uk.ingredient_unit(inputs)
+	if (locale === "vi") return __vi.ingredient_unit(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.ingredient_unit(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.ingredient_unit(inputs)
+	return __en.ingredient_unit(inputs)
 });
 /**
 * | output |
@@ -53682,6 +56017,498 @@ export const integrations_webhooks = /** @type {((inputs?: Integrations_Webhooks
 /**
 * | output |
 * | --- |
+* | "Focus the add-item field" |
+*
+* @param {Keyboard_Shortcuts_AddInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_add = /** @type {((inputs?: Keyboard_Shortcuts_AddInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Keyboard_Shortcuts_AddInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.keyboard_shortcuts_add(inputs)
+	if (locale === "cs") return __cs.keyboard_shortcuts_add(inputs)
+	if (locale === "da") return __da.keyboard_shortcuts_add(inputs)
+	if (locale === "de") return __de.keyboard_shortcuts_add(inputs)
+	if (locale === "el") return __el.keyboard_shortcuts_add(inputs)
+	if (locale === "es") return __es.keyboard_shortcuts_add(inputs)
+	if (locale === "fi") return __fi.keyboard_shortcuts_add(inputs)
+	if (locale === "fr") return __fr.keyboard_shortcuts_add(inputs)
+	if (locale === "he") return __he.keyboard_shortcuts_add(inputs)
+	if (locale === "hu") return __hu.keyboard_shortcuts_add(inputs)
+	if (locale === "id") return __id.keyboard_shortcuts_add(inputs)
+	if (locale === "it") return __it.keyboard_shortcuts_add(inputs)
+	if (locale === "ja") return __ja.keyboard_shortcuts_add(inputs)
+	if (locale === "ko") return __ko.keyboard_shortcuts_add(inputs)
+	if (locale === "nb") return __nb.keyboard_shortcuts_add(inputs)
+	if (locale === "nl") return __nl.keyboard_shortcuts_add(inputs)
+	if (locale === "pl") return __pl.keyboard_shortcuts_add(inputs)
+	if (locale === "pt-BR") return __pt_br2.keyboard_shortcuts_add(inputs)
+	if (locale === "pt-PT") return __pt_pt2.keyboard_shortcuts_add(inputs)
+	if (locale === "ro") return __ro.keyboard_shortcuts_add(inputs)
+	if (locale === "ru") return __ru.keyboard_shortcuts_add(inputs)
+	if (locale === "sv") return __sv.keyboard_shortcuts_add(inputs)
+	if (locale === "th") return __th.keyboard_shortcuts_add(inputs)
+	if (locale === "tr") return __tr.keyboard_shortcuts_add(inputs)
+	if (locale === "uk") return __uk.keyboard_shortcuts_add(inputs)
+	if (locale === "vi") return __vi.keyboard_shortcuts_add(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.keyboard_shortcuts_add(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.keyboard_shortcuts_add(inputs)
+	return __en.keyboard_shortcuts_add(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Enable shortcuts" |
+*
+* @param {Keyboard_Shortcuts_EnabledInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_enabled = /** @type {((inputs?: Keyboard_Shortcuts_EnabledInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Keyboard_Shortcuts_EnabledInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.keyboard_shortcuts_enabled(inputs)
+	if (locale === "cs") return __cs.keyboard_shortcuts_enabled(inputs)
+	if (locale === "da") return __da.keyboard_shortcuts_enabled(inputs)
+	if (locale === "de") return __de.keyboard_shortcuts_enabled(inputs)
+	if (locale === "el") return __el.keyboard_shortcuts_enabled(inputs)
+	if (locale === "es") return __es.keyboard_shortcuts_enabled(inputs)
+	if (locale === "fi") return __fi.keyboard_shortcuts_enabled(inputs)
+	if (locale === "fr") return __fr.keyboard_shortcuts_enabled(inputs)
+	if (locale === "he") return __he.keyboard_shortcuts_enabled(inputs)
+	if (locale === "hu") return __hu.keyboard_shortcuts_enabled(inputs)
+	if (locale === "id") return __id.keyboard_shortcuts_enabled(inputs)
+	if (locale === "it") return __it.keyboard_shortcuts_enabled(inputs)
+	if (locale === "ja") return __ja.keyboard_shortcuts_enabled(inputs)
+	if (locale === "ko") return __ko.keyboard_shortcuts_enabled(inputs)
+	if (locale === "nb") return __nb.keyboard_shortcuts_enabled(inputs)
+	if (locale === "nl") return __nl.keyboard_shortcuts_enabled(inputs)
+	if (locale === "pl") return __pl.keyboard_shortcuts_enabled(inputs)
+	if (locale === "pt-BR") return __pt_br2.keyboard_shortcuts_enabled(inputs)
+	if (locale === "pt-PT") return __pt_pt2.keyboard_shortcuts_enabled(inputs)
+	if (locale === "ro") return __ro.keyboard_shortcuts_enabled(inputs)
+	if (locale === "ru") return __ru.keyboard_shortcuts_enabled(inputs)
+	if (locale === "sv") return __sv.keyboard_shortcuts_enabled(inputs)
+	if (locale === "th") return __th.keyboard_shortcuts_enabled(inputs)
+	if (locale === "tr") return __tr.keyboard_shortcuts_enabled(inputs)
+	if (locale === "uk") return __uk.keyboard_shortcuts_enabled(inputs)
+	if (locale === "vi") return __vi.keyboard_shortcuts_enabled(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.keyboard_shortcuts_enabled(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.keyboard_shortcuts_enabled(inputs)
+	return __en.keyboard_shortcuts_enabled(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Show keyboard shortcuts" |
+*
+* @param {Keyboard_Shortcuts_HelpInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_help = /** @type {((inputs?: Keyboard_Shortcuts_HelpInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Keyboard_Shortcuts_HelpInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.keyboard_shortcuts_help(inputs)
+	if (locale === "cs") return __cs.keyboard_shortcuts_help(inputs)
+	if (locale === "da") return __da.keyboard_shortcuts_help(inputs)
+	if (locale === "de") return __de.keyboard_shortcuts_help(inputs)
+	if (locale === "el") return __el.keyboard_shortcuts_help(inputs)
+	if (locale === "es") return __es.keyboard_shortcuts_help(inputs)
+	if (locale === "fi") return __fi.keyboard_shortcuts_help(inputs)
+	if (locale === "fr") return __fr.keyboard_shortcuts_help(inputs)
+	if (locale === "he") return __he.keyboard_shortcuts_help(inputs)
+	if (locale === "hu") return __hu.keyboard_shortcuts_help(inputs)
+	if (locale === "id") return __id.keyboard_shortcuts_help(inputs)
+	if (locale === "it") return __it.keyboard_shortcuts_help(inputs)
+	if (locale === "ja") return __ja.keyboard_shortcuts_help(inputs)
+	if (locale === "ko") return __ko.keyboard_shortcuts_help(inputs)
+	if (locale === "nb") return __nb.keyboard_shortcuts_help(inputs)
+	if (locale === "nl") return __nl.keyboard_shortcuts_help(inputs)
+	if (locale === "pl") return __pl.keyboard_shortcuts_help(inputs)
+	if (locale === "pt-BR") return __pt_br2.keyboard_shortcuts_help(inputs)
+	if (locale === "pt-PT") return __pt_pt2.keyboard_shortcuts_help(inputs)
+	if (locale === "ro") return __ro.keyboard_shortcuts_help(inputs)
+	if (locale === "ru") return __ru.keyboard_shortcuts_help(inputs)
+	if (locale === "sv") return __sv.keyboard_shortcuts_help(inputs)
+	if (locale === "th") return __th.keyboard_shortcuts_help(inputs)
+	if (locale === "tr") return __tr.keyboard_shortcuts_help(inputs)
+	if (locale === "uk") return __uk.keyboard_shortcuts_help(inputs)
+	if (locale === "vi") return __vi.keyboard_shortcuts_help(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.keyboard_shortcuts_help(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.keyboard_shortcuts_help(inputs)
+	return __en.keyboard_shortcuts_help(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Shortcuts pause while you type or use a menu or dialog. This setting is saved in this browser." |
+*
+* @param {Keyboard_Shortcuts_HintInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_hint = /** @type {((inputs?: Keyboard_Shortcuts_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Keyboard_Shortcuts_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.keyboard_shortcuts_hint(inputs)
+	if (locale === "cs") return __cs.keyboard_shortcuts_hint(inputs)
+	if (locale === "da") return __da.keyboard_shortcuts_hint(inputs)
+	if (locale === "de") return __de.keyboard_shortcuts_hint(inputs)
+	if (locale === "el") return __el.keyboard_shortcuts_hint(inputs)
+	if (locale === "es") return __es.keyboard_shortcuts_hint(inputs)
+	if (locale === "fi") return __fi.keyboard_shortcuts_hint(inputs)
+	if (locale === "fr") return __fr.keyboard_shortcuts_hint(inputs)
+	if (locale === "he") return __he.keyboard_shortcuts_hint(inputs)
+	if (locale === "hu") return __hu.keyboard_shortcuts_hint(inputs)
+	if (locale === "id") return __id.keyboard_shortcuts_hint(inputs)
+	if (locale === "it") return __it.keyboard_shortcuts_hint(inputs)
+	if (locale === "ja") return __ja.keyboard_shortcuts_hint(inputs)
+	if (locale === "ko") return __ko.keyboard_shortcuts_hint(inputs)
+	if (locale === "nb") return __nb.keyboard_shortcuts_hint(inputs)
+	if (locale === "nl") return __nl.keyboard_shortcuts_hint(inputs)
+	if (locale === "pl") return __pl.keyboard_shortcuts_hint(inputs)
+	if (locale === "pt-BR") return __pt_br2.keyboard_shortcuts_hint(inputs)
+	if (locale === "pt-PT") return __pt_pt2.keyboard_shortcuts_hint(inputs)
+	if (locale === "ro") return __ro.keyboard_shortcuts_hint(inputs)
+	if (locale === "ru") return __ru.keyboard_shortcuts_hint(inputs)
+	if (locale === "sv") return __sv.keyboard_shortcuts_hint(inputs)
+	if (locale === "th") return __th.keyboard_shortcuts_hint(inputs)
+	if (locale === "tr") return __tr.keyboard_shortcuts_hint(inputs)
+	if (locale === "uk") return __uk.keyboard_shortcuts_hint(inputs)
+	if (locale === "vi") return __vi.keyboard_shortcuts_hint(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.keyboard_shortcuts_hint(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.keyboard_shortcuts_hint(inputs)
+	return __en.keyboard_shortcuts_hint(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "In Imports" |
+*
+* @param {Keyboard_Shortcuts_ImportsInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_imports = /** @type {((inputs?: Keyboard_Shortcuts_ImportsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Keyboard_Shortcuts_ImportsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.keyboard_shortcuts_imports(inputs)
+	if (locale === "cs") return __cs.keyboard_shortcuts_imports(inputs)
+	if (locale === "da") return __da.keyboard_shortcuts_imports(inputs)
+	if (locale === "de") return __de.keyboard_shortcuts_imports(inputs)
+	if (locale === "el") return __el.keyboard_shortcuts_imports(inputs)
+	if (locale === "es") return __es.keyboard_shortcuts_imports(inputs)
+	if (locale === "fi") return __fi.keyboard_shortcuts_imports(inputs)
+	if (locale === "fr") return __fr.keyboard_shortcuts_imports(inputs)
+	if (locale === "he") return __he.keyboard_shortcuts_imports(inputs)
+	if (locale === "hu") return __hu.keyboard_shortcuts_imports(inputs)
+	if (locale === "id") return __id.keyboard_shortcuts_imports(inputs)
+	if (locale === "it") return __it.keyboard_shortcuts_imports(inputs)
+	if (locale === "ja") return __ja.keyboard_shortcuts_imports(inputs)
+	if (locale === "ko") return __ko.keyboard_shortcuts_imports(inputs)
+	if (locale === "nb") return __nb.keyboard_shortcuts_imports(inputs)
+	if (locale === "nl") return __nl.keyboard_shortcuts_imports(inputs)
+	if (locale === "pl") return __pl.keyboard_shortcuts_imports(inputs)
+	if (locale === "pt-BR") return __pt_br2.keyboard_shortcuts_imports(inputs)
+	if (locale === "pt-PT") return __pt_pt2.keyboard_shortcuts_imports(inputs)
+	if (locale === "ro") return __ro.keyboard_shortcuts_imports(inputs)
+	if (locale === "ru") return __ru.keyboard_shortcuts_imports(inputs)
+	if (locale === "sv") return __sv.keyboard_shortcuts_imports(inputs)
+	if (locale === "th") return __th.keyboard_shortcuts_imports(inputs)
+	if (locale === "tr") return __tr.keyboard_shortcuts_imports(inputs)
+	if (locale === "uk") return __uk.keyboard_shortcuts_imports(inputs)
+	if (locale === "vi") return __vi.keyboard_shortcuts_imports(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.keyboard_shortcuts_imports(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.keyboard_shortcuts_imports(inputs)
+	return __en.keyboard_shortcuts_imports(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "In your library" |
+*
+* @param {Keyboard_Shortcuts_LibraryInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_library = /** @type {((inputs?: Keyboard_Shortcuts_LibraryInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Keyboard_Shortcuts_LibraryInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.keyboard_shortcuts_library(inputs)
+	if (locale === "cs") return __cs.keyboard_shortcuts_library(inputs)
+	if (locale === "da") return __da.keyboard_shortcuts_library(inputs)
+	if (locale === "de") return __de.keyboard_shortcuts_library(inputs)
+	if (locale === "el") return __el.keyboard_shortcuts_library(inputs)
+	if (locale === "es") return __es.keyboard_shortcuts_library(inputs)
+	if (locale === "fi") return __fi.keyboard_shortcuts_library(inputs)
+	if (locale === "fr") return __fr.keyboard_shortcuts_library(inputs)
+	if (locale === "he") return __he.keyboard_shortcuts_library(inputs)
+	if (locale === "hu") return __hu.keyboard_shortcuts_library(inputs)
+	if (locale === "id") return __id.keyboard_shortcuts_library(inputs)
+	if (locale === "it") return __it.keyboard_shortcuts_library(inputs)
+	if (locale === "ja") return __ja.keyboard_shortcuts_library(inputs)
+	if (locale === "ko") return __ko.keyboard_shortcuts_library(inputs)
+	if (locale === "nb") return __nb.keyboard_shortcuts_library(inputs)
+	if (locale === "nl") return __nl.keyboard_shortcuts_library(inputs)
+	if (locale === "pl") return __pl.keyboard_shortcuts_library(inputs)
+	if (locale === "pt-BR") return __pt_br2.keyboard_shortcuts_library(inputs)
+	if (locale === "pt-PT") return __pt_pt2.keyboard_shortcuts_library(inputs)
+	if (locale === "ro") return __ro.keyboard_shortcuts_library(inputs)
+	if (locale === "ru") return __ru.keyboard_shortcuts_library(inputs)
+	if (locale === "sv") return __sv.keyboard_shortcuts_library(inputs)
+	if (locale === "th") return __th.keyboard_shortcuts_library(inputs)
+	if (locale === "tr") return __tr.keyboard_shortcuts_library(inputs)
+	if (locale === "uk") return __uk.keyboard_shortcuts_library(inputs)
+	if (locale === "vi") return __vi.keyboard_shortcuts_library(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.keyboard_shortcuts_library(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.keyboard_shortcuts_library(inputs)
+	return __en.keyboard_shortcuts_library(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Next date range" |
+*
+* @param {Keyboard_Shortcuts_NextInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_next = /** @type {((inputs?: Keyboard_Shortcuts_NextInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Keyboard_Shortcuts_NextInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.keyboard_shortcuts_next(inputs)
+	if (locale === "cs") return __cs.keyboard_shortcuts_next(inputs)
+	if (locale === "da") return __da.keyboard_shortcuts_next(inputs)
+	if (locale === "de") return __de.keyboard_shortcuts_next(inputs)
+	if (locale === "el") return __el.keyboard_shortcuts_next(inputs)
+	if (locale === "es") return __es.keyboard_shortcuts_next(inputs)
+	if (locale === "fi") return __fi.keyboard_shortcuts_next(inputs)
+	if (locale === "fr") return __fr.keyboard_shortcuts_next(inputs)
+	if (locale === "he") return __he.keyboard_shortcuts_next(inputs)
+	if (locale === "hu") return __hu.keyboard_shortcuts_next(inputs)
+	if (locale === "id") return __id.keyboard_shortcuts_next(inputs)
+	if (locale === "it") return __it.keyboard_shortcuts_next(inputs)
+	if (locale === "ja") return __ja.keyboard_shortcuts_next(inputs)
+	if (locale === "ko") return __ko.keyboard_shortcuts_next(inputs)
+	if (locale === "nb") return __nb.keyboard_shortcuts_next(inputs)
+	if (locale === "nl") return __nl.keyboard_shortcuts_next(inputs)
+	if (locale === "pl") return __pl.keyboard_shortcuts_next(inputs)
+	if (locale === "pt-BR") return __pt_br2.keyboard_shortcuts_next(inputs)
+	if (locale === "pt-PT") return __pt_pt2.keyboard_shortcuts_next(inputs)
+	if (locale === "ro") return __ro.keyboard_shortcuts_next(inputs)
+	if (locale === "ru") return __ru.keyboard_shortcuts_next(inputs)
+	if (locale === "sv") return __sv.keyboard_shortcuts_next(inputs)
+	if (locale === "th") return __th.keyboard_shortcuts_next(inputs)
+	if (locale === "tr") return __tr.keyboard_shortcuts_next(inputs)
+	if (locale === "uk") return __uk.keyboard_shortcuts_next(inputs)
+	if (locale === "vi") return __vi.keyboard_shortcuts_next(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.keyboard_shortcuts_next(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.keyboard_shortcuts_next(inputs)
+	return __en.keyboard_shortcuts_next(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "In Plan" |
+*
+* @param {Keyboard_Shortcuts_PlanInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_plan = /** @type {((inputs?: Keyboard_Shortcuts_PlanInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Keyboard_Shortcuts_PlanInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.keyboard_shortcuts_plan(inputs)
+	if (locale === "cs") return __cs.keyboard_shortcuts_plan(inputs)
+	if (locale === "da") return __da.keyboard_shortcuts_plan(inputs)
+	if (locale === "de") return __de.keyboard_shortcuts_plan(inputs)
+	if (locale === "el") return __el.keyboard_shortcuts_plan(inputs)
+	if (locale === "es") return __es.keyboard_shortcuts_plan(inputs)
+	if (locale === "fi") return __fi.keyboard_shortcuts_plan(inputs)
+	if (locale === "fr") return __fr.keyboard_shortcuts_plan(inputs)
+	if (locale === "he") return __he.keyboard_shortcuts_plan(inputs)
+	if (locale === "hu") return __hu.keyboard_shortcuts_plan(inputs)
+	if (locale === "id") return __id.keyboard_shortcuts_plan(inputs)
+	if (locale === "it") return __it.keyboard_shortcuts_plan(inputs)
+	if (locale === "ja") return __ja.keyboard_shortcuts_plan(inputs)
+	if (locale === "ko") return __ko.keyboard_shortcuts_plan(inputs)
+	if (locale === "nb") return __nb.keyboard_shortcuts_plan(inputs)
+	if (locale === "nl") return __nl.keyboard_shortcuts_plan(inputs)
+	if (locale === "pl") return __pl.keyboard_shortcuts_plan(inputs)
+	if (locale === "pt-BR") return __pt_br2.keyboard_shortcuts_plan(inputs)
+	if (locale === "pt-PT") return __pt_pt2.keyboard_shortcuts_plan(inputs)
+	if (locale === "ro") return __ro.keyboard_shortcuts_plan(inputs)
+	if (locale === "ru") return __ru.keyboard_shortcuts_plan(inputs)
+	if (locale === "sv") return __sv.keyboard_shortcuts_plan(inputs)
+	if (locale === "th") return __th.keyboard_shortcuts_plan(inputs)
+	if (locale === "tr") return __tr.keyboard_shortcuts_plan(inputs)
+	if (locale === "uk") return __uk.keyboard_shortcuts_plan(inputs)
+	if (locale === "vi") return __vi.keyboard_shortcuts_plan(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.keyboard_shortcuts_plan(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.keyboard_shortcuts_plan(inputs)
+	return __en.keyboard_shortcuts_plan(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Previous date range" |
+*
+* @param {Keyboard_Shortcuts_PreviousInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_previous = /** @type {((inputs?: Keyboard_Shortcuts_PreviousInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Keyboard_Shortcuts_PreviousInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.keyboard_shortcuts_previous(inputs)
+	if (locale === "cs") return __cs.keyboard_shortcuts_previous(inputs)
+	if (locale === "da") return __da.keyboard_shortcuts_previous(inputs)
+	if (locale === "de") return __de.keyboard_shortcuts_previous(inputs)
+	if (locale === "el") return __el.keyboard_shortcuts_previous(inputs)
+	if (locale === "es") return __es.keyboard_shortcuts_previous(inputs)
+	if (locale === "fi") return __fi.keyboard_shortcuts_previous(inputs)
+	if (locale === "fr") return __fr.keyboard_shortcuts_previous(inputs)
+	if (locale === "he") return __he.keyboard_shortcuts_previous(inputs)
+	if (locale === "hu") return __hu.keyboard_shortcuts_previous(inputs)
+	if (locale === "id") return __id.keyboard_shortcuts_previous(inputs)
+	if (locale === "it") return __it.keyboard_shortcuts_previous(inputs)
+	if (locale === "ja") return __ja.keyboard_shortcuts_previous(inputs)
+	if (locale === "ko") return __ko.keyboard_shortcuts_previous(inputs)
+	if (locale === "nb") return __nb.keyboard_shortcuts_previous(inputs)
+	if (locale === "nl") return __nl.keyboard_shortcuts_previous(inputs)
+	if (locale === "pl") return __pl.keyboard_shortcuts_previous(inputs)
+	if (locale === "pt-BR") return __pt_br2.keyboard_shortcuts_previous(inputs)
+	if (locale === "pt-PT") return __pt_pt2.keyboard_shortcuts_previous(inputs)
+	if (locale === "ro") return __ro.keyboard_shortcuts_previous(inputs)
+	if (locale === "ru") return __ru.keyboard_shortcuts_previous(inputs)
+	if (locale === "sv") return __sv.keyboard_shortcuts_previous(inputs)
+	if (locale === "th") return __th.keyboard_shortcuts_previous(inputs)
+	if (locale === "tr") return __tr.keyboard_shortcuts_previous(inputs)
+	if (locale === "uk") return __uk.keyboard_shortcuts_previous(inputs)
+	if (locale === "vi") return __vi.keyboard_shortcuts_previous(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.keyboard_shortcuts_previous(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.keyboard_shortcuts_previous(inputs)
+	return __en.keyboard_shortcuts_previous(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "On a recipe" |
+*
+* @param {Keyboard_Shortcuts_ReadingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_reading = /** @type {((inputs?: Keyboard_Shortcuts_ReadingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Keyboard_Shortcuts_ReadingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.keyboard_shortcuts_reading(inputs)
+	if (locale === "cs") return __cs.keyboard_shortcuts_reading(inputs)
+	if (locale === "da") return __da.keyboard_shortcuts_reading(inputs)
+	if (locale === "de") return __de.keyboard_shortcuts_reading(inputs)
+	if (locale === "el") return __el.keyboard_shortcuts_reading(inputs)
+	if (locale === "es") return __es.keyboard_shortcuts_reading(inputs)
+	if (locale === "fi") return __fi.keyboard_shortcuts_reading(inputs)
+	if (locale === "fr") return __fr.keyboard_shortcuts_reading(inputs)
+	if (locale === "he") return __he.keyboard_shortcuts_reading(inputs)
+	if (locale === "hu") return __hu.keyboard_shortcuts_reading(inputs)
+	if (locale === "id") return __id.keyboard_shortcuts_reading(inputs)
+	if (locale === "it") return __it.keyboard_shortcuts_reading(inputs)
+	if (locale === "ja") return __ja.keyboard_shortcuts_reading(inputs)
+	if (locale === "ko") return __ko.keyboard_shortcuts_reading(inputs)
+	if (locale === "nb") return __nb.keyboard_shortcuts_reading(inputs)
+	if (locale === "nl") return __nl.keyboard_shortcuts_reading(inputs)
+	if (locale === "pl") return __pl.keyboard_shortcuts_reading(inputs)
+	if (locale === "pt-BR") return __pt_br2.keyboard_shortcuts_reading(inputs)
+	if (locale === "pt-PT") return __pt_pt2.keyboard_shortcuts_reading(inputs)
+	if (locale === "ro") return __ro.keyboard_shortcuts_reading(inputs)
+	if (locale === "ru") return __ru.keyboard_shortcuts_reading(inputs)
+	if (locale === "sv") return __sv.keyboard_shortcuts_reading(inputs)
+	if (locale === "th") return __th.keyboard_shortcuts_reading(inputs)
+	if (locale === "tr") return __tr.keyboard_shortcuts_reading(inputs)
+	if (locale === "uk") return __uk.keyboard_shortcuts_reading(inputs)
+	if (locale === "vi") return __vi.keyboard_shortcuts_reading(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.keyboard_shortcuts_reading(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.keyboard_shortcuts_reading(inputs)
+	return __en.keyboard_shortcuts_reading(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "In Shopping" |
+*
+* @param {Keyboard_Shortcuts_ShoppingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_shopping = /** @type {((inputs?: Keyboard_Shortcuts_ShoppingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Keyboard_Shortcuts_ShoppingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.keyboard_shortcuts_shopping(inputs)
+	if (locale === "cs") return __cs.keyboard_shortcuts_shopping(inputs)
+	if (locale === "da") return __da.keyboard_shortcuts_shopping(inputs)
+	if (locale === "de") return __de.keyboard_shortcuts_shopping(inputs)
+	if (locale === "el") return __el.keyboard_shortcuts_shopping(inputs)
+	if (locale === "es") return __es.keyboard_shortcuts_shopping(inputs)
+	if (locale === "fi") return __fi.keyboard_shortcuts_shopping(inputs)
+	if (locale === "fr") return __fr.keyboard_shortcuts_shopping(inputs)
+	if (locale === "he") return __he.keyboard_shortcuts_shopping(inputs)
+	if (locale === "hu") return __hu.keyboard_shortcuts_shopping(inputs)
+	if (locale === "id") return __id.keyboard_shortcuts_shopping(inputs)
+	if (locale === "it") return __it.keyboard_shortcuts_shopping(inputs)
+	if (locale === "ja") return __ja.keyboard_shortcuts_shopping(inputs)
+	if (locale === "ko") return __ko.keyboard_shortcuts_shopping(inputs)
+	if (locale === "nb") return __nb.keyboard_shortcuts_shopping(inputs)
+	if (locale === "nl") return __nl.keyboard_shortcuts_shopping(inputs)
+	if (locale === "pl") return __pl.keyboard_shortcuts_shopping(inputs)
+	if (locale === "pt-BR") return __pt_br2.keyboard_shortcuts_shopping(inputs)
+	if (locale === "pt-PT") return __pt_pt2.keyboard_shortcuts_shopping(inputs)
+	if (locale === "ro") return __ro.keyboard_shortcuts_shopping(inputs)
+	if (locale === "ru") return __ru.keyboard_shortcuts_shopping(inputs)
+	if (locale === "sv") return __sv.keyboard_shortcuts_shopping(inputs)
+	if (locale === "th") return __th.keyboard_shortcuts_shopping(inputs)
+	if (locale === "tr") return __tr.keyboard_shortcuts_shopping(inputs)
+	if (locale === "uk") return __uk.keyboard_shortcuts_shopping(inputs)
+	if (locale === "vi") return __vi.keyboard_shortcuts_shopping(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.keyboard_shortcuts_shopping(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.keyboard_shortcuts_shopping(inputs)
+	return __en.keyboard_shortcuts_shopping(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Keyboard shortcuts" |
+*
+* @param {Keyboard_Shortcuts_TitleInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_title = /** @type {((inputs?: Keyboard_Shortcuts_TitleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Keyboard_Shortcuts_TitleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.keyboard_shortcuts_title(inputs)
+	if (locale === "cs") return __cs.keyboard_shortcuts_title(inputs)
+	if (locale === "da") return __da.keyboard_shortcuts_title(inputs)
+	if (locale === "de") return __de.keyboard_shortcuts_title(inputs)
+	if (locale === "el") return __el.keyboard_shortcuts_title(inputs)
+	if (locale === "es") return __es.keyboard_shortcuts_title(inputs)
+	if (locale === "fi") return __fi.keyboard_shortcuts_title(inputs)
+	if (locale === "fr") return __fr.keyboard_shortcuts_title(inputs)
+	if (locale === "he") return __he.keyboard_shortcuts_title(inputs)
+	if (locale === "hu") return __hu.keyboard_shortcuts_title(inputs)
+	if (locale === "id") return __id.keyboard_shortcuts_title(inputs)
+	if (locale === "it") return __it.keyboard_shortcuts_title(inputs)
+	if (locale === "ja") return __ja.keyboard_shortcuts_title(inputs)
+	if (locale === "ko") return __ko.keyboard_shortcuts_title(inputs)
+	if (locale === "nb") return __nb.keyboard_shortcuts_title(inputs)
+	if (locale === "nl") return __nl.keyboard_shortcuts_title(inputs)
+	if (locale === "pl") return __pl.keyboard_shortcuts_title(inputs)
+	if (locale === "pt-BR") return __pt_br2.keyboard_shortcuts_title(inputs)
+	if (locale === "pt-PT") return __pt_pt2.keyboard_shortcuts_title(inputs)
+	if (locale === "ro") return __ro.keyboard_shortcuts_title(inputs)
+	if (locale === "ru") return __ru.keyboard_shortcuts_title(inputs)
+	if (locale === "sv") return __sv.keyboard_shortcuts_title(inputs)
+	if (locale === "th") return __th.keyboard_shortcuts_title(inputs)
+	if (locale === "tr") return __tr.keyboard_shortcuts_title(inputs)
+	if (locale === "uk") return __uk.keyboard_shortcuts_title(inputs)
+	if (locale === "vi") return __vi.keyboard_shortcuts_title(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.keyboard_shortcuts_title(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.keyboard_shortcuts_title(inputs)
+	return __en.keyboard_shortcuts_title(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Nothing here matches that." |
 *
 * @param {Label_Choices_Nothing_Here_Matches_ThatInputs} inputs
@@ -55076,6 +57903,88 @@ export const library_filters_clear_all = /** @type {((inputs?: Library_Filters_C
 /**
 * | output |
 * | --- |
+* | "Dietary labels are ones you assign. Stated is what the recipe itself claims, and Savorum does not check it." |
+*
+* @param {Library_Filters_Diet_HintInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_filters_diet_hint = /** @type {((inputs?: Library_Filters_Diet_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_Filters_Diet_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.library_filters_diet_hint(inputs)
+	if (locale === "cs") return __cs.library_filters_diet_hint(inputs)
+	if (locale === "da") return __da.library_filters_diet_hint(inputs)
+	if (locale === "de") return __de.library_filters_diet_hint(inputs)
+	if (locale === "el") return __el.library_filters_diet_hint(inputs)
+	if (locale === "es") return __es.library_filters_diet_hint(inputs)
+	if (locale === "fi") return __fi.library_filters_diet_hint(inputs)
+	if (locale === "fr") return __fr.library_filters_diet_hint(inputs)
+	if (locale === "he") return __he.library_filters_diet_hint(inputs)
+	if (locale === "hu") return __hu.library_filters_diet_hint(inputs)
+	if (locale === "id") return __id.library_filters_diet_hint(inputs)
+	if (locale === "it") return __it.library_filters_diet_hint(inputs)
+	if (locale === "ja") return __ja.library_filters_diet_hint(inputs)
+	if (locale === "ko") return __ko.library_filters_diet_hint(inputs)
+	if (locale === "nb") return __nb.library_filters_diet_hint(inputs)
+	if (locale === "nl") return __nl.library_filters_diet_hint(inputs)
+	if (locale === "pl") return __pl.library_filters_diet_hint(inputs)
+	if (locale === "pt-BR") return __pt_br2.library_filters_diet_hint(inputs)
+	if (locale === "pt-PT") return __pt_pt2.library_filters_diet_hint(inputs)
+	if (locale === "ro") return __ro.library_filters_diet_hint(inputs)
+	if (locale === "ru") return __ru.library_filters_diet_hint(inputs)
+	if (locale === "sv") return __sv.library_filters_diet_hint(inputs)
+	if (locale === "th") return __th.library_filters_diet_hint(inputs)
+	if (locale === "tr") return __tr.library_filters_diet_hint(inputs)
+	if (locale === "uk") return __uk.library_filters_diet_hint(inputs)
+	if (locale === "vi") return __vi.library_filters_diet_hint(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.library_filters_diet_hint(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.library_filters_diet_hint(inputs)
+	return __en.library_filters_diet_hint(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "How stated diets work" |
+*
+* @param {Library_Filters_Diet_ManualInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_filters_diet_manual = /** @type {((inputs?: Library_Filters_Diet_ManualInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_Filters_Diet_ManualInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.library_filters_diet_manual(inputs)
+	if (locale === "cs") return __cs.library_filters_diet_manual(inputs)
+	if (locale === "da") return __da.library_filters_diet_manual(inputs)
+	if (locale === "de") return __de.library_filters_diet_manual(inputs)
+	if (locale === "el") return __el.library_filters_diet_manual(inputs)
+	if (locale === "es") return __es.library_filters_diet_manual(inputs)
+	if (locale === "fi") return __fi.library_filters_diet_manual(inputs)
+	if (locale === "fr") return __fr.library_filters_diet_manual(inputs)
+	if (locale === "he") return __he.library_filters_diet_manual(inputs)
+	if (locale === "hu") return __hu.library_filters_diet_manual(inputs)
+	if (locale === "id") return __id.library_filters_diet_manual(inputs)
+	if (locale === "it") return __it.library_filters_diet_manual(inputs)
+	if (locale === "ja") return __ja.library_filters_diet_manual(inputs)
+	if (locale === "ko") return __ko.library_filters_diet_manual(inputs)
+	if (locale === "nb") return __nb.library_filters_diet_manual(inputs)
+	if (locale === "nl") return __nl.library_filters_diet_manual(inputs)
+	if (locale === "pl") return __pl.library_filters_diet_manual(inputs)
+	if (locale === "pt-BR") return __pt_br2.library_filters_diet_manual(inputs)
+	if (locale === "pt-PT") return __pt_pt2.library_filters_diet_manual(inputs)
+	if (locale === "ro") return __ro.library_filters_diet_manual(inputs)
+	if (locale === "ru") return __ru.library_filters_diet_manual(inputs)
+	if (locale === "sv") return __sv.library_filters_diet_manual(inputs)
+	if (locale === "th") return __th.library_filters_diet_manual(inputs)
+	if (locale === "tr") return __tr.library_filters_diet_manual(inputs)
+	if (locale === "uk") return __uk.library_filters_diet_manual(inputs)
+	if (locale === "vi") return __vi.library_filters_diet_manual(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.library_filters_diet_manual(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.library_filters_diet_manual(inputs)
+	return __en.library_filters_diet_manual(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Every one of these is already chosen." |
 *
 * @param {Library_Filters_Every_One_ChosenInputs} inputs
@@ -55322,6 +58231,47 @@ export const library_filters_in_a_book = /** @type {((inputs?: Library_Filters_I
 /**
 * | output |
 * | --- |
+* | "More filters" |
+*
+* @param {Library_Filters_MoreInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_filters_more = /** @type {((inputs?: Library_Filters_MoreInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_Filters_MoreInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.library_filters_more(inputs)
+	if (locale === "cs") return __cs.library_filters_more(inputs)
+	if (locale === "da") return __da.library_filters_more(inputs)
+	if (locale === "de") return __de.library_filters_more(inputs)
+	if (locale === "el") return __el.library_filters_more(inputs)
+	if (locale === "es") return __es.library_filters_more(inputs)
+	if (locale === "fi") return __fi.library_filters_more(inputs)
+	if (locale === "fr") return __fr.library_filters_more(inputs)
+	if (locale === "he") return __he.library_filters_more(inputs)
+	if (locale === "hu") return __hu.library_filters_more(inputs)
+	if (locale === "id") return __id.library_filters_more(inputs)
+	if (locale === "it") return __it.library_filters_more(inputs)
+	if (locale === "ja") return __ja.library_filters_more(inputs)
+	if (locale === "ko") return __ko.library_filters_more(inputs)
+	if (locale === "nb") return __nb.library_filters_more(inputs)
+	if (locale === "nl") return __nl.library_filters_more(inputs)
+	if (locale === "pl") return __pl.library_filters_more(inputs)
+	if (locale === "pt-BR") return __pt_br2.library_filters_more(inputs)
+	if (locale === "pt-PT") return __pt_pt2.library_filters_more(inputs)
+	if (locale === "ro") return __ro.library_filters_more(inputs)
+	if (locale === "ru") return __ru.library_filters_more(inputs)
+	if (locale === "sv") return __sv.library_filters_more(inputs)
+	if (locale === "th") return __th.library_filters_more(inputs)
+	if (locale === "tr") return __tr.library_filters_more(inputs)
+	if (locale === "uk") return __uk.library_filters_more(inputs)
+	if (locale === "vi") return __vi.library_filters_more(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.library_filters_more(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.library_filters_more(inputs)
+	return __en.library_filters_more(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Narrow to {value1}" |
 *
 * @param {Library_Filters_Narrow_ToInputs} inputs
@@ -55527,47 +58477,6 @@ export const library_filters_stated_by_the_recipe = /** @type {((inputs?: Librar
 /**
 * | output |
 * | --- |
-* | "Only recipes that make the statement without conditions." |
-*
-* @param {Library_Filters_Stated_HintInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const library_filters_stated_hint = /** @type {((inputs?: Library_Filters_Stated_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_Filters_Stated_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.library_filters_stated_hint(inputs)
-	if (locale === "cs") return __cs.library_filters_stated_hint(inputs)
-	if (locale === "da") return __da.library_filters_stated_hint(inputs)
-	if (locale === "de") return __de.library_filters_stated_hint(inputs)
-	if (locale === "el") return __el.library_filters_stated_hint(inputs)
-	if (locale === "es") return __es.library_filters_stated_hint(inputs)
-	if (locale === "fi") return __fi.library_filters_stated_hint(inputs)
-	if (locale === "fr") return __fr.library_filters_stated_hint(inputs)
-	if (locale === "he") return __he.library_filters_stated_hint(inputs)
-	if (locale === "hu") return __hu.library_filters_stated_hint(inputs)
-	if (locale === "id") return __id.library_filters_stated_hint(inputs)
-	if (locale === "it") return __it.library_filters_stated_hint(inputs)
-	if (locale === "ja") return __ja.library_filters_stated_hint(inputs)
-	if (locale === "ko") return __ko.library_filters_stated_hint(inputs)
-	if (locale === "nb") return __nb.library_filters_stated_hint(inputs)
-	if (locale === "nl") return __nl.library_filters_stated_hint(inputs)
-	if (locale === "pl") return __pl.library_filters_stated_hint(inputs)
-	if (locale === "pt-BR") return __pt_br2.library_filters_stated_hint(inputs)
-	if (locale === "pt-PT") return __pt_pt2.library_filters_stated_hint(inputs)
-	if (locale === "ro") return __ro.library_filters_stated_hint(inputs)
-	if (locale === "ru") return __ru.library_filters_stated_hint(inputs)
-	if (locale === "sv") return __sv.library_filters_stated_hint(inputs)
-	if (locale === "th") return __th.library_filters_stated_hint(inputs)
-	if (locale === "tr") return __tr.library_filters_stated_hint(inputs)
-	if (locale === "uk") return __uk.library_filters_stated_hint(inputs)
-	if (locale === "vi") return __vi.library_filters_stated_hint(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.library_filters_stated_hint(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.library_filters_stated_hint(inputs)
-	return __en.library_filters_stated_hint(inputs)
-});
-/**
-* | output |
-* | --- |
 * | "Stop narrowing to {value1}" |
 *
 * @param {Library_Filters_Stop_NarrowingInputs} inputs
@@ -55650,7 +58559,7 @@ export const library_filters_tags = /** @type {((inputs?: Library_Filters_TagsIn
 /**
 * | output |
 * | --- |
-* | "Taken from a cookbook" |
+* | "Cookbook source" |
 *
 * @param {Library_Filters_Taken_From_A_CookbookInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -57409,6 +60318,47 @@ export const library_selection_bar_sref_bundle = /** @type {((inputs?: Library_S
 	if (locale === "zh-Hans") return __zh_hans1.library_selection_bar_sref_bundle(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.library_selection_bar_sref_bundle(inputs)
 	return __en.library_selection_bar_sref_bundle(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Recently cooked" |
+*
+* @param {Library_Sort_CookedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_sort_cooked = /** @type {((inputs?: Library_Sort_CookedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_Sort_CookedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.library_sort_cooked(inputs)
+	if (locale === "cs") return __cs.library_sort_cooked(inputs)
+	if (locale === "da") return __da.library_sort_cooked(inputs)
+	if (locale === "de") return __de.library_sort_cooked(inputs)
+	if (locale === "el") return __el.library_sort_cooked(inputs)
+	if (locale === "es") return __es.library_sort_cooked(inputs)
+	if (locale === "fi") return __fi.library_sort_cooked(inputs)
+	if (locale === "fr") return __fr.library_sort_cooked(inputs)
+	if (locale === "he") return __he.library_sort_cooked(inputs)
+	if (locale === "hu") return __hu.library_sort_cooked(inputs)
+	if (locale === "id") return __id.library_sort_cooked(inputs)
+	if (locale === "it") return __it.library_sort_cooked(inputs)
+	if (locale === "ja") return __ja.library_sort_cooked(inputs)
+	if (locale === "ko") return __ko.library_sort_cooked(inputs)
+	if (locale === "nb") return __nb.library_sort_cooked(inputs)
+	if (locale === "nl") return __nl.library_sort_cooked(inputs)
+	if (locale === "pl") return __pl.library_sort_cooked(inputs)
+	if (locale === "pt-BR") return __pt_br2.library_sort_cooked(inputs)
+	if (locale === "pt-PT") return __pt_pt2.library_sort_cooked(inputs)
+	if (locale === "ro") return __ro.library_sort_cooked(inputs)
+	if (locale === "ru") return __ru.library_sort_cooked(inputs)
+	if (locale === "sv") return __sv.library_sort_cooked(inputs)
+	if (locale === "th") return __th.library_sort_cooked(inputs)
+	if (locale === "tr") return __tr.library_sort_cooked(inputs)
+	if (locale === "uk") return __uk.library_sort_cooked(inputs)
+	if (locale === "vi") return __vi.library_sort_cooked(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.library_sort_cooked(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.library_sort_cooked(inputs)
+	return __en.library_sort_cooked(inputs)
 });
 /**
 * | output |
@@ -61937,7 +64887,7 @@ export const nutrition_basis_serving_of = /** @type {((inputs: Nutrition_Basis_S
 /**
 * | output |
 * | --- |
-* | "Basis not stated" |
+* | "The source does not say whether these values are per serving or for the whole recipe" |
 *
 * @param {Nutrition_Basis_UnspecifiedInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -65418,47 +68368,6 @@ export const organization_summary_library_details = /** @type {((inputs?: Organi
 	if (locale === "zh-Hans") return __zh_hans1.organization_summary_library_details(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.organization_summary_library_details(inputs)
 	return __en.organization_summary_library_details(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "{value1} more" |
-*
-* @param {Organization_Summary_MoreInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const organization_summary_more = /** @type {((inputs: Organization_Summary_MoreInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Organization_Summary_MoreInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.organization_summary_more(inputs)
-	if (locale === "cs") return __cs.organization_summary_more(inputs)
-	if (locale === "da") return __da.organization_summary_more(inputs)
-	if (locale === "de") return __de.organization_summary_more(inputs)
-	if (locale === "el") return __el.organization_summary_more(inputs)
-	if (locale === "es") return __es.organization_summary_more(inputs)
-	if (locale === "fi") return __fi.organization_summary_more(inputs)
-	if (locale === "fr") return __fr.organization_summary_more(inputs)
-	if (locale === "he") return __he.organization_summary_more(inputs)
-	if (locale === "hu") return __hu.organization_summary_more(inputs)
-	if (locale === "id") return __id.organization_summary_more(inputs)
-	if (locale === "it") return __it.organization_summary_more(inputs)
-	if (locale === "ja") return __ja.organization_summary_more(inputs)
-	if (locale === "ko") return __ko.organization_summary_more(inputs)
-	if (locale === "nb") return __nb.organization_summary_more(inputs)
-	if (locale === "nl") return __nl.organization_summary_more(inputs)
-	if (locale === "pl") return __pl.organization_summary_more(inputs)
-	if (locale === "pt-BR") return __pt_br2.organization_summary_more(inputs)
-	if (locale === "pt-PT") return __pt_pt2.organization_summary_more(inputs)
-	if (locale === "ro") return __ro.organization_summary_more(inputs)
-	if (locale === "ru") return __ru.organization_summary_more(inputs)
-	if (locale === "sv") return __sv.organization_summary_more(inputs)
-	if (locale === "th") return __th.organization_summary_more(inputs)
-	if (locale === "tr") return __tr.organization_summary_more(inputs)
-	if (locale === "uk") return __uk.organization_summary_more(inputs)
-	if (locale === "vi") return __vi.organization_summary_more(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.organization_summary_more(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.organization_summary_more(inputs)
-	return __en.organization_summary_more(inputs)
 });
 /**
 * | output |
@@ -69900,6 +72809,47 @@ export const plan_dinner = /** @type {((inputs?: Plan_DinnerInputs, options?: { 
 /**
 * | output |
 * | --- |
+* | "{name} ({amount} batches)" |
+*
+* @param {Plan_Dish_BatchesInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const plan_dish_batches = /** @type {((inputs: Plan_Dish_BatchesInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Plan_Dish_BatchesInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.plan_dish_batches(inputs)
+	if (locale === "cs") return __cs.plan_dish_batches(inputs)
+	if (locale === "da") return __da.plan_dish_batches(inputs)
+	if (locale === "de") return __de.plan_dish_batches(inputs)
+	if (locale === "el") return __el.plan_dish_batches(inputs)
+	if (locale === "es") return __es.plan_dish_batches(inputs)
+	if (locale === "fi") return __fi.plan_dish_batches(inputs)
+	if (locale === "fr") return __fr.plan_dish_batches(inputs)
+	if (locale === "he") return __he.plan_dish_batches(inputs)
+	if (locale === "hu") return __hu.plan_dish_batches(inputs)
+	if (locale === "id") return __id.plan_dish_batches(inputs)
+	if (locale === "it") return __it.plan_dish_batches(inputs)
+	if (locale === "ja") return __ja.plan_dish_batches(inputs)
+	if (locale === "ko") return __ko.plan_dish_batches(inputs)
+	if (locale === "nb") return __nb.plan_dish_batches(inputs)
+	if (locale === "nl") return __nl.plan_dish_batches(inputs)
+	if (locale === "pl") return __pl.plan_dish_batches(inputs)
+	if (locale === "pt-BR") return __pt_br2.plan_dish_batches(inputs)
+	if (locale === "pt-PT") return __pt_pt2.plan_dish_batches(inputs)
+	if (locale === "ro") return __ro.plan_dish_batches(inputs)
+	if (locale === "ru") return __ru.plan_dish_batches(inputs)
+	if (locale === "sv") return __sv.plan_dish_batches(inputs)
+	if (locale === "th") return __th.plan_dish_batches(inputs)
+	if (locale === "tr") return __tr.plan_dish_batches(inputs)
+	if (locale === "uk") return __uk.plan_dish_batches(inputs)
+	if (locale === "vi") return __vi.plan_dish_batches(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.plan_dish_batches(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.plan_dish_batches(inputs)
+	return __en.plan_dish_batches(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Dish name" |
 *
 * @param {Plan_Dish_NameInputs} inputs
@@ -69941,6 +72891,47 @@ export const plan_dish_name = /** @type {((inputs?: Plan_Dish_NameInputs, option
 /**
 * | output |
 * | --- |
+* | "{name} ({amount} batch)" |
+*
+* @param {Plan_Dish_Part_BatchInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const plan_dish_part_batch = /** @type {((inputs: Plan_Dish_Part_BatchInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Plan_Dish_Part_BatchInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.plan_dish_part_batch(inputs)
+	if (locale === "cs") return __cs.plan_dish_part_batch(inputs)
+	if (locale === "da") return __da.plan_dish_part_batch(inputs)
+	if (locale === "de") return __de.plan_dish_part_batch(inputs)
+	if (locale === "el") return __el.plan_dish_part_batch(inputs)
+	if (locale === "es") return __es.plan_dish_part_batch(inputs)
+	if (locale === "fi") return __fi.plan_dish_part_batch(inputs)
+	if (locale === "fr") return __fr.plan_dish_part_batch(inputs)
+	if (locale === "he") return __he.plan_dish_part_batch(inputs)
+	if (locale === "hu") return __hu.plan_dish_part_batch(inputs)
+	if (locale === "id") return __id.plan_dish_part_batch(inputs)
+	if (locale === "it") return __it.plan_dish_part_batch(inputs)
+	if (locale === "ja") return __ja.plan_dish_part_batch(inputs)
+	if (locale === "ko") return __ko.plan_dish_part_batch(inputs)
+	if (locale === "nb") return __nb.plan_dish_part_batch(inputs)
+	if (locale === "nl") return __nl.plan_dish_part_batch(inputs)
+	if (locale === "pl") return __pl.plan_dish_part_batch(inputs)
+	if (locale === "pt-BR") return __pt_br2.plan_dish_part_batch(inputs)
+	if (locale === "pt-PT") return __pt_pt2.plan_dish_part_batch(inputs)
+	if (locale === "ro") return __ro.plan_dish_part_batch(inputs)
+	if (locale === "ru") return __ru.plan_dish_part_batch(inputs)
+	if (locale === "sv") return __sv.plan_dish_part_batch(inputs)
+	if (locale === "th") return __th.plan_dish_part_batch(inputs)
+	if (locale === "tr") return __tr.plan_dish_part_batch(inputs)
+	if (locale === "uk") return __uk.plan_dish_part_batch(inputs)
+	if (locale === "vi") return __vi.plan_dish_part_batch(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.plan_dish_part_batch(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.plan_dish_part_batch(inputs)
+	return __en.plan_dish_part_batch(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Dishes" |
 *
 * @param {Plan_DishesInputs} inputs
@@ -69978,6 +72969,47 @@ export const plan_dishes = /** @type {((inputs?: Plan_DishesInputs, options?: { 
 	if (locale === "zh-Hans") return __zh_hans1.plan_dishes(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.plan_dishes(inputs)
 	return __en.plan_dishes(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Earlier this week" |
+*
+* @param {Plan_Earlier_This_WeekInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const plan_earlier_this_week = /** @type {((inputs?: Plan_Earlier_This_WeekInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Plan_Earlier_This_WeekInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.plan_earlier_this_week(inputs)
+	if (locale === "cs") return __cs.plan_earlier_this_week(inputs)
+	if (locale === "da") return __da.plan_earlier_this_week(inputs)
+	if (locale === "de") return __de.plan_earlier_this_week(inputs)
+	if (locale === "el") return __el.plan_earlier_this_week(inputs)
+	if (locale === "es") return __es.plan_earlier_this_week(inputs)
+	if (locale === "fi") return __fi.plan_earlier_this_week(inputs)
+	if (locale === "fr") return __fr.plan_earlier_this_week(inputs)
+	if (locale === "he") return __he.plan_earlier_this_week(inputs)
+	if (locale === "hu") return __hu.plan_earlier_this_week(inputs)
+	if (locale === "id") return __id.plan_earlier_this_week(inputs)
+	if (locale === "it") return __it.plan_earlier_this_week(inputs)
+	if (locale === "ja") return __ja.plan_earlier_this_week(inputs)
+	if (locale === "ko") return __ko.plan_earlier_this_week(inputs)
+	if (locale === "nb") return __nb.plan_earlier_this_week(inputs)
+	if (locale === "nl") return __nl.plan_earlier_this_week(inputs)
+	if (locale === "pl") return __pl.plan_earlier_this_week(inputs)
+	if (locale === "pt-BR") return __pt_br2.plan_earlier_this_week(inputs)
+	if (locale === "pt-PT") return __pt_pt2.plan_earlier_this_week(inputs)
+	if (locale === "ro") return __ro.plan_earlier_this_week(inputs)
+	if (locale === "ru") return __ru.plan_earlier_this_week(inputs)
+	if (locale === "sv") return __sv.plan_earlier_this_week(inputs)
+	if (locale === "th") return __th.plan_earlier_this_week(inputs)
+	if (locale === "tr") return __tr.plan_earlier_this_week(inputs)
+	if (locale === "uk") return __uk.plan_earlier_this_week(inputs)
+	if (locale === "vi") return __vi.plan_earlier_this_week(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.plan_earlier_this_week(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.plan_earlier_this_week(inputs)
+	return __en.plan_earlier_this_week(inputs)
 });
 /**
 * | output |
@@ -70511,6 +73543,47 @@ export const plan_meal_actions = /** @type {((inputs: Plan_Meal_ActionsInputs, o
 	if (locale === "zh-Hans") return __zh_hans1.plan_meal_actions(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.plan_meal_actions(inputs)
 	return __en.plan_meal_actions(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Meal tray" |
+*
+* @param {Plan_Meal_TrayInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const plan_meal_tray = /** @type {((inputs?: Plan_Meal_TrayInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Plan_Meal_TrayInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.plan_meal_tray(inputs)
+	if (locale === "cs") return __cs.plan_meal_tray(inputs)
+	if (locale === "da") return __da.plan_meal_tray(inputs)
+	if (locale === "de") return __de.plan_meal_tray(inputs)
+	if (locale === "el") return __el.plan_meal_tray(inputs)
+	if (locale === "es") return __es.plan_meal_tray(inputs)
+	if (locale === "fi") return __fi.plan_meal_tray(inputs)
+	if (locale === "fr") return __fr.plan_meal_tray(inputs)
+	if (locale === "he") return __he.plan_meal_tray(inputs)
+	if (locale === "hu") return __hu.plan_meal_tray(inputs)
+	if (locale === "id") return __id.plan_meal_tray(inputs)
+	if (locale === "it") return __it.plan_meal_tray(inputs)
+	if (locale === "ja") return __ja.plan_meal_tray(inputs)
+	if (locale === "ko") return __ko.plan_meal_tray(inputs)
+	if (locale === "nb") return __nb.plan_meal_tray(inputs)
+	if (locale === "nl") return __nl.plan_meal_tray(inputs)
+	if (locale === "pl") return __pl.plan_meal_tray(inputs)
+	if (locale === "pt-BR") return __pt_br2.plan_meal_tray(inputs)
+	if (locale === "pt-PT") return __pt_pt2.plan_meal_tray(inputs)
+	if (locale === "ro") return __ro.plan_meal_tray(inputs)
+	if (locale === "ru") return __ru.plan_meal_tray(inputs)
+	if (locale === "sv") return __sv.plan_meal_tray(inputs)
+	if (locale === "th") return __th.plan_meal_tray(inputs)
+	if (locale === "tr") return __tr.plan_meal_tray(inputs)
+	if (locale === "uk") return __uk.plan_meal_tray(inputs)
+	if (locale === "vi") return __vi.plan_meal_tray(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.plan_meal_tray(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.plan_meal_tray(inputs)
+	return __en.plan_meal_tray(inputs)
 });
 /**
 * | output |
@@ -81627,6 +84700,47 @@ export const recipe_format_prefer = /** @type {((inputs?: Recipe_Format_PreferIn
 /**
 * | output |
 * | --- |
+* | "From the source page" |
+*
+* @param {Recipe_From_Source_PageInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const recipe_from_source_page = /** @type {((inputs?: Recipe_From_Source_PageInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Recipe_From_Source_PageInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.recipe_from_source_page(inputs)
+	if (locale === "cs") return __cs.recipe_from_source_page(inputs)
+	if (locale === "da") return __da.recipe_from_source_page(inputs)
+	if (locale === "de") return __de.recipe_from_source_page(inputs)
+	if (locale === "el") return __el.recipe_from_source_page(inputs)
+	if (locale === "es") return __es.recipe_from_source_page(inputs)
+	if (locale === "fi") return __fi.recipe_from_source_page(inputs)
+	if (locale === "fr") return __fr.recipe_from_source_page(inputs)
+	if (locale === "he") return __he.recipe_from_source_page(inputs)
+	if (locale === "hu") return __hu.recipe_from_source_page(inputs)
+	if (locale === "id") return __id.recipe_from_source_page(inputs)
+	if (locale === "it") return __it.recipe_from_source_page(inputs)
+	if (locale === "ja") return __ja.recipe_from_source_page(inputs)
+	if (locale === "ko") return __ko.recipe_from_source_page(inputs)
+	if (locale === "nb") return __nb.recipe_from_source_page(inputs)
+	if (locale === "nl") return __nl.recipe_from_source_page(inputs)
+	if (locale === "pl") return __pl.recipe_from_source_page(inputs)
+	if (locale === "pt-BR") return __pt_br2.recipe_from_source_page(inputs)
+	if (locale === "pt-PT") return __pt_pt2.recipe_from_source_page(inputs)
+	if (locale === "ro") return __ro.recipe_from_source_page(inputs)
+	if (locale === "ru") return __ru.recipe_from_source_page(inputs)
+	if (locale === "sv") return __sv.recipe_from_source_page(inputs)
+	if (locale === "th") return __th.recipe_from_source_page(inputs)
+	if (locale === "tr") return __tr.recipe_from_source_page(inputs)
+	if (locale === "uk") return __uk.recipe_from_source_page(inputs)
+	if (locale === "vi") return __vi.recipe_from_source_page(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.recipe_from_source_page(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.recipe_from_source_page(inputs)
+	return __en.recipe_from_source_page(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "A recipe in it changed" |
 *
 * @param {Recipe_History_Page_A_Recipe_In_It_ChangedInputs} inputs
@@ -88113,6 +91227,88 @@ export const shopping_apply = /** @type {((inputs?: Shopping_ApplyInputs, option
 /**
 * | output |
 * | --- |
+* | "Arrange items" |
+*
+* @param {Shopping_ArrangeInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const shopping_arrange = /** @type {((inputs?: Shopping_ArrangeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Shopping_ArrangeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.shopping_arrange(inputs)
+	if (locale === "cs") return __cs.shopping_arrange(inputs)
+	if (locale === "da") return __da.shopping_arrange(inputs)
+	if (locale === "de") return __de.shopping_arrange(inputs)
+	if (locale === "el") return __el.shopping_arrange(inputs)
+	if (locale === "es") return __es.shopping_arrange(inputs)
+	if (locale === "fi") return __fi.shopping_arrange(inputs)
+	if (locale === "fr") return __fr.shopping_arrange(inputs)
+	if (locale === "he") return __he.shopping_arrange(inputs)
+	if (locale === "hu") return __hu.shopping_arrange(inputs)
+	if (locale === "id") return __id.shopping_arrange(inputs)
+	if (locale === "it") return __it.shopping_arrange(inputs)
+	if (locale === "ja") return __ja.shopping_arrange(inputs)
+	if (locale === "ko") return __ko.shopping_arrange(inputs)
+	if (locale === "nb") return __nb.shopping_arrange(inputs)
+	if (locale === "nl") return __nl.shopping_arrange(inputs)
+	if (locale === "pl") return __pl.shopping_arrange(inputs)
+	if (locale === "pt-BR") return __pt_br2.shopping_arrange(inputs)
+	if (locale === "pt-PT") return __pt_pt2.shopping_arrange(inputs)
+	if (locale === "ro") return __ro.shopping_arrange(inputs)
+	if (locale === "ru") return __ru.shopping_arrange(inputs)
+	if (locale === "sv") return __sv.shopping_arrange(inputs)
+	if (locale === "th") return __th.shopping_arrange(inputs)
+	if (locale === "tr") return __tr.shopping_arrange(inputs)
+	if (locale === "uk") return __uk.shopping_arrange(inputs)
+	if (locale === "vi") return __vi.shopping_arrange(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.shopping_arrange(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.shopping_arrange(inputs)
+	return __en.shopping_arrange(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Move items within their section, or select items to combine under one name." |
+*
+* @param {Shopping_Arrange_HintInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const shopping_arrange_hint = /** @type {((inputs?: Shopping_Arrange_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Shopping_Arrange_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.shopping_arrange_hint(inputs)
+	if (locale === "cs") return __cs.shopping_arrange_hint(inputs)
+	if (locale === "da") return __da.shopping_arrange_hint(inputs)
+	if (locale === "de") return __de.shopping_arrange_hint(inputs)
+	if (locale === "el") return __el.shopping_arrange_hint(inputs)
+	if (locale === "es") return __es.shopping_arrange_hint(inputs)
+	if (locale === "fi") return __fi.shopping_arrange_hint(inputs)
+	if (locale === "fr") return __fr.shopping_arrange_hint(inputs)
+	if (locale === "he") return __he.shopping_arrange_hint(inputs)
+	if (locale === "hu") return __hu.shopping_arrange_hint(inputs)
+	if (locale === "id") return __id.shopping_arrange_hint(inputs)
+	if (locale === "it") return __it.shopping_arrange_hint(inputs)
+	if (locale === "ja") return __ja.shopping_arrange_hint(inputs)
+	if (locale === "ko") return __ko.shopping_arrange_hint(inputs)
+	if (locale === "nb") return __nb.shopping_arrange_hint(inputs)
+	if (locale === "nl") return __nl.shopping_arrange_hint(inputs)
+	if (locale === "pl") return __pl.shopping_arrange_hint(inputs)
+	if (locale === "pt-BR") return __pt_br2.shopping_arrange_hint(inputs)
+	if (locale === "pt-PT") return __pt_pt2.shopping_arrange_hint(inputs)
+	if (locale === "ro") return __ro.shopping_arrange_hint(inputs)
+	if (locale === "ru") return __ru.shopping_arrange_hint(inputs)
+	if (locale === "sv") return __sv.shopping_arrange_hint(inputs)
+	if (locale === "th") return __th.shopping_arrange_hint(inputs)
+	if (locale === "tr") return __tr.shopping_arrange_hint(inputs)
+	if (locale === "uk") return __uk.shopping_arrange_hint(inputs)
+	if (locale === "vi") return __vi.shopping_arrange_hint(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.shopping_arrange_hint(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.shopping_arrange_hint(inputs)
+	return __en.shopping_arrange_hint(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Bought" |
 *
 * @param {Shopping_BoughtInputs} inputs
@@ -89339,47 +92535,6 @@ export const shopping_list = /** @type {((inputs?: Shopping_ListInputs, options?
 	if (locale === "zh-Hans") return __zh_hans1.shopping_list(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.shopping_list(inputs)
 	return __en.shopping_list(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "List actions" |
-*
-* @param {Shopping_List_ActionsInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const shopping_list_actions = /** @type {((inputs?: Shopping_List_ActionsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Shopping_List_ActionsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.shopping_list_actions(inputs)
-	if (locale === "cs") return __cs.shopping_list_actions(inputs)
-	if (locale === "da") return __da.shopping_list_actions(inputs)
-	if (locale === "de") return __de.shopping_list_actions(inputs)
-	if (locale === "el") return __el.shopping_list_actions(inputs)
-	if (locale === "es") return __es.shopping_list_actions(inputs)
-	if (locale === "fi") return __fi.shopping_list_actions(inputs)
-	if (locale === "fr") return __fr.shopping_list_actions(inputs)
-	if (locale === "he") return __he.shopping_list_actions(inputs)
-	if (locale === "hu") return __hu.shopping_list_actions(inputs)
-	if (locale === "id") return __id.shopping_list_actions(inputs)
-	if (locale === "it") return __it.shopping_list_actions(inputs)
-	if (locale === "ja") return __ja.shopping_list_actions(inputs)
-	if (locale === "ko") return __ko.shopping_list_actions(inputs)
-	if (locale === "nb") return __nb.shopping_list_actions(inputs)
-	if (locale === "nl") return __nl.shopping_list_actions(inputs)
-	if (locale === "pl") return __pl.shopping_list_actions(inputs)
-	if (locale === "pt-BR") return __pt_br2.shopping_list_actions(inputs)
-	if (locale === "pt-PT") return __pt_pt2.shopping_list_actions(inputs)
-	if (locale === "ro") return __ro.shopping_list_actions(inputs)
-	if (locale === "ru") return __ru.shopping_list_actions(inputs)
-	if (locale === "sv") return __sv.shopping_list_actions(inputs)
-	if (locale === "th") return __th.shopping_list_actions(inputs)
-	if (locale === "tr") return __tr.shopping_list_actions(inputs)
-	if (locale === "uk") return __uk.shopping_list_actions(inputs)
-	if (locale === "vi") return __vi.shopping_list_actions(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.shopping_list_actions(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.shopping_list_actions(inputs)
-	return __en.shopping_list_actions(inputs)
 });
 /**
 * | output |
@@ -91065,6 +94220,47 @@ export const site_header_books = /** @type {((inputs?: Site_Header_BooksInputs, 
 /**
 * | output |
 * | --- |
+* | "Help" |
+*
+* @param {Site_Header_HelpInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const site_header_help = /** @type {((inputs?: Site_Header_HelpInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Site_Header_HelpInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.site_header_help(inputs)
+	if (locale === "cs") return __cs.site_header_help(inputs)
+	if (locale === "da") return __da.site_header_help(inputs)
+	if (locale === "de") return __de.site_header_help(inputs)
+	if (locale === "el") return __el.site_header_help(inputs)
+	if (locale === "es") return __es.site_header_help(inputs)
+	if (locale === "fi") return __fi.site_header_help(inputs)
+	if (locale === "fr") return __fr.site_header_help(inputs)
+	if (locale === "he") return __he.site_header_help(inputs)
+	if (locale === "hu") return __hu.site_header_help(inputs)
+	if (locale === "id") return __id.site_header_help(inputs)
+	if (locale === "it") return __it.site_header_help(inputs)
+	if (locale === "ja") return __ja.site_header_help(inputs)
+	if (locale === "ko") return __ko.site_header_help(inputs)
+	if (locale === "nb") return __nb.site_header_help(inputs)
+	if (locale === "nl") return __nl.site_header_help(inputs)
+	if (locale === "pl") return __pl.site_header_help(inputs)
+	if (locale === "pt-BR") return __pt_br2.site_header_help(inputs)
+	if (locale === "pt-PT") return __pt_pt2.site_header_help(inputs)
+	if (locale === "ro") return __ro.site_header_help(inputs)
+	if (locale === "ru") return __ru.site_header_help(inputs)
+	if (locale === "sv") return __sv.site_header_help(inputs)
+	if (locale === "th") return __th.site_header_help(inputs)
+	if (locale === "tr") return __tr.site_header_help(inputs)
+	if (locale === "uk") return __uk.site_header_help(inputs)
+	if (locale === "vi") return __vi.site_header_help(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.site_header_help(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.site_header_help(inputs)
+	return __en.site_header_help(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Imports" |
 *
 * @param {Site_Header_ImportsInputs} inputs
@@ -92455,6 +95651,47 @@ export const source_refresh_page_review_before_replacing = /** @type {((inputs?:
 	if (locale === "zh-Hans") return __zh_hans1.source_refresh_page_review_before_replacing(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.source_refresh_page_review_before_replacing(inputs)
 	return __en.source_refresh_page_review_before_replacing(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "This is taking longer than usual. You can keep waiting or reload the page." |
+*
+* @param {Status_Loading_SlowInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const status_loading_slow = /** @type {((inputs?: Status_Loading_SlowInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Status_Loading_SlowInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.status_loading_slow(inputs)
+	if (locale === "cs") return __cs.status_loading_slow(inputs)
+	if (locale === "da") return __da.status_loading_slow(inputs)
+	if (locale === "de") return __de.status_loading_slow(inputs)
+	if (locale === "el") return __el.status_loading_slow(inputs)
+	if (locale === "es") return __es.status_loading_slow(inputs)
+	if (locale === "fi") return __fi.status_loading_slow(inputs)
+	if (locale === "fr") return __fr.status_loading_slow(inputs)
+	if (locale === "he") return __he.status_loading_slow(inputs)
+	if (locale === "hu") return __hu.status_loading_slow(inputs)
+	if (locale === "id") return __id.status_loading_slow(inputs)
+	if (locale === "it") return __it.status_loading_slow(inputs)
+	if (locale === "ja") return __ja.status_loading_slow(inputs)
+	if (locale === "ko") return __ko.status_loading_slow(inputs)
+	if (locale === "nb") return __nb.status_loading_slow(inputs)
+	if (locale === "nl") return __nl.status_loading_slow(inputs)
+	if (locale === "pl") return __pl.status_loading_slow(inputs)
+	if (locale === "pt-BR") return __pt_br2.status_loading_slow(inputs)
+	if (locale === "pt-PT") return __pt_pt2.status_loading_slow(inputs)
+	if (locale === "ro") return __ro.status_loading_slow(inputs)
+	if (locale === "ru") return __ru.status_loading_slow(inputs)
+	if (locale === "sv") return __sv.status_loading_slow(inputs)
+	if (locale === "th") return __th.status_loading_slow(inputs)
+	if (locale === "tr") return __tr.status_loading_slow(inputs)
+	if (locale === "uk") return __uk.status_loading_slow(inputs)
+	if (locale === "vi") return __vi.status_loading_slow(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.status_loading_slow(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.status_loading_slow(inputs)
+	return __en.status_loading_slow(inputs)
 });
 /**
 * | output |

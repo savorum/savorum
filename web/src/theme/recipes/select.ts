@@ -143,12 +143,24 @@ export const select = defineSlotRecipe({
   variants: {
     size: {
       sm: {
-        trigger: { height: "9", minHeight: "9", paddingInline: "2.5", textStyle: "sm" },
+        trigger: {
+          height: "9",
+          minHeight: "9",
+          paddingInline: "2.5",
+          textStyle: "sm",
+          "@media (pointer: coarse)": { height: "11", minHeight: "11" },
+        },
         item: { paddingBlock: "1", paddingInline: "2" },
         itemGroupLabel: { paddingBlock: "1", paddingInline: "2" },
       },
       md: {
-        trigger: { height: "10", minHeight: "10", paddingInline: "3", textStyle: "md" },
+        trigger: {
+          height: "10",
+          minHeight: "10",
+          paddingInline: "3",
+          textStyle: "md",
+          "@media (pointer: coarse)": { height: "11", minHeight: "11" },
+        },
         item: { paddingBlock: "1.5", paddingInline: "2.5" },
         itemGroupLabel: { paddingBlock: "1.5", paddingInline: "2.5" },
       },

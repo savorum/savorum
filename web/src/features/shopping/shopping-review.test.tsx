@@ -64,7 +64,7 @@ afterEach(() => {
 
 test("review groups a dish once and submits the cook's ingredient selections", async () => {
   render(() => <ShoppingReview input={{ meal_ids: ["breakfast"] }} close={() => {}} />)
-  const milk = await screen.findByRole("checkbox", { name: "2 Milk" }, { interval: 10 })
+  const milk = await screen.findByRole("checkbox", { name: "Milk 2" }, { interval: 10 })
   expect(screen.getAllByRole("heading", { name: "Sunday breakfast · Pancakes" })).toHaveLength(1)
   fireEvent.click(milk)
   fireEvent.click(screen.getByRole("button", { name: "Update shopping list" }))
@@ -88,12 +88,12 @@ test("a failed review stays open with retry and cannot apply stale data", async 
   ).toBe(true)
   fail = false
   fireEvent.click(screen.getByRole("button", { name: "Try again" }))
-  await screen.findByRole("checkbox", { name: "2 Milk" }, { interval: 10 })
+  await screen.findByRole("checkbox", { name: "Milk 2" }, { interval: 10 })
 })
 
 test("retrying a failed update preserves the ingredients already excluded", async () => {
   render(() => <ShoppingReview input={{ meal_ids: ["breakfast"] }} close={() => {}} />)
-  fireEvent.click(await screen.findByRole("checkbox", { name: "2 Milk" }, { interval: 10 }))
+  fireEvent.click(await screen.findByRole("checkbox", { name: "Milk 2" }, { interval: 10 }))
   const updateButton = screen.getByRole("button", {
     name: "Update shopping list",
   }) as HTMLButtonElement
@@ -103,13 +103,13 @@ test("retrying a failed update preserves the ingredients already excluded", asyn
   fail = false
   fireEvent.click(screen.getByRole("button", { name: "Try again" }))
   await waitFor(() => expect(updateButton.disabled).toBe(false), { interval: 10 })
-  expect((screen.getByRole("checkbox", { name: "2 Milk" }) as HTMLInputElement).checked).toBe(false)
+  expect((screen.getByRole("checkbox", { name: "Milk 2" }) as HTMLInputElement).checked).toBe(false)
 })
 
 test("a planned meal's ingredients are headed by its day in the reader's language", async () => {
   source = { label: "Pancakes", meal_date: "2026-09-24" }
   render(() => <ShoppingReview input={{ meal_ids: ["breakfast"] }} close={() => {}} />)
-  await screen.findByRole("checkbox", { name: "2 Milk" }, { interval: 10 })
+  await screen.findByRole("checkbox", { name: "Milk 2" }, { interval: 10 })
   expect(screen.getByRole("heading", { name: /^Thu, Sep 24 · .*Pancakes/ })).toBeTruthy()
   expect(screen.queryByText(/2026-09-24/)).toBeNull()
 })

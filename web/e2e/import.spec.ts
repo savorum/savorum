@@ -191,7 +191,8 @@ test("a single-recipe import keeps its result in focus", async ({ page }) => {
   await expect(page.getByRole("link", { name: "See them in your library" })).toHaveCount(0)
   await page.getByRole("link", { name: title, exact: true }).click()
   await expect(page).toHaveURL(/\/recipes\//)
-  await expect(page.getByRole("heading", { name: title, exact: true })).toBeVisible()
+  await expect(page.getByRole("button", { name: "Cook", exact: true })).toBeVisible()
+  await expect(page.getByRole("heading", { name: title, exact: true, level: 1 })).toBeVisible()
 
   // Import history can still scope the library to this job.
   await page.goto(`/?imported=${job}`)
@@ -312,7 +313,7 @@ test("progress updates in place without replacing the document or its interactiv
       .querySelector('[aria-label="Filter import results"] button')!
       .setAttribute("data-identity-check", "same-filter")
     const range = document.createRange()
-    range.selectNodeContents(document.querySelector('[title="stable-recipes.zip"]')!)
+    range.selectNodeContents(document.querySelector("main h1")!)
     const selection = window.getSelection()!
     selection.removeAllRanges()
     selection.addRange(range)
@@ -326,10 +327,6 @@ test("progress updates in place without replacing the document or its interactiv
   expect(scrollBefore).toBeGreaterThan(0)
 
   await expect(page.getByRole("heading", { name: "30 recipes imported" })).toBeVisible()
-  await expect(page.getByRole("progressbar", { name: "Import progress" })).toHaveAttribute(
-    "aria-valuenow",
-    "30",
-  )
   expect(await page.evaluate(() => sessionStorage.getItem("import-progress-document-loads"))).toBe(
     "1",
   )
@@ -424,7 +421,11 @@ test("a long source filename appears once and the import results reflow", async 
   await page.goto("/imports/long-source")
 
   await expect(page.getByText(source)).toHaveCount(1)
-  await expect(page.getByText(source)).toHaveAttribute("title", source)
+  await expect(page.getByRole("heading", { level: 1, name: source })).toBeVisible()
+  const timing = page.getByRole("button", { name: "Timing", exact: true })
+  await expect(timing).toHaveAttribute("aria-expanded", "false")
+  await timing.focus()
+  await page.keyboard.press("Enter")
   const copy = await page.locator("main").innerText()
   expect(copy).not.toContain("—")
   expect(copy).not.toContain("Every recipe in this import arrived.")

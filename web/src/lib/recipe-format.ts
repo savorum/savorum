@@ -8,6 +8,7 @@ import type { UnitConvention } from "./units.ts"
 import {
   type MeasurementSystem,
   convertAmount,
+  convertToUnit,
   measurementConvention,
   unitIsTight,
   unitLabel,
@@ -26,6 +27,8 @@ type Yield = components["schemas"]["Yield"]
 export interface Presentation {
   system: MeasurementSystem
   scale: Rational
+  /** A reader's unit choice for one ingredient, applied after batch scaling. */
+  unit?: string
 }
 
 export const asWritten: Presentation = {
@@ -67,6 +70,7 @@ export function cookNumber(value: Rational): string {
   if (!glyph) {
     // Denominators no kitchen measure uses read better as a decimal.
     const hundredths = (numerator * 200n + value.denominator) / (value.denominator * 2n)
+    if (hundredths === 0n) return localizeDecimal(`${sign}${numerator}/${value.denominator}`)
     const decimal = `${hundredths / 100n}.${String(hundredths % 100n).padStart(2, "0")}`.replace(
       /\.?0+$/,
       "",
@@ -94,18 +98,22 @@ function showAmount(
 ): Shown | undefined {
   if (!amount) return undefined
   const scale = presentation.scale
+  const conversion = (value: Rational) =>
+    presentation.unit && unit
+      ? convertToUnit(value, unit, presentation.unit)
+      : convertAmount(
+          value,
+          unit,
+          presentation.system,
+          compare(scale, one) !== 0 || presentation.system !== "original",
+        )
   const render = (
     raw: string,
   ): { text: string; value: Rational; approximate: boolean } | undefined => {
     const parsed = parseRational(raw)
     if (!parsed) return undefined
     const scaled = multiply(parsed, scale)
-    const converted = convertAmount(
-      scaled,
-      unit,
-      presentation.system,
-      compare(scale, one) !== 0 || presentation.system !== "original",
-    )
+    const converted = conversion(scaled)
     const value = converted?.amount ?? scaled
     const text = converted?.parts
       ? converted.parts
@@ -118,12 +126,7 @@ function showAmount(
   if (amount.value) {
     const shown = render(amount.value)
     if (!shown) return undefined
-    const converted = convertAmount(
-      multiply(parseRational(amount.value)!, scale),
-      unit,
-      presentation.system,
-      compare(scale, one) !== 0 || presentation.system !== "original",
-    )
+    const converted = conversion(multiply(parseRational(amount.value)!, scale))
     return {
       text: converted?.parts
         ? shown.text
@@ -135,11 +138,7 @@ function showAmount(
     const low = render(amount.min)
     const high = render(amount.max)
     if (!low || !high) return undefined
-    const converted = convertAmount(
-      multiply(parseRational(amount.max)!, scale),
-      unit,
-      presentation.system,
-    )
+    const converted = conversion(multiply(parseRational(amount.max)!, scale))
     return {
       text: joinAmountAndUnit(`${low.text}–${high.text}`, converted?.unit ?? unit, high.value),
       approximate: low.approximate || high.approximate || Boolean(amount.approximate),
@@ -210,19 +209,15 @@ export function showQuantity(
   }
 }
 
-/** One ingredient of a choice, as its own line. */
 export interface IngredientChoiceBranch {
   amount: string
   text: string
 }
 
-/** A choice between ingredients, for display as separate lines rather than one sentence. */
 export interface IngredientChoiceLine {
-  /** True when the branches state one shared amount, which is the line's amount. */
+  /** The shared amount is in IngredientLine.amount; branch amounts are empty. */
   sharedAmount: boolean
-  /** Precedes the branches when the first is preferred; empty otherwise. */
-  lead: string
-  /** Sits between two branches: "or", "and/or", "alternatively". */
+  preferred: boolean
   joiner: string
   branches: IngredientChoiceBranch[]
   note?: string
@@ -238,17 +233,9 @@ export interface IngredientLine {
   choice?: IngredientChoiceLine
   /** The line exactly as the source wrote it, when it differs from the above. */
   original?: string
-  /**
-   * True when the batch differs from the recipe's own and this row's amount is
-   * still the recipe's own. SREF requires reporting an amount that could not
-   * be scaled.
-   */
+  /** The batch changed but this amount could not scale; SREF requires a visible warning. */
   keptAmount: boolean
-  /**
-   * True when a recalculated row still states the recipe's own numbers in the
-   * wording beside the amount — the "227 grams, 2 sticks" an importer left in
-   * a note, or a package size, which never follows the batch.
-   */
+  /** Authored numeric wording remains unchanged even when the structured amount scales. */
   keptWording: boolean
 }
 
@@ -271,11 +258,6 @@ function amountFollowsBatch(quantity: Quantity | undefined, presentation: Presen
   return shown.text !== showQuantity(quantity, { ...presentation, scale: one })?.text
 }
 
-/**
- * An alternative is compact only when every branch names the same unit and
- * the same exact, non-approximate value in the same package-size context.
- * Units are never converted to make branches agree.
- */
 interface ExactSimpleQuantity {
   value: Rational
   unit: string
@@ -311,6 +293,7 @@ function packageSizesMatch(left: Ingredient, right: Ingredient): boolean {
   return Boolean(leftSize && rightSize && exactSimpleQuantitiesMatch(leftSize, rightSize))
 }
 
+/** Shared amounts require exact equality in authored units and package sizes, without conversion. */
 function sharedAlternativeQuantity(ingredient: Ingredient): Quantity | undefined {
   const branches = ingredient.alternatives ?? []
   const first = branches[0]?.quantity
@@ -328,6 +311,13 @@ function sharedAlternativeQuantity(ingredient: Ingredient): Quantity | undefined
   }
 
   return first
+}
+
+export function ingredientUnit(ingredient: Ingredient): string | undefined {
+  const quantity = ingredient.alternatives?.length
+    ? sharedAlternativeQuantity(ingredient)
+    : ingredient.quantity
+  return quantity?.kind === "simple" ? quantity.unit : undefined
 }
 
 /** A joiner message without the spacing and punctuation that fit it into a sentence. */
@@ -356,27 +346,21 @@ export function ingredientLine(ingredient: Ingredient, presentation: Presentatio
       return `${sharedQuantity ? "" : line.amount ? `${line.amount} ` : ""}${line.text}${branchOptional(index)}`
     })
     const joiner =
-      ingredient.relation === "and_or"
-        ? m.recipe_quantity_and_or()
-        : ingredient.relation === "preferred"
-          ? m.recipe_quantity_alternatively()
-          : m.recipe_quantity_or()
+      ingredient.relation === "and_or" ? m.recipe_quantity_and_or() : m.recipe_quantity_or()
     const preferred = ingredient.relation === "preferred"
-    const text = `${preferred && !sharedQuantity ? m.recipe_format_prefer() : ""}${branches.join(joiner)}${ingredient.note ? ` — ${ingredient.note}` : ""}${ingredient.optional ? m.recipe_quantity_optional() : ""}`
+    const text = `${branches.join(joiner)}${ingredient.note ? ` — ${ingredient.note}` : ""}${ingredient.optional ? m.recipe_quantity_optional() : ""}`
     const keptAmount =
       batched &&
       (sharedQuantity
         ? !amountFollowsBatch(sharedQuantity, presentation)
         : branchLines.some((line) => line.keptAmount))
     return {
-      amount: sharedAmount?.text
-        ? `${preferred ? m.recipe_format_prefer() : ""}${sharedAmount.text}`
-        : "",
+      amount: sharedAmount?.text ?? "",
       approximate: sharedAmount?.approximate ?? false,
       text,
       choice: {
         sharedAmount: Boolean(sharedQuantity),
-        lead: preferred && !sharedQuantity ? m.recipe_format_prefer().trim() : "",
+        preferred,
         joiner: bareJoiner(joiner),
         branches: branchLines.map((line, index) => ({
           amount: sharedQuantity ? "" : line.amount,
@@ -409,7 +393,7 @@ export function ingredientLine(ingredient: Ingredient, presentation: Presentatio
   }
 
   const size = ingredient.package_size
-    ? showSimple(ingredient.package_size, { ...presentation, scale: one })
+    ? showSimple(ingredient.package_size, { ...presentation, scale: one, unit: undefined })
     : undefined
   const named = size ? `${ingredient.name ?? ""} (${size.text})` : (ingredient.name ?? "")
   const text = withNote(named, ingredient.note)

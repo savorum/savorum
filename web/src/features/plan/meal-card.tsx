@@ -1,9 +1,11 @@
 import { Link } from "@tanstack/solid-router"
-import { CookingPot, Ellipsis, Pencil, ShoppingCart } from "lucide-solid"
+import { Ellipsis } from "lucide-solid"
 import { For, Show } from "solid-js"
 import { css } from "styled-system/css"
 
 import type { Meal } from "@/api/client"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { IconButton } from "@/components/ui/icon-button"
 import { Menu, MenuItem, MenuItemGroup, MenuSeparator } from "@/components/ui/menu"
 import { isolate } from "@/lib/direction"
@@ -29,7 +31,6 @@ const styles = {
     width: "full",
   }),
   notice: css({ color: "fg.muted", fontSize: "sm", marginTop: "1" }),
-  // A photograph beside the meal, with its actions under the words.
   meal: css({
     background: "bg.surface",
     borderColor: "border.subtle",
@@ -44,7 +45,6 @@ const styles = {
     "&:not(:has(> img)) > *": { gridColumn: "1 / -1" },
     '&[data-skipped="true"]': { opacity: "0.7" },
   }),
-  // A narrow week column: the photograph above the words.
   mealCompact: css({
     background: "bg.surface",
     borderColor: "border.subtle",
@@ -58,18 +58,24 @@ const styles = {
   }),
   mealBody: css({ display: "grid", gap: "0.5", minWidth: "0" }),
   slot: css({ color: "fg.muted", fontSize: "xs", fontWeight: "medium" }),
-  mealTitle: css({ fontWeight: "semibold", lineHeight: "1.3", overflowWrap: "anywhere" }),
+  mealTitle: css({
+    fontFamily: "editorial",
+    fontSize: "md",
+    fontWeight: "normal",
+    lineHeight: "1.3",
+    overflowWrap: "anywhere",
+  }),
   meta: css({ color: "fg.muted", fontSize: "sm", overflowWrap: "anywhere" }),
-  iconActions: css({
+  actions: css({
     alignItems: "center",
     display: "flex",
     flexWrap: "wrap",
-    marginInline: "-1.5",
-    marginTop: "1",
+    gap: "1",
+    marginTop: "2",
   }),
+  action: css({ "@media (pointer: coarse)": { minHeight: "11", minWidth: "11" } }),
 }
 
-/** What a meal's selection checkbox, action buttons, and More menu do. */
 export interface MealControls {
   selecting: () => boolean
   isSelected: (id: string) => boolean
@@ -113,8 +119,7 @@ function MealSelection(props: { meal: Meal; controls: MealControls }) {
   return (
     <Show when={props.controls.selecting()}>
       <label class={css({ display: "flex", alignItems: "center", gap: "3", minHeight: "12" })}>
-        <input
-          type="checkbox"
+        <Checkbox
           disabled={props.meal.skipped}
           checked={props.controls.isSelected(props.meal.id)}
           onChange={(event) => props.controls.select(props.meal.id, event.currentTarget.checked)}
@@ -125,47 +130,45 @@ function MealSelection(props: { meal: Meal; controls: MealControls }) {
   )
 }
 
-/** The frequent actions as a compact row of icons; the rest are under More. */
 function MealActionRow(props: { meal: Meal; controls: MealControls; class?: string }) {
+  const cooks = () => cookable(props.meal)
   return (
     <Show when={!props.controls.selecting()}>
-      <div class={props.class ?? styles.iconActions}>
-        <Show when={cookable(props.meal)}>
-          <IconButton
-            size="xs"
-            variant="plain"
-            aria-label={cookLabel(props.meal)}
-            title={cookLabel(props.meal)}
+      <div class={props.class ?? styles.actions}>
+        <Show
+          when={cooks()}
+          fallback={
+            <Button
+              class={styles.action}
+              size="sm"
+              variant="outline"
+              onClick={() => props.controls.edit(props.meal)}
+            >
+              {m.plan_edit()}
+            </Button>
+          }
+        >
+          <Button
+            class={styles.action}
+            size="sm"
+            variant="outline"
             disabled={props.controls.starting()}
             onClick={() => props.controls.cook(props.meal)}
           >
-            <CookingPot aria-hidden="true" />
-          </IconButton>
+            {cookLabel(props.meal)}
+          </Button>
         </Show>
-        <IconButton
-          size="xs"
-          variant="plain"
-          aria-label={m.shopping_review()}
-          title={m.shopping_review()}
-          onClick={() => props.controls.shop(props.meal)}
-        >
-          <ShoppingCart aria-hidden="true" />
-        </IconButton>
-        <IconButton
-          size="xs"
-          variant="plain"
-          aria-label={m.plan_edit()}
-          title={m.plan_edit()}
-          onClick={() => props.controls.edit(props.meal)}
-        >
-          <Pencil aria-hidden="true" />
-        </IconButton>
         <Menu
-          onSelect={({ value }) => props.controls.menu(props.meal, value)}
+          onSelect={({ value }) => {
+            if (value === "edit") props.controls.edit(props.meal)
+            else if (value === "shop") props.controls.shop(props.meal)
+            else props.controls.menu(props.meal, value)
+          }}
           trigger={(trigger) => (
             <IconButton
               {...trigger()}
-              size="xs"
+              class={styles.action}
+              size="sm"
               variant="plain"
               aria-label={m.plan_more_actions()}
               title={m.plan_more_actions()}
@@ -175,16 +178,25 @@ function MealActionRow(props: { meal: Meal; controls: MealControls; class?: stri
           )}
         >
           <MenuItemGroup>
+            <Show when={cooks()}>
+              <MenuItem value="edit">{m.plan_edit()}</MenuItem>
+            </Show>
+            <MenuItem value="shop">{m.shopping_review()}</MenuItem>
+          </MenuItemGroup>
+          <MenuSeparator />
+          <MenuItemGroup>
             <MenuItem value="copy">{m.plan_copy_to()}</MenuItem>
             <MenuItem value="move">{m.plan_move_to()}</MenuItem>
             <MenuItem value="leftovers">{m.plan_leftovers()}</MenuItem>
             <MenuItem value="skip">
               {props.meal.skipped ? m.plan_keep_meal() : m.plan_skip()}
             </MenuItem>
+            <MenuItem value="save">{m.plan_save_combination()}</MenuItem>
           </MenuItemGroup>
           <MenuSeparator />
-          <MenuItem value="save">{m.plan_save_combination()}</MenuItem>
-          <MenuItem value="delete">{m.plan_delete()}</MenuItem>
+          <MenuItem value="delete" class={tiles.destructive}>
+            {m.plan_delete()}
+          </MenuItem>
         </Menu>
       </div>
     </Show>
@@ -209,7 +221,6 @@ function TroubledDishes(props: { meal: Meal }) {
   )
 }
 
-/** A day's meal: its photograph, what is being made, and its actions. */
 export function MealCard(props: { meal: Meal; compact: boolean; controls: MealControls }) {
   const image = () => dishImages(props.meal.dishes ?? [])[0]
   return (
@@ -251,7 +262,6 @@ export function MealCard(props: { meal: Meal; compact: boolean; controls: MealCo
   )
 }
 
-/** A meal without a day, shown as a tile like a saved meal. */
 export function MealTile(props: { meal: Meal; controls: MealControls }) {
   const dishes = () => props.meal.dishes ?? []
   return (

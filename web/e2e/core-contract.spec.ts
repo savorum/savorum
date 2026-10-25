@@ -1,6 +1,7 @@
+import AxeBuilder from "@axe-core/playwright"
 import { expect, test } from "@playwright/test"
 
-import { choose, chooser, section } from "./controls"
+import { choose, chooser, section, settleAnimations } from "./controls"
 import { seedBook, seedRecipe } from "./library"
 
 test("recipe photos support the first viewport and galleries follow the method", async ({
@@ -58,7 +59,8 @@ test("recipe photos support the first viewport and galleries follow the method",
   const body = await page.locator(".recipe-page__body").boundingBox()
   expect(gallery!.y).toBeGreaterThanOrEqual(body!.y + body!.height)
   await page.goto("/?q=Contract%20illustrated")
-  const cardImage = page.getByRole("link", { name: new RegExp(recipe.title) }).getByRole("img")
+  const cardImage = page.getByRole("link", { name: new RegExp(recipe.title) }).locator("img")
+  await expect(cardImage).toHaveAttribute("alt", "")
   await expect(cardImage).toHaveAttribute("src", /\/derivatives\/card$/)
   await expect(cardImage).toHaveJSProperty("naturalWidth", 640)
 })
@@ -149,12 +151,19 @@ test("tags and books filter the library and a trashed recipe can be restored", a
   await dialog.getByRole("button", { name: "Save changes" }).click()
   await expect(page.getByRole("dialog")).not.toBeVisible()
   await page.reload()
-  await expect(page.getByText("Contract quick", { exact: true })).toBeVisible()
+  const filing = page.getByRole("link", { name: "Contract quick", exact: true })
+  await expect(filing).toHaveAttribute("href", new RegExp(encodeURIComponent(tag.id)))
+  await filing.click()
+  await page.getByRole("button", { name: /Filters/ }).click()
+  await page.getByRole("button", { name: "Choose a tag", exact: true }).click()
+  await expect(page.getByRole("checkbox", { name: "Contract quick", exact: true })).toBeChecked()
+  await page.keyboard.press("Escape")
   await page.goto("/?q=Contract")
   await page.getByRole("button", { name: /Filters/ }).click()
   await page.getByRole("button", { name: "Choose a tag", exact: true }).click()
   await page.getByRole("checkbox", { name: "Contract quick", exact: true }).click()
   await expect(page).toHaveURL(new RegExp(encodeURIComponent(tag.id)))
+  await page.keyboard.press("Escape")
   await expect(page.getByRole("link", { name: new RegExp(recipe.title) })).toBeVisible()
   await expect(page.getByRole("link", { name: new RegExp(unrelated.title) })).toHaveCount(0)
   await page.getByRole("link", { name: new RegExp(recipe.title) }).click()
@@ -199,11 +208,21 @@ test("a changed batch says which amounts it could not recalculate", async ({ pag
   await page.getByRole("textbox", { name: "How many servings" }).fill("8")
   await page.getByRole("textbox", { name: "How many servings" }).press("Tab")
   await expect(ingredients).toContainText("2 cups")
-  await expect(ingredients).toContainText("amount as written")
-  await expect(ingredients).toContainText("wording as written")
-  await expect(page.getByText("Some amounts could not be scaled")).toContainText(
-    "2 ingredients still read as the recipe wrote them",
-  )
+  await expect(
+    ingredients.getByRole("button", {
+      name: "This amount could not be recalculated for the batch, so it is the recipe's own.",
+    }),
+  ).toBeVisible()
+  await expect(
+    ingredients.getByRole("button", {
+      name: "This ingredient's wording still states the recipe's own numbers.",
+    }),
+  ).toBeVisible()
+  const check = page.getByRole("button", { name: "Measurements to check (2)", exact: true })
+  await expect(check).toBeVisible()
+  await check.click()
+  await expect(page.getByRole("dialog")).toContainText("This amount could not be recalculated")
+  await page.keyboard.press("Escape")
   // The row a reader hears is the one on screen, not the one the source wrote.
   const butter = ingredients.getByRole("listitem").filter({ hasText: "unsalted butter" })
   expect(await butter.getAttribute("title")).toBeNull()
@@ -298,6 +317,89 @@ test("shared exact alternative quantities are presented once in the amount colum
   await expect(citrus.locator(".recipe-page__amount")).toHaveText("1")
 })
 
+test("preferred ingredients use a quieter alternative in reader and cooking views", async ({
+  page,
+  request,
+}, testInfo) => {
+  const recipe = await seedRecipe(request, "Preferred ingredient presentation", {
+    ingredient_sections: [
+      {
+        id: "ingredients",
+        ingredients: [
+          {
+            id: "fat",
+            relation: "preferred",
+            alternatives: [
+              {
+                id: "butter",
+                name: "unsalted butter",
+                quantity: {
+                  kind: "simple",
+                  amount: { value: "1" },
+                  unit: "volume.cup.us.customary",
+                },
+              },
+              {
+                id: "oil",
+                name: "mild olive oil",
+                quantity: {
+                  kind: "simple",
+                  amount: { value: "3/4" },
+                  unit: "volume.cup.us.customary",
+                },
+              },
+            ],
+          },
+          {
+            id: "topping",
+            relation: "preferred",
+            alternatives: [
+              {
+                id: "yoghurt",
+                name: "plain yoghurt",
+                quantity: { kind: "simple", amount: { value: "100" }, unit: "mass.gram" },
+              },
+              {
+                id: "coconut",
+                name: "coconut yoghurt",
+                quantity: { kind: "simple", amount: { value: "100" }, unit: "mass.gram" },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  })
+  await page.goto(`/recipes/${recipe.id}`)
+  const row = page.locator("#ingredient-fat")
+  await expect(row.getByText("or", { exact: true })).toBeVisible()
+  await expect(row.getByText("Prefer", { exact: true })).toHaveCSS("width", "1px")
+  await expect(row).not.toContainText("alternatively")
+  const amounts = row.locator(".recipe-page__amount")
+  const primary = await amounts.first().evaluate((element) => getComputedStyle(element).color)
+  const alternative = await amounts.last().evaluate((element) => getComputedStyle(element).color)
+  expect(primary).not.toBe(alternative)
+  const shared = page.locator("#ingredient-topping")
+  await expect(shared.locator(".recipe-page__amount")).toHaveCount(1)
+  expect(
+    await shared
+      .getByText("coconut yoghurt", { exact: true })
+      .evaluate((element) => getComputedStyle(element).color),
+  ).toBe(alternative)
+  for (const colorScheme of ["light", "dark"] as const) {
+    await page.emulateMedia({ colorScheme })
+    await settleAnimations(page)
+    expect(
+      (await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa"]).analyze())
+        .violations,
+    ).toEqual([])
+    await page.screenshot({ path: testInfo.outputPath(`preferred-reader-${colorScheme}.png`) })
+  }
+  await page.getByRole("button", { name: "Cook", exact: true }).click()
+  await expect(page.getByText("mild olive oil", { exact: false })).toBeVisible()
+  await expect(page.getByText("alternatively", { exact: true })).toHaveCount(0)
+})
+
 test("the search box offers the library's own words and narrows by the one chosen", async ({
   page,
   request,
@@ -390,4 +492,74 @@ test("a book opens as something to read, with arranging behind a deliberate step
   await expect(titles).toHaveCount(0)
   releaseBook()
   await expect(titles).toHaveText([second.title, first.title])
+})
+
+test("ingredient units change this reading, follow the batch, and leave saved quantities intact", async ({
+  page,
+  request,
+}) => {
+  const recipe = await seedRecipe(request, "Reader unit choices")
+  await page.goto(`/recipes/${recipe.id}`)
+  await choose(chooser(page, "Measurements"), "original")
+  const row = page.locator("#ingredient-yoghurt")
+  const amount = row.getByRole("button", { name: /^whole-milk yoghurt: .* · Unit$/ })
+  await expect(amount).toContainText("½ cup")
+  await amount.click()
+  await expect(page.getByRole("menuitemradio", { name: "g", exact: true })).toHaveCount(0)
+  await page.getByRole("menuitemradio", { name: /^ml$/i }).click()
+  await expect(amount).toHaveText(/≈ 118\.29 ml/i)
+  await expect(amount).toBeFocused()
+  const servings = page.getByRole("textbox", { name: "How many servings" })
+  await servings.fill("8")
+  await servings.press("Tab")
+  await expect(amount).toHaveText(/≈ 236\.59 ml/i)
+  await amount.click()
+  await page.getByRole("menuitemradio", { name: "As written", exact: true }).click()
+  await expect(amount).toContainText("1 cup")
+  await amount.click()
+  await page.getByRole("menuitemradio", { name: /^ml$/i }).click()
+  await choose(chooser(page, "Measurements"), "metric")
+  await amount.click()
+  await expect(page.getByRole("menuitemradio", { name: "Metric", exact: true })).toHaveAttribute(
+    "aria-checked",
+    "true",
+  )
+  await page.keyboard.press("Escape")
+  const saved = await (await request.get(`/api/v1/recipes/${recipe.id}`)).json()
+  expect(saved.recipe.ingredient_sections[0].ingredients[0].quantity).toEqual({
+    kind: "simple",
+    amount: { value: "1/2" },
+    unit: "volume.cup.us.customary",
+  })
+})
+
+test("each publication source recipe links within its own row", async ({ page, request }) => {
+  const first = await seedRecipe(request, "First sourced supper")
+  const second = await seedRecipe(request, "Second sourced supper")
+  const response = await request.post("/api/v1/books", {
+    data: { kind: "publication", title: "Source cookbook", entries: [], sections: [] },
+  })
+  expect(response.ok()).toBe(true)
+  const book = await response.json()
+  for (const entry of [first, second]) {
+    const organization = await (
+      await request.get(`/api/v1/recipes/${entry.id}/organization`)
+    ).json()
+    const result = await request.put(`/api/v1/recipes/${entry.id}/organization`, {
+      headers: { "If-Match": `"${organization.revision}"` },
+      data: {
+        tag_ids: [],
+        facet_ids: [],
+        user_state: { favorite: false },
+        sources: [{ kind: "publication", publication_book_id: book.id }],
+      },
+    })
+    expect(result.ok()).toBe(true)
+  }
+  await page.goto(`/books/${book.id}`)
+  await page.getByRole("link", { name: first.title, exact: true }).click()
+  await expect(page).toHaveURL(new RegExp(`/recipes/${first.id}$`))
+  await page.goto(`/books/${book.id}`)
+  await page.getByRole("link", { name: second.title, exact: true }).click()
+  await expect(page).toHaveURL(new RegExp(`/recipes/${second.id}$`))
 })

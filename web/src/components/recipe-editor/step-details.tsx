@@ -7,6 +7,7 @@ import { type Recipe, assetURL, fallbackToOriginalImage } from "@/api/client"
 import type { components } from "@/api/schema"
 import { ChangeError } from "@/components/status"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Dialog, DialogClose } from "@/components/ui/dialog"
 import { FieldGroup, FormField } from "@/components/ui/field"
 import { IconButton } from "@/components/ui/icon-button"
@@ -334,8 +335,7 @@ export function StepDetails(props: {
               <Index each={props.ingredients}>
                 {(ingredient) => (
                   <div class={styles.ingredientUseChoice}>
-                    <input
-                      type="checkbox"
+                    <Checkbox
                       checked={ingredientUse(ingredient().id) !== undefined}
                       aria-label={m.editor_use_label({ label: ingredient().label })}
                       onChange={() => toggleIngredient(ingredient().id)}

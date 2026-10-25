@@ -1,7 +1,8 @@
-import { untrack, For, Show } from "solid-js"
+import { untrack, Show } from "solid-js"
 
 import type { BookSummary, Facet, FacetKind, Tag } from "@/api/client"
 import type { ChoiceLoader } from "@/components/label-choices"
+import { Disclosure } from "@/components/ui/disclosure"
 import type { LibraryVocabulary } from "@/features/library/create-library-vocabulary"
 import type { FilterValue } from "@/lib/filter-vocabulary"
 import { type LibraryFilters, facetGroups } from "@/lib/library-query"
@@ -12,6 +13,23 @@ import { FilterPicker } from "./filter-picker"
 import { chip, styles } from "./filter-styles"
 
 const statedDiets: Diet[] = ["vegan", "vegetarian", "gluten_free"]
+
+interface ShortcutProps {
+  label: string
+  on: boolean
+  onToggle: () => void
+}
+
+const Shortcut = (props: ShortcutProps) => (
+  <button
+    type="button"
+    class={chip({ selected: props.on })}
+    aria-pressed={props.on}
+    onClick={() => props.onToggle()}
+  >
+    {props.label}
+  </button>
+)
 
 interface FilterGroupProps {
   label: string
@@ -84,95 +102,67 @@ export const FilterPanel = (props: FilterPanelProps) => {
       .filter((book: BookSummary) => book.kind === "publication")
       .map((book) => ({ id: book.id, label: book.title }))
 
-  const shortcuts = [
-    {
-      get label() {
-        return m.library_filters_favorites()
-      },
-      get on() {
-        return Boolean(props.filters.favorite)
-      },
-      toggle: () => ({
-        ...props.filters,
-        favorite: props.filters.favorite ? undefined : true,
-      }),
-    },
-    {
-      get label() {
-        return m.library_filters_not_cooked_yet()
-      },
-      get on() {
-        return Boolean(props.filters.unmade)
-      },
-      toggle: () => ({ ...props.filters, unmade: props.filters.unmade ? undefined : true }),
-    },
-    {
-      get label() {
-        return m.library_filters_4_stars()
-      },
-      get on() {
-        return props.filters.rating === 4
-      },
-      toggle: () => ({ ...props.filters, rating: props.filters.rating === 4 ? undefined : 4 }),
-    },
-    {
-      get label() {
-        return m.library_filters_needs_ingredient_review()
-      },
-      get on() {
-        return Boolean(props.filters.review)
-      },
-      toggle: () => ({ ...props.filters, review: props.filters.review ? undefined : true }),
-    },
-  ]
+  const facetGroup = (key: (typeof facetGroups)[number]["key"]) =>
+    facetGroups.find((group) => group.key === key)!
+  const facetFilter = (key: (typeof facetGroups)[number]["key"]) => {
+    const group = facetGroup(key)
+    return (
+      <FilterGroup
+        label={group.label}
+        action={m.library_filters_choose_a_category({ value1: group.singular })}
+        searchNoun={group.plural}
+        values={facetValues(group.kind)}
+        selected={props.filters[group.key]}
+        onToggle={(value) => toggle(group.key, value)}
+      />
+    )
+  }
+  const statedOn = (diet: Diet) => (props.filters.stated ?? []).includes(diet)
+  const toggleStated = (diet: Diet) =>
+    props.onChange({
+      ...props.filters,
+      stated: statedOn(diet)
+        ? props.filters.stated?.filter((entry) => entry !== diet)
+        : [...(props.filters.stated ?? []), diet],
+    })
+  const moreInUse = () =>
+    props.filters.dietary.length > 0 ||
+    props.filters.method.length > 0 ||
+    props.filters.source.length > 0 ||
+    (props.filters.stated ?? []).length > 0
 
   return (
     <div class={styles.panel}>
-      <div class={styles.shortcuts}>
-        <div class={styles.group}>
-          <p class={styles.groupTitle}>{m.library_filters_only_show()}</p>
-          <div class={styles.chips}>
-            <For each={shortcuts}>
-              {(shortcut) => (
-                <button
-                  type="button"
-                  class={chip({ selected: shortcut.on })}
-                  aria-pressed={shortcut.on}
-                  onClick={() => props.onChange(shortcut.toggle())}
-                >
-                  {shortcut.label}
-                </button>
-              )}
-            </For>
-          </div>
-        </div>
-        <div class={styles.group}>
-          <p class={styles.groupTitle}>{m.library_filters_stated_by_the_recipe()}</p>
-          <div class={styles.chips}>
-            <For each={statedDiets}>
-              {(diet) => {
-                const on = () => (props.filters.stated ?? []).includes(diet)
-                return (
-                  <button
-                    type="button"
-                    class={chip({ selected: on() })}
-                    aria-pressed={on()}
-                    onClick={() =>
-                      props.onChange({
-                        ...props.filters,
-                        stated: on()
-                          ? props.filters.stated?.filter((entry) => entry !== diet)
-                          : [...(props.filters.stated ?? []), diet],
-                      })
-                    }
-                  >
-                    {dietName(diet)}
-                  </button>
-                )
-              }}
-            </For>
-          </div>
-          <p class={styles.hint}>{m.library_filters_stated_hint()}</p>
+      <div class={styles.group}>
+        <p class={styles.groupTitle}>{m.library_filters_only_show()}</p>
+        <div class={styles.chips}>
+          <Shortcut
+            label={m.library_filters_favorites()}
+            on={Boolean(props.filters.favorite)}
+            onToggle={() =>
+              props.onChange({
+                ...props.filters,
+                favorite: props.filters.favorite ? undefined : true,
+              })
+            }
+          />
+          <Shortcut
+            label={m.library_filters_not_cooked_yet()}
+            on={Boolean(props.filters.unmade)}
+            onToggle={() =>
+              props.onChange({ ...props.filters, unmade: props.filters.unmade ? undefined : true })
+            }
+          />
+          <Shortcut
+            label={m.library_filters_4_stars()}
+            on={props.filters.rating === 4}
+            onToggle={() =>
+              props.onChange({
+                ...props.filters,
+                rating: props.filters.rating === 4 ? undefined : 4,
+              })
+            }
+          />
         </div>
       </div>
       <div class={styles.categories}>
@@ -186,18 +176,8 @@ export const FilterPanel = (props: FilterPanelProps) => {
           selected={props.filters.tags}
           onToggle={(value) => toggle("tags", value)}
         />
-        <For each={facetGroups}>
-          {(group) => (
-            <FilterGroup
-              label={group.label}
-              action={m.library_filters_choose_a_category({ value1: group.singular })}
-              searchNoun={group.plural}
-              values={facetValues(group.kind)}
-              selected={props.filters[group.key]}
-              onToggle={(value) => toggle(group.key, value)}
-            />
-          )}
-        </For>
+        {facetFilter("cuisine")}
+        {facetFilter("course")}
         <FilterGroup
           label={m.library_filters_in_a_book()}
           action={m.library_filters_choose_a_book()}
@@ -209,16 +189,66 @@ export const FilterPanel = (props: FilterPanelProps) => {
           selected={props.filters.book}
           onToggle={(value) => toggle("book", value)}
         />
-        <FilterGroup
-          label={m.library_filters_taken_from_a_cookbook()}
-          action={m.library_filters_choose_a_cookbook()}
-          searchNoun={m.search_cookbooks_noun()}
-          values={publications()}
-          load={booksLoader(true)}
-          selected={props.filters.source}
-          onToggle={(value) => toggle("source", value)}
-        />
       </div>
+      <Disclosure
+        variant="inline"
+        class={styles.more}
+        label={m.library_filters_more()}
+        open={moreInUse()}
+      >
+        <div class={styles.moreGroups}>
+          <div class={styles.group}>
+            <p class={styles.groupTitle}>{facetGroup("dietary").label}</p>
+            <FilterPicker
+              label={facetGroup("dietary").label}
+              action={m.library_filters_choose_a_category({
+                value1: facetGroup("dietary").singular,
+              })}
+              searchNoun={facetGroup("dietary").plural}
+              values={[
+                ...statedDiets.map((diet) => ({
+                  id: `stated:${diet}`,
+                  label: `${dietName(diet)} · ${m.library_filters_stated_by_the_recipe()}`,
+                })),
+                ...facetValues("dietary").map((value) => ({
+                  ...value,
+                  id: `category:${value.id}`,
+                })),
+              ]}
+              selected={[
+                ...(props.filters.stated ?? []).map((diet) => `stated:${diet}`),
+                ...props.filters.dietary.map((id) => `category:${id}`),
+              ]}
+              onToggle={(id) =>
+                id.startsWith("stated:")
+                  ? toggleStated(id.slice(7) as Diet)
+                  : toggle("dietary", id.slice(9))
+              }
+            />
+            <p class={styles.hint}>
+              {m.library_filters_diet_hint()}{" "}
+              <a
+                class={styles.manual}
+                href="https://docs.savorum.app/guide/organize-library/#search-for-a-recipe"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {m.library_filters_diet_manual()}
+              </a>
+            </p>
+          </div>
+          {facetFilter("method")}
+          <FilterGroup
+            label={m.library_filters_taken_from_a_cookbook()}
+            action={m.library_filters_choose_a_cookbook()}
+            searchNoun={m.search_cookbooks_noun()}
+            values={publications()}
+            load={booksLoader(true)}
+            selected={props.filters.source}
+            onToggle={(value) => toggle("source", value)}
+          />
+        </div>
+      </Disclosure>
     </div>
   )
 }

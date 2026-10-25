@@ -1,7 +1,6 @@
 import { Link as RouterLink } from "@tanstack/solid-router"
 import { ChevronDown, FileUp, History, Link, NotepadText, Plus, Upload } from "lucide-solid"
 import { For, Show } from "solid-js"
-import { css } from "styled-system/css"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -15,6 +14,7 @@ import {
   MenuItemText,
   MenuSeparator,
 } from "@/components/ui/menu"
+import { shortcutAria } from "@/lib/keyboard-shortcuts"
 
 import { capabilities } from "../api/capabilities"
 import { m } from "../lib/messages.ts"
@@ -71,7 +71,7 @@ export const ImportMenu = (props: {
   onFiles: () => void
   onURL: () => void
   onText: () => void
-  onHistory: () => void
+  onHistory?: () => void
 }) => (
   <Menu
     positioning={{ placement: "bottom-end", gutter: 8 }}
@@ -79,16 +79,22 @@ export const ImportMenu = (props: {
       if (value === "files") props.onFiles()
       if (value === "url") props.onURL()
       if (value === "text") props.onText()
-      if (value === "history") props.onHistory()
+      if (value === "history") props.onHistory?.()
     }}
     trigger={(triggerProps) => (
       <Button
         {...triggerProps()}
+        data-shortcut={props.write ? "add-recipes" : "import-recipes"}
+        aria-keyshortcuts={shortcutAria(props.write ? "add-recipes" : "import-recipes")}
         class={props.class}
         variant={props.variant ?? "outline"}
         colorPalette={props.variant === "solid" ? "accent" : undefined}
         size="sm"
         px={props.compact ? "0" : undefined}
+        h="auto"
+        minH="9"
+        maxW="100%"
+        whiteSpace="normal"
         loading={props.busy}
         aria-label={
           props.write
@@ -103,11 +109,7 @@ export const ImportMenu = (props: {
               <Show when={props.write} fallback={<Upload aria-hidden="true" size={16} />}>
                 <Plus aria-hidden="true" size={16} />
               </Show>
-              <span
-                class={props.write ? css({ display: { base: "none", sm: "inline" } }) : undefined}
-              >
-                {props.write ? m.library_page_add_recipes() : m.import_menu_import()}
-              </span>
+              <span>{props.write ? m.library_page_add_recipes() : m.import_menu_import()}</span>
               <MenuIndicator>
                 <ChevronDown aria-hidden="true" size={14} />
               </MenuIndicator>
@@ -150,9 +152,11 @@ export const ImportMenu = (props: {
         )}
       </For>
     </MenuItemGroup>
-    <MenuSeparator />
-    <MenuItem value="history">
-      <History aria-hidden="true" size={16} /> {m.import_menu_recent_imports()}
-    </MenuItem>
+    <Show when={props.onHistory}>
+      <MenuSeparator />
+      <MenuItem value="history">
+        <History aria-hidden="true" size={16} /> {m.import_menu_recent_imports()}
+      </MenuItem>
+    </Show>
   </Menu>
 )

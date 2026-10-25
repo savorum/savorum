@@ -1,14 +1,6 @@
 import { expect, type Locator, type Page } from "@playwright/test"
 
-/**
- * Waits until choosing has finished moving focus.
- *
- * A chooser hands focus back to its trigger as it closes, a frame or two after
- * the list goes. A test that types into the next field before that happens
- * loses the caret to the trigger part way through a word, so this waits for
- * the trigger to hold focus — or to have left the page, where choosing
- * navigated.
- */
+/** Waits for focus restoration unless navigation removes the chooser. */
 async function settled(chooser: Locator): Promise<void> {
   await expect(chooser).toHaveAttribute("data-state", "closed")
   const id = await chooser.getAttribute("id")
@@ -36,14 +28,7 @@ export async function chooseNamed(chooser: Locator, label: string): Promise<void
   await settled(chooser)
 }
 
-/**
- * Opens a chooser and returns its own list.
- *
- * Every list is drawn in the same portal, and a screen can offer the same
- * option twice ("Applies to temperature 1" and "Applies to temperature 2"
- * both offer "other"), so the list is found through the trigger that controls
- * it rather than by searching the page.
- */
+/** Scopes the portal list to its trigger because option labels can repeat. */
 async function open(chooser: Locator): Promise<Locator> {
   await chooser.click()
   const listID = await chooser.getAttribute("aria-controls")
@@ -68,13 +53,7 @@ export async function openSection(page: Page, name: RegExp | string): Promise<vo
   await expect(trigger).toHaveAttribute("aria-expanded", "true")
 }
 
-/**
- * Chooses an item from a row's action menu.
- *
- * A menu that had to scroll into view can still be settling into place, so a
- * click at the item's previous position selects nothing and the menu stays
- * open. The click is repeated only in that case.
- */
+/** Retries selection if scrolling moved the menu before the click landed. */
 export async function chooseAction(page: Page, menu: string, item: string): Promise<void> {
   const trigger = page.getByRole("button", { name: menu, exact: true })
   await trigger.click()
@@ -83,4 +62,14 @@ export async function chooseAction(page: Page, menu: string, item: string): Prom
     if (await choice.isVisible()) await choice.click()
     await expect(trigger).toHaveAttribute("aria-expanded", "false", { timeout: 1000 })
   }).toPass()
+}
+
+export async function settleAnimations(page: Page): Promise<void> {
+  await page.evaluate(async () => {
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))
+    const animations = document
+      .getAnimations()
+      .filter((animation) => animation.effect?.getTiming().iterations !== Infinity)
+    await Promise.all(animations.map((animation) => animation.finished.catch(() => {})))
+  })
 }

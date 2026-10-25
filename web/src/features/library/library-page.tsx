@@ -1,5 +1,4 @@
-import { Link } from "@tanstack/solid-router"
-import { type Accessor, Show, Suspense, createSignal, lazy } from "solid-js"
+import { type Accessor, For, Show, Suspense, createSignal, lazy } from "solid-js"
 import { css, cx } from "styled-system/css"
 import { pageShell } from "styled-system/recipes"
 
@@ -7,8 +6,8 @@ import { importAccept } from "@/api/capabilities"
 import { createLiveRefresh } from "@/api/live-events"
 import { ImportMenu } from "@/components/import-menu"
 import { ImportProgress } from "@/components/import-progress"
+import { SkeletonBlock, SkeletonGroup, SkeletonLine } from "@/components/skeleton"
 import { ChangeError, Loading } from "@/components/status"
-import { buttonLink } from "@/components/ui/button-link"
 import { RestoreNotice } from "@/features/library/restore-notice"
 import type { TrashedRecipe } from "@/lib/library-return"
 
@@ -16,6 +15,7 @@ import { m } from "../../lib/messages.ts"
 import { createImportWorkflow } from "../import-review/create-import-workflow"
 import { createLibraryQuery } from "./create-library-query"
 import { createLibrarySelection } from "./create-library-selection"
+import { styles as filterStyles } from "./filter-styles"
 import { LibraryContinuation } from "./library-continuation"
 import { LibraryResults } from "./library-results"
 import { type LibrarySearch, type UpdateLibrarySearch } from "./library-search"
@@ -148,9 +148,6 @@ export function LibraryPage(props: {
                 onNarrow={query.applyFilters}
               />
               <div class={styles.primaryActions}>
-                <Link to="/books" class={buttonLink({ variant: "outline" })}>
-                  {m.site_header_books()}
-                </Link>
                 <ImportMenu
                   busy={workflow.busy()}
                   write
@@ -185,7 +182,7 @@ export function LibraryPage(props: {
               </Suspense>
             </Show>
             <Show when={query.filtersOpen()}>
-              <Suspense fallback={<Loading />}>
+              <Suspense fallback={<FilterPanelLoading />}>
                 <FilterPanel
                   filters={query.filters()}
                   vocabulary={query.vocabulary}
@@ -233,6 +230,37 @@ export function LibraryPage(props: {
   )
 }
 
+function FilterPanelLoading() {
+  const count = (length: number) => Array.from({ length }, (_, index) => index)
+  return (
+    <SkeletonGroup class={filterStyles.panel}>
+      <span class={filterStyles.group}>
+        <SkeletonLine width="5rem" size="sm" />
+        <span class={filterStyles.chips}>
+          <For each={count(3)}>
+            {() => (
+              <span class={styles.chipShape}>
+                <SkeletonBlock height="100%" />
+              </span>
+            )}
+          </For>
+        </span>
+      </span>
+      <span class={filterStyles.categories}>
+        <For each={count(4)}>
+          {() => (
+            <span class={filterStyles.group}>
+              <SkeletonLine width="4rem" size="sm" />
+              <SkeletonBlock height="2.25rem" />
+            </span>
+          )}
+        </For>
+      </span>
+      <SkeletonLine width="7rem" />
+    </SkeletonGroup>
+  )
+}
+
 const layout = pageShell({ width: "wide" })
 
 const styles = {
@@ -265,6 +293,7 @@ const styles = {
     justifySelf: "end",
   }),
   fileInput: css({ display: "none" }),
+  chipShape: css({ display: "block", height: { base: "11", md: "8" }, width: "6rem" }),
   dropOverlay: css({
     position: "fixed",
     inset: 0,

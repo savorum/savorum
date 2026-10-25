@@ -113,6 +113,20 @@ export const account_activity_heading: ((inputs?: Account_Activity_HeadingInputs
 /**
 * | output |
 * | --- |
+* | "Active" |
+*
+* @param {Account_Admin_ActiveInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_admin_active: ((inputs?: Account_Admin_ActiveInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Admin_ActiveInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Security and destructive operations across this instance." |
 *
 * @param {Account_Admin_Audit_LedeInputs} inputs
@@ -155,7 +169,7 @@ export const account_admin_audit_title: ((inputs?: Account_Admin_Audit_TitleInpu
 /**
 * | output |
 * | --- |
-* | "Create a local account" |
+* | "Add user" |
 *
 * @param {Account_Admin_Create_HeadingInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -225,7 +239,7 @@ export const account_admin_create_library_submit: ((inputs?: Account_Admin_Creat
 /**
 * | output |
 * | --- |
-* | "Create account" |
+* | "Add user" |
 *
 * @param {Account_Admin_Create_SubmitInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -486,6 +500,34 @@ export const account_admin_library_none: ((inputs?: Account_Admin_Library_NoneIn
 export const account_admin_library_role: ((inputs?: Account_Admin_Library_RoleInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Admin_Library_RoleInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Manage" |
+*
+* @param {Account_Admin_ManageInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_admin_manage: ((inputs?: Account_Admin_ManageInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Admin_ManageInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Manage {name}" |
+*
+* @param {Account_Admin_Manage_NamedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_admin_manage_named: ((inputs: Account_Admin_Manage_NamedInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Admin_Manage_NamedInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -752,6 +794,20 @@ export const account_admin_nav_people: ((inputs?: Account_Admin_Nav_PeopleInputs
 export const account_admin_nav_providers: ((inputs?: Account_Admin_Nav_ProvidersInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Admin_Nav_ProvidersInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Password reset. This user has been signed out of all sessions." |
+*
+* @param {Account_Admin_Password_Reset_NoticeInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_admin_password_reset_notice: ((inputs?: Account_Admin_Password_Reset_NoticeInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Admin_Password_Reset_NoticeInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -1032,6 +1088,34 @@ export const account_admin_recover_submit: ((inputs?: Account_Admin_Recover_Subm
 export const account_admin_recovered: ((inputs?: Account_Admin_RecoveredInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Admin_RecoveredInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Reset password" |
+*
+* @param {Account_Admin_Reset_ActionInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_admin_reset_action: ((inputs?: Account_Admin_Reset_ActionInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Admin_Reset_ActionInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Resetting the password signs this user out everywhere." |
+*
+* @param {Account_Admin_Reset_HintInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_admin_reset_hint: ((inputs?: Account_Admin_Reset_HintInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Admin_Reset_HintInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -1345,6 +1429,34 @@ export const account_assistant_temporary: ((inputs?: Account_Assistant_Temporary
 /**
 * | output |
 * | --- |
+* | "Access changed" |
+*
+* @param {Account_Audit_Access_ChangedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_access_changed: ((inputs?: Account_Audit_Access_ChangedInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_Access_ChangedInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Action code" |
+*
+* @param {Account_Audit_Action_CodeInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_action_code: ((inputs?: Account_Audit_Action_CodeInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_Action_CodeInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Activity" |
 *
 * @param {Account_Audit_ActivityInputs} inputs
@@ -1373,6 +1485,20 @@ export const account_audit_actor: ((inputs?: Account_Audit_ActorInputs, options?
 /**
 * | output |
 * | --- |
+* | "Affected" |
+*
+* @param {Account_Audit_AffectedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_affected: ((inputs?: Account_Audit_AffectedInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_AffectedInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "All activity" |
 *
 * @param {Account_Audit_AllInputs} inputs
@@ -1382,6 +1508,20 @@ export const account_audit_actor: ((inputs?: Account_Audit_ActorInputs, options?
 export const account_audit_all: ((inputs?: Account_Audit_AllInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_AllInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Anyone" |
+*
+* @param {Account_Audit_AnyoneInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_anyone: ((inputs?: Account_Audit_AnyoneInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_AnyoneInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -1429,6 +1569,62 @@ export const account_audit_books: ((inputs?: Account_Audit_BooksInputs, options?
 /**
 * | output |
 * | --- |
+* | "By" |
+*
+* @param {Account_Audit_ByInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_by: ((inputs?: Account_Audit_ByInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_ByInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Credential ID" |
+*
+* @param {Account_Audit_Credential_IdInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_credential_id: ((inputs?: Account_Audit_Credential_IdInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_Credential_IdInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Deleted" |
+*
+* @param {Account_Audit_DeletedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_deleted: ((inputs?: Account_Audit_DeletedInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_DeletedInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Record details" |
+*
+* @param {Account_Audit_DetailsInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_details: ((inputs?: Account_Audit_DetailsInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_DetailsInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "No matching activity." |
 *
 * @param {Account_Audit_EmptyInputs} inputs
@@ -1438,6 +1634,20 @@ export const account_audit_books: ((inputs?: Account_Audit_BooksInputs, options?
 export const account_audit_empty: ((inputs?: Account_Audit_EmptyInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_EmptyInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Enabled" |
+*
+* @param {Account_Audit_EnabledInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_enabled: ((inputs?: Account_Audit_EnabledInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_EnabledInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -1466,6 +1676,48 @@ export const account_audit_error: ((inputs?: Account_Audit_ErrorInputs, options?
 export const account_audit_event_detail: ((inputs: Account_Audit_Event_DetailInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_Event_DetailInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Event ID" |
+*
+* @param {Account_Audit_Event_IdInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_event_id: ((inputs?: Account_Audit_Event_IdInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_Event_IdInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Failed" |
+*
+* @param {Account_Audit_FailedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_failed: ((inputs?: Account_Audit_FailedInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_FailedInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Forced sign-in method removal" |
+*
+* @param {Account_Audit_Forced_UnlinkInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_forced_unlink: ((inputs?: Account_Audit_Forced_UnlinkInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_Forced_UnlinkInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -1541,6 +1793,20 @@ export const account_audit_library: ((inputs?: Account_Audit_LibraryInputs, opti
 /**
 * | output |
 * | --- |
+* | "Sign-in method added" |
+*
+* @param {Account_Audit_LinkedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_linked: ((inputs?: Account_Audit_LinkedInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_LinkedInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Loading audit history…" |
 *
 * @param {Account_Audit_LoadingInputs} inputs
@@ -1550,6 +1816,20 @@ export const account_audit_library: ((inputs?: Account_Audit_LibraryInputs, opti
 export const account_audit_loading: ((inputs?: Account_Audit_LoadingInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_LoadingInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Merged" |
+*
+* @param {Account_Audit_MergedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_merged: ((inputs?: Account_Audit_MergedInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_MergedInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -1569,6 +1849,62 @@ export const account_audit_older: ((inputs?: Account_Audit_OlderInputs, options?
 /**
 * | output |
 * | --- |
+* | "Instance owner" |
+*
+* @param {Account_Audit_OwnerInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_owner: ((inputs?: Account_Audit_OwnerInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_OwnerInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Password change" |
+*
+* @param {Account_Audit_Password_ChangeInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_password_change: ((inputs?: Account_Audit_Password_ChangeInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_Password_ChangeInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Paused" |
+*
+* @param {Account_Audit_PausedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_paused: ((inputs?: Account_Audit_PausedInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_PausedInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Permanently deleted" |
+*
+* @param {Account_Audit_PurgedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_purged: ((inputs?: Account_Audit_PurgedInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_PurgedInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Recipes" |
 *
 * @param {Account_Audit_RecipesInputs} inputs
@@ -1583,6 +1919,132 @@ export const account_audit_recipes: ((inputs?: Account_Audit_RecipesInputs, opti
 /**
 * | output |
 * | --- |
+* | "Recovery codes replaced" |
+*
+* @param {Account_Audit_Recovery_ReplacedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_recovery_replaced: ((inputs?: Account_Audit_Recovery_ReplacedInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_Recovery_ReplacedInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Recovery sign-in" |
+*
+* @param {Account_Audit_Recovery_Sign_InInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_recovery_sign_in: ((inputs?: Account_Audit_Recovery_Sign_InInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_Recovery_Sign_InInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Redelivery requested" |
+*
+* @param {Account_Audit_RedeliveryInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_redelivery: ((inputs?: Account_Audit_RedeliveryInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_RedeliveryInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Renamed" |
+*
+* @param {Account_Audit_RenamedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_renamed: ((inputs?: Account_Audit_RenamedInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_RenamedInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Request ID" |
+*
+* @param {Account_Audit_Request_IdInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_request_id: ((inputs?: Account_Audit_Request_IdInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_Request_IdInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Result" |
+*
+* @param {Account_Audit_ResultInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_result: ((inputs?: Account_Audit_ResultInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_ResultInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Retired" |
+*
+* @param {Account_Audit_RetiredInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_retired: ((inputs?: Account_Audit_RetiredInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_RetiredInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Signing secret rotated" |
+*
+* @param {Account_Audit_Secret_RotatedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_secret_rotated: ((inputs?: Account_Audit_Secret_RotatedInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_Secret_RotatedInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Hosting service" |
+*
+* @param {Account_Audit_ServiceInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_service: ((inputs?: Account_Audit_ServiceInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_ServiceInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Settings" |
 *
 * @param {Account_Audit_SettingsInputs} inputs
@@ -1592,6 +2054,48 @@ export const account_audit_recipes: ((inputs?: Account_Audit_RecipesInputs, opti
 export const account_audit_settings: ((inputs?: Account_Audit_SettingsInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_SettingsInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Sign-in" |
+*
+* @param {Account_Audit_Sign_InInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_sign_in: ((inputs?: Account_Audit_Sign_InInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_Sign_InInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Succeeded" |
+*
+* @param {Account_Audit_SucceededInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_succeeded: ((inputs?: Account_Audit_SucceededInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_SucceededInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "System" |
+*
+* @param {Account_Audit_SystemInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_system: ((inputs?: Account_Audit_SystemInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_SystemInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -1779,6 +2283,20 @@ export const account_audit_target_user: ((inputs?: Account_Audit_Target_UserInpu
 /**
 * | output |
 * | --- |
+* | "Test requested" |
+*
+* @param {Account_Audit_Test_RequestedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_test_requested: ((inputs?: Account_Audit_Test_RequestedInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_Test_RequestedInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "API tokens" |
 *
 * @param {Account_Audit_TokensInputs} inputs
@@ -1788,6 +2306,34 @@ export const account_audit_target_user: ((inputs?: Account_Audit_Target_UserInpu
 export const account_audit_tokens: ((inputs?: Account_Audit_TokensInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_TokensInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Moved to Trash" |
+*
+* @param {Account_Audit_TrashedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_trashed: ((inputs?: Account_Audit_TrashedInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_TrashedInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Sign-in method removed" |
+*
+* @param {Account_Audit_UnlinkedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_unlinked: ((inputs?: Account_Audit_UnlinkedInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_UnlinkedInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -1816,6 +2362,20 @@ export const account_audit_until: ((inputs?: Account_Audit_UntilInputs, options?
 export const account_audit_users: ((inputs?: Account_Audit_UsersInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_UsersInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Webhook" |
+*
+* @param {Account_Audit_WebhookInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_audit_webhook: ((inputs?: Account_Audit_WebhookInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Audit_WebhookInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -3473,6 +4033,34 @@ export const account_passkeys_removed: ((inputs?: Account_Passkeys_RemovedInputs
 /**
 * | output |
 * | --- |
+* | "Rename" |
+*
+* @param {Account_Passkeys_RenameInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_passkeys_rename: ((inputs?: Account_Passkeys_RenameInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Passkeys_RenameInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Rename {name}" |
+*
+* @param {Account_Passkeys_Rename_NamedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_passkeys_rename_named: ((inputs: Account_Passkeys_Rename_NamedInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Passkeys_Rename_NamedInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Passkey renamed." |
 *
 * @param {Account_Passkeys_RenamedInputs} inputs
@@ -3641,6 +4229,20 @@ export const account_recovery_dismiss: ((inputs?: Account_Recovery_DismissInputs
 /**
 * | output |
 * | --- |
+* | "No recovery codes available." |
+*
+* @param {Account_Recovery_EmptyInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_recovery_empty: ((inputs?: Account_Recovery_EmptyInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Recovery_EmptyInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Generate 10 recovery codes" |
 *
 * @param {Account_Recovery_GenerateInputs} inputs
@@ -3695,9 +4297,10 @@ export const account_recovery_hint: ((inputs?: Account_Recovery_HintInputs, opti
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
-* | output |
-* | --- |
-* | "{count} unused codes remaining." |
+* | plural | output |
+* | --- | --- |
+* | "one" | "{countText} recovery code remaining." |
+* | * | "{countText} recovery codes remaining." |
 *
 * @param {Account_Recovery_RemainingInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -4089,6 +4692,20 @@ export const account_sessions_hint: ((inputs?: Account_Sessions_HintInputs, opti
 /**
 * | output |
 * | --- |
+* | "Last active {date}" |
+*
+* @param {Account_Sessions_Last_ActiveInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_sessions_last_active: ((inputs: Account_Sessions_Last_ActiveInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Sessions_Last_ActiveInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Another browser" |
 *
 * @param {Account_Sessions_OtherInputs} inputs
@@ -4098,6 +4715,20 @@ export const account_sessions_hint: ((inputs?: Account_Sessions_HintInputs, opti
 export const account_sessions_other: ((inputs?: Account_Sessions_OtherInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Sessions_OtherInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Other sessions" |
+*
+* @param {Account_Sessions_Other_HeadingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_sessions_other_heading: ((inputs?: Account_Sessions_Other_HeadingInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Sessions_Other_HeadingInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -4168,6 +4799,20 @@ export const account_sessions_revoke_others: ((inputs?: Account_Sessions_Revoke_
 export const account_sessions_revoked: ((inputs?: Account_Sessions_RevokedInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Sessions_RevokedInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Signed in {date}" |
+*
+* @param {Account_Sessions_Signed_InInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_sessions_signed_in: ((inputs: Account_Sessions_Signed_InInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Sessions_Signed_InInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -9357,6 +10002,20 @@ export const common_keep_it: ((inputs?: Common_Keep_ItInputs, options?: {
 /**
 * | output |
 * | --- |
+* | "Loading…" |
+*
+* @param {Common_LoadingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const common_loading: ((inputs?: Common_LoadingInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Common_LoadingInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Next" |
 *
 * @param {Common_NextInputs} inputs
@@ -12844,6 +13503,48 @@ export const exports_the_export_could_not_be_completed: ((inputs?: Exports_The_E
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
+* | output |
+* | --- |
+* | "Help with importing recipes" |
+*
+* @param {Help_ImportsInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const help_imports: ((inputs?: Help_ImportsInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Help_ImportsInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Help with meal planning" |
+*
+* @param {Help_PlanInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const help_plan: ((inputs?: Help_PlanInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Help_PlanInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Help with shopping lists" |
+*
+* @param {Help_ShoppingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const help_shopping: ((inputs?: Help_ShoppingInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Help_ShoppingInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
 * | plural | output |
 * | --- | --- |
 * | "one" | "about {countText} hour" |
@@ -13552,15 +14253,15 @@ export const import_job_not_imported: ((inputs: Import_Job_Not_ImportedInputs, o
 /**
 * | output |
 * | --- |
-* | "{value1} already in your library" |
+* | "Back to imports" |
 *
-* @param {Import_Job_Page_Already_In_Your_LibraryInputs} inputs
+* @param {Import_Job_Page_Back_To_ImportsInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
 * @returns {LocalizedString}
 */
-export const import_job_page_already_in_your_library: ((inputs: Import_Job_Page_Already_In_Your_LibraryInputs, options?: {
+export const import_job_page_back_to_imports: ((inputs?: Import_Job_Page_Back_To_ImportsInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Page_Already_In_Your_LibraryInputs, {
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Page_Back_To_ImportsInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -13589,20 +14290,6 @@ export const import_job_page_back_to_your_library: ((inputs?: Import_Job_Page_Ba
 export const import_job_page_batch_of: ((inputs: Import_Job_Page_Batch_OfInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Page_Batch_OfInputs, {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}, {}>;
-/**
-* | output |
-* | --- |
-* | "could not be imported" |
-*
-* @param {Import_Job_Page_Could_Not_Be_ImportedInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const import_job_page_could_not_be_imported: ((inputs?: Import_Job_Page_Could_Not_Be_ImportedInputs, options?: {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Page_Could_Not_Be_ImportedInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -13720,20 +14407,6 @@ export const import_job_page_import_the_rest: ((inputs?: Import_Job_Page_Import_
 /**
 * | output |
 * | --- |
-* | "imported" |
-*
-* @param {Import_Job_Page_ImportedInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const import_job_page_imported: ((inputs?: Import_Job_Page_ImportedInputs, options?: {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Page_ImportedInputs, {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}, {}>;
-/**
-* | output |
-* | --- |
 * | "{value1} left" |
 *
 * @param {Import_Job_Page_LeftInputs} inputs
@@ -13746,31 +14419,18 @@ export const import_job_page_left: ((inputs: Import_Job_Page_LeftInputs, options
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
-* | output |
-* | --- |
-* | "need review" |
+* | plural | output |
+* | --- | --- |
+* | "one" | "{countText} recipe needs a look" |
+* | * | "{countText} recipes need a look" |
 *
-* @param {Import_Job_Page_Need_ReviewInputs} inputs
+* @param {Import_Job_Page_Need_A_LookInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
 * @returns {LocalizedString}
 */
-export const import_job_page_need_review: ((inputs?: Import_Job_Page_Need_ReviewInputs, options?: {
+export const import_job_page_need_a_look: ((inputs: Import_Job_Page_Need_A_LookInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Page_Need_ReviewInputs, {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}, {}>;
-/**
-* | output |
-* | --- |
-* | "{value1} not imported" |
-*
-* @param {Import_Job_Page_Not_ImportedInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const import_job_page_not_imported: ((inputs: Import_Job_Page_Not_ImportedInputs, options?: {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Page_Not_ImportedInputs, {
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Page_Need_A_LookInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -13818,20 +14478,6 @@ export const import_job_page_review_details: ((inputs?: Import_Job_Page_Review_D
 /**
 * | output |
 * | --- |
-* | "Recipes that need a look" |
-*
-* @param {Import_Job_Page_Review_MeasurementsInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const import_job_page_review_measurements: ((inputs?: Import_Job_Page_Review_MeasurementsInputs, options?: {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Page_Review_MeasurementsInputs, {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}, {}>;
-/**
-* | output |
-* | --- |
 * | "Started {value1}" |
 *
 * @param {Import_Job_Page_StartedInputs} inputs
@@ -13869,20 +14515,6 @@ export const import_job_page_stop_importing: ((inputs?: Import_Job_Page_Stop_Imp
 export const import_job_page_to_go: ((inputs: Import_Job_Page_To_GoInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Page_To_GoInputs, {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}, {}>;
-/**
-* | output |
-* | --- |
-* | "with preserved details" |
-*
-* @param {Import_Job_Page_With_Preserved_DetailsInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const import_job_page_with_preserved_details: ((inputs?: Import_Job_Page_With_Preserved_DetailsInputs, options?: {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Page_With_Preserved_DetailsInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -14141,6 +14773,118 @@ export const import_job_results_could_not_import: ((inputs?: Import_Job_Results_
 /**
 * | output |
 * | --- |
+* | "Error message" |
+*
+* @param {Import_Job_Results_Error_MessageInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_results_error_message: ((inputs?: Import_Job_Results_Error_MessageInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Results_Error_MessageInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "The matching recipe in your library changed after you reviewed this import." |
+*
+* @param {Import_Job_Results_Failure_ChangedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_results_failure_changed: ((inputs?: Import_Job_Results_Failure_ChangedInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Results_Failure_ChangedInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Import it again to review it against the current version." |
+*
+* @param {Import_Job_Results_Failure_Changed_NextInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_results_failure_changed_next: ((inputs?: Import_Job_Results_Failure_Changed_NextInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Results_Failure_Changed_NextInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "This recipe is already in your library." |
+*
+* @param {Import_Job_Results_Failure_DuplicateInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_results_failure_duplicate: ((inputs?: Import_Job_Results_Failure_DuplicateInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Results_Failure_DuplicateInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "To keep both, import it again and choose to import it as a separate recipe." |
+*
+* @param {Import_Job_Results_Failure_Duplicate_NextInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_results_failure_duplicate_next: ((inputs?: Import_Job_Results_Failure_Duplicate_NextInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Results_Failure_Duplicate_NextInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Savorum no longer has the source this recipe came from." |
+*
+* @param {Import_Job_Results_Failure_SourceInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_results_failure_source: ((inputs?: Import_Job_Results_Failure_SourceInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Results_Failure_SourceInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Import it again from the original file or page." |
+*
+* @param {Import_Job_Results_Failure_Source_NextInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_results_failure_source_next: ((inputs?: Import_Job_Results_Failure_Source_NextInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Results_Failure_Source_NextInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Try importing it again. If it fails again, share the error message in the details below." |
+*
+* @param {Import_Job_Results_Failure_Unknown_NextInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_results_failure_unknown_next: ((inputs?: Import_Job_Results_Failure_Unknown_NextInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Results_Failure_Unknown_NextInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Filter import results" |
 *
 * @param {Import_Job_Results_Filter_Import_ResultsInputs} inputs
@@ -14150,6 +14894,20 @@ export const import_job_results_could_not_import: ((inputs?: Import_Job_Results_
 export const import_job_results_filter_import_results: ((inputs?: Import_Job_Results_Filter_Import_ResultsInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Results_Filter_Import_ResultsInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Find it in your library" |
+*
+* @param {Import_Job_Results_Find_In_LibraryInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_results_find_in_library: ((inputs?: Import_Job_Results_Find_In_LibraryInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_Results_Find_In_LibraryInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -14334,6 +15092,20 @@ export const import_job_skipped: ((inputs: Import_Job_SkippedInputs, options?: {
 export const import_job_stopping: ((inputs?: Import_Job_StoppingInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_StoppingInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Timing" |
+*
+* @param {Import_Job_TimingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_job_timing: ((inputs?: Import_Job_TimingInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Import_Job_TimingInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -15406,15 +16178,15 @@ export const imports_index_imports_savorum: ((inputs?: Imports_Index_Imports_Sav
 /**
 * | output |
 * | --- |
-* | "{value1} and {value2} others" |
+* | "Recipes you bring in from a file, a website or text appear here." |
 *
-* @param {Imports_Page_And_OthersInputs} inputs
+* @param {Imports_Page_Empty_HintInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
 * @returns {LocalizedString}
 */
-export const imports_page_and_others: ((inputs: Imports_Page_And_OthersInputs, options?: {
+export const imports_page_empty_hint: ((inputs?: Imports_Page_Empty_HintInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}) => LocalizedString) & import("../runtime.js").MessageMetadata<Imports_Page_And_OthersInputs, {
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Imports_Page_Empty_HintInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -15448,20 +16220,6 @@ export const imports_page_import_jobs: ((inputs?: Imports_Page_Import_JobsInputs
 /**
 * | output |
 * | --- |
-* | "Import recipes from your library." |
-*
-* @param {Imports_Page_Import_Recipes_From_Your_LibraryInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const imports_page_import_recipes_from_your_library: ((inputs?: Imports_Page_Import_Recipes_From_Your_LibraryInputs, options?: {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}) => LocalizedString) & import("../runtime.js").MessageMetadata<Imports_Page_Import_Recipes_From_Your_LibraryInputs, {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}, {}>;
-/**
-* | output |
-* | --- |
 * | "Imports" |
 *
 * @param {Imports_Page_ImportsInputs} inputs
@@ -15471,6 +16229,21 @@ export const imports_page_import_recipes_from_your_library: ((inputs?: Imports_P
 export const imports_page_imports: ((inputs?: Imports_Page_ImportsInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Imports_Page_ImportsInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | plural | output |
+* | --- | --- |
+* | "one" | "{title} and {countText} other" |
+* | * | "{title} and {countText} others" |
+*
+* @param {Imports_Page_Lead_And_OthersInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const imports_page_lead_and_others: ((inputs: Imports_Page_Lead_And_OthersInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Imports_Page_Lead_And_OthersInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -15513,20 +16286,6 @@ export const imports_page_no_imports_yet: ((inputs?: Imports_Page_No_Imports_Yet
 export const imports_page_reading_your_imports: ((inputs?: Imports_Page_Reading_Your_ImportsInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Imports_Page_Reading_Your_ImportsInputs, {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}, {}>;
-/**
-* | output |
-* | --- |
-* | "Refresh imports" |
-*
-* @param {Imports_Page_Refresh_ImportsInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const imports_page_refresh_imports: ((inputs?: Imports_Page_Refresh_ImportsInputs, options?: {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}) => LocalizedString) & import("../runtime.js").MessageMetadata<Imports_Page_Refresh_ImportsInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -16199,6 +16958,20 @@ export const ingredient_row_preparation_or_note: ((inputs?: Ingredient_Row_Prepa
 export const ingredient_row_remove: ((inputs?: Ingredient_Row_RemoveInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Ingredient_Row_RemoveInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Unit" |
+*
+* @param {Ingredient_UnitInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const ingredient_unit: ((inputs?: Ingredient_UnitInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Ingredient_UnitInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -17520,6 +18293,174 @@ export const integrations_webhooks: ((inputs?: Integrations_WebhooksInputs, opti
 /**
 * | output |
 * | --- |
+* | "Focus the add-item field" |
+*
+* @param {Keyboard_Shortcuts_AddInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_add: ((inputs?: Keyboard_Shortcuts_AddInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Keyboard_Shortcuts_AddInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Enable shortcuts" |
+*
+* @param {Keyboard_Shortcuts_EnabledInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_enabled: ((inputs?: Keyboard_Shortcuts_EnabledInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Keyboard_Shortcuts_EnabledInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Show keyboard shortcuts" |
+*
+* @param {Keyboard_Shortcuts_HelpInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_help: ((inputs?: Keyboard_Shortcuts_HelpInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Keyboard_Shortcuts_HelpInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Shortcuts pause while you type or use a menu or dialog. This setting is saved in this browser." |
+*
+* @param {Keyboard_Shortcuts_HintInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_hint: ((inputs?: Keyboard_Shortcuts_HintInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Keyboard_Shortcuts_HintInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "In Imports" |
+*
+* @param {Keyboard_Shortcuts_ImportsInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_imports: ((inputs?: Keyboard_Shortcuts_ImportsInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Keyboard_Shortcuts_ImportsInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "In your library" |
+*
+* @param {Keyboard_Shortcuts_LibraryInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_library: ((inputs?: Keyboard_Shortcuts_LibraryInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Keyboard_Shortcuts_LibraryInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Next date range" |
+*
+* @param {Keyboard_Shortcuts_NextInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_next: ((inputs?: Keyboard_Shortcuts_NextInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Keyboard_Shortcuts_NextInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "In Plan" |
+*
+* @param {Keyboard_Shortcuts_PlanInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_plan: ((inputs?: Keyboard_Shortcuts_PlanInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Keyboard_Shortcuts_PlanInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Previous date range" |
+*
+* @param {Keyboard_Shortcuts_PreviousInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_previous: ((inputs?: Keyboard_Shortcuts_PreviousInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Keyboard_Shortcuts_PreviousInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "On a recipe" |
+*
+* @param {Keyboard_Shortcuts_ReadingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_reading: ((inputs?: Keyboard_Shortcuts_ReadingInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Keyboard_Shortcuts_ReadingInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "In Shopping" |
+*
+* @param {Keyboard_Shortcuts_ShoppingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_shopping: ((inputs?: Keyboard_Shortcuts_ShoppingInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Keyboard_Shortcuts_ShoppingInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Keyboard shortcuts" |
+*
+* @param {Keyboard_Shortcuts_TitleInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const keyboard_shortcuts_title: ((inputs?: Keyboard_Shortcuts_TitleInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Keyboard_Shortcuts_TitleInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Nothing here matches that." |
 *
 * @param {Label_Choices_Nothing_Here_Matches_ThatInputs} inputs
@@ -17996,6 +18937,34 @@ export const library_filters_clear_all: ((inputs?: Library_Filters_Clear_AllInpu
 /**
 * | output |
 * | --- |
+* | "Dietary labels are ones you assign. Stated is what the recipe itself claims, and Savorum does not check it." |
+*
+* @param {Library_Filters_Diet_HintInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_filters_diet_hint: ((inputs?: Library_Filters_Diet_HintInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Library_Filters_Diet_HintInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "How stated diets work" |
+*
+* @param {Library_Filters_Diet_ManualInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_filters_diet_manual: ((inputs?: Library_Filters_Diet_ManualInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Library_Filters_Diet_ManualInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Every one of these is already chosen." |
 *
 * @param {Library_Filters_Every_One_ChosenInputs} inputs
@@ -18080,6 +19049,20 @@ export const library_filters_in_a_book: ((inputs?: Library_Filters_In_A_BookInpu
 /**
 * | output |
 * | --- |
+* | "More filters" |
+*
+* @param {Library_Filters_MoreInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_filters_more: ((inputs?: Library_Filters_MoreInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Library_Filters_MoreInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Narrow to {value1}" |
 *
 * @param {Library_Filters_Narrow_ToInputs} inputs
@@ -18150,20 +19133,6 @@ export const library_filters_stated_by_the_recipe: ((inputs?: Library_Filters_St
 /**
 * | output |
 * | --- |
-* | "Only recipes that make the statement without conditions." |
-*
-* @param {Library_Filters_Stated_HintInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const library_filters_stated_hint: ((inputs?: Library_Filters_Stated_HintInputs, options?: {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}) => LocalizedString) & import("../runtime.js").MessageMetadata<Library_Filters_Stated_HintInputs, {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}, {}>;
-/**
-* | output |
-* | --- |
 * | "Stop narrowing to {value1}" |
 *
 * @param {Library_Filters_Stop_NarrowingInputs} inputs
@@ -18192,7 +19161,7 @@ export const library_filters_tags: ((inputs?: Library_Filters_TagsInputs, option
 /**
 * | output |
 * | --- |
-* | "Taken from a cookbook" |
+* | "Cookbook source" |
 *
 * @param {Library_Filters_Taken_From_A_CookbookInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -18789,6 +19758,20 @@ export const library_selection_bar_selected_recipes: ((inputs?: Library_Selectio
 export const library_selection_bar_sref_bundle: ((inputs?: Library_Selection_Bar_Sref_BundleInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Library_Selection_Bar_Sref_BundleInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Recently cooked" |
+*
+* @param {Library_Sort_CookedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_sort_cooked: ((inputs?: Library_Sort_CookedInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Library_Sort_CookedInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -20348,7 +21331,7 @@ export const nutrition_basis_serving_of: ((inputs: Nutrition_Basis_Serving_OfInp
 /**
 * | output |
 * | --- |
-* | "Basis not stated" |
+* | "The source does not say whether these values are per serving or for the whole recipe" |
 *
 * @param {Nutrition_Basis_UnspecifiedInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -21533,20 +22516,6 @@ export const organization_slow_cooker: ((inputs?: Organization_Slow_CookerInputs
 export const organization_summary_library_details: ((inputs?: Organization_Summary_Library_DetailsInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Organization_Summary_Library_DetailsInputs, {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}, {}>;
-/**
-* | output |
-* | --- |
-* | "{value1} more" |
-*
-* @param {Organization_Summary_MoreInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const organization_summary_more: ((inputs: Organization_Summary_MoreInputs, options?: {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}) => LocalizedString) & import("../runtime.js").MessageMetadata<Organization_Summary_MoreInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -23073,6 +24042,20 @@ export const plan_dinner: ((inputs?: Plan_DinnerInputs, options?: {
 /**
 * | output |
 * | --- |
+* | "{name} ({amount} batches)" |
+*
+* @param {Plan_Dish_BatchesInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const plan_dish_batches: ((inputs: Plan_Dish_BatchesInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Plan_Dish_BatchesInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Dish name" |
 *
 * @param {Plan_Dish_NameInputs} inputs
@@ -23087,6 +24070,20 @@ export const plan_dish_name: ((inputs?: Plan_Dish_NameInputs, options?: {
 /**
 * | output |
 * | --- |
+* | "{name} ({amount} batch)" |
+*
+* @param {Plan_Dish_Part_BatchInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const plan_dish_part_batch: ((inputs: Plan_Dish_Part_BatchInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Plan_Dish_Part_BatchInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Dishes" |
 *
 * @param {Plan_DishesInputs} inputs
@@ -23096,6 +24093,20 @@ export const plan_dish_name: ((inputs?: Plan_Dish_NameInputs, options?: {
 export const plan_dishes: ((inputs?: Plan_DishesInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Plan_DishesInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Earlier this week" |
+*
+* @param {Plan_Earlier_This_WeekInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const plan_earlier_this_week: ((inputs?: Plan_Earlier_This_WeekInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Plan_Earlier_This_WeekInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -23278,6 +24289,20 @@ export const plan_lunch: ((inputs?: Plan_LunchInputs, options?: {
 export const plan_meal_actions: ((inputs: Plan_Meal_ActionsInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Plan_Meal_ActionsInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Meal tray" |
+*
+* @param {Plan_Meal_TrayInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const plan_meal_tray: ((inputs?: Plan_Meal_TrayInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Plan_Meal_TrayInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -27078,6 +28103,20 @@ export const recipe_format_prefer: ((inputs?: Recipe_Format_PreferInputs, option
 /**
 * | output |
 * | --- |
+* | "From the source page" |
+*
+* @param {Recipe_From_Source_PageInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const recipe_from_source_page: ((inputs?: Recipe_From_Source_PageInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Recipe_From_Source_PageInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "A recipe in it changed" |
 *
 * @param {Recipe_History_Page_A_Recipe_In_It_ChangedInputs} inputs
@@ -29208,6 +30247,34 @@ export const shopping_apply: ((inputs?: Shopping_ApplyInputs, options?: {
 /**
 * | output |
 * | --- |
+* | "Arrange items" |
+*
+* @param {Shopping_ArrangeInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const shopping_arrange: ((inputs?: Shopping_ArrangeInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Shopping_ArrangeInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Move items within their section, or select items to combine under one name." |
+*
+* @param {Shopping_Arrange_HintInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const shopping_arrange_hint: ((inputs?: Shopping_Arrange_HintInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Shopping_Arrange_HintInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Bought" |
 *
 * @param {Shopping_BoughtInputs} inputs
@@ -29623,20 +30690,6 @@ export const shopping_keep_theirs: ((inputs?: Shopping_Keep_TheirsInputs, option
 export const shopping_list: ((inputs?: Shopping_ListInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Shopping_ListInputs, {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}, {}>;
-/**
-* | output |
-* | --- |
-* | "List actions" |
-*
-* @param {Shopping_List_ActionsInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const shopping_list_actions: ((inputs?: Shopping_List_ActionsInputs, options?: {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}) => LocalizedString) & import("../runtime.js").MessageMetadata<Shopping_List_ActionsInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -30216,6 +31269,20 @@ export const site_header_books: ((inputs?: Site_Header_BooksInputs, options?: {
 /**
 * | output |
 * | --- |
+* | "Help" |
+*
+* @param {Site_Header_HelpInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const site_header_help: ((inputs?: Site_Header_HelpInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Site_Header_HelpInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Imports" |
 *
 * @param {Site_Header_ImportsInputs} inputs
@@ -30687,6 +31754,20 @@ export const source_refresh_page_recorded_source: ((inputs: Source_Refresh_Page_
 export const source_refresh_page_review_before_replacing: ((inputs?: Source_Refresh_Page_Review_Before_ReplacingInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Source_Refresh_Page_Review_Before_ReplacingInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "This is taking longer than usual. You can keep waiting or reload the page." |
+*
+* @param {Status_Loading_SlowInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const status_loading_slow: ((inputs?: Status_Loading_SlowInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Status_Loading_SlowInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -33222,6 +34303,7 @@ export type Account_Access_TitleInputs = {
     library: NonNullable<unknown>;
 };
 export type Account_Activity_HeadingInputs = {};
+export type Account_Admin_ActiveInputs = {};
 export type Account_Admin_Audit_LedeInputs = {};
 export type Account_Admin_Audit_Page_TitleInputs = {};
 export type Account_Admin_Audit_TitleInputs = {};
@@ -33259,6 +34341,10 @@ export type Account_Admin_Library_CreatedInputs = {
 export type Account_Admin_Library_NameInputs = {};
 export type Account_Admin_Library_NoneInputs = {};
 export type Account_Admin_Library_RoleInputs = {};
+export type Account_Admin_ManageInputs = {};
+export type Account_Admin_Manage_NamedInputs = {
+    name: NonNullable<unknown>;
+};
 export type Account_Admin_Mapping_AddInputs = {};
 export type Account_Admin_Mapping_Choose_LibraryInputs = {};
 export type Account_Admin_Mapping_Choose_ProviderInputs = {};
@@ -33286,6 +34372,7 @@ export type Account_Admin_Nav_LabelInputs = {};
 export type Account_Admin_Nav_LibrariesInputs = {};
 export type Account_Admin_Nav_PeopleInputs = {};
 export type Account_Admin_Nav_ProvidersInputs = {};
+export type Account_Admin_Password_Reset_NoticeInputs = {};
 export type Account_Admin_People_ErrorInputs = {};
 export type Account_Admin_People_HeadingInputs = {};
 export type Account_Admin_People_LedeInputs = {};
@@ -33308,6 +34395,8 @@ export type Account_Admin_Recover_Library_HintInputs = {};
 export type Account_Admin_Recover_OwnerInputs = {};
 export type Account_Admin_Recover_SubmitInputs = {};
 export type Account_Admin_RecoveredInputs = {};
+export type Account_Admin_Reset_ActionInputs = {};
+export type Account_Admin_Reset_HintInputs = {};
 export type Account_Admin_Reset_PasswordInputs = {
     name: NonNullable<unknown>;
 };
@@ -33338,13 +34427,22 @@ export type Account_Assistant_Setup_PromptInputs = {
     guide: NonNullable<unknown>;
 };
 export type Account_Assistant_TemporaryInputs = {};
+export type Account_Audit_Access_ChangedInputs = {};
+export type Account_Audit_Action_CodeInputs = {};
 export type Account_Audit_ActivityInputs = {};
 export type Account_Audit_ActorInputs = {};
+export type Account_Audit_AffectedInputs = {};
 export type Account_Audit_AllInputs = {};
+export type Account_Audit_AnyoneInputs = {};
 export type Account_Audit_ApplyInputs = {};
 export type Account_Audit_AuthInputs = {};
 export type Account_Audit_BooksInputs = {};
+export type Account_Audit_ByInputs = {};
+export type Account_Audit_Credential_IdInputs = {};
+export type Account_Audit_DeletedInputs = {};
+export type Account_Audit_DetailsInputs = {};
 export type Account_Audit_EmptyInputs = {};
+export type Account_Audit_EnabledInputs = {};
 export type Account_Audit_ErrorInputs = {};
 export type Account_Audit_Event_DetailInputs = {
     actor: NonNullable<unknown>;
@@ -33352,15 +34450,36 @@ export type Account_Audit_Event_DetailInputs = {
     target: NonNullable<unknown>;
     outcome: NonNullable<unknown>;
 };
+export type Account_Audit_Event_IdInputs = {};
+export type Account_Audit_FailedInputs = {};
+export type Account_Audit_Forced_UnlinkInputs = {};
 export type Account_Audit_FromInputs = {};
 export type Account_Audit_HintInputs = {};
 export type Account_Audit_Identifier_HintInputs = {};
 export type Account_Audit_ImportsInputs = {};
 export type Account_Audit_LibraryInputs = {};
+export type Account_Audit_LinkedInputs = {};
 export type Account_Audit_LoadingInputs = {};
+export type Account_Audit_MergedInputs = {};
 export type Account_Audit_OlderInputs = {};
+export type Account_Audit_OwnerInputs = {};
+export type Account_Audit_Password_ChangeInputs = {};
+export type Account_Audit_PausedInputs = {};
+export type Account_Audit_PurgedInputs = {};
 export type Account_Audit_RecipesInputs = {};
+export type Account_Audit_Recovery_ReplacedInputs = {};
+export type Account_Audit_Recovery_Sign_InInputs = {};
+export type Account_Audit_RedeliveryInputs = {};
+export type Account_Audit_RenamedInputs = {};
+export type Account_Audit_Request_IdInputs = {};
+export type Account_Audit_ResultInputs = {};
+export type Account_Audit_RetiredInputs = {};
+export type Account_Audit_Secret_RotatedInputs = {};
+export type Account_Audit_ServiceInputs = {};
 export type Account_Audit_SettingsInputs = {};
+export type Account_Audit_Sign_InInputs = {};
+export type Account_Audit_SucceededInputs = {};
+export type Account_Audit_SystemInputs = {};
 export type Account_Audit_TargetInputs = {};
 export type Account_Audit_Target_AuthenticationInputs = {};
 export type Account_Audit_Target_BookInputs = {};
@@ -33374,9 +34493,13 @@ export type Account_Audit_Target_SessionInputs = {};
 export type Account_Audit_Target_SettingsInputs = {};
 export type Account_Audit_Target_TokenInputs = {};
 export type Account_Audit_Target_UserInputs = {};
+export type Account_Audit_Test_RequestedInputs = {};
 export type Account_Audit_TokensInputs = {};
+export type Account_Audit_TrashedInputs = {};
+export type Account_Audit_UnlinkedInputs = {};
 export type Account_Audit_UntilInputs = {};
 export type Account_Audit_UsersInputs = {};
+export type Account_Audit_WebhookInputs = {};
 export type Account_Confirm_RemovalInputs = {};
 export type Account_CopiedInputs = {};
 export type Account_CopyInputs = {};
@@ -33525,6 +34648,10 @@ export type Account_Passkeys_Remove_NamedInputs = {
     name: NonNullable<unknown>;
 };
 export type Account_Passkeys_RemovedInputs = {};
+export type Account_Passkeys_RenameInputs = {};
+export type Account_Passkeys_Rename_NamedInputs = {
+    name: NonNullable<unknown>;
+};
 export type Account_Passkeys_RenamedInputs = {};
 export type Account_Passkeys_Save_NameInputs = {};
 export type Account_Passkeys_UnavailableInputs = {};
@@ -33537,6 +34664,7 @@ export type Account_Password_SubmitInputs = {};
 export type Account_Recovery_Codes_LabelInputs = {};
 export type Account_Recovery_DisabledInputs = {};
 export type Account_Recovery_DismissInputs = {};
+export type Account_Recovery_EmptyInputs = {};
 export type Account_Recovery_GenerateInputs = {};
 export type Account_Recovery_HeadingInputs = {};
 export type Account_Recovery_HiddenInputs = {};
@@ -33577,7 +34705,11 @@ export type Account_Sessions_DetailInputs = {
 export type Account_Sessions_ErrorInputs = {};
 export type Account_Sessions_HeadingInputs = {};
 export type Account_Sessions_HintInputs = {};
+export type Account_Sessions_Last_ActiveInputs = {
+    date: NonNullable<unknown>;
+};
 export type Account_Sessions_OtherInputs = {};
+export type Account_Sessions_Other_HeadingInputs = {};
 export type Account_Sessions_Others_RevokedInputs = {};
 export type Account_Sessions_RevokeInputs = {};
 export type Account_Sessions_Revoke_NamedInputs = {
@@ -33585,6 +34717,9 @@ export type Account_Sessions_Revoke_NamedInputs = {
 };
 export type Account_Sessions_Revoke_OthersInputs = {};
 export type Account_Sessions_RevokedInputs = {};
+export type Account_Sessions_Signed_InInputs = {
+    date: NonNullable<unknown>;
+};
 export type Account_Sessions_ThisInputs = {};
 export type Account_Sign_InInputs = {};
 export type Account_Sign_In_Page_TitleInputs = {};
@@ -34044,6 +35179,7 @@ export type Common_Dash_SeparatorInputs = {};
 export type Common_Dot_SeparatorInputs = {};
 export type Common_Earlier_VersionsInputs = {};
 export type Common_Keep_ItInputs = {};
+export type Common_LoadingInputs = {};
 export type Common_NextInputs = {};
 export type Common_Pagination_RangeInputs = {
     value1: NonNullable<unknown>;
@@ -34421,6 +35557,9 @@ export type Export_Menu_Preparing_ExportInputs = {};
 export type Export_Menu_The_Export_Could_Not_Be_CompletedInputs = {};
 export type Exports_Choose_At_Least_One_Recipe_To_ExportInputs = {};
 export type Exports_The_Export_Could_Not_Be_CompletedInputs = {};
+export type Help_ImportsInputs = {};
+export type Help_PlanInputs = {};
+export type Help_ShoppingInputs = {};
 export type Import_About_HoursInputs = {
     count: NonNullable<unknown>;
 };
@@ -34497,16 +35636,13 @@ export type Import_Job_Interrupted_GuidanceInputs = {};
 export type Import_Job_Not_ImportedInputs = {
     count: NonNullable<unknown>;
 };
-export type Import_Job_Page_Already_In_Your_LibraryInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Import_Job_Page_Back_To_ImportsInputs = {};
 export type Import_Job_Page_Back_To_Your_LibraryInputs = {};
 export type Import_Job_Page_Batch_OfInputs = {
     value1: NonNullable<unknown>;
     value2: NonNullable<unknown>;
     value3: NonNullable<unknown>;
 };
-export type Import_Job_Page_Could_Not_Be_ImportedInputs = {};
 export type Import_Job_Page_ElapsedInputs = {
     value1: NonNullable<unknown>;
 };
@@ -34519,13 +35655,11 @@ export type Import_Job_Page_ImportInputs = {};
 export type Import_Job_Page_Import_ProgressInputs = {};
 export type Import_Job_Page_Import_Review_DetailsInputs = {};
 export type Import_Job_Page_Import_The_RestInputs = {};
-export type Import_Job_Page_ImportedInputs = {};
 export type Import_Job_Page_LeftInputs = {
     value1: NonNullable<unknown>;
 };
-export type Import_Job_Page_Need_ReviewInputs = {};
-export type Import_Job_Page_Not_ImportedInputs = {
-    value1: NonNullable<unknown>;
+export type Import_Job_Page_Need_A_LookInputs = {
+    count: NonNullable<unknown>;
 };
 export type Import_Job_Page_Of_RecipesInputs = {
     value1: NonNullable<unknown>;
@@ -34533,7 +35667,6 @@ export type Import_Job_Page_Of_RecipesInputs = {
 };
 export type Import_Job_Page_Reading_This_ImportInputs = {};
 export type Import_Job_Page_Review_DetailsInputs = {};
-export type Import_Job_Page_Review_MeasurementsInputs = {};
 export type Import_Job_Page_StartedInputs = {
     value1: NonNullable<unknown>;
 };
@@ -34541,7 +35674,6 @@ export type Import_Job_Page_Stop_ImportingInputs = {};
 export type Import_Job_Page_To_GoInputs = {
     value1: NonNullable<unknown>;
 };
-export type Import_Job_Page_With_Preserved_DetailsInputs = {};
 export type Import_Job_Presentation_Already_In_Your_LibraryInputs = {};
 export type Import_Job_Presentation_Could_Not_Be_ImportedInputs = {};
 export type Import_Job_Presentation_Import_CompleteInputs = {};
@@ -34562,7 +35694,16 @@ export type Import_Job_Results_All_RecipesInputs = {};
 export type Import_Job_Results_Already_In_LibraryInputs = {};
 export type Import_Job_Results_Could_Not_Be_ImportedInputs = {};
 export type Import_Job_Results_Could_Not_ImportInputs = {};
+export type Import_Job_Results_Error_MessageInputs = {};
+export type Import_Job_Results_Failure_ChangedInputs = {};
+export type Import_Job_Results_Failure_Changed_NextInputs = {};
+export type Import_Job_Results_Failure_DuplicateInputs = {};
+export type Import_Job_Results_Failure_Duplicate_NextInputs = {};
+export type Import_Job_Results_Failure_SourceInputs = {};
+export type Import_Job_Results_Failure_Source_NextInputs = {};
+export type Import_Job_Results_Failure_Unknown_NextInputs = {};
 export type Import_Job_Results_Filter_Import_ResultsInputs = {};
+export type Import_Job_Results_Find_In_LibraryInputs = {};
 export type Import_Job_Results_Import_DetailsInputs = {};
 export type Import_Job_Results_ImportedInputs = {};
 export type Import_Job_Results_Load_More_RecipesInputs = {};
@@ -34583,6 +35724,7 @@ export type Import_Job_SkippedInputs = {
     count: NonNullable<unknown>;
 };
 export type Import_Job_StoppingInputs = {};
+export type Import_Job_TimingInputs = {};
 export type Import_Job_WaitingInputs = {
     count: NonNullable<unknown>;
 };
@@ -34706,18 +35848,17 @@ export type Import_Source_Dialogs_Recipe_UrlInputs = {};
 export type Import_Source_Dialogs_Update_PreviewInputs = {};
 export type Imports_Index_Imports_SavorumInputs = {};
 export type Imports_Jobid_Import_Savorum1Inputs = {};
-export type Imports_Page_And_OthersInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
+export type Imports_Page_Empty_HintInputs = {};
 export type Imports_Page_ImportInputs = {};
 export type Imports_Page_Import_JobsInputs = {};
-export type Imports_Page_Import_Recipes_From_Your_LibraryInputs = {};
 export type Imports_Page_ImportsInputs = {};
+export type Imports_Page_Lead_And_OthersInputs = {
+    title: NonNullable<unknown>;
+    count: NonNullable<unknown>;
+};
 export type Imports_Page_Load_More_ImportsInputs = {};
 export type Imports_Page_No_Imports_YetInputs = {};
 export type Imports_Page_Reading_Your_ImportsInputs = {};
-export type Imports_Page_Refresh_ImportsInputs = {};
 export type Imports_Page_Your_Recent_Imports_Newest_FirstInputs = {};
 export type Index_Recipes_SavorumInputs = {};
 export type Ingredient_Choice_Add_AlternativeInputs = {};
@@ -34770,6 +35911,7 @@ export type Ingredient_Row_Move_DownInputs = {};
 export type Ingredient_Row_Move_UpInputs = {};
 export type Ingredient_Row_Preparation_Or_NoteInputs = {};
 export type Ingredient_Row_RemoveInputs = {};
+export type Ingredient_UnitInputs = {};
 export type Ingredients_Added_GroupInputs = {};
 export type Ingredients_Added_IngredientInputs = {};
 export type Ingredients_Group_NameInputs = {};
@@ -34890,6 +36032,18 @@ export type Integrations_Test_QueuedInputs = {};
 export type Integrations_TitleInputs = {};
 export type Integrations_UnavailableInputs = {};
 export type Integrations_WebhooksInputs = {};
+export type Keyboard_Shortcuts_AddInputs = {};
+export type Keyboard_Shortcuts_EnabledInputs = {};
+export type Keyboard_Shortcuts_HelpInputs = {};
+export type Keyboard_Shortcuts_HintInputs = {};
+export type Keyboard_Shortcuts_ImportsInputs = {};
+export type Keyboard_Shortcuts_LibraryInputs = {};
+export type Keyboard_Shortcuts_NextInputs = {};
+export type Keyboard_Shortcuts_PlanInputs = {};
+export type Keyboard_Shortcuts_PreviousInputs = {};
+export type Keyboard_Shortcuts_ReadingInputs = {};
+export type Keyboard_Shortcuts_ShoppingInputs = {};
+export type Keyboard_Shortcuts_TitleInputs = {};
 export type Label_Choices_Nothing_Here_Matches_ThatInputs = {};
 export type Label_Choices_Show_FewerInputs = {};
 export type Label_Choices_Show_MoreInputs = {
@@ -34955,6 +36109,8 @@ export type Library_Filters_Choose_A_CategoryInputs = {
 export type Library_Filters_Choose_A_CookbookInputs = {};
 export type Library_Filters_Choose_A_TagInputs = {};
 export type Library_Filters_Clear_AllInputs = {};
+export type Library_Filters_Diet_HintInputs = {};
+export type Library_Filters_Diet_ManualInputs = {};
 export type Library_Filters_Every_One_ChosenInputs = {};
 export type Library_Filters_FavoritesInputs = {};
 export type Library_Filters_FiltersInputs = {};
@@ -34963,6 +36119,7 @@ export type Library_Filters_FromInputs = {
 };
 export type Library_Filters_From_One_ImportInputs = {};
 export type Library_Filters_In_A_BookInputs = {};
+export type Library_Filters_MoreInputs = {};
 export type Library_Filters_Narrow_ToInputs = {
     value1: NonNullable<unknown>;
 };
@@ -34970,7 +36127,6 @@ export type Library_Filters_Needs_Ingredient_ReviewInputs = {};
 export type Library_Filters_Not_Cooked_YetInputs = {};
 export type Library_Filters_Only_ShowInputs = {};
 export type Library_Filters_Stated_By_The_RecipeInputs = {};
-export type Library_Filters_Stated_HintInputs = {};
 export type Library_Filters_Stop_NarrowingInputs = {
     value1: NonNullable<unknown>;
 };
@@ -35028,6 +36184,7 @@ export type Library_Selection_Bar_SelectedInputs = {
 };
 export type Library_Selection_Bar_Selected_RecipesInputs = {};
 export type Library_Selection_Bar_Sref_BundleInputs = {};
+export type Library_Sort_CookedInputs = {};
 export type Library_Sort_RatingInputs = {};
 export type Library_Sort_RelevanceInputs = {};
 export type Library_Sort_TitleInputs = {};
@@ -35295,9 +36452,6 @@ export type Organization_Recipe_Organization_Could_Not_Be_LoadedInputs = {};
 export type Organization_Recipe_Organization_Could_Not_Be_SavedInputs = {};
 export type Organization_Slow_CookerInputs = {};
 export type Organization_Summary_Library_DetailsInputs = {};
-export type Organization_Summary_MoreInputs = {
-    value1: NonNullable<unknown>;
-};
 export type Organization_Summary_Not_Filed_YetInputs = {};
 export type Organization_Summary_OrganizeInputs = {};
 export type Organization_Summary_Try_AgainInputs = {};
@@ -35438,8 +36592,17 @@ export type Plan_Delete_SavedInputs = {};
 export type Plan_Delete_Saved_HintInputs = {};
 export type Plan_Delete_TitleInputs = {};
 export type Plan_DinnerInputs = {};
+export type Plan_Dish_BatchesInputs = {
+    name: NonNullable<unknown>;
+    amount: NonNullable<unknown>;
+};
 export type Plan_Dish_NameInputs = {};
+export type Plan_Dish_Part_BatchInputs = {
+    name: NonNullable<unknown>;
+    amount: NonNullable<unknown>;
+};
 export type Plan_DishesInputs = {};
+export type Plan_Earlier_This_WeekInputs = {};
 export type Plan_EditInputs = {};
 export type Plan_Edit_SavedInputs = {};
 export type Plan_Editor_EditInputs = {};
@@ -35457,6 +36620,7 @@ export type Plan_LunchInputs = {};
 export type Plan_Meal_ActionsInputs = {
     name: NonNullable<unknown>;
 };
+export type Plan_Meal_TrayInputs = {};
 export type Plan_Meal_TypeInputs = {};
 export type Plan_Meal_Type_UnspecifiedInputs = {};
 export type Plan_MonthInputs = {};
@@ -35810,6 +36974,7 @@ export type Recipe_Fields_PublishedInputs = {};
 export type Recipe_Fields_SourceInputs = {};
 export type Recipe_Fields_Source_LocaleInputs = {};
 export type Recipe_Format_PreferInputs = {};
+export type Recipe_From_Source_PageInputs = {};
 export type Recipe_History_Page_A_Recipe_In_It_ChangedInputs = {};
 export type Recipe_History_Page_As_It_Was_OnInputs = {
     value1: NonNullable<unknown>;
@@ -36029,6 +37194,8 @@ export type Shopping_AddedInputs = {};
 export type Shopping_Added_HintInputs = {};
 export type Shopping_AlternativeInputs = {};
 export type Shopping_ApplyInputs = {};
+export type Shopping_ArrangeInputs = {};
+export type Shopping_Arrange_HintInputs = {};
 export type Shopping_BoughtInputs = {};
 export type Shopping_BuyInputs = {};
 export type Shopping_CancelInputs = {};
@@ -36069,7 +37236,6 @@ export type Shopping_Keep_ListInputs = {};
 export type Shopping_Keep_MineInputs = {};
 export type Shopping_Keep_TheirsInputs = {};
 export type Shopping_ListInputs = {};
-export type Shopping_List_ActionsInputs = {};
 export type Shopping_List_Changed_FailedInputs = {};
 export type Shopping_List_NameInputs = {};
 export type Shopping_Load_FailedInputs = {};
@@ -36124,6 +37290,7 @@ export type Shopping_View_ListInputs = {};
 export type Shopping_View_OnlyInputs = {};
 export type Site_Header_Active_LibraryInputs = {};
 export type Site_Header_BooksInputs = {};
+export type Site_Header_HelpInputs = {};
 export type Site_Header_ImportsInputs = {};
 export type Site_Header_MoreInputs = {};
 export type Site_Header_PlanInputs = {};
@@ -36166,6 +37333,7 @@ export type Source_Refresh_Page_Recorded_SourceInputs = {
     value1: NonNullable<unknown>;
 };
 export type Source_Refresh_Page_Review_Before_ReplacingInputs = {};
+export type Status_Loading_SlowInputs = {};
 export type Status_Nothing_Was_Overwritten_Reloading_Replaces_What_Is_On_SInputs = {};
 export type Status_Reload_The_Current_VersionInputs = {};
 export type Status_Storage_AdminInputs = {};

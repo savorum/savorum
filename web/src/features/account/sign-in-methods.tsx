@@ -1,4 +1,5 @@
 import { For, Show, createResource, createSignal } from "solid-js"
+import { css } from "styled-system/css"
 
 import { loadCapabilities } from "@/api/capabilities"
 import { ChangeError } from "@/components/status"
@@ -181,9 +182,9 @@ export function ManagedSignInMethods(props: { userID: string; displayName: strin
     }
   }
   return (
-    <Show when={settled(methods)?.length}>
-      <div>
-        <h4>{m.account_methods_heading()}</h4>
+    <Show when={methods.error || settled(methods)?.length}>
+      <div class={css({ display: "grid", gap: "2" })}>
+        <h3 class={css({ fontSize: "sm", fontWeight: "medium" })}>{m.account_methods_heading()}</h3>
         <ChangeError error={error() ?? methods.error} />
         <ul class={styles.list}>
           <For each={settled(methods)}>

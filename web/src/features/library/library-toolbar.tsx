@@ -14,7 +14,7 @@ import { settled } from "@/lib/settled"
 import { m } from "../../lib/messages.ts"
 import type { LibraryQuery } from "./create-library-query"
 import type { LibrarySelection } from "./create-library-selection"
-import { sortLabels, sorts } from "./library-search"
+import { sortChoices, sortLabels } from "./library-search"
 
 export function LibraryToolbar(props: { query: LibraryQuery; selection: LibrarySelection }) {
   const {
@@ -25,6 +25,7 @@ export function LibraryToolbar(props: { query: LibraryQuery; selection: LibraryS
     filters,
     applyFilters,
     sort,
+    text,
     editSearch,
     entries,
     total,
@@ -67,7 +68,7 @@ export function LibraryToolbar(props: { query: LibraryQuery; selection: LibraryS
             aria-label={m.library_toolbar_sort_recipes()}
             value={sort()}
             onValueChange={(value) => editSearch({ sort: value as RecipeSort })}
-            items={sorts.map((value) => ({ value, label: sortLabels[value] }))}
+            items={sortChoices(text()).map((value) => ({ value, label: sortLabels[value] }))}
           />
           <Show when={activeFilterCount(filters()) > 0 || savableSearch()}>
             <div class={styles.applied}>

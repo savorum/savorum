@@ -38,7 +38,7 @@ export const green = defineSemanticTokens.colors({
       hover: { value: { _light: "{colors.green.a4}", _dark: "{colors.green.a4}" } },
       active: { value: { _light: "{colors.green.a5}", _dark: "{colors.green.a5}" } },
     },
-    fg: { DEFAULT: { value: { _light: "{colors.green.a11}", _dark: "{colors.green.a11}" } } },
+    fg: { DEFAULT: { value: { _light: "{colors.green.12}", _dark: "{colors.green.12}" } } },
   },
   surface: {
     bg: {

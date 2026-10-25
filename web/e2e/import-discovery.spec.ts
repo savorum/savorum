@@ -8,6 +8,7 @@ test("a committed import remains discoverable after leaving and reloading its jo
   const review = page.getByRole("region", { name: "Save this recipe" })
   await review.getByRole("button", { name: "Save recipe", exact: true }).click()
   await expect(page).toHaveURL(/\/imports\/[^/]+$/)
+  await expect(page.getByRole("link", { name: "Back to your library", exact: true })).toBeVisible()
   const jobURL = page.url()
   await expect(page.getByRole("heading", { name: "1 recipe imported" })).toBeVisible()
 
@@ -22,6 +23,33 @@ test("a committed import remains discoverable after leaving and reloading its jo
   await page.reload()
   await expect(page.getByRole("heading", { name: "1 recipe imported" })).toBeVisible()
   await expect(page.getByRole("link", { name: "Import discovery tart" })).toBeVisible()
+})
+
+test("an import started from Imports keeps its return path through review and reload", async ({
+  page,
+}) => {
+  const recipe = {
+    "@context": "https://schema.org",
+    "@type": "Recipe",
+    name: "Import from history soup",
+    recipeYield: "2 servings",
+    recipeIngredient: ["300 g carrots", "500 ml water"],
+    recipeInstructions: ["Simmer the carrots in water."],
+  }
+  await page.goto("/imports")
+  await expect(page.getByRole("heading", { name: "Imports", level: 1 })).toBeVisible()
+  await page.locator('input[type="file"]').setInputFiles({
+    name: "history-soup.json",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify(recipe)),
+  })
+  const review = page.getByRole("region", { name: "Save this recipe" })
+  await review.getByRole("button", { name: "Save recipe", exact: true }).click()
+  await expect(page).toHaveURL(/\/imports\/[^/]+$/)
+  await expect(page.getByRole("link", { name: "Back to imports", exact: true })).toBeVisible()
+  await page.reload()
+  await page.getByRole("link", { name: "Back to imports", exact: true }).click()
+  await expect(page).toHaveURL(/\/imports$/)
 })
 
 test("loading more imports and refreshing keeps one row per job", async ({ page }) => {
@@ -76,14 +104,12 @@ test("loading more imports and refreshing keeps one row per job", async ({ page 
       .evaluateAll((links) => new Set(links.map((link) => link.getAttribute("href"))).size),
   ).toBe(130)
 
-  const refresh = page.getByRole("button", { name: "Refresh imports" })
+  await expect(page.getByRole("button", { name: "Refresh imports" })).toHaveCount(0)
   const firstLink = page.locator('ul[aria-label="Import jobs"] a').first()
   await expect(firstLink).toContainText("Importing")
   await firstLink.evaluate((node) => node.setAttribute("data-identity-check", "stable-job-link"))
   completed = true
-  await refresh.focus()
-  await refresh.click()
-  await expect(refresh).toBeFocused()
+  await expect(firstLink).toContainText("imported", { timeout: 10_000 })
   await expect(page.locator('ul[aria-label="Import jobs"] > li')).toHaveCount(130)
   await expect(page.locator('ul[aria-label="Import jobs"] a').first()).toContainText("imported")
   await expect(page.locator('ul[aria-label="Import jobs"] a').first()).toHaveAttribute(
@@ -150,9 +176,8 @@ test("the bar is the places a cook reads from and the rest is grouped by what it
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto("/")
   const primary = page.getByRole("navigation", { name: "Primary" })
-  for (const name of ["Recipes", "Plan", "Shopping"])
+  for (const name of ["Recipes", "Books", "Plan", "Shopping"])
     await expect(primary.getByRole("link", { name, exact: true })).toBeVisible()
-  await expect(page.getByRole("link", { name: "Books", exact: true })).toBeVisible()
   // Imports is a place, but it is one you visit while something is coming in.
   await expect(primary.getByRole("link", { name: "Imports", exact: true })).toHaveCount(0)
   await page.getByRole("button", { name: "Add recipes", exact: true }).click()

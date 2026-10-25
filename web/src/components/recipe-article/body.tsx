@@ -1,16 +1,20 @@
 import { useRouterState } from "@tanstack/solid-router"
-import { For, Show, createEffect, createMemo, onCleanup } from "solid-js"
+import { Info } from "lucide-solid"
+import { For, Show, createEffect, createMemo, createSignal, on, onCleanup } from "solid-js"
 import { css } from "styled-system/css"
 import { recipePage } from "styled-system/recipes"
 
 import { type Recipe, type TimingAssertion, assetURL, fallbackToOriginalImage } from "@/api/client"
 import type { components } from "@/api/schema"
+import { Disclosure } from "@/components/ui/disclosure"
+import { Popover } from "@/components/ui/popover"
 import { formatSourceDate } from "@/lib/date-format"
 import { formatNumber } from "@/lib/locale-format"
 import {
   type Presentation,
   asWritten,
   ingredientLine,
+  ingredientUnit,
   stepAnchorID,
   showQuantity,
   visibleStepTitle,
@@ -20,6 +24,7 @@ import { timingIsNamed, timingLine } from "@/lib/timing-summary"
 
 import { m } from "../../lib/messages.ts"
 import { DependencyNote, RecipeClaims, RecipeNutrition } from "./facts"
+import { IngredientAmount } from "./ingredient-amount"
 import { MicrowaveTiming } from "./microwave-timing"
 import { StepTimer } from "./step-timer"
 
@@ -27,6 +32,7 @@ type Step = components["schemas"]["Step"]
 type RecipeLayout = ReturnType<typeof recipePage>
 
 const styles = {
+  visuallyHidden: css({ srOnly: true }),
   authoredText: css({ overflowWrap: "anywhere", whiteSpace: "pre-wrap" }),
   note: css({
     color: "fg.muted",
@@ -104,8 +110,19 @@ const styles = {
   asWritten: css({
     color: "fg.muted",
     fontSize: "xs",
-    marginInlineStart: "1.5",
-    whiteSpace: "nowrap",
+    alignItems: "center",
+    background: "transparent",
+    borderRadius: "l1",
+    cursor: "pointer",
+    display: "inline-flex",
+    marginInlineStart: "1",
+    minHeight: "6",
+    minWidth: "6",
+    justifyContent: "center",
+    verticalAlign: "middle",
+    "@media (pointer: coarse)": { minHeight: "11", minWidth: "11" },
+    _hover: { color: "fg.default" },
+    _focusVisible: { outline: "2px solid", outlineColor: "accent.default", outlineOffset: "2px" },
   }),
   // Between the branches of a choice, in the column the names are in.
   choiceJoiner: css({
@@ -123,17 +140,26 @@ const styles = {
     whiteSpace: "pre-wrap",
   }),
   choiceTail: css({ gridColumn: "2", "&:empty": { display: "none" } }),
-  visuallyHidden: css({ srOnly: true }),
+  alternative: css({ color: "fg.muted" }),
   variantList: css({ display: "grid", gap: "3", listStyle: "none", margin: "0", padding: "0" }),
   variant: css({ display: "grid", gap: "1" }),
   variantTitle: css({ fontWeight: "semibold" }),
   variantText: css({ margin: "0", whiteSpace: "pre-wrap" }),
+  endMatter: css({
+    columnGap: "6",
+    display: "grid",
+    gridTemplateColumns: "repeat(2, max-content) minmax(0, 1fr)",
+    marginTop: "8",
+    maxWidth: "46rem",
+    "&:has([data-part=trigger])": { borderTopColor: "border.subtle", borderTopWidth: "1px" },
+    "& > aside, & [data-scope=collapsible][data-part=root]": { display: "contents" },
+    "& [data-scope=collapsible][data-part=trigger]": { gridRow: "1", width: "auto" },
+    "& [data-scope=collapsible][data-part=content]": { gridColumn: "1 / -1" },
+  }),
   authoredMetadata: css({
     color: "fg.muted",
     fontSize: "xs",
     lineHeight: "1.55",
-    marginTop: "6",
-    maxWidth: "46rem",
   }),
   authoredMetadataList: css({
     display: "grid",
@@ -183,6 +209,7 @@ function authoredMetadata(recipe: Recipe) {
 }
 
 export function RecipeArticleBody(props: {
+  sectionIDs?: { ingredients: string; instructions: string }
   recipe: Recipe
   entryID?: string
   layout: RecipeLayout
@@ -238,12 +265,15 @@ export function RecipeArticleBody(props: {
   })
 
   const details = createMemo(() => authoredMetadata(props.recipe))
+  const system = createMemo(() => props.presentation.system)
 
   return (
     <div class={props.layout.body} {...props.content}>
       <aside class={props.layout.ingredients}>
         <Show when={(props.recipe.ingredient_sections ?? []).length > 0}>
-          <h2 class={props.layout.columnTitle}>{m.body_ingredients()}</h2>
+          <h2 id={props.sectionIDs?.ingredients} tabIndex={-1} class={props.layout.columnTitle}>
+            {m.body_ingredients()}
+          </h2>
         </Show>
         <For each={props.recipe.ingredient_sections ?? []}>
           {(section) => (
@@ -256,7 +286,10 @@ export function RecipeArticleBody(props: {
               <ul class={props.layout.ingredientList} role="list">
                 <For each={section.ingredients ?? []}>
                   {(ingredient) => {
-                    const line = () => ingredientLine(ingredient, props.presentation)
+                    const [unit, setUnit] = createSignal<string>()
+                    createEffect(on(system, () => setUnit(undefined), { defer: true }))
+                    const line = () =>
+                      ingredientLine(ingredient, { ...props.presentation, unit: unit() })
                     const choice = () => line().choice
                     // The amount column carries the amount when the branches share one.
                     const stacked = () => {
@@ -277,24 +310,34 @@ export function RecipeArticleBody(props: {
                         <Show when={ingredient.optional}>
                           <span class={styles.optional}>{m.body_optional()}</span>
                         </Show>
-                        {/* SREF requires an amount that cannot be recalculated to be reported as unscaled. */}
-                        <Show when={line().keptAmount}>
-                          <span class={styles.asWritten}>
-                            {m.body_amount_as_written()}
-                            <span class={styles.visuallyHidden}>
-                              {" "}
-                              {m.body_amount_as_written_hint()}
-                            </span>
-                          </span>
-                        </Show>
-                        <Show when={line().keptWording}>
-                          <span class={styles.asWritten}>
-                            {m.body_wording_as_written()}
-                            <span class={styles.visuallyHidden}>
-                              {" "}
-                              {m.body_wording_as_written_hint()}
-                            </span>
-                          </span>
+                        <Show when={line().keptAmount || line().keptWording}>
+                          <Popover
+                            title={
+                              line().keptAmount
+                                ? m.body_amount_as_written()
+                                : m.body_wording_as_written()
+                            }
+                            trigger={(trigger) => (
+                              <button
+                                {...trigger()}
+                                type="button"
+                                class={styles.asWritten}
+                                aria-label={
+                                  line().keptAmount
+                                    ? m.body_amount_as_written_hint()
+                                    : m.body_wording_as_written_hint()
+                                }
+                              >
+                                <Info aria-hidden="true" size={14} />
+                              </button>
+                            )}
+                          >
+                            <p>
+                              {line().keptAmount
+                                ? m.body_amount_as_written_hint()
+                                : m.body_wording_as_written_hint()}
+                            </p>
+                          </Popover>
                         </Show>
                       </>
                     )
@@ -308,7 +351,14 @@ export function RecipeArticleBody(props: {
                                 class={props.layout.amount}
                                 data-empty={line().amount ? undefined : "true"}
                               >
-                                {line().amount}
+                                <IngredientAmount
+                                  amount={`${line().approximate ? "≈ " : ""}${line().amount}`}
+                                  name={ingredient.name || line().text}
+                                  sourceUnit={ingredientUnit(ingredient)}
+                                  selectedUnit={unit()}
+                                  system={props.presentation.system}
+                                  onUnit={setUnit}
+                                />
                                 <Show when={line().amount}> </Show>
                               </span>
                               <span class={styles.authoredText} dir={props.textDir}>
@@ -324,7 +374,20 @@ export function RecipeArticleBody(props: {
                                               {shown().joiner}
                                             </span>{" "}
                                           </Show>
-                                          {branch.text}
+                                          <span
+                                            class={
+                                              shown().preferred && index() > 0
+                                                ? styles.alternative
+                                                : undefined
+                                            }
+                                          >
+                                            <Show when={shown().preferred && index() === 0}>
+                                              <span class={styles.visuallyHidden}>
+                                                {m.recipe_format_prefer()}
+                                              </span>
+                                            </Show>
+                                            {branch.text}
+                                          </span>
                                         </>
                                       )}
                                     </For>
@@ -340,11 +403,6 @@ export function RecipeArticleBody(props: {
                         >
                           {(shown) => (
                             <>
-                              <Show when={shown().lead}>
-                                <span class={styles.choiceJoiner} dir={props.textDir}>
-                                  {shown().lead}
-                                </span>
-                              </Show>
                               <For each={shown().branches}>
                                 {(branch, index) => (
                                   <>
@@ -354,14 +412,22 @@ export function RecipeArticleBody(props: {
                                       </span>
                                     </Show>
                                     <span
-                                      class={props.layout.amount}
+                                      class={`${props.layout.amount} ${shown().preferred && index() > 0 ? styles.alternative : ""}`}
                                       data-empty={branch.amount ? undefined : "true"}
                                     >
                                       {branch.amount}
                                       <Show when={branch.amount}> </Show>
                                     </span>
-                                    <span class={styles.authoredText} dir={props.textDir}>
+                                    <span
+                                      class={`${styles.authoredText} ${shown().preferred && index() > 0 ? styles.alternative : ""}`}
+                                      dir={props.textDir}
+                                    >
                                       <Show when={index() === 0}>{anchors}</Show>
+                                      <Show when={shown().preferred && index() === 0}>
+                                        <span class={styles.visuallyHidden}>
+                                          {m.recipe_format_prefer()}
+                                        </span>
+                                      </Show>
                                       {branch.text}
                                     </span>
                                   </>
@@ -419,7 +485,9 @@ export function RecipeArticleBody(props: {
 
       <div class={props.layout.instructions}>
         <Show when={methodSections().length > 0}>
-          <h2 class={props.layout.columnTitle}>{m.body_method()}</h2>
+          <h2 id={props.sectionIDs?.instructions} tabIndex={-1} class={props.layout.columnTitle}>
+            {m.body_method()}
+          </h2>
         </Show>
         <For each={methodSections()}>
           {(section, sectionIndex) => (
@@ -563,27 +631,32 @@ export function RecipeArticleBody(props: {
           </aside>
         </Show>
 
-        <RecipeNutrition
-          recipe={props.recipe}
-          scale={props.presentation.scale}
-          textDir={props.textDir}
-        />
-
-        <Show when={details().length > 0}>
-          <aside class={styles.authoredMetadata} aria-label={m.body_recipe_details()}>
-            <dl class={styles.authoredMetadataList}>
-              <For each={details()}>
-                {(entry) => (
-                  <>
-                    <dt class={styles.authoredMetadataTerm}>{entry.label}</dt>
-                    <dd class={styles.authoredMetadataValue} dir={props.textDir}>
-                      {entry.value}
-                    </dd>
-                  </>
-                )}
-              </For>
-            </dl>
-          </aside>
+        <Show when={(props.recipe.nutrition?.length ?? 0) > 0 || details().length > 0}>
+          <div class={styles.endMatter}>
+            <RecipeNutrition
+              recipe={props.recipe}
+              scale={props.presentation.scale}
+              textDir={props.textDir}
+            />
+            <Show when={details().length > 0}>
+              <aside class={styles.authoredMetadata} aria-label={m.body_recipe_details()}>
+                <Disclosure label={m.recipe_from_source_page()}>
+                  <dl class={styles.authoredMetadataList}>
+                    <For each={details()}>
+                      {(entry) => (
+                        <>
+                          <dt class={styles.authoredMetadataTerm}>{entry.label}</dt>
+                          <dd class={styles.authoredMetadataValue} dir={props.textDir}>
+                            {entry.value}
+                          </dd>
+                        </>
+                      )}
+                    </For>
+                  </dl>
+                </Disclosure>
+              </aside>
+            </Show>
+          </div>
         </Show>
       </div>
     </div>

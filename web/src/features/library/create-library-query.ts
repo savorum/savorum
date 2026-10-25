@@ -32,6 +32,7 @@ import {
 import {
   type LibrarySearch,
   type UpdateLibrarySearch,
+  effectiveSort,
   filterSearch,
   searchFilters,
 } from "./library-search"
@@ -62,9 +63,7 @@ export function createLibraryQuery(search: Accessor<LibrarySearch>, update: Upda
 
   const text = () => opened()?.text ?? search().q ?? ""
   const sort = () =>
-    (activeView()?.sort as RecipeSort | undefined) ??
-    search().sort ??
-    (text() ? "relevance" : "updated-desc")
+    effectiveSort((activeView()?.sort as RecipeSort | undefined) ?? search().sort, text())
   const filters = (): LibraryFilters => {
     const shown = opened()
     if (shown) return shown.filters

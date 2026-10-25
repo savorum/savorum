@@ -19,6 +19,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { newID } from "@/lib/recipe-draft"
 
 import { m } from "../../lib/messages.ts"
+import { binding, bindingStyle } from "./book-cover"
 import type { BookViewProps } from "./book-types"
 import type { BookEditor } from "./create-book-editor"
 export function BookMetadata(
@@ -39,21 +40,31 @@ export function BookMetadata(
     <>
       {" "}
       <div class={styles.masthead}>
-        <div class={`${styles.cover} ${editing() ? styles.coverEditing : ""}`}>
+        <div class={`${styles.coverColumn} ${editing() ? styles.coverEditing : ""}`}>
           <Show
-            when={draft.cover_asset_id}
+            when={
+              draft.cover_asset_id || (props.book.preview_asset_id && props.book.preview_entry_id)
+            }
             fallback={
-              <span class={styles.coverTitle} aria-hidden="true">
-                {draft.title}
-              </span>
+              <div class={`${styles.cover} ${binding}`} style={bindingStyle(props.book.id)} />
             }
           >
-            <img
-              class={styles.coverImage}
-              src={assetURL(draft.cover_asset_id!, { bookID: props.book.id }, "reader")}
-              onError={(event) => fallbackToOriginalImage(event.currentTarget)}
-              alt=""
-            />
+            <div class={`${styles.cover} ${styles.pictured}`}>
+              <img
+                class={styles.coverImage}
+                src={
+                  draft.cover_asset_id
+                    ? assetURL(draft.cover_asset_id, { bookID: props.book.id }, "reader")
+                    : assetURL(
+                        props.book.preview_asset_id!,
+                        { recipeID: props.book.preview_entry_id! },
+                        "reader",
+                      )
+                }
+                onError={(event) => fallbackToOriginalImage(event.currentTarget)}
+                alt=""
+              />
+            </div>
           </Show>
           <CoverButton onUploaded={(id) => setDraft("cover_asset_id", id)} />
         </div>
@@ -300,34 +311,23 @@ const styles = {
     marginBottom: "8",
   }),
 
-  cover: css({
-    alignItems: "center",
-    aspectRatio: "3 / 4",
+  coverColumn: css({
     alignSelf: "start",
-    background: "bg.muted",
-    borderRadius: "l2",
-    color: "border.default",
-    display: "flex",
-    justifyContent: "center",
-    overflow: "hidden",
+    display: "grid",
+    gap: "2",
+    justifyItems: "start",
+    minWidth: "0",
     position: "relative",
   }),
 
-  coverTitle: css({
-    alignSelf: "stretch",
-    borderInlineStartWidth: "4px",
-    borderColor: "accent.default",
-    color: "fg.default",
-    display: "flex",
-    alignItems: "center",
-    fontFamily: "editorial",
-    fontSize: { base: "xs", sm: "xl" },
-    lineHeight: "1.2",
-    overflowWrap: "anywhere",
-    padding: { base: "2", sm: "4" },
+  cover: css({
+    aspectRatio: "3 / 4",
+    borderRadius: "l2",
+    overflow: "hidden",
     width: "100%",
   }),
-  coverImage: css({ height: "100%", objectFit: "cover", width: "100%" }),
+  pictured: css({ background: "bg.muted" }),
+  coverImage: css({ display: "block", height: "100%", objectFit: "cover", width: "100%" }),
 
   coverEditing: css({
     justifySelf: "start",
@@ -335,7 +335,14 @@ const styles = {
     width: "100%",
   }),
 
-  coverButton: css({ insetBlockEnd: "2", insetInlineEnd: "2", position: "absolute" }),
+  coverButton: css({
+    height: { base: "11", sm: "8" },
+    insetBlockEnd: { sm: "2" },
+    insetInlineEnd: { sm: "2" },
+    minWidth: { base: "11", sm: "8" },
+    position: { base: "static", sm: "absolute" },
+    width: { base: "11", sm: "8" },
+  }),
 
   title: css({
     fontFamily: "editorial",

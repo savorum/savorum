@@ -9,7 +9,9 @@ import { Suspense, onCleanup, onMount } from "solid-js"
 import { HydrationScript } from "solid-js/web"
 import { css } from "styled-system/css"
 
+import { RouteProgress } from "@/components/route-progress"
 import { SiteHeader } from "@/components/site-header"
+import { SkeletonPage } from "@/components/skeleton"
 import { OfflineNotice } from "@/components/status/offline-notice"
 import { StorageNotice } from "@/components/status/storage-notice"
 import { AccountShell } from "@/features/account/account-shell"
@@ -69,6 +71,11 @@ const styles = {
     zIndex: "skipLink",
     _focus: { transform: "translateY(0)" },
   }),
+  pendingPage: css({
+    marginInline: "auto",
+    maxWidth: "92rem",
+    paddingInline: { base: "5", md: "8", lg: "10" },
+  }),
 }
 
 /**
@@ -78,6 +85,7 @@ const styles = {
  */
 function RouteAccessibility() {
   const router = useRouter()
+  let navigationFocus: Element | null = null
   let headingObserver: MutationObserver | undefined
   let observerTimeout: ReturnType<typeof setTimeout> | undefined
 
@@ -95,17 +103,34 @@ function RouteAccessibility() {
     return true
   }
 
+  const focusMoved = () => {
+    const active = document.activeElement
+    const content = document.getElementById("main-content")
+    return (
+      active &&
+      active !== navigationFocus &&
+      active !== content &&
+      (content?.contains(active) ||
+        active.closest('[role="dialog"], [role="alertdialog"], [role="menu"]'))
+    )
+  }
+
   onMount(() => {
+    const beforeNavigate = router.subscribe("onBeforeNavigate", () => {
+      stopWaiting()
+      navigationFocus = document.activeElement
+    })
     const unsubscribe = router.subscribe("onRendered", (event) => {
       if (!event.fromLocation || !event.pathChanged) return
       stopWaiting()
       queueMicrotask(() => {
         const content = document.getElementById("main-content")
-        if (focusHeading()) return
+        // A user may start editing before navigation finishes.
+        if (focusMoved() || focusHeading()) return
         content?.focus({ preventScroll: true })
         if (!content) return
         headingObserver = new MutationObserver(() => {
-          if (focusHeading()) stopWaiting()
+          if (focusMoved() || focusHeading()) stopWaiting()
         })
         headingObserver.observe(content, { childList: true, subtree: true, characterData: true })
         observerTimeout = setTimeout(stopWaiting, 5_000)
@@ -113,6 +138,7 @@ function RouteAccessibility() {
     })
     onCleanup(() => {
       unsubscribe()
+      beforeNavigate()
       stopWaiting()
     })
   })
@@ -164,11 +190,12 @@ function RootComponent() {
         <RouteAccessibility />
         <AccountShell>
           <LiveUpdates />
+          <RouteProgress />
           <SiteHeader />
           <OfflineNotice />
           <StorageNotice />
           <div id="main-content" tabIndex={-1}>
-            <Suspense>
+            <Suspense fallback={<SkeletonPage class={styles.pendingPage} />}>
               <Outlet />
             </Suspense>
           </div>

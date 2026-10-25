@@ -5,11 +5,19 @@ import { afterEach, expect, test, vi } from "vitest"
 import type { ImportJob, ImportJobItem } from "@/api/import-jobs"
 
 import type { ImportJobController } from "./create-import-job"
-import { ImportJobResults } from "./import-job-results"
+import { ImportJobResults, offeredFilters } from "./import-job-results"
 
 vi.mock("@tanstack/solid-router", () => ({
-  Link: (props: { to: string; class?: string; children?: JSX.Element }) => (
-    <a href={props.to} class={props.class}>
+  Link: (props: {
+    to: string
+    search?: Record<string, string>
+    class?: string
+    children?: JSX.Element
+  }) => (
+    <a
+      href={props.search ? `${props.to}?${new URLSearchParams(props.search)}` : props.to}
+      class={props.class}
+    >
       {props.children}
     </a>
   ),
@@ -153,13 +161,44 @@ test("a recipe carrying more unmapped fields than fit counts the rest rather tha
 })
 
 test("a recipe that could not be imported says so as a problem rather than as a note", () => {
+  const error = "this recipe cannot be stored as it stands: timing reference is repeated"
+  const screen = results({ state: "failed", review_required: false, error, diagnostics: [] })
+
+  const problem = screen.getByText("This recipe could not be imported")
+  expect(problem.closest('[class*="status_error"]')).toBeTruthy()
+  expect(screen.getByText("Import details")).toBeTruthy()
+  expect(screen.getByText(error)).toBeTruthy()
+})
+
+test("a recipe already in the library says so and offers to find it", () => {
+  const error =
+    "recipe reviewed for import has changed: library entry already exists; refresh the preview: library entry already exists"
   const screen = results({
+    title: "Brownies",
     state: "failed",
-    review_required: false,
-    error: "this recipe cannot be stored as it stands: timing reference is repeated",
+    error,
+    error_code: "already-in-library",
     diagnostics: [],
   })
 
-  const problem = screen.getByText("This recipe could not be imported")
-  expect(problem.closest("[role=alert]")).toBeTruthy()
+  expect(screen.getByText("This recipe is already in your library.")).toBeTruthy()
+  expect(screen.getByText("Find it in your library").getAttribute("href")).toBe("/?q=Brownies")
+  expect(screen.getByText(error).closest('[data-state="closed"]')).toBeTruthy()
+})
+
+test("filters with recipes in them are offered, and every filter while the job runs", () => {
+  const progress = { ...job.progress, total: 2, imported: 1, failed: 1, review_required: 2 }
+  const offered = (...args: Parameters<typeof offeredFilters>) =>
+    offeredFilters(...args).map((choice) => choice.value)
+  expect(offered(progress, "all")).toEqual(["all", "failed", "review-required", "imported"])
+  expect(offered({ ...progress, imported: 2, failed: 0, review_required: 0 }, "all")).toEqual([
+    "all",
+    "imported",
+  ])
+  expect(offered({ ...progress, imported: 2, failed: 0, review_required: 0 }, "failed")).toEqual([
+    "all",
+    "failed",
+    "imported",
+  ])
+  expect(offeredFilters(progress, "all", false).length).toBeGreaterThan(4)
 })

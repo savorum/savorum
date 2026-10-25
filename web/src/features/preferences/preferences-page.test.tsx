@@ -99,3 +99,11 @@ test("unsupported interface choice remains human-readable and fallback controls 
   expect(fallback.textContent).toBe("German (Deutsch)")
   expect(locale.textContent).toBe("Canadian French (not yet available)")
 })
+
+test("preferences can retry an interrupted initial load", async () => {
+  vi.mocked(readPreferences).mockRejectedValueOnce(new Error("Disconnected"))
+  const screen = render(() => <PreferencesPage />)
+  fireEvent.click(await screen.findByRole("button", { name: "Retry" }))
+  await screen.findByLabelText("Timezone", {}, { interval: 10 })
+  expect(screen.queryByRole("button", { name: "Retry" })).toBeNull()
+})

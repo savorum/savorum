@@ -8,6 +8,7 @@
 /** @typedef {{}} Account_Access_Page_TitleInputs */
 /** @typedef {{ library: NonNullable<unknown> }} Account_Access_TitleInputs */
 /** @typedef {{}} Account_Activity_HeadingInputs */
+/** @typedef {{}} Account_Admin_ActiveInputs */
 /** @typedef {{}} Account_Admin_Audit_LedeInputs */
 /** @typedef {{}} Account_Admin_Audit_Page_TitleInputs */
 /** @typedef {{}} Account_Admin_Audit_TitleInputs */
@@ -35,6 +36,8 @@
 /** @typedef {{}} Account_Admin_Library_NameInputs */
 /** @typedef {{}} Account_Admin_Library_NoneInputs */
 /** @typedef {{}} Account_Admin_Library_RoleInputs */
+/** @typedef {{}} Account_Admin_ManageInputs */
+/** @typedef {{ name: NonNullable<unknown> }} Account_Admin_Manage_NamedInputs */
 /** @typedef {{}} Account_Admin_Mapping_AddInputs */
 /** @typedef {{}} Account_Admin_Mapping_Choose_LibraryInputs */
 /** @typedef {{}} Account_Admin_Mapping_Choose_ProviderInputs */
@@ -54,6 +57,7 @@
 /** @typedef {{}} Account_Admin_Nav_LibrariesInputs */
 /** @typedef {{}} Account_Admin_Nav_PeopleInputs */
 /** @typedef {{}} Account_Admin_Nav_ProvidersInputs */
+/** @typedef {{}} Account_Admin_Password_Reset_NoticeInputs */
 /** @typedef {{}} Account_Admin_People_ErrorInputs */
 /** @typedef {{}} Account_Admin_People_HeadingInputs */
 /** @typedef {{}} Account_Admin_People_LedeInputs */
@@ -74,6 +78,8 @@
 /** @typedef {{}} Account_Admin_Recover_OwnerInputs */
 /** @typedef {{}} Account_Admin_Recover_SubmitInputs */
 /** @typedef {{}} Account_Admin_RecoveredInputs */
+/** @typedef {{}} Account_Admin_Reset_ActionInputs */
+/** @typedef {{}} Account_Admin_Reset_HintInputs */
 /** @typedef {{ name: NonNullable<unknown> }} Account_Admin_Reset_PasswordInputs */
 /** @typedef {{}} Account_Admin_Reset_SubmitInputs */
 /** @typedef {{}} Account_Admin_UnavailableInputs */
@@ -96,24 +102,54 @@
 /** @typedef {{}} Account_Assistant_Setup_HintInputs */
 /** @typedef {{ guide: NonNullable<unknown> }} Account_Assistant_Setup_PromptInputs */
 /** @typedef {{}} Account_Assistant_TemporaryInputs */
+/** @typedef {{}} Account_Audit_Access_ChangedInputs */
+/** @typedef {{}} Account_Audit_Action_CodeInputs */
 /** @typedef {{}} Account_Audit_ActivityInputs */
 /** @typedef {{}} Account_Audit_ActorInputs */
+/** @typedef {{}} Account_Audit_AffectedInputs */
 /** @typedef {{}} Account_Audit_AllInputs */
+/** @typedef {{}} Account_Audit_AnyoneInputs */
 /** @typedef {{}} Account_Audit_ApplyInputs */
 /** @typedef {{}} Account_Audit_AuthInputs */
 /** @typedef {{}} Account_Audit_BooksInputs */
+/** @typedef {{}} Account_Audit_ByInputs */
+/** @typedef {{}} Account_Audit_Credential_IdInputs */
+/** @typedef {{}} Account_Audit_DeletedInputs */
+/** @typedef {{}} Account_Audit_DetailsInputs */
 /** @typedef {{}} Account_Audit_EmptyInputs */
+/** @typedef {{}} Account_Audit_EnabledInputs */
 /** @typedef {{}} Account_Audit_ErrorInputs */
 /** @typedef {{ actor: NonNullable<unknown>, targetType: NonNullable<unknown>, target: NonNullable<unknown>, outcome: NonNullable<unknown> }} Account_Audit_Event_DetailInputs */
+/** @typedef {{}} Account_Audit_Event_IdInputs */
+/** @typedef {{}} Account_Audit_FailedInputs */
+/** @typedef {{}} Account_Audit_Forced_UnlinkInputs */
 /** @typedef {{}} Account_Audit_FromInputs */
 /** @typedef {{}} Account_Audit_HintInputs */
 /** @typedef {{}} Account_Audit_Identifier_HintInputs */
 /** @typedef {{}} Account_Audit_ImportsInputs */
 /** @typedef {{}} Account_Audit_LibraryInputs */
+/** @typedef {{}} Account_Audit_LinkedInputs */
 /** @typedef {{}} Account_Audit_LoadingInputs */
+/** @typedef {{}} Account_Audit_MergedInputs */
 /** @typedef {{}} Account_Audit_OlderInputs */
+/** @typedef {{}} Account_Audit_OwnerInputs */
+/** @typedef {{}} Account_Audit_Password_ChangeInputs */
+/** @typedef {{}} Account_Audit_PausedInputs */
+/** @typedef {{}} Account_Audit_PurgedInputs */
 /** @typedef {{}} Account_Audit_RecipesInputs */
+/** @typedef {{}} Account_Audit_Recovery_ReplacedInputs */
+/** @typedef {{}} Account_Audit_Recovery_Sign_InInputs */
+/** @typedef {{}} Account_Audit_RedeliveryInputs */
+/** @typedef {{}} Account_Audit_RenamedInputs */
+/** @typedef {{}} Account_Audit_Request_IdInputs */
+/** @typedef {{}} Account_Audit_ResultInputs */
+/** @typedef {{}} Account_Audit_RetiredInputs */
+/** @typedef {{}} Account_Audit_Secret_RotatedInputs */
+/** @typedef {{}} Account_Audit_ServiceInputs */
 /** @typedef {{}} Account_Audit_SettingsInputs */
+/** @typedef {{}} Account_Audit_Sign_InInputs */
+/** @typedef {{}} Account_Audit_SucceededInputs */
+/** @typedef {{}} Account_Audit_SystemInputs */
 /** @typedef {{}} Account_Audit_TargetInputs */
 /** @typedef {{}} Account_Audit_Target_AuthenticationInputs */
 /** @typedef {{}} Account_Audit_Target_BookInputs */
@@ -127,9 +163,13 @@
 /** @typedef {{}} Account_Audit_Target_SettingsInputs */
 /** @typedef {{}} Account_Audit_Target_TokenInputs */
 /** @typedef {{}} Account_Audit_Target_UserInputs */
+/** @typedef {{}} Account_Audit_Test_RequestedInputs */
 /** @typedef {{}} Account_Audit_TokensInputs */
+/** @typedef {{}} Account_Audit_TrashedInputs */
+/** @typedef {{}} Account_Audit_UnlinkedInputs */
 /** @typedef {{}} Account_Audit_UntilInputs */
 /** @typedef {{}} Account_Audit_UsersInputs */
+/** @typedef {{}} Account_Audit_WebhookInputs */
 /** @typedef {{}} Account_Confirm_RemovalInputs */
 /** @typedef {{}} Account_CopiedInputs */
 /** @typedef {{}} Account_CopyInputs */
@@ -248,6 +288,8 @@
 /** @typedef {{}} Account_Passkeys_Remove_ConfirmInputs */
 /** @typedef {{ name: NonNullable<unknown> }} Account_Passkeys_Remove_NamedInputs */
 /** @typedef {{}} Account_Passkeys_RemovedInputs */
+/** @typedef {{}} Account_Passkeys_RenameInputs */
+/** @typedef {{ name: NonNullable<unknown> }} Account_Passkeys_Rename_NamedInputs */
 /** @typedef {{}} Account_Passkeys_RenamedInputs */
 /** @typedef {{}} Account_Passkeys_Save_NameInputs */
 /** @typedef {{}} Account_Passkeys_UnavailableInputs */
@@ -260,6 +302,7 @@
 /** @typedef {{}} Account_Recovery_Codes_LabelInputs */
 /** @typedef {{}} Account_Recovery_DisabledInputs */
 /** @typedef {{}} Account_Recovery_DismissInputs */
+/** @typedef {{}} Account_Recovery_EmptyInputs */
 /** @typedef {{}} Account_Recovery_GenerateInputs */
 /** @typedef {{}} Account_Recovery_HeadingInputs */
 /** @typedef {{}} Account_Recovery_HiddenInputs */
@@ -292,12 +335,15 @@
 /** @typedef {{}} Account_Sessions_ErrorInputs */
 /** @typedef {{}} Account_Sessions_HeadingInputs */
 /** @typedef {{}} Account_Sessions_HintInputs */
+/** @typedef {{ date: NonNullable<unknown> }} Account_Sessions_Last_ActiveInputs */
 /** @typedef {{}} Account_Sessions_OtherInputs */
+/** @typedef {{}} Account_Sessions_Other_HeadingInputs */
 /** @typedef {{}} Account_Sessions_Others_RevokedInputs */
 /** @typedef {{}} Account_Sessions_RevokeInputs */
 /** @typedef {{ last: NonNullable<unknown> }} Account_Sessions_Revoke_NamedInputs */
 /** @typedef {{}} Account_Sessions_Revoke_OthersInputs */
 /** @typedef {{}} Account_Sessions_RevokedInputs */
+/** @typedef {{ date: NonNullable<unknown> }} Account_Sessions_Signed_InInputs */
 /** @typedef {{}} Account_Sessions_ThisInputs */
 /** @typedef {{}} Account_Sign_InInputs */
 /** @typedef {{}} Account_Sign_In_Page_TitleInputs */
@@ -671,6 +717,7 @@
 /** @typedef {{}} Common_Dot_SeparatorInputs */
 /** @typedef {{}} Common_Earlier_VersionsInputs */
 /** @typedef {{}} Common_Keep_ItInputs */
+/** @typedef {{}} Common_LoadingInputs */
 /** @typedef {{}} Common_NextInputs */
 /** @typedef {{ value1: NonNullable<unknown>, value2: NonNullable<unknown>, value3: NonNullable<unknown> }} Common_Pagination_RangeInputs */
 /** @typedef {{}} Common_Plus_SymbolInputs */
@@ -920,6 +967,9 @@
 /** @typedef {{}} Export_Menu_The_Export_Could_Not_Be_CompletedInputs */
 /** @typedef {{}} Exports_Choose_At_Least_One_Recipe_To_ExportInputs */
 /** @typedef {{}} Exports_The_Export_Could_Not_Be_CompletedInputs */
+/** @typedef {{}} Help_ImportsInputs */
+/** @typedef {{}} Help_PlanInputs */
+/** @typedef {{}} Help_ShoppingInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Import_About_HoursInputs */
 /** @typedef {{}} Import_Candidate_Already_HereInputs */
 /** @typedef {{}} Import_Candidate_BlockedInputs */
@@ -965,10 +1015,9 @@
 /** @typedef {{}} Import_Job_InterruptedInputs */
 /** @typedef {{}} Import_Job_Interrupted_GuidanceInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Import_Job_Not_ImportedInputs */
-/** @typedef {{ value1: NonNullable<unknown> }} Import_Job_Page_Already_In_Your_LibraryInputs */
+/** @typedef {{}} Import_Job_Page_Back_To_ImportsInputs */
 /** @typedef {{}} Import_Job_Page_Back_To_Your_LibraryInputs */
 /** @typedef {{ value1: NonNullable<unknown>, value2: NonNullable<unknown>, value3: NonNullable<unknown> }} Import_Job_Page_Batch_OfInputs */
-/** @typedef {{}} Import_Job_Page_Could_Not_Be_ImportedInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Import_Job_Page_ElapsedInputs */
 /** @typedef {{}} Import_Job_Page_Find_These_RecipesInputs */
 /** @typedef {{}} Import_Job_Page_Finish_The_RestInputs */
@@ -977,18 +1026,14 @@
 /** @typedef {{}} Import_Job_Page_Import_ProgressInputs */
 /** @typedef {{}} Import_Job_Page_Import_Review_DetailsInputs */
 /** @typedef {{}} Import_Job_Page_Import_The_RestInputs */
-/** @typedef {{}} Import_Job_Page_ImportedInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Import_Job_Page_LeftInputs */
-/** @typedef {{}} Import_Job_Page_Need_ReviewInputs */
-/** @typedef {{ value1: NonNullable<unknown> }} Import_Job_Page_Not_ImportedInputs */
+/** @typedef {{ count: NonNullable<unknown> }} Import_Job_Page_Need_A_LookInputs */
 /** @typedef {{ value1: NonNullable<unknown>, value2: NonNullable<unknown> }} Import_Job_Page_Of_RecipesInputs */
 /** @typedef {{}} Import_Job_Page_Reading_This_ImportInputs */
 /** @typedef {{}} Import_Job_Page_Review_DetailsInputs */
-/** @typedef {{}} Import_Job_Page_Review_MeasurementsInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Import_Job_Page_StartedInputs */
 /** @typedef {{}} Import_Job_Page_Stop_ImportingInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Import_Job_Page_To_GoInputs */
-/** @typedef {{}} Import_Job_Page_With_Preserved_DetailsInputs */
 /** @typedef {{}} Import_Job_Presentation_Already_In_Your_LibraryInputs */
 /** @typedef {{}} Import_Job_Presentation_Could_Not_Be_ImportedInputs */
 /** @typedef {{}} Import_Job_Presentation_Import_CompleteInputs */
@@ -1007,7 +1052,16 @@
 /** @typedef {{}} Import_Job_Results_Already_In_LibraryInputs */
 /** @typedef {{}} Import_Job_Results_Could_Not_Be_ImportedInputs */
 /** @typedef {{}} Import_Job_Results_Could_Not_ImportInputs */
+/** @typedef {{}} Import_Job_Results_Error_MessageInputs */
+/** @typedef {{}} Import_Job_Results_Failure_ChangedInputs */
+/** @typedef {{}} Import_Job_Results_Failure_Changed_NextInputs */
+/** @typedef {{}} Import_Job_Results_Failure_DuplicateInputs */
+/** @typedef {{}} Import_Job_Results_Failure_Duplicate_NextInputs */
+/** @typedef {{}} Import_Job_Results_Failure_SourceInputs */
+/** @typedef {{}} Import_Job_Results_Failure_Source_NextInputs */
+/** @typedef {{}} Import_Job_Results_Failure_Unknown_NextInputs */
 /** @typedef {{}} Import_Job_Results_Filter_Import_ResultsInputs */
+/** @typedef {{}} Import_Job_Results_Find_In_LibraryInputs */
 /** @typedef {{}} Import_Job_Results_Import_DetailsInputs */
 /** @typedef {{}} Import_Job_Results_ImportedInputs */
 /** @typedef {{}} Import_Job_Results_Load_More_RecipesInputs */
@@ -1021,6 +1075,7 @@
 /** @typedef {{ count: NonNullable<unknown>, finished: NonNullable<unknown> }} Import_Job_RunningInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Import_Job_SkippedInputs */
 /** @typedef {{}} Import_Job_StoppingInputs */
+/** @typedef {{}} Import_Job_TimingInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Import_Job_WaitingInputs */
 /** @typedef {{}} Import_Jobs_That_Import_Could_Not_Be_ReadInputs */
 /** @typedef {{}} Import_Jobs_The_Recipes_In_This_Import_Could_Not_Be_ReadInputs */
@@ -1097,15 +1152,14 @@
 /** @typedef {{}} Import_Source_Dialogs_Update_PreviewInputs */
 /** @typedef {{}} Imports_Index_Imports_SavorumInputs */
 /** @typedef {{}} Imports_Jobid_Import_Savorum1Inputs */
-/** @typedef {{ value1: NonNullable<unknown>, value2: NonNullable<unknown> }} Imports_Page_And_OthersInputs */
+/** @typedef {{}} Imports_Page_Empty_HintInputs */
 /** @typedef {{}} Imports_Page_ImportInputs */
 /** @typedef {{}} Imports_Page_Import_JobsInputs */
-/** @typedef {{}} Imports_Page_Import_Recipes_From_Your_LibraryInputs */
 /** @typedef {{}} Imports_Page_ImportsInputs */
+/** @typedef {{ title: NonNullable<unknown>, count: NonNullable<unknown> }} Imports_Page_Lead_And_OthersInputs */
 /** @typedef {{}} Imports_Page_Load_More_ImportsInputs */
 /** @typedef {{}} Imports_Page_No_Imports_YetInputs */
 /** @typedef {{}} Imports_Page_Reading_Your_ImportsInputs */
-/** @typedef {{}} Imports_Page_Refresh_ImportsInputs */
 /** @typedef {{}} Imports_Page_Your_Recent_Imports_Newest_FirstInputs */
 /** @typedef {{}} Index_Recipes_SavorumInputs */
 /** @typedef {{}} Ingredient_Choice_Add_AlternativeInputs */
@@ -1154,6 +1208,7 @@
 /** @typedef {{}} Ingredient_Row_Move_UpInputs */
 /** @typedef {{}} Ingredient_Row_Preparation_Or_NoteInputs */
 /** @typedef {{}} Ingredient_Row_RemoveInputs */
+/** @typedef {{}} Ingredient_UnitInputs */
 /** @typedef {{}} Ingredients_Added_GroupInputs */
 /** @typedef {{}} Ingredients_Added_IngredientInputs */
 /** @typedef {{}} Ingredients_Group_NameInputs */
@@ -1248,6 +1303,18 @@
 /** @typedef {{}} Integrations_TitleInputs */
 /** @typedef {{}} Integrations_UnavailableInputs */
 /** @typedef {{}} Integrations_WebhooksInputs */
+/** @typedef {{}} Keyboard_Shortcuts_AddInputs */
+/** @typedef {{}} Keyboard_Shortcuts_EnabledInputs */
+/** @typedef {{}} Keyboard_Shortcuts_HelpInputs */
+/** @typedef {{}} Keyboard_Shortcuts_HintInputs */
+/** @typedef {{}} Keyboard_Shortcuts_ImportsInputs */
+/** @typedef {{}} Keyboard_Shortcuts_LibraryInputs */
+/** @typedef {{}} Keyboard_Shortcuts_NextInputs */
+/** @typedef {{}} Keyboard_Shortcuts_PlanInputs */
+/** @typedef {{}} Keyboard_Shortcuts_PreviousInputs */
+/** @typedef {{}} Keyboard_Shortcuts_ReadingInputs */
+/** @typedef {{}} Keyboard_Shortcuts_ShoppingInputs */
+/** @typedef {{}} Keyboard_Shortcuts_TitleInputs */
 /** @typedef {{}} Label_Choices_Nothing_Here_Matches_ThatInputs */
 /** @typedef {{}} Label_Choices_Show_FewerInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Label_Choices_Show_MoreInputs */
@@ -1282,18 +1349,20 @@
 /** @typedef {{}} Library_Filters_Choose_A_CookbookInputs */
 /** @typedef {{}} Library_Filters_Choose_A_TagInputs */
 /** @typedef {{}} Library_Filters_Clear_AllInputs */
+/** @typedef {{}} Library_Filters_Diet_HintInputs */
+/** @typedef {{}} Library_Filters_Diet_ManualInputs */
 /** @typedef {{}} Library_Filters_Every_One_ChosenInputs */
 /** @typedef {{}} Library_Filters_FavoritesInputs */
 /** @typedef {{}} Library_Filters_FiltersInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Library_Filters_FromInputs */
 /** @typedef {{}} Library_Filters_From_One_ImportInputs */
 /** @typedef {{}} Library_Filters_In_A_BookInputs */
+/** @typedef {{}} Library_Filters_MoreInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Library_Filters_Narrow_ToInputs */
 /** @typedef {{}} Library_Filters_Needs_Ingredient_ReviewInputs */
 /** @typedef {{}} Library_Filters_Not_Cooked_YetInputs */
 /** @typedef {{}} Library_Filters_Only_ShowInputs */
 /** @typedef {{}} Library_Filters_Stated_By_The_RecipeInputs */
-/** @typedef {{}} Library_Filters_Stated_HintInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Library_Filters_Stop_NarrowingInputs */
 /** @typedef {{}} Library_Filters_TagsInputs */
 /** @typedef {{}} Library_Filters_Taken_From_A_CookbookInputs */
@@ -1339,6 +1408,7 @@
 /** @typedef {{ value1: NonNullable<unknown> }} Library_Selection_Bar_SelectedInputs */
 /** @typedef {{}} Library_Selection_Bar_Selected_RecipesInputs */
 /** @typedef {{}} Library_Selection_Bar_Sref_BundleInputs */
+/** @typedef {{}} Library_Sort_CookedInputs */
 /** @typedef {{}} Library_Sort_RatingInputs */
 /** @typedef {{}} Library_Sort_RelevanceInputs */
 /** @typedef {{}} Library_Sort_TitleInputs */
@@ -1534,7 +1604,6 @@
 /** @typedef {{}} Organization_Recipe_Organization_Could_Not_Be_SavedInputs */
 /** @typedef {{}} Organization_Slow_CookerInputs */
 /** @typedef {{}} Organization_Summary_Library_DetailsInputs */
-/** @typedef {{ value1: NonNullable<unknown> }} Organization_Summary_MoreInputs */
 /** @typedef {{}} Organization_Summary_Not_Filed_YetInputs */
 /** @typedef {{}} Organization_Summary_OrganizeInputs */
 /** @typedef {{}} Organization_Summary_Try_AgainInputs */
@@ -1643,8 +1712,11 @@
 /** @typedef {{}} Plan_Delete_Saved_HintInputs */
 /** @typedef {{}} Plan_Delete_TitleInputs */
 /** @typedef {{}} Plan_DinnerInputs */
+/** @typedef {{ name: NonNullable<unknown>, amount: NonNullable<unknown> }} Plan_Dish_BatchesInputs */
 /** @typedef {{}} Plan_Dish_NameInputs */
+/** @typedef {{ name: NonNullable<unknown>, amount: NonNullable<unknown> }} Plan_Dish_Part_BatchInputs */
 /** @typedef {{}} Plan_DishesInputs */
+/** @typedef {{}} Plan_Earlier_This_WeekInputs */
 /** @typedef {{}} Plan_EditInputs */
 /** @typedef {{}} Plan_Edit_SavedInputs */
 /** @typedef {{}} Plan_Editor_EditInputs */
@@ -1658,6 +1730,7 @@
 /** @typedef {{}} Plan_Load_FailedInputs */
 /** @typedef {{}} Plan_LunchInputs */
 /** @typedef {{ name: NonNullable<unknown> }} Plan_Meal_ActionsInputs */
+/** @typedef {{}} Plan_Meal_TrayInputs */
 /** @typedef {{}} Plan_Meal_TypeInputs */
 /** @typedef {{}} Plan_Meal_Type_UnspecifiedInputs */
 /** @typedef {{}} Plan_MonthInputs */
@@ -1929,6 +2002,7 @@
 /** @typedef {{}} Recipe_Fields_SourceInputs */
 /** @typedef {{}} Recipe_Fields_Source_LocaleInputs */
 /** @typedef {{}} Recipe_Format_PreferInputs */
+/** @typedef {{}} Recipe_From_Source_PageInputs */
 /** @typedef {{}} Recipe_History_Page_A_Recipe_In_It_ChangedInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Recipe_History_Page_As_It_Was_OnInputs */
 /** @typedef {{}} Recipe_History_Page_Back_To_The_RecipeInputs */
@@ -2087,6 +2161,8 @@
 /** @typedef {{}} Shopping_Added_HintInputs */
 /** @typedef {{}} Shopping_AlternativeInputs */
 /** @typedef {{}} Shopping_ApplyInputs */
+/** @typedef {{}} Shopping_ArrangeInputs */
+/** @typedef {{}} Shopping_Arrange_HintInputs */
 /** @typedef {{}} Shopping_BoughtInputs */
 /** @typedef {{}} Shopping_BuyInputs */
 /** @typedef {{}} Shopping_CancelInputs */
@@ -2117,7 +2193,6 @@
 /** @typedef {{}} Shopping_Keep_MineInputs */
 /** @typedef {{}} Shopping_Keep_TheirsInputs */
 /** @typedef {{}} Shopping_ListInputs */
-/** @typedef {{}} Shopping_List_ActionsInputs */
 /** @typedef {{}} Shopping_List_Changed_FailedInputs */
 /** @typedef {{}} Shopping_List_NameInputs */
 /** @typedef {{}} Shopping_Load_FailedInputs */
@@ -2159,6 +2234,7 @@
 /** @typedef {{}} Shopping_View_OnlyInputs */
 /** @typedef {{}} Site_Header_Active_LibraryInputs */
 /** @typedef {{}} Site_Header_BooksInputs */
+/** @typedef {{}} Site_Header_HelpInputs */
 /** @typedef {{}} Site_Header_ImportsInputs */
 /** @typedef {{}} Site_Header_MoreInputs */
 /** @typedef {{}} Site_Header_PlanInputs */
@@ -2193,6 +2269,7 @@
 /** @typedef {{}} Source_Refresh_Page_Recipe_Source_UrlInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Source_Refresh_Page_Recorded_SourceInputs */
 /** @typedef {{}} Source_Refresh_Page_Review_Before_ReplacingInputs */
+/** @typedef {{}} Status_Loading_SlowInputs */
 /** @typedef {{}} Status_Nothing_Was_Overwritten_Reloading_Replaces_What_Is_On_SInputs */
 /** @typedef {{}} Status_Reload_The_Current_VersionInputs */
 /** @typedef {{}} Status_Storage_AdminInputs */
@@ -2408,6 +2485,10 @@ export const account_activity_heading = /** @type {(inputs: Account_Activity_Hea
 	return /** @type {LocalizedString} */ (`Library activity`)
 };
 
+export const account_admin_active = /** @type {(inputs: Account_Admin_ActiveInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Active`)
+};
+
 export const account_admin_audit_lede = /** @type {(inputs: Account_Admin_Audit_LedeInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Security and destructive operations across this instance.`)
 };
@@ -2421,7 +2502,7 @@ export const account_admin_audit_title = /** @type {(inputs: Account_Admin_Audit
 };
 
 export const account_admin_create_heading = /** @type {(inputs: Account_Admin_Create_HeadingInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Create a local account`)
+	return /** @type {LocalizedString} */ (`Add user`)
 };
 
 export const account_admin_create_hint = /** @type {(inputs: Account_Admin_Create_HintInputs) => LocalizedString} */ () => {
@@ -2441,7 +2522,7 @@ export const account_admin_create_library_submit = /** @type {(inputs: Account_A
 };
 
 export const account_admin_create_submit = /** @type {(inputs: Account_Admin_Create_SubmitInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Create account`)
+	return /** @type {LocalizedString} */ (`Add user`)
 };
 
 export const account_admin_dependencies_heading = /** @type {(inputs: Account_Admin_Dependencies_HeadingInputs) => LocalizedString} */ () => {
@@ -2514,6 +2595,14 @@ export const account_admin_library_none = /** @type {(inputs: Account_Admin_Libr
 
 export const account_admin_library_role = /** @type {(inputs: Account_Admin_Library_RoleInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Library role`)
+};
+
+export const account_admin_manage = /** @type {(inputs: Account_Admin_ManageInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Manage`)
+};
+
+export const account_admin_manage_named = /** @type {(inputs: Account_Admin_Manage_NamedInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`Manage ${i?.name}`)
 };
 
 export const account_admin_mapping_add = /** @type {(inputs: Account_Admin_Mapping_AddInputs) => LocalizedString} */ () => {
@@ -2590,6 +2679,10 @@ export const account_admin_nav_people = /** @type {(inputs: Account_Admin_Nav_Pe
 
 export const account_admin_nav_providers = /** @type {(inputs: Account_Admin_Nav_ProvidersInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Sign-in providers`)
+};
+
+export const account_admin_password_reset_notice = /** @type {(inputs: Account_Admin_Password_Reset_NoticeInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Password reset. This user has been signed out of all sessions.`)
 };
 
 export const account_admin_people_error = /** @type {(inputs: Account_Admin_People_ErrorInputs) => LocalizedString} */ () => {
@@ -2670,6 +2763,14 @@ export const account_admin_recover_submit = /** @type {(inputs: Account_Admin_Re
 
 export const account_admin_recovered = /** @type {(inputs: Account_Admin_RecoveredInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Ownership assigned.`)
+};
+
+export const account_admin_reset_action = /** @type {(inputs: Account_Admin_Reset_ActionInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Reset password`)
+};
+
+export const account_admin_reset_hint = /** @type {(inputs: Account_Admin_Reset_HintInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Resetting the password signs this user out everywhere.`)
 };
 
 export const account_admin_reset_password = /** @type {(inputs: Account_Admin_Reset_PasswordInputs) => LocalizedString} */ (i) => {
@@ -2760,6 +2861,14 @@ export const account_assistant_temporary = /** @type {(inputs: Account_Assistant
 	return /** @type {LocalizedString} */ (`Temporary access: 15 minutes.`)
 };
 
+export const account_audit_access_changed = /** @type {(inputs: Account_Audit_Access_ChangedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Access changed`)
+};
+
+export const account_audit_action_code = /** @type {(inputs: Account_Audit_Action_CodeInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Action code`)
+};
+
 export const account_audit_activity = /** @type {(inputs: Account_Audit_ActivityInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Activity`)
 };
@@ -2768,8 +2877,16 @@ export const account_audit_actor = /** @type {(inputs: Account_Audit_ActorInputs
 	return /** @type {LocalizedString} */ (`Actor ID`)
 };
 
+export const account_audit_affected = /** @type {(inputs: Account_Audit_AffectedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Affected`)
+};
+
 export const account_audit_all = /** @type {(inputs: Account_Audit_AllInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`All activity`)
+};
+
+export const account_audit_anyone = /** @type {(inputs: Account_Audit_AnyoneInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Anyone`)
 };
 
 export const account_audit_apply = /** @type {(inputs: Account_Audit_ApplyInputs) => LocalizedString} */ () => {
@@ -2784,8 +2901,28 @@ export const account_audit_books = /** @type {(inputs: Account_Audit_BooksInputs
 	return /** @type {LocalizedString} */ (`Books`)
 };
 
+export const account_audit_by = /** @type {(inputs: Account_Audit_ByInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`By`)
+};
+
+export const account_audit_credential_id = /** @type {(inputs: Account_Audit_Credential_IdInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Credential ID`)
+};
+
+export const account_audit_deleted = /** @type {(inputs: Account_Audit_DeletedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Deleted`)
+};
+
+export const account_audit_details = /** @type {(inputs: Account_Audit_DetailsInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Record details`)
+};
+
 export const account_audit_empty = /** @type {(inputs: Account_Audit_EmptyInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`No matching activity.`)
+};
+
+export const account_audit_enabled = /** @type {(inputs: Account_Audit_EnabledInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Enabled`)
 };
 
 export const account_audit_error = /** @type {(inputs: Account_Audit_ErrorInputs) => LocalizedString} */ () => {
@@ -2794,6 +2931,18 @@ export const account_audit_error = /** @type {(inputs: Account_Audit_ErrorInputs
 
 export const account_audit_event_detail = /** @type {(inputs: Account_Audit_Event_DetailInputs) => LocalizedString} */ (i) => {
 	return /** @type {LocalizedString} */ (`${i?.actor} · ${i?.targetType} ${i?.target} · ${i?.outcome}`)
+};
+
+export const account_audit_event_id = /** @type {(inputs: Account_Audit_Event_IdInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Event ID`)
+};
+
+export const account_audit_failed = /** @type {(inputs: Account_Audit_FailedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Failed`)
+};
+
+export const account_audit_forced_unlink = /** @type {(inputs: Account_Audit_Forced_UnlinkInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Forced sign-in method removal`)
 };
 
 export const account_audit_from = /** @type {(inputs: Account_Audit_FromInputs) => LocalizedString} */ () => {
@@ -2816,20 +2965,92 @@ export const account_audit_library = /** @type {(inputs: Account_Audit_LibraryIn
 	return /** @type {LocalizedString} */ (`Library access`)
 };
 
+export const account_audit_linked = /** @type {(inputs: Account_Audit_LinkedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Sign-in method added`)
+};
+
 export const account_audit_loading = /** @type {(inputs: Account_Audit_LoadingInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Loading audit history…`)
+};
+
+export const account_audit_merged = /** @type {(inputs: Account_Audit_MergedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Merged`)
 };
 
 export const account_audit_older = /** @type {(inputs: Account_Audit_OlderInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Older activity`)
 };
 
+export const account_audit_owner = /** @type {(inputs: Account_Audit_OwnerInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Instance owner`)
+};
+
+export const account_audit_password_change = /** @type {(inputs: Account_Audit_Password_ChangeInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Password change`)
+};
+
+export const account_audit_paused = /** @type {(inputs: Account_Audit_PausedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Paused`)
+};
+
+export const account_audit_purged = /** @type {(inputs: Account_Audit_PurgedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Permanently deleted`)
+};
+
 export const account_audit_recipes = /** @type {(inputs: Account_Audit_RecipesInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Recipes`)
 };
 
+export const account_audit_recovery_replaced = /** @type {(inputs: Account_Audit_Recovery_ReplacedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Recovery codes replaced`)
+};
+
+export const account_audit_recovery_sign_in = /** @type {(inputs: Account_Audit_Recovery_Sign_InInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Recovery sign-in`)
+};
+
+export const account_audit_redelivery = /** @type {(inputs: Account_Audit_RedeliveryInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Redelivery requested`)
+};
+
+export const account_audit_renamed = /** @type {(inputs: Account_Audit_RenamedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Renamed`)
+};
+
+export const account_audit_request_id = /** @type {(inputs: Account_Audit_Request_IdInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Request ID`)
+};
+
+export const account_audit_result = /** @type {(inputs: Account_Audit_ResultInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Result`)
+};
+
+export const account_audit_retired = /** @type {(inputs: Account_Audit_RetiredInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Retired`)
+};
+
+export const account_audit_secret_rotated = /** @type {(inputs: Account_Audit_Secret_RotatedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Signing secret rotated`)
+};
+
+export const account_audit_service = /** @type {(inputs: Account_Audit_ServiceInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Hosting service`)
+};
+
 export const account_audit_settings = /** @type {(inputs: Account_Audit_SettingsInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Settings`)
+};
+
+export const account_audit_sign_in = /** @type {(inputs: Account_Audit_Sign_InInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Sign-in`)
+};
+
+export const account_audit_succeeded = /** @type {(inputs: Account_Audit_SucceededInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Succeeded`)
+};
+
+export const account_audit_system = /** @type {(inputs: Account_Audit_SystemInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`System`)
 };
 
 export const account_audit_target = /** @type {(inputs: Account_Audit_TargetInputs) => LocalizedString} */ () => {
@@ -2884,8 +3105,20 @@ export const account_audit_target_user = /** @type {(inputs: Account_Audit_Targe
 	return /** @type {LocalizedString} */ (`Account`)
 };
 
+export const account_audit_test_requested = /** @type {(inputs: Account_Audit_Test_RequestedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Test requested`)
+};
+
 export const account_audit_tokens = /** @type {(inputs: Account_Audit_TokensInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`API tokens`)
+};
+
+export const account_audit_trashed = /** @type {(inputs: Account_Audit_TrashedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Moved to Trash`)
+};
+
+export const account_audit_unlinked = /** @type {(inputs: Account_Audit_UnlinkedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Sign-in method removed`)
 };
 
 export const account_audit_until = /** @type {(inputs: Account_Audit_UntilInputs) => LocalizedString} */ () => {
@@ -2894,6 +3127,10 @@ export const account_audit_until = /** @type {(inputs: Account_Audit_UntilInputs
 
 export const account_audit_users = /** @type {(inputs: Account_Audit_UsersInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Accounts`)
+};
+
+export const account_audit_webhook = /** @type {(inputs: Account_Audit_WebhookInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Webhook`)
 };
 
 export const account_confirm_removal = /** @type {(inputs: Account_Confirm_RemovalInputs) => LocalizedString} */ () => {
@@ -3368,6 +3605,14 @@ export const account_passkeys_removed = /** @type {(inputs: Account_Passkeys_Rem
 	return /** @type {LocalizedString} */ (`Passkey removed.`)
 };
 
+export const account_passkeys_rename = /** @type {(inputs: Account_Passkeys_RenameInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Rename`)
+};
+
+export const account_passkeys_rename_named = /** @type {(inputs: Account_Passkeys_Rename_NamedInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`Rename ${i?.name}`)
+};
+
 export const account_passkeys_renamed = /** @type {(inputs: Account_Passkeys_RenamedInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Passkey renamed.`)
 };
@@ -3416,6 +3661,10 @@ export const account_recovery_dismiss = /** @type {(inputs: Account_Recovery_Dis
 	return /** @type {LocalizedString} */ (`I saved my codes`)
 };
 
+export const account_recovery_empty = /** @type {(inputs: Account_Recovery_EmptyInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`No recovery codes available.`)
+};
+
 export const account_recovery_generate = /** @type {(inputs: Account_Recovery_GenerateInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Generate 10 recovery codes`)
 };
@@ -3432,8 +3681,11 @@ export const account_recovery_hint = /** @type {(inputs: Account_Recovery_HintIn
 	return /** @type {LocalizedString} */ (`Use a code if you lose your other sign-in methods. Each code works once.`)
 };
 
-export const account_recovery_remaining = /** @type {(inputs: Account_Recovery_RemainingInputs) => LocalizedString} */ (i) => {
-	return /** @type {LocalizedString} */ (`${i?.count} unused codes remaining.`)
+export const account_recovery_remaining = /** @type {(inputs: Account_Recovery_RemainingInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
+	const plural = registry.plural("en", i?.count, {});
+	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recovery code remaining.`);
+	return /** @type {LocalizedString} */ (`${countText} recovery codes remaining.`)
+	
 };
 
 export const account_recovery_replace = /** @type {(inputs: Account_Recovery_ReplaceInputs) => LocalizedString} */ () => {
@@ -3544,8 +3796,16 @@ export const account_sessions_hint = /** @type {(inputs: Account_Sessions_HintIn
 	return /** @type {LocalizedString} */ (`Each browser signed in to your account. Revoke any you do not recognize.`)
 };
 
+export const account_sessions_last_active = /** @type {(inputs: Account_Sessions_Last_ActiveInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`Last active ${i?.date}`)
+};
+
 export const account_sessions_other = /** @type {(inputs: Account_Sessions_OtherInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Another browser`)
+};
+
+export const account_sessions_other_heading = /** @type {(inputs: Account_Sessions_Other_HeadingInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Other sessions`)
 };
 
 export const account_sessions_others_revoked = /** @type {(inputs: Account_Sessions_Others_RevokedInputs) => LocalizedString} */ () => {
@@ -3566,6 +3826,10 @@ export const account_sessions_revoke_others = /** @type {(inputs: Account_Sessio
 
 export const account_sessions_revoked = /** @type {(inputs: Account_Sessions_RevokedInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Session revoked.`)
+};
+
+export const account_sessions_signed_in = /** @type {(inputs: Account_Sessions_Signed_InInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`Signed in ${i?.date}`)
 };
 
 export const account_sessions_this = /** @type {(inputs: Account_Sessions_ThisInputs) => LocalizedString} */ () => {
@@ -5065,6 +5329,10 @@ export const common_keep_it = /** @type {(inputs: Common_Keep_ItInputs) => Local
 	return /** @type {LocalizedString} */ (`Keep it`)
 };
 
+export const common_loading = /** @type {(inputs: Common_LoadingInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Loading…`)
+};
+
 export const common_next = /** @type {(inputs: Common_NextInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Next`)
 };
@@ -6070,6 +6338,18 @@ export const exports_the_export_could_not_be_completed = /** @type {(inputs: Exp
 	return /** @type {LocalizedString} */ (`The export could not be completed.`)
 };
 
+export const help_imports = /** @type {(inputs: Help_ImportsInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Help with importing recipes`)
+};
+
+export const help_plan = /** @type {(inputs: Help_PlanInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Help with meal planning`)
+};
+
+export const help_shopping = /** @type {(inputs: Help_ShoppingInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Help with shopping lists`)
+};
+
 export const import_about_hours = /** @type {(inputs: Import_About_HoursInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
 	const plural = registry.plural("en", i?.count, {});
 	if (plural === "one") return /** @type {LocalizedString} */ (`about ${countText} hour`);
@@ -6340,8 +6620,8 @@ export const import_job_not_imported = /** @type {(inputs: Import_Job_Not_Import
 	
 };
 
-export const import_job_page_already_in_your_library = /** @type {(inputs: Import_Job_Page_Already_In_Your_LibraryInputs) => LocalizedString} */ (i) => {
-	return /** @type {LocalizedString} */ (`${i?.value1} already in your library`)
+export const import_job_page_back_to_imports = /** @type {(inputs: Import_Job_Page_Back_To_ImportsInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Back to imports`)
 };
 
 export const import_job_page_back_to_your_library = /** @type {(inputs: Import_Job_Page_Back_To_Your_LibraryInputs) => LocalizedString} */ () => {
@@ -6350,10 +6630,6 @@ export const import_job_page_back_to_your_library = /** @type {(inputs: Import_J
 
 export const import_job_page_batch_of = /** @type {(inputs: Import_Job_Page_Batch_OfInputs) => LocalizedString} */ (i) => {
 	return /** @type {LocalizedString} */ (`Batch ${i?.value1} of${i?.value2} ${i?.value3}`)
-};
-
-export const import_job_page_could_not_be_imported = /** @type {(inputs: Import_Job_Page_Could_Not_Be_ImportedInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`could not be imported`)
 };
 
 export const import_job_page_elapsed = /** @type {(inputs: Import_Job_Page_ElapsedInputs) => LocalizedString} */ (i) => {
@@ -6388,20 +6664,15 @@ export const import_job_page_import_the_rest = /** @type {(inputs: Import_Job_Pa
 	return /** @type {LocalizedString} */ (`Import the rest`)
 };
 
-export const import_job_page_imported = /** @type {(inputs: Import_Job_Page_ImportedInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`imported`)
-};
-
 export const import_job_page_left = /** @type {(inputs: Import_Job_Page_LeftInputs) => LocalizedString} */ (i) => {
 	return /** @type {LocalizedString} */ (`${i?.value1} left`)
 };
 
-export const import_job_page_need_review = /** @type {(inputs: Import_Job_Page_Need_ReviewInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`need review`)
-};
-
-export const import_job_page_not_imported = /** @type {(inputs: Import_Job_Page_Not_ImportedInputs) => LocalizedString} */ (i) => {
-	return /** @type {LocalizedString} */ (`${i?.value1} not imported`)
+export const import_job_page_need_a_look = /** @type {(inputs: Import_Job_Page_Need_A_LookInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
+	const plural = registry.plural("en", i?.count, {});
+	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recipe needs a look`);
+	return /** @type {LocalizedString} */ (`${countText} recipes need a look`)
+	
 };
 
 export const import_job_page_of_recipes = /** @type {(inputs: Import_Job_Page_Of_RecipesInputs) => LocalizedString} */ (i) => {
@@ -6416,10 +6687,6 @@ export const import_job_page_review_details = /** @type {(inputs: Import_Job_Pag
 	return /** @type {LocalizedString} */ (`Review details`)
 };
 
-export const import_job_page_review_measurements = /** @type {(inputs: Import_Job_Page_Review_MeasurementsInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Recipes that need a look`)
-};
-
 export const import_job_page_started = /** @type {(inputs: Import_Job_Page_StartedInputs) => LocalizedString} */ (i) => {
 	return /** @type {LocalizedString} */ (`Started ${i?.value1}`)
 };
@@ -6430,10 +6697,6 @@ export const import_job_page_stop_importing = /** @type {(inputs: Import_Job_Pag
 
 export const import_job_page_to_go = /** @type {(inputs: Import_Job_Page_To_GoInputs) => LocalizedString} */ (i) => {
 	return /** @type {LocalizedString} */ (`${i?.value1} to go`)
-};
-
-export const import_job_page_with_preserved_details = /** @type {(inputs: Import_Job_Page_With_Preserved_DetailsInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`with preserved details`)
 };
 
 export const import_job_presentation_already_in_your_library = /** @type {(inputs: Import_Job_Presentation_Already_In_Your_LibraryInputs) => LocalizedString} */ () => {
@@ -6511,8 +6774,44 @@ export const import_job_results_could_not_import = /** @type {(inputs: Import_Jo
 	return /** @type {LocalizedString} */ (`Could not import`)
 };
 
+export const import_job_results_error_message = /** @type {(inputs: Import_Job_Results_Error_MessageInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Error message`)
+};
+
+export const import_job_results_failure_changed = /** @type {(inputs: Import_Job_Results_Failure_ChangedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`The matching recipe in your library changed after you reviewed this import.`)
+};
+
+export const import_job_results_failure_changed_next = /** @type {(inputs: Import_Job_Results_Failure_Changed_NextInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Import it again to review it against the current version.`)
+};
+
+export const import_job_results_failure_duplicate = /** @type {(inputs: Import_Job_Results_Failure_DuplicateInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`This recipe is already in your library.`)
+};
+
+export const import_job_results_failure_duplicate_next = /** @type {(inputs: Import_Job_Results_Failure_Duplicate_NextInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`To keep both, import it again and choose to import it as a separate recipe.`)
+};
+
+export const import_job_results_failure_source = /** @type {(inputs: Import_Job_Results_Failure_SourceInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Savorum no longer has the source this recipe came from.`)
+};
+
+export const import_job_results_failure_source_next = /** @type {(inputs: Import_Job_Results_Failure_Source_NextInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Import it again from the original file or page.`)
+};
+
+export const import_job_results_failure_unknown_next = /** @type {(inputs: Import_Job_Results_Failure_Unknown_NextInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Try importing it again. If it fails again, share the error message in the details below.`)
+};
+
 export const import_job_results_filter_import_results = /** @type {(inputs: Import_Job_Results_Filter_Import_ResultsInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Filter import results`)
+};
+
+export const import_job_results_find_in_library = /** @type {(inputs: Import_Job_Results_Find_In_LibraryInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Find it in your library`)
 };
 
 export const import_job_results_import_details = /** @type {(inputs: Import_Job_Results_Import_DetailsInputs) => LocalizedString} */ () => {
@@ -6572,6 +6871,10 @@ export const import_job_skipped = /** @type {(inputs: Import_Job_SkippedInputs) 
 
 export const import_job_stopping = /** @type {(inputs: Import_Job_StoppingInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Stopping after the current batch`)
+};
+
+export const import_job_timing = /** @type {(inputs: Import_Job_TimingInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Timing`)
 };
 
 export const import_job_waiting = /** @type {(inputs: Import_Job_WaitingInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
@@ -6924,8 +7227,8 @@ export const imports_jobid_import_savorum1 = /** @type {(inputs: Imports_Jobid_I
 	return /** @type {LocalizedString} */ (`Import · Savorum`)
 };
 
-export const imports_page_and_others = /** @type {(inputs: Imports_Page_And_OthersInputs) => LocalizedString} */ (i) => {
-	return /** @type {LocalizedString} */ (`${i?.value1} and ${i?.value2} others`)
+export const imports_page_empty_hint = /** @type {(inputs: Imports_Page_Empty_HintInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Recipes you bring in from a file, a website or text appear here.`)
 };
 
 export const imports_page_import = /** @type {(inputs: Imports_Page_ImportInputs) => LocalizedString} */ () => {
@@ -6936,12 +7239,15 @@ export const imports_page_import_jobs = /** @type {(inputs: Imports_Page_Import_
 	return /** @type {LocalizedString} */ (`Import jobs`)
 };
 
-export const imports_page_import_recipes_from_your_library = /** @type {(inputs: Imports_Page_Import_Recipes_From_Your_LibraryInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Import recipes from your library.`)
-};
-
 export const imports_page_imports = /** @type {(inputs: Imports_Page_ImportsInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Imports`)
+};
+
+export const imports_page_lead_and_others = /** @type {(inputs: Imports_Page_Lead_And_OthersInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
+	const plural = registry.plural("en", i?.count, {});
+	if (plural === "one") return /** @type {LocalizedString} */ (`${i?.title} and ${countText} other`);
+	return /** @type {LocalizedString} */ (`${i?.title} and ${countText} others`)
+	
 };
 
 export const imports_page_load_more_imports = /** @type {(inputs: Imports_Page_Load_More_ImportsInputs) => LocalizedString} */ () => {
@@ -6954,10 +7260,6 @@ export const imports_page_no_imports_yet = /** @type {(inputs: Imports_Page_No_I
 
 export const imports_page_reading_your_imports = /** @type {(inputs: Imports_Page_Reading_Your_ImportsInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Reading your imports…`)
-};
-
-export const imports_page_refresh_imports = /** @type {(inputs: Imports_Page_Refresh_ImportsInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Refresh imports`)
 };
 
 export const imports_page_your_recent_imports_newest_first = /** @type {(inputs: Imports_Page_Your_Recent_Imports_Newest_FirstInputs) => LocalizedString} */ () => {
@@ -7150,6 +7452,10 @@ export const ingredient_row_preparation_or_note = /** @type {(inputs: Ingredient
 
 export const ingredient_row_remove = /** @type {(inputs: Ingredient_Row_RemoveInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Remove`)
+};
+
+export const ingredient_unit = /** @type {(inputs: Ingredient_UnitInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Unit`)
 };
 
 export const ingredients_added_group = /** @type {(inputs: Ingredients_Added_GroupInputs) => LocalizedString} */ () => {
@@ -7528,6 +7834,54 @@ export const integrations_webhooks = /** @type {(inputs: Integrations_WebhooksIn
 	return /** @type {LocalizedString} */ (`Webhooks`)
 };
 
+export const keyboard_shortcuts_add = /** @type {(inputs: Keyboard_Shortcuts_AddInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Focus the add-item field`)
+};
+
+export const keyboard_shortcuts_enabled = /** @type {(inputs: Keyboard_Shortcuts_EnabledInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Enable shortcuts`)
+};
+
+export const keyboard_shortcuts_help = /** @type {(inputs: Keyboard_Shortcuts_HelpInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Show keyboard shortcuts`)
+};
+
+export const keyboard_shortcuts_hint = /** @type {(inputs: Keyboard_Shortcuts_HintInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Shortcuts pause while you type or use a menu or dialog. This setting is saved in this browser.`)
+};
+
+export const keyboard_shortcuts_imports = /** @type {(inputs: Keyboard_Shortcuts_ImportsInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`In Imports`)
+};
+
+export const keyboard_shortcuts_library = /** @type {(inputs: Keyboard_Shortcuts_LibraryInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`In your library`)
+};
+
+export const keyboard_shortcuts_next = /** @type {(inputs: Keyboard_Shortcuts_NextInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Next date range`)
+};
+
+export const keyboard_shortcuts_plan = /** @type {(inputs: Keyboard_Shortcuts_PlanInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`In Plan`)
+};
+
+export const keyboard_shortcuts_previous = /** @type {(inputs: Keyboard_Shortcuts_PreviousInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Previous date range`)
+};
+
+export const keyboard_shortcuts_reading = /** @type {(inputs: Keyboard_Shortcuts_ReadingInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`On a recipe`)
+};
+
+export const keyboard_shortcuts_shopping = /** @type {(inputs: Keyboard_Shortcuts_ShoppingInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`In Shopping`)
+};
+
+export const keyboard_shortcuts_title = /** @type {(inputs: Keyboard_Shortcuts_TitleInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Keyboard shortcuts`)
+};
+
 export const label_choices_nothing_here_matches_that = /** @type {(inputs: Label_Choices_Nothing_Here_Matches_ThatInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Nothing here matches that.`)
 };
@@ -7664,6 +8018,14 @@ export const library_filters_clear_all = /** @type {(inputs: Library_Filters_Cle
 	return /** @type {LocalizedString} */ (`Clear all`)
 };
 
+export const library_filters_diet_hint = /** @type {(inputs: Library_Filters_Diet_HintInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Dietary labels are ones you assign. Stated is what the recipe itself claims, and Savorum does not check it.`)
+};
+
+export const library_filters_diet_manual = /** @type {(inputs: Library_Filters_Diet_ManualInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`How stated diets work`)
+};
+
 export const library_filters_every_one_chosen = /** @type {(inputs: Library_Filters_Every_One_ChosenInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Every one of these is already chosen.`)
 };
@@ -7688,6 +8050,10 @@ export const library_filters_in_a_book = /** @type {(inputs: Library_Filters_In_
 	return /** @type {LocalizedString} */ (`In a book`)
 };
 
+export const library_filters_more = /** @type {(inputs: Library_Filters_MoreInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`More filters`)
+};
+
 export const library_filters_narrow_to = /** @type {(inputs: Library_Filters_Narrow_ToInputs) => LocalizedString} */ (i) => {
 	return /** @type {LocalizedString} */ (`Narrow to ${i?.value1}`)
 };
@@ -7708,10 +8074,6 @@ export const library_filters_stated_by_the_recipe = /** @type {(inputs: Library_
 	return /** @type {LocalizedString} */ (`Stated by the recipe`)
 };
 
-export const library_filters_stated_hint = /** @type {(inputs: Library_Filters_Stated_HintInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Only recipes that make the statement without conditions.`)
-};
-
 export const library_filters_stop_narrowing = /** @type {(inputs: Library_Filters_Stop_NarrowingInputs) => LocalizedString} */ (i) => {
 	return /** @type {LocalizedString} */ (`Stop narrowing to ${i?.value1}`)
 };
@@ -7721,7 +8083,7 @@ export const library_filters_tags = /** @type {(inputs: Library_Filters_TagsInpu
 };
 
 export const library_filters_taken_from_a_cookbook = /** @type {(inputs: Library_Filters_Taken_From_A_CookbookInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Taken from a cookbook`)
+	return /** @type {LocalizedString} */ (`Cookbook source`)
 };
 
 export const library_page_add_recipes = /** @type {(inputs: Library_Page_Add_RecipesInputs) => LocalizedString} */ () => {
@@ -7890,6 +8252,10 @@ export const library_selection_bar_selected_recipes = /** @type {(inputs: Librar
 
 export const library_selection_bar_sref_bundle = /** @type {(inputs: Library_Selection_Bar_Sref_BundleInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`SREF Bundle`)
+};
+
+export const library_sort_cooked = /** @type {(inputs: Library_Sort_CookedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Recently cooked`)
 };
 
 export const library_sort_rating = /** @type {(inputs: Library_Sort_RatingInputs) => LocalizedString} */ () => {
@@ -8369,7 +8735,7 @@ export const nutrition_basis_serving_of = /** @type {(inputs: Nutrition_Basis_Se
 };
 
 export const nutrition_basis_unspecified = /** @type {(inputs: Nutrition_Basis_UnspecifiedInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Basis not stated`)
+	return /** @type {LocalizedString} */ (`The source does not say whether these values are per serving or for the whole recipe`)
 };
 
 export const nutrition_carbohydrate = /** @type {(inputs: Nutrition_CarbohydrateInputs) => LocalizedString} */ () => {
@@ -8706,10 +9072,6 @@ export const organization_slow_cooker = /** @type {(inputs: Organization_Slow_Co
 
 export const organization_summary_library_details = /** @type {(inputs: Organization_Summary_Library_DetailsInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Library details`)
-};
-
-export const organization_summary_more = /** @type {(inputs: Organization_Summary_MoreInputs) => LocalizedString} */ (i) => {
-	return /** @type {LocalizedString} */ (`${i?.value1} more`)
 };
 
 export const organization_summary_not_filed_yet = /** @type {(inputs: Organization_Summary_Not_Filed_YetInputs) => LocalizedString} */ () => {
@@ -9157,12 +9519,24 @@ export const plan_dinner = /** @type {(inputs: Plan_DinnerInputs) => LocalizedSt
 	return /** @type {LocalizedString} */ (`Dinner`)
 };
 
+export const plan_dish_batches = /** @type {(inputs: Plan_Dish_BatchesInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`${i?.name} (${i?.amount} batches)`)
+};
+
 export const plan_dish_name = /** @type {(inputs: Plan_Dish_NameInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Dish name`)
 };
 
+export const plan_dish_part_batch = /** @type {(inputs: Plan_Dish_Part_BatchInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`${i?.name} (${i?.amount} batch)`)
+};
+
 export const plan_dishes = /** @type {(inputs: Plan_DishesInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Dishes`)
+};
+
+export const plan_earlier_this_week = /** @type {(inputs: Plan_Earlier_This_WeekInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Earlier this week`)
 };
 
 export const plan_edit = /** @type {(inputs: Plan_EditInputs) => LocalizedString} */ () => {
@@ -9215,6 +9589,10 @@ export const plan_lunch = /** @type {(inputs: Plan_LunchInputs) => LocalizedStri
 
 export const plan_meal_actions = /** @type {(inputs: Plan_Meal_ActionsInputs) => LocalizedString} */ (i) => {
 	return /** @type {LocalizedString} */ (`Actions for ${i?.name}`)
+};
+
+export const plan_meal_tray = /** @type {(inputs: Plan_Meal_TrayInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Meal tray`)
 };
 
 export const plan_meal_type = /** @type {(inputs: Plan_Meal_TypeInputs) => LocalizedString} */ () => {
@@ -10303,6 +10681,10 @@ export const recipe_format_prefer = /** @type {(inputs: Recipe_Format_PreferInpu
 	return /** @type {LocalizedString} */ (`Prefer `)
 };
 
+export const recipe_from_source_page = /** @type {(inputs: Recipe_From_Source_PageInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`From the source page`)
+};
+
 export const recipe_history_page_a_recipe_in_it_changed = /** @type {(inputs: Recipe_History_Page_A_Recipe_In_It_ChangedInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`A recipe in it changed`)
 };
@@ -10941,6 +11323,14 @@ export const shopping_apply = /** @type {(inputs: Shopping_ApplyInputs) => Local
 	return /** @type {LocalizedString} */ (`Update shopping list`)
 };
 
+export const shopping_arrange = /** @type {(inputs: Shopping_ArrangeInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Arrange items`)
+};
+
+export const shopping_arrange_hint = /** @type {(inputs: Shopping_Arrange_HintInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Move items within their section, or select items to combine under one name.`)
+};
+
 export const shopping_bought = /** @type {(inputs: Shopping_BoughtInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Bought`)
 };
@@ -11059,10 +11449,6 @@ export const shopping_keep_theirs = /** @type {(inputs: Shopping_Keep_TheirsInpu
 
 export const shopping_list = /** @type {(inputs: Shopping_ListInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Shopping list`)
-};
-
-export const shopping_list_actions = /** @type {(inputs: Shopping_List_ActionsInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`List actions`)
 };
 
 export const shopping_list_changed_failed = /** @type {(inputs: Shopping_List_Changed_FailedInputs) => LocalizedString} */ () => {
@@ -11229,6 +11615,10 @@ export const site_header_books = /** @type {(inputs: Site_Header_BooksInputs) =>
 	return /** @type {LocalizedString} */ (`Books`)
 };
 
+export const site_header_help = /** @type {(inputs: Site_Header_HelpInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Help`)
+};
+
 export const site_header_imports = /** @type {(inputs: Site_Header_ImportsInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Imports`)
 };
@@ -11363,6 +11753,10 @@ export const source_refresh_page_recorded_source = /** @type {(inputs: Source_Re
 
 export const source_refresh_page_review_before_replacing = /** @type {(inputs: Source_Refresh_Page_Review_Before_ReplacingInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Checking fetches the page and shows what differs; nothing replaces your copy until you choose it.`)
+};
+
+export const status_loading_slow = /** @type {(inputs: Status_Loading_SlowInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`This is taking longer than usual. You can keep waiting or reload the page.`)
 };
 
 export const status_nothing_was_overwritten_reloading_replaces_what_is_on_s = /** @type {(inputs: Status_Nothing_Was_Overwritten_Reloading_Replaces_What_Is_On_SInputs) => LocalizedString} */ () => {

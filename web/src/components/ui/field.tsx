@@ -2,6 +2,8 @@ import { Field } from "@ark-ui/solid/field"
 import { type JSX, Show } from "solid-js"
 import { css } from "styled-system/css"
 
+import { Checkbox } from "./checkbox"
+
 const styles = {
   root: css({ alignContent: "start", display: "grid", gap: "1.5", minWidth: "0" }),
   group: css({
@@ -30,12 +32,6 @@ const styles = {
     fontSize: "sm",
     gap: "2.5",
     "&:has(:disabled)": { layerStyle: "disabled" },
-  }),
-  toggleInput: css({
-    accentColor: "accent.default",
-    cursor: "pointer",
-    height: "4",
-    width: "4",
   }),
 }
 
@@ -83,9 +79,7 @@ export interface ToggleFieldProps {
 
 export const ToggleField = (props: ToggleFieldProps) => (
   <label class={styles.toggle}>
-    <input
-      class={styles.toggleInput}
-      type="checkbox"
+    <Checkbox
       checked={props.checked}
       disabled={props.disabled}
       onChange={(event) => props.onChange(event.currentTarget.checked)}

@@ -54,3 +54,39 @@ test("book naming keeps composition, focus and caret until a separate Enter subm
   await waitFor(() => expect(created).toHaveBeenCalledWith("book"))
   expect(createBook).toHaveBeenCalledWith(expect.objectContaining({ title: "日本料理" }))
 })
+
+test("a shelf names each book once, on its cover or below its picture", async () => {
+  const book = {
+    kind: "personal" as const,
+    revision: 1,
+    updated_at: "2026-09-25T00:00:00Z",
+  }
+  vi.mocked(listBookPage).mockResolvedValue({
+    items: [
+      { ...book, id: "plain", title: "Sunday baking", entry_count: 1 },
+      {
+        ...book,
+        id: "preview",
+        title: "Weekday meals",
+        entry_count: 2,
+        preview_asset_id: "photo",
+        preview_entry_id: "recipe",
+      },
+      { ...book, id: "pictured", title: "Summer salads", entry_count: 3, cover_asset_id: "cover" },
+    ],
+    total: 3,
+    limit: 24,
+    offset: 0,
+  })
+  const screen = render(() => <BooksPage onCreated={vi.fn()} />)
+  await screen.findByRole("heading", { name: "Sunday baking" })
+  expect(screen.getAllByText("Sunday baking")).toHaveLength(1)
+  expect(screen.getAllByText("Summer salads")).toHaveLength(1)
+  expect(screen.getByText("1 recipe")).toBeTruthy()
+  expect(screen.getByText("3 recipes")).toBeTruthy()
+  expect(
+    screen.container.querySelector(
+      'img[src="/api/v1/recipes/recipe/assets/photo/derivatives/card"]',
+    ),
+  ).toBeTruthy()
+})

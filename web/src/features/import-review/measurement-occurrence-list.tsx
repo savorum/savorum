@@ -3,6 +3,7 @@ import { css } from "styled-system/css"
 
 import type { MeasurementResolutionOccurrence } from "@/api/import-previews"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 
 import { m } from "../../lib/messages.ts"
 
@@ -18,8 +19,7 @@ export function MeasurementOccurrenceList(props: {
       <For each={props.occurrences}>
         {(match) => (
           <li class={styles.resolutionMatch}>
-            <input
-              type="checkbox"
+            <Checkbox
               aria-label={m.measurement_occurrence_list_include_from({
                 value1: match.source_text,
                 value2: match.recipe_title,

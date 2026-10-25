@@ -27,6 +27,7 @@ export const button = defineRecipe({
     _disabled: {
       layerStyle: "disabled",
     },
+    "@media (pointer: coarse)": { minHeight: "11", minWidth: "11" },
     focusVisibleRing: "outside",
   },
   defaultVariants: {

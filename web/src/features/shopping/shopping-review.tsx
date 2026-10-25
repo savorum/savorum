@@ -5,6 +5,7 @@ import { css } from "styled-system/css"
 import { supports } from "@/api/capabilities"
 import { client, unwrap } from "@/api/client"
 import type { components } from "@/api/schema"
+import { SkeletonRows } from "@/components/skeleton"
 import { ChangeError, Problem } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -13,12 +14,14 @@ import { Select } from "@/components/ui/select"
 import { createAsyncAction } from "@/lib/create-async-action"
 import { formatCalendarDay } from "@/lib/date-format"
 import { isolate } from "@/lib/direction"
+import { interfaceAttributes } from "@/lib/i18n"
 import { settled } from "@/lib/settled"
 import { shoppingQuantity } from "@/lib/shopping-quantity"
 import { uniqueID } from "@/lib/unique-id"
 
 import { m } from "../../lib/messages.ts"
 import { loadPantry } from "./pantry-panel"
+import { displayName } from "./shopping-display"
 import { ShoppingListPicker } from "./shopping-list-picker"
 import { shoppingScope, selectedShoppingList, selectShoppingList } from "./shopping-store"
 
@@ -70,6 +73,16 @@ const styles = {
     gap: "3",
     minHeight: "11",
   }),
+  line: css({
+    alignItems: "baseline",
+    display: "flex",
+    flex: "1",
+    gap: "3",
+    justifyContent: "space-between",
+    minWidth: "0",
+  }),
+  name: css({ minWidth: "0", overflowWrap: "anywhere" }),
+  quantity: css({ color: "fg.muted", flexShrink: "0", fontSize: "sm", textAlign: "end" }),
   aside: css({ color: "fg.muted", fontSize: "sm", margin: "0", paddingInlineStart: "9" }),
   list: css({ margin: "0", paddingInlineStart: "5" }),
 }
@@ -309,7 +322,7 @@ export function ShoppingReview(props: { input: ReviewInput; close(): void }) {
             </div>
           </Show>
           <Show when={review.loading && !current()}>
-            <p class={styles.muted}>{m.shopping_review_loading()}</p>
+            <SkeletonRows label={m.shopping_review_loading()} count={4} />
           </Show>
           <For each={groups()}>
             {([key, source]) => (
@@ -336,7 +349,14 @@ export function ShoppingReview(props: { input: ReviewInput; close(): void }) {
                               }))
                             }
                           />
-                          <span>{`${shoppingQuantity(choice()?.quantity ?? "")} ${choice()?.name ?? ""}`}</span>
+                          <span class={styles.line}>
+                            <span class={styles.name}>
+                              {displayName(choice()?.name ?? "", interfaceAttributes().lang)}
+                            </span>{" "}
+                            <span class={styles.quantity}>
+                              {shoppingQuantity(choice()?.quantity ?? "")}
+                            </span>
+                          </span>
                         </label>
                         <Show when={showPantry()}>
                           <For

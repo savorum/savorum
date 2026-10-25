@@ -22,6 +22,8 @@ import { updateCookingSession } from "@/features/cooking/cooking-session"
 import { CookingStep, cookingPlan } from "@/features/cooking/cooking-step"
 import { CookingWakeLock } from "@/features/cooking/wake-lock"
 import { contentAttributes, inlineArrowStep, isolate } from "@/lib/direction"
+import { keyTaken } from "@/lib/keyboard"
+import { shortcutsEnabled } from "@/lib/keyboard-shortcuts"
 import { measurementSystem } from "@/lib/preferences"
 import { formatRational, parseRational, rational } from "@/lib/rational"
 import type { Presentation } from "@/lib/recipe-format"
@@ -230,13 +232,14 @@ export function CookingMode(props: {
     }
     const pagehide = () => props.wakeLock.disable()
     const onKeyDown = (event: KeyboardEvent) => {
-      const target = event.target as HTMLElement | null
+      if (keyTaken(event)) return
+      const target = event.target instanceof Element ? event.target : undefined
       if (
-        target &&
-        (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)
-      ) {
+        (event.key === " " || event.code === "Space") &&
+        target?.closest("button, a, [role=checkbox]")
+      )
         return
-      }
+      if (!shortcutsEnabled() && event.key.length === 1) return
       // Left and right follow the direction the step controls are laid out in.
       const inline = inlineArrowStep(event.key, document.documentElement)
       if (event.key === " " || event.code === "Space") {

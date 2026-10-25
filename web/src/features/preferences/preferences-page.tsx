@@ -1,5 +1,5 @@
 import { createSignal, For, onCleanup, onMount, Show } from "solid-js"
-import { css, cx } from "styled-system/css"
+import { css } from "styled-system/css"
 import { pageShell } from "styled-system/recipes"
 
 import {
@@ -8,6 +8,7 @@ import {
   replacePreferences,
   type PreferenceValues,
 } from "@/api/preferences"
+import { SkeletonRows } from "@/components/skeleton"
 import { Notice, Problem } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import { Disclosure } from "@/components/ui/disclosure"
@@ -37,7 +38,6 @@ interface ChoiceField {
   options: readonly (readonly [string, () => string])[]
 }
 
-/** The settings, grouped by occasion: reading, cooking, and printing. */
 const readingFields: ChoiceField[] = [
   {
     key: "measurement",
@@ -141,7 +141,8 @@ export function PreferencesPage() {
   onCleanup(() => {
     active = false
   })
-  onMount(() => {
+  function load() {
+    setProblem("")
     void readPreferences()
       .then((value) => {
         if (!active) return
@@ -151,8 +152,11 @@ export function PreferencesPage() {
         setRevision(value.revision)
         setReady(true)
       })
-      .catch(() => setProblem(m.preferences_page_could_not_load_your_preferences()))
-  })
+      .catch(() => {
+        if (active) setProblem(m.preferences_page_could_not_load_your_preferences())
+      })
+  }
+  onMount(load)
   async function save(event: SubmitEvent) {
     event.preventDefault()
     setSaving(true)
@@ -250,15 +254,7 @@ export function PreferencesPage() {
     )
   }
   return (
-    <main
-      class={cx(
-        layout.page,
-        css({
-          "& fieldset": { display: "grid", gap: "4", marginBlock: "6", minWidth: "0" },
-          "& legend": { fontSize: "lg", fontWeight: "semibold", marginBottom: "4" },
-        }),
-      )}
-    >
+    <main class={layout.page}>
       <h1 class={layout.title}>{m.preferences_page_your_preferences()}</h1>
       {/* Local mode has one shared account, so these settings are not personal. */}
       <p class={css({ color: "fg.muted", marginTop: "2" })}>
@@ -268,8 +264,21 @@ export function PreferencesPage() {
       </p>
       <Notice message={notice()} />
       <Problem message={problem()} />
+      <Show when={!ready()}>
+        <Show when={problem()} fallback={<SkeletonRows count={5} />}>
+          <Button variant="outline" onClick={load}>
+            {m.account_retry()}
+          </Button>
+        </Show>
+      </Show>
       <Show when={ready()}>
         <form
+          class={styles.form}
+          onFocusIn={(event) => {
+            // Native tabbing can leave a field behind the sticky action bar.
+            if (event.target instanceof HTMLElement)
+              event.target.scrollIntoView({ block: "nearest", behavior: "instant" })
+          }}
           onSubmit={(event) => {
             void save(event)
           }}
@@ -343,16 +352,61 @@ export function PreferencesPage() {
           <fieldset disabled={saving()}>
             <legend>{m.preferences_page_appearance()}</legend>
             <For each={appearanceFields}>{(field) => <ChoiceControl field={field} />}</For>
-          </fieldset>
-          <fieldset disabled={saving()}>
-            <legend>{m.preferences_page_accessibility()}</legend>
             <For each={accessibilityFields}>{(field) => <ChoiceControl field={field} />}</For>
           </fieldset>
-          <Button type="submit" loading={saving()} loadingText={m.preferences_saving()}>
-            {m.preferences_page_save_preferences()}
-          </Button>
+          <div class={styles.save}>
+            <Button type="submit" loading={saving()} loadingText={m.preferences_saving()}>
+              {m.preferences_page_save_preferences()}
+            </Button>
+          </div>
         </form>
       </Show>
     </main>
   )
+}
+
+const styles = {
+  form: css({
+    display: "grid",
+    gap: "5",
+    marginTop: "6",
+    "& input, & button": { scrollMarginBlockEnd: "24" },
+    "& fieldset": { margin: "0", padding: "0", minWidth: "0", borderWidth: "0" },
+    "& legend": { fontFamily: "editorial", fontSize: "xl", marginBottom: "3", width: "100%" },
+    "& fieldset > *:not(legend)": { marginBottom: "3" },
+    "& fieldset > :last-child": { marginBottom: "0" },
+    "& fieldset > [data-scope=select]": {
+      display: "grid",
+      gridTemplateColumns: { base: "1fr", sm: "minmax(0, 1fr) minmax(0, 1fr)" },
+      alignItems: "center",
+      columnGap: "6",
+      "& > [data-part=label]": {
+        margin: "0",
+        fontWeight: "medium",
+        fontSize: "sm",
+        color: "fg.default",
+      },
+    },
+    "& fieldset > [data-scope=field]": {
+      gridTemplateColumns: { base: "1fr", sm: "minmax(0, 1fr) minmax(0, 1fr)" },
+      alignItems: "center",
+      columnGap: "6",
+      "& > [data-part=label]": { fontWeight: "medium", fontSize: "sm", color: "fg.default" },
+      "& > [data-part=helper-text]": { gridColumn: "1 / -1", maxWidth: "65ch" },
+    },
+    "& fieldset + fieldset > legend": {
+      borderTopWidth: "1px",
+      borderColor: "border.subtle",
+      paddingTop: "5",
+    },
+  }),
+  save: css({
+    background: "bg.canvas",
+    borderTopWidth: "1px",
+    borderColor: "border.subtle",
+    paddingBlock: "4",
+    position: "sticky",
+    bottom: "0",
+    zIndex: "1",
+  }),
 }

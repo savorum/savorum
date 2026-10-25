@@ -1,7 +1,8 @@
 import { cleanup, fireEvent, render } from "@solidjs/testing-library"
-import { createSignal } from "solid-js"
+import { createSignal, onCleanup } from "solid-js"
 import { afterEach, expect, test, vi } from "vitest"
 
+import { listenForShortcuts } from "@/lib/keyboard-shortcuts"
 import { emptyFilters } from "@/lib/library-query"
 
 import { LibrarySearchField } from "./library-search-field"
@@ -21,16 +22,20 @@ function setup() {
   vi.useFakeTimers()
   const [text, setText] = createSignal("")
   const navigate = vi.fn()
-  const screen = render(() => (
-    <LibrarySearchField
-      text={text}
-      editSearch={navigate}
-      vocabulary={noVocabulary}
-      filters={() => emptyFilters}
-      onNarrow={() => {}}
-    />
-  ))
+  const screen = render(() => {
+    onCleanup(listenForShortcuts(() => {}))
+    return (
+      <LibrarySearchField
+        text={text}
+        editSearch={navigate}
+        vocabulary={noVocabulary}
+        filters={() => emptyFilters}
+        onNarrow={() => {}}
+      />
+    )
+  })
   const input = screen.getByRole("combobox") as HTMLInputElement
+  input.getClientRects = () => [{ width: 200, height: 40 }] as unknown as DOMRectList
   return { ...screen, getSearchbox: () => screen.getByRole("combobox"), input, setText, navigate }
 }
 
@@ -83,4 +88,21 @@ test("saved-view and browser navigation synchronize an idle field; route cleanup
   unmount()
   vi.advanceTimersByTime(500)
   expect(navigate).not.toHaveBeenCalled()
+})
+
+test("slash focuses the search unless something else is being typed in", () => {
+  const { input } = setup()
+  const other = document.createElement("textarea")
+  document.body.append(other)
+  other.focus()
+  fireEvent.keyDown(other, { key: "/" })
+  expect(document.activeElement).toBe(other)
+  other.blur()
+  const press = new KeyboardEvent("keydown", { key: "/", bubbles: true, cancelable: true })
+  document.body.dispatchEvent(press)
+  expect(document.activeElement).toBe(input)
+  expect(press.defaultPrevented).toBe(true)
+  fireEvent.keyDown(input, { key: "/" })
+  expect(document.activeElement).toBe(input)
+  other.remove()
 })

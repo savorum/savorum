@@ -5,6 +5,7 @@ import { css, cva } from "styled-system/css"
 import { pageShell } from "styled-system/recipes"
 
 import { assetURL, fallbackToOriginalImage, type BookSummary } from "@/api/client"
+import { SkeletonCards } from "@/components/skeleton"
 import { ChangeError, ResourceState } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import { FormField } from "@/components/ui/field"
@@ -12,6 +13,7 @@ import { Input } from "@/components/ui/input"
 import { formatNumber } from "@/lib/locale-format"
 
 import { m } from "../../lib/messages.ts"
+import { binding, bindingStyle } from "./book-cover"
 import { createBooks, type CreateBooksOptions } from "./create-books"
 
 const choice = cva({
@@ -72,26 +74,23 @@ const styles = {
   cover: css({
     alignItems: "center",
     aspectRatio: "3 / 4",
-    background: "bg.muted",
     borderRadius: "l2",
-    color: "border.default",
     display: "flex",
-    justifyContent: "center",
     overflow: "hidden",
   }),
+  plain: css({ padding: { base: "4", md: "5" } }),
+  pictured: css({ background: "bg.muted" }),
   coverTitle: css({
-    alignSelf: "stretch",
-    borderInlineStartWidth: "5px",
-    borderColor: "accent.default",
-    color: "fg.default",
-    display: "flex",
-    alignItems: "center",
     fontFamily: "editorial",
-    fontSize: { base: "xl", md: "2xl" },
+    fontSize: { base: "lg", sm: "xl", md: "2xl" },
+    fontWeight: "normal",
+    hyphens: "auto",
+    lineClamp: "6",
     lineHeight: "1.2",
+    margin: "0",
     overflowWrap: "anywhere",
-    padding: { base: "4", md: "5" },
-    width: "100%",
+    textWrap: "balance",
+    transition: "colors",
   }),
   coverImage: css({ height: "100%", objectFit: "cover", width: "100%" }),
   bookTitle: css({
@@ -237,6 +236,7 @@ export function BooksPage(props: CreateBooksOptions) {
 
       <ResourceState
         resource={books}
+        loading={<SkeletonCards aspect="3 / 4" count={6} />}
         onRetry={() => void refetch()}
         isEmpty={(page) => page.items.length === 0}
         empty={
@@ -253,29 +253,51 @@ export function BooksPage(props: CreateBooksOptions) {
                 {(book: BookSummary) => (
                   <li>
                     <Link class={styles.card} to="/books/$bookId" params={{ bookId: book.id }}>
-                      <div class={styles.cover}>
-                        <Show
-                          when={book.cover_asset_id}
-                          fallback={
-                            <span class={styles.coverTitle} aria-hidden="true">
-                              {book.title}
-                            </span>
-                          }
-                        >
+                      <Show
+                        when={
+                          book.cover_asset_id || (book.preview_asset_id && book.preview_entry_id)
+                        }
+                        fallback={
+                          <div
+                            class={`${styles.cover} ${styles.plain} ${binding}`}
+                            style={bindingStyle(book.id)}
+                          >
+                            <h2 class={`${styles.coverTitle} book-card-title`}>{book.title}</h2>
+                          </div>
+                        }
+                      >
+                        <div class={`${styles.cover} ${styles.pictured}`}>
                           <img
                             class={styles.coverImage}
-                            src={assetURL(book.cover_asset_id!, { bookID: book.id }, "card")}
+                            src={
+                              book.cover_asset_id
+                                ? assetURL(book.cover_asset_id, { bookID: book.id }, "card")
+                                : assetURL(
+                                    book.preview_asset_id!,
+                                    { recipeID: book.preview_entry_id! },
+                                    "card",
+                                  )
+                            }
                             alt=""
                             loading="lazy"
                             onError={(event) => fallbackToOriginalImage(event.currentTarget)}
                           />
-                        </Show>
-                      </div>
+                        </div>
+                      </Show>
                       <div>
-                        <h2 class={`${styles.bookTitle} book-card-title`}>{book.title}</h2>
+                        <Show
+                          when={
+                            book.cover_asset_id || (book.preview_asset_id && book.preview_entry_id)
+                          }
+                        >
+                          <h2 class={`${styles.bookTitle} book-card-title`}>{book.title}</h2>
+                        </Show>
                         <p class={styles.meta}>
-                          {formatNumber(book.entry_count)}{" "}
-                          {book.entry_count === 1 ? "recipe" : "recipes"}
+                          {book.entry_count === 1
+                            ? m.book_reader_recipe_count_one()
+                            : m.book_reader_recipe_count({
+                                value1: formatNumber(book.entry_count),
+                              })}
                           <Show when={book.author}>
                             {" "}
                             {m.common_dot_separator()} {book.author}

@@ -1,5 +1,16 @@
 import { useNavigate } from "@tanstack/solid-router"
-import { For, Show, createMemo, createResource, createSignal, onCleanup, untrack } from "solid-js"
+import { ChevronDown } from "lucide-solid"
+import {
+  For,
+  Show,
+  createEffect,
+  createMemo,
+  createResource,
+  createSignal,
+  on,
+  onCleanup,
+  untrack,
+} from "solid-js"
 import { css } from "styled-system/css"
 import { pageShell } from "styled-system/recipes"
 
@@ -8,8 +19,11 @@ import { downloadMealCalendar } from "@/api/exports"
 import { createLiveRefresh } from "@/api/live-events"
 import { createMeal, deleteMeal, listMeals, replaceMeal } from "@/api/meals"
 import { suggestRecipes } from "@/api/selections"
+import { SkeletonCards } from "@/components/skeleton"
 import { ChangeError, ResourceState } from "@/components/status"
+import { Button } from "@/components/ui/button"
 import { ConfirmDialog } from "@/components/ui/dialog"
+import { Segmented } from "@/components/ui/segmented"
 import { cookingOwner } from "@/features/cooking/cooking-owner"
 import { ShoppingReview } from "@/features/shopping/shopping-review"
 import { mealOnShoppingList } from "@/features/shopping/shopping-store"
@@ -36,13 +50,37 @@ import {
 } from "./plan-calendar"
 import { PlanHeader, PlanNavigator, ShoppingUpdateNotice, isCalendarView } from "./plan-controls"
 import { startPlannedMeal } from "./plan-cooking"
+import { PlanSkeleton } from "./plan-skeleton"
 import { SavedMeals, SaveMeal } from "./saved-meals"
 
 const layout = pageShell({ width: "wide" })
 const styles = {
+  workspace: css({
+    display: "grid",
+    gap: "8",
+    gridTemplateColumns: { base: "minmax(0, 1fr)", xl: "minmax(0, 1fr) 18rem" },
+    alignItems: "start",
+  }),
+  tray: css({
+    borderColor: "border.subtle",
+    borderTopWidth: { base: "1px", xl: "0" },
+    paddingTop: { base: "5", xl: "0" },
+    display: "grid",
+    gap: "4",
+    minWidth: "0",
+    "& ul, & [data-tray-content] > section > div": { gridTemplateColumns: "minmax(0, 1fr)" },
+  }),
   grid: css({ display: "grid", gridTemplateColumns: "1fr", gap: "0" }),
   weekGrid: css({ display: "grid", gridTemplateColumns: "repeat(7, minmax(0, 1fr))", gap: "2" }),
   empty: css({ color: "fg.muted", fontSize: "sm" }),
+  earlier: css({
+    color: "fg.muted",
+    justifyContent: "flex-start",
+    marginBottom: "1",
+    "@media (pointer: coarse)": { minHeight: "11" },
+    "& svg": { transition: "transform 150ms ease-out" },
+    "&[aria-expanded=true] svg": { transform: "rotate(180deg)" },
+  }),
 }
 
 function useWide(query: string): () => boolean {
@@ -60,14 +98,27 @@ export function PlanPage(props: {
   onSearch: (next: PlanSearch) => void
 }) {
   const navigate = useNavigate()
-  const view = (): PlanView => props.search().view ?? "week"
+  const view = (): PlanView =>
+    isCalendarView(props.search().view ?? "week") ? (props.search().view ?? "week") : "week"
+  const [tray, setTray] = createSignal<"unscheduled" | "saved">(
+    untrack(() => (props.search().view === "saved" ? "saved" : "unscheduled")),
+  )
+  createEffect(
+    on(
+      () => props.search().view,
+      (view) => {
+        if (view === "saved" || view === "unscheduled") setTray(view)
+      },
+      { defer: true },
+    ),
+  )
   const anchor = () => parseDate(props.search().date ?? "") ?? new Date()
   const setView = (next: PlanView) =>
     props.onSearch({ ...props.search(), view: next, shop: undefined })
   const setAnchor = (date: Date) =>
     props.onSearch({ ...props.search(), date: iso(date), shop: undefined })
   const calendarView = () => (isCalendarView(view()) ? view() : "week")
-  const wideWeek = useWide("(min-width: 80rem)")
+  const wideWeek = useWide("(min-width: 100rem)")
   const wideMonth = useWide("(min-width: 48rem)")
   const [feedsOpen, setFeedsOpen] = createSignal(false)
   const [changedMeal, setChangedMeal] = createSignal<Meal>()
@@ -104,6 +155,15 @@ export function PlanPage(props: {
 
   const days = createMemo(() => visibleDays(calendarView(), anchor()))
   const range = createMemo(() => ({ from: iso(days()[0]!), to: iso(days().at(-1)!) }))
+  const [showEarlier, setShowEarlier] = createSignal(false)
+  createEffect(on(range, () => setShowEarlier(false), { defer: true }))
+  const earlierDays = createMemo(() => {
+    const today = iso(new Date())
+    if (wideWeek() || !days().some((day) => iso(day) === today)) return []
+    return days().filter((day) => iso(day) < today)
+  })
+  const weekDays = () =>
+    showEarlier() ? days() : days().filter((day) => !earlierDays().includes(day))
   const [meals, { refetch }] = createResource(
     () => ({ ...range(), owner: JSON.stringify(cookingOwner()) }),
     (value) => listMeals({ from: value.from, to: value.to, includeUnscheduled: true }),
@@ -181,7 +241,7 @@ export function PlanPage(props: {
         offerShoppingUpdate((await replaceMeal(editor.meal.id, editor.meal.revision, input)).value)
       else await createMeal(input)
       if (input.date) props.onSearch({ view: calendarView(), date: input.date })
-      else setView("unscheduled")
+      else setTray("unscheduled")
       await refetch()
     }
 
@@ -239,6 +299,11 @@ export function PlanPage(props: {
         }}
         onStep={(direction) => setAnchor(stepped(view(), anchor(), direction))}
         onToday={() => setAnchor(new Date())}
+        onTray={() => {
+          const heading = document.getElementById("meal-tray")
+          heading?.scrollIntoView({ block: "start" })
+          heading?.focus({ preventScroll: true })
+        }}
       />
       <ChangeError
         error={deleting() ? undefined : error()}
@@ -247,117 +312,179 @@ export function PlanPage(props: {
           void refetch()
         }}
       />
-      <Show when={view() === "week"}>
-        <ResourceState resource={meals} onRetry={() => void refetch()}>
-          {() => (
-            <>
-              <Show when={!days().some((day) => plannedOn(iso(day)).length)}>
-                <p class={styles.empty}>{m.plan_week_empty()}</p>
-              </Show>
-              <div class={wideWeek() ? styles.weekGrid : styles.grid}>
-                <For each={days()}>
-                  {(day) => (
-                    <DaySection
-                      day={day}
-                      compact={wideWeek()}
-                      onNewMeal={(date) => setEditing({ date })}
-                    >
-                      <For each={plannedOn(iso(day))}>
-                        {(meal) => (
-                          <MealCard meal={meal} compact={wideWeek()} controls={controls} />
-                        )}
-                      </For>
-                    </DaySection>
-                  )}
-                </For>
-              </div>
-            </>
-          )}
-        </ResourceState>
-      </Show>
-      <Show when={view() === "agenda" || (view() === "month" && !wideMonth())}>
-        <ResourceState resource={meals} onRetry={() => void refetch()}>
-          {() => {
-            const shown = () =>
-              days().filter(
-                (day) =>
-                  (view() === "agenda" || day.getMonth() === anchor().getMonth()) &&
-                  plannedOn(iso(day)).length,
-              )
-            return (
-              <div class={styles.grid}>
-                <For
-                  each={shown()}
-                  fallback={
-                    <p class={styles.empty}>
-                      {view() === "agenda" ? m.plan_agenda_empty() : m.plan_month_empty()}
-                    </p>
-                  }
-                >
-                  {(day) => (
-                    <DaySection
-                      day={day}
-                      compact={false}
-                      onNewMeal={(date) => setEditing({ date })}
-                    >
-                      <For each={plannedOn(iso(day))}>
-                        {(meal) => <MealCard meal={meal} compact={false} controls={controls} />}
-                      </For>
-                    </DaySection>
-                  )}
-                </For>
-              </div>
-            )
-          }}
-        </ResourceState>
-      </Show>
-      <Show when={view() === "month" && wideMonth()}>
-        <ResourceState resource={meals} onRetry={() => void refetch()}>
-          {() => (
-            <MonthCalendar
-              days={days()}
-              anchor={anchor()}
-              plannedOn={plannedOn}
-              onOpenWeek={(date) => props.onSearch({ view: "week", date })}
-              onEdit={(meal) => setEditing({ meal })}
-            />
-          )}
-        </ResourceState>
-      </Show>
-      <Show when={changedMeal()} keyed>
-        {(meal) => (
-          <ShoppingUpdateNotice
-            onReview={() => {
-              setShoppingMeals([meal.id])
-              setChangedMeal(undefined)
-            }}
-            onKeep={() => setChangedMeal(undefined)}
-          />
-        )}
-      </Show>
-      <Show when={view() === "unscheduled"}>
-        <section aria-labelledby="unscheduled-heading">
-          <h2 id="unscheduled-heading" class={css({ srOnly: true })}>
-            {m.plan_unscheduled()}
-          </h2>
-          <p class={tiles.lede}>{m.plan_unscheduled_hint()}</p>
-          <div class={tiles.grid}>
-            <For
-              each={items().filter((meal) => !meal.date)}
-              fallback={<p class={styles.empty}>{m.plan_empty_unscheduled()}</p>}
+      <div class={styles.workspace}>
+        <div>
+          <Show when={view() === "week"}>
+            <ResourceState
+              resource={meals}
+              onRetry={() => void refetch()}
+              loading={<PlanSkeleton layout={wideWeek() ? "columns" : "rows"} />}
             >
-              {(meal) => <MealTile meal={meal} controls={controls} />}
-            </For>
+              {() => (
+                <>
+                  <Show when={!days().some((day) => plannedOn(iso(day)).length)}>
+                    <p class={styles.empty}>{m.plan_week_empty()}</p>
+                  </Show>
+                  <Show when={earlierDays().length}>
+                    <Button
+                      class={styles.earlier}
+                      variant="plain"
+                      aria-expanded={showEarlier()}
+                      onClick={() => setShowEarlier((value) => !value)}
+                    >
+                      <ChevronDown aria-hidden="true" />
+                      {m.plan_earlier_this_week()}
+                    </Button>
+                  </Show>
+                  <div class={wideWeek() ? styles.weekGrid : styles.grid}>
+                    <For each={weekDays()}>
+                      {(day) => (
+                        <DaySection
+                          day={day}
+                          compact={wideWeek()}
+                          onNewMeal={(date) => setEditing({ date })}
+                        >
+                          <For each={plannedOn(iso(day))}>
+                            {(meal) => (
+                              <MealCard meal={meal} compact={wideWeek()} controls={controls} />
+                            )}
+                          </For>
+                        </DaySection>
+                      )}
+                    </For>
+                  </div>
+                </>
+              )}
+            </ResourceState>
+          </Show>
+          <Show when={view() === "agenda" || (view() === "month" && !wideMonth())}>
+            <ResourceState
+              resource={meals}
+              onRetry={() => void refetch()}
+              loading={<PlanSkeleton layout="rows" />}
+            >
+              {() => {
+                const shown = () =>
+                  days().filter(
+                    (day) =>
+                      (view() === "agenda" || day.getMonth() === anchor().getMonth()) &&
+                      plannedOn(iso(day)).length,
+                  )
+                return (
+                  <div class={styles.grid}>
+                    <For
+                      each={shown()}
+                      fallback={
+                        <p class={styles.empty}>
+                          {view() === "agenda" ? m.plan_agenda_empty() : m.plan_month_empty()}
+                        </p>
+                      }
+                    >
+                      {(day) => (
+                        <DaySection
+                          day={day}
+                          compact={false}
+                          onNewMeal={(date) => setEditing({ date })}
+                        >
+                          <For each={plannedOn(iso(day))}>
+                            {(meal) => <MealCard meal={meal} compact={false} controls={controls} />}
+                          </For>
+                        </DaySection>
+                      )}
+                    </For>
+                  </div>
+                )
+              }}
+            </ResourceState>
+          </Show>
+          <Show when={view() === "month" && wideMonth()}>
+            <ResourceState
+              resource={meals}
+              onRetry={() => void refetch()}
+              loading={<PlanSkeleton layout="month" />}
+            >
+              {() => (
+                <MonthCalendar
+                  days={days()}
+                  anchor={anchor()}
+                  plannedOn={plannedOn}
+                  onOpenWeek={(date) => props.onSearch({ view: "week", date })}
+                  onEdit={(meal) => setEditing({ meal })}
+                />
+              )}
+            </ResourceState>
+          </Show>
+          <Show when={changedMeal()} keyed>
+            {(meal) => (
+              <ShoppingUpdateNotice
+                onReview={() => {
+                  setShoppingMeals([meal.id])
+                  setChangedMeal(undefined)
+                }}
+                onKeep={() => setChangedMeal(undefined)}
+              />
+            )}
+          </Show>
+        </div>
+        <aside class={styles.tray} aria-label={m.plan_meal_tray()}>
+          <h2
+            id="meal-tray"
+            tabIndex={-1}
+            class={css({
+              fontSize: "xl",
+              fontWeight: "semibold",
+              margin: "0",
+              scrollMarginBlockStart: "4",
+            })}
+          >
+            {m.plan_meal_tray()}
+          </h2>
+          <Segmented
+            label={m.plan_meal_tray()}
+            value={tray()}
+            options={[
+              { value: "unscheduled", label: m.plan_unscheduled() },
+              { value: "saved", label: m.plan_saved() },
+            ]}
+            onChange={(value) => setTray(value as "unscheduled" | "saved")}
+          />
+          <div data-tray-content>
+            <Show when={tray() === "unscheduled"}>
+              <section aria-labelledby="unscheduled-heading">
+                <h2 id="unscheduled-heading" class={css({ srOnly: true })}>
+                  {m.plan_unscheduled()}
+                </h2>
+                <p class={tiles.lede}>{m.plan_unscheduled_hint()}</p>
+                <Show
+                  when={!meals.error}
+                  fallback={<p class={styles.empty}>{m.plan_load_failed()}</p>}
+                >
+                  <Show when={meals.loading && !settled(meals)}>
+                    <SkeletonCards count={3} aspect="3 / 1" />
+                  </Show>
+                  <Show when={!meals.loading || settled(meals)}>
+                    <div class={tiles.grid}>
+                      <For
+                        each={items().filter((meal) => !meal.date)}
+                        fallback={<p class={styles.empty}>{m.plan_empty_unscheduled()}</p>}
+                      >
+                        {(meal) => <MealTile meal={meal} controls={controls} />}
+                      </For>
+                    </div>
+                  </Show>
+                </Show>
+              </section>
+            </Show>
+            <Show when={tray() === "saved"}>
+              <SavedMeals
+                recipes={recipes.error ? [] : (settled(recipes)?.items ?? [])}
+                version={savedVersion()}
+                onUse={useSavedMeal}
+              />
+            </Show>
           </div>
-        </section>
-      </Show>
-      <Show when={view() === "saved"}>
-        <SavedMeals
-          recipes={recipes.error ? [] : (settled(recipes)?.items ?? [])}
-          version={savedVersion()}
-          onUse={useSavedMeal}
-        />
-      </Show>
+        </aside>
+      </div>
       <Show when={editing()} keyed>
         {(editor) => (
           <MealEditor

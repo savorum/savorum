@@ -23,7 +23,8 @@ export interface TooltipProps extends Omit<RootProps, "content"> {
   showArrow?: boolean
   portalled?: boolean
   portalRef?: HTMLElement | undefined
-  children: JSX.Element | undefined
+  children?: JSX.Element
+  trigger?: ComponentProps<typeof ArkTooltip.Trigger>["asChild"]
   content: JSX.Element | string
   contentProps?: ContentProps
   disabled?: boolean
@@ -33,6 +34,7 @@ export const Tooltip = (props: TooltipProps) => {
   const [local, rootProps] = splitProps(props, [
     "showArrow",
     "children",
+    "trigger",
     "disabled",
     "portalled",
     "content",
@@ -43,9 +45,11 @@ export const Tooltip = (props: TooltipProps) => {
   const portalled = () => local.portalled ?? true
 
   return (
-    <Show when={!local.disabled} fallback={local.children}>
+    <Show when={!local.disabled} fallback={local.trigger?.(() => ({})) ?? local.children}>
       <Root {...rootProps}>
-        <Trigger>{local.children}</Trigger>
+        <Show when={local.trigger} fallback={<Trigger>{local.children}</Trigger>}>
+          {(trigger) => <ArkTooltip.Trigger asChild={trigger()} />}
+        </Show>
         <Show
           when={portalled()}
           fallback={

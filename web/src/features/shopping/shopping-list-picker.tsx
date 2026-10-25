@@ -1,5 +1,5 @@
-import { MoreHorizontal } from "lucide-solid"
-import { createResource, createSignal, createUniqueId, Show } from "solid-js"
+import { ChevronDown } from "lucide-solid"
+import { createResource, createSignal, createUniqueId, For, Show } from "solid-js"
 import { css } from "styled-system/css"
 
 import { client, expectOk, unwrap } from "@/api/client"
@@ -7,9 +7,15 @@ import { ChangeError, errorMessage, Problem } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import { ConfirmDialog, Dialog } from "@/components/ui/dialog"
 import { FormField } from "@/components/ui/field"
-import { IconButton } from "@/components/ui/icon-button"
 import { Input } from "@/components/ui/input"
-import { Menu, MenuItem, MenuSeparator } from "@/components/ui/menu"
+import {
+  Menu,
+  MenuIndicator,
+  MenuItem,
+  MenuRadioItem,
+  MenuRadioItemGroup,
+  MenuSeparator,
+} from "@/components/ui/menu"
 import { Select } from "@/components/ui/select"
 import { createAsyncAction } from "@/lib/create-async-action"
 import { isolate } from "@/lib/direction"
@@ -18,25 +24,15 @@ import { uniqueID } from "@/lib/unique-id"
 
 import { m } from "../../lib/messages.ts"
 
-export function ShoppingListPicker(props: {
-  principal: string
-  library: string
-  value: string
-  canCreate?: boolean
-  onSelect: (id: string) => void
-}) {
-  let creationID = uniqueID()
-  const formID = createUniqueId()
-  const [creating, setCreating] = createSignal<"create" | "rename">()
-  const [deleting, setDeleting] = createSignal(false)
-  const [name, setName] = createSignal("")
-  const { busy: saving, error, setError, run } = createAsyncAction()
+type Owner = { principal: string; library: string }
+
+function createShoppingLists(props: Owner & { name?: string }) {
   const headers = () => ({
     "X-Savorum-Principal": props.principal,
     "X-Savorum-Library": props.library,
   })
   const [lists, { refetch }] = createResource(
-    () => JSON.stringify([props.principal, props.library]),
+    () => JSON.stringify([props.principal, props.library, props.name]),
     async () =>
       unwrap(
         await client.GET("/api/v1/shopping/lists", { headers: headers() }),
@@ -48,13 +44,84 @@ export function ShoppingListPicker(props: {
       ? settled(lists)!
       : [{ id: "groceries", name: m.shopping_groceries() }]
     ).map((list) => ({ value: list.id, label: list.name }))
+  return { lists, refetch, options, headers }
+}
 
-  const currentName = () => options().find((option) => option.value === props.value)?.label ?? ""
+const styles = {
+  trigger: css({
+    alignItems: "center",
+    background: "none",
+    border: "none",
+    borderRadius: "l1",
+    color: "inherit",
+    cursor: "pointer",
+    display: "inline-flex",
+    font: "inherit",
+    gap: "1.5",
+    letterSpacing: "inherit",
+    marginInline: "-1",
+    minHeight: "11",
+    paddingInline: "1",
+    textAlign: "start",
+    "& > [data-part=indicator]": { color: "fg.muted", flexShrink: "0" },
+    _hover: { "& > [data-part=indicator]": { color: "accent.default" } },
+  }),
+  name: css({ overflowWrap: "break-word" }),
+  item: css({ "@media (pointer: coarse)": { minHeight: "11" } }),
+}
+
+export function ShoppingListPicker(
+  props: Owner & { value: string; onSelect: (id: string) => void },
+) {
+  const shared = createShoppingLists(props)
+  return (
+    <div class={css({ display: "grid", gap: "3" })}>
+      <Show when={shared.options().length > 1}>
+        <Select
+          label={m.shopping_list()}
+          value={props.value}
+          items={shared.options()}
+          onValueChange={(id) => props.onSelect(id)}
+        />
+      </Show>
+      <Show when={shared.lists.error}>
+        <Problem message={errorMessage(shared.lists.error, m.shopping_load_failed())} />
+        <div>
+          <Button variant="outline" onClick={() => void shared.refetch()}>
+            {m.shopping_retry()}
+          </Button>
+        </div>
+      </Show>
+    </div>
+  )
+}
+
+export function ShoppingListHeading(
+  props: Owner & {
+    value: string
+    name?: string
+    class?: string
+    canCreate?: boolean
+    onSelect: (id: string) => void
+  },
+) {
+  let creationID = uniqueID()
+  const formID = createUniqueId()
+  const shared = createShoppingLists(props)
+  const [creating, setCreating] = createSignal<"create" | "rename">()
+  const [deleting, setDeleting] = createSignal(false)
+  const [name, setName] = createSignal("")
+  const { busy: saving, error, setError, run } = createAsyncAction()
+
+  const currentName = () =>
+    shared.options().find((option) => option.value === props.value)?.label ??
+    props.name ??
+    (props.value === "groceries" ? m.shopping_groceries() : "")
 
   function remove() {
     if (saving()) return
     const listID = props.value
-    const scope = headers()
+    const scope = shared.headers()
     const onSelect = props.onSelect
     void run(async () => {
       expectOk(
@@ -64,7 +131,7 @@ export function ShoppingListPicker(props: {
         }),
         m.shopping_list_changed_failed(),
       )
-      await refetch()
+      await shared.refetch()
       setDeleting(false)
       onSelect("groceries")
     })
@@ -76,7 +143,7 @@ export function ShoppingListPicker(props: {
     const renaming = creating() === "rename"
     const listID = props.value
     const id = creationID
-    const scope = headers()
+    const scope = shared.headers()
     const onSelect = props.onSelect
     void run(async () => {
       const list = renaming
@@ -95,7 +162,7 @@ export function ShoppingListPicker(props: {
             }),
             m.shopping_create_list_failed(),
           )
-      await refetch()
+      await shared.refetch()
       setCreating(undefined)
       setName("")
       onSelect(list.id)
@@ -110,20 +177,12 @@ export function ShoppingListPicker(props: {
   }
 
   return (
-    <div class={css({ display: "grid", gap: "3" })}>
-      <div class={css({ alignItems: "end", display: "flex", gap: "2" })}>
-        {/* With one list there is nothing to choose between. */}
-        <Show when={options().length > 1}>
-          <div class={css({ flex: "1", minWidth: "12rem" })}>
-            <Select
-              label={m.shopping_list()}
-              value={props.value}
-              items={options()}
-              onValueChange={(id) => props.onSelect(id)}
-            />
-          </div>
-        </Show>
-        <Show when={props.canCreate}>
+    <>
+      <Show
+        when={props.canCreate || shared.options().length > 1}
+        fallback={<h1 class={props.class}>{currentName()}</h1>}
+      >
+        <h1 class={props.class}>
           <Menu
             onSelect={({ value }) => {
               if (value === "create" || value === "rename") openDialog(value)
@@ -133,26 +192,51 @@ export function ShoppingListPicker(props: {
               }
             }}
             trigger={(trigger) => (
-              <IconButton {...trigger()} variant="outline" aria-label={m.shopping_list_actions()}>
-                <MoreHorizontal aria-hidden="true" size={18} />
-              </IconButton>
+              <button {...trigger()} type="button" class={styles.trigger}>
+                <span class={styles.name}>{currentName()}</span>
+                <MenuIndicator>
+                  <ChevronDown aria-hidden="true" size={22} />
+                </MenuIndicator>
+              </button>
             )}
           >
-            <MenuItem value="create">{m.shopping_new_list()}</MenuItem>
-            <Show when={props.value !== "groceries"}>
-              <MenuItem value="rename">{m.shopping_rename_list()}</MenuItem>
+            <MenuRadioItemGroup
+              value={`list:${props.value}`}
+              onValueChange={(details) => props.onSelect(details.value.slice("list:".length))}
+            >
+              <For each={shared.options()}>
+                {(option) => (
+                  <MenuRadioItem class={styles.item} value={`list:${option.value}`}>
+                    {option.label}
+                  </MenuRadioItem>
+                )}
+              </For>
+            </MenuRadioItemGroup>
+            <Show when={props.canCreate}>
               <MenuSeparator />
-              <MenuItem value="delete">{m.shopping_delete_list()}</MenuItem>
+              <MenuItem class={styles.item} value="create">
+                {m.shopping_new_list()}
+              </MenuItem>
+              <Show when={props.value !== "groceries"}>
+                <MenuItem class={styles.item} value="rename">
+                  {m.shopping_rename_list()}
+                </MenuItem>
+                <MenuItem class={styles.item} value="delete">
+                  {m.shopping_delete_list()}
+                </MenuItem>
+              </Show>
             </Show>
           </Menu>
-        </Show>
-      </div>
-      <Show when={lists.error}>
-        <Problem message={errorMessage(lists.error, m.shopping_load_failed())} />
-        <div>
-          <Button variant="outline" onClick={() => void refetch()}>
-            {m.shopping_retry()}
-          </Button>
+        </h1>
+      </Show>
+      <Show when={shared.lists.error}>
+        <div class={css({ display: "grid", gap: "3", width: "100%" })}>
+          <Problem message={errorMessage(shared.lists.error, m.shopping_load_failed())} />
+          <div>
+            <Button variant="outline" onClick={() => void shared.refetch()}>
+              {m.shopping_retry()}
+            </Button>
+          </div>
         </div>
       </Show>
       <Show when={deleting()}>
@@ -203,6 +287,6 @@ export function ShoppingListPicker(props: {
           </form>
         </Dialog>
       </Show>
-    </div>
+    </>
   )
 }

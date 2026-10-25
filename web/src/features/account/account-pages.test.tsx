@@ -16,9 +16,12 @@ import { AdminPeoplePage } from "./admin-people-page"
 import { AdminProvidersPage } from "./admin-providers-page"
 import { AssistantApproval } from "./assistant-approval"
 import { AssistantPanel } from "./assistant-panel"
+import { AuditView } from "./audit-view"
 import { LibraryAccess } from "./library-access-page"
 import { Login } from "./login-page"
+import { PasskeysPanel, RecoveryCodesPanel } from "./passkeys-and-recovery"
 import { SecurityPage } from "./security-page"
+import { SessionsPanel } from "./sessions-panel"
 import { SignOutDialog } from "./sign-out-dialog"
 import { TokensPage } from "./token-panel"
 
@@ -159,21 +162,84 @@ test("login inputs retain identity, focus, caret, and composed text", async () =
 
 test("security inputs retain identity, focus, caret, and composed text", async () => {
   const screen = render(() => <SecurityPage />)
-  fireEvent.click(await screen.findByRole("button", { name: /Personal key/ }))
+  fireEvent.click(await screen.findByRole("button", { name: "Rename Personal key" }))
   await screen.findByLabelText("Name for Personal key")
   await verifyInputs(screen.container)
+})
+
+test("saving a passkey name restores focus after the action is enabled", async () => {
+  const screen = render(() => <PasskeysPanel />)
+  fireEvent.click(await screen.findByRole("button", { name: "Rename Personal key" }))
+  const input = screen.getByLabelText("Name for Personal key")
+  fireEvent.input(input, { target: { value: "Renamed key" } })
+  fireEvent.submit(input.closest("form")!)
+  await waitFor(() =>
+    expect(document.activeElement).toBe(
+      screen.getByRole("button", { name: "Rename Personal key" }),
+    ),
+  )
+})
+
+test("a failed passkey rename preserves the draft and restores input focus", async () => {
+  const { accountRequest } = await import("./account-state")
+  const screen = render(() => <PasskeysPanel />)
+  fireEvent.click(await screen.findByRole("button", { name: "Rename Personal key" }))
+  const input = screen.getByLabelText("Name for Personal key") as HTMLInputElement
+  fireEvent.input(input, { target: { value: "Travel key" } })
+  let reject!: (error: Error) => void
+  vi.mocked(accountRequest).mockImplementationOnce(
+    () =>
+      new Promise((_, fail) => {
+        reject = fail
+      }),
+  )
+  input.focus()
+  fireEvent.submit(input.closest("form")!)
+  expect(input.disabled).toBe(true)
+  input.blur()
+  reject(new Error("Connection interrupted"))
+  await screen.findByText("Connection interrupted")
+  await waitFor(() => expect(document.activeElement).toBe(input))
+  expect(input.value).toBe("Travel key")
+})
+
+test("a failed passkey refresh keeps the row available for retry", async () => {
+  const { accountRequest } = await import("./account-state")
+  const screen = render(() => <PasskeysPanel />)
+  fireEvent.click(await screen.findByRole("button", { name: "Rename Personal key" }))
+  const input = screen.getByLabelText("Name for Personal key")
+  fireEvent.input(input, { target: { value: "Travel key" } })
+  vi.mocked(accountRequest)
+    .mockResolvedValueOnce({})
+    .mockRejectedValueOnce(new Error("Refresh interrupted"))
+  fireEvent.submit(input.closest("form")!)
+  await screen.findByText("Could not load your sign-in methods. Reload the page to try again.")
+  await waitFor(() =>
+    expect(document.activeElement).toBe(
+      screen.getByRole("button", { name: "Rename Personal key" }),
+    ),
+  )
+  fireEvent.click(screen.getByRole("button", { name: "Retry" }))
+  await waitFor(() => expect(screen.queryByRole("button", { name: "Retry" })).toBeNull())
 })
 
 test("library access inputs retain identity, focus, caret, and composed text", async () => {
   const screen = render(() => <LibraryAccess libraryID="l1" />)
   await screen.findByLabelText("Private label (optional)")
+  fireEvent.click(screen.getByRole("button", { name: "More filters" }))
   await verifyInputs(screen.container)
 })
 
 test("administration inputs retain identity, focus, caret, and composed text", async () => {
   const people = render(() => <AdminPeoplePage />)
-  await people.findByLabelText("New password for Sam")
-  await verifyInputs(people.container)
+  fireEvent.click(await people.findByRole("button", { name: "Manage Sam" }))
+  const manage = await portal.findByRole("dialog", { name: "Manage Sam" })
+  await verifyInputs(manage)
+  fireEvent.click(within(manage).getByRole("button", { name: "Done" }))
+  fireEvent.click(people.getByRole("button", { name: "Add user" }))
+  const create = await portal.findByRole("dialog", { name: "Add user" })
+  await verifyInputs(create)
+  fireEvent.click(within(create).getByRole("button", { name: "Cancel" }))
   const libraries = render(() => <AdminLibrariesPage />)
   await libraries.findByLabelText("Library identifier")
   await verifyInputs(libraries.container)
@@ -186,6 +252,166 @@ test("token inputs retain identity, focus, caret, and composed text", async () =
   const screen = render(() => <TokensPage />)
   await screen.findByLabelText("Token name")
   await verifyInputs(screen.container)
+})
+
+test("a failed administrative password reset preserves the entered password", async () => {
+  const { accountRequest } = await import("./account-state")
+  const screen = render(() => <AdminPeoplePage />)
+  fireEvent.click(await screen.findByRole("button", { name: "Manage Sam" }))
+  const dialog = await portal.findByRole("dialog", { name: "Manage Sam" })
+  const input = within(dialog).getByLabelText("New password for Sam")
+  fireEvent.input(input, { target: { value: "a complete password for retry" } })
+  vi.mocked(accountRequest).mockRejectedValueOnce(new Error("Request interrupted"))
+  fireEvent.submit(input.closest("form")!)
+  await within(dialog).findByText("Request interrupted")
+  expect((input as HTMLInputElement).value).toBe("a complete password for retry")
+  expect(input.isConnected).toBe(true)
+  await waitFor(() => expect(document.activeElement).toBe(input))
+  expect(portal.getAllByRole("alert")).toHaveLength(1)
+  fireEvent.click(within(dialog).getByRole("button", { name: "Done" }))
+  await waitFor(() => expect(portal.queryByText("Request interrupted")).toBeNull())
+})
+
+test("a failed account creation stays in its dialog and clears when cancelled", async () => {
+  const { accountRequest } = await import("./account-state")
+  const screen = render(() => <AdminPeoplePage />)
+  fireEvent.click(await screen.findByRole("button", { name: "Add user" }))
+  const dialog = await portal.findByRole("dialog", { name: "Add user" })
+  await verifyInputs(dialog)
+  vi.mocked(accountRequest).mockRejectedValueOnce(new Error("Request interrupted"))
+  fireEvent.submit(dialog.querySelector("form")!)
+  await within(dialog).findByText("Request interrupted")
+  expect(portal.getAllByRole("alert")).toHaveLength(1)
+  fireEvent.click(within(dialog).getByRole("button", { name: "Cancel" }))
+  await waitFor(() => expect(portal.queryByText("Request interrupted")).toBeNull())
+})
+
+test("a failed user-list refresh keeps the management dialog mounted", async () => {
+  const { accountRequest } = await import("./account-state")
+  const screen = render(() => <AdminPeoplePage />)
+  fireEvent.click(await screen.findByRole("button", { name: "Manage Sam" }))
+  const dialog = await portal.findByRole("dialog", { name: "Manage Sam" })
+  const input = within(dialog).getByLabelText("New password for Sam") as HTMLInputElement
+  fireEvent.input(input, { target: { value: "a complete password for retry" } })
+  vi.mocked(accountRequest)
+    .mockResolvedValueOnce({})
+    .mockRejectedValueOnce(new Error("Refresh interrupted"))
+  fireEvent.submit(input.closest("form")!)
+  await screen.findByText("Could not load accounts.")
+  expect(dialog.isConnected).toBe(true)
+  expect(within(dialog).getByText("Refresh interrupted")).toBeTruthy()
+  expect(input.isConnected).toBe(true)
+  await waitFor(() => expect(input.disabled).toBe(false))
+  expect(input.value).toBe("")
+})
+
+test("a successful administrative reset keeps its dialog and clears the password", async () => {
+  const screen = render(() => <AdminPeoplePage />)
+  fireEvent.click(await screen.findByRole("button", { name: "Manage Sam" }))
+  const dialog = await portal.findByRole("dialog", { name: "Manage Sam" })
+  const input = within(dialog).getByLabelText("New password for Sam") as HTMLInputElement
+  expect(document.getElementById(input.getAttribute("aria-describedby")!)?.textContent).toBe(
+    "Resetting the password signs this user out everywhere.",
+  )
+  fireEvent.input(input, { target: { value: "a complete replacement password" } })
+  fireEvent.submit(input.closest("form")!)
+  await within(dialog).findByText("Password reset. This user has been signed out of all sessions.")
+  expect(portal.getByRole("dialog", { name: "Manage Sam" })).toBe(dialog)
+  expect(within(dialog).getByLabelText("New password for Sam")).toBe(input)
+  expect(input.value).toBe("")
+})
+
+test("a failed disable keeps the confirmation and recovery message visible", async () => {
+  const { accountRequest } = await import("./account-state")
+  const screen = render(() => <AdminPeoplePage />)
+  await screen.findByRole("button", { name: "Manage Sam" })
+  expect(screen.queryByRole("button", { name: "Disable Sam and revoke their sessions" })).toBeNull()
+  fireEvent.click(screen.getByRole("button", { name: "Manage Sam" }))
+  const dialog = await portal.findByRole("dialog", { name: "Manage Sam" })
+  fireEvent.click(
+    within(dialog).getByRole("button", { name: "Disable Sam and revoke their sessions" }),
+  )
+  vi.mocked(accountRequest).mockRejectedValueOnce(new Error("Request interrupted"))
+  fireEvent.click(within(dialog).getByRole("button", { name: "Disable and revoke sessions" }))
+  await within(dialog).findByText("Request interrupted")
+  expect(dialog.isConnected).toBe(true)
+  expect(within(dialog).getByRole("button", { name: "Cancel" }).hasAttribute("disabled")).toBe(
+    false,
+  )
+})
+
+test.each([0, 1, 2])("recovery status describes %i available codes", async (remaining) => {
+  const { accountRequest } = await import("./account-state")
+  vi.mocked(accountRequest).mockResolvedValueOnce({ remaining, allowed: true })
+  const screen = render(() => <RecoveryCodesPanel />)
+  await screen.findByText(
+    remaining === 0
+      ? "No recovery codes available."
+      : `${remaining} recovery code${remaining === 1 ? "" : "s"} remaining.`,
+  )
+})
+
+test("sessions put the current browser first and keep both activity dates", async () => {
+  const { accountRequest } = await import("./account-state")
+  vi.mocked(accountRequest).mockResolvedValueOnce({
+    sessions: [
+      {
+        id: "older",
+        current: false,
+        auth_method: "local",
+        created_at: "2026-09-01T00:00:00Z",
+        last_seen_at: "2026-09-03T00:00:00Z",
+      },
+      {
+        id: "current",
+        current: true,
+        auth_method: "local",
+        created_at: "2026-09-01T00:00:00Z",
+        last_seen_at: "2026-09-02T00:00:00Z",
+      },
+    ],
+  })
+  const screen = render(() => <SessionsPanel />)
+  await screen.findByText("This browser")
+  const rows = screen.getAllByRole("listitem")
+  expect(rows[0]?.textContent).toContain("This browser")
+  expect(within(rows[0]!).queryByRole("button")).toBeNull()
+  expect(screen.getAllByText(/^Last active /)).toHaveLength(2)
+  expect(screen.getAllByText(/^Signed in /)).toHaveLength(2)
+  expect(within(rows[1]!).getByRole("button", { name: /^Revoke the session/ })).toBeTruthy()
+})
+
+test("a large session list stays bounded and keeps this browser on every page", async () => {
+  const { accountRequest } = await import("./account-state")
+  vi.mocked(accountRequest).mockResolvedValueOnce({
+    sessions: [
+      {
+        id: "current",
+        current: true,
+        auth_method: "local",
+        created_at: "2026-09-01T00:00:00Z",
+        last_seen_at: "2026-09-03T00:00:00Z",
+      },
+      ...Array.from({ length: 10 }, (_, index) => ({
+        id: `other-${index}`,
+        current: false,
+        auth_method: "local",
+        created_at: "2026-09-01T00:00:00Z",
+        last_seen_at: `2026-09-${String(index + 4).padStart(2, "0")}T00:00:00Z`,
+      })),
+    ],
+  })
+  const screen = render(() => <SessionsPanel />)
+  const next = await screen.findByRole("button", { name: "Next" })
+  expect(screen.getAllByRole("listitem")).toHaveLength(5)
+  expect(screen.getByRole("button", { name: "Previous" }).hasAttribute("disabled")).toBe(true)
+  fireEvent.click(next)
+  expect(screen.getAllByRole("listitem")).toHaveLength(5)
+  expect(screen.getByText("This browser")).toBeTruthy()
+  fireEvent.click(next)
+  expect(screen.getAllByRole("listitem")).toHaveLength(3)
+  expect(screen.getByText("This browser")).toBeTruthy()
+  expect(next.hasAttribute("disabled")).toBe(true)
 })
 
 test("the setup prompt contains no secret and creates no credential", async () => {
@@ -325,6 +551,67 @@ test("administration stays hidden from a member who is not an administrator", ()
   const people = render(() => <AdminPeoplePage />)
   expect(people.queryByLabelText("Login name")).toBeNull()
   expect(people.queryByRole("navigation")).toBeNull()
+})
+
+test("audit identifier filters retain typing, focus, and composition", async () => {
+  const page = render(() => <AuditView />)
+  fireEvent.click(page.getByRole("button", { name: "More filters" }))
+  await verifyInputs(page.container)
+})
+
+test("audit paging uses applied filters while a new filter is being drafted", async () => {
+  const { accountRequest } = await import("./account-state")
+  vi.mocked(accountRequest).mockResolvedValueOnce({
+    events: Array.from({ length: 100 }, (_, index) => ({
+      id: 100 - index,
+      created_at: 1800000000,
+      actor_id: "u1",
+      target_type: "user",
+      target_id: "u2",
+      action: "user.updated",
+      outcome: "succeeded",
+    })),
+  })
+  const page = render(() => <AuditView />)
+  await page.findByRole("button", { name: "Older activity" })
+  fireEvent.click(page.getByRole("button", { name: "More filters" }))
+  fireEvent.input(page.getByLabelText("Actor ID"), { target: { value: "unapplied-actor" } })
+  fireEvent.click(page.getByRole("button", { name: "Older activity" }))
+  await waitFor(() => expect(accountRequest).toHaveBeenCalledWith("/account/audit?before=1"))
+  fireEvent.click(await page.findByRole("button", { name: "Previous" }))
+  await waitFor(() => expect(accountRequest).toHaveBeenLastCalledWith("/account/audit?"))
+})
+
+test("connected status names its remote address and keeps setup editing stable while disconnecting", async () => {
+  const { accountRequest } = await import("./account-state")
+  vi.mocked(accountRequest).mockResolvedValueOnce({
+    configured: true,
+    state: "connected",
+    certificate_ready: true,
+    remote_origin: "https://kitchen.example.com",
+  })
+  const page = render(() => <AdminConnectPage />)
+  await page.findByRole("heading", { name: "Connected" })
+  expect(page.getByRole("link", { name: "https://kitchen.example.com" }).getAttribute("href")).toBe(
+    "https://kitchen.example.com",
+  )
+  const input = page.getByLabelText("Setup document") as HTMLTextAreaElement
+  fireEvent.input(input, { target: { value: "a replacement setup in progress" } })
+  fireEvent.click(page.getByRole("button", { name: "Disconnect" }))
+  await page.findByRole("heading", { name: "Disconnected" })
+  expect(accountRequest).toHaveBeenCalledWith("/instance/connect", "DELETE")
+  expect(page.getByLabelText("Setup document")).toBe(input)
+  expect(input.value).toBe("a replacement setup in progress")
+})
+
+test("invalid Connect setup stays available for correction", async () => {
+  const page = render(() => <AdminConnectPage />)
+  const input = page.getByLabelText("Setup document") as HTMLTextAreaElement
+  fireEvent.input(input, { target: { value: "an unfinished setup document" } })
+  fireEvent.submit(input.closest("form")!)
+  await page.findByText("The setup document is invalid. Copy a new one from Savorum Cloud.")
+  expect(page.getByLabelText("Setup document")).toBe(input)
+  expect(input.value).toBe("an unfinished setup document")
 })
 
 test("Connect setup retains its input while typing and composing", async () => {

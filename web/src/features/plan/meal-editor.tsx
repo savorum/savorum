@@ -3,7 +3,13 @@ import { For, Index, Show, createSignal, createResource, untrack } from "solid-j
 import { createStore } from "solid-js/store"
 import { css } from "styled-system/css"
 
-import type { Meal, MealDish, MealInput, RecipeSummary } from "@/api/client"
+import {
+  fallbackToOriginalImage,
+  type Meal,
+  type MealDish,
+  type MealInput,
+  type RecipeSummary,
+} from "@/api/client"
 import { getSavedMeal } from "@/api/meals"
 import { suggestRecipes, suggestSavedMeals, type SavedMealSelection } from "@/api/selections"
 import { ChangeError, Problem } from "@/components/status"
@@ -13,6 +19,7 @@ import { Disclosure } from "@/components/ui/disclosure"
 import { FormField } from "@/components/ui/field"
 import { IconButton } from "@/components/ui/icon-button"
 import { Input } from "@/components/ui/input"
+import { Segmented } from "@/components/ui/segmented"
 import { Select } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { authEnabled } from "@/features/account/account-state"
@@ -22,10 +29,6 @@ import { formatRational, parseRational } from "@/lib/rational"
 import { latestUnlessFailed, settled } from "@/lib/settled"
 
 import { m } from "../../lib/messages.ts"
-
-interface EditableDish extends MealDish {
-  localKey: string
-}
 
 const styles = {
   form: css({
@@ -62,8 +65,6 @@ const styles = {
     borderWidth: "1px",
     display: "grid",
     gap: "3",
-    maxHeight: "60",
-    overflowY: "auto",
     padding: "2",
   }),
   choiceGroup: css({ display: "grid", gap: "1" }),
@@ -85,7 +86,7 @@ const styles = {
   choiceDetail: css({ color: "fg.muted", fontSize: "sm", fontWeight: "normal" }),
 }
 
-function editableDish(dish?: MealDish): EditableDish {
+function editableDish(dish?: MealDish): MealDish {
   return {
     id: dish?.id,
     entry_id: dish?.entry_id,
@@ -95,7 +96,6 @@ function editableDish(dish?: MealDish): EditableDish {
     scale: dish?.scale ?? "1",
     notes: dish?.notes,
     plain_items: dish?.plain_items,
-    localKey: globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`,
   }
 }
 
@@ -117,19 +117,37 @@ export function MealEditor(props: {
     dishes: (initialMeal?.dishes ?? []).map(editableDish),
   })
   const [search, setSearch] = createSignal("")
+  const [choiceKind, setChoiceKind] = createSignal("recipes")
+  const [choosing, setChoosing] = createSignal(!initialMeal?.dishes?.length)
+  let dishesElement: HTMLElement | undefined
+  const finishChoice = () => {
+    setChoosing(false)
+    const index = draft.dishes.length - 1
+    queueMicrotask(() =>
+      dishesElement?.querySelectorAll<HTMLTextAreaElement>("textarea").item(index)?.focus(),
+    )
+  }
   const [choiceOffset, setChoiceOffset] = createSignal(0)
   const [matches] = createResource(
-    () => ({ query: search().trim(), offset: choiceOffset() }),
+    () => choiceKind() === "recipes" && { query: search().trim(), offset: choiceOffset() },
     (request) => suggestRecipes(request.query, request.offset),
   )
-  const recipeChoices = () => (matches.loading ? [] : (settled(matches)?.items ?? []))
+  const recipeChoices = () => (matches.loading ? [] : (settled(matches)?.items ?? []).slice(0, 5))
   // A saved meal adds its dishes to the meal being planned, so it is offered
   // only when planning.
   const [savedMeals] = createResource(
-    () => (props.savedCombination ? false : { query: search().trim(), offset: choiceOffset() }),
+    () =>
+      !props.savedCombination && choiceKind() === "saved"
+        ? { query: search().trim(), offset: choiceOffset() }
+        : false,
     (request) => suggestSavedMeals(request.query, request.offset),
   )
-  const savedChoices = () => (savedMeals.loading ? [] : (settled(savedMeals)?.items ?? []))
+  const savedChoices = () =>
+    savedMeals.loading ? [] : (settled(savedMeals)?.items ?? []).slice(0, 5)
+  const choicesLoading = () => (choiceKind() === "recipes" ? matches.loading : savedMeals.loading)
+  const choicePage = () =>
+    choiceKind() === "recipes" ? latestUnlessFailed(matches) : latestUnlessFailed(savedMeals)
+  const moreChoices = () => (choicePage()?.items.length ?? 0) > 5 || choicePage()?.has_more
   const [invalid, setInvalid] = createSignal<string>()
   const { busy, error, setError, run } = createAsyncAction()
   const refuse = (message: string) => {
@@ -150,6 +168,7 @@ export function MealEditor(props: {
         scale: "1",
       }),
     )
+    finishChoice()
   }
 
   const addSavedMeal = async (summary: SavedMealSelection) => {
@@ -165,6 +184,7 @@ export function MealEditor(props: {
         }),
       ),
     ])
+    finishChoice()
   }
 
   const submit = () => {
@@ -180,7 +200,7 @@ export function MealEditor(props: {
     }
     const dishes = draft.dishes
       .filter((dish) => dish.display_name.trim())
-      .map(({ localKey: _localKey, ...dish }) => ({
+      .map((dish) => ({
         ...dish,
         display_name: dish.display_name.trim(),
         scale: dish.scale?.trim() ? formatRational(parseRational(dish.scale)!) : undefined,
@@ -241,6 +261,10 @@ export function MealEditor(props: {
           <Button
             colorPalette="accent"
             loading={busy()}
+            disabled={
+              !draft.dishes.some((dish) => dish.display_name.trim()) ||
+              (props.savedCombination && !draft.name.trim())
+            }
             loadingText={m.plan_saving()}
             onClick={submit}
           >
@@ -264,7 +288,42 @@ export function MealEditor(props: {
             />
           </FormField>
         </Show>
-        <section aria-labelledby="meal-dishes-heading" class={css({ display: "grid", gap: "4" })}>
+        <Show when={!props.savedCombination}>
+          <div class={styles.split}>
+            <FormField
+              label={m.plan_date()}
+              hint={
+                !draft.date ? `${m.plan_unscheduled()} · ${m.plan_unscheduled_hint()}` : undefined
+              }
+            >
+              <Input
+                type="date"
+                value={draft.date}
+                onInput={(event) => setDraft("date", event.currentTarget.value)}
+              />
+            </FormField>
+            <Select
+              label={m.plan_meal_type()}
+              value={draft.mealType}
+              items={[
+                { value: "", label: m.plan_meal_type_unspecified() },
+                { value: "breakfast", label: m.plan_breakfast() },
+                { value: "lunch", label: m.plan_lunch() },
+                { value: "dinner", label: m.plan_dinner() },
+                { value: "snack", label: m.plan_snack() },
+              ]}
+              onValueChange={(value) => setDraft("mealType", value as typeof draft.mealType)}
+            />
+          </div>
+        </Show>
+
+        <section
+          ref={(element) => {
+            dishesElement = element
+          }}
+          aria-labelledby="meal-dishes-heading"
+          class={css({ display: "grid", gap: "4" })}
+        >
           <h2 id="meal-dishes-heading">{m.plan_dishes()}</h2>
           <Index each={draft.dishes}>
             {(dish, index) => (
@@ -371,8 +430,27 @@ export function MealEditor(props: {
           <Show when={draft.dishes.some((dish) => dish.entry_id)}>
             <p class={css({ fontSize: "sm", color: "fg.muted" })}>{m.plan_batch_hint()}</p>
           </Show>
-          <Disclosure label={m.cooking_add_recipe()} open={!initialMeal?.dishes?.length}>
+          <Disclosure
+            label={m.cooking_add_recipe()}
+            expanded={choosing()}
+            onExpandedChange={setChoosing}
+          >
             <div class={css({ display: "grid", gap: "3" })}>
+              <Show when={!props.savedCombination}>
+                <Segmented
+                  label={m.plan_dishes()}
+                  value={choiceKind()}
+                  size="md"
+                  options={[
+                    { value: "recipes", label: m.plan_recipes_group() },
+                    { value: "saved", label: m.plan_saved() },
+                  ]}
+                  onChange={(value) => {
+                    setChoiceKind(value)
+                    setChoiceOffset(0)
+                  }}
+                />
+              </Show>
               <FormField
                 label={props.savedCombination ? m.cooking_find_recipe() : m.plan_find_dish()}
               >
@@ -384,58 +462,25 @@ export function MealEditor(props: {
                   }}
                 />
               </FormField>
-              <Show when={matches.error}>
-                <Problem message={m.plan_recipes_failed()} />
+              <Show when={choiceKind() === "recipes" ? matches.error : savedMeals.error}>
+                <Problem
+                  message={
+                    choiceKind() === "recipes"
+                      ? m.plan_recipes_failed()
+                      : m.plan_saved_load_failed()
+                  }
+                />
               </Show>
-              <Show when={!search().trim() && !props.recipes.length}>
+              <Show when={choiceKind() === "recipes" && !search().trim() && !props.recipes.length}>
                 <p class={css({ color: "fg.muted", fontSize: "sm", margin: "0" })}>
                   {m.plan_no_recipes()}
                 </p>
               </Show>
-              <div class={styles.actions}>
-                <Button
-                  variant="outline"
-                  onClick={() => setDraft("dishes", draft.dishes.length, editableDish())}
-                >
-                  {m.plan_plain_dish()}
-                </Button>
-              </div>
               <Show
-                when={
-                  choiceOffset() > 0 ||
-                  latestUnlessFailed(matches)?.has_more ||
-                  latestUnlessFailed(savedMeals)?.has_more
-                }
+                when={choiceKind() === "saved" ? savedChoices().length : recipeChoices().length}
               >
-                <div class={styles.actions}>
-                  <Button
-                    type="button"
-                    variant="plain"
-                    disabled={!choiceOffset() || matches.loading || savedMeals.loading}
-                    onClick={() => setChoiceOffset(Math.max(0, choiceOffset() - 10))}
-                  >
-                    {m.common_previous()}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="plain"
-                    disabled={
-                      !(
-                        latestUnlessFailed(matches)?.has_more ||
-                        latestUnlessFailed(savedMeals)?.has_more
-                      ) ||
-                      matches.loading ||
-                      savedMeals.loading
-                    }
-                    onClick={() => setChoiceOffset(choiceOffset() + 10)}
-                  >
-                    {m.common_next()}
-                  </Button>
-                </div>
-              </Show>
-              <Show when={savedChoices().length || recipeChoices().length}>
                 <div class={styles.choices}>
-                  <Show when={savedChoices().length}>
+                  <Show when={choiceKind() === "saved" && savedChoices().length}>
                     <div role="group" aria-label={m.plan_saved()} class={styles.choiceGroup}>
                       <p class={styles.choiceHeading} aria-hidden="true">
                         {m.plan_saved()}
@@ -446,6 +491,7 @@ export function MealEditor(props: {
                             type="button"
                             variant="plain"
                             class={styles.choice}
+                            disabled={busy()}
                             aria-label={m.plan_add_saved_meal({ name: saved.name })}
                             onClick={() => {
                               const selected = { ...saved }
@@ -463,25 +509,36 @@ export function MealEditor(props: {
                       </For>
                     </div>
                   </Show>
-                  <Show when={recipeChoices().length}>
+                  <Show when={choiceKind() === "recipes" && recipeChoices().length}>
                     <div
                       role="group"
                       aria-label={m.plan_choose_recipe()}
                       class={styles.choiceGroup}
                     >
-                      <Show when={savedChoices().length}>
-                        <p class={styles.choiceHeading} aria-hidden="true">
-                          {m.plan_recipes_group()}
-                        </p>
-                      </Show>
                       <For each={recipeChoices()}>
                         {(recipe) => (
                           <Button
                             type="button"
                             variant="plain"
                             class={styles.choice}
+                            disabled={busy()}
                             onClick={() => addRecipe(recipe.id)}
                           >
+                            <Show when={recipe.primary_image?.url}>
+                              <img
+                                src={`${recipe.primary_image!.url}/derivatives/thumb`}
+                                onError={(event) => fallbackToOriginalImage(event.currentTarget)}
+                                alt=""
+                                loading="lazy"
+                                class={css({
+                                  width: "8",
+                                  height: "8",
+                                  objectFit: "cover",
+                                  borderRadius: "l1",
+                                  flexShrink: "0",
+                                })}
+                              />
+                            </Show>
                             {recipe.title}
                           </Button>
                         )}
@@ -490,32 +547,42 @@ export function MealEditor(props: {
                   </Show>
                 </div>
               </Show>
+              <Show when={choiceOffset() > 0 || moreChoices()}>
+                <div class={styles.actions}>
+                  <Button
+                    type="button"
+                    variant="plain"
+                    disabled={!choiceOffset() || choicesLoading()}
+                    onClick={() => setChoiceOffset(Math.max(0, choiceOffset() - 5))}
+                  >
+                    {m.common_previous()} ·{" "}
+                    {choiceKind() === "recipes" ? m.plan_recipes_group() : m.plan_saved()}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="plain"
+                    disabled={!moreChoices() || choicesLoading()}
+                    onClick={() => setChoiceOffset(choiceOffset() + 5)}
+                  >
+                    {m.common_next()} ·{" "}
+                    {choiceKind() === "recipes" ? m.plan_recipes_group() : m.plan_saved()}
+                  </Button>
+                </div>
+              </Show>
+              <div class={styles.actions}>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setDraft("dishes", draft.dishes.length, editableDish())
+                    finishChoice()
+                  }}
+                >
+                  {m.plan_plain_dish()}
+                </Button>
+              </div>
             </div>
           </Disclosure>
         </section>
-        <Show when={!props.savedCombination}>
-          <div class={styles.split}>
-            <FormField label={m.plan_date()}>
-              <Input
-                type="date"
-                value={draft.date}
-                onInput={(event) => setDraft("date", event.currentTarget.value)}
-              />
-            </FormField>
-            <Select
-              label={m.plan_meal_type()}
-              value={draft.mealType}
-              items={[
-                { value: "", label: m.plan_meal_type_unspecified() },
-                { value: "breakfast", label: m.plan_breakfast() },
-                { value: "lunch", label: m.plan_lunch() },
-                { value: "dinner", label: m.plan_dinner() },
-                { value: "snack", label: m.plan_snack() },
-              ]}
-              onValueChange={(value) => setDraft("mealType", value as typeof draft.mealType)}
-            />
-          </div>
-        </Show>
         <Show when={!props.savedCombination}>
           <FormField label={m.plan_name()} hint={m.plan_name_hint()}>
             <Input

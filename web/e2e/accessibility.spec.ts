@@ -1,19 +1,19 @@
 import AxeBuilder from "@axe-core/playwright"
 import { type Locator, type Page, expect, test } from "@playwright/test"
 
-import { choose, openSection } from "./controls"
+import { choose, openSection, settleAnimations } from "./controls"
 import { seedBook, seedRecipe } from "./library"
 
-async function expectAccessible(page: Page) {
-  await page.evaluate(async () => {
-    const animations = document
-      .getAnimations()
-      .filter((animation) => animation.effect?.getTiming().iterations !== Infinity)
-    await Promise.all(animations.map((animation) => animation.finished.catch(() => {})))
-  })
-  const results = await new AxeBuilder({ page })
-    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
-    .analyze()
+async function expectAccessible(page: Page, scope?: string) {
+  await settleAnimations(page)
+  const scan = new AxeBuilder({ page }).withTags([
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "wcag22aa",
+  ])
+  const results = await (scope ? scan.include(scope) : scan).analyze()
   expect(results.violations).toEqual([])
 }
 
@@ -399,6 +399,68 @@ test("resource-backed recipe searches retain focus, caret, composition, and DOM 
   await expect(candidate).toHaveCount(1)
   await expectStableControlledValue(bookSearch, "Searchable accessible")
 })
+
+test("the shopping item dialog retains typed and composed values at phone width", async ({
+  page,
+  request,
+}, testInfo) => {
+  const id = `dialog-${Math.random().toString(36).slice(2, 10)}`
+  expect((await request.post("/api/v1/shopping/lists", { data: { id, name: id } })).ok()).toBe(true)
+  expect(
+    (
+      await request.post(`/api/v1/shopping/lists/${id}/changes`, {
+        data: { id: `${id}-add`, kind: "add", item_id: "tea", base_revision: 0, name: "Tea" },
+      })
+    ).ok(),
+  ).toBe(true)
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto("/shopping")
+  await page.getByRole("heading", { level: 1 }).getByRole("button").click()
+  await page.getByRole("menuitemradio", { name: id, exact: true }).click()
+  const item = page.getByRole("button", { name: "Tea", exact: true })
+  await item.click()
+  const dialog = page.getByRole("dialog", { name: "Edit item", exact: true })
+  for (const label of ["Item name", "Amount to buy", "Section or aisle", "Note"]) {
+    const input = dialog.getByLabel(label, { exact: true })
+    const original = await input.elementHandle()
+    await input.fill("")
+    await input.pressSequentially("Green tea ")
+    await input.evaluate((element) => {
+      const control = element as HTMLInputElement
+      control.dispatchEvent(new CompositionEvent("compositionstart", { bubbles: true }))
+      control.value += "茶"
+      control.dispatchEvent(
+        new InputEvent("input", { bubbles: true, data: "茶", isComposing: true }),
+      )
+      control.dispatchEvent(new CompositionEvent("compositionend", { bubbles: true, data: "茶" }))
+    })
+    await expect(input).toBeFocused()
+    await expect(input).toHaveValue("Green tea 茶")
+    expect(await input.evaluate((element, original) => element === original, original)).toBe(true)
+    expect(await input.evaluate((element) => (element as HTMLInputElement).selectionStart)).toBe(11)
+  }
+  await expectAccessible(page)
+  await page.screenshot({ path: testInfo.outputPath("shopping-item-phone.png") })
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390)
+  await dialog.getByRole("button", { name: "Save changes", exact: true }).click()
+  await expect(dialog).toBeHidden()
+  await expect(page.getByRole("button", { name: /^Green tea 茶/ })).toBeVisible()
+})
+
+for (const colorScheme of ["light", "dark"] as const) {
+  test(`the add menu hover remains readable in ${colorScheme} mode`, async ({ page }, testInfo) => {
+    await page.emulateMedia({ colorScheme })
+    await page.goto("/")
+    await page.getByRole("button", { name: "Add recipes", exact: true }).click()
+    const item = page.getByRole("menuitem", { name: "From a file", exact: true })
+    await item.hover()
+    await expect(item).toHaveAttribute("data-highlighted", "")
+    await expectAccessible(page, '[role="menu"]')
+    await page.screenshot({ path: testInfo.outputPath(`add-menu-${colorScheme}.png`) })
+    await page.keyboard.press("Escape")
+    await expect(page.getByRole("button", { name: "Add recipes", exact: true })).toBeFocused()
+  })
+}
 
 test("the add menu offers writing and import from the keyboard", async ({ page }) => {
   await page.goto("/")

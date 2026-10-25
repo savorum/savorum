@@ -333,9 +333,8 @@ test("account management creates users, revokes sessions, changes passwords and 
       owner.getByRole("heading", { name: "People", exact: true, level: 1 }),
     ).toBeVisible()
 
-    const create = owner
-      .getByRole("heading", { name: "Create a local account", exact: true })
-      .locator("..")
+    await owner.getByRole("button", { name: "Add user", exact: true }).click()
+    const create = owner.getByRole("dialog", { name: "Add user", exact: true })
     await create.getByLabel("Login name", { exact: true }).pressSequentially("lifecycle")
     await create.getByLabel("Display name", { exact: true }).pressSequentially("Lifecycle member")
     await create.getByLabel("Initial password", { exact: true }).fill(password)
@@ -344,9 +343,11 @@ test("account management creates users, revokes sessions, changes passwords and 
       (response) =>
         response.url().endsWith("/api/v1/users") && response.request().method() === "POST",
     )
-    await create.getByRole("button", { name: "Create account", exact: true }).click()
+    await create.getByRole("button", { name: "Add user", exact: true }).click()
     expect((await creation).ok()).toBe(true)
-    const disable = owner.getByRole("button", {
+    await owner.getByRole("button", { name: "Manage Lifecycle member", exact: true }).click()
+    const management = owner.getByRole("dialog", { name: "Manage Lifecycle member", exact: true })
+    const disable = management.getByRole("button", {
       name: "Disable Lifecycle member and revoke their sessions",
       exact: true,
     })
@@ -355,15 +356,15 @@ test("account management creates users, revokes sessions, changes passwords and 
     const member = await memberContext.newPage()
     await login(member, "lifecycle")
     await disable.click()
-    await owner
-      .getByRole("dialog", { name: "Disable Lifecycle member?" })
+    await management
       .getByRole("button", { name: "Disable and revoke sessions", exact: true })
       .click()
-    const enable = owner.getByRole("button", { name: "Enable Lifecycle member", exact: true })
+    const enable = management.getByRole("button", { name: "Enable Lifecycle member", exact: true })
     await expect(enable).toBeVisible()
     expect((await memberContext.request.get(`${origin}/api/v1/recipes`)).status()).toBe(401)
     await enable.click()
     await expect(enable).toHaveCount(0)
+    await management.getByRole("button", { name: "Done", exact: true }).click()
     await login(member, "lifecycle")
     const other = await otherContext.newPage()
     await login(other, "lifecycle")
@@ -759,10 +760,11 @@ test("shared login and account inputs preserve focus, caret and composition", as
     await checkInputs()
     await login(page, "owner")
     await page.goto(`${origin}/admin`)
-    await expect(
-      page.getByRole("heading", { name: "Create a local account", exact: true }),
-    ).toBeVisible()
+    await page.getByRole("button", { name: "Add user", exact: true }).click()
+    const create = page.getByRole("dialog", { name: "Add user", exact: true })
+    await expect(create).toBeVisible()
     await checkInputs()
+    await create.getByRole("button", { name: "Cancel", exact: true }).click()
     await page.goto(`${origin}/account/security`)
     await expect(
       page.getByRole("heading", { name: "Sign-in and security", exact: true, level: 1 }),

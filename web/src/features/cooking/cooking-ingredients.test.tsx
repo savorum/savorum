@@ -57,7 +57,7 @@ test("a choice with different amounts is listed one ingredient to a line", () =>
   ))
   const items = [...view.container.querySelectorAll("li")]
   const lines = (item: Element) =>
-    [...item.querySelectorAll("label span span")].map((line) => line.textContent)
+    [...item.querySelectorAll("label > span > span")].map((line) => line.textContent)
   expect(lines(items[0])).toEqual([
     "325 g wheat flour",
     "or",

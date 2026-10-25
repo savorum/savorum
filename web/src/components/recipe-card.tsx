@@ -26,7 +26,6 @@ const styles = {
       borderRadius: "l2",
     },
     "&:hover .recipe-card-title": { color: "accent.default" },
-    "&:hover .recipe-card-favorite, &:focus-visible .recipe-card-favorite": { opacity: "1" },
   }),
   frame: css({
     aspectRatio: "4 / 3",
@@ -50,13 +49,18 @@ const styles = {
     justifyContent: "center",
   }),
   favorite: css({
-    color: "bg.surface",
-    filter: "drop-shadow(0 1px 1px rgba(0,0,0,0.25))",
-    insetBlockStart: "2.5",
-    insetInlineEnd: "2.5",
-    opacity: "0.8",
+    alignItems: "center",
+    background: "bg.surface",
+    borderRadius: "full",
+    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.22)",
+    color: "favorite.default",
+    display: "flex",
+    height: "1.75rem",
+    insetBlockStart: "2",
+    insetInlineEnd: "2",
+    justifyContent: "center",
     position: "absolute",
-    transition: "opacity 150ms ease",
+    width: "1.75rem",
   }),
   title: css({
     color: "fg.default",
@@ -74,7 +78,7 @@ const styles = {
     color: "fg.muted",
     display: "flex",
     flexWrap: "wrap",
-    fontSize: "2xs",
+    fontSize: "xs",
     gap: "1.5",
     margin: "0",
     marginTop: "1.5",
@@ -136,6 +140,14 @@ const styles = {
   dimmed: css({ opacity: "0.55" }),
 }
 
+export function recipeTime(recipe: Pick<RecipeSummary, "active_time" | "total_time">): string {
+  const active = formatDuration(recipe.active_time)
+  const total = formatDuration(recipe.total_time)
+  if (active && total && active !== total) return m.recipe_card_active_and_total({ active, total })
+  if (total) return total
+  return active ? m.recipe_card_active({ active }) : ""
+}
+
 export interface RecipeCardProps {
   recipe: RecipeSummary
   priority?: boolean
@@ -154,18 +166,6 @@ export const RecipeCard = (props: RecipeCardProps) => {
     scrollX: libraryScroll().x,
     scrollY: libraryScroll().y,
   })
-  /**
-   * Work and elapsed time, named separately whenever they differ; working time
-   * alone is always labelled as such.
-   */
-  const clock = () => {
-    const active = formatDuration(props.recipe.active_time)
-    const total = formatDuration(props.recipe.total_time)
-    if (active && total && active !== total)
-      return m.recipe_card_active_and_total({ active, total })
-    if (total) return total
-    return active ? m.recipe_card_active({ active }) : ""
-  }
   const made = () =>
     props.recipe.last_cooked
       ? m.recipe_card_made({ when: formatRelativeDate(props.recipe.last_cooked) })
@@ -192,10 +192,10 @@ export const RecipeCard = (props: RecipeCardProps) => {
       .filter(Boolean)
       .join(` ${m.common_dot_separator()} `)
   const meta = () =>
-    [clock(), made(), props.recipe.authors?.join(", ")]
+    [recipeTime(props.recipe), made(), props.recipe.authors?.join(", ")]
       .filter(Boolean)
       .join(` ${m.common_dot_separator()} `)
-  const shownTags = () => (props.recipe.tags ?? []).slice(0, 3)
+  const shownTags = () => (props.recipe.tags ?? []).slice(0, 2)
 
   const body = () => (
     <>
@@ -212,19 +212,16 @@ export const RecipeCard = (props: RecipeCardProps) => {
             class={styles.image}
             src={`${props.recipe.primary_image!.url}/derivatives/card`}
             onError={(event) => fallbackToOriginalImage(event.currentTarget)}
-            alt={props.recipe.primary_image?.alt ?? ""}
+            alt=""
             loading={props.priority ? "eager" : "lazy"}
             fetchpriority={props.priority ? "high" : "auto"}
             decoding="async"
           />
         </Show>
         <Show when={props.recipe.favorite}>
-          <Heart
-            class={`${styles.favorite} recipe-card-favorite`}
-            aria-label={m.recipe_card_favorite()}
-            fill="currentColor"
-            size={17}
-          />
+          <span class={styles.favorite} role="img" aria-label={m.recipe_card_favorite()}>
+            <Heart aria-hidden="true" fill="currentColor" size={15} />
+          </span>
         </Show>
         <Show when={props.selecting}>
           <span class={`${styles.mark} ${props.selected ? styles.marked : ""}`} aria-hidden="true">

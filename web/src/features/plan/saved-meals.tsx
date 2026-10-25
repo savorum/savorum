@@ -9,18 +9,20 @@ import {
   replaceSavedMeal,
   deleteSavedMeal,
 } from "@/api/meals"
+import { SkeletonCards } from "@/components/skeleton"
 import { ChangeError, ErrorState } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import { Dialog, ConfirmDialog } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { Menu, MenuItem } from "@/components/ui/menu"
+import { Menu, MenuItem, MenuSeparator } from "@/components/ui/menu"
 import { cookingOwner } from "@/features/cooking/cooking-owner"
 import { createAsyncAction } from "@/lib/create-async-action"
 import { settled } from "@/lib/settled"
 
 import { m } from "../../lib/messages.ts"
 import { MealEditor } from "./meal-editor"
-import { TileImages, scaledDish } from "./meal-tile-images"
+import { scaled } from "./meal-labels"
+import { TileImages } from "./meal-tile-images"
 import { tiles } from "./meal-tiles"
 
 export function SavedMeals(props: {
@@ -93,6 +95,9 @@ export function SavedMeals(props: {
           onRetry={() => void refetch()}
         />
       </Show>
+      <Show when={saved.loading && !settled(saved)}>
+        <SkeletonCards count={3} aspect="3 / 1" />
+      </Show>
       <Show when={!saved.loading && !saved.error && settled(saved)?.length === 0}>
         <p class={tiles.meta}>{m.plan_saved_empty()}</p>
       </Show>
@@ -108,7 +113,7 @@ export function SavedMeals(props: {
               </div>
               <div class={css({ alignContent: "start", display: "grid", gap: "2" })}>
                 <ul class={tiles.dishes}>
-                  <For each={meal.dishes ?? []}>{(dish) => <li>{scaledDish(dish)}</li>}</For>
+                  <For each={meal.dishes ?? []}>{(dish) => <li>{scaled(dish)}</li>}</For>
                 </ul>
                 <Show when={meal.notes}>
                   <p class={tiles.note}>{meal.notes}</p>
@@ -140,7 +145,10 @@ export function SavedMeals(props: {
                     <MenuItem value="cook">{m.cooking_together()}</MenuItem>
                   </Show>
                   <MenuItem value="edit">{m.plan_edit()}</MenuItem>
-                  <MenuItem value="delete">{m.plan_delete()}</MenuItem>
+                  <MenuSeparator />
+                  <MenuItem value="delete" class={tiles.destructive}>
+                    {m.plan_delete()}
+                  </MenuItem>
                 </Menu>
               </div>
             </article>
