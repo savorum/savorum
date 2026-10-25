@@ -6,6 +6,11 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+## 0.3.0
+
+- Add keyboard shortcuts.
+- Refine account and preferences layouts, user management, session lists, Connect setup, audit history, and recovery-code status.
+- Improve recipe unit controls and printing, meal planning, shopping, and import recovery.
 - Fix rare crashes caused by cancelled reads.
 - Fix assistant JSON and idempotent writes.
 
