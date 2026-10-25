@@ -172,7 +172,7 @@ test("client navigation preserves focus moved to a different header control", as
   const held = new Promise<void>((resolve) => (release = resolve))
   let requested!: () => void
   const loading = new Promise<void>((resolve) => (requested = resolve))
-  await page.route("**/assets/*.js", async (route) => {
+  await page.route("**/api/v1/books*", async (route) => {
     requested()
     await held
     await route.continue()
