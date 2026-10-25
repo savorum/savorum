@@ -159,6 +159,35 @@ test("skip navigation and client routing place focus at meaningful content", asy
 
   await page.getByRole("link", { name: new RegExp(recipe.title) }).click()
   await expect(page.getByRole("heading", { name: recipe.title })).toBeFocused()
+  await page.getByRole("banner").getByRole("link", { name: "Books", exact: true }).click()
+  await expect(page.getByRole("heading", { name: "Books", exact: true })).toBeFocused()
+})
+
+test("client navigation preserves focus moved to a different header control", async ({ page }) => {
+  await page.goto("/")
+  const header = page.getByRole("banner")
+  const more = header.getByRole("button", { name: "More", exact: true })
+  await expect(more).toBeVisible()
+  let release!: () => void
+  const held = new Promise<void>((resolve) => (release = resolve))
+  let requested!: () => void
+  const loading = new Promise<void>((resolve) => (requested = resolve))
+  await page.route("**/assets/*.js", async (route) => {
+    requested()
+    await held
+    await route.continue()
+  })
+  try {
+    await header.getByRole("link", { name: "Books", exact: true }).click()
+    await loading
+    await more.focus()
+    await expect(more).toBeFocused()
+  } finally {
+    release()
+  }
+  await expect(page.getByRole("heading", { name: "Books", exact: true })).toBeVisible()
+  await settleAnimations(page)
+  await expect(more).toBeFocused()
 })
 
 test("controlled list inputs retain focus and composition while editing", async ({
