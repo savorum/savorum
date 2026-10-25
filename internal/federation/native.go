@@ -20,8 +20,9 @@ import (
 // NativeRedirectURIs are the exact return targets a native sign-in may use.
 var NativeRedirectURIs = []string{"savorum://auth/callback"}
 
-// NativeGrant is a completed provider sign-in waiting for the app's PKCE verifier.
+// NativeGrant is a completed sign-in waiting for the app's PKCE verifier.
 type NativeGrant struct {
+	SourceSessionID                          string
 	UserID, Provider, Challenge, RedirectURI string
 	Subject, IdentityID                      string
 }
@@ -195,6 +196,11 @@ func (h *Handler) nativeRedeem(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	r = r.WithContext(identity.WithSessionIdentity(r.Context(), grant.IdentityID))
+	if grant.SourceSessionID != "" {
+		r = r.WithContext(identity.WithBrowserSession(r.Context(), grant.SourceSessionID))
+	} else {
+		r = r.WithContext(identity.WithSessionIdentity(r.Context(), grant.IdentityID))
+	}
+
 	h.startSession(w, r, grant.Provider, user, false, false)
 }

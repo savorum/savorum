@@ -17,6 +17,7 @@ type Session = {
   id: string
   created_at: string
   last_seen_at: string
+  browser_handoff?: boolean
   auth_method: string
   current: boolean
 }
@@ -64,6 +65,9 @@ export function SessionsPanel() {
               <div class={styles.rowBody}>
                 <div class={styles.actions}>
                   <h3>{methodName(session.auth_method)}</h3>
+                  <Show when={session.browser_handoff}>
+                    <span class={styles.muted}>{m.account_sessions_browser_handoff()}</span>
+                  </Show>
                   <Show when={session.current}>
                     <span
                       class={css({ color: "fg.default", fontSize: "xs", fontWeight: "medium" })}

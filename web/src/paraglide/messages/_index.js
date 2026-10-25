@@ -333,6 +333,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Account_Session_EndedInputs */
 /** @typedef {{}} Account_Session_Ended_DismissInputs */
 /** @typedef {{}} Account_Session_Ended_Sign_InInputs */
+/** @typedef {{}} Account_Sessions_Browser_HandoffInputs */
 /** @typedef {{ method: NonNullable<unknown>, last: NonNullable<unknown>, created: NonNullable<unknown> }} Account_Sessions_DetailInputs */
 /** @typedef {{}} Account_Sessions_ErrorInputs */
 /** @typedef {{}} Account_Sessions_HeadingInputs */
@@ -16056,6 +16057,47 @@ export const account_session_ended_sign_in = /** @type {((inputs?: Account_Sessi
 /**
 * | output |
 * | --- |
+* | "App via browser sign-in" |
+*
+* @param {Account_Sessions_Browser_HandoffInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_sessions_browser_handoff = /** @type {((inputs?: Account_Sessions_Browser_HandoffInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Sessions_Browser_HandoffInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_sessions_browser_handoff(inputs)
+	if (locale === "cs") return __cs.account_sessions_browser_handoff(inputs)
+	if (locale === "da") return __da.account_sessions_browser_handoff(inputs)
+	if (locale === "de") return __de.account_sessions_browser_handoff(inputs)
+	if (locale === "el") return __el.account_sessions_browser_handoff(inputs)
+	if (locale === "es") return __es.account_sessions_browser_handoff(inputs)
+	if (locale === "fi") return __fi.account_sessions_browser_handoff(inputs)
+	if (locale === "fr") return __fr.account_sessions_browser_handoff(inputs)
+	if (locale === "he") return __he.account_sessions_browser_handoff(inputs)
+	if (locale === "hu") return __hu.account_sessions_browser_handoff(inputs)
+	if (locale === "id") return __id.account_sessions_browser_handoff(inputs)
+	if (locale === "it") return __it.account_sessions_browser_handoff(inputs)
+	if (locale === "ja") return __ja.account_sessions_browser_handoff(inputs)
+	if (locale === "ko") return __ko.account_sessions_browser_handoff(inputs)
+	if (locale === "nb") return __nb.account_sessions_browser_handoff(inputs)
+	if (locale === "nl") return __nl.account_sessions_browser_handoff(inputs)
+	if (locale === "pl") return __pl.account_sessions_browser_handoff(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_sessions_browser_handoff(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_sessions_browser_handoff(inputs)
+	if (locale === "ro") return __ro.account_sessions_browser_handoff(inputs)
+	if (locale === "ru") return __ru.account_sessions_browser_handoff(inputs)
+	if (locale === "sv") return __sv.account_sessions_browser_handoff(inputs)
+	if (locale === "th") return __th.account_sessions_browser_handoff(inputs)
+	if (locale === "tr") return __tr.account_sessions_browser_handoff(inputs)
+	if (locale === "uk") return __uk.account_sessions_browser_handoff(inputs)
+	if (locale === "vi") return __vi.account_sessions_browser_handoff(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_sessions_browser_handoff(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_sessions_browser_handoff(inputs)
+	return __en.account_sessions_browser_handoff(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "{method} · Last active {last} · Signed in {created}" |
 *
 * @param {Account_Sessions_DetailInputs} inputs
@@ -16179,7 +16221,7 @@ export const account_sessions_heading = /** @type {((inputs?: Account_Sessions_H
 /**
 * | output |
 * | --- |
-* | "Each browser signed in to your account. Revoke any you do not recognize." |
+* | "Browsers and apps signed in to your account. Revoke any you do not recognize." |
 *
 * @param {Account_Sessions_HintInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options

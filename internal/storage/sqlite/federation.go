@@ -78,22 +78,34 @@ func (s *Store) RegisterProviders(ctx context.Context, providers []federation.Pr
 	return nil
 }
 
+func transactionProviderID(provider string) any {
+	if provider == federation.NativeBrowserProvider {
+		return nil
+	}
+
+	return provider
+}
+
 // SaveFederationTransaction stores a hashed browser-bound short-lived authorization transaction.
 func (s *Store) SaveFederationTransaction(ctx context.Context, token, provider, browser, payload string, expires time.Time) error {
+	providerID := transactionProviderID(provider)
+
 	if _, e := s.db.ExecContext(ctx, `DELETE FROM federation_transactions WHERE expires_at<=unixepoch()`); e != nil {
 		return federationStorageError("SaveFederationTransaction", e)
 	}
 
-	_, e := s.db.ExecContext(ctx, `INSERT INTO federation_transactions VALUES(?,?,?,?,?)`, tokenHash(token), provider, tokenHash(browser), payload, expires.Unix())
+	_, e := s.db.ExecContext(ctx, `INSERT INTO federation_transactions VALUES(?,?,?,?,?)`, tokenHash(token), providerID, tokenHash(browser), payload, expires.Unix())
 
 	return federationStorageError("SaveFederationTransaction", e)
 }
 
 // ConsumeFederationTransaction binds state to the initiating browser and atomically consumes it once.
 func (s *Store) ConsumeFederationTransaction(ctx context.Context, token, provider, browser string) (string, error) {
+	providerID := transactionProviderID(provider)
+
 	var payload string
 
-	e := s.db.QueryRowContext(ctx, `DELETE FROM federation_transactions WHERE token_hash=? AND provider=? AND browser_hash=? AND expires_at>unixepoch() RETURNING payload`, tokenHash(token), provider, tokenHash(browser)).Scan(&payload)
+	e := s.db.QueryRowContext(ctx, `DELETE FROM federation_transactions WHERE token_hash=? AND provider IS ? AND browser_hash=? AND expires_at>unixepoch() RETURNING payload`, tokenHash(token), providerID, tokenHash(browser)).Scan(&payload)
 	if errors.Is(e, sql.ErrNoRows) {
 		return "", identity.ErrCredentials
 	}
@@ -103,6 +115,10 @@ func (s *Store) ConsumeFederationTransaction(ctx context.Context, token, provide
 
 // SaveNativeGrant stores a hashed one-time sign-in result for a native app.
 func (s *Store) SaveNativeGrant(ctx context.Context, code string, grant federation.NativeGrant, expires time.Time) error {
+	if grant.SourceSessionID != "" {
+		return s.saveBrowserNativeGrant(ctx, code, grant, expires)
+	}
+
 	if _, e := s.db.ExecContext(ctx, `DELETE FROM native_sign_in_grants WHERE expires_at<=unixepoch()`); e != nil {
 		return federationStorageError("SaveNativeGrant", e)
 	}
@@ -128,13 +144,14 @@ func (s *Store) SaveNativeGrant(ctx context.Context, code string, grant federati
 // returns its account only while that account and provider remain active.
 func (s *Store) RedeemNativeGrant(ctx context.Context, code string) (federation.NativeGrant, identity.Principal, error) {
 	var (
-		grant      federation.NativeGrant
-		p          identity.Principal
-		expires    int64
-		identityID string
+		grant              federation.NativeGrant
+		p                  identity.Principal
+		expires            int64
+		identityID         string
+		sourceID, provider sql.NullString
 	)
 
-	e := s.db.QueryRowContext(ctx, `DELETE FROM native_sign_in_grants WHERE code_hash=? RETURNING user_id,provider,challenge,redirect_uri,expires_at,identity_id`, tokenHash(code)).Scan(&grant.UserID, &grant.Provider, &grant.Challenge, &grant.RedirectURI, &expires, &identityID)
+	e := s.db.QueryRowContext(ctx, `DELETE FROM native_sign_in_grants WHERE code_hash=? RETURNING user_id,provider,challenge,redirect_uri,expires_at,identity_id,source_session_id`, tokenHash(code)).Scan(&grant.UserID, &provider, &grant.Challenge, &grant.RedirectURI, &expires, &identityID, &sourceID)
 	if errors.Is(e, sql.ErrNoRows) {
 		return grant, p, identity.ErrCredentials
 	}
@@ -144,9 +161,20 @@ func (s *Store) RedeemNativeGrant(ctx context.Context, code string) (federation.
 	}
 
 	grant.IdentityID = identityID
+	grant.Provider = provider.String
+	grant.SourceSessionID = sourceID.String
 
 	if expires <= time.Now().Unix() {
 		return grant, p, identity.ErrCredentials
+	}
+
+	if grant.SourceSessionID != "" {
+		e = s.db.QueryRowContext(ctx, `SELECT u.id,u.display_name,u.instance_admin,b.provider FROM users u JOIN browser_sessions b ON b.user_id=u.id WHERE u.id=? AND u.status='active' AND b.id=? AND b.revoked_at IS NULL AND b.idle_expires>unixepoch() AND b.absolute_expires>unixepoch()`, grant.UserID, grant.SourceSessionID).Scan(&p.UserID, &p.DisplayName, &p.InstanceAdmin, &grant.Provider)
+		if errors.Is(e, sql.ErrNoRows) {
+			return grant, p, identity.ErrCredentials
+		}
+
+		return grant, p, federationStorageError("resolve browser grant", e)
 	}
 
 	e = s.db.QueryRowContext(ctx, `SELECT u.id,u.display_name,u.instance_admin FROM users u JOIN auth_providers a ON a.id=? AND a.enabled=1 JOIN identities i ON i.user_id=u.id AND i.provider=a.id AND i.id=? AND i.enabled=1 WHERE u.id=? AND u.status='active'`, grant.Provider, identityID, grant.UserID).Scan(&p.UserID, &p.DisplayName, &p.InstanceAdmin)

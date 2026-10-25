@@ -331,6 +331,7 @@
 /** @typedef {{}} Account_Session_EndedInputs */
 /** @typedef {{}} Account_Session_Ended_DismissInputs */
 /** @typedef {{}} Account_Session_Ended_Sign_InInputs */
+/** @typedef {{}} Account_Sessions_Browser_HandoffInputs */
 /** @typedef {{ method: NonNullable<unknown>, last: NonNullable<unknown>, created: NonNullable<unknown> }} Account_Sessions_DetailInputs */
 /** @typedef {{}} Account_Sessions_ErrorInputs */
 /** @typedef {{}} Account_Sessions_HeadingInputs */
@@ -3780,6 +3781,10 @@ export const account_session_ended_sign_in = /** @type {(inputs: Account_Session
 	return /** @type {LocalizedString} */ (`Sign in again`)
 };
 
+export const account_sessions_browser_handoff = /** @type {(inputs: Account_Sessions_Browser_HandoffInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`App via browser sign-in`)
+};
+
 export const account_sessions_detail = /** @type {(inputs: Account_Sessions_DetailInputs) => LocalizedString} */ (i) => {
 	return /** @type {LocalizedString} */ (`${i?.method} · Last active ${i?.last} · Signed in ${i?.created}`)
 };
@@ -3793,7 +3798,7 @@ export const account_sessions_heading = /** @type {(inputs: Account_Sessions_Hea
 };
 
 export const account_sessions_hint = /** @type {(inputs: Account_Sessions_HintInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Each browser signed in to your account. Revoke any you do not recognize.`)
+	return /** @type {LocalizedString} */ (`Browsers and apps signed in to your account. Revoke any you do not recognize.`)
 };
 
 export const account_sessions_last_active = /** @type {(inputs: Account_Sessions_Last_ActiveInputs) => LocalizedString} */ (i) => {

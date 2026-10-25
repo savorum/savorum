@@ -329,6 +329,7 @@ export const account_security_title: (inputs: Account_Security_TitleInputs) => L
 export const account_session_ended: (inputs: Account_Session_EndedInputs) => LocalizedString;
 export const account_session_ended_dismiss: (inputs: Account_Session_Ended_DismissInputs) => LocalizedString;
 export const account_session_ended_sign_in: (inputs: Account_Session_Ended_Sign_InInputs) => LocalizedString;
+export const account_sessions_browser_handoff: (inputs: Account_Sessions_Browser_HandoffInputs) => LocalizedString;
 export const account_sessions_detail: (inputs: Account_Sessions_DetailInputs) => LocalizedString;
 export const account_sessions_error: (inputs: Account_Sessions_ErrorInputs) => LocalizedString;
 export const account_sessions_heading: (inputs: Account_Sessions_HeadingInputs) => LocalizedString;
@@ -2855,6 +2856,7 @@ export type Account_Security_TitleInputs = {};
 export type Account_Session_EndedInputs = {};
 export type Account_Session_Ended_DismissInputs = {};
 export type Account_Session_Ended_Sign_InInputs = {};
+export type Account_Sessions_Browser_HandoffInputs = {};
 export type Account_Sessions_DetailInputs = {
     method: NonNullable<unknown>;
     last: NonNullable<unknown>;

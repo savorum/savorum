@@ -48,6 +48,10 @@
           "auth_method": {
             "type": "string"
           },
+          "browser_handoff": {
+            "description": "True when a native app created the session by exchanging a browser sign-in.",
+            "type": "boolean"
+          },
           "created_at": {
             "format": "date-time",
             "type": "string"
@@ -64,6 +68,7 @@
           }
         },
         "required": [
+          "browser_handoff",
           "id",
           "created_at",
           "last_seen_at",
@@ -12462,6 +12467,468 @@
         ]
       }
     },
+    "/api/v1/auth/native-browser": {
+      "get": {
+        "description": "Available only when account authentication is enabled. Provider configuration is restart-bound. Local logout does not require an external provider. Responses must not be cached.",
+        "operationId": "begin-native-browser-login",
+        "parameters": [
+          {
+            "description": "An exactly permitted return target: `savorum://auth/callback`.",
+            "in": "query",
+            "name": "redirect_uri",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "16 to 256 unreserved characters, returned unchanged to the app.",
+            "in": "query",
+            "name": "state",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Base64url SHA-256 of the app's code verifier, without padding.",
+            "in": "query",
+            "name": "code_challenge",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "code_challenge_method",
+            "required": true,
+            "schema": {
+              "enum": [
+                "S256"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "303": {
+            "description": "Opens the sign-in page with a five-minute browser-bound transaction. Accepts the same redirect_uri, state, code_challenge, and S256 code_challenge_method as provider sign-in."
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "code",
+                    "detail"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured authentication boundary failure"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "code",
+                    "detail"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured authentication boundary failure"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "code",
+                    "detail"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured authentication boundary failure"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "code",
+                    "detail"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured authentication boundary failure"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "code",
+                    "detail"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured authentication boundary failure"
+          }
+        },
+        "summary": "Open browser sign-in",
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/api/v1/auth/native-browser/finish": {
+      "post": {
+        "description": "Available only when account authentication is enabled. Provider configuration is restart-bound. Local logout does not require an external provider. Responses must not be cached.",
+        "operationId": "complete-native-browser-login",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "state": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "state"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "redirect_uri": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "redirect_uri"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Requires a browser session created after entry, Origin, CSRF, and the transaction cookie. Returns redirect_uri with the app state and a one-minute, one-use code bound to PKCE."
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "code",
+                    "detail"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured authentication boundary failure"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "code",
+                    "detail"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured authentication boundary failure"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "code",
+                    "detail"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured authentication boundary failure"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "code",
+                    "detail"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured authentication boundary failure"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "code",
+                    "detail"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Structured authentication boundary failure"
+          }
+        },
+        "summary": "Return sign-in to the app",
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
     "/api/v1/auth/native-links": {
       "post": {
         "description": "Available only when account authentication is enabled. Provider configuration is restart-bound. Local logout does not require an external provider. Responses must not be cached.",
@@ -17676,7 +18143,7 @@
     },
     "/api/v1/capabilities": {
       "get": {
-        "description": "Unauthenticated requests return product, API compatibility, interactive sign-in methods, and sign-in features only. `auth.native_sign_in` means a native app can complete OIDC, SAML, and managed sign-in through `begin-native-provider-login` and `finish-native-provider-login`. `auth.native_link` means a signed-in native app can link an OIDC or SAML identity through `create-native-link-ticket`, `begin-native-provider-login`, and `finish-native-provider-link`. `auth.managed_session` means a managed provider is configured and its web and native sign-in use short-lived, tenant-audienced grants after PKCE code redemption. `auth.managed_native_session` means a native client can redeem a scoped hosting grant through `finish-managed-native-login` for an ordinary local session. Every response links to this instance's guide, OpenAPI description, and token page. Authenticated requests add registered formats, optional features, and enforced bounds, and a request made with a personal API token adds that token's scopes, libraries, and expiry. `recipes.search.ingredient` means ingredient: queries match indexed ingredient names, including optional and alternative names, with original-line fallback only when the name is absent. All words in one qualifier must match the same ingredient. Capabilities describe availability, not a grant of authorization. Schema version 1 permits additive optional fields and new IDs; clients ignore unknown IDs. Cache for the current session and refresh after reconnect or configuration changes.",
+        "description": "Unauthenticated requests return product, API compatibility, interactive sign-in methods, and sign-in features only. `auth.native_browser_sign_in` means browser sign-in can return to a native app through `begin-native-browser-login`, `complete-native-browser-login`, and `finish-native-provider-login`. `auth.native_sign_in` means a native app can complete OIDC, SAML, and managed sign-in through `begin-native-provider-login` and `finish-native-provider-login`. `auth.native_link` means a signed-in native app can link an OIDC or SAML identity through `create-native-link-ticket`, `begin-native-provider-login`, and `finish-native-provider-link`. `auth.managed_session` means a managed provider is configured and its web and native sign-in use short-lived, tenant-audienced grants after PKCE code redemption. `auth.managed_native_session` means a native client can redeem a scoped hosting grant through `finish-managed-native-login` for an ordinary local session. Every response links to this instance's guide, OpenAPI description, and token page. Authenticated requests add registered formats, optional features, and enforced bounds, and a request made with a personal API token adds that token's scopes, libraries, and expiry. `recipes.search.ingredient` means ingredient: queries match indexed ingredient names, including optional and alternative names, with original-line fallback only when the name is absent. All words in one qualifier must match the same ingredient. Capabilities describe availability, not a grant of authorization. Schema version 1 permits additive optional fields and new IDs; clients ignore unknown IDs. Cache for the current session and refresh after reconnect or configuration changes.",
         "operationId": "get-capabilities",
         "responses": {
           "200": {

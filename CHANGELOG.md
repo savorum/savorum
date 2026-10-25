@@ -6,6 +6,10 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+## 0.3.1
+
+- Fix native app sign-in through browser passkeys, passwords, and configured providers.
+
 ## 0.3.0
 
 - Add keyboard shortcuts.

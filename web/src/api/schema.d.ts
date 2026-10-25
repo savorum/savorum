@@ -629,6 +629,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/auth/native-browser": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Open browser sign-in
+         * @description Available only when account authentication is enabled. Provider configuration is restart-bound. Local logout does not require an external provider. Responses must not be cached.
+         */
+        get: operations["begin-native-browser-login"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/native-browser/finish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Return sign-in to the app
+         * @description Available only when account authentication is enabled. Provider configuration is restart-bound. Local logout does not require an external provider. Responses must not be cached.
+         */
+        post: operations["complete-native-browser-login"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/auth/native-links": {
         parameters: {
             query?: never;
@@ -1237,7 +1277,7 @@ export interface paths {
         };
         /**
          * Discover capabilities
-         * @description Unauthenticated requests return product, API compatibility, interactive sign-in methods, and sign-in features only. `auth.native_sign_in` means a native app can complete OIDC, SAML, and managed sign-in through `begin-native-provider-login` and `finish-native-provider-login`. `auth.native_link` means a signed-in native app can link an OIDC or SAML identity through `create-native-link-ticket`, `begin-native-provider-login`, and `finish-native-provider-link`. `auth.managed_session` means a managed provider is configured and its web and native sign-in use short-lived, tenant-audienced grants after PKCE code redemption. `auth.managed_native_session` means a native client can redeem a scoped hosting grant through `finish-managed-native-login` for an ordinary local session. Every response links to this instance's guide, OpenAPI description, and token page. Authenticated requests add registered formats, optional features, and enforced bounds, and a request made with a personal API token adds that token's scopes, libraries, and expiry. `recipes.search.ingredient` means ingredient: queries match indexed ingredient names, including optional and alternative names, with original-line fallback only when the name is absent. All words in one qualifier must match the same ingredient. Capabilities describe availability, not a grant of authorization. Schema version 1 permits additive optional fields and new IDs; clients ignore unknown IDs. Cache for the current session and refresh after reconnect or configuration changes.
+         * @description Unauthenticated requests return product, API compatibility, interactive sign-in methods, and sign-in features only. `auth.native_browser_sign_in` means browser sign-in can return to a native app through `begin-native-browser-login`, `complete-native-browser-login`, and `finish-native-provider-login`. `auth.native_sign_in` means a native app can complete OIDC, SAML, and managed sign-in through `begin-native-provider-login` and `finish-native-provider-login`. `auth.native_link` means a signed-in native app can link an OIDC or SAML identity through `create-native-link-ticket`, `begin-native-provider-login`, and `finish-native-provider-link`. `auth.managed_session` means a managed provider is configured and its web and native sign-in use short-lived, tenant-audienced grants after PKCE code redemption. `auth.managed_native_session` means a native client can redeem a scoped hosting grant through `finish-managed-native-login` for an ordinary local session. Every response links to this instance's guide, OpenAPI description, and token page. Authenticated requests add registered formats, optional features, and enforced bounds, and a request made with a personal API token adds that token's scopes, libraries, and expiry. `recipes.search.ingredient` means ingredient: queries match indexed ingredient names, including optional and alternative names, with original-line fallback only when the name is absent. All words in one qualifier must match the same ingredient. Capabilities describe availability, not a grant of authorization. Schema version 1 permits additive optional fields and new IDs; clients ignore unknown IDs. Cache for the current session and refresh after reconnect or configuration changes.
          */
         get: operations["get-capabilities"];
         put?: never;
@@ -3589,6 +3629,8 @@ export interface components {
         };
         AccountSession: {
             auth_method: string;
+            /** @description True when a native app created the session by exchanging a browser sign-in. */
+            browser_handoff: boolean;
             /** Format: date-time */
             created_at: string;
             current: boolean;
@@ -8183,6 +8225,213 @@ export interface operations {
                 };
                 content: {
                     "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+        };
+    };
+    "begin-native-browser-login": {
+        parameters: {
+            query: {
+                /** @description An exactly permitted return target: `savorum://auth/callback`. */
+                redirect_uri: string;
+                /** @description 16 to 256 unreserved characters, returned unchanged to the app. */
+                state: string;
+                /** @description Base64url SHA-256 of the app's code verifier, without padding. */
+                code_challenge: string;
+                code_challenge_method: "S256";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Opens the sign-in page with a five-minute browser-bound transaction. Accepts the same redirect_uri, state, code_challenge, and S256 code_challenge_method as provider sign-in. */
+            303: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Structured authentication boundary failure */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+        };
+    };
+    "complete-native-browser-login": {
+        parameters: {
+            query?: never;
+            header: {
+                Origin: string;
+                "X-CSRF-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    state: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Requires a browser session created after entry, Origin, CSRF, and the transaction cookie. Returns redirect_uri with the app state and a one-minute, one-use code bound to PKCE. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        redirect_uri: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
                 };
             };
         };

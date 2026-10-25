@@ -47,6 +47,7 @@ func PrincipalFromContext(ctx context.Context) (Principal, bool) {
 
 // Session contains only non-secret session metadata.
 type Session struct {
+	BrowserHandoff  bool      `json:"browser_handoff"`
 	ID              string    `json:"id"`
 	UserID          string    `json:"user_id"`
 	CreatedAt       time.Time `json:"created_at"`

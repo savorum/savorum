@@ -149,16 +149,19 @@ async function verifyInputs(container: HTMLElement) {
   }
 }
 
-test("login inputs retain identity, focus, caret, and composed text", async () => {
-  const screen = render(() => <Login />)
-  await screen.findByLabelText("Directory username")
-  for (const button of screen.container.querySelectorAll<HTMLButtonElement>(
-    'button[aria-expanded="false"]',
-  )) {
-    fireEvent.click(button)
-  }
-  await verifyInputs(screen.container)
-})
+test.each([false, true])(
+  "login inputs retain identity, focus, caret, and composed text (browser handoff %s)",
+  async (browserHandoff) => {
+    const screen = render(() => <Login onSignedIn={browserHandoff ? async () => {} : undefined} />)
+    await screen.findByLabelText("Directory username")
+    for (const button of screen.container.querySelectorAll<HTMLButtonElement>(
+      'button[aria-expanded="false"]',
+    )) {
+      fireEvent.click(button)
+    }
+    await verifyInputs(screen.container)
+  },
+)
 
 test("security inputs retain identity, focus, caret, and composed text", async () => {
   const screen = render(() => <SecurityPage />)
@@ -739,4 +742,27 @@ test("sign-out stays open while pending and clears an error when closed", async 
   setOpen(true)
   await portal.findByRole("button", { name: "Sign out" })
   expect(portal.queryByText("Sign-out interrupted")).toBeNull()
+})
+
+test("browser handoff sessions show their provenance and can be revoked", async () => {
+  const { accountRequest } = await import("./account-state")
+  vi.mocked(accountRequest).mockResolvedValueOnce({
+    sessions: [
+      {
+        id: "app-session",
+        current: false,
+        auth_method: "local",
+        browser_handoff: true,
+        created_at: "2026-09-01T00:00:00Z",
+        last_seen_at: "2026-09-02T00:00:00Z",
+      },
+    ],
+  })
+  const screen = render(() => <SessionsPanel />)
+  await screen.findByText("App via browser sign-in")
+  expect(screen.getByRole("heading", { name: "Password" })).toBeTruthy()
+  fireEvent.click(screen.getByRole("button", { name: /^Revoke the session/ }))
+  await waitFor(() =>
+    expect(accountRequest).toHaveBeenCalledWith("/account/sessions/app-session", "DELETE"),
+  )
 })

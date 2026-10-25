@@ -43,6 +43,8 @@ func RegisterOpenAPI(api huma.API) {
 		{http.MethodGet, "/api/v1/auth/{provider}/native", "begin-native-provider-login", "Begin a native sign-in", map[string]*huma.Response{
 			"303": {Description: "Sets the browser-bound transaction cookie and redirects to the OIDC, SAML or managed provider. Open this URL in the app's authentication browser, not with a native HTTP client."},
 		}},
+		{http.MethodGet, "/api/v1/auth/native-browser", "begin-native-browser-login", "Open browser sign-in", map[string]*huma.Response{"303": {Description: "Opens the sign-in page with a five-minute browser-bound transaction. Accepts the same redirect_uri, state, code_challenge, and S256 code_challenge_method as provider sign-in."}}},
+		{http.MethodPost, "/api/v1/auth/native-browser/finish", "complete-native-browser-login", "Return sign-in to the app", map[string]*huma.Response{"200": {Description: "Requires a browser session created after entry, Origin, CSRF, and the transaction cookie. Returns redirect_uri with the app state and a one-minute, one-use code bound to PKCE.", Content: jsonBody(&huma.Schema{Type: huma.TypeObject, Required: []string{"redirect_uri"}, Properties: map[string]*huma.Schema{"redirect_uri": str}})}}},
 		{http.MethodPost, "/api/v1/auth/native-sessions", "finish-native-provider-login", "Finish a native sign-in", map[string]*huma.Response{
 			"200": {Description: "The one-time code and its PKCE verifier are exchanged for an ordinary session, returned in the instance's session cookie. A presented earlier session is revoked.", Content: jsonBody(session)},
 		}},
@@ -61,7 +63,7 @@ func RegisterOpenAPI(api huma.API) {
 		}},
 	} {
 		op := &huma.Operation{Method: route.method, Path: route.path, OperationID: route.id, Summary: route.summary, Tags: []string{"Authentication"}, Description: "Available only when account authentication is enabled. Provider configuration is restart-bound. Local logout does not require an external provider. Responses must not be cached.", Responses: route.responses}
-		if route.id != "list-authentication-providers" && route.id != "finish-native-provider-login" && route.id != "finish-native-provider-link" {
+		if route.id != "list-authentication-providers" && route.id != "finish-native-provider-login" && route.id != "finish-native-provider-link" && route.id != "begin-native-browser-login" && route.id != "complete-native-browser-login" {
 			op.Parameters = []*huma.Param{{Name: "provider", In: "path", Required: true, Schema: str}}
 		}
 
@@ -71,13 +73,15 @@ func RegisterOpenAPI(api huma.API) {
 		case "begin-provider-login":
 			op.Parameters = append(op.Parameters, &huma.Param{Name: "Origin", In: "header", Required: true, Schema: str}, &huma.Param{Name: "X-CSRF-Token", In: "header", Description: "Required when explicitly linking to the current account.", Schema: str})
 			op.RequestBody = &huma.RequestBody{Required: true, Content: jsonBody(&huma.Schema{Type: huma.TypeObject, AdditionalProperties: false, Properties: map[string]*huma.Schema{"login": str, "password": {Type: huma.TypeString, WriteOnly: true}, "invitation_token": {Type: huma.TypeString, WriteOnly: true}, "link": {Type: huma.TypeBoolean, Description: "Requires a browser session authenticated within the last five minutes and CSRF proof; callback rechecks session validity and freshness."}}})}
-		case "begin-native-provider-login":
+		case "begin-native-browser-login", "begin-native-provider-login":
 			op.Parameters = append(op.Parameters,
 				&huma.Param{Name: "redirect_uri", In: "query", Required: true, Description: "An exactly permitted return target: `savorum://auth/callback`.", Schema: str},
 				&huma.Param{Name: "state", In: "query", Required: true, Description: "16 to 256 unreserved characters, returned unchanged to the app.", Schema: str},
 				&huma.Param{Name: "code_challenge", In: "query", Required: true, Description: "Base64url SHA-256 of the app's code verifier, without padding.", Schema: str},
-				&huma.Param{Name: "code_challenge_method", In: "query", Required: true, Schema: &huma.Schema{Type: huma.TypeString, Enum: []any{"S256"}}},
-				&huma.Param{Name: "link_ticket", In: "query", Description: "A ticket from `create-native-link-ticket`. The return then carries a link code for `finish-native-provider-link` instead of a sign-in code.", Schema: str})
+				&huma.Param{Name: "code_challenge_method", In: "query", Required: true, Schema: &huma.Schema{Type: huma.TypeString, Enum: []any{"S256"}}})
+			if route.id == "begin-native-provider-login" {
+				op.Parameters = append(op.Parameters, &huma.Param{Name: "link_ticket", In: "query", Description: "A ticket from `create-native-link-ticket`. The return then carries a link code for `finish-native-provider-link` instead of a sign-in code.", Schema: str})
+			}
 		case "create-native-link-ticket":
 			op.Parameters = append(op.Parameters, &huma.Param{Name: "Origin", In: "header", Required: true, Schema: str}, &huma.Param{Name: "X-CSRF-Token", In: "header", Required: true, Schema: str})
 			op.RequestBody = &huma.RequestBody{Required: true, Content: jsonBody(&huma.Schema{Type: huma.TypeObject, AdditionalProperties: false, Required: []string{"code_challenge", "code_challenge_method"}, Properties: map[string]*huma.Schema{
@@ -91,6 +95,9 @@ func RegisterOpenAPI(api huma.API) {
 				"code_verifier": {Type: huma.TypeString, WriteOnly: true, Description: "The PKCE verifier: 43 to 128 unreserved characters."},
 				"redirect_uri":  {Type: huma.TypeString, Description: "The return target used to begin the link."},
 			}})}
+		case "complete-native-browser-login":
+			op.Parameters = append(op.Parameters, &huma.Param{Name: "Origin", In: "header", Required: true, Schema: str}, &huma.Param{Name: "X-CSRF-Token", In: "header", Required: true, Schema: str})
+			op.RequestBody = &huma.RequestBody{Required: true, Content: jsonBody(&huma.Schema{Type: huma.TypeObject, AdditionalProperties: false, Required: []string{"state"}, Properties: map[string]*huma.Schema{"state": str}})}
 		case "finish-native-provider-login":
 			op.Parameters = append(op.Parameters, &huma.Param{Name: "Origin", In: "header", Required: true, Schema: str})
 			op.RequestBody = &huma.RequestBody{Required: true, Content: jsonBody(&huma.Schema{Type: huma.TypeObject, AdditionalProperties: false, Required: []string{"code", "code_verifier", "redirect_uri"}, Properties: map[string]*huma.Schema{

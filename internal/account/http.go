@@ -446,7 +446,7 @@ func (h *Handler) sessions(w http.ResponseWriter, r *http.Request) {
 
 	out := []map[string]any{}
 	for _, s := range ss {
-		out = append(out, map[string]any{"id": s.ID, "created_at": s.CreatedAt, "last_seen_at": s.LastSeen, "auth_method": s.Provider, "current": s.ID == b.session.ID})
+		out = append(out, map[string]any{"id": s.ID, "created_at": s.CreatedAt, "last_seen_at": s.LastSeen, "auth_method": s.Provider, "browser_handoff": s.BrowserHandoff, "current": s.ID == b.session.ID})
 	}
 
 	respond(w, map[string]any{"sessions": out})
