@@ -97,8 +97,11 @@ type DuplicateError struct {
 	Title    string
 }
 
+// DuplicateErrorPhrase identifies a DuplicateError in stored error text.
+const DuplicateErrorPhrase = " is already in this library as entry "
+
 func (e *DuplicateError) Error() string {
-	return fmt.Sprintf("recipe document %q is already in this library as entry %q", e.RecipeID, e.EntryID)
+	return fmt.Sprintf("recipe document %q"+DuplicateErrorPhrase+"%q", e.RecipeID, e.EntryID)
 }
 
 func (*DuplicateError) Unwrap() error { return ErrDuplicateDocument }

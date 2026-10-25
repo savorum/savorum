@@ -27,13 +27,14 @@ type ImportJobService interface {
 	Resume(ctx context.Context, id string) (importjob.Job, error)
 }
 
-// ImportJobProgress is the aggregate a person watches. Finished counts every
-// recipe that has stopped moving, whatever it stopped as.
+// ImportJobProgress includes failed, skipped and cancelled items in Finished;
+// review and diagnostic totals can overlap these outcomes.
 type ImportJobProgress struct {
 	Total                     int                          `json:"total" minimum:"0"`
 	Pending                   int                          `json:"pending" minimum:"0"`
 	Running                   int                          `json:"running" minimum:"0"`
 	Imported                  int                          `json:"imported" minimum:"0"`
+	AlreadyInLibrary          int                          `json:"already_in_library,omitempty" minimum:"0" doc:"Failed items recognized as recipes already in the library; included in failed"`
 	Skipped                   int                          `json:"skipped" minimum:"0"`
 	Failed                    int                          `json:"failed" minimum:"0"`
 	Cancelled                 int                          `json:"cancelled" minimum:"0"`
@@ -112,6 +113,7 @@ type ImportJobItemResource struct {
 	DeferredAssets int                   `json:"deferred_assets" minimum:"0" doc:"Photographs not fetched yet whose addresses the recipe retains"`
 	Diagnostics    []ImportJobDiagnostic `json:"diagnostics,omitempty"`
 	Error          string                `json:"error,omitempty"`
+	ErrorCode      string                `json:"error_code,omitempty" enum:"already-in-library,changed-since-review,source-unavailable" doc:"Why a failed recipe could not be imported, when the cause is recognized"`
 	StartedAt      string                `json:"started_at,omitempty" format:"date-time"`
 	FinishedAt     string                `json:"finished_at,omitempty" format:"date-time"`
 }
@@ -361,7 +363,7 @@ func importJobResource(job importjob.Job) ImportJobResource {
 		ResolutionDecisions:     decisions,
 		Progress: ImportJobProgress{
 			Total: job.Progress.Total, Pending: job.Progress.Pending, Running: job.Progress.Running,
-			Imported: job.Progress.Imported, Skipped: job.Progress.Skipped, Failed: job.Progress.Failed,
+			AlreadyInLibrary: job.Progress.AlreadyInLibrary, Imported: job.Progress.Imported, Skipped: job.Progress.Skipped, Failed: job.Progress.Failed,
 			Cancelled: job.Progress.Cancelled, ReviewRequired: job.Progress.ReviewRequired,
 			Resumable:                 job.Progress.Resumable,
 			InformationalPreservation: job.Progress.InformationalPreservation,
@@ -417,7 +419,13 @@ func importJobItemResource(item importjob.Item) ImportJobItemResource {
 		})
 	}
 
+	var errorCode string
+	if item.State == importjob.ItemFailed {
+		errorCode = string(importjob.ClassifyFailure(item.Error))
+	}
+
 	return ImportJobItemResource{
+		ErrorCode:     errorCode,
 		ImportEventID: item.ImportEventID, Position: item.Position, Title: item.Title, Filename: item.Filename, SourceURL: item.SourceURL,
 		State: string(item.State), ReviewRequired: item.ReviewRequired, Outcome: string(item.Outcome),
 		LibraryEntryID: string(item.EntryID), RecipeID: item.RecipeID, Revision: item.Revision,

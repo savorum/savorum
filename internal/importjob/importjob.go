@@ -87,9 +87,7 @@ const (
 	ItemCancelled ItemState = "cancelled"
 )
 
-// Job is one bulk import. Totals are counted from its items rather than
-// maintained alongside them, so a progress report cannot drift from the rows
-// it claims to summarize.
+// Job is a bulk import whose progress is derived from its items.
 type Job struct {
 	Actor           identity.Principal
 	LibraryID       string
@@ -101,10 +99,8 @@ type Job struct {
 	TotalItems      int
 	// BatchSize is persisted because a later process may be configured
 	// differently from the one that ran this job.
-	BatchSize int
-	Error     string
-	// LeadTitle is the first recipe this job brought in, by position, which
-	// names the job.
+	BatchSize               int
+	Error                   string
 	LeadTitle               string
 	CreatedAt               time.Time
 	StartedAt               *time.Time
@@ -114,20 +110,19 @@ type Job struct {
 	ResolutionDecisions     []exchange.MeasurementResolutionRecord
 }
 
-// Progress is the aggregate a person watches. Finished is every item that has
-// stopped moving, whatever it stopped as, so a progress bar cannot stall on a
-// job whose remaining recipes all failed.
+// Progress includes AlreadyInLibrary in Failed. Review and diagnostic counts
+// overlap the item-state counts and must not be added to Total.
 type Progress struct {
-	Total          int
-	Pending        int
-	Running        int
-	Imported       int
-	Skipped        int
-	Failed         int
-	Cancelled      int
-	ReviewRequired int
-	// Resumable is how many unfinished recipes still carry what a second
-	// attempt would need; resuming is offered only when it is positive.
+	Total            int
+	Pending          int
+	Running          int
+	Imported         int
+	Skipped          int
+	AlreadyInLibrary int
+	Failed           int
+	Cancelled        int
+	ReviewRequired   int
+	// Resumable excludes recognized duplicates even when their payloads remain.
 	Resumable                 int
 	InformationalPreservation int
 	WithoutDiagnostics        int
@@ -135,7 +130,8 @@ type Progress struct {
 	Diagnostics               []DiagnosticSummary
 }
 
-// DiagnosticSummary aggregates matching diagnostic occurrences across items.
+// DiagnosticSummary counts occurrences separately from recipes; one recipe
+// can contribute multiple occurrences of the same diagnostic.
 type DiagnosticSummary struct {
 	Code        string
 	Class       importer.DiagnosticClass
@@ -150,9 +146,7 @@ func (progress Progress) Finished() int {
 	return progress.Imported + progress.Skipped + progress.Failed + progress.Cancelled
 }
 
-// Item is one recipe's row in the job. Payload is its resumable work and is
-// never returned by ordinary reads: it is large, it is not something a reader
-// asked for, and only recovery needs it.
+// Item records one recipe's outcome. Only recovery reads include Payload.
 type Item struct {
 	ImportEventID  string
 	JobID          string

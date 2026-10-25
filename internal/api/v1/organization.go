@@ -207,7 +207,7 @@ type BookSourceRecipe struct {
 	OriginalTitle  string  `json:"original_title,omitempty"`
 }
 
-// Book is the API representation of a recipe book.
+// Book includes ordered entries and sections; collection responses use BookSummary.
 type Book struct {
 	ID              string        `json:"id"`
 	Kind            string        `json:"kind" enum:"personal,publication"`
@@ -227,6 +227,8 @@ type Book struct {
 	CreatedAt       time.Time     `json:"created_at"`
 	UpdatedAt       time.Time     `json:"updated_at"`
 	DeletedAt       *time.Time    `json:"deleted_at,omitempty"`
+	PreviewAssetID  string        `json:"preview_asset_id,omitempty" readOnly:"true"`
+	PreviewEntryID  string        `json:"preview_entry_id,omitempty" readOnly:"true"`
 }
 
 // BookRevision represents a historical recipe-book revision.
@@ -252,18 +254,21 @@ type BookRevisionSummary struct {
 	CreatedAt      time.Time `json:"created_at"`
 }
 
-// BookSummary provides a compact recipe-book representation.
+// BookSummary omits ordered entries and sections. PreviewEntryID scopes access
+// to a recipe photograph used when the book has no cover.
 type BookSummary struct {
-	ID            string     `json:"id"`
-	Kind          string     `json:"kind" enum:"personal,publication"`
-	Title         string     `json:"title"`
-	CoverAssetID  string     `json:"cover_asset_id,omitempty"`
-	Author        string     `json:"author,omitempty"`
-	EntryCount    int        `json:"entry_count" minimum:"0"`
-	ContainsEntry bool       `json:"contains_entry,omitempty"`
-	Revision      uint64     `json:"revision" minimum:"1"`
-	UpdatedAt     time.Time  `json:"updated_at"`
-	DeletedAt     *time.Time `json:"deleted_at,omitempty"`
+	ID             string     `json:"id"`
+	Kind           string     `json:"kind" enum:"personal,publication"`
+	Title          string     `json:"title"`
+	CoverAssetID   string     `json:"cover_asset_id,omitempty"`
+	PreviewAssetID string     `json:"preview_asset_id,omitempty" doc:"A recipe photograph for a book without a cover"`
+	PreviewEntryID string     `json:"preview_entry_id,omitempty" doc:"The accessible recipe that scopes the preview photograph"`
+	Author         string     `json:"author,omitempty"`
+	EntryCount     int        `json:"entry_count" minimum:"0"`
+	ContainsEntry  bool       `json:"contains_entry,omitempty"`
+	Revision       uint64     `json:"revision" minimum:"1"`
+	UpdatedAt      time.Time  `json:"updated_at"`
+	DeletedAt      *time.Time `json:"deleted_at,omitempty"`
 }
 
 // BookInput supplies a recipe book to create or replace.
@@ -288,7 +293,7 @@ type SavedView struct {
 	ID        string    `json:"id"`
 	Title     string    `json:"title"`
 	Query     string    `json:"query"`
-	Sort      string    `json:"sort,omitempty" enum:"relevance,updated-desc,title-asc,rating-desc"`
+	Sort      string    `json:"sort,omitempty" enum:"relevance,updated-desc,title-asc,rating-desc,total-time-asc,cooked-desc"`
 	Revision  uint64    `json:"revision"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
@@ -298,7 +303,7 @@ type SavedView struct {
 type SavedViewInput struct {
 	Title string `json:"title" minLength:"1" maxLength:"1000"`
 	Query string `json:"query" maxLength:"200"`
-	Sort  string `json:"sort,omitempty" maxLength:"100" enum:"relevance,updated-desc,title-asc,rating-desc"`
+	Sort  string `json:"sort,omitempty" maxLength:"100" enum:"relevance,updated-desc,title-asc,rating-desc,total-time-asc,cooked-desc"`
 }
 
 type organizationPathInput struct {
@@ -694,7 +699,7 @@ func registerBookCollection(api huma.API, service OrganizationService) {
 		for i, value := range values {
 			output.Body.Items[i] = BookSummary{
 				ID: value.ID, Kind: string(value.Kind), Title: value.Title,
-				CoverAssetID: value.CoverAssetID, Author: value.Author,
+				CoverAssetID: value.CoverAssetID, PreviewAssetID: value.PreviewAssetID, PreviewEntryID: value.PreviewEntryID, Author: value.Author,
 				EntryCount: value.EntryCount, ContainsEntry: value.ContainsEntry,
 				Revision: value.Revision, UpdatedAt: value.UpdatedAt,
 				DeletedAt: value.DeletedAt,
@@ -1126,7 +1131,15 @@ func toBook(v BookInput) library.Book {
 }
 
 func fromBook(v library.Book) Book {
-	r := Book{ID: v.ID, Kind: string(v.Kind), Title: v.Title, Subtitle: v.Subtitle, Description: v.Description, CoverAssetID: v.CoverAssetID, Author: v.Author, Editor: v.Editor, Edition: v.Edition, ISBN: v.ISBN, Publisher: v.Publisher, PublicationDate: v.PublicationDate, Revision: v.Revision, CreatedAt: v.CreatedAt, UpdatedAt: v.UpdatedAt, DeletedAt: v.DeletedAt, Sections: []BookSection{}, Entries: []BookEntry{}}
+	r := Book{
+		ID: v.ID, Kind: string(v.Kind), Title: v.Title, Subtitle: v.Subtitle,
+		Description: v.Description, CoverAssetID: v.CoverAssetID,
+		PreviewAssetID: v.PreviewAssetID, PreviewEntryID: v.PreviewEntryID,
+		Author: v.Author, Editor: v.Editor, Edition: v.Edition, ISBN: v.ISBN,
+		Publisher: v.Publisher, PublicationDate: v.PublicationDate,
+		Revision: v.Revision, CreatedAt: v.CreatedAt, UpdatedAt: v.UpdatedAt, DeletedAt: v.DeletedAt,
+		Sections: []BookSection{}, Entries: []BookEntry{},
+	}
 	for _, x := range v.Sections {
 		r.Sections = append(r.Sections, BookSection{ID: x.ID, Title: x.Title, Position: x.Position})
 	}

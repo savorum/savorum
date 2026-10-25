@@ -3843,6 +3843,8 @@ export interface components {
             isbn?: string;
             /** @enum {string} */
             kind: "personal" | "publication";
+            readonly preview_asset_id?: string;
+            readonly preview_entry_id?: string;
             publication_date?: string;
             publisher?: string;
             /** Format: int64 */
@@ -3991,6 +3993,10 @@ export interface components {
             id: string;
             /** @enum {string} */
             kind: "personal" | "publication";
+            /** @description A recipe photograph for a book without a cover */
+            preview_asset_id?: string;
+            /** @description The accessible recipe that scopes the preview photograph */
+            preview_entry_id?: string;
             /** Format: int64 */
             revision: number;
             title: string;
@@ -4602,6 +4608,11 @@ export interface components {
              */
             dropped_assets: number;
             error?: string;
+            /**
+             * @description Why a failed recipe could not be imported, when the cause is recognized
+             * @enum {string}
+             */
+            error_code?: "already-in-library" | "changed-since-review" | "source-unavailable";
             filename?: string;
             /** Format: date-time */
             finished_at?: string;
@@ -4625,6 +4636,11 @@ export interface components {
             [key: string]: unknown;
         };
         ImportJobProgress: {
+            /**
+             * Format: int64
+             * @description Failed items recognized as recipes already in the library; included in failed
+             */
+            already_in_library?: number;
             /** Format: int64 */
             cancelled: number;
             /**
@@ -5998,7 +6014,7 @@ export interface components {
             /** Format: int64 */
             revision: number;
             /** @enum {string} */
-            sort?: "relevance" | "updated-desc" | "title-asc" | "rating-desc";
+            sort?: "relevance" | "updated-desc" | "title-asc" | "rating-desc" | "total-time-asc" | "cooked-desc";
             title: string;
             /** Format: date-time */
             updated_at: string;
@@ -6008,7 +6024,7 @@ export interface components {
         SavedViewInput: {
             query: string;
             /** @enum {string} */
-            sort?: "relevance" | "updated-desc" | "title-asc" | "rating-desc";
+            sort?: "relevance" | "updated-desc" | "title-asc" | "rating-desc" | "total-time-asc" | "cooked-desc";
             title: string;
         };
         SavedViewsOutputBody: {
@@ -15163,7 +15179,7 @@ export interface operations {
                 /** @description Library state to list */
                 state?: "active" | "trash";
                 /** @description Recipe list ordering */
-                sort?: "relevance" | "updated-desc" | "title-asc" | "rating-desc";
+                sort?: "relevance" | "updated-desc" | "title-asc" | "rating-desc" | "total-time-asc" | "cooked-desc";
                 /** @description Present each set of translated recipes once, as the rendition the preferred languages choose among those that match */
                 group_translations?: boolean;
                 /** @description Comma-separated BCP 47 content languages in order of preference, used when grouping translations */

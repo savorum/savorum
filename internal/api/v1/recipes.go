@@ -37,7 +37,7 @@ type listRecipesInput struct {
 	Offset int    `query:"offset" default:"0" minimum:"0" doc:"Number of entries to skip"`
 	Query  string `query:"q" maxLength:"200" doc:"Recipe text with bounded title/author typo matching and structured filters. author: requires full author-name membership with Unicode case, NFC, and whitespace normalization; accents and punctuation are preserved. ingredient: requires literal word-prefix matches within one ingredient name, including optional and alternative names, with original-line fallback only when that name is absent"`
 	State  string `query:"state" default:"active" enum:"active,trash" doc:"Library state to list"`
-	Sort   string `query:"sort" default:"relevance" enum:"relevance,updated-desc,title-asc,rating-desc" doc:"Recipe list ordering"`
+	Sort   string `query:"sort" default:"relevance" enum:"relevance,updated-desc,title-asc,rating-desc,total-time-asc,cooked-desc" doc:"Recipe list ordering"`
 	// Huma reads query parameters from direct fields only, so these repeat on
 	// each input that groups translations.
 	GroupTranslations bool   `query:"group_translations" doc:"Present each set of translated recipes once, as the rendition the preferred languages choose among those that match"`

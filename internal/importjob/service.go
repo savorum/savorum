@@ -867,6 +867,10 @@ func (s *Service) Resume(ctx context.Context, id string) (Job, error) {
 	var lost []Item
 
 	for _, item := range items {
+		if item.State == ItemFailed && ClassifyFailure(item.Error) == FailureAlreadyInLibrary {
+			continue
+		}
+
 		if !item.Resumable() {
 			lost = append(lost, Item{
 				JobID: id, Position: item.Position, State: ItemFailed, ReviewRequired: true,
@@ -882,7 +886,7 @@ func (s *Service) Resume(ctx context.Context, id string) (Job, error) {
 			lost = append(lost, Item{
 				JobID: id, Position: item.Position, State: ItemFailed, ReviewRequired: true,
 				Diagnostics: item.Diagnostics, FinishedAt: &now,
-				Error: "The stored copy of this recipe could not be read: " + err.Error(),
+				Error: sourceCopyUnreadable + err.Error(),
 			})
 
 			continue
@@ -931,11 +935,11 @@ func (s *Service) Resume(ctx context.Context, id string) (Job, error) {
 func unresumableReason(item Item) string {
 	switch {
 	case item.Filename != "":
-		return "Savorum no longer holds " + item.Filename + ", the file this recipe came from. Choose it again to import this recipe."
+		return sourceFileGone + item.Filename + ", the file this recipe came from. Choose it again to import this recipe."
 	case item.SourceURL != "":
-		return "Savorum did not keep a copy of this recipe, so it cannot be run again from here. Import " + item.SourceURL + " again."
+		return sourceCopyNotKept + ", so it cannot be run again from here. Import " + item.SourceURL + " again."
 	default:
-		return "Savorum did not keep a copy of this recipe, so it cannot be run again from here. Import it again from its source."
+		return sourceCopyNotKept + ", so it cannot be run again from here. Import it again from its source."
 	}
 }
 

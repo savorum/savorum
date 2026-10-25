@@ -180,9 +180,6 @@ func (s *Store) ListImportJobs(ctx context.Context, options importjob.ListOption
 	return jobs, total, nil
 }
 
-// importJobSummary is what one job's own items say about it: the counts a
-// person watches, and the first recipe's title, so activity can be named by
-// what arrived rather than by the file it arrived in.
 type importJobSummary struct {
 	progress     importjob.Progress
 	leadTitle    string
@@ -209,7 +206,7 @@ func (s *Store) importJobSummaries(ctx context.Context, identifiers []string) (m
 
 	rows, err := s.db.QueryContext(ctx, `
 		SELECT job_id, state, review_required, diagnostics_json,
-		       payload_json IS NOT NULL AND payload_json <> '', title, position
+		       payload_json IS NOT NULL AND payload_json <> '', title, position, COALESCE(error, '')
 		FROM import_job_items
 		WHERE job_id IN (`+placeholders+`)`, arguments...)
 	if err != nil {
@@ -219,10 +216,10 @@ func (s *Store) importJobSummaries(ctx context.Context, identifiers []string) (m
 
 	for rows.Next() {
 		var (
-			jobID, state, encoded, title string
-			review, retained, position   int
+			jobID, state, encoded, title, itemError string
+			review, retained, position              int
 		)
-		if err := rows.Scan(&jobID, &state, &review, &encoded, &retained, &title, &position); err != nil {
+		if err := rows.Scan(&jobID, &state, &review, &encoded, &retained, &title, &position, &itemError); err != nil {
 			return nil, fmt.Errorf("scan import job progress: %w", err)
 		}
 
@@ -239,6 +236,16 @@ func (s *Store) importJobSummaries(ctx context.Context, identifiers []string) (m
 		}
 
 		progress[jobID], summaries[jobID] = accumulateImportJobItemProgress(progress[jobID], summaries[jobID], importjob.ItemState(state), review, retained == 1, diagnostics)
+		if state == string(importjob.ItemFailed) && importjob.ClassifyFailure(itemError) == importjob.FailureAlreadyInLibrary {
+			current := progress[jobID]
+
+			current.AlreadyInLibrary++
+			if retained == 1 {
+				current.Resumable--
+			}
+
+			progress[jobID] = current
+		}
 	}
 
 	if err := rows.Err(); err != nil {

@@ -191,7 +191,8 @@ const (
 	BookPublication BookKind = "publication"
 )
 
-// Book holds collection metadata and its ordered recipe memberships.
+// Book persists ordered membership. Preview identifiers are derived and
+// excluded from serialized revisions.
 type Book struct {
 	ID              string        `json:"id"`
 	Kind            BookKind      `json:"kind"`
@@ -211,21 +212,25 @@ type Book struct {
 	CreatedAt       time.Time     `json:"created_at"`
 	UpdatedAt       time.Time     `json:"updated_at"`
 	DeletedAt       *time.Time    `json:"deleted_at,omitempty"`
+	PreviewAssetID  string        `json:"-"`
+	PreviewEntryID  string        `json:"-"`
 }
 
 // BookListItem is the bounded collection representation. Complete ordered
 // sections and entries belong only to the individual book resource.
 type BookListItem struct {
-	ID            string
-	Kind          BookKind
-	Title         string
-	CoverAssetID  string
-	Author        string
-	EntryCount    int
-	ContainsEntry bool
-	Revision      uint64
-	UpdatedAt     time.Time
-	DeletedAt     *time.Time
+	ID             string
+	Kind           BookKind
+	Title          string
+	CoverAssetID   string
+	PreviewAssetID string
+	PreviewEntryID string
+	Author         string
+	EntryCount     int
+	ContainsEntry  bool
+	Revision       uint64
+	UpdatedAt      time.Time
+	DeletedAt      *time.Time
 }
 
 // BookListOptions selects a page of active or trashed books and optional membership annotations.
