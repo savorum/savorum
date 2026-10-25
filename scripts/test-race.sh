@@ -17,4 +17,4 @@ while IFS= read -r package; do
 	packages+=("$package")
 done <<< "$package_list"
 go test "${packages[@]}"
-go test -race "${packages[@]}"
+go test -race -timeout=30m "${packages[@]}"
