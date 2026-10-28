@@ -25,7 +25,11 @@ export interface paths {
         delete: operations["delete-current-account"];
         options?: never;
         head?: never;
-        patch?: never;
+        /**
+         * Update the current account
+         * @description Changes only the fields sent. display_name is trimmed to 1 to 128 Unicode characters. Uses the persisted local-mode user when authentication is disabled. Otherwise an authenticated browser session is required, except for the current account and sign-in. Modifying authenticated requests require the current X-CSRF-Token. Credentials and responses must not be cached.
+         */
+        patch: operations["update-current-account"];
         trace?: never;
     };
     "/api/v1/account/audit": {
@@ -6603,6 +6607,9 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        UpdateAccountRequest: {
+            display_name?: string;
+        };
         UpdateUserRequest: {
             disabled?: boolean;
             password?: string;
@@ -6730,6 +6737,51 @@ export interface operations {
                 };
                 content: {
                     "application/json": Record<string, never>;
+                };
+            };
+            /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Stable account problem code; authentication, authority, validation or lifecycle conflict. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+        };
+    };
+    "update-current-account": {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Required with an authenticated browser session; read from current-account. */
+                "X-CSRF-Token"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateAccountRequest"];
+            };
+        };
+        responses: {
+            /** @description Operation completed. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AccountUser"];
                 };
             };
             /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */

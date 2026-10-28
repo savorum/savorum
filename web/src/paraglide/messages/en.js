@@ -251,6 +251,10 @@
 /** @typedef {{ method: NonNullable<unknown> }} Account_Methods_Remove_NamedInputs */
 /** @typedef {{}} Account_Methods_UnavailableInputs */
 /** @typedef {{}} Account_Methods_VerifyInputs */
+/** @typedef {{}} Account_Name_HeadingInputs */
+/** @typedef {{}} Account_Name_HintInputs */
+/** @typedef {{}} Account_Name_LabelInputs */
+/** @typedef {{}} Account_Name_SubmitInputs */
 /** @typedef {{}} Account_Nav_AccountInputs */
 /** @typedef {{}} Account_Nav_Account_MenuInputs */
 /** @typedef {{}} Account_Nav_LabelInputs */
@@ -3456,6 +3460,22 @@ export const account_methods_unavailable = /** @type {(inputs: Account_Methods_U
 
 export const account_methods_verify = /** @type {(inputs: Account_Methods_VerifyInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Verify and add provider`)
+};
+
+export const account_name_heading = /** @type {(inputs: Account_Name_HeadingInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Display name`)
+};
+
+export const account_name_hint = /** @type {(inputs: Account_Name_HintInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`The name other people see.`)
+};
+
+export const account_name_label = /** @type {(inputs: Account_Name_LabelInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Name`)
+};
+
+export const account_name_submit = /** @type {(inputs: Account_Name_SubmitInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Change name`)
 };
 
 export const account_nav_account = /** @type {(inputs: Account_Nav_AccountInputs) => LocalizedString} */ () => {

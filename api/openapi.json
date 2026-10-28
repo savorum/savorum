@@ -10146,6 +10146,15 @@
         ],
         "type": "object"
       },
+      "UpdateAccountRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "display_name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "UpdateUserRequest": {
         "additionalProperties": false,
         "properties": {
@@ -10462,6 +10471,66 @@
           }
         ],
         "summary": "Get the current account",
+        "tags": [
+          "Account"
+        ]
+      },
+      "patch": {
+        "description": "Changes only the fields sent. display_name is trimmed to 1 to 128 Unicode characters. Uses the persisted local-mode user when authentication is disabled. Otherwise an authenticated browser session is required, except for the current account and sign-in. Modifying authenticated requests require the current X-CSRF-Token. Credentials and responses must not be cached.",
+        "operationId": "update-current-account",
+        "parameters": [
+          {
+            "description": "Required with an authenticated browser session; read from current-account.",
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAccountRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountUser"
+                }
+              }
+            },
+            "description": "Operation completed."
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountProblem"
+                }
+              }
+            },
+            "description": "No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`)."
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountProblem"
+                }
+              }
+            },
+            "description": "Stable account problem code; authentication, authority, validation or lifecycle conflict."
+          }
+        },
+        "summary": "Update the current account",
         "tags": [
           "Account"
         ]

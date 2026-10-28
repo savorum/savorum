@@ -116,7 +116,6 @@ export function InvitedRegistration() {
           <Input
             value={display()}
             onInput={(event) => setDisplay(event.currentTarget.value)}
-            maxLength={128}
             autocomplete="name"
           />
         </FormField>

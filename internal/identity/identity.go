@@ -6,7 +6,9 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
+	"strings"
 	"time"
+	"unicode/utf8"
 )
 
 // ErrCredentials deliberately does not distinguish absent and incorrect accounts.
@@ -14,6 +16,19 @@ var ErrCredentials = errors.New("invalid credentials")
 
 // ErrConflict describes a state transition that would violate an account invariant.
 var ErrConflict = errors.New("account operation conflicts with current state")
+
+// MaxDisplayNameLength bounds account names in Unicode code points.
+const MaxDisplayNameLength = 128
+
+// NormalizeDisplayName trims and validates a newly assigned account name.
+func NormalizeDisplayName(name string) (string, error) {
+	name = strings.TrimSpace(name)
+	if name == "" || !utf8.ValidString(name) || utf8.RuneCountInString(name) > MaxDisplayNameLength {
+		return "", ErrConflict
+	}
+
+	return name, nil
+}
 
 // Principal is the persisted application identity, independent of its login provider.
 type Principal struct {
