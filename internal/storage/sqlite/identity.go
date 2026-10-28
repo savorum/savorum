@@ -130,6 +130,11 @@ func (s *Store) BootstrapAdmin(ctx context.Context, login, display, password str
 		display = login
 	}
 
+	display, err = identity.NormalizeDisplayName(display)
+	if err != nil {
+		return identity.Principal{}, err
+	}
+
 	if _, err := tx.ExecContext(ctx, `UPDATE users SET display_name=?,instance_admin=1,updated_at=unixepoch() WHERE id=?`, display, id); err != nil {
 		return identity.Principal{}, fmt.Errorf("claim local account: %w", err)
 	}
@@ -178,6 +183,11 @@ func (s *Store) CreateLocalUser(ctx context.Context, actor, login, display, pass
 
 	if strings.TrimSpace(display) == "" {
 		display = login
+	}
+
+	display, err = identity.NormalizeDisplayName(display)
+	if err != nil {
+		return identity.Principal{}, err
 	}
 
 	if _, err := tx.ExecContext(ctx, `INSERT INTO users(id,display_name,created_at,updated_at) VALUES(?,?,unixepoch(),unixepoch())`, id, display); err != nil {
@@ -325,6 +335,32 @@ func (s *Store) ChangePassword(ctx context.Context, userID, current, password st
 	}
 
 	return s.replacePassword(ctx, userID, userID, password, false)
+}
+
+// RenameUser changes the display name of an active account.
+func (s *Store) RenameUser(ctx context.Context, userID, name string) error {
+	var err error
+
+	name, err = identity.NormalizeDisplayName(name)
+	if err != nil {
+		return err
+	}
+
+	result, err := s.db.ExecContext(ctx, `UPDATE users SET display_name=?,updated_at=unixepoch() WHERE id=? AND status='active'`, name, userID)
+	if err != nil {
+		return fmt.Errorf("rename user: %w", err)
+	}
+
+	n, err := result.RowsAffected()
+	if err != nil {
+		return fmt.Errorf("count renamed users: %w", err)
+	}
+
+	if n == 0 {
+		return identity.ErrConflict
+	}
+
+	return nil
 }
 
 // ResetPassword permits an administrator to replace another account's credential.

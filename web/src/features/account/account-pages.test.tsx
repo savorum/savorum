@@ -54,6 +54,7 @@ vi.mock("./account-state", async () => {
     administers: () => state.auth_enabled && state.user.instance_admin,
     roleName: () => messages.m.account_role_owner(),
     refreshAccount: vi.fn(),
+    setAccount: vi.fn(),
     accountRequest: vi.fn(async (path: string, method?: string) => {
       if (path === "/account/connections") return { connections: [] }
       if (path.startsWith("/account/authorization?"))
@@ -525,6 +526,24 @@ test("an owner without administration adds a member by identifier", async () => 
   const screen = render(() => <LibraryAccess libraryID="l1" />)
   await screen.findByLabelText("Savorum user ID")
   expect(screen.queryByLabelText("Person")).toBeNull()
+})
+
+test("changing the display name patches the account and keeps the new name", async () => {
+  const { accountRequest } = await import("./account-state")
+  vi.mocked(accountRequest).mockResolvedValueOnce({
+    id: "u1",
+    display_name: "Chef Alex",
+    instance_admin: true,
+  })
+  const overview = render(() => <AccountOverview />)
+  const name = await overview.findByLabelText("Name")
+  fireEvent.input(name, { target: { value: "  Chef Alex  " } })
+  fireEvent.click(overview.getByRole("button", { name: "Change name" }))
+  await waitFor(() =>
+    expect(accountRequest).toHaveBeenCalledWith("/account", "PATCH", {
+      display_name: "  Chef Alex  ",
+    }),
+  )
 })
 
 test("local mode hides sign-in, token, access and administration controls", async () => {

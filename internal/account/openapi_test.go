@@ -32,7 +32,7 @@ func TestEveryAccountRouteHasAnOpenAPIContract(t *testing.T) {
 			continue
 		}
 
-		methods := map[string]*huma.Operation{"get": item.Get, "post": item.Post, "put": item.Put, "delete": item.Delete}
+		methods := map[string]*huma.Operation{"get": item.Get, "post": item.Post, "put": item.Put, "patch": item.Patch, "delete": item.Delete}
 		if methods[strings.ToLower(route.Method)] == nil {
 			t.Errorf("undocumented method %s %s", route.Method, route.Path)
 		}

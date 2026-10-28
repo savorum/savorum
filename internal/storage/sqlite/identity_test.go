@@ -184,3 +184,26 @@ func TestIdentityDeletionPreservesHistoricalActorAndRequiresOwnershipTransfer(t 
 		t.Fatal("deletion retained credentials or deleted shared library")
 	}
 }
+
+func TestIdentityRenameUser(t *testing.T) {
+	ctx := t.Context()
+	store := openStore(ctx, t)
+
+	admin, err := store.BootstrapAdmin(ctx, "chef", "Chef", "long passphrase for admin")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if err := store.RenameUser(ctx, admin.UserID, "Head Chef"); err != nil {
+		t.Fatal(err)
+	}
+
+	user, err := store.User(ctx, admin.UserID)
+	if err != nil || user.DisplayName != "Head Chef" {
+		t.Fatalf("renamed user=%+v err=%v", user, err)
+	}
+
+	if err := store.RenameUser(ctx, "missing", "Nobody"); !errors.Is(err, identity.ErrConflict) {
+		t.Fatalf("rename missing user: %v", err)
+	}
+}

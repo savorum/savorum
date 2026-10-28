@@ -6,6 +6,8 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+- Add display name editing in Account.
+
 ## 0.3.1
 
 - Fix native app sign-in through browser passkeys, passwords, and configured providers.

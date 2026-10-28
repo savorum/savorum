@@ -30,6 +30,7 @@ type Repository interface {
 	Authenticate(context.Context, string, string, string) (identity.Principal, error)
 	CreateLocalUser(context.Context, string, string, string, string) (identity.Principal, error)
 	ChangePassword(context.Context, string, string, string) error
+	RenameUser(context.Context, string, string) error
 	ResetPassword(context.Context, string, string, string) error
 	DisableUser(context.Context, string, string, bool) error
 	DeleteUser(context.Context, string, string) error
@@ -98,6 +99,7 @@ func New(store Repository, options Options, next http.Handler) *Handler {
 	h.routes.HandleFunc("POST /api/v1/account/logout", h.logout)
 	h.routes.HandleFunc("POST /api/v1/account/library", h.selectLibrary)
 	h.routes.HandleFunc("PUT /api/v1/account/password", h.password)
+	h.routes.HandleFunc("PATCH /api/v1/account", h.update)
 	h.routes.HandleFunc("DELETE /api/v1/account", h.deleteAccount)
 	h.routes.HandleFunc("GET /api/v1/account/sessions", h.sessions)
 	h.routes.HandleFunc("DELETE /api/v1/account/sessions", h.revokeOthers)
@@ -399,6 +401,40 @@ func (h *Handler) password(w http.ResponseWriter, r *http.Request) {
 
 	h.cookie(w, r, sessionCookie, "", -1)
 	respond(w, map[string]any{})
+}
+
+func (h *Handler) update(w http.ResponseWriter, r *http.Request) {
+	var in struct {
+		DisplayName json.RawMessage `json:"display_name"`
+	}
+	if !decode(w, r, &in) {
+		return
+	}
+
+	b := getBrowser(r)
+
+	if len(in.DisplayName) > 0 {
+		var name string
+		if err := json.Unmarshal(in.DisplayName, &name); err != nil {
+			problem(w, 400, problemInvalidRequest)
+			return
+		}
+
+		name, err := identity.NormalizeDisplayName(name)
+		if err != nil {
+			problem(w, 400, problemInvalidRequest)
+			return
+		}
+
+		if err := h.store.RenameUser(r.Context(), b.principal.UserID, name); err != nil {
+			operationError(w, err)
+			return
+		}
+
+		b.principal.DisplayName = name
+	}
+
+	respond(w, userJSON(b.principal))
 }
 
 func (h *Handler) deleteAccount(w http.ResponseWriter, r *http.Request) {

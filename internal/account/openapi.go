@@ -1,6 +1,7 @@
 package account
 
 import (
+	"fmt"
 	"net/http"
 	"reflect"
 	"strings"
@@ -71,6 +72,9 @@ type loginResponse struct {
 type (
 	selectLibraryRequest struct {
 		LibraryID string `json:"library_id"`
+	}
+	updateAccountRequest struct {
+		DisplayName *string `json:"display_name,omitempty"`
 	}
 	passwordRequest struct {
 		CurrentPassword string `json:"current_password" writeOnly:"true"`
@@ -175,6 +179,7 @@ func RegisterOpenAPI(api huma.API) {
 		{http.MethodPost, "/api/v1/account/logout", "logout-account", "Sessions", "Sign out", "Revokes the current browser session.", nil, nil},
 		{http.MethodPost, "/api/v1/account/library", "select-current-library", "Account", "Select a library", "Chooses which accessible library this browser acts in.", reflect.TypeFor[selectLibraryRequest](), nil},
 		{http.MethodPut, "/api/v1/account/password", "change-account-password", "Account", "Change the password", "Requires the current password. Revokes every session of the account, including the one that made the request, so the client signs in again.", reflect.TypeFor[passwordRequest](), nil},
+		{http.MethodPatch, "/api/v1/account", "update-current-account", "Account", "Update the current account", fmt.Sprintf("Changes only the fields sent. display_name is trimmed to 1 to %d Unicode characters.", identity.MaxDisplayNameLength), reflect.TypeFor[updateAccountRequest](), reflect.TypeFor[accountUser]()},
 		{http.MethodDelete, "/api/v1/account", "delete-current-account", "Account", "Delete the current account", "Requires explicit confirmation. Shared libraries survive.", reflect.TypeFor[deleteAccountRequest](), nil},
 		{http.MethodGet, "/api/v1/account/sessions", "list-account-sessions", "Sessions", "List sessions", "Active browser sessions owned by this account.", nil, reflect.TypeFor[sessionsResponse]()},
 		{http.MethodDelete, "/api/v1/account/sessions", "revoke-other-account-sessions", "Sessions", "Revoke other sessions", "Keeps the session making the request.", nil, nil},

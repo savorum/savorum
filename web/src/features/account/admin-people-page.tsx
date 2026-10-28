@@ -436,7 +436,6 @@ function CreatePerson(props: {
           <Input
             required
             disabled={props.busy}
-            maxLength={128}
             value={name()}
             onInput={(event) => setName(event.currentTarget.value)}
           />

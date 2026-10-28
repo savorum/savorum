@@ -269,8 +269,9 @@ func (s *Store) RegisterInvitedLocalUser(ctx context.Context, token, login, disp
 		display = login
 	}
 
-	if len(display) > 128 {
-		return p, identity.ErrConflict
+	display, err = identity.NormalizeDisplayName(display)
+	if err != nil {
+		return p, err
 	}
 
 	if _, err = tx.ExecContext(ctx, `INSERT INTO users(id,display_name,created_at,updated_at) VALUES(?,?,unixepoch(),unixepoch())`, id, display); err != nil {

@@ -296,8 +296,8 @@ func provisionExternalUser(ctx context.Context, tx *sql.Tx, providerID, display,
 		p.DisplayName = "New member"
 	}
 
-	if len([]rune(p.DisplayName)) > 128 {
-		p.DisplayName = string([]rune(p.DisplayName)[:128])
+	if len([]rune(p.DisplayName)) > identity.MaxDisplayNameLength {
+		p.DisplayName = string([]rune(p.DisplayName)[:identity.MaxDisplayNameLength])
 	}
 
 	if _, err = tx.ExecContext(ctx, `INSERT INTO users(id,display_name,created_at,updated_at) VALUES(?,?,unixepoch(),unixepoch())`, p.UserID, p.DisplayName); err != nil {

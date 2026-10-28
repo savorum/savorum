@@ -1,12 +1,23 @@
 import { Link } from "@tanstack/solid-router"
-import { For, Show } from "solid-js"
+import { For, Show, createSignal } from "solid-js"
 
-import { Callout } from "@/components/status"
+import { Callout, ChangeError } from "@/components/status"
+import { Button } from "@/components/ui/button"
 import { CopyField } from "@/components/ui/clipboard"
+import { FormField } from "@/components/ui/field"
+import { Input } from "@/components/ui/input"
 
 import { m } from "../../lib/messages.ts"
 import { AccountNav, accountStyles as styles } from "./account-layout"
-import { account, authEnabled, libraries, roleName } from "./account-state"
+import {
+  type AccountUser,
+  account,
+  accountRequest,
+  authEnabled,
+  libraries,
+  roleName,
+  setAccount,
+} from "./account-state"
 import { InvitationAcceptance } from "./invitations"
 
 export function AccountOverview() {
@@ -36,6 +47,7 @@ export function AccountOverview() {
         </Callout>
       </Show>
       <Show when={authEnabled()}>
+        <NamePanel />
         <div class={styles.details}>
           <CopyField
             label={m.account_overview_user_id()}
@@ -82,5 +94,45 @@ export function AccountOverview() {
         </Link>
       </section>
     </main>
+  )
+}
+
+function NamePanel() {
+  const [name, setName] = createSignal(account()?.user?.display_name ?? "")
+  const [error, setError] = createSignal<unknown>()
+  const [busy, setBusy] = createSignal(false)
+  return (
+    <section class={styles.section}>
+      <h2>{m.account_name_heading()}</h2>
+      <p class={styles.muted}>{m.account_name_hint()}</p>
+      <ChangeError error={error()} />
+      <form
+        class={styles.form}
+        onSubmit={(event) => {
+          event.preventDefault()
+          setBusy(true)
+          setError(undefined)
+          void accountRequest<AccountUser>("/account", "PATCH", { display_name: name() })
+            .then((user) => {
+              setAccount((current) => current && { ...current, user })
+              setName(user.display_name)
+            })
+            .catch((failure: unknown) => setError(failure))
+            .finally(() => setBusy(false))
+        }}
+      >
+        <FormField label={m.account_name_label()} required>
+          <Input
+            required
+            autocomplete="name"
+            value={name()}
+            onInput={(event) => setName(event.currentTarget.value)}
+          />
+        </FormField>
+        <Button type="submit" disabled={busy()}>
+          {m.account_name_submit()}
+        </Button>
+      </form>
+    </section>
   )
 }

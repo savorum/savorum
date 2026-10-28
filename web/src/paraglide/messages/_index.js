@@ -253,6 +253,10 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{ method: NonNullable<unknown> }} Account_Methods_Remove_NamedInputs */
 /** @typedef {{}} Account_Methods_UnavailableInputs */
 /** @typedef {{}} Account_Methods_VerifyInputs */
+/** @typedef {{}} Account_Name_HeadingInputs */
+/** @typedef {{}} Account_Name_HintInputs */
+/** @typedef {{}} Account_Name_LabelInputs */
+/** @typedef {{}} Account_Name_SubmitInputs */
 /** @typedef {{}} Account_Nav_AccountInputs */
 /** @typedef {{}} Account_Nav_Account_MenuInputs */
 /** @typedef {{}} Account_Nav_LabelInputs */
@@ -12772,6 +12776,170 @@ export const account_methods_verify = /** @type {((inputs?: Account_Methods_Veri
 	if (locale === "zh-Hans") return __zh_hans1.account_methods_verify(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_methods_verify(inputs)
 	return __en.account_methods_verify(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Display name" |
+*
+* @param {Account_Name_HeadingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_name_heading = /** @type {((inputs?: Account_Name_HeadingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Name_HeadingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_name_heading(inputs)
+	if (locale === "cs") return __cs.account_name_heading(inputs)
+	if (locale === "da") return __da.account_name_heading(inputs)
+	if (locale === "de") return __de.account_name_heading(inputs)
+	if (locale === "el") return __el.account_name_heading(inputs)
+	if (locale === "es") return __es.account_name_heading(inputs)
+	if (locale === "fi") return __fi.account_name_heading(inputs)
+	if (locale === "fr") return __fr.account_name_heading(inputs)
+	if (locale === "he") return __he.account_name_heading(inputs)
+	if (locale === "hu") return __hu.account_name_heading(inputs)
+	if (locale === "id") return __id.account_name_heading(inputs)
+	if (locale === "it") return __it.account_name_heading(inputs)
+	if (locale === "ja") return __ja.account_name_heading(inputs)
+	if (locale === "ko") return __ko.account_name_heading(inputs)
+	if (locale === "nb") return __nb.account_name_heading(inputs)
+	if (locale === "nl") return __nl.account_name_heading(inputs)
+	if (locale === "pl") return __pl.account_name_heading(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_name_heading(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_name_heading(inputs)
+	if (locale === "ro") return __ro.account_name_heading(inputs)
+	if (locale === "ru") return __ru.account_name_heading(inputs)
+	if (locale === "sv") return __sv.account_name_heading(inputs)
+	if (locale === "th") return __th.account_name_heading(inputs)
+	if (locale === "tr") return __tr.account_name_heading(inputs)
+	if (locale === "uk") return __uk.account_name_heading(inputs)
+	if (locale === "vi") return __vi.account_name_heading(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_name_heading(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_name_heading(inputs)
+	return __en.account_name_heading(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "The name other people see." |
+*
+* @param {Account_Name_HintInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_name_hint = /** @type {((inputs?: Account_Name_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Name_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_name_hint(inputs)
+	if (locale === "cs") return __cs.account_name_hint(inputs)
+	if (locale === "da") return __da.account_name_hint(inputs)
+	if (locale === "de") return __de.account_name_hint(inputs)
+	if (locale === "el") return __el.account_name_hint(inputs)
+	if (locale === "es") return __es.account_name_hint(inputs)
+	if (locale === "fi") return __fi.account_name_hint(inputs)
+	if (locale === "fr") return __fr.account_name_hint(inputs)
+	if (locale === "he") return __he.account_name_hint(inputs)
+	if (locale === "hu") return __hu.account_name_hint(inputs)
+	if (locale === "id") return __id.account_name_hint(inputs)
+	if (locale === "it") return __it.account_name_hint(inputs)
+	if (locale === "ja") return __ja.account_name_hint(inputs)
+	if (locale === "ko") return __ko.account_name_hint(inputs)
+	if (locale === "nb") return __nb.account_name_hint(inputs)
+	if (locale === "nl") return __nl.account_name_hint(inputs)
+	if (locale === "pl") return __pl.account_name_hint(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_name_hint(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_name_hint(inputs)
+	if (locale === "ro") return __ro.account_name_hint(inputs)
+	if (locale === "ru") return __ru.account_name_hint(inputs)
+	if (locale === "sv") return __sv.account_name_hint(inputs)
+	if (locale === "th") return __th.account_name_hint(inputs)
+	if (locale === "tr") return __tr.account_name_hint(inputs)
+	if (locale === "uk") return __uk.account_name_hint(inputs)
+	if (locale === "vi") return __vi.account_name_hint(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_name_hint(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_name_hint(inputs)
+	return __en.account_name_hint(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Name" |
+*
+* @param {Account_Name_LabelInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_name_label = /** @type {((inputs?: Account_Name_LabelInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Name_LabelInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_name_label(inputs)
+	if (locale === "cs") return __cs.account_name_label(inputs)
+	if (locale === "da") return __da.account_name_label(inputs)
+	if (locale === "de") return __de.account_name_label(inputs)
+	if (locale === "el") return __el.account_name_label(inputs)
+	if (locale === "es") return __es.account_name_label(inputs)
+	if (locale === "fi") return __fi.account_name_label(inputs)
+	if (locale === "fr") return __fr.account_name_label(inputs)
+	if (locale === "he") return __he.account_name_label(inputs)
+	if (locale === "hu") return __hu.account_name_label(inputs)
+	if (locale === "id") return __id.account_name_label(inputs)
+	if (locale === "it") return __it.account_name_label(inputs)
+	if (locale === "ja") return __ja.account_name_label(inputs)
+	if (locale === "ko") return __ko.account_name_label(inputs)
+	if (locale === "nb") return __nb.account_name_label(inputs)
+	if (locale === "nl") return __nl.account_name_label(inputs)
+	if (locale === "pl") return __pl.account_name_label(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_name_label(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_name_label(inputs)
+	if (locale === "ro") return __ro.account_name_label(inputs)
+	if (locale === "ru") return __ru.account_name_label(inputs)
+	if (locale === "sv") return __sv.account_name_label(inputs)
+	if (locale === "th") return __th.account_name_label(inputs)
+	if (locale === "tr") return __tr.account_name_label(inputs)
+	if (locale === "uk") return __uk.account_name_label(inputs)
+	if (locale === "vi") return __vi.account_name_label(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_name_label(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_name_label(inputs)
+	return __en.account_name_label(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Change name" |
+*
+* @param {Account_Name_SubmitInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_name_submit = /** @type {((inputs?: Account_Name_SubmitInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Name_SubmitInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_name_submit(inputs)
+	if (locale === "cs") return __cs.account_name_submit(inputs)
+	if (locale === "da") return __da.account_name_submit(inputs)
+	if (locale === "de") return __de.account_name_submit(inputs)
+	if (locale === "el") return __el.account_name_submit(inputs)
+	if (locale === "es") return __es.account_name_submit(inputs)
+	if (locale === "fi") return __fi.account_name_submit(inputs)
+	if (locale === "fr") return __fr.account_name_submit(inputs)
+	if (locale === "he") return __he.account_name_submit(inputs)
+	if (locale === "hu") return __hu.account_name_submit(inputs)
+	if (locale === "id") return __id.account_name_submit(inputs)
+	if (locale === "it") return __it.account_name_submit(inputs)
+	if (locale === "ja") return __ja.account_name_submit(inputs)
+	if (locale === "ko") return __ko.account_name_submit(inputs)
+	if (locale === "nb") return __nb.account_name_submit(inputs)
+	if (locale === "nl") return __nl.account_name_submit(inputs)
+	if (locale === "pl") return __pl.account_name_submit(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_name_submit(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_name_submit(inputs)
+	if (locale === "ro") return __ro.account_name_submit(inputs)
+	if (locale === "ru") return __ru.account_name_submit(inputs)
+	if (locale === "sv") return __sv.account_name_submit(inputs)
+	if (locale === "th") return __th.account_name_submit(inputs)
+	if (locale === "tr") return __tr.account_name_submit(inputs)
+	if (locale === "uk") return __uk.account_name_submit(inputs)
+	if (locale === "vi") return __vi.account_name_submit(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_name_submit(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_name_submit(inputs)
+	return __en.account_name_submit(inputs)
 });
 /**
 * | output |

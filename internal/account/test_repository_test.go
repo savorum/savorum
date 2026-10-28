@@ -41,6 +41,10 @@ func (unexpectedRepository) ChangePassword(context.Context, string, string, stri
 	panic(unexpectedRepositoryCall)
 }
 
+func (unexpectedRepository) RenameUser(context.Context, string, string) error {
+	panic(unexpectedRepositoryCall)
+}
+
 func (unexpectedRepository) ResetPassword(context.Context, string, string, string) error {
 	panic(unexpectedRepositoryCall)
 }

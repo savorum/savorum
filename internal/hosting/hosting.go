@@ -11,6 +11,8 @@ import (
 	"strings"
 	"time"
 	"unicode/utf8"
+
+	"github.com/savorum/savorum/internal/identity"
 )
 
 // Bootstrap is one operator request. OperationID identifies the request, so
@@ -111,8 +113,8 @@ func (b Bootstrap) Validate() error {
 		fail("owner.subject must be 1 to 256 printable characters")
 	}
 
-	if !boundedText(b.Owner.DisplayName, 128) {
-		fail("owner.display_name must be 1 to 128 characters")
+	if !boundedText(b.Owner.DisplayName, identity.MaxDisplayNameLength) {
+		fail("owner.display_name must be 1 to %d characters", identity.MaxDisplayNameLength)
 	}
 
 	if !boundedText(b.LibraryName, 100) {
@@ -197,7 +199,7 @@ func (m MemberRequest) Validate() error {
 		return errors.New("member authorization modes cannot be combined")
 	}
 
-	if !operationPattern.MatchString(m.OperationID) || !operationPattern.MatchString(m.TenantID) || !boundedText(m.Subject, 256) || !boundedText(m.DisplayName, 128) || len(m.InvitationToken) > 256 {
+	if !operationPattern.MatchString(m.OperationID) || !operationPattern.MatchString(m.TenantID) || !boundedText(m.Subject, 256) || !boundedText(m.DisplayName, identity.MaxDisplayNameLength) || len(m.InvitationToken) > 256 {
 		return errors.New("member operation, tenant, subject, display name and invitation token are required")
 	}
 

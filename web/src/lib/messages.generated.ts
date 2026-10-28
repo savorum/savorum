@@ -756,6 +756,18 @@ export const account_methods_unavailable: Messages["account_methods_unavailable"
 export const account_methods_verify: Messages["account_methods_verify"] = /* @__PURE__ */ localized("account_methods_verify", () => {
 	return /** @type {LocalizedString} */ (`Verify and add provider`)
 })
+export const account_name_heading: Messages["account_name_heading"] = /* @__PURE__ */ localized("account_name_heading", () => {
+	return /** @type {LocalizedString} */ (`Display name`)
+})
+export const account_name_hint: Messages["account_name_hint"] = /* @__PURE__ */ localized("account_name_hint", () => {
+	return /** @type {LocalizedString} */ (`The name other people see.`)
+})
+export const account_name_label: Messages["account_name_label"] = /* @__PURE__ */ localized("account_name_label", () => {
+	return /** @type {LocalizedString} */ (`Name`)
+})
+export const account_name_submit: Messages["account_name_submit"] = /* @__PURE__ */ localized("account_name_submit", () => {
+	return /** @type {LocalizedString} */ (`Change name`)
+})
 export const account_nav_account: Messages["account_nav_account"] = /* @__PURE__ */ localized("account_nav_account", () => {
 	return /** @type {LocalizedString} */ (`Account`)
 })
