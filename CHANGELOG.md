@@ -7,6 +7,7 @@ Notable changes to Savorum Core. Each release publishes
 ## Unreleased
 
 - Add display name editing in Account.
+- Add invitation controls in Account and People, and links to open invitations in the app.
 
 ## 0.3.1
 

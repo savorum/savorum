@@ -26,6 +26,9 @@ export const account_admin_disable_title: (inputs: Account_Admin_Disable_TitleIn
 export const account_admin_enable: (inputs: Account_Admin_EnableInputs) => LocalizedString;
 export const account_admin_enable_named: (inputs: Account_Admin_Enable_NamedInputs) => LocalizedString;
 export const account_admin_initial_password: (inputs: Account_Admin_Initial_PasswordInputs) => LocalizedString;
+export const account_admin_invite_heading: (inputs: Account_Admin_Invite_HeadingInputs) => LocalizedString;
+export const account_admin_invite_hint: (inputs: Account_Admin_Invite_HintInputs) => LocalizedString;
+export const account_admin_invite_library: (inputs: Account_Admin_Invite_LibraryInputs) => LocalizedString;
 export const account_admin_libraries_lede: (inputs: Account_Admin_Libraries_LedeInputs) => LocalizedString;
 export const account_admin_libraries_page_title: (inputs: Account_Admin_Libraries_Page_TitleInputs) => LocalizedString;
 export const account_admin_libraries_title: (inputs: Account_Admin_Libraries_TitleInputs) => LocalizedString;
@@ -182,6 +185,7 @@ export const account_display_name: (inputs: Account_Display_NameInputs) => Local
 export const account_invitation_accept: (inputs: Account_Invitation_AcceptInputs) => LocalizedString;
 export const account_invitation_heading: (inputs: Account_Invitation_HeadingInputs) => LocalizedString;
 export const account_invitation_join_as: (inputs: Account_Invitation_Join_AsInputs) => LocalizedString;
+export const account_invitation_open_app: (inputs: Account_Invitation_Open_AppInputs) => LocalizedString;
 export const account_invitation_state_accepted: (inputs: Account_Invitation_State_AcceptedInputs) => LocalizedString;
 export const account_invitation_state_expired: (inputs: Account_Invitation_State_ExpiredInputs) => LocalizedString;
 export const account_invitation_state_expires: (inputs: Account_Invitation_State_ExpiresInputs) => LocalizedString;
@@ -259,6 +263,7 @@ export const account_nav_label: (inputs: Account_Nav_LabelInputs) => LocalizedSt
 export const account_nav_security: (inputs: Account_Nav_SecurityInputs) => LocalizedString;
 export const account_nav_tokens: (inputs: Account_Nav_TokensInputs) => LocalizedString;
 export const account_overview_details: (inputs: Account_Overview_DetailsInputs) => LocalizedString;
+export const account_overview_invite_people: (inputs: Account_Overview_Invite_PeopleInputs) => LocalizedString;
 export const account_overview_libraries: (inputs: Account_Overview_LibrariesInputs) => LocalizedString;
 export const account_overview_libraries_empty: (inputs: Account_Overview_Libraries_EmptyInputs) => LocalizedString;
 export const account_overview_local_mode: (inputs: Account_Overview_Local_ModeInputs) => LocalizedString;
@@ -2494,6 +2499,9 @@ export type Account_Admin_Enable_NamedInputs = {
     name: NonNullable<unknown>;
 };
 export type Account_Admin_Initial_PasswordInputs = {};
+export type Account_Admin_Invite_HeadingInputs = {};
+export type Account_Admin_Invite_HintInputs = {};
+export type Account_Admin_Invite_LibraryInputs = {};
 export type Account_Admin_Libraries_LedeInputs = {};
 export type Account_Admin_Libraries_Page_TitleInputs = {};
 export type Account_Admin_Libraries_TitleInputs = {};
@@ -2679,6 +2687,7 @@ export type Account_Invitation_HeadingInputs = {};
 export type Account_Invitation_Join_AsInputs = {
     name: NonNullable<unknown>;
 };
+export type Account_Invitation_Open_AppInputs = {};
 export type Account_Invitation_State_AcceptedInputs = {};
 export type Account_Invitation_State_ExpiredInputs = {};
 export type Account_Invitation_State_ExpiresInputs = {
@@ -2776,6 +2785,7 @@ export type Account_Nav_LabelInputs = {};
 export type Account_Nav_SecurityInputs = {};
 export type Account_Nav_TokensInputs = {};
 export type Account_Overview_DetailsInputs = {};
+export type Account_Overview_Invite_PeopleInputs = {};
 export type Account_Overview_LibrariesInputs = {};
 export type Account_Overview_Libraries_EmptyInputs = {};
 export type Account_Overview_Local_ModeInputs = {};

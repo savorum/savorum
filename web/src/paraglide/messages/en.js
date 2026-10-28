@@ -28,6 +28,9 @@
 /** @typedef {{}} Account_Admin_EnableInputs */
 /** @typedef {{ name: NonNullable<unknown> }} Account_Admin_Enable_NamedInputs */
 /** @typedef {{}} Account_Admin_Initial_PasswordInputs */
+/** @typedef {{}} Account_Admin_Invite_HeadingInputs */
+/** @typedef {{}} Account_Admin_Invite_HintInputs */
+/** @typedef {{}} Account_Admin_Invite_LibraryInputs */
 /** @typedef {{}} Account_Admin_Libraries_LedeInputs */
 /** @typedef {{}} Account_Admin_Libraries_Page_TitleInputs */
 /** @typedef {{}} Account_Admin_Libraries_TitleInputs */
@@ -184,6 +187,7 @@
 /** @typedef {{}} Account_Invitation_AcceptInputs */
 /** @typedef {{}} Account_Invitation_HeadingInputs */
 /** @typedef {{ name: NonNullable<unknown> }} Account_Invitation_Join_AsInputs */
+/** @typedef {{}} Account_Invitation_Open_AppInputs */
 /** @typedef {{}} Account_Invitation_State_AcceptedInputs */
 /** @typedef {{}} Account_Invitation_State_ExpiredInputs */
 /** @typedef {{ date: NonNullable<unknown> }} Account_Invitation_State_ExpiresInputs */
@@ -261,6 +265,7 @@
 /** @typedef {{}} Account_Nav_SecurityInputs */
 /** @typedef {{}} Account_Nav_TokensInputs */
 /** @typedef {{}} Account_Overview_DetailsInputs */
+/** @typedef {{}} Account_Overview_Invite_PeopleInputs */
 /** @typedef {{}} Account_Overview_LibrariesInputs */
 /** @typedef {{}} Account_Overview_Libraries_EmptyInputs */
 /** @typedef {{}} Account_Overview_Local_ModeInputs */
@@ -2570,6 +2575,18 @@ export const account_admin_initial_password = /** @type {(inputs: Account_Admin_
 	return /** @type {LocalizedString} */ (`Initial password`)
 };
 
+export const account_admin_invite_heading = /** @type {(inputs: Account_Admin_Invite_HeadingInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Invite by link`)
+};
+
+export const account_admin_invite_hint = /** @type {(inputs: Account_Admin_Invite_HintInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`The person creates their own account or joins with the one they have. Use Add user to set their password yourself.`)
+};
+
+export const account_admin_invite_library = /** @type {(inputs: Account_Admin_Invite_LibraryInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Library to invite to`)
+};
+
 export const account_admin_libraries_lede = /** @type {(inputs: Account_Admin_Libraries_LedeInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Create a library, or give a library a new owner when its owners are gone.`)
 };
@@ -3194,6 +3211,10 @@ export const account_invitation_join_as = /** @type {(inputs: Account_Invitation
 	return /** @type {LocalizedString} */ (`Join as ${i?.name}.`)
 };
 
+export const account_invitation_open_app = /** @type {(inputs: Account_Invitation_Open_AppInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Open in Savorum`)
+};
+
 export const account_invitation_state_accepted = /** @type {(inputs: Account_Invitation_State_AcceptedInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Accepted`)
 };
@@ -3500,6 +3521,10 @@ export const account_nav_tokens = /** @type {(inputs: Account_Nav_TokensInputs) 
 
 export const account_overview_details = /** @type {(inputs: Account_Overview_DetailsInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Your details`)
+};
+
+export const account_overview_invite_people = /** @type {(inputs: Account_Overview_Invite_PeopleInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Invite people`)
 };
 
 export const account_overview_libraries = /** @type {(inputs: Account_Overview_LibrariesInputs) => LocalizedString} */ () => {

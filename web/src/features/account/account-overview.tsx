@@ -75,6 +75,14 @@ export function AccountOverview() {
                         class={styles.back}
                         to="/libraries/$libraryId/access"
                         params={{ libraryId: library.id }}
+                        hash="invitations"
+                      >
+                        {m.account_overview_invite_people()}
+                      </Link>
+                      <Link
+                        class={styles.back}
+                        to="/libraries/$libraryId/access"
+                        params={{ libraryId: library.id }}
                       >
                         {m.account_overview_manage_access()}
                       </Link>

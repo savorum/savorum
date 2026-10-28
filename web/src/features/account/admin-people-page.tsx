@@ -16,6 +16,7 @@ import { m } from "../../lib/messages.ts"
 import { accountStyles as styles } from "./account-layout"
 import { account, accountRequest, libraries, type AccountUser } from "./account-state"
 import { AdminPage } from "./admin-page"
+import { LibraryInvitations } from "./invitations"
 import { ManagedSignInMethods } from "./sign-in-methods"
 
 export function AdminPeoplePage() {
@@ -32,6 +33,7 @@ function People() {
   )
   const people = createMemo<AccountUser[]>((previous) => settled(users) ?? previous, [])
   const [creating, setCreating] = createSignal(false)
+  const [inviting, setInviting] = createSignal(false)
   const [error, setError] = createSignal<unknown>()
   const [busy, setBusy] = createSignal(false)
   async function run(path: string, method: string, body: unknown) {
@@ -62,15 +64,22 @@ function People() {
           <h2 class={css({ fontFamily: "editorial", fontSize: "xl" })}>
             {m.account_admin_people_heading()}
           </h2>
-          <Button
-            size="sm"
-            onClick={() => {
-              setError(undefined)
-              setCreating(true)
-            }}
-          >
-            {m.account_admin_create_heading()}
-          </Button>
+          <div class={css({ display: "flex", gap: "2" })}>
+            <Show when={libraries().length > 0}>
+              <Button size="sm" variant="outline" onClick={() => setInviting(true)}>
+                {m.account_admin_invite_heading()}
+              </Button>
+            </Show>
+            <Button
+              size="sm"
+              onClick={() => {
+                setError(undefined)
+                setCreating(true)
+              }}
+            >
+              {m.account_admin_create_heading()}
+            </Button>
+          </div>
         </div>
         <Show when={users.error}>
           <Callout
@@ -104,6 +113,9 @@ function People() {
           </For>
         </ul>
       </section>
+      <Show when={inviting()}>
+        <InvitePeople onClose={() => setInviting(false)} />
+      </Show>
       <Show when={creating()}>
         <CreatePerson
           busy={busy()}
@@ -367,6 +379,36 @@ function ManagePerson(props: {
           </code>
         </div>
       </div>
+    </Dialog>
+  )
+}
+
+function InvitePeople(props: { onClose: () => void }) {
+  const [library, setLibrary] = createSignal(libraries()[0]?.id ?? "")
+  const chosen = () => libraries().find((entry) => entry.id === library())
+  return (
+    <Dialog
+      open
+      title={m.account_admin_invite_heading()}
+      description={m.account_admin_invite_hint()}
+      onClose={props.onClose}
+      contentClass={css({ maxWidth: "34rem" })}
+      footer={
+        <Button variant="outline" onClick={props.onClose}>
+          {m.common_cancel()}
+        </Button>
+      }
+    >
+      <FormField label={m.account_admin_invite_library()}>
+        <Select
+          value={library()}
+          onValueChange={setLibrary}
+          items={libraries().map((entry) => ({ value: entry.id, label: entry.name }))}
+        />
+      </FormField>
+      <Show when={chosen()} keyed>
+        {(entry) => <LibraryInvitations libraryID={entry.id} libraryName={entry.name} />}
+      </Show>
     </Dialog>
   )
 }

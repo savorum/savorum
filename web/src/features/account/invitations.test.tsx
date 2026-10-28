@@ -1,7 +1,7 @@
 import { cleanup, fireEvent, render, screen as portal } from "@solidjs/testing-library"
 import { afterEach, expect, test, vi } from "vitest"
 
-import { InvitedRegistration, LibraryInvitations } from "./invitations"
+import { InvitedRegistration, LibraryInvitations, appInvitationURL } from "./invitations"
 import { LinkedSignInMethods } from "./sign-in-methods"
 
 vi.mock("@/api/capabilities", () => ({
@@ -76,4 +76,13 @@ test("provider link credentials retain focus and composition", async () => {
   fireEvent.click(await portal.findByRole("option", { name: "Company" }))
   verify((await screen.findByLabelText("Provider username")) as HTMLInputElement)
   verify(screen.getByLabelText("Provider password") as HTMLInputElement)
+})
+
+test("an invitation opens in the app with the token in the fragment", async () => {
+  expect(appInvitationURL("https://recipes.example", "a b/c")).toBe(
+    "savorum://invitation#server=https%3A%2F%2Frecipes.example&token=a%20b%2Fc",
+  )
+  sessionStorage.setItem("savorum.invitation", "token-token-token")
+  const screen = render(() => <InvitedRegistration />)
+  expect(await screen.findByRole("button", { name: "Open in Savorum" })).toBeTruthy()
 })
