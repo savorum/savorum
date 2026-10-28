@@ -46,6 +46,22 @@ export function invitationToken() {
   return token || sessionStorage.getItem("savorum.invitation") || ""
 }
 
+/** The token stays in the fragment, so it never reaches a server log. */
+export function appInvitationURL(origin: string, token: string) {
+  return `savorum://invitation#server=${encodeURIComponent(origin)}&token=${encodeURIComponent(token)}`
+}
+
+function OpenInApp(props: { token: string }) {
+  return (
+    <Button
+      variant="outline"
+      onClick={() => window.location.assign(appInvitationURL(window.location.origin, props.token))}
+    >
+      {m.account_invitation_open_app()}
+    </Button>
+  )
+}
+
 export function InvitationAcceptance() {
   const [token, setToken] = createSignal("")
   const [error, setError] = createSignal<unknown>()
@@ -75,6 +91,7 @@ export function InvitationAcceptance() {
           <Button disabled={busy()} onClick={() => void accept()}>
             {m.account_invitation_accept()}
           </Button>
+          <OpenInApp token={token()} />
         </div>
       </section>
     </Show>
@@ -139,9 +156,12 @@ export function InvitedRegistration() {
           />
         </FormField>
         <ChangeError error={error()} />
-        <Button type="submit" disabled={busy()}>
-          {m.account_register_submit()}
-        </Button>
+        <div class={styles.actions}>
+          <Button type="submit" disabled={busy()}>
+            {m.account_register_submit()}
+          </Button>
+          <OpenInApp token={token()} />
+        </div>
       </form>
     </Show>
   )
@@ -200,7 +220,7 @@ export function LibraryInvitations(props: { libraryID: string; libraryName: stri
     }
   }
   return (
-    <section class={styles.section}>
+    <section class={styles.section} id="invitations">
       <h2>{m.account_invitations_heading()}</h2>
       <p class={styles.muted}>
         {m.account_invitations_hint({ library: isolate(props.libraryName) })}

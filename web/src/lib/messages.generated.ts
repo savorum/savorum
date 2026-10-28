@@ -87,6 +87,15 @@ export const account_admin_enable_named: Messages["account_admin_enable_named"] 
 export const account_admin_initial_password: Messages["account_admin_initial_password"] = /* @__PURE__ */ localized("account_admin_initial_password", () => {
 	return /** @type {LocalizedString} */ (`Initial password`)
 })
+export const account_admin_invite_heading: Messages["account_admin_invite_heading"] = /* @__PURE__ */ localized("account_admin_invite_heading", () => {
+	return /** @type {LocalizedString} */ (`Invite by link`)
+})
+export const account_admin_invite_hint: Messages["account_admin_invite_hint"] = /* @__PURE__ */ localized("account_admin_invite_hint", () => {
+	return /** @type {LocalizedString} */ (`The person creates their own account or joins with the one they have. Use Add user to set their password yourself.`)
+})
+export const account_admin_invite_library: Messages["account_admin_invite_library"] = /* @__PURE__ */ localized("account_admin_invite_library", () => {
+	return /** @type {LocalizedString} */ (`Library to invite to`)
+})
 export const account_admin_libraries_lede: Messages["account_admin_libraries_lede"] = /* @__PURE__ */ localized("account_admin_libraries_lede", () => {
 	return /** @type {LocalizedString} */ (`Create a library, or give a library a new owner when its owners are gone.`)
 })
@@ -555,6 +564,9 @@ export const account_invitation_heading: Messages["account_invitation_heading"] 
 export const account_invitation_join_as: Messages["account_invitation_join_as"] = /* @__PURE__ */ localized("account_invitation_join_as", (i) => {
 	return /** @type {LocalizedString} */ (`Join as ${i?.name}.`)
 })
+export const account_invitation_open_app: Messages["account_invitation_open_app"] = /* @__PURE__ */ localized("account_invitation_open_app", () => {
+	return /** @type {LocalizedString} */ (`Open in Savorum`)
+})
 export const account_invitation_state_accepted: Messages["account_invitation_state_accepted"] = /* @__PURE__ */ localized("account_invitation_state_accepted", () => {
 	return /** @type {LocalizedString} */ (`Accepted`)
 })
@@ -785,6 +797,9 @@ export const account_nav_tokens: Messages["account_nav_tokens"] = /* @__PURE__ *
 })
 export const account_overview_details: Messages["account_overview_details"] = /* @__PURE__ */ localized("account_overview_details", () => {
 	return /** @type {LocalizedString} */ (`Your details`)
+})
+export const account_overview_invite_people: Messages["account_overview_invite_people"] = /* @__PURE__ */ localized("account_overview_invite_people", () => {
+	return /** @type {LocalizedString} */ (`Invite people`)
 })
 export const account_overview_libraries: Messages["account_overview_libraries"] = /* @__PURE__ */ localized("account_overview_libraries", () => {
 	return /** @type {LocalizedString} */ (`Your libraries`)

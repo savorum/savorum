@@ -393,6 +393,48 @@ export const account_admin_initial_password: ((inputs?: Account_Admin_Initial_Pa
 /**
 * | output |
 * | --- |
+* | "Invite by link" |
+*
+* @param {Account_Admin_Invite_HeadingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_admin_invite_heading: ((inputs?: Account_Admin_Invite_HeadingInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Admin_Invite_HeadingInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "The person creates their own account or joins with the one they have. Use Add user to set their password yourself." |
+*
+* @param {Account_Admin_Invite_HintInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_admin_invite_hint: ((inputs?: Account_Admin_Invite_HintInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Admin_Invite_HintInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Library to invite to" |
+*
+* @param {Account_Admin_Invite_LibraryInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_admin_invite_library: ((inputs?: Account_Admin_Invite_LibraryInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Admin_Invite_LibraryInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Create a library, or give a library a new owner when its owners are gone." |
 *
 * @param {Account_Admin_Libraries_LedeInputs} inputs
@@ -2577,6 +2619,20 @@ export const account_invitation_join_as: ((inputs: Account_Invitation_Join_AsInp
 /**
 * | output |
 * | --- |
+* | "Open in Savorum" |
+*
+* @param {Account_Invitation_Open_AppInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_invitation_open_app: ((inputs?: Account_Invitation_Open_AppInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Invitation_Open_AppInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
 * | "Accepted" |
 *
 * @param {Account_Invitation_State_AcceptedInputs} inputs
@@ -3650,6 +3706,20 @@ export const account_nav_tokens: ((inputs?: Account_Nav_TokensInputs, options?: 
 export const account_overview_details: ((inputs?: Account_Overview_DetailsInputs, options?: {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Overview_DetailsInputs, {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}, {}>;
+/**
+* | output |
+* | --- |
+* | "Invite people" |
+*
+* @param {Account_Overview_Invite_PeopleInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_overview_invite_people: ((inputs?: Account_Overview_Invite_PeopleInputs, options?: {
+    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Overview_Invite_PeopleInputs, {
     locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
 }, {}>;
 /**
@@ -34401,6 +34471,9 @@ export type Account_Admin_Enable_NamedInputs = {
     name: NonNullable<unknown>;
 };
 export type Account_Admin_Initial_PasswordInputs = {};
+export type Account_Admin_Invite_HeadingInputs = {};
+export type Account_Admin_Invite_HintInputs = {};
+export type Account_Admin_Invite_LibraryInputs = {};
 export type Account_Admin_Libraries_LedeInputs = {};
 export type Account_Admin_Libraries_Page_TitleInputs = {};
 export type Account_Admin_Libraries_TitleInputs = {};
@@ -34586,6 +34659,7 @@ export type Account_Invitation_HeadingInputs = {};
 export type Account_Invitation_Join_AsInputs = {
     name: NonNullable<unknown>;
 };
+export type Account_Invitation_Open_AppInputs = {};
 export type Account_Invitation_State_AcceptedInputs = {};
 export type Account_Invitation_State_ExpiredInputs = {};
 export type Account_Invitation_State_ExpiresInputs = {
@@ -34683,6 +34757,7 @@ export type Account_Nav_LabelInputs = {};
 export type Account_Nav_SecurityInputs = {};
 export type Account_Nav_TokensInputs = {};
 export type Account_Overview_DetailsInputs = {};
+export type Account_Overview_Invite_PeopleInputs = {};
 export type Account_Overview_LibrariesInputs = {};
 export type Account_Overview_Libraries_EmptyInputs = {};
 export type Account_Overview_Local_ModeInputs = {};
