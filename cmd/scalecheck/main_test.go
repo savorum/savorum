@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"path/filepath"
 	"slices"
+	"strings"
 	"testing"
 	"time"
 
@@ -105,14 +106,23 @@ func TestSeededBrowseWorkload(t *testing.T) {
 }
 
 func TestTaxonomyResponseRequiresRecipeCounts(t *testing.T) {
-	c := scalefixture.Policy()
-	for path, size := range map[string]int{"/api/v1/tags": c.Taxonomy.Tags + 3, "/api/v1/facets": 4 * c.Taxonomy.FacetsPerKind} {
-		body, err := json.Marshal(map[string]any{"items": make([]struct{}, size)})
+	labels := fixtureLabelCounts(100)
+
+	for path, prefix := range map[string]string{"/api/v1/tags": "tscale", "/api/v1/facets": "fscale-"} {
+		var items []map[string]string
+
+		for id := range labels {
+			if strings.HasPrefix(id, prefix) {
+				items = append(items, map[string]string{"id": id})
+			}
+		}
+
+		body, err := json.Marshal(map[string]any{"items": items})
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		if err := verifyTaxonomyResponse(body, path, 100, fixtureLabelCounts(100)); err == nil {
+		if err := verifyTaxonomyResponse(body, path, 100, labels); err == nil {
 			t.Errorf("%s accepted missing counts", path)
 		}
 	}
