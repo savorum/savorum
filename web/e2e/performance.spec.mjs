@@ -6,29 +6,27 @@ import { expect, test } from "@playwright/test"
 const contract = JSON.parse(
   readFileSync(new URL("../../internal/scalefixture/contract.json", import.meta.url), "utf8"),
 )
-test("representative library first render stays within the product budget", async ({ page }) => {
+test("representative library first render stays within the product budget", async ({ context }) => {
   test.skip(!process.env.SAVORUM_SCALE_REPORT, "Requires the shared scalecheck fixture")
   const timings = []
   const labelRequests = []
-  let requests
-  page.on("request", (request) => {
-    const url = new URL(request.url())
-    if (url.pathname === "/api/v1/tags") requests.tags++
-    if (url.pathname === "/api/v1/facets") requests.facets++
-    if (url.pathname === "/api/v1/recipes" && url.searchParams.get("limit") === "1")
-      requests.total++
-    if (/^\/api\/v1\/recipes\/rscale\d+$/.test(url.pathname)) requests.recipeDetails++
-  })
   const reportPath = process.env.SAVORUM_SCALE_REPORT
   const report = JSON.parse(readFileSync(reportPath, "utf8"))
   expect(report.workload_version).toBe(contract.version)
-  // Fresh browser contexts are supplied by Playwright; each navigation discards
-  // the document. Disable cache so this includes shell, scripts and card assets.
-  const session = await page.context().newCDPSession(page)
-  await session.send("Network.enable")
-  await session.send("Network.setCacheDisabled", { cacheDisabled: true })
   for (let i = 0; i < 5; i++) {
-    requests = { tags: 0, facets: 0, total: 0, recipeDetails: 0 }
+    const page = await context.newPage()
+    const requests = { tags: 0, facets: 0, total: 0, recipeDetails: 0 }
+    page.on("request", (request) => {
+      const url = new URL(request.url())
+      if (url.pathname === "/api/v1/tags") requests.tags++
+      if (url.pathname === "/api/v1/facets") requests.facets++
+      if (url.pathname === "/api/v1/recipes" && url.searchParams.get("limit") === "1")
+        requests.total++
+      if (/^\/api\/v1\/recipes\/rscale\d+$/.test(url.pathname)) requests.recipeDetails++
+    })
+    const session = await context.newCDPSession(page)
+    await session.send("Network.enable")
+    await session.send("Network.setCacheDisabled", { cacheDisabled: true })
     const start = performance.now()
     const metadata = ["/api/v1/tags", "/api/v1/facets"].map((path) =>
       page.waitForResponse((response) => new URL(response.url()).pathname === path),
@@ -65,6 +63,7 @@ test("representative library first render stays within the product budget", asyn
     timings.push(performance.now() - start)
     expect(requests).toEqual({ tags: 1, facets: 1, total: 1, recipeDetails: 0 })
     labelRequests.push(requests)
+    await page.close()
   }
   timings.sort((a, b) => a - b)
   const milliseconds = timings.at(-1)
