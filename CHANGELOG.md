@@ -6,6 +6,8 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+## 0.4.0
+
 - Add display name editing in Account.
 - Add invitation controls in Account and People, and links to open invitations in the app.
 - Add `recipe_count` to tag and facet lists and `facets` to recipe summaries in the API.
