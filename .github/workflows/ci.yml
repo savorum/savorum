@@ -13,6 +13,15 @@ on:
         description: Source revision to check
         required: false
         type: string
+      release-artifacts:
+        description: Preserve the tested web bundle for release images
+        type: boolean
+        default: false
+    outputs:
+      web-artifact-id:
+        value: ${{ jobs.web.outputs.artifact-id }}
+      web-sha256:
+        value: ${{ jobs.web.outputs.sha256 }}
 
 permissions:
   contents: read
@@ -73,7 +82,7 @@ jobs:
           elif [[ "$EVENT" == pull_request ]]; then
             changed="$(git diff --name-only "$BASE" HEAD)"
             e2e_paths='^(\.github/|go\.mod$|go\.sum$|justfile$|web/|api/|cmd/savorum/|cmd/scalecheck/|scripts/scale-check\.sh$|internal/(scalefixture|capacity|recovery|access|account|api|app|assets|configuration|export|exchange|federation|httpsecurity|identity|importjob|importer|library|print|recipe|render|storage|webui)/)'
-            container_paths='^(\.github/|\.dockerignore$|Dockerfile$|compose\.yaml$|scripts/container-smoke-test\.sh$|scripts/publish-container\.sh$|cmd/savorum/(healthcheck|healthcheck_test|main)\.go$|internal/buildinfo/)'
+            container_paths='^(\.github/|\.dockerignore$|Dockerfile$|compose\.yaml$|scripts/(container-smoke-test|publish-container|bootstrap-pnpm)\.sh$|cmd/savorum/(healthcheck|healthcheck_test|main)\.go$|internal/buildinfo/)'
             if grep -qE "$e2e_paths" <<< "$changed"; then e2e=true; fi
             if grep -qE "$container_paths" <<< "$changed"; then container=true; fi
           fi
@@ -86,6 +95,8 @@ jobs:
     timeout-minutes: 20
     outputs:
       playwright-image: ${{ steps.playwright.outputs.image }}
+      artifact-id: ${{ steps.release-web.outputs.artifact-id }}
+      sha256: ${{ steps.bundle.outputs.sha256 }}
     env:
       NODE_OPTIONS: --max-old-space-size=4096
     steps:
@@ -105,6 +116,20 @@ jobs:
       # The prerendered shell embeds a build timestamp, so it is passed to later
       # jobs as an artifact instead of compared byte-for-byte.
       - run: git diff --exit-code -- web/src/api/schema.d.ts web/src/routeTree.gen.ts
+      - name: Package the release web bundle
+        if: inputs.release-artifacts
+        id: bundle
+        run: |
+          tar -C internal/webui -cf "$RUNNER_TEMP/webui.tar" dist
+          echo "sha256=$(sha256sum "$RUNNER_TEMP/webui.tar" | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
+      - if: inputs.release-artifacts
+        id: release-web
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-webui-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/webui.tar
+          if-no-files-found: error
+          retention-days: 1
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: webui
@@ -140,6 +165,10 @@ jobs:
       - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version-file: go.mod
+      - name: Check OpenAPI contracts
+        run: |
+          go test ./cmd/openapi
+          go run ./cmd/openapi --check
       - run: |
           go install "mvdan.cc/gofumpt@$GOFUMPT_VERSION"
           go install "github.com/golangci/golangci-lint/v2/cmd/golangci-lint@$GOLANGCI_LINT_VERSION"
