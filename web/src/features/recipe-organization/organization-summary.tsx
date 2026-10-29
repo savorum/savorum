@@ -3,6 +3,7 @@ import { For, Show, createMemo, createResource, createSignal } from "solid-js"
 import { css } from "styled-system/css"
 
 import type { BookSummary } from "@/api/client"
+import { libraryRecipeTotal } from "@/api/library-total"
 import { listFacets, listTags } from "@/api/organization"
 import { suggestBooks, lookupBooks, lookupRecipes } from "@/api/selections"
 import { LabelSwatch } from "@/components/label-swatch"
@@ -34,6 +35,7 @@ export const OrganizationSummary = (props: {
   const [editing, setEditing] = createSignal(false)
   const [tags, { refetch: refetchTags }] = createResource(listTags)
   const [facets, { refetch: refetchFacets }] = createResource(() => listFacets())
+  const [total] = createResource(libraryRecipeTotal)
   const [books, { refetch: refetchBooks }] = createResource(
     () => props.entryID,
     async (id) => {
@@ -76,6 +78,7 @@ export const OrganizationSummary = (props: {
               color: tag.color,
               search: { tags: [tag.id] },
             })),
+          latestUnlessFailed(total),
         ).map(({ name, color, search }): Filing => ({ name, color, search })),
       },
       ...facetGroups.map((group) => ({
@@ -89,6 +92,7 @@ export const OrganizationSummary = (props: {
               recipeCount: facet.recipe_count ?? 0,
               search: { [group.key]: [facet.id] },
             })),
+          latestUnlessFailed(total),
         ).map(({ name, search }): Filing => ({ name, search })),
       })),
     ]

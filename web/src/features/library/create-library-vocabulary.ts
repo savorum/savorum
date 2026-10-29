@@ -1,6 +1,7 @@
 import { createMemo, createResource } from "solid-js"
 
 import type { BookSummary, Facet, Tag } from "@/api/client"
+import { libraryRecipeTotal } from "@/api/library-total"
 import { listFacets, listTags } from "@/api/organization"
 import { suggestBooks, lookupBooks } from "@/api/selections"
 import { latestUnlessFailed, settled } from "@/lib/settled"
@@ -10,6 +11,8 @@ export interface LibraryVocabulary {
   tags: () => Tag[]
   facets: () => Facet[]
   books: () => BookSummary[]
+  /** Active recipes in the library, once known. */
+  recipeTotal?: () => number | undefined
   searchBooks?: (
     query: string,
     offset: number,
@@ -22,6 +25,7 @@ export function createLibraryVocabulary(): LibraryVocabulary {
   // Recipe requests take a connection before the supporting filter metadata.
   const [tags] = createResource(() => Promise.resolve().then(listTags))
   const [facets] = createResource(() => Promise.resolve().then(() => listFacets()))
+  const [total] = createResource(libraryRecipeTotal)
   const [books, { mutate: mutateBooks }] = createResource(async () =>
     (await suggestBooks()).items.map((book) => ({
       ...book,
@@ -55,6 +59,7 @@ export function createLibraryVocabulary(): LibraryVocabulary {
     tags: () => settled(tags) ?? [],
     facets: () => settled(facets) ?? [],
     books: () => settled(books) ?? [],
+    recipeTotal: () => settled(total),
     searchBooks: async (query, offset) => {
       const page = await suggestBooks(query, offset)
       remember(page.items)
