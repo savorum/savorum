@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/solid-router"
-import { For, Show, createSignal, untrack } from "solid-js"
+import { For, Show, createSignal, onCleanup, untrack } from "solid-js"
 
 import { Callout, ChangeError } from "@/components/status"
 import { Button } from "@/components/ui/button"
@@ -48,7 +48,9 @@ export function AccountOverview() {
         </Callout>
       </Show>
       <Show when={authEnabled()}>
-        <NamePanel />
+        <Show when={account()?.user?.id} keyed>
+          {(userID) => <NamePanel userID={userID} />}
+        </Show>
         <div class={styles.details}>
           <CopyField
             label={m.account_overview_user_id()}
@@ -106,9 +108,13 @@ export function AccountOverview() {
   )
 }
 
-function NamePanel() {
+function NamePanel(props: { userID: string }) {
   const [name, setName] = createSignal(account()?.user?.display_name ?? "")
   const change = createAsyncAction()
+  let active = true
+  onCleanup(() => {
+    active = false
+  })
   return (
     <section class={styles.section}>
       <h2>{m.account_name_heading()}</h2>
@@ -119,12 +125,19 @@ function NamePanel() {
         onSubmit={(event) => {
           event.preventDefault()
           if (change.busy()) return
+          const userID = props.userID
           const submitted = name()
+          const csrfToken = account()?.csrf_token
           void change.run(async () => {
             const user = await accountRequest<AccountUser>("/account", "PATCH", {
               display_name: submitted,
             })
-            setAccount((current) => current && { ...current, user })
+            if (!active || account()?.csrf_token !== csrfToken) return
+            setAccount((current) =>
+              current?.user?.id === userID
+                ? { ...current, user: { ...current.user, display_name: user.display_name } }
+                : current,
+            )
             if (untrack(name) === submitted) setName(user.display_name)
           })
         }}
