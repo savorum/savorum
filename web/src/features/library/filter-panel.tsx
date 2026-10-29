@@ -137,6 +137,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
         })),
       ],
       8,
+      props.vocabulary.recipeTotal?.(),
     )
   const statedOn = (diet: Diet) => (props.filters.stated ?? []).includes(diet)
   const toggleStated = (diet: Diet) =>
