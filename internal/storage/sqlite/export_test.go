@@ -2,40 +2,20 @@ package sqlite
 
 import (
 	"context"
-	"fmt"
-	"os"
-	"path/filepath"
-	"sync"
 	"testing"
 	"time"
 
 	"github.com/savorum/savorum/internal/library"
+	"github.com/savorum/savorum/internal/testfixture"
 )
 
-var emptyTestDatabase = sync.OnceValues(func() ([]byte, error) {
-	directory, err := os.MkdirTemp("", "savorum-sqlite-fixture-")
-	if err != nil {
-		return nil, fmt.Errorf("create fixture directory: %w", err)
-	}
-	defer func() { _ = os.RemoveAll(directory) }()
-
-	path := filepath.Join(directory, "library.db")
-
+var emptyTestDatabase = testfixture.DatabaseTemplate(func(path string) error {
 	store, err := Open(context.Background(), path)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	if err := store.Close(); err != nil {
-		return nil, err
-	}
-
-	image, err := os.ReadFile(path)
-	if err != nil {
-		return nil, fmt.Errorf("read fixture database: %w", err)
-	}
-
-	return image, nil
+	return store.Close()
 })
 
 // OpenTestStore opens an isolated copy of a migrated empty database.
@@ -43,13 +23,8 @@ var emptyTestDatabase = sync.OnceValues(func() ([]byte, error) {
 func OpenTestStore(ctx context.Context, t testing.TB) *Store {
 	t.Helper()
 
-	image, err := emptyTestDatabase()
+	path, err := emptyTestDatabase(t.TempDir())
 	if err != nil {
-		t.Fatal(err)
-	}
-
-	path := filepath.Join(t.TempDir(), "library.db")
-	if err := os.WriteFile(path, image, 0o600); err != nil {
 		t.Fatal(err)
 	}
 

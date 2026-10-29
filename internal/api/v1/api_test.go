@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"maps"
 	"net/http"
@@ -30,18 +31,45 @@ import (
 	"github.com/savorum/savorum/internal/sref"
 	"github.com/savorum/savorum/internal/storage/files"
 	"github.com/savorum/savorum/internal/storage/sqlite"
+	"github.com/savorum/savorum/internal/testfixture"
 	"github.com/savorum/savorum/internal/units"
 )
 
-func testAPI(t *testing.T) (*routecatalog.Mux, *sqlite.Store, huma.API) {
+var apiTestDatabase = testfixture.DatabaseTemplate(func(path string) error {
+	store, err := sqlite.Open(context.Background(), path)
+	if err != nil {
+		return fmt.Errorf("open API fixture: %w", err)
+	}
+
+	if err := store.Close(); err != nil {
+		return fmt.Errorf("close API fixture: %w", err)
+	}
+
+	return nil
+})
+
+func testAPIStore(t testing.TB) *sqlite.Store {
 	t.Helper()
 
-	store, err := sqlite.Open(context.Background(), filepath.Join(t.TempDir(), "library.db"))
+	path, err := apiTestDatabase(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	store, err := sqlite.Open(context.Background(), path)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	t.Cleanup(func() { _ = store.Close() })
+
+	return store
+}
+
+func testAPI(t *testing.T) (*routecatalog.Mux, *sqlite.Store, huma.API) {
+	t.Helper()
+
+	store := testAPIStore(t)
 
 	service, err := library.NewService(
 		store,

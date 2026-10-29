@@ -24,7 +24,6 @@ import (
 	"github.com/savorum/savorum/internal/library"
 	"github.com/savorum/savorum/internal/print"
 	"github.com/savorum/savorum/internal/storage/files"
-	"github.com/savorum/savorum/internal/storage/sqlite"
 	"github.com/savorum/savorum/internal/units"
 )
 
@@ -33,12 +32,7 @@ import (
 func importJobAPI(t *testing.T, fetcher exchange.RemoteAssetFetcher) http.Handler {
 	t.Helper()
 
-	store, err := sqlite.Open(context.Background(), filepath.Join(t.TempDir(), "library.db"))
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	t.Cleanup(func() { _ = store.Close() })
+	store := testAPIStore(t)
 
 	service, err := library.NewService(store, units.DefaultCatalog(),
 		library.WithClock(func() time.Time { return time.Date(2026, time.September, 1, 0, 0, 0, 0, time.UTC) }))
