@@ -741,15 +741,7 @@ func TestStoreMissingEntry(t *testing.T) {
 
 func openStore(t *testing.T) *sqlite.Store {
 	t.Helper()
-
-	store, err := sqlite.Open(context.Background(), filepath.Join(t.TempDir(), "library.db"))
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	t.Cleanup(func() { _ = store.Close() })
-
-	return store
+	return sqlite.OpenTestStore(context.Background(), t)
 }
 
 func TestPartialRecipesAndLocalStubs(t *testing.T) {
