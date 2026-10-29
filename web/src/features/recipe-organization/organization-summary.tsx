@@ -191,7 +191,11 @@ export const OrganizationSummary = (props: {
             facets={latestUnlessFailed(facets) ?? []}
             books={latestUnlessFailed(books) ?? []}
             onClose={() => setEditing(false)}
-            onSaved={() => void refetchBooks()}
+            onSaved={() => {
+              void refetchBooks()
+              void refetchTags()
+              void refetchFacets()
+            }}
           />
         </Show>
       </section>

@@ -117,3 +117,33 @@ test("deleting a tag recipes carry confirms, then takes it off them", async ({ p
   await expect(page.getByRole("button", { name, exact: true })).toHaveCount(0)
   expect(await tagsOn(request, recipe.id)).not.toContain(tagID)
 })
+
+test("saving recipe labels refreshes their usage order without reloading", async ({
+  page,
+  request,
+}) => {
+  const recipe = await seedRecipe(request, "Label ranking supper")
+  const other = await seedRecipe(request, "Label ranking lunch")
+  const suffix = Math.random().toString(36).slice(2, 8)
+  const first = `Ranking A ${suffix}`
+  const second = `Ranking B ${suffix}`
+  const firstID = await createTag(request, first)
+  const secondID = await createTag(request, second)
+  await fileUnder(request, recipe.id, [firstID])
+  await fileUnder(request, other.id, [secondID])
+
+  await page.goto(`/recipes/${recipe.id}`)
+  await page.getByRole("button", { name: "Organize", exact: true }).click()
+  const dialog = page.getByRole("dialog", { name: "Organize recipe", exact: true })
+  await dialog.getByRole("button", { name: "Add a tag", exact: true }).click()
+  const search = dialog.getByRole("searchbox", { name: "Search tags", exact: true })
+  if (await search.isVisible()) await search.fill(second)
+  await dialog.getByRole("button", { name: `Add the tag ${second}`, exact: true }).click()
+  await dialog.getByRole("button", { name: "Save changes", exact: true }).click()
+  await expect(dialog).not.toBeVisible()
+  const labels = page
+    .getByRole("region", { name: "Your library", exact: true })
+    .getByRole("link")
+    .filter({ hasText: suffix })
+  await expect(labels).toHaveText([second, first])
+})
