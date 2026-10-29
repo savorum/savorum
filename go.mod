@@ -11,7 +11,7 @@ require (
 	github.com/gen2brain/avif v0.6.0
 	github.com/gen2brain/h265 v0.2.3
 	github.com/gen2brain/jpegxl v0.6.0
-	github.com/go-jose/go-jose/v4 v4.1.5
+	github.com/go-jose/go-jose/v4 v4.1.6
 	github.com/go-ldap/ldap/v3 v3.4.15
 	github.com/go-webauthn/webauthn v0.18.2
 	github.com/google/jsonschema-go v0.4.3

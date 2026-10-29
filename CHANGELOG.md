@@ -6,6 +6,11 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+## 0.4.1
+
+- Security: Fix excessive CPU use when parsing crafted RSA JSON Web Keys (CVE-2026-116587).
+- Require OIDC RSA signing keys of 4096 bits or fewer.
+
 ## 0.4.0
 
 - Add display name editing in Account.
