@@ -1,10 +1,11 @@
-import { untrack, Show } from "solid-js"
+import { For, untrack, Show } from "solid-js"
 
 import type { BookSummary, Facet, FacetKind, Tag } from "@/api/client"
 import type { ChoiceLoader } from "@/components/label-choices"
 import { Disclosure } from "@/components/ui/disclosure"
 import type { LibraryVocabulary } from "@/features/library/create-library-vocabulary"
 import type { FilterValue } from "@/lib/filter-vocabulary"
+import { topLabels } from "@/lib/label-ranking"
 import { type LibraryFilters, facetGroups } from "@/lib/library-query"
 import { type Diet, dietName } from "@/lib/recipe-facts"
 
@@ -117,6 +118,26 @@ export const FilterPanel = (props: FilterPanelProps) => {
       />
     )
   }
+  const topChips = () =>
+    topLabels(
+      [
+        ...props.vocabulary.tags().map((tag: Tag) => ({
+          id: tag.id,
+          name: tag.name,
+          kind: "tag",
+          key: "tags" as const,
+          recipeCount: tag.recipe_count ?? 0,
+        })),
+        ...props.vocabulary.facets().map((facet: Facet) => ({
+          id: facet.id,
+          name: facet.value,
+          kind: facet.kind,
+          key: facet.kind,
+          recipeCount: facet.recipe_count ?? 0,
+        })),
+      ],
+      8,
+    )
   const statedOn = (diet: Diet) => (props.filters.stated ?? []).includes(diet)
   const toggleStated = (diet: Diet) =>
     props.onChange({
@@ -163,6 +184,15 @@ export const FilterPanel = (props: FilterPanelProps) => {
               })
             }
           />
+          <For each={topChips()}>
+            {(chip) => (
+              <Shortcut
+                label={chip.name}
+                on={props.filters[chip.key].includes(chip.id)}
+                onToggle={() => toggle(chip.key, chip.id)}
+              />
+            )}
+          </For>
         </div>
       </div>
       <div class={styles.categories}>

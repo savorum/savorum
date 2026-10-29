@@ -12,6 +12,7 @@ import { CookingLog } from "@/features/recipe-organization/cooking-log"
 import type { OrganizationController } from "@/features/recipe-organization/create-organization-controller"
 import { RecipeRating } from "@/features/recipe-organization/organization-bar"
 import { OrganizationEditor } from "@/features/recipe-organization/organization-editor"
+import { rankLabels } from "@/lib/label-ranking"
 import { facetGroups } from "@/lib/library-query"
 import type { Rational } from "@/lib/rational"
 import { latestUnlessFailed } from "@/lib/settled"
@@ -65,19 +66,30 @@ export const OrganizationSummary = (props: {
       },
       {
         label: m.organization_editor_tags(),
-        entries: (latestUnlessFailed(tags) ?? [])
-          .filter((tag) => current?.tag_ids?.includes(tag.id))
-          .map((tag): Filing => ({
-            name: tag.name,
-            color: tag.color,
-            search: { tags: [tag.id] },
-          })),
+        entries: rankLabels(
+          (latestUnlessFailed(tags) ?? [])
+            .filter((tag) => current?.tag_ids?.includes(tag.id))
+            .map((tag) => ({
+              name: tag.name,
+              kind: "tag",
+              recipeCount: tag.recipe_count ?? 0,
+              color: tag.color,
+              search: { tags: [tag.id] },
+            })),
+        ).map(({ name, color, search }): Filing => ({ name, color, search })),
       },
       ...facetGroups.map((group) => ({
         label: group.label,
-        entries: (latestUnlessFailed(facets) ?? [])
-          .filter((facet) => facet.kind === group.kind && current?.facet_ids?.includes(facet.id))
-          .map((facet): Filing => ({ name: facet.value, search: { [group.key]: [facet.id] } })),
+        entries: rankLabels(
+          (latestUnlessFailed(facets) ?? [])
+            .filter((facet) => facet.kind === group.kind && current?.facet_ids?.includes(facet.id))
+            .map((facet) => ({
+              name: facet.value,
+              kind: facet.kind,
+              recipeCount: facet.recipe_count ?? 0,
+              search: { [group.key]: [facet.id] },
+            })),
+        ).map(({ name, search }): Filing => ({ name, search })),
       })),
     ]
     return filed.filter((group) => group.entries.length > 0)

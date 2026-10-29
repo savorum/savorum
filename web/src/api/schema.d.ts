@@ -4511,6 +4511,8 @@ export interface components {
             /** @enum {string} */
             kind: "course" | "cuisine" | "method" | "dietary";
             /** Format: int64 */
+            recipe_count?: number;
+            /** Format: int64 */
             revision: number;
             /** Format: date-time */
             updated_at: string;
@@ -6444,6 +6446,8 @@ export interface components {
             created_at: string;
             id: string;
             name: string;
+            /** Format: int64 */
+            recipe_count?: number;
             /** Format: int64 */
             revision: number;
             /** Format: date-time */
