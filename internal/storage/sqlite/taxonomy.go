@@ -598,5 +598,9 @@ func (s *Store) labelCounts(ctx context.Context, table, column string) (map[stri
 		counts[id] = count
 	}
 
-	return counts, rows.Err()
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterate label counts: %w", err)
+	}
+
+	return counts, nil
 }
