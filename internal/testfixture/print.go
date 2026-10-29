@@ -1,6 +1,4 @@
-// Package testfixture builds the recipes tests share. Fixtures live here rather
-// than beside each suite so that a document exercising a particular shape is
-// written once and every test that needs it sees the same one.
+// Package testfixture builds shared recipe and database fixtures.
 package testfixture
 
 import (

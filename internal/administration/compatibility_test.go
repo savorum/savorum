@@ -16,6 +16,7 @@ import (
 	"time"
 
 	"github.com/savorum/savorum/internal/storage/sqlite"
+	"github.com/savorum/savorum/internal/testfixture"
 )
 
 func TestVerifyAcceptsOlderSchemaAndRestoreMigratesBeforeInstall(t *testing.T) {
@@ -322,21 +323,33 @@ func TestEveryHistoricalSchemaVerifiesAndRestores(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	// Register the real SQL functions before constructing historical fixtures.
+	currentStore, err := sqlite.Open(t.Context(), filepath.Join(t.TempDir(), "current.db"))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if err := currentStore.Close(); err != nil {
+		t.Fatal(err)
+	}
+
+	source := firstMigrationDatabase(t)
+	prepared := 1
+
+	migrations, err := filepath.Glob(filepath.Join("..", "storage", "sqlite", "migrations", "*.sql"))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// The source advances sequentially; each restore uses a private copy.
 	for version := 1; version < current; version++ {
 		t.Run(fmt.Sprint(version), func(t *testing.T) {
-			database := firstMigrationDatabase(t)
-
-			db, err := sql.Open("sqlite", database)
+			db, err := sql.Open("sqlite", source)
 			if err != nil {
 				t.Fatal(err)
 			}
 
-			migrations, err := filepath.Glob(filepath.Join("..", "storage", "sqlite", "migrations", "*.sql"))
-			if err != nil {
-				t.Fatal(err)
-			}
-
-			for number := 2; number <= version; number++ {
+			for number := prepared + 1; number <= version; number++ {
 				body, err := os.ReadFile(migrations[number-1])
 				if err != nil {
 					t.Fatal(err)
@@ -350,11 +363,25 @@ func TestEveryHistoricalSchemaVerifiesAndRestores(t *testing.T) {
 				if _, err := db.ExecContext(t.Context(), "INSERT INTO schema_migrations VALUES(?,?,?,?)", number, strings.TrimSuffix(filepath.Base(migrations[number-1])[5:], ".sql"), hex.EncodeToString(digest[:]), "2026-08-01T00:00:00Z"); err != nil {
 					t.Fatal(err)
 				}
+
+				prepared = number
 			}
 
 			if err := db.Close(); err != nil {
 				t.Fatal(err)
 			}
+
+			image, err := os.ReadFile(source)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			directory := t.TempDir()
+			if err := testfixture.CopyDatabase(directory, image); err != nil {
+				t.Fatal(err)
+			}
+
+			database := filepath.Join(directory, "library.db")
 
 			archive := filepath.Join(t.TempDir(), "historical.savorum-backup")
 			writeTestBackup(t, archive, database, manifest{Format: Format, Version: Version, SavorumVersion: "historical-fixture", DatabaseSchemaVersion: version, CreatedAt: time.Now(), Assets: []assetRecord{}})

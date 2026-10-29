@@ -544,27 +544,43 @@ func TestPartiallyMigratedDatabaseUpgradesToCurrentSchema(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	source := filepath.Join(t.TempDir(), "prefix.db")
+	prepared := 0
+
+	// The source advances sequentially; each upgrade uses a private copy.
 	for applied := 1; applied < len(migrations); applied++ {
 		t.Run(fmt.Sprintf("from %04d", applied), func(t *testing.T) {
-			path := filepath.Join(t.TempDir(), "partial.db")
-
-			database, err := sql.Open("sqlite", path)
+			database, err := sql.Open("sqlite", source)
 			if err != nil {
 				t.Fatal(err)
 			}
 
-			partial := &Store{db: &writerDB{raw: database}, dsn: path, path: path}
-			for index, migration := range migrations[:applied] {
-				if err := partial.applyMigration(ctx, migration, index == 0); err != nil {
+			partial := &Store{db: &writerDB{raw: database}, dsn: source, path: source}
+			for prepared < applied {
+				if err := partial.applyMigration(ctx, migrations[prepared], prepared == 0); err != nil {
 					_ = database.Close()
 
 					t.Fatal(err)
 				}
+
+				prepared++
 			}
 
 			if err := database.Close(); err != nil {
 				t.Fatal(err)
 			}
+
+			image, err := os.ReadFile(source)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			directory := t.TempDir()
+			if err := testfixture.CopyDatabase(directory, image); err != nil {
+				t.Fatal(err)
+			}
+
+			path := filepath.Join(directory, "library.db")
 
 			store, err := Open(ctx, path)
 			if err != nil {
