@@ -11,9 +11,16 @@ version="${tag#v}"
 target="${TARGET:-}"
 variant="${VARIANT:-}"
 suffix="${variant:+-$variant}"
+regctl="${REGCTL:-regctl}"
 
 for name in "$tag$suffix" "$version$suffix"; do
-  if docker manifest inspect "$image:$name" >/dev/null 2>&1; then
+  exists=false
+  if [ -n "${OCI_ARCHIVE:-}" ]; then
+    if "$regctl" manifest head "$image:$name" >/dev/null 2>&1; then exists=true; fi
+  else
+    if docker manifest inspect "$image:$name" >/dev/null 2>&1; then exists=true; fi
+  fi
+  if "$exists"; then
     echo "immutable image tag $image:$name already exists" >&2
     exit 1
   fi
@@ -30,6 +37,30 @@ case "$version" in
     set -- "$@" --tag "$image:$minor$suffix" --tag "$image:${variant:-latest}"
     ;;
 esac
+
+if [ -n "${OCI_ARCHIVE:-}" ]; then
+  digest="${IMAGE_DIGEST:?prepared image digest is required}"
+  if ! printf '%s\n' "$digest" | grep -Eq '^sha256:[0-9a-f]{64}$'; then
+    echo "invalid prepared image digest" >&2
+    exit 1
+  fi
+  archived_digest="$(tar -xOf "$OCI_ARCHIVE" index.json | jq -er \
+    'select(.manifests | length == 1) | .manifests[0].digest')"
+  if [ "$archived_digest" != "$digest" ]; then
+    echo "prepared image digest does not match its archive" >&2
+    exit 1
+  fi
+  "$regctl" image import "$image@$digest" "$OCI_ARCHIVE"
+  test "$("$regctl" manifest head "$image@$digest" --require-list)" = "$digest"
+  while [ "$#" -gt 0 ]; do
+    "$regctl" image copy "$image@$digest" "$2"
+    shift 2
+  done
+  if [ -n "${METADATA_FILE:-}" ]; then
+    jq -n --arg digest "$digest" '{"containerimage.digest": $digest}' > "$METADATA_FILE"
+  fi
+  exit 0
+fi
 
 if [ -n "$target" ]; then
   set -- "$@" --target "$target"

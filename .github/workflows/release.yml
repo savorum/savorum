@@ -44,9 +44,9 @@ jobs:
     with:
       ref: ${{ needs.source.outputs.revision }}
       release-artifacts: true
+      release-tag: ${{ inputs.tag || github.ref_name }}
 
-  # Smokes the native minimal and documents images, then publishes an amd64/arm64
-  # manifest of each. Existing full-version tags are never overwritten.
+  # Only this job can publish the images prepared by the read-only CI jobs.
   container-release:
     needs: [source, ci]
     runs-on: ubuntu-26.04
@@ -64,43 +64,37 @@ jobs:
       IMAGE: ghcr.io/savorum/savorum
       REVISION: ${{ needs.source.outputs.revision }}
       WEB_BUNDLE_SHA256: ${{ needs.ci.outputs.web-sha256 }}
+      IMAGES_MANIFEST_SHA256: ${{ needs.ci.outputs.images-manifest-sha256 }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ needs.source.outputs.revision }}
           persist-credentials: false
-      - name: Require the tested web artifact
+      - name: Require the prepared image artifact
         env:
-          ARTIFACT_ID: ${{ needs.ci.outputs.web-artifact-id }}
+          ARTIFACT_ID: ${{ needs.ci.outputs.images-artifact-id }}
         run: '[[ "$ARTIFACT_ID" =~ ^[0-9]+$ ]]'
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
-          artifact-ids: ${{ needs.ci.outputs.web-artifact-id }}
-          path: ${{ runner.temp }}/web-artifact
-      - name: Verify the tested web bundle
-        working-directory: ${{ runner.temp }}/web-artifact
+          artifact-ids: ${{ needs.ci.outputs.images-artifact-id }}
+          path: ${{ runner.temp }}/images
+      - name: Verify the prepared images
+        working-directory: ${{ runner.temp }}/images
         run: |
-          [[ "$WEB_BUNDLE_SHA256" =~ ^[0-9a-f]{64}$ ]]
-          printf '%s  webui.tar\n' "$WEB_BUNDLE_SHA256" | sha256sum --check --strict
-          WEB_BUILD_CONTEXT="$RUNNER_TEMP/release-web"
-          mkdir -p "$WEB_BUILD_CONTEXT/src/internal/webui"
-          tar -xf webui.tar -C "$WEB_BUILD_CONTEXT/src/internal/webui"
-          echo "WEB_BUILD_CONTEXT=$WEB_BUILD_CONTEXT" >> "$GITHUB_ENV"
-      - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
-        with:
-          cache-image: false
-      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
-        with:
-          cache-binary: false
-      - run: docker buildx build --pull --load --build-context "web=$WEB_BUILD_CONTEXT" --build-arg "WEB_BUNDLE_SHA256=$WEB_BUNDLE_SHA256" --build-arg VERSION="${RELEASE_TAG#v}" --build-arg REVISION="$REVISION" --tag "savorum:release-smoke-$REVISION" .
-      - run: ./scripts/container-smoke-test.sh "savorum:release-smoke-$REVISION"
-      - run: docker buildx build --pull --load --target documents --build-context "web=$WEB_BUILD_CONTEXT" --build-arg "WEB_BUNDLE_SHA256=$WEB_BUNDLE_SHA256" --build-arg VERSION="${RELEASE_TAG#v}" --build-arg REVISION="$REVISION" --tag "savorum:release-smoke-documents-$REVISION" .
-      - run: ./scripts/container-smoke-test.sh "savorum:release-smoke-documents-$REVISION"
-      - name: Require the document tools
-        run: |
-          docker run --rm --entrypoint sh "savorum:release-smoke-documents-$REVISION" -c \
-            'for tool in pdfinfo pdftotext pdftoppm tesseract; do command -v "$tool" || exit 1; done'
-          docker run --rm --entrypoint tesseract "savorum:release-smoke-documents-$REVISION" --list-langs | grep -qx eng
+          [[ "$IMAGES_MANIFEST_SHA256" =~ ^[0-9a-f]{64}$ ]]
+          printf '%s  images.json\n' "$IMAGES_MANIFEST_SHA256" | sha256sum --check --strict
+          jq -e --arg revision "$REVISION" --arg version "${RELEASE_TAG#v}" --arg web "$WEB_BUNDLE_SHA256" \
+            '.revision == $revision and .version == $version and .web_sha256 == $web
+              and (.images | keys) == ["documents", "minimal"]' images.json
+          for variant in minimal documents; do
+            sha256="$(jq -er --arg variant "$variant" '.images[$variant].sha256' images.json)"
+            digest="$(jq -er --arg variant "$variant" '.images[$variant].digest' images.json)"
+            [[ "$sha256" =~ ^[0-9a-f]{64}$ && "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+            printf '%s  %s.oci.tar\n' "$sha256" "$variant" | sha256sum --check --strict
+            test "$(tar -xOf "$variant.oci.tar" index.json | jq -er 'select(.manifests | length == 1) | .manifests[0].digest')" = "$digest"
+          done
+      - id: regctl
+        uses: ./.github/actions/setup-regctl
       - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
         with:
           registry: ghcr.io
@@ -108,8 +102,12 @@ jobs:
           password: ${{ github.token }}
       - id: minimal
         env:
+          REGCTL: ${{ steps.regctl.outputs.cmd }}
           METADATA_FILE: ${{ runner.temp }}/minimal.json
+          OCI_ARCHIVE: ${{ runner.temp }}/images/minimal.oci.tar
         run: |
+          IMAGE_DIGEST="$(jq -er '.images.minimal.digest' "$RUNNER_TEMP/images/images.json")"
+          export IMAGE_DIGEST
           ./scripts/publish-container.sh
           echo "digest=$(jq -r '."containerimage.digest"' "$METADATA_FILE")" >> "$GITHUB_OUTPUT"
       - uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
@@ -120,10 +118,14 @@ jobs:
           create-storage-record: false
       - id: documents
         env:
+          REGCTL: ${{ steps.regctl.outputs.cmd }}
           TARGET: documents
           VARIANT: documents
           METADATA_FILE: ${{ runner.temp }}/documents.json
+          OCI_ARCHIVE: ${{ runner.temp }}/images/documents.oci.tar
         run: |
+          IMAGE_DIGEST="$(jq -er '.images.documents.digest' "$RUNNER_TEMP/images/images.json")"
+          export IMAGE_DIGEST
           ./scripts/publish-container.sh
           echo "digest=$(jq -r '."containerimage.digest"' "$METADATA_FILE")" >> "$GITHUB_OUTPUT"
       - uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
