@@ -544,6 +544,37 @@ test("changing the display name patches the account and keeps the new name", asy
       display_name: "  Chef Alex  ",
     }),
   )
+  await waitFor(() => expect((name as HTMLInputElement).value).toBe("Chef Alex"))
+})
+
+test("display-name editing retains identity, focus, caret, and composed text", async () => {
+  const screen = render(() => <AccountOverview />)
+  await verifyInputs(screen.container)
+})
+
+test("a pending name change preserves a newer draft and ignores repeated submissions", async () => {
+  const { accountRequest } = await import("./account-state")
+  let finish!: (user: unknown) => void
+  vi.mocked(accountRequest).mockImplementationOnce(
+    () =>
+      new Promise((resolve) => {
+        finish = resolve
+      }),
+  )
+  const screen = render(() => <AccountOverview />)
+  const input = screen.getByLabelText("Name") as HTMLInputElement
+  fireEvent.input(input, { target: { value: "Chef Alex" } })
+  fireEvent.submit(input.closest("form")!)
+  fireEvent.input(input, { target: { value: "Chef Sam" } })
+  fireEvent.submit(input.closest("form")!)
+  finish({ id: "u1", display_name: "Chef Alex", instance_admin: true })
+  await waitFor(() =>
+    expect(screen.getByRole<HTMLButtonElement>("button", { name: "Change name" }).disabled).toBe(
+      false,
+    ),
+  )
+  expect(input.value).toBe("Chef Sam")
+  expect(accountRequest).toHaveBeenCalledTimes(1)
 })
 
 test("local mode hides sign-in, token, access and administration controls", async () => {

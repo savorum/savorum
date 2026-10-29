@@ -1,11 +1,12 @@
 import { Link } from "@tanstack/solid-router"
-import { For, Show, createSignal } from "solid-js"
+import { For, Show, createSignal, untrack } from "solid-js"
 
 import { Callout, ChangeError } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import { CopyField } from "@/components/ui/clipboard"
 import { FormField } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { createAsyncAction } from "@/lib/create-async-action"
 
 import { m } from "../../lib/messages.ts"
 import { AccountNav, accountStyles as styles } from "./account-layout"
@@ -107,26 +108,25 @@ export function AccountOverview() {
 
 function NamePanel() {
   const [name, setName] = createSignal(account()?.user?.display_name ?? "")
-  const [error, setError] = createSignal<unknown>()
-  const [busy, setBusy] = createSignal(false)
+  const change = createAsyncAction()
   return (
     <section class={styles.section}>
       <h2>{m.account_name_heading()}</h2>
       <p class={styles.muted}>{m.account_name_hint()}</p>
-      <ChangeError error={error()} />
+      <ChangeError error={change.error()} />
       <form
         class={styles.form}
         onSubmit={(event) => {
           event.preventDefault()
-          setBusy(true)
-          setError(undefined)
-          void accountRequest<AccountUser>("/account", "PATCH", { display_name: name() })
-            .then((user) => {
-              setAccount((current) => current && { ...current, user })
-              setName(user.display_name)
+          if (change.busy()) return
+          const submitted = name()
+          void change.run(async () => {
+            const user = await accountRequest<AccountUser>("/account", "PATCH", {
+              display_name: submitted,
             })
-            .catch((failure: unknown) => setError(failure))
-            .finally(() => setBusy(false))
+            setAccount((current) => current && { ...current, user })
+            if (untrack(name) === submitted) setName(user.display_name)
+          })
         }}
       >
         <FormField label={m.account_name_label()} required>
@@ -137,7 +137,7 @@ function NamePanel() {
             onInput={(event) => setName(event.currentTarget.value)}
           />
         </FormField>
-        <Button type="submit" disabled={busy()}>
+        <Button type="submit" disabled={change.busy()}>
           {m.account_name_submit()}
         </Button>
       </form>
