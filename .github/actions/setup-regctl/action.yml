@@ -1,0 +1,23 @@
+name: Set up registry client
+description: Install the pinned registry client for publishing prepared OCI images.
+
+outputs:
+  cmd:
+    description: Path to the verified registry client.
+    value: ${{ steps.install.outputs.cmd }}
+
+runs:
+  using: composite
+  steps:
+    - id: install
+      shell: bash
+      run: |
+        mkdir -p "$RUNNER_TEMP/regctl"
+        curl --fail --location --silent --show-error --retry 2 \
+          https://github.com/regclient/regclient/releases/download/v0.11.7/regctl-linux-amd64 \
+          -o "$RUNNER_TEMP/regctl/regctl"
+        printf '%s  %s\n' \
+          3737fbbdd791e04e7a831640b681f3397a376498e80e2ad9b1b2d27296f239bc \
+          "$RUNNER_TEMP/regctl/regctl" | sha256sum --check --strict
+        chmod +x "$RUNNER_TEMP/regctl/regctl"
+        echo "cmd=$RUNNER_TEMP/regctl/regctl" >> "$GITHUB_OUTPUT"

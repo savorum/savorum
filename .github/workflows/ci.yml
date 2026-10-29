@@ -14,14 +14,19 @@ on:
         required: false
         type: string
       release-artifacts:
-        description: Preserve the tested web bundle for release images
+        description: Prepare tested release artifacts
         type: boolean
         default: false
+      release-tag:
+        description: Version tag for prepared release images
+        type: string
     outputs:
-      web-artifact-id:
-        value: ${{ jobs.web.outputs.artifact-id }}
       web-sha256:
         value: ${{ jobs.web.outputs.sha256 }}
+      images-artifact-id:
+        value: ${{ jobs.container-build.outputs.artifact-id }}
+      images-manifest-sha256:
+        value: ${{ jobs.container-build.outputs.manifest-sha256 }}
 
 permissions:
   contents: read
@@ -82,7 +87,7 @@ jobs:
           elif [[ "$EVENT" == pull_request ]]; then
             changed="$(git diff --name-only "$BASE" HEAD)"
             e2e_paths='^(\.github/|go\.mod$|go\.sum$|justfile$|web/|api/|cmd/savorum/|cmd/scalecheck/|scripts/scale-check\.sh$|internal/(scalefixture|capacity|recovery|access|account|api|app|assets|configuration|export|exchange|federation|httpsecurity|identity|importjob|importer|library|print|recipe|render|storage|webui)/)'
-            container_paths='^(\.github/|\.dockerignore$|Dockerfile$|compose\.yaml$|scripts/(container-smoke-test|publish-container|bootstrap-pnpm)\.sh$|cmd/savorum/(healthcheck|healthcheck_test|main)\.go$|internal/buildinfo/)'
+            container_paths='^(\.github/|\.dockerignore$|Dockerfile$|compose\.yaml$|scripts/(container-smoke-test|publish-container|prepare-containers|bootstrap-pnpm)\.sh$|cmd/savorum/(healthcheck|healthcheck_test|main)\.go$|internal/buildinfo/)'
             if grep -qE "$e2e_paths" <<< "$changed"; then e2e=true; fi
             if grep -qE "$container_paths" <<< "$changed"; then container=true; fi
           fi
@@ -153,6 +158,16 @@ jobs:
             bin/savorum.gz
             bin/scalecheck.gz
           retention-days: 1
+
+  container-build:
+    if: inputs.release-artifacts
+    needs: web
+    uses: ./.github/workflows/prepare-containers.yml
+    with:
+      ref: ${{ inputs.ref || github.sha }}
+      tag: ${{ inputs.release-tag }}
+      web-artifact-id: ${{ needs.web.outputs.artifact-id }}
+      web-sha256: ${{ needs.web.outputs.sha256 }}
 
   lint:
     runs-on: ubuntu-26.04
