@@ -1,20 +1,50 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Every test still runs. The real Typst/WASM rendering corpus runs normally:
-# the Go race detector cannot instrument the embedded compiler and makes that
-# CPU-heavy work roughly an order of magnitude slower. API print tests exercise
-# the same renderer. Those test files opt out through the standard `race` build
-# tag while their packages and the rest of the repository remain instrumented.
-# `./...` traverses every directory whose name does not start with `.` or
-# `_`. That includes package-shaped fixtures from JavaScript dependencies such
-# as web/node_modules, which are neither part of Savorum nor safe to execute.
+# Selected packages run normally and with race detection. Typst/WASM corpus
+# tests use the normal pass because the detector cannot instrument WebAssembly.
+# Package enumeration excludes dependency fixtures outside cmd and internal.
+group="${1:-all}"
+if [[ $# -gt 0 ]]; then shift; fi
+list_only=false
+if [[ "$group" == --list ]]; then
+	group=all
+	list_only=true
+elif [[ "${1:-}" == --list ]]; then
+	list_only=true
+	shift
+fi
+case "$group" in
+	all|storage|administration|application) ;;
+	*) echo "Unknown Go verification group: $group" >&2; exit 2 ;;
+esac
+if [[ $# -ne 0 ]]; then
+	echo "usage: $0 [all|storage|administration|application] [--list]" >&2
+	exit 2
+fi
+
 packages=()
 # Capture enumeration first so a go list failure stops the check. A process
 # substitution's exit status is not propagated by set -e or pipefail.
 package_list=$(go list ./cmd/... ./internal/...)
 while IFS= read -r package; do
-	packages+=("$package")
+	if [[ -z "$package" ]]; then continue; fi
+	case "$package" in
+		*/internal/storage/sqlite) package_group=storage ;;
+		*/internal/administration) package_group=administration ;;
+		*) package_group=application ;;
+	esac
+	if [[ "$group" == all || "$group" == "$package_group" ]]; then
+		packages+=("$package")
+	fi
 done <<< "$package_list"
+if [[ ${#packages[@]} -eq 0 ]]; then
+	echo "Go verification group has no packages: $group" >&2
+	exit 2
+fi
+if $list_only; then
+	printf '%s\n' "${packages[@]}"
+	exit 0
+fi
 go test "${packages[@]}"
 go test -race -timeout=30m "${packages[@]}"

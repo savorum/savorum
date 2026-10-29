@@ -153,10 +153,14 @@ jobs:
       - run: golangci-lint run
       - run: scripts/verify-typst-wasm.sh
 
-  verify:
-    needs: [changes, web]
+  go-tests:
+    needs: web
     runs-on: ubuntu-26.04
     timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        group: [storage, administration, application]
     env:
       SAVORUM_REQUIRE_WEB_BUILD: "1"
     steps:
@@ -173,9 +177,22 @@ jobs:
           path: internal/webui/dist
       # Race detection covers Go code; the embedded Typst/WASM rendering corpus
       # runs without it because the detector cannot instrument that compiler.
-      - run: ./scripts/test-race.sh
-      - run: go run ./cmd/openapi --check
-      - run: go run ./cmd/units --check
+      - run: ./scripts/test-race.sh "${{ matrix.group }}"
+      - if: matrix.group == 'application'
+        run: go run ./cmd/openapi --check
+      - if: matrix.group == 'application'
+        run: go run ./cmd/units --check
+
+  verify:
+    if: ${{ always() }}
+    needs: go-tests
+    runs-on: ubuntu-26.04
+    timeout-minutes: 5
+    steps:
+      - name: Require every Go verification group to succeed
+        env:
+          RESULT: ${{ needs.go-tests.result }}
+        run: test "$RESULT" = success
 
   # Checks against the SREF revisions declared in integration/sref.json, never
   # a mutable branch. SREF_REQUIRED and SREF_REGISTRY_REQUIRED turn the local
