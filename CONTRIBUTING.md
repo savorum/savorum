@@ -90,6 +90,10 @@ web build and serves only the API.
 `just generate` regenerates API, unit, and route artifacts when their inputs
 change.
 
+`just test-race` runs every Go package in normal and race modes. CI distributes
+these checks across three groups. Run one group with
+`./scripts/test-race.sh storage`; append `--list` to list its packages.
+
 Savorum's version is separate from the SREF version it uses. The integration
 inputs record which SREF release each Savorum version is tested with.
 
