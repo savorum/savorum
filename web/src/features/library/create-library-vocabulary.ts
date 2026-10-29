@@ -13,6 +13,7 @@ export interface LibraryVocabulary {
   books: () => BookSummary[]
   /** Active recipes in the library, once known. */
   recipeTotal?: () => number | undefined
+  refreshLabels?: () => void
   searchBooks?: (
     query: string,
     offset: number,
@@ -23,9 +24,13 @@ export interface LibraryVocabulary {
 
 export function createLibraryVocabulary(): LibraryVocabulary {
   // Recipe requests take a connection before the supporting filter metadata.
-  const [tags] = createResource(() => Promise.resolve().then(listTags))
-  const [facets] = createResource(() => Promise.resolve().then(() => listFacets()))
-  const [total] = createResource(libraryRecipeTotal)
+  const [tags, { refetch: refetchTags }] = createResource(() => Promise.resolve().then(listTags))
+  const [facets, { refetch: refetchFacets }] = createResource(() =>
+    Promise.resolve().then(() => listFacets()),
+  )
+  const [total, { refetch: refetchTotal }] = createResource(() =>
+    Promise.resolve().then(libraryRecipeTotal),
+  )
   const [books, { mutate: mutateBooks }] = createResource(async () =>
     (await suggestBooks()).items.map((book) => ({
       ...book,
@@ -60,6 +65,11 @@ export function createLibraryVocabulary(): LibraryVocabulary {
     facets: () => settled(facets) ?? [],
     books: () => settled(books) ?? [],
     recipeTotal: () => settled(total),
+    refreshLabels: () => {
+      void refetchTags()
+      void refetchFacets()
+      void refetchTotal()
+    },
     searchBooks: async (query, offset) => {
       const page = await suggestBooks(query, offset)
       remember(page.items)

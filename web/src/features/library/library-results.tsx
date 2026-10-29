@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/solid-router"
-import { For, Show, createEffect, untrack } from "solid-js"
+import { For, Show, createEffect, createMemo, untrack } from "solid-js"
 import { css } from "styled-system/css"
 
 import { ImportMenu } from "@/components/import-menu"
@@ -30,8 +30,17 @@ export function LibraryResults(props: {
   update: UpdateLibrarySearch
   start: StartChoices
 }) {
-  const { page, refetch, entries, narrowed } = untrack(() => props.query)
+  const { page, refetch, entries, narrowed, vocabulary } = untrack(() => props.query)
   const { selecting, isSelected, toggleSelected } = untrack(() => props.selection)
+  const labelRecipeCounts = createMemo(
+    () =>
+      new Map(
+        [...vocabulary.tags(), ...vocabulary.facets()].map((label) => [
+          label.id,
+          label.recipe_count ?? 0,
+        ]),
+      ),
+  )
   let region: HTMLElement | undefined
   createEffect(() => {
     const target = props.query.focusOffset()
@@ -110,6 +119,8 @@ export function LibraryResults(props: {
                 <li>
                   <RecipeCard
                     recipe={entry}
+                    labelRecipeCounts={labelRecipeCounts()}
+                    libraryTotal={vocabulary.recipeTotal?.()}
                     priority={index() === 0}
                     selecting={selecting()}
                     selected={isSelected(entry.id)}

@@ -325,6 +325,10 @@ func (s *Store) populateRecipeSummaryAssociations(ctx context.Context, entries [
 		return fmt.Errorf("close batched recipe tags: %w", err)
 	}
 
+	if err := s.appendSummaryFacets(ctx, entries, indexes, args, placeholders); err != nil {
+		return err
+	}
+
 	// Curated membership and cookbook provenance are reported separately.
 	if err := s.appendSummaryBooks(ctx, entries, indexes, args, `
 		SELECT book_entries.entry_id, books.id, books.kind, books.title
@@ -348,6 +352,39 @@ func (s *Store) populateRecipeSummaryAssociations(ctx context.Context, entries [
 			summary.SourceBooks = append(summary.SourceBooks, book)
 		}); err != nil {
 		return fmt.Errorf("query batched recipe source books: %w", err)
+	}
+
+	return nil
+}
+
+func (s *Store) appendSummaryFacets(ctx context.Context, entries []library.Summary, indexes map[library.EntryID]int, args []any, placeholders string) error {
+	rows, err := s.db.QueryContext(ctx, `
+		SELECT recipe_facets.entry_id, facets.id, facets.kind, facets.name
+		FROM recipe_facets
+		JOIN facets ON facets.id = recipe_facets.facet_id
+		WHERE recipe_facets.entry_id IN (`+placeholders+`)
+		ORDER BY recipe_facets.entry_id, facets.kind, facets.name COLLATE NOCASE, facets.id`, args...)
+	if err != nil {
+		return fmt.Errorf("query batched recipe facets: %w", err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var (
+			entryID library.EntryID
+			facet   library.Facet
+		)
+		if err := rows.Scan(&entryID, &facet.ID, &facet.Kind, &facet.Value); err != nil {
+			return fmt.Errorf("scan batched recipe facet: %w", err)
+		}
+
+		if index, ok := indexes[entryID]; ok {
+			entries[index].Facets = append(entries[index].Facets, facet)
+		}
+	}
+
+	if err := rows.Err(); err != nil {
+		return fmt.Errorf("iterate batched recipe facets: %w", err)
 	}
 
 	return nil

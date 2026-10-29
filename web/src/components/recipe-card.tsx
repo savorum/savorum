@@ -1,6 +1,6 @@
 import { Link, useLocation } from "@tanstack/solid-router"
 import { Check, Heart, UtensilsCrossed } from "lucide-solid"
-import { For, Show, createSignal } from "solid-js"
+import { For, Show, createMemo, createSignal } from "solid-js"
 import { css } from "styled-system/css"
 
 import { type RecipeSummary, fallbackToOriginalImage } from "@/api/client"
@@ -8,6 +8,7 @@ import { LabelSwatch } from "@/components/label-swatch"
 import { formatRelativeDate } from "@/lib/date-format"
 import { contentAttributes, isolate, nativeLanguageName } from "@/lib/direction"
 import { formatDuration } from "@/lib/duration-format"
+import { rankLabels } from "@/lib/label-ranking"
 import { formatList, formatNumber } from "@/lib/locale-format"
 
 import { m } from "../lib/messages.ts"
@@ -73,7 +74,7 @@ const styles = {
     transition: "colors",
   }),
   meta: css({ color: "fg.muted", fontSize: "xs", marginTop: "1" }),
-  tags: css({
+  labels: css({
     alignItems: "center",
     color: "fg.muted",
     display: "flex",
@@ -83,7 +84,7 @@ const styles = {
     margin: "0",
     marginTop: "1.5",
   }),
-  tag: css({
+  label: css({
     alignItems: "center",
     background: "bg.muted",
     borderRadius: "l1",
@@ -96,7 +97,7 @@ const styles = {
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
   }),
-  moreTags: css({ color: "fg.subtle" }),
+  moreLabels: css({ color: "fg.subtle" }),
   selectable: css({
     background: "transparent",
     borderWidth: "0",
@@ -150,6 +151,8 @@ export function recipeTime(recipe: Pick<RecipeSummary, "active_time" | "total_ti
 
 export interface RecipeCardProps {
   recipe: RecipeSummary
+  labelRecipeCounts?: ReadonlyMap<string, number>
+  libraryTotal?: number
   priority?: boolean
   /** True while the library is choosing recipes rather than opening one. */
   selecting?: boolean
@@ -195,7 +198,26 @@ export const RecipeCard = (props: RecipeCardProps) => {
     [recipeTime(props.recipe), made(), props.recipe.authors?.join(", ")]
       .filter(Boolean)
       .join(` ${m.common_dot_separator()} `)
-  const shownTags = () => (props.recipe.tags ?? []).slice(0, 2)
+  const labels = createMemo(() =>
+    rankLabels(
+      [
+        ...(props.recipe.tags ?? []).map((tag) => ({
+          ...tag,
+          kind: "tag",
+          recipeCount: props.labelRecipeCounts?.get(tag.id) ?? 0,
+        })),
+        ...(props.recipe.facets ?? []).map((facet) => ({
+          id: facet.id,
+          name: facet.value,
+          kind: facet.kind,
+          color: undefined,
+          recipeCount: props.labelRecipeCounts?.get(facet.id) ?? 0,
+        })),
+      ],
+      props.libraryTotal,
+    ),
+  )
+  const shownLabels = createMemo(() => labels().slice(0, 2))
 
   const body = () => (
     <>
@@ -250,21 +272,21 @@ export const RecipeCard = (props: RecipeCardProps) => {
             </Show>
           </p>
         </Show>
-        <Show when={shownTags().length}>
-          <p class={styles.tags}>
-            <For each={shownTags()}>
-              {(tag) => (
-                <span class={styles.tag}>
-                  <LabelSwatch color={tag.color} size="sm" />
-                  {tag.name}
+        <Show when={shownLabels().length}>
+          <p class={styles.labels}>
+            <For each={shownLabels()}>
+              {(label) => (
+                <span class={styles.label}>
+                  <LabelSwatch color={label.color} size="sm" />
+                  {label.name}
                 </span>
               )}
             </For>
-            <Show when={(props.recipe.tags?.length ?? 0) > shownTags().length}>
-              <span class={styles.moreTags}>
+            <Show when={labels().length > shownLabels().length}>
+              <span class={styles.moreLabels}>
                 {" "}
                 {m.common_plus_symbol()}
-                {formatNumber((props.recipe.tags?.length ?? 0) - shownTags().length)}
+                {formatNumber(labels().length - shownLabels().length)}
               </span>
             </Show>
           </p>

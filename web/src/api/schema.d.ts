@@ -4525,6 +4525,14 @@ export interface components {
             kind: "course" | "cuisine" | "method" | "dietary";
             value: string;
         };
+        FacetSummary: {
+            id: string;
+            /** @enum {string} */
+            kind: "course" | "cuisine" | "method" | "dietary";
+            value: string;
+        } & {
+            [key: string]: unknown;
+        };
         FacetsOutputBody: {
             items: components["schemas"]["Facet"][] | null;
         } & {
@@ -5943,6 +5951,8 @@ export interface components {
             /** Format: date-time */
             deleted_at?: string;
             description?: string;
+            /** @description Library categories assigned to this recipe */
+            facets?: components["schemas"]["FacetSummary"][] | null;
             favorite: boolean;
             /** @description Identifier of this entry in the local Savorum library */
             id: string;
