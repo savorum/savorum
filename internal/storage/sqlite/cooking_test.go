@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"path/filepath"
 	"testing"
 	"time"
 
@@ -152,15 +151,7 @@ func TestRememberedBatchIsOneAnswer(t *testing.T) {
 
 func openStore(ctx context.Context, t *testing.T) *Store {
 	t.Helper()
-
-	store, err := Open(ctx, filepath.Join(t.TempDir(), "library.db"))
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	t.Cleanup(func() { _ = store.Close() })
-
-	return store
+	return OpenTestStore(ctx, t)
 }
 
 func seedRecipe(ctx context.Context, t *testing.T, store *Store, id library.EntryID) {
