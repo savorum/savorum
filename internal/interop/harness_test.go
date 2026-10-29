@@ -12,6 +12,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
+	"errors"
 	"image"
 	"image/color"
 	"image/png"
@@ -31,6 +32,7 @@ import (
 	"github.com/savorum/savorum/internal/srefcheckout"
 	"github.com/savorum/savorum/internal/storage/files"
 	"github.com/savorum/savorum/internal/storage/sqlite"
+	"github.com/savorum/savorum/internal/testfixture"
 	"github.com/savorum/savorum/internal/units"
 )
 
@@ -43,13 +45,27 @@ type savorum struct {
 	outbound *export.Service
 }
 
+var interopTestDatabase = testfixture.DatabaseTemplate(func(path string) error {
+	store, err := sqlite.Open(context.Background(), path)
+	if err != nil {
+		return err
+	}
+
+	return store.Close()
+})
+
 func newSavorum(t *testing.T) *savorum {
 	t.Helper()
 
 	ctx := context.Background()
 	root := t.TempDir()
 
-	store, err := sqlite.Open(ctx, filepath.Join(root, "library.db"))
+	path, err := interopTestDatabase(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	store, err := sqlite.Open(ctx, path)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -77,6 +93,29 @@ func newSavorum(t *testing.T) *savorum {
 	}
 
 	return &savorum{recipes: recipes, blobs: blobs, inbound: exchange.NewService(recipes, blobs), outbound: outbound}
+}
+
+func TestFixturesKeepRecipesIndependent(t *testing.T) {
+	t.Parallel()
+
+	first, second := newSavorum(t), newSavorum(t)
+	document := difficultQuantities()
+
+	data, err := sref.Encode(document)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	imported := first.importOne(t, importer.Input{Name: "recipe.json", MediaType: "application/json", Data: data})
+	for _, other := range []*savorum{second, newSavorum(t)} {
+		if _, err := other.recipes.Get(t.Context(), imported.EntryID); !errors.Is(err, library.ErrNotFound) {
+			t.Fatalf("another fixture contains an imported recipe: %v", err)
+		}
+	}
+
+	if entry := first.stored(t, imported.EntryID); entry.Recipe.Title != document.Title {
+		t.Fatal("the importing fixture lost its recipe")
+	}
 }
 
 // importOne brings one source in through the ordinary import boundary and
