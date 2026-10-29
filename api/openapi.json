@@ -2902,6 +2902,11 @@
             ],
             "type": "string"
           },
+          "recipe_count": {
+            "format": "int64",
+            "minimum": 0,
+            "type": "integer"
+          },
           "revision": {
             "format": "int64",
             "minimum": 1,
@@ -9634,6 +9639,11 @@
           },
           "name": {
             "type": "string"
+          },
+          "recipe_count": {
+            "format": "int64",
+            "minimum": 0,
+            "type": "integer"
           },
           "revision": {
             "format": "int64",

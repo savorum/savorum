@@ -845,3 +845,47 @@ func TestMicrowaveReanalysisPersistsThroughTheRealStore(t *testing.T) {
 		t.Fatalf("retained history = %#v", revisions)
 	}
 }
+
+func TestStoreListsTagAndFacetRecipeCounts(t *testing.T) {
+	t.Parallel()
+	store := openStore(t)
+	ctx := context.Background()
+	now := time.Date(2026, time.October, 28, 0, 0, 0, 0, time.UTC)
+
+	if err := store.CreateTag(ctx, library.Tag{ID: "tquick", Name: "Quick", Revision: 1, CreatedAt: now, UpdatedAt: now}); err != nil {
+		t.Fatal(err)
+	}
+
+	if err := store.CreateFacet(ctx, library.Facet{ID: "fthai", Kind: library.FacetCuisine, Value: "Thai", Revision: 1, CreatedAt: now, UpdatedAt: now}); err != nil {
+		t.Fatal(err)
+	}
+
+	for index, ids := range []struct{ tags, facets []string }{
+		{[]string{"tquick"}, []string{"fthai"}},
+		{[]string{"tquick"}, nil},
+	} {
+		document := testfixture.Document()
+		document.ID = recipe.RecipeID("counted-" + string(rune(0x30+index)))
+		id := library.EntryID("rcounted" + string(rune(0x30+index)))
+
+		entry := library.Entry{ID: id, Recipe: document, Revision: 1, CreatedAt: now, UpdatedAt: now}
+		if err := store.Create(ctx, entry, library.RevisionMetadata{Cause: library.RevisionCauseAPI}); err != nil {
+			t.Fatal(err)
+		}
+
+		organization := library.Organization{EntryID: id, TagIDs: ids.tags, FacetIDs: ids.facets, Sources: []library.RecipeSource{}}
+		if _, err := store.ReplaceOrganization(ctx, string(id), library.DefaultUserID, 1, organization, nil, now); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	tags, err := store.ListTags(ctx)
+	if err != nil || len(tags) != 1 || tags[0].RecipeCount != 2 {
+		t.Fatalf("tags = %#v, %v; want one tag on two recipes", tags, err)
+	}
+
+	facets, err := store.ListFacets(ctx, "")
+	if err != nil || len(facets) != 1 || facets[0].RecipeCount != 1 {
+		t.Fatalf("facets = %#v, %v; want one facet on one recipe", facets, err)
+	}
+}

@@ -97,6 +97,15 @@ func (s *Store) ListTags(ctx context.Context) ([]library.Tag, error) {
 		return nil, fmt.Errorf("iterate tags: %w", err)
 	}
 
+	counts, err := s.labelCounts(ctx, "recipe_tags", "tag_id")
+	if err != nil {
+		return nil, err
+	}
+
+	for index := range result {
+		result[index].RecipeCount = counts[result[index].ID]
+	}
+
 	return result, nil
 }
 
@@ -316,6 +325,15 @@ func (s *Store) ListFacets(ctx context.Context, kind library.FacetKind) ([]libra
 
 	if err := rows.Err(); err != nil {
 		return nil, fmt.Errorf("iterate facets: %w", err)
+	}
+
+	counts, err := s.labelCounts(ctx, "recipe_facets", "facet_id")
+	if err != nil {
+		return nil, err
+	}
+
+	for index := range result {
+		result[index].RecipeCount = counts[result[index].ID]
 	}
 
 	return result, nil
@@ -551,4 +569,34 @@ func scanFacet(source scanner) (library.Facet, error) {
 	}
 
 	return facet, nil
+}
+
+func (s *Store) labelCounts(ctx context.Context, table, column string) (map[string]uint64, error) {
+	rows, err := s.db.QueryContext(ctx, `
+		SELECT assignment.`+column+`, COUNT(*)
+		FROM `+table+` AS assignment
+		JOIN library_recipes AS recipes ON recipes.id = assignment.entry_id
+		WHERE recipes.library_id = ? AND recipes.deleted_at IS NULL
+		GROUP BY assignment.`+column, scopeID(ctx))
+	if err != nil {
+		return nil, fmt.Errorf("count label recipes: %w", err)
+	}
+	defer rows.Close()
+
+	counts := map[string]uint64{}
+
+	for rows.Next() {
+		var (
+			id    string
+			count uint64
+		)
+
+		if err := rows.Scan(&id, &count); err != nil {
+			return nil, fmt.Errorf("scan label count: %w", err)
+		}
+
+		counts[id] = count
+	}
+
+	return counts, rows.Err()
 }

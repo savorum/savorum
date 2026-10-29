@@ -55,22 +55,26 @@ type OrganizationService interface {
 
 // Facet is the API representation of an organization facet.
 type Facet struct {
-	ID        string    `json:"id"`
-	Kind      string    `json:"kind" enum:"course,cuisine,method,dietary"`
-	Value     string    `json:"value"`
-	Revision  uint64    `json:"revision" minimum:"1"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID    string `json:"id"`
+	Kind  string `json:"kind" enum:"course,cuisine,method,dietary"`
+	Value string `json:"value"`
+	// RecipeCount is how many active recipes carry the facet as local organization; set on lists.
+	RecipeCount uint64    `json:"recipe_count,omitempty"`
+	Revision    uint64    `json:"revision" minimum:"1"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }
 
 // Tag is the API representation of a recipe tag.
 type Tag struct {
-	ID        string    `json:"id"`
-	Name      string    `json:"name"`
-	Color     string    `json:"color,omitempty"`
-	Revision  uint64    `json:"revision" minimum:"1"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID    string `json:"id"`
+	Name  string `json:"name"`
+	Color string `json:"color,omitempty"`
+	// RecipeCount is how many active recipes carry the tag; set on lists.
+	RecipeCount uint64    `json:"recipe_count,omitempty"`
+	Revision    uint64    `json:"revision" minimum:"1"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }
 
 // FacetInput supplies a facet to create or replace.
@@ -1106,7 +1110,7 @@ func toTag(v TagInput) library.Tag {
 }
 
 func fromTag(v library.Tag) Tag {
-	return Tag{ID: v.ID, Name: v.Name, Color: v.Color, Revision: v.Revision, CreatedAt: v.CreatedAt, UpdatedAt: v.UpdatedAt}
+	return Tag{ID: v.ID, Name: v.Name, Color: v.Color, RecipeCount: v.RecipeCount, Revision: v.Revision, CreatedAt: v.CreatedAt, UpdatedAt: v.UpdatedAt}
 }
 
 func toFacet(v FacetInput) library.Facet {
@@ -1114,7 +1118,7 @@ func toFacet(v FacetInput) library.Facet {
 }
 
 func fromFacet(v library.Facet) Facet {
-	return Facet{ID: v.ID, Kind: string(v.Kind), Value: v.Value, Revision: v.Revision, CreatedAt: v.CreatedAt, UpdatedAt: v.UpdatedAt}
+	return Facet{ID: v.ID, Kind: string(v.Kind), Value: v.Value, RecipeCount: v.RecipeCount, Revision: v.Revision, CreatedAt: v.CreatedAt, UpdatedAt: v.UpdatedAt}
 }
 
 func toBook(v BookInput) library.Book {
