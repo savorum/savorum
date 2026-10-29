@@ -25,22 +25,24 @@ const (
 
 // Facet is one reusable value within a classification category.
 type Facet struct {
-	ID        string    `json:"id"`
-	Kind      FacetKind `json:"kind"`
-	Value     string    `json:"value"`
-	Revision  uint64    `json:"revision"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID          string    `json:"id"`
+	Kind        FacetKind `json:"kind"`
+	Value       string    `json:"value"`
+	RecipeCount uint64    `json:"recipe_count"`
+	Revision    uint64    `json:"revision"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }
 
 // Tag is a reusable library label with an optional display color.
 type Tag struct {
-	ID        string    `json:"id"`
-	Name      string    `json:"name"`
-	Color     string    `json:"color,omitempty"`
-	Revision  uint64    `json:"revision"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID          string    `json:"id"`
+	Name        string    `json:"name"`
+	Color       string    `json:"color,omitempty"`
+	RecipeCount uint64    `json:"recipe_count"`
+	Revision    uint64    `json:"revision"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }
 
 // UserState is what one person has decided about a recipe. Cooking counts and
