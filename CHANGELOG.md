@@ -8,8 +8,8 @@ Notable changes to Savorum Core. Each release publishes
 
 - Add display name editing in Account.
 - Add invitation controls in Account and People, and links to open invitations in the app.
-- Add `recipe_count` to tag and facet API lists.
-- Add label quick filters and order recipe labels by usage.
+- Add `recipe_count` to tag and facet lists and `facets` to recipe summaries in the API.
+- Add label quick filters and show tags and categories on recipe cards in usage order.
 
 ## 0.3.1
 

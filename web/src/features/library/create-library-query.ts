@@ -190,6 +190,7 @@ export function createLibraryQuery(search: Accessor<LibrarySearch>, update: Upda
   const refetch = () => {
     resetContinuation()
     cache.clear()
+    vocabulary.refreshLabels?.()
     return actions.refetch()
   }
   const prefetchPage = (nextOffset: number) => {

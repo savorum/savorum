@@ -110,6 +110,7 @@ type Summary struct {
 	DeletedAt    *time.Time
 	PrimaryImage *AssetReference
 	Tags         []Tag
+	Facets       []Facet
 	// Books is curated membership. SourceBooks is the separate provenance
 	// relationship: publication books a recipe was taken from.
 	Books       []BookSummary

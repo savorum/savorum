@@ -43,6 +43,10 @@ type Contract struct {
 		ImageVersions int `json:"image_versions"`
 		Cookings      int `json:"cookings_per_recipe"`
 	} `json:"history"`
+	Taxonomy struct {
+		Tags          int `json:"tags"`
+		FacetsPerKind int `json:"facets_per_kind"`
+	} `json:"taxonomy"`
 	Budgets        map[string]float64 `json:"budgets_ms"`
 	StorageBudgets map[string]int64   `json:"storage_budgets_bytes_per_recipe"`
 }
@@ -160,10 +164,8 @@ func Seed(ctx context.Context, store *sqlite.Store, files assets.BlobStore, coun
 		return fmt.Errorf("create scale fixture library service: %w", err)
 	}
 
-	for i := range 20 {
-		if err := store.CreateTag(ctx, library.Tag{ID: fmt.Sprintf("tscale%d", i), Name: fmt.Sprintf("Kitchen label %d", i), Revision: 1, CreatedAt: stamp, UpdatedAt: stamp}); err != nil {
-			return err
-		}
+	if err := seedTaxonomy(ctx, store, stamp); err != nil {
+		return err
 	}
 
 	for i := range docs {
@@ -173,7 +175,9 @@ func Seed(ctx context.Context, store *sqlite.Store, files assets.BlobStore, coun
 			state.Rating = &rating
 		}
 
-		_, err := store.ReplaceOrganization(ctx, string(EntryID(i)), principal.UserID, 1, library.Organization{EntryID: EntryID(i), TagIDs: []string{fmt.Sprintf("tscale%d", i%20), fmt.Sprintf("tscale%d", (i+1)%20)}, State: state, Sources: []library.RecipeSource{{ID: fmt.Sprintf("source%d", i), Kind: library.SourceURL, URL: fmt.Sprintf("https://recipes.example/supper/%d", i)}}}, nil, stamp)
+		tags, facets := Labels(i)
+
+		_, err := store.ReplaceOrganization(ctx, string(EntryID(i)), principal.UserID, 1, library.Organization{EntryID: EntryID(i), TagIDs: tags, FacetIDs: facets, State: state, Sources: []library.RecipeSource{{ID: fmt.Sprintf("source%d", i), Kind: library.SourceURL, URL: fmt.Sprintf("https://recipes.example/supper/%d", i)}}}, nil, stamp)
 		if err != nil {
 			return err
 		}

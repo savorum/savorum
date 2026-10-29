@@ -85,6 +85,24 @@ func TestOrganizationBooksProvenanceAndSavedViewsEndToEnd(t *testing.T) {
 		t.Fatalf("tag search status=%d body=%s", search.Code, search.Body.String())
 	}
 
+	var summaries struct {
+		Items []struct {
+			Facets []map[string]string `json:"facets"`
+		} `json:"items"`
+	}
+	if err := json.Unmarshal(search.Body.Bytes(), &summaries); err != nil {
+		t.Fatal(err)
+	}
+
+	wantFacets := []map[string]string{
+		{"id": mainFacet.ID, "kind": "course", "value": "Main"},
+		{"id": italianFacet.ID, "kind": "cuisine", "value": "Italian"},
+		{"id": bakingFacet.ID, "kind": "method", "value": "Baking"},
+	}
+	if len(summaries.Items) != 1 || !reflect.DeepEqual(summaries.Items[0].Facets, wantFacets) {
+		t.Fatalf("recipe summary categories = %#v; want %#v", summaries.Items, wantFacets)
+	}
+
 	plainTagSearch := request(t, handler, http.MethodGet, "/api/v1/recipes?q=weeknight&limit=10", nil)
 	if plainTagSearch.Code != http.StatusOK || !strings.Contains(plainTagSearch.Body.String(), created.ID) {
 		t.Fatalf("plain tag search status=%d body=%s", plainTagSearch.Code, plainTagSearch.Body.String())

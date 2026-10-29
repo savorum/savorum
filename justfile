@@ -141,3 +141,8 @@ check-fast: web-test openapi-check units-check sref-integration build e2e
 scale-check: build
     go build -o bin/scalecheck ./cmd/scalecheck
     ./scripts/scale-check.sh
+
+# Browse reads and ranked card rendering against a full-history library.
+scale-browse recipes="10000": build
+    go build -o bin/scalecheck ./cmd/scalecheck
+    ./scripts/scale-check.sh output/scale/browse --browse-only --recipes {{ quote(recipes) }}

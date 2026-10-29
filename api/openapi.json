@@ -2954,6 +2954,32 @@
         ],
         "type": "object"
       },
+      "FacetSummary": {
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "course",
+              "cuisine",
+              "method",
+              "dietary"
+            ],
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "value"
+        ],
+        "type": "object"
+      },
       "FacetsOutputBody": {
         "additionalProperties": true,
         "properties": {
@@ -7907,6 +7933,16 @@
           },
           "description": {
             "type": "string"
+          },
+          "facets": {
+            "description": "Library categories assigned to this recipe",
+            "items": {
+              "$ref": "#/components/schemas/FacetSummary"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
           },
           "favorite": {
             "type": "boolean"

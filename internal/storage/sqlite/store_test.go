@@ -317,12 +317,22 @@ func TestStoreListUsesBatchedSummaryProjectionsAndSupportedSorts(t *testing.T) {
 		}
 	}
 
+	for _, facet := range []library.Facet{
+		{ID: "f-main", Kind: library.FacetCourse, Value: "Main", Revision: 1, CreatedAt: base, UpdatedAt: base},
+		{ID: "f-italian", Kind: library.FacetCuisine, Value: "Italian", Revision: 1, CreatedAt: base, UpdatedAt: base},
+		{ID: "f-baking", Kind: library.FacetMethod, Value: "Baking", Revision: 1, CreatedAt: base, UpdatedAt: base},
+	} {
+		if err := store.CreateFacet(ctx, facet); err != nil {
+			t.Fatal(err)
+		}
+	}
+
 	ratingTwo, ratingFive := uint8(2), uint8(5)
 
 	organizations := map[library.EntryID]library.Organization{
 		"ra": {State: library.UserState{}},
-		"rb": {TagIDs: []string{"t-alpha"}, State: library.UserState{Rating: &ratingFive}},
-		"rz": {TagIDs: []string{"t-zulu"}, State: library.UserState{Favorite: true, Rating: &ratingTwo}},
+		"rb": {TagIDs: []string{"t-alpha"}, FacetIDs: []string{"f-italian", "f-main"}, State: library.UserState{Rating: &ratingFive}},
+		"rz": {TagIDs: []string{"t-zulu"}, FacetIDs: []string{"f-baking"}, State: library.UserState{Favorite: true, Rating: &ratingTwo}},
 	}
 	for id, organization := range organizations {
 		if _, err := store.ReplaceOrganization(ctx, string(id), library.DefaultUserID, 1, organization, nil, base); err != nil {
@@ -372,7 +382,7 @@ func TestStoreListUsesBatchedSummaryProjectionsAndSupportedSorts(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if len(items[0].Tags) != 0 || len(items[0].Books) != 0 || items[0].Favorite {
+	if len(items[0].Tags) != 0 || len(items[0].Facets) != 0 || len(items[0].Books) != 0 || items[0].Favorite {
 		t.Fatalf("alpha associations leaked from another summary: %#v", items[0])
 	}
 
@@ -382,6 +392,14 @@ func TestStoreListUsesBatchedSummaryProjectionsAndSupportedSorts(t *testing.T) {
 
 	if len(items[2].Tags) != 1 || items[2].Tags[0].ID != "t-zulu" || len(items[2].Books) != 1 || !items[2].Favorite {
 		t.Fatalf("zulu projection = %#v", items[2])
+	}
+
+	if len(items[1].Facets) != 2 || items[1].Facets[0].ID != "f-main" || items[1].Facets[1].ID != "f-italian" {
+		t.Fatalf("beta categories = %#v", items[1].Facets)
+	}
+
+	if len(items[2].Facets) != 1 || items[2].Facets[0].ID != "f-baking" || items[2].Facets[0].Kind != library.FacetMethod {
+		t.Fatalf("zulu categories = %#v", items[2].Facets)
 	}
 
 	books, err := store.ListBooks(ctx, library.BookListOptions{Limit: 10, State: library.StateActive})

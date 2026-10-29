@@ -334,6 +334,13 @@ type TagSummary struct {
 	Color string `json:"color,omitempty"`
 }
 
+// FacetSummary identifies a library category assigned to a recipe.
+type FacetSummary struct {
+	ID    string `json:"id"`
+	Kind  string `json:"kind" enum:"course,cuisine,method,dietary"`
+	Value string `json:"value"`
+}
+
 // RecipeSummary provides a compact recipe representation.
 type RecipeSummary struct {
 	ID           string               `json:"id" doc:"Identifier of this entry in the local Savorum library"`
@@ -349,6 +356,7 @@ type RecipeSummary struct {
 	DeletedAt    *time.Time           `json:"deleted_at,omitempty"`
 	PrimaryImage *AssetReference      `json:"primary_image,omitempty"`
 	Tags         []TagSummary         `json:"tags"`
+	Facets       []FacetSummary       `json:"facets,omitempty" doc:"Library categories assigned to this recipe"`
 	Books        []LibraryBookSummary `json:"books" doc:"Books this recipe was deliberately placed in"`
 	SourceBooks  []LibraryBookSummary `json:"source_books" doc:"Publication books this recipe was taken from"`
 	Favorite     bool                 `json:"favorite"`
@@ -506,6 +514,10 @@ func fromSummary(summary library.Summary) RecipeSummary {
 
 	for _, tag := range summary.Tags {
 		result.Tags = append(result.Tags, TagSummary{ID: tag.ID, Name: tag.Name, Color: tag.Color})
+	}
+
+	for _, facet := range summary.Facets {
+		result.Facets = append(result.Facets, FacetSummary{ID: facet.ID, Kind: string(facet.Kind), Value: facet.Value})
 	}
 
 	for _, book := range summary.Books {

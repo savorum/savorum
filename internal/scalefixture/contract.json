@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "sizes": [
     100,
     1000,
@@ -32,10 +32,17 @@
     "browser_first_render": 2500,
     "migrations": 30000,
     "image_original": 300,
-    "image_reader": 1000
+    "image_reader": 1000,
+    "tags": 300,
+    "facets": 300,
+    "library_total": 300
   },
   "storage_budgets_bytes_per_recipe": {
     "database": 131072,
     "originals": 131072
+  },
+  "taxonomy": {
+    "tags": 200,
+    "facets_per_kind": 25
   }
 }
