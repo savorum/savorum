@@ -3,8 +3,7 @@
 ARG GO_VERSION=1.27.3
 ARG NODE_VERSION=26.9.0
 
-# The frontend is built here rather than committed. Its output is
-# platform-independent, so it is built once on the build platform.
+# Release builds supply the verified frontend through the web build context.
 FROM --platform=$BUILDPLATFORM node:${NODE_VERSION}-bookworm@sha256:347d9d5391493c2fc3f0d161b75a9cab64a9805064b1b01b099f8ee97f98ed47 AS web
 WORKDIR /src
 COPY scripts/corepack/package.json scripts/corepack/package-lock.json /opt/corepack/
@@ -12,7 +11,8 @@ ENV PATH="/opt/corepack/node_modules/.bin:${PATH}"
 RUN npm ci --prefix /opt/corepack --ignore-scripts --no-fund --no-audit \
     && /opt/corepack/node_modules/.bin/corepack enable --install-directory /usr/local/bin
 COPY web/package.json web/
-RUN corepack install --global "$(node -p "require('./web/package.json').packageManager")"
+COPY scripts/bootstrap-pnpm.sh /opt/bootstrap-pnpm.sh
+RUN sh /opt/bootstrap-pnpm.sh
 COPY api/openapi.json api/
 COPY internal/recipetext/vocabulary.json internal/recipetext/vocabulary.json
 COPY web/ web/
@@ -30,16 +30,19 @@ COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
 COPY --from=web /src/internal/webui/dist internal/webui/dist
-RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH \
+RUN --mount=type=cache,target=/root/.cache/go-build \
+    CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH \
     go build -trimpath -tags nodynamic \
     -ldflags="-s -w -X github.com/savorum/savorum/internal/buildinfo.Version=${VERSION} -X github.com/savorum/savorum/internal/buildinfo.Revision=${REVISION}" \
     -o /out/savorum ./cmd/savorum
-RUN CGO_ENABLED=0 go run -tags nodynamic ./cmd/savorum admin compatibility > /out/savorum-compatibility.json
+RUN --mount=type=cache,target=/root/.cache/go-build \
+    CGO_ENABLED=0 go run -trimpath -tags nodynamic ./cmd/savorum admin compatibility > /out/savorum-compatibility.json
 RUN mkdir -p /out/data /out/tmp && chmod 0750 /out/data && chmod 1777 /out/tmp
 
 FROM alpine:3.24.2@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6 AS runtime
 ARG VERSION=development
 ARG REVISION=
+ARG WEB_BUNDLE_SHA256=
 RUN apk add --no-cache \
        bash=5.3.9-r1 \
        ca-certificates-bundle=20260909-r0 \
@@ -53,7 +56,8 @@ LABEL org.opencontainers.image.title="Savorum" \
       org.opencontainers.image.source="https://github.com/savorum/savorum" \
       org.opencontainers.image.licenses="AGPL-3.0-only" \
       org.opencontainers.image.version=$VERSION \
-      org.opencontainers.image.revision=$REVISION
+      org.opencontainers.image.revision=$REVISION \
+      io.savorum.web-bundle-sha256=$WEB_BUNDLE_SHA256
 
 COPY --from=build /out/savorum /savorum
 COPY --from=build /out/savorum-compatibility.json /savorum-compatibility.json

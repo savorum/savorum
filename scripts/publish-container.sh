@@ -40,6 +40,16 @@ if [ -n "${METADATA_FILE:-}" ]; then
   set -- "$@" --metadata-file "$METADATA_FILE"
 fi
 
+if [ -n "${WEB_BUILD_CONTEXT:-}" ]; then
+  if ! printf '%s\n' "${WEB_BUNDLE_SHA256:-}" | grep -Eq '^[0-9a-f]{64}$'; then
+    echo "a verified web bundle digest is required with WEB_BUILD_CONTEXT" >&2
+    exit 1
+  fi
+  test -d "$WEB_BUILD_CONTEXT/src/internal/webui/dist"
+  set -- "$@" --build-context "web=$WEB_BUILD_CONTEXT" \
+    --build-arg "WEB_BUNDLE_SHA256=$WEB_BUNDLE_SHA256"
+fi
+
 docker buildx build \
   --pull \
   --platform linux/amd64,linux/arm64 \
