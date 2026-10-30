@@ -11,6 +11,8 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	// The runtime image has no system zoneinfo; preference time zones need it.
+	_ "time/tzdata"
 
 	"github.com/savorum/savorum/internal/hosting"
 )
