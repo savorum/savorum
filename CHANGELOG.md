@@ -6,6 +6,8 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+- Fix saving a time zone in container images.
+
 ## 0.4.1
 
 - Security: Fix excessive CPU use when parsing crafted RSA JSON Web Keys (CVE-2026-116587).
