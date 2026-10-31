@@ -2203,7 +2203,6 @@
   "account_sessions_other": "Alt browser",
   "account_sessions_detail": "{method} · Ultima activitate: {last} · Autentificare: {created}",
   "account_sessions_revoke": "Revocă sesiunea",
-  "account_sessions_revoke_named": "Revocă sesiunea cu ultima activitate la {last}",
   "account_sessions_revoked": "Sesiune revocată.",
   "account_sessions_revoke_others": "Deconectează toate celelalte sesiuni",
   "account_sessions_others_revoked": "Celelalte sesiuni au fost revocate.",

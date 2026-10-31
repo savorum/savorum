@@ -374,12 +374,10 @@ test("account management creates users, revokes sessions, changes passwords and 
     await expect(
       member.getByRole("heading", { name: "Sign-in and security", exact: true, level: 1 }),
     ).toBeVisible()
-    const revoke = member.getByRole("button", { name: /^Revoke the session last active/ })
+    const revoke = member.getByRole("button", { name: "Revoke session", exact: true })
     await expect(revoke).toHaveCount(1)
     await revoke.click()
-    await expect(
-      member.getByRole("button", { name: /^Revoke the session last active/ }),
-    ).toHaveCount(0)
+    await expect(member.getByRole("button", { name: "Revoke session", exact: true })).toHaveCount(0)
     expect((await otherContext.request.get(`${origin}/api/v1/recipes`)).status()).toBe(401)
 
     const newPassword = "changed browser fixture password 2026"

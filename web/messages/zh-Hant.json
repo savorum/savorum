@@ -1942,7 +1942,6 @@
   "account_sessions_other": "其他瀏覽器",
   "account_sessions_detail": "{method} · 上次活動 {last} · 登入時間 {created}",
   "account_sessions_revoke": "撤銷工作階段",
-  "account_sessions_revoke_named": "撤銷上次活動於 {last} 的工作階段",
   "account_sessions_revoked": "已撤銷工作階段。",
   "account_sessions_revoke_others": "登出所有其他工作階段",
   "account_sessions_others_revoked": "已撤銷其他工作階段。",

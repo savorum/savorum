@@ -1942,7 +1942,6 @@
   "account_sessions_other": "Trình duyệt khác",
   "account_sessions_detail": "{method} · Hoạt động gần nhất {last} · Đăng nhập {created}",
   "account_sessions_revoke": "Thu hồi phiên",
-  "account_sessions_revoke_named": "Thu hồi phiên hoạt động gần nhất vào {last}",
   "account_sessions_revoked": "Đã thu hồi phiên.",
   "account_sessions_revoke_others": "Đăng xuất tất cả phiên khác",
   "account_sessions_others_revoked": "Đã thu hồi các phiên khác.",

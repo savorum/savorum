@@ -1944,7 +1944,6 @@
   "account_sessions_other": "Another browser",
   "account_sessions_detail": "{method} · Last active {last} · Signed in {created}",
   "account_sessions_revoke": "Revoke session",
-  "account_sessions_revoke_named": "Revoke the session last active {last}",
   "account_sessions_revoked": "Session revoked.",
   "account_sessions_revoke_others": "Sign out all other sessions",
   "account_sessions_others_revoked": "Other sessions revoked.",

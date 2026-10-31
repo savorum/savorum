@@ -1947,7 +1947,6 @@
   "account_sessions_other": "Anderer Browser",
   "account_sessions_detail": "{method} · Zuletzt aktiv: {last} · Angemeldet: {created}",
   "account_sessions_revoke": "Sitzung widerrufen",
-  "account_sessions_revoke_named": "Sitzung mit letzter Aktivität am {last} widerrufen",
   "account_sessions_revoked": "Sitzung widerrufen.",
   "account_sessions_revoke_others": "Alle anderen Sitzungen abmelden",
   "account_sessions_others_revoked": "Andere Sitzungen widerrufen.",

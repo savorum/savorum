@@ -2054,7 +2054,6 @@
   "account_sessions_other": "Άλλο πρόγραμμα περιήγησης",
   "account_sessions_detail": "{method} · Τελευταία δραστηριότητα {last} · Σύνδεση {created}",
   "account_sessions_revoke": "Ανάκληση συνεδρίας",
-  "account_sessions_revoke_named": "Ανάκληση συνεδρίας με τελευταία δραστηριότητα {last}",
   "account_sessions_revoked": "Η συνεδρία ανακλήθηκε.",
   "account_sessions_revoke_others": "Αποσύνδεση όλων των άλλων συνεδριών",
   "account_sessions_others_revoked": "Οι άλλες συνεδρίες ανακλήθηκαν.",

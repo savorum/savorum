@@ -481,7 +481,7 @@ for (const colorScheme of ["light", "dark"] as const) {
     await page.emulateMedia({ colorScheme })
     await page.goto("/")
     await page.getByRole("button", { name: "Add recipes", exact: true }).click()
-    const item = page.getByRole("menuitem", { name: "From a file", exact: true })
+    const item = page.getByRole("menuitem", { name: /^From a file/ })
     await item.hover()
     await expect(item).toHaveAttribute("data-highlighted", "")
     await expectAccessible(page, '[role="menu"]')

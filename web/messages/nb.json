@@ -2060,7 +2060,6 @@
   "account_sessions_other": "En annen nettleser",
   "account_sessions_detail": "{method} · Sist aktiv {last} · Logget inn {created}",
   "account_sessions_revoke": "Tilbakekall økt",
-  "account_sessions_revoke_named": "Tilbakekall økten som sist var aktiv {last}",
   "account_sessions_revoked": "Økt tilbakekalt.",
   "account_sessions_revoke_others": "Logg ut alle andre økter",
   "account_sessions_others_revoked": "Andre økter tilbakekalt.",

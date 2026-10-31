@@ -2399,7 +2399,6 @@
   "account_sessions_other": "Інший браузер",
   "account_sessions_detail": "{method} · Остання активність: {last} · Вхід: {created}",
   "account_sessions_revoke": "Відкликати сеанс",
-  "account_sessions_revoke_named": "Відкликати сеанс з останньою активністю {last}",
   "account_sessions_revoked": "Сеанс відкликано.",
   "account_sessions_revoke_others": "Вийти з усіх інших сеансів",
   "account_sessions_others_revoked": "Інші сеанси відкликано.",

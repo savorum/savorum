@@ -138,7 +138,7 @@ export const ImportMenu = (props: {
       <MenuItemGroupLabel>{m.import_menu_bring_recipes_in()}</MenuItemGroupLabel>
       <For each={ways}>
         {(way) => (
-          <MenuItem value={way.value} valueText={way.label} aria-label={way.label}>
+          <MenuItem value={way.value} valueText={way.label}>
             <MenuItemMedia>
               <way.icon size={21} />
             </MenuItemMedia>

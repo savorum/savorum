@@ -1942,7 +1942,6 @@
   "account_sessions_other": "Browser lain",
   "account_sessions_detail": "{method} · Terakhir aktif {last} · Masuk {created}",
   "account_sessions_revoke": "Cabut sesi",
-  "account_sessions_revoke_named": "Cabut sesi yang terakhir aktif {last}",
   "account_sessions_revoked": "Sesi dicabut.",
   "account_sessions_revoke_others": "Keluar dari semua sesi lain",
   "account_sessions_others_revoked": "Sesi lain dicabut.",

@@ -1868,7 +1868,6 @@
   "account_sessions_other": "別のブラウザ",
   "account_sessions_detail": "{method} · 最終アクティビティ：{last} · サインイン：{created}",
   "account_sessions_revoke": "セッションを取り消す",
-  "account_sessions_revoke_named": "最終アクティビティが{last}のセッションを取り消す",
   "account_sessions_revoked": "セッションを取り消しました。",
   "account_sessions_revoke_others": "他のすべてのセッションからサインアウト",
   "account_sessions_others_revoked": "他のセッションを取り消しました。",

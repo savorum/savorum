@@ -2399,7 +2399,6 @@
   "account_sessions_other": "Inna przeglądarka",
   "account_sessions_detail": "{method} · Ostatnia aktywność {last} · Logowanie {created}",
   "account_sessions_revoke": "Unieważnij sesję",
-  "account_sessions_revoke_named": "Unieważnij sesję ostatnio aktywną {last}",
   "account_sessions_revoked": "Sesja unieważniona.",
   "account_sessions_revoke_others": "Wyloguj wszystkie inne sesje",
   "account_sessions_others_revoked": "Inne sesje zostały unieważnione.",

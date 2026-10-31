@@ -951,11 +951,11 @@ export const account_recovery_hidden: Messages["account_recovery_hidden"] = /* @
 export const account_recovery_hint: Messages["account_recovery_hint"] = /* @__PURE__ */ localized("account_recovery_hint", () => {
 	return /** @type {LocalizedString} */ (`Use a code if you lose your other sign-in methods. Each code works once.`)
 })
-export const account_recovery_remaining: Messages["account_recovery_remaining"] = /* @__PURE__ */ localized("account_recovery_remaining", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const account_recovery_remaining: Messages["account_recovery_remaining"] = /* @__PURE__ */ localized("account_recovery_remaining", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recovery code remaining.`);
 	return /** @type {LocalizedString} */ (`${countText} recovery codes remaining.`)
-	
 })
 export const account_recovery_replace: Messages["account_recovery_replace"] = /* @__PURE__ */ localized("account_recovery_replace", () => {
 	return /** @type {LocalizedString} */ (`Generate replacement codes`)
@@ -1055,9 +1055,6 @@ export const account_sessions_others_revoked: Messages["account_sessions_others_
 })
 export const account_sessions_revoke: Messages["account_sessions_revoke"] = /* @__PURE__ */ localized("account_sessions_revoke", () => {
 	return /** @type {LocalizedString} */ (`Revoke session`)
-})
-export const account_sessions_revoke_named: Messages["account_sessions_revoke_named"] = /* @__PURE__ */ localized("account_sessions_revoke_named", (i) => {
-	return /** @type {LocalizedString} */ (`Revoke the session last active ${i?.last}`)
 })
 export const account_sessions_revoke_others: Messages["account_sessions_revoke_others"] = /* @__PURE__ */ localized("account_sessions_revoke_others", () => {
 	return /** @type {LocalizedString} */ (`Sign out all other sessions`)
@@ -1233,7 +1230,6 @@ export const api_export_asset_unavailable: Messages["api_export_asset_unavailabl
 	if (i?.reason === "size-mismatch") return /** @type {LocalizedString} */ (`“${i?.title}” references a file whose size does not match the recipe. Export needs every file a recipe references, so nothing was written.`);
 	if (i?.reason === "integrity") return /** @type {LocalizedString} */ (`“${i?.title}” references a file that failed its integrity check. Export needs every file a recipe references, so nothing was written.`);
 	return /** @type {LocalizedString} */ (`“${i?.title}” references a file that could not be read. Export needs every file a recipe references, so nothing was written.`)
-	
 })
 export const api_problem_access_denied: Messages["api_problem_access_denied"] = /* @__PURE__ */ localized("api_problem_access_denied", () => {
 	return /** @type {LocalizedString} */ (`You do not have permission for this operation`)
@@ -2486,11 +2482,11 @@ export const cooking_timer_minutes: Messages["cooking_timer_minutes"] = /* @__PU
 export const cooking_timer_setup: Messages["cooking_timer_setup"] = /* @__PURE__ */ localized("cooking_timer_setup", () => {
 	return /** @type {LocalizedString} */ (`Timers`)
 })
-export const cooking_times_cooked: Messages["cooking_times_cooked"] = /* @__PURE__ */ localized("cooking_times_cooked", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const cooking_times_cooked: Messages["cooking_times_cooked"] = /* @__PURE__ */ localized("cooking_times_cooked", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`Cooked ${countText} time`);
 	return /** @type {LocalizedString} */ (`Cooked ${countText} times`)
-	
 })
 export const cooking_together: Messages["cooking_together"] = /* @__PURE__ */ localized("cooking_together", () => {
 	return /** @type {LocalizedString} */ (`Cook together`)
@@ -2690,8 +2686,9 @@ export const editor_group_removed: Messages["editor_group_removed"] = /* @__PURE
 export const editor_hands_on: Messages["editor_hands_on"] = /* @__PURE__ */ localized("editor_hands_on", () => {
 	return /** @type {LocalizedString} */ (`Hands-on work`)
 })
-export const editor_ingredient_count: Messages["editor_ingredient_count"] = /* @__PURE__ */ localized("editor_ingredient_count", (i) => {const countPlural = registry.plural("en", i?.count, {});
-	const formattedCount = registry.number("en", i?.count, {});
+export const editor_ingredient_count: Messages["editor_ingredient_count"] = /* @__PURE__ */ localized("editor_ingredient_count", (i) => {
+	const countPlural = registry.plural("en", i?.count, {}, true);
+	const formattedCount = registry.number("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${formattedCount} ingredient`);
 	if (countPlural === "other") return /** @type {LocalizedString} */ (`${formattedCount} ingredients`);
 	return /** @type {LocalizedString} */ ("editor_ingredient_count");
@@ -2756,8 +2753,9 @@ export const editor_optional: Messages["editor_optional"] = /* @__PURE__ */ loca
 export const editor_package_size: Messages["editor_package_size"] = /* @__PURE__ */ localized("editor_package_size", (i) => {
 	return /** @type {LocalizedString} */ (`Each package: ${i?.value}`)
 })
-export const editor_photo_count: Messages["editor_photo_count"] = /* @__PURE__ */ localized("editor_photo_count", (i) => {const countPlural = registry.plural("en", i?.count, {});
-	const formattedCount = registry.number("en", i?.count, {});
+export const editor_photo_count: Messages["editor_photo_count"] = /* @__PURE__ */ localized("editor_photo_count", (i) => {
+	const countPlural = registry.plural("en", i?.count, {}, true);
+	const formattedCount = registry.number("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${formattedCount} photo`);
 	if (countPlural === "other") return /** @type {LocalizedString} */ (`${formattedCount} photos`);
 	return /** @type {LocalizedString} */ ("editor_photo_count");
@@ -2960,11 +2958,11 @@ export const help_plan: Messages["help_plan"] = /* @__PURE__ */ localized("help_
 export const help_shopping: Messages["help_shopping"] = /* @__PURE__ */ localized("help_shopping", () => {
 	return /** @type {LocalizedString} */ (`Help with shopping lists`)
 })
-export const import_about_hours: Messages["import_about_hours"] = /* @__PURE__ */ localized("import_about_hours", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_about_hours: Messages["import_about_hours"] = /* @__PURE__ */ localized("import_about_hours", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`about ${countText} hour`);
 	return /** @type {LocalizedString} */ (`about ${countText} hours`)
-	
 })
 export const import_candidate_already_here: Messages["import_candidate_already_here"] = /* @__PURE__ */ localized("import_candidate_already_here", () => {
 	return /** @type {LocalizedString} */ (`Already in your library`)
@@ -2996,11 +2994,11 @@ export const import_candidate_import: Messages["import_candidate_import"] = /* @
 export const import_candidate_import_as_a_separate_recipe: Messages["import_candidate_import_as_a_separate_recipe"] = /* @__PURE__ */ localized("import_candidate_import_as_a_separate_recipe", () => {
 	return /** @type {LocalizedString} */ (`Import as a separate recipe`)
 })
-export const import_candidate_ingredient_count: Messages["import_candidate_ingredient_count"] = /* @__PURE__ */ localized("import_candidate_ingredient_count", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_candidate_ingredient_count: Messages["import_candidate_ingredient_count"] = /* @__PURE__ */ localized("import_candidate_ingredient_count", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} ingredient`);
 	return /** @type {LocalizedString} */ (`${countText} ingredients`)
-	
 })
 export const import_candidate_ingredients_label: Messages["import_candidate_ingredients_label"] = /* @__PURE__ */ localized("import_candidate_ingredients_label", () => {
 	return /** @type {LocalizedString} */ (`Ingredients`)
@@ -3080,10 +3078,11 @@ export const import_history_this_recipe_s_import_history_could_not_be_read: Mess
 export const import_job_automatic: Messages["import_job_automatic"] = /* @__PURE__ */ localized("import_job_automatic", () => {
 	return /** @type {LocalizedString} */ (`The import begins automatically.`)
 })
-export const import_job_diagnostic: Messages["import_job_diagnostic"] = /* @__PURE__ */ localized("import_job_diagnostic", (i) => {const occurrencesText = registry.number("en", i?.occurrences, {});
-	const recipesText = registry.number("en", i?.recipes, {});
-	const occurrencePlural = registry.plural("en", i?.occurrences, {});
-	const recipePlural = registry.plural("en", i?.recipes, {});
+export const import_job_diagnostic: Messages["import_job_diagnostic"] = /* @__PURE__ */ localized("import_job_diagnostic", (i) => {
+	const occurrencesText = registry.number("en", i?.occurrences, {}, true);
+	const recipesText = registry.number("en", i?.recipes, {}, true);
+	const occurrencePlural = registry.plural("en", i?.occurrences, {}, true);
+	const recipePlural = registry.plural("en", i?.recipes, {}, true);
 	if (i?.classification === "actionable" && i?.area === "assets" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} photograph detail in ${recipesText} recipe`);
 	if (i?.classification === "actionable" && i?.area === "content" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} content detail in ${recipesText} recipe`);
 	if (i?.classification === "actionable" && i?.area === "duplicate" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} duplicate detail in ${recipesText} recipe`);
@@ -3156,22 +3155,21 @@ export const import_job_diagnostic: Messages["import_job_diagnostic"] = /* @__PU
 	if (occurrencePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} detail in ${recipesText} recipes`);
 	if (recipePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} details in ${recipesText} recipe`);
 	return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} details in ${recipesText} recipes`)
-	
 })
-export const import_job_failed: Messages["import_job_failed"] = /* @__PURE__ */ localized("import_job_failed", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_job_failed: Messages["import_job_failed"] = /* @__PURE__ */ localized("import_job_failed", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recipe could not be imported`);
 	return /** @type {LocalizedString} */ (`${countText} recipes could not be imported`)
-	
 })
 export const import_job_failed_headline: Messages["import_job_failed_headline"] = /* @__PURE__ */ localized("import_job_failed_headline", () => {
 	return /** @type {LocalizedString} */ (`Import could not continue`)
 })
-export const import_job_imported: Messages["import_job_imported"] = /* @__PURE__ */ localized("import_job_imported", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_job_imported: Messages["import_job_imported"] = /* @__PURE__ */ localized("import_job_imported", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recipe imported`);
 	return /** @type {LocalizedString} */ (`${countText} recipes imported`)
-	
 })
 export const import_job_interrupted: Messages["import_job_interrupted"] = /* @__PURE__ */ localized("import_job_interrupted", () => {
 	return /** @type {LocalizedString} */ (`Import was interrupted`)
@@ -3179,11 +3177,11 @@ export const import_job_interrupted: Messages["import_job_interrupted"] = /* @__
 export const import_job_interrupted_guidance: Messages["import_job_interrupted_guidance"] = /* @__PURE__ */ localized("import_job_interrupted_guidance", () => {
 	return /** @type {LocalizedString} */ (`Imported recipes are in your library. You can import the remaining recipes.`)
 })
-export const import_job_not_imported: Messages["import_job_not_imported"] = /* @__PURE__ */ localized("import_job_not_imported", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_job_not_imported: Messages["import_job_not_imported"] = /* @__PURE__ */ localized("import_job_not_imported", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recipe not imported`);
 	return /** @type {LocalizedString} */ (`${countText} recipes not imported`)
-	
 })
 export const import_job_page_back_to_imports: Messages["import_job_page_back_to_imports"] = /* @__PURE__ */ localized("import_job_page_back_to_imports", () => {
 	return /** @type {LocalizedString} */ (`Back to imports`)
@@ -3221,11 +3219,11 @@ export const import_job_page_import_the_rest: Messages["import_job_page_import_t
 export const import_job_page_left: Messages["import_job_page_left"] = /* @__PURE__ */ localized("import_job_page_left", (i) => {
 	return /** @type {LocalizedString} */ (`${i?.value1} left`)
 })
-export const import_job_page_need_a_look: Messages["import_job_page_need_a_look"] = /* @__PURE__ */ localized("import_job_page_need_a_look", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_job_page_need_a_look: Messages["import_job_page_need_a_look"] = /* @__PURE__ */ localized("import_job_page_need_a_look", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recipe needs a look`);
 	return /** @type {LocalizedString} */ (`${countText} recipes need a look`)
-	
 })
 export const import_job_page_of_recipes: Messages["import_job_page_of_recipes"] = /* @__PURE__ */ localized("import_job_page_of_recipes", (i) => {
 	return /** @type {LocalizedString} */ (`${i?.value1} of ${i?.value2} recipes`)
@@ -3281,11 +3279,11 @@ export const import_job_presentation_waiting_to_import: Messages["import_job_pre
 export const import_job_presentation_you_can_import_the_remaining_recipes_when_you_are_ready: Messages["import_job_presentation_you_can_import_the_remaining_recipes_when_you_are_ready"] = /* @__PURE__ */ localized("import_job_presentation_you_can_import_the_remaining_recipes_when_you_are_ready", () => {
 	return /** @type {LocalizedString} */ (`You can import the remaining recipes when you are ready.`)
 })
-export const import_job_processed: Messages["import_job_processed"] = /* @__PURE__ */ localized("import_job_processed", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_job_processed: Messages["import_job_processed"] = /* @__PURE__ */ localized("import_job_processed", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recipe processed so far.`);
 	return /** @type {LocalizedString} */ (`${countText} recipes processed so far.`)
-	
 })
 export const import_job_results_affected_content: Messages["import_job_results_affected_content"] = /* @__PURE__ */ localized("import_job_results_affected_content", () => {
 	return /** @type {LocalizedString} */ (`Affected content`)
@@ -3362,18 +3360,18 @@ export const import_job_results_review_details: Messages["import_job_results_rev
 export const import_job_review_failed: Messages["import_job_review_failed"] = /* @__PURE__ */ localized("import_job_review_failed", () => {
 	return /** @type {LocalizedString} */ (`Review the recipes that could not be imported.`)
 })
-export const import_job_running: Messages["import_job_running"] = /* @__PURE__ */ localized("import_job_running", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
-	const finishedText = registry.number("en", i?.finished, {});
+export const import_job_running: Messages["import_job_running"] = /* @__PURE__ */ localized("import_job_running", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
+	const finishedText = registry.number("en", i?.finished, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`Importing ${finishedText} of ${countText} recipe`);
 	return /** @type {LocalizedString} */ (`Importing ${finishedText} of ${countText} recipes`)
-	
 })
-export const import_job_skipped: Messages["import_job_skipped"] = /* @__PURE__ */ localized("import_job_skipped", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_job_skipped: Messages["import_job_skipped"] = /* @__PURE__ */ localized("import_job_skipped", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recipe already in your library`);
 	return /** @type {LocalizedString} */ (`${countText} recipes already in your library`)
-	
 })
 export const import_job_stopping: Messages["import_job_stopping"] = /* @__PURE__ */ localized("import_job_stopping", () => {
 	return /** @type {LocalizedString} */ (`Stopping after the current batch`)
@@ -3381,11 +3379,11 @@ export const import_job_stopping: Messages["import_job_stopping"] = /* @__PURE__
 export const import_job_timing: Messages["import_job_timing"] = /* @__PURE__ */ localized("import_job_timing", () => {
 	return /** @type {LocalizedString} */ (`Timing`)
 })
-export const import_job_waiting: Messages["import_job_waiting"] = /* @__PURE__ */ localized("import_job_waiting", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_job_waiting: Messages["import_job_waiting"] = /* @__PURE__ */ localized("import_job_waiting", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recipe waiting to import`);
 	return /** @type {LocalizedString} */ (`${countText} recipes waiting to import`)
-	
 })
 export const import_jobs_that_import_could_not_be_read: Messages["import_jobs_that_import_could_not_be_read"] = /* @__PURE__ */ localized("import_jobs_that_import_could_not_be_read", () => {
 	return /** @type {LocalizedString} */ (`That import could not be read.`)
@@ -3438,17 +3436,17 @@ export const import_menu_recent_imports: Messages["import_menu_recent_imports"] 
 export const import_menu_recipe_collections_pdfs_and_photos: Messages["import_menu_recipe_collections_pdfs_and_photos"] = /* @__PURE__ */ localized("import_menu_recipe_collections_pdfs_and_photos", () => {
 	return /** @type {LocalizedString} */ (`Recipe collections, PDFs and photos`)
 })
-export const import_photos_pending: Messages["import_photos_pending"] = /* @__PURE__ */ localized("import_photos_pending", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_photos_pending: Messages["import_photos_pending"] = /* @__PURE__ */ localized("import_photos_pending", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} photograph still to fetch`);
 	return /** @type {LocalizedString} */ (`${countText} photographs still to fetch`)
-	
 })
-export const import_photos_unavailable: Messages["import_photos_unavailable"] = /* @__PURE__ */ localized("import_photos_unavailable", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_photos_unavailable: Messages["import_photos_unavailable"] = /* @__PURE__ */ localized("import_photos_unavailable", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} photograph unavailable`);
 	return /** @type {LocalizedString} */ (`${countText} photographs unavailable`)
-	
 })
 export const import_previews_the_corrected_recipe_text_could_not_be_applied: Messages["import_previews_the_corrected_recipe_text_could_not_be_applied"] = /* @__PURE__ */ localized("import_previews_the_corrected_recipe_text_could_not_be_applied", () => {
 	return /** @type {LocalizedString} */ (`The corrected recipe text could not be applied.`)
@@ -3477,14 +3475,14 @@ export const import_previews_the_recipe_page_could_not_be_previewed: Messages["i
 export const import_previews_the_staged_import_could_not_be_reopened: Messages["import_previews_the_staged_import_could_not_be_reopened"] = /* @__PURE__ */ localized("import_previews_the_staged_import_could_not_be_reopened", () => {
 	return /** @type {LocalizedString} */ (`That import review is no longer available.`)
 })
-export const import_progress_bytes: Messages["import_progress_bytes"] = /* @__PURE__ */ localized("import_progress_bytes", (i) => {const valueText = registry.number("en", i?.value, {});
-	const plural = registry.plural("en", i?.value, {});
+export const import_progress_bytes: Messages["import_progress_bytes"] = /* @__PURE__ */ localized("import_progress_bytes", (i) => {
+	const valueText = registry.number("en", i?.value, {}, true);
+	const plural = registry.plural("en", i?.value, {}, true);
 	if (i?.unit === "bytes" && plural === "one") return /** @type {LocalizedString} */ (`${valueText} byte`);
 	if (i?.unit === "bytes") return /** @type {LocalizedString} */ (`${valueText} bytes`);
 	if (i?.unit === "KB") return /** @type {LocalizedString} */ (`${valueText} KB`);
 	if (i?.unit === "MB") return /** @type {LocalizedString} */ (`${valueText} MB`);
 	return /** @type {LocalizedString} */ (`${valueText} GB`)
-	
 })
 export const import_progress_bytes_of: Messages["import_progress_bytes_of"] = /* @__PURE__ */ localized("import_progress_bytes_of", (i) => {
 	return /** @type {LocalizedString} */ (`${i?.sent} of ${i?.total}`)
@@ -3492,12 +3490,12 @@ export const import_progress_bytes_of: Messages["import_progress_bytes_of"] = /*
 export const import_progress_fetching_the_recipe_page: Messages["import_progress_fetching_the_recipe_page"] = /* @__PURE__ */ localized("import_progress_fetching_the_recipe_page", () => {
 	return /** @type {LocalizedString} */ (`Fetching the recipe page`)
 })
-export const import_progress_finished: Messages["import_progress_finished"] = /* @__PURE__ */ localized("import_progress_finished", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
-	const finishedText = registry.number("en", i?.finished, {});
+export const import_progress_finished: Messages["import_progress_finished"] = /* @__PURE__ */ localized("import_progress_finished", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
+	const finishedText = registry.number("en", i?.finished, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${finishedText} of ${countText} recipe`);
 	return /** @type {LocalizedString} */ (`${finishedText} of ${countText} recipes`)
-	
 })
 export const import_progress_hr: Messages["import_progress_hr"] = /* @__PURE__ */ localized("import_progress_hr", (i) => {
 	return /** @type {LocalizedString} */ (`${i?.value1} hr`)
@@ -3517,17 +3515,17 @@ export const import_progress_min_sec: Messages["import_progress_min_sec"] = /* @
 export const import_progress_minute: Messages["import_progress_minute"] = /* @__PURE__ */ localized("import_progress_minute", () => {
 	return /** @type {LocalizedString} */ (`about a minute`)
 })
-export const import_progress_minutes: Messages["import_progress_minutes"] = /* @__PURE__ */ localized("import_progress_minutes", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_progress_minutes: Messages["import_progress_minutes"] = /* @__PURE__ */ localized("import_progress_minutes", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`about ${countText} minute`);
 	return /** @type {LocalizedString} */ (`about ${countText} minutes`)
-	
 })
-export const import_progress_rate: Messages["import_progress_rate"] = /* @__PURE__ */ localized("import_progress_rate", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_progress_rate: Messages["import_progress_rate"] = /* @__PURE__ */ localized("import_progress_rate", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`about ${countText} recipe per minute`);
 	return /** @type {LocalizedString} */ (`about ${countText} recipes per minute`)
-	
 })
 export const import_progress_reading_detail: Messages["import_progress_reading_detail"] = /* @__PURE__ */ localized("import_progress_reading_detail", () => {
 	return /** @type {LocalizedString} */ (`A large export takes a moment.`)
@@ -3535,26 +3533,26 @@ export const import_progress_reading_detail: Messages["import_progress_reading_d
 export const import_progress_sec: Messages["import_progress_sec"] = /* @__PURE__ */ localized("import_progress_sec", (i) => {
 	return /** @type {LocalizedString} */ (`${i?.value1} sec`)
 })
-export const import_reading_files: Messages["import_reading_files"] = /* @__PURE__ */ localized("import_reading_files", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_reading_files: Messages["import_reading_files"] = /* @__PURE__ */ localized("import_reading_files", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`Reading ${countText} file`);
 	return /** @type {LocalizedString} */ (`Reading ${countText} files`)
-	
 })
 export const import_review_panel_all_recipes: Messages["import_review_panel_all_recipes"] = /* @__PURE__ */ localized("import_review_panel_all_recipes", () => {
 	return /** @type {LocalizedString} */ (`All recipes`)
 })
-export const import_review_panel_already_here_note: Messages["import_review_panel_already_here_note"] = /* @__PURE__ */ localized("import_review_panel_already_here_note", (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const import_review_panel_already_here_note: Messages["import_review_panel_already_here_note"] = /* @__PURE__ */ localized("import_review_panel_already_here_note", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${countText} recipe is already in your library.`);
 	return /** @type {LocalizedString} */ (`${countText} recipes are already in your library.`)
-	
 })
-export const import_review_panel_blocked_note: Messages["import_review_panel_blocked_note"] = /* @__PURE__ */ localized("import_review_panel_blocked_note", (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const import_review_panel_blocked_note: Messages["import_review_panel_blocked_note"] = /* @__PURE__ */ localized("import_review_panel_blocked_note", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${countText} recipe could not be read.`);
 	return /** @type {LocalizedString} */ (`${countText} recipes could not be read.`)
-	
 })
 export const import_review_panel_cannot_be_imported: Messages["import_review_panel_cannot_be_imported"] = /* @__PURE__ */ localized("import_review_panel_cannot_be_imported", () => {
 	return /** @type {LocalizedString} */ (`Cannot be imported`)
@@ -3574,11 +3572,11 @@ export const import_review_panel_import_selection_actions: Messages["import_revi
 export const import_review_panel_needs_a_decision: Messages["import_review_panel_needs_a_decision"] = /* @__PURE__ */ localized("import_review_panel_needs_a_decision", () => {
 	return /** @type {LocalizedString} */ (`Needs a decision`)
 })
-export const import_review_panel_needs_decision: Messages["import_review_panel_needs_decision"] = /* @__PURE__ */ localized("import_review_panel_needs_decision", (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const import_review_panel_needs_decision: Messages["import_review_panel_needs_decision"] = /* @__PURE__ */ localized("import_review_panel_needs_decision", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${countText} recipe needs a decision.`);
 	return /** @type {LocalizedString} */ (`${countText} recipes need a decision.`)
-	
 })
 export const import_review_panel_needs_review: Messages["import_review_panel_needs_review"] = /* @__PURE__ */ localized("import_review_panel_needs_review", () => {
 	return /** @type {LocalizedString} */ (`Some details need a look`)
@@ -3610,26 +3608,26 @@ export const import_review_panel_select_none: Messages["import_review_panel_sele
 export const import_review_panel_select_visible: Messages["import_review_panel_select_visible"] = /* @__PURE__ */ localized("import_review_panel_select_visible", () => {
 	return /** @type {LocalizedString} */ (`Select visible`)
 })
-export const import_review_panel_selection_note: Messages["import_review_panel_selection_note"] = /* @__PURE__ */ localized("import_review_panel_selection_note", (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const import_review_panel_selection_note: Messages["import_review_panel_selection_note"] = /* @__PURE__ */ localized("import_review_panel_selection_note", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${countText} recipe selected`);
 	return /** @type {LocalizedString} */ (`${countText} recipes selected`)
-	
 })
 export const import_review_panel_the_recipes: Messages["import_review_panel_the_recipes"] = /* @__PURE__ */ localized("import_review_panel_the_recipes", () => {
 	return /** @type {LocalizedString} */ (`The recipes`)
 })
-export const import_review_panel_what_is: Messages["import_review_panel_what_is"] = /* @__PURE__ */ localized("import_review_panel_what_is", (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const import_review_panel_what_is: Messages["import_review_panel_what_is"] = /* @__PURE__ */ localized("import_review_panel_what_is", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${countText} recipe will be added to your library.`);
 	return /** @type {LocalizedString} */ (`${countText} recipes will be added to your library.`)
-	
 })
-export const import_sending_files: Messages["import_sending_files"] = /* @__PURE__ */ localized("import_sending_files", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_sending_files: Messages["import_sending_files"] = /* @__PURE__ */ localized("import_sending_files", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`Sending ${countText} file`);
 	return /** @type {LocalizedString} */ (`Sending ${countText} files`)
-	
 })
 export const import_source_dialogs_edit_recipe_text: Messages["import_source_dialogs_edit_recipe_text"] = /* @__PURE__ */ localized("import_source_dialogs_edit_recipe_text", () => {
 	return /** @type {LocalizedString} */ (`Edit recipe text`)
@@ -3667,11 +3665,11 @@ export const imports_page_import_jobs: Messages["imports_page_import_jobs"] = /*
 export const imports_page_imports: Messages["imports_page_imports"] = /* @__PURE__ */ localized("imports_page_imports", () => {
 	return /** @type {LocalizedString} */ (`Imports`)
 })
-export const imports_page_lead_and_others: Messages["imports_page_lead_and_others"] = /* @__PURE__ */ localized("imports_page_lead_and_others", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const imports_page_lead_and_others: Messages["imports_page_lead_and_others"] = /* @__PURE__ */ localized("imports_page_lead_and_others", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${i?.title} and ${countText} other`);
 	return /** @type {LocalizedString} */ (`${i?.title} and ${countText} others`)
-	
 })
 export const imports_page_load_more_imports: Messages["imports_page_load_more_imports"] = /* @__PURE__ */ localized("imports_page_load_more_imports", () => {
 	return /** @type {LocalizedString} */ (`Load more imports`)
@@ -4510,11 +4508,11 @@ export const measurement_decisions_examples: Messages["measurement_decisions_exa
 export const measurement_decisions_exceptions: Messages["measurement_decisions_exceptions"] = /* @__PURE__ */ localized("measurement_decisions_exceptions", () => {
 	return /** @type {LocalizedString} */ (`Exceptions`)
 })
-export const measurement_decisions_intro: Messages["measurement_decisions_intro"] = /* @__PURE__ */ localized("measurement_decisions_intro", (i) => {const measurementsText = registry.number("en", i?.measurements, {});
-	const measurementsPlural = registry.plural("en", i?.measurements, {});
+export const measurement_decisions_intro: Messages["measurement_decisions_intro"] = /* @__PURE__ */ localized("measurement_decisions_intro", (i) => {
+	const measurementsText = registry.number("en", i?.measurements, {}, true);
+	const measurementsPlural = registry.plural("en", i?.measurements, {}, true);
 	if (measurementsPlural === "one") return /** @type {LocalizedString} */ (`${measurementsText} measurement names a size that differs by country. Unanswered ones import as written.`);
 	return /** @type {LocalizedString} */ (`${measurementsText} measurements name sizes that differ by country. Unanswered ones import as written.`)
-	
 })
 export const measurement_decisions_keep_as_written: Messages["measurement_decisions_keep_as_written"] = /* @__PURE__ */ localized("measurement_decisions_keep_as_written", () => {
 	return /** @type {LocalizedString} */ (`Keep as written`)
@@ -4522,62 +4520,62 @@ export const measurement_decisions_keep_as_written: Messages["measurement_decisi
 export const measurement_decisions_loading: Messages["measurement_decisions_loading"] = /* @__PURE__ */ localized("measurement_decisions_loading", () => {
 	return /** @type {LocalizedString} */ (`Loading…`)
 })
-export const measurement_decisions_outcome_excluded: Messages["measurement_decisions_outcome_excluded"] = /* @__PURE__ */ localized("measurement_decisions_outcome_excluded", (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const measurement_decisions_outcome_excluded: Messages["measurement_decisions_outcome_excluded"] = /* @__PURE__ */ localized("measurement_decisions_outcome_excluded", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${countText} excluded.`);
 	return /** @type {LocalizedString} */ (`${countText} excluded.`)
-	
 })
-export const measurement_decisions_outcome_kept: Messages["measurement_decisions_outcome_kept"] = /* @__PURE__ */ localized("measurement_decisions_outcome_kept", (i) => {const measurementsText = registry.number("en", i?.measurements, {});
-	const measurementsPlural = registry.plural("en", i?.measurements, {});
-	const recipesText = registry.number("en", i?.recipes, {});
-	const recipesPlural = registry.plural("en", i?.recipes, {});
+export const measurement_decisions_outcome_kept: Messages["measurement_decisions_outcome_kept"] = /* @__PURE__ */ localized("measurement_decisions_outcome_kept", (i) => {
+	const measurementsText = registry.number("en", i?.measurements, {}, true);
+	const measurementsPlural = registry.plural("en", i?.measurements, {}, true);
+	const recipesText = registry.number("en", i?.recipes, {}, true);
+	const recipesPlural = registry.plural("en", i?.recipes, {}, true);
 	if (measurementsPlural === "one" && recipesPlural === "one") return /** @type {LocalizedString} */ (`Keeps ${measurementsText} measurement in ${recipesText} recipe as written.`);
 	if (measurementsPlural === "one") return /** @type {LocalizedString} */ (`Keeps ${measurementsText} measurement in ${recipesText} recipes as written.`);
 	if (recipesPlural === "one") return /** @type {LocalizedString} */ (`Keeps ${measurementsText} measurements in ${recipesText} recipe as written.`);
 	return /** @type {LocalizedString} */ (`Keeps ${measurementsText} measurements in ${recipesText} recipes as written.`)
-	
 })
-export const measurement_decisions_outcome_pending: Messages["measurement_decisions_outcome_pending"] = /* @__PURE__ */ localized("measurement_decisions_outcome_pending", (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const measurement_decisions_outcome_pending: Messages["measurement_decisions_outcome_pending"] = /* @__PURE__ */ localized("measurement_decisions_outcome_pending", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${countText} waits for another measure in the same ingredient.`);
 	return /** @type {LocalizedString} */ (`${countText} wait for another measure in the same ingredient.`)
-	
 })
-export const measurement_decisions_outcome_read: Messages["measurement_decisions_outcome_read"] = /* @__PURE__ */ localized("measurement_decisions_outcome_read", (i) => {const measurementsText = registry.number("en", i?.measurements, {});
-	const measurementsPlural = registry.plural("en", i?.measurements, {});
-	const recipesText = registry.number("en", i?.recipes, {});
-	const recipesPlural = registry.plural("en", i?.recipes, {});
+export const measurement_decisions_outcome_read: Messages["measurement_decisions_outcome_read"] = /* @__PURE__ */ localized("measurement_decisions_outcome_read", (i) => {
+	const measurementsText = registry.number("en", i?.measurements, {}, true);
+	const measurementsPlural = registry.plural("en", i?.measurements, {}, true);
+	const recipesText = registry.number("en", i?.recipes, {}, true);
+	const recipesPlural = registry.plural("en", i?.recipes, {}, true);
 	if (measurementsPlural === "one" && recipesPlural === "one") return /** @type {LocalizedString} */ (`Reads ${measurementsText} measurement in ${recipesText} recipe.`);
 	if (measurementsPlural === "one") return /** @type {LocalizedString} */ (`Reads ${measurementsText} measurement in ${recipesText} recipes.`);
 	if (recipesPlural === "one") return /** @type {LocalizedString} */ (`Reads ${measurementsText} measurements in ${recipesText} recipe.`);
 	return /** @type {LocalizedString} */ (`Reads ${measurementsText} measurements in ${recipesText} recipes.`)
-	
 })
-export const measurement_decisions_outcome_unreadable: Messages["measurement_decisions_outcome_unreadable"] = /* @__PURE__ */ localized("measurement_decisions_outcome_unreadable", (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const measurement_decisions_outcome_unreadable: Messages["measurement_decisions_outcome_unreadable"] = /* @__PURE__ */ localized("measurement_decisions_outcome_unreadable", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${countText} unreadable, kept as written.`);
 	return /** @type {LocalizedString} */ (`${countText} unreadable, kept as written.`)
-	
 })
-export const measurement_decisions_reach: Messages["measurement_decisions_reach"] = /* @__PURE__ */ localized("measurement_decisions_reach", (i) => {const measurementsText = registry.number("en", i?.measurements, {});
-	const measurementsPlural = registry.plural("en", i?.measurements, {});
-	const recipesText = registry.number("en", i?.recipes, {});
-	const recipesPlural = registry.plural("en", i?.recipes, {});
+export const measurement_decisions_reach: Messages["measurement_decisions_reach"] = /* @__PURE__ */ localized("measurement_decisions_reach", (i) => {
+	const measurementsText = registry.number("en", i?.measurements, {}, true);
+	const measurementsPlural = registry.plural("en", i?.measurements, {}, true);
+	const recipesText = registry.number("en", i?.recipes, {}, true);
+	const recipesPlural = registry.plural("en", i?.recipes, {}, true);
 	if (measurementsPlural === "one" && recipesPlural === "one") return /** @type {LocalizedString} */ (`${measurementsText} measurement · ${recipesText} recipe`);
 	if (measurementsPlural === "one") return /** @type {LocalizedString} */ (`${measurementsText} measurement · ${recipesText} recipes`);
 	if (recipesPlural === "one") return /** @type {LocalizedString} */ (`${measurementsText} measurements · ${recipesText} recipe`);
 	return /** @type {LocalizedString} */ (`${measurementsText} measurements · ${recipesText} recipes`)
-	
 })
 export const measurement_decisions_read_these_as: Messages["measurement_decisions_read_these_as"] = /* @__PURE__ */ localized("measurement_decisions_read_these_as", (i) => {
 	return /** @type {LocalizedString} */ (`Read ${i?.measure} as`)
 })
-export const measurement_decisions_separately: Messages["measurement_decisions_separately"] = /* @__PURE__ */ localized("measurement_decisions_separately", (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const measurement_decisions_separately: Messages["measurement_decisions_separately"] = /* @__PURE__ */ localized("measurement_decisions_separately", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`Answer the measure separately`);
 	return /** @type {LocalizedString} */ (`Answer the ${countText} measures separately`)
-	
 })
 export const measurement_decisions_title: Messages["measurement_decisions_title"] = /* @__PURE__ */ localized("measurement_decisions_title", () => {
 	return /** @type {LocalizedString} */ (`Measurements to check`)
@@ -5173,14 +5171,16 @@ export const pdf_preview_of: Messages["pdf_preview_of"] = /* @__PURE__ */ locali
 export const pdf_preview_page: Messages["pdf_preview_page"] = /* @__PURE__ */ localized("pdf_preview_page", (i) => {
 	return /** @type {LocalizedString} */ (`Page ${i?.value1}`)
 })
-export const pdf_preview_page_number: Messages["pdf_preview_page_number"] = /* @__PURE__ */ localized("pdf_preview_page_number", (i) => {const pageText = registry.number("en", i?.page, {});
+export const pdf_preview_page_number: Messages["pdf_preview_page_number"] = /* @__PURE__ */ localized("pdf_preview_page_number", (i) => {
+	const pageText = registry.number("en", i?.page, {}, true);
 	if (i?.unit === "page") return /** @type {LocalizedString} */ (`page ${pageText}`);
 	if (i?.unit === "sheet") return /** @type {LocalizedString} */ (`sheet ${pageText}`);
 	if (i?.unit === "card") return /** @type {LocalizedString} */ (`card ${pageText}`);
 	return /** @type {LocalizedString} */ ("pdf_preview_page_number");
 })
-export const pdf_preview_pages_count: Messages["pdf_preview_pages_count"] = /* @__PURE__ */ localized("pdf_preview_pages_count", (i) => {const countText = registry.number("en", i?.pages, {});
-	const plural = registry.plural("en", i?.pages, {});
+export const pdf_preview_pages_count: Messages["pdf_preview_pages_count"] = /* @__PURE__ */ localized("pdf_preview_pages_count", (i) => {
+	const countText = registry.number("en", i?.pages, {}, true);
+	const plural = registry.plural("en", i?.pages, {}, true);
 	if (i?.unit === "page" && plural === "one") return /** @type {LocalizedString} */ (`${countText} page`);
 	if (i?.unit === "sheet" && plural === "one") return /** @type {LocalizedString} */ (`${countText} sheet`);
 	if (i?.unit === "card" && plural === "one") return /** @type {LocalizedString} */ (`${countText} card`);
@@ -5978,7 +5978,6 @@ export const quantity_label_part_position: Messages["quantity_label_part_positio
 export const quantity_one_amount: Messages["quantity_one_amount"] = /* @__PURE__ */ localized("quantity_one_amount", (i) => {
 	if (i?.level === "nested") return /** @type {LocalizedString} */ (`One amount`);
 	return /** @type {LocalizedString} */ (`One amount or wording`)
-	
 })
 export const quantity_placeholder_example: Messages["quantity_placeholder_example"] = /* @__PURE__ */ localized("quantity_placeholder_example", () => {
 	return /** @type {LocalizedString} */ (`2–3 or as needed`)
@@ -6604,11 +6603,11 @@ export const scale_controls_batch_size: Messages["scale_controls_batch_size"] = 
 export const scale_controls_how_many: Messages["scale_controls_how_many"] = /* @__PURE__ */ localized("scale_controls_how_many", (i) => {
 	return /** @type {LocalizedString} */ (`How many ${i?.value1}`)
 })
-export const scale_controls_kept_as_written: Messages["scale_controls_kept_as_written"] = /* @__PURE__ */ localized("scale_controls_kept_as_written", (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const scale_controls_kept_as_written: Messages["scale_controls_kept_as_written"] = /* @__PURE__ */ localized("scale_controls_kept_as_written", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`Some amounts could not be scaled: ${countText} ingredient still reads as the recipe wrote it.`);
 	return /** @type {LocalizedString} */ (`Some amounts could not be scaled: ${countText} ingredients still read as the recipe wrote them.`)
-	
 })
 export const scale_controls_make_less: Messages["scale_controls_make_less"] = /* @__PURE__ */ localized("scale_controls_make_less", () => {
 	return /** @type {LocalizedString} */ (`Make less`)
@@ -6661,11 +6660,11 @@ export const search_tags_noun: Messages["search_tags_noun"] = /* @__PURE__ */ lo
 export const selection_print_page_choose_some_recipes_to_print: Messages["selection_print_page_choose_some_recipes_to_print"] = /* @__PURE__ */ localized("selection_print_page_choose_some_recipes_to_print", () => {
 	return /** @type {LocalizedString} */ (`Choose some recipes to print.`)
 })
-export const selection_print_page_recipes: Messages["selection_print_page_recipes"] = /* @__PURE__ */ localized("selection_print_page_recipes", (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const selection_print_page_recipes: Messages["selection_print_page_recipes"] = /* @__PURE__ */ localized("selection_print_page_recipes", (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recipe`);
 	return /** @type {LocalizedString} */ (`${countText} recipes`)
-	
 })
 export const selection_print_page_recipes_heading: Messages["selection_print_page_recipes_heading"] = /* @__PURE__ */ localized("selection_print_page_recipes_heading", () => {
 	return /** @type {LocalizedString} */ (`Recipes`)

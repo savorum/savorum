@@ -2622,7 +2622,6 @@
   "account_sessions_other": "متصفح آخر",
   "account_sessions_detail": "{method} · آخر نشاط: {last} · تسجيل الدخول: {created}",
   "account_sessions_revoke": "إلغاء الجلسة",
-  "account_sessions_revoke_named": "إلغاء الجلسة التي كان آخر نشاط لها في {last}",
   "account_sessions_revoked": "تم إلغاء الجلسة.",
   "account_sessions_revoke_others": "تسجيل الخروج من جميع الجلسات الأخرى",
   "account_sessions_others_revoked": "تم إلغاء الجلسات الأخرى.",

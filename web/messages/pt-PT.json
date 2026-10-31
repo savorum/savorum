@@ -2201,7 +2201,6 @@
   "account_sessions_other": "Outro navegador",
   "account_sessions_detail": "{method} · Última atividade: {last} · Sessão iniciada: {created}",
   "account_sessions_revoke": "Revogar sessão",
-  "account_sessions_revoke_named": "Revogar a sessão com última atividade em {last}",
   "account_sessions_revoked": "Sessão revogada.",
   "account_sessions_revoke_others": "Terminar todas as outras sessões",
   "account_sessions_others_revoked": "Outras sessões revogadas.",
