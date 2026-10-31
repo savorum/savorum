@@ -17,6 +17,7 @@ import (
 	"github.com/savorum/savorum/internal/assets"
 	"github.com/savorum/savorum/internal/configuration"
 	"github.com/savorum/savorum/internal/contracttest"
+	"github.com/savorum/savorum/internal/importer/webrecipe"
 	"github.com/savorum/savorum/internal/storage/files"
 	"github.com/savorum/savorum/internal/storage/sqlite"
 	"github.com/savorum/savorum/internal/units"
@@ -55,10 +56,15 @@ func TestEveryOperationAnswersWithinTheContract(t *testing.T) {
 		WebhookDirectory:    t.TempDir(),
 		AutomationDirectory: t.TempDir(),
 		StoragePath:         t.TempDir(),
+		PageFetcher: func(_ context.Context, address string) (*webrecipe.Page, error) {
+			return &webrecipe.Page{URL: address, ContentType: "text/html", Body: []byte(recipePage)}, nil
+		},
 	})
 	if err != nil {
 		t.Fatal(err)
 	}
+
+	closeServices(t, application)
 
 	sweep(t, func(operation contracttest.Operation) bool {
 		return !strings.HasPrefix(operation.Path, "/api/v1/auth/")
