@@ -111,7 +111,7 @@ func RegisterOpenAPI(api huma.API) {
 			op.RequestBody = &huma.RequestBody{Required: true, Content: map[string]*huma.MediaType{"application/x-www-form-urlencoded": {Schema: &huma.Schema{Type: huma.TypeObject, Required: []string{"RelayState", "SAMLResponse"}, Properties: map[string]*huma.Schema{"RelayState": str, "SAMLResponse": {Type: huma.TypeString, WriteOnly: true}}}}}}
 		}
 
-		for _, status := range []string{"400", "401", "403", "429", "500"} {
+		for _, status := range []string{"400", "401", "403", "404", "429", "500"} {
 			if op.Responses[status] != nil {
 				continue
 			}

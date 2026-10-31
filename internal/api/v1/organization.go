@@ -500,7 +500,7 @@ func registerTaxonomy(api huma.API, service OrganizationService) {
 }
 
 func registerTags(api huma.API, service OrganizationService) {
-	huma.Register(api, huma.Operation{OperationID: "create-tag", Method: http.MethodPost, Path: "/api/v1/tags", Summary: "Create a tag", Tags: []string{"Tags"}, DefaultStatus: 201, Errors: []int{409, 422}}, func(ctx context.Context, input *createTagInput) (*taxonomyOutput[Tag], error) {
+	huma.Register(api, huma.Operation{OperationID: "create-tag", Method: http.MethodPost, Path: "/api/v1/tags", Summary: "Create a tag", Tags: []string{"Tags"}, DefaultStatus: 201, Errors: []int{404, 409, 422}}, func(ctx context.Context, input *createTagInput) (*taxonomyOutput[Tag], error) {
 		value, err := retryCreate(ctx, api, "create-tag", input, func(work context.Context) (library.Tag, error) { return service.CreateTag(work, toTag(input.Body)) }, service.GetTag)
 		if err != nil {
 			return nil, mapOrganizationError(err, "tag")
@@ -571,7 +571,7 @@ func registerTags(api huma.API, service OrganizationService) {
 }
 
 func registerFacets(api huma.API, service OrganizationService) {
-	huma.Register(api, huma.Operation{OperationID: "create-facet", Method: http.MethodPost, Path: "/api/v1/facets", Summary: "Create a facet", Tags: []string{"Facets"}, DefaultStatus: 201, Errors: []int{409, 422}}, func(ctx context.Context, input *createFacetInput) (*taxonomyOutput[Facet], error) {
+	huma.Register(api, huma.Operation{OperationID: "create-facet", Method: http.MethodPost, Path: "/api/v1/facets", Summary: "Create a facet", Tags: []string{"Facets"}, DefaultStatus: 201, Errors: []int{404, 409, 422}}, func(ctx context.Context, input *createFacetInput) (*taxonomyOutput[Facet], error) {
 		value, err := retryCreate(ctx, api, "create-facet", input, func(work context.Context) (library.Facet, error) {
 			return service.CreateFacet(work, toFacet(input.Body))
 		}, service.GetFacet)
@@ -838,7 +838,7 @@ func registerBookHistory(api huma.API, service OrganizationService) {
 }
 
 func registerSavedViews(api huma.API, service OrganizationService, recipes RecipeService) {
-	huma.Register(api, huma.Operation{OperationID: "create-saved-view", Method: http.MethodPost, Path: "/api/v1/saved-views", Summary: "Create a saved view", Tags: []string{"Saved views"}, DefaultStatus: 201, Errors: []int{409, 422}}, func(ctx context.Context, input *createSavedViewInput) (*savedViewOutput, error) {
+	huma.Register(api, huma.Operation{OperationID: "create-saved-view", Method: http.MethodPost, Path: "/api/v1/saved-views", Summary: "Create a saved view", Tags: []string{"Saved views"}, DefaultStatus: 201, Errors: []int{404, 409, 422}}, func(ctx context.Context, input *createSavedViewInput) (*savedViewOutput, error) {
 		value, err := retryCreate(ctx, api, "create-saved-view", input, func(work context.Context) (library.SavedView, error) {
 			return service.CreateSavedView(work, toSavedView(input.Body))
 		}, service.GetSavedView)

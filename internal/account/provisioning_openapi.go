@@ -91,7 +91,10 @@ func registerProvisioningOpenAPI(api huma.API) {
 			schema = doc.Components.Schemas.Schema(r.response, true, r.response.Name())
 		}
 
-		op.Responses = map[string]*huma.Response{"200": {Description: "Completed", Content: map[string]*huma.MediaType{"application/json": {Schema: schema}}}}
+		op.Responses = map[string]*huma.Response{
+			"200":     {Description: "Completed", Content: map[string]*huma.MediaType{"application/json": {Schema: schema}}},
+			"default": {Description: "Stable account problem code; authentication, authority, validation or lifecycle conflict.", Content: map[string]*huma.MediaType{"application/problem+json": {Schema: doc.Components.Schemas.Schema(reflect.TypeFor[accountProblem](), true, "AccountProblem")}}},
+		}
 		doc.AddOperation(op)
 	}
 }

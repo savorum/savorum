@@ -23,6 +23,8 @@ var (
 	_ api.OrganizationService  = schemaService{}
 	_ api.AssetService         = schemaService{}
 	_ api.ImportHistoryService = schemaService{}
+	_ api.SourceRefreshService = schemaService{}
+	_ api.RecipeMergeService   = schemaService{}
 )
 
 func (schemaService) ListImportEvents(context.Context, library.EntryID, library.RevisionListOptions) ([]library.ImportEvent, error) {
@@ -337,3 +339,19 @@ func (schemaService) CreateTranslation(context.Context, library.EntryID, recipe.
 }
 
 var _ api.TranslationService = schemaService{}
+
+func (schemaService) CheckSourceUpdates(context.Context, library.EntryID, recipe.Document, uint64) (library.SourceRefreshPreview, error) {
+	return library.SourceRefreshPreview{}, errors.New("schema-only service")
+}
+
+func (schemaService) ApplySourceRefresh(context.Context, library.SourceRefreshPreview, []library.RefreshResolution) (library.Entry, error) {
+	return library.Entry{}, errors.New("schema-only service")
+}
+
+func (schemaService) CompareRecipes(context.Context, library.EntryID, library.EntryID) (library.RecipeMergePreview, error) {
+	return library.RecipeMergePreview{}, errors.New("schema-only service")
+}
+
+func (schemaService) MergeRecipes(context.Context, library.RecipeMergeRequest) (library.Entry, error) {
+	return library.Entry{}, errors.New("schema-only service")
+}

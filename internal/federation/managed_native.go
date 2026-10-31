@@ -13,7 +13,7 @@ import (
 func (h *Handler) managedNativeSession(w http.ResponseWriter, r *http.Request) {
 	p, ok := h.providers[r.PathValue("provider")]
 	if !ok || p.Kind != "managed" {
-		http.NotFound(w, r)
+		httpsecurity.WriteProblem(w, http.StatusNotFound, "not_found", "not_found")
 		return
 	}
 

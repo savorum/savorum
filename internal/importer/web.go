@@ -21,7 +21,11 @@ import (
 // webRecipeAdapter adapts the web extraction pipeline to the common importer,
 // so a saved page imports through the same stages as a pasted link. It is the
 // only place that decides what Savorum keeps; extraction preserves the page.
-type webRecipeAdapter struct{}
+type webRecipeAdapter struct{ fetch PageFetcher }
+
+// PageFetcher retrieves a recipe page. The default applies the outbound policy
+// in webrecipe.Fetch; a replacement is responsible for its own.
+type PageFetcher func(ctx context.Context, rawURL string) (*webrecipe.Page, error)
 
 func (webRecipeAdapter) Format() Format {
 	return Format{InputKinds: []string{"file", "url"}, MediaTypes: []string{"text/html", "application/ld+json", "application/json"}, ID: "web-recipe", Name: "Recipe web page", Version: "1", Extensions: []string{".json", ".jsonld", ".html", ".htm"}, Capabilities: Capabilities{
@@ -48,9 +52,17 @@ func (adapter webRecipeAdapter) Probe(_ context.Context, input Input) ProbeResul
 	}
 }
 
-func (webRecipeAdapter) Import(ctx context.Context, input Input, _ Options) (ImportBatch, error) {
+func (adapter webRecipeAdapter) Import(ctx context.Context, input Input, _ Options) (ImportBatch, error) {
 	if strings.TrimSpace(input.URL) != "" {
-		return FetchWebRecipe(ctx, input.URL)
+		fetch := adapter.fetch
+		if fetch == nil {
+			return FetchWebRecipe(ctx, input.URL)
+		}
+
+		ctx, cancel := context.WithTimeout(ctx, 45*time.Second)
+		defer cancel()
+
+		return fetchWebRecipe(ctx, input.URL, fetch)
 	}
 
 	contentType := input.MediaType

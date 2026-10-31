@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/savorum/savorum/internal/app"
+	"github.com/savorum/savorum/internal/contracttest"
 	"github.com/savorum/savorum/internal/storage/sqlite"
 	"github.com/savorum/savorum/internal/units"
 )
@@ -46,7 +47,7 @@ func TestCalendarFeedsPublishRotateAndRevoke(t *testing.T) {
 		}
 
 		recorder := httptest.NewRecorder()
-		application.Handler.ServeHTTP(recorder, request)
+		contracttest.Handler(t, application.Handler).ServeHTTP(recorder, request)
 
 		return recorder
 	}

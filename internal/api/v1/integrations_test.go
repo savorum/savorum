@@ -16,6 +16,7 @@ import (
 	"github.com/danielgtaylor/huma/v2/adapters/humago"
 	"github.com/savorum/savorum/internal/access"
 	"github.com/savorum/savorum/internal/automation"
+	"github.com/savorum/savorum/internal/contracttest"
 	"github.com/savorum/savorum/internal/event"
 	"github.com/savorum/savorum/internal/exchange"
 	"github.com/savorum/savorum/internal/export"
@@ -75,7 +76,7 @@ func integrationAPI(t *testing.T) (http.Handler, huma.API, *automation.Service, 
 
 	t.Cleanup(func() { _ = hooks.Close() })
 
-	raw, definition, err := New(recipes, store, nil, Options{Pantry: store, Events: store, Automation: jobs, Idempotency: receipts, ImportJobs: imports, Exchange: exchanger, Webhooks: hooks})
+	raw, definition, err := New(recipes, store, nil, Options{Pantry: store, Events: store, Automation: jobs, Idempotency: receipts, ImportJobs: imports, Exchange: exchanger, Webhooks: hooks, Wrap: func(next http.Handler) http.Handler { return contracttest.Handler(t, next) }})
 	if err != nil {
 		t.Fatal(err)
 	}

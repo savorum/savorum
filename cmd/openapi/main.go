@@ -14,6 +14,7 @@ import (
 	"github.com/danielgtaylor/huma/v2"
 
 	"github.com/savorum/savorum/internal/automation"
+	"github.com/savorum/savorum/internal/contracttest"
 	"github.com/savorum/savorum/internal/event"
 	"github.com/savorum/savorum/internal/pantry"
 	"github.com/savorum/savorum/internal/webhook"
@@ -35,12 +36,18 @@ func run(arguments []string) error {
 	output := flags.String("output", "api/openapi.json", "OpenAPI output path")
 
 	check := flags.Bool("check", false, "verify that the output file is current")
+
+	coverage := flags.String("coverage", "", "list operations with no validated success response in this recorded-coverage file")
 	if err := flags.Parse(arguments); err != nil {
 		return fmt.Errorf("parse command flags: %w", err)
 	}
 
 	if flags.NArg() != 0 {
 		return fmt.Errorf("unexpected argument %q", flags.Arg(0))
+	}
+
+	if *coverage != "" {
+		return reportCoverage(*coverage)
 	}
 
 	definition, err := schemaDefinition()
@@ -106,3 +113,27 @@ func (schemaEvents) ReadEvents(context.Context, string, int) (event.Page, error)
 type schemaSelections struct{ api.SelectionService }
 
 type schemaSourceAttachments struct{ api.SourceAttachmentService }
+
+// reportCoverage fails when an operation in the published contract never
+// produced a validated success response in the recorded test runs.
+func reportCoverage(path string) error {
+	contract, err := contracttest.Load()
+	if err != nil {
+		return fmt.Errorf("load contract: %w", err)
+	}
+
+	missing, err := contract.Uncovered(path)
+	if err != nil {
+		return fmt.Errorf("read coverage: %w", err)
+	}
+
+	for _, operation := range missing {
+		fmt.Fprintf(os.Stderr, "%s %s\n", operation.Method, operation.Path)
+	}
+
+	if len(missing) > 0 {
+		return fmt.Errorf("%d operations never produced a validated success response", len(missing))
+	}
+
+	return nil
+}

@@ -23,6 +23,8 @@ import (
 	"github.com/beevik/etree"
 	"github.com/crewjam/saml"
 	dsig "github.com/russellhaering/goxmldsig"
+
+	"github.com/savorum/savorum/internal/contracttest"
 )
 
 func samlTestProvider(t *testing.T) (Provider, *rsa.PrivateKey, []byte) {
@@ -83,7 +85,7 @@ func TestSAMLProtocolValidation(t *testing.T) {
 			}
 
 			started := httptest.NewRecorder()
-			h.ServeHTTP(started, begin)
+			contracttest.Handler(t, h).ServeHTTP(started, begin)
 
 			var start map[string]string
 
@@ -176,7 +178,7 @@ func TestSAMLProtocolValidation(t *testing.T) {
 			request.AddCookie(started.Result().Cookies()[0])
 
 			result := httptest.NewRecorder()
-			h.ServeHTTP(result, request)
+			contracttest.Handler(t, h).ServeHTTP(result, request)
 
 			if native {
 				back := nativeReturnQuery(t, result)
@@ -211,7 +213,7 @@ func TestSAMLMetadataRefreshReplacesSigningKeys(t *testing.T) {
 	h, _ := testHandler(t, p)
 	r := httptest.NewRequestWithContext(t.Context(), http.MethodGet, "https://recipes.example/api/v1/auth/saml/metadata", nil)
 	w := httptest.NewRecorder()
-	h.ServeHTTP(w, r)
+	contracttest.Handler(t, h).ServeHTTP(w, r)
 
 	if w.Code != 200 || !strings.Contains(w.Body.String(), "AssertionConsumerService") {
 		t.Fatal(w.Code, w.Body.String())

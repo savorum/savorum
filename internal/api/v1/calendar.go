@@ -88,7 +88,7 @@ func registerMealCalendar(api huma.API, service MealCalendarService) {
 		OperationID: "create-calendar-feed", Method: http.MethodPost, Path: "/api/v1/calendar-feeds",
 		Summary:     "Create a calendar feed",
 		Description: "Creates a read-only feed of the selected library's plan. The response is the only time its URL is shown: anyone holding the URL can read the plan until the feed is rotated or revoked. The feed keeps working only while its creator can read the plan.",
-		Tags:        []string{"Plan"}, DefaultStatus: http.StatusCreated, Errors: []int{http.StatusUnprocessableEntity},
+		Tags:        []string{"Plan"}, DefaultStatus: http.StatusCreated, Errors: []int{http.StatusNotFound, http.StatusUnprocessableEntity},
 	}, func(ctx context.Context, input *calendarFeedInput) (*calendarSecretOutput, error) {
 		secret, err := retryCreate(ctx, api, "create-calendar-feed", input, func(work context.Context) (mealcalendar.CalendarFeedSecret, error) {
 			return service.Create(work, input.Body.Name)

@@ -219,9 +219,19 @@ jobs:
         with:
           name: webui
           path: internal/webui/dist
+      - if: matrix.group == 'application'
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends poppler-utils tesseract-ocr
       # Race detection covers Go code; the embedded Typst/WASM rendering corpus
       # runs without it because the detector cannot instrument that compiler.
       - run: ./scripts/test-race.sh "${{ matrix.group }}"
+        env:
+          OMP_THREAD_LIMIT: "1"
+          SAVORUM_DOCUMENT_TOOLS_REQUIRED: ${{ matrix.group == 'application' && '1' || '' }}
+          SAVORUM_CONTRACT_COVERAGE: ${{ matrix.group == 'application' && format('{0}/contract-coverage.txt', runner.temp) || '' }}
+      - if: matrix.group == 'application'
+        run: go run ./cmd/openapi --coverage "${{ runner.temp }}/contract-coverage.txt"
       - if: matrix.group == 'application'
         run: go run ./cmd/openapi --check
       - if: matrix.group == 'application'

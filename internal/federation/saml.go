@@ -17,6 +17,8 @@ import (
 
 	"github.com/crewjam/saml"
 	dsig "github.com/russellhaering/goxmldsig"
+
+	"github.com/savorum/savorum/internal/httpsecurity"
 )
 
 func (h *Handler) samlLocalProvider(ctx context.Context, p Provider) (*saml.ServiceProvider, error) {
@@ -131,7 +133,7 @@ func (h *Handler) cachedSAMLMetadata(r *http.Request, p Provider) (*saml.EntityD
 func (h *Handler) samlMetadata(w http.ResponseWriter, r *http.Request) {
 	p, ok := h.providers[r.PathValue("provider")]
 	if !ok || p.Kind != "saml" {
-		http.NotFound(w, r)
+		httpsecurity.WriteProblem(w, http.StatusNotFound, "not_found", "not_found")
 		return
 	}
 
@@ -215,7 +217,7 @@ func samlAttribute(a *saml.Assertion, name string) string {
 func (h *Handler) samlCallback(w http.ResponseWriter, r *http.Request) {
 	p, ok := h.providers[r.PathValue("provider")]
 	if !ok || p.Kind != "saml" {
-		http.NotFound(w, r)
+		httpsecurity.WriteProblem(w, http.StatusNotFound, "not_found", "not_found")
 		return
 	}
 

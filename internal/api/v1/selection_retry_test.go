@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/savorum/savorum/internal/access"
+	"github.com/savorum/savorum/internal/contracttest"
 	"github.com/savorum/savorum/internal/idempotency"
 	"github.com/savorum/savorum/internal/identity"
 	"github.com/savorum/savorum/internal/library"
@@ -229,7 +230,7 @@ func TestCalendarCreationRetryOmitsCredential(t *testing.T) {
 
 	calendar := mealcalendar.NewService(store, nil, func(context.Context) (string, error) { return "test", nil }, func(context.Context) string { return "" })
 
-	raw, _, err := New(recipes, store, nil, Options{Idempotency: idempotency.New(store), MealCalendar: calendar})
+	raw, _, err := New(recipes, store, nil, Options{Idempotency: idempotency.New(store), MealCalendar: calendar, Wrap: func(next http.Handler) http.Handler { return contracttest.Handler(t, next) }})
 	if err != nil {
 		t.Fatal(err)
 	}

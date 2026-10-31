@@ -72,7 +72,7 @@ func registerRecipes(api huma.API, service RecipeService) {
 		Path:            "/api/v1/recipes",
 		Summary:         "Create a recipe",
 		Tags:            []string{"Recipes"},
-		Errors:          []int{http.StatusConflict, http.StatusUnprocessableEntity},
+		Errors:          []int{http.StatusNotFound, http.StatusConflict, http.StatusUnprocessableEntity},
 		DefaultStatus:   http.StatusCreated,
 		MaxBodyBytes:    16 * 1024 * 1024,
 		BodyReadTimeout: 15 * time.Second,

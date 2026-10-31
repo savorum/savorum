@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/savorum/savorum/internal/app"
+	"github.com/savorum/savorum/internal/contracttest"
 	"github.com/savorum/savorum/internal/diskspace"
 	"github.com/savorum/savorum/internal/storage/sqlite"
 	"github.com/savorum/savorum/internal/storagebudget"
@@ -33,7 +34,7 @@ func TestStorageStatusIsAuthenticatedAndDoesNotPublishBootstrapUsage(t *testing.
 		}
 
 		response := httptest.NewRecorder()
-		application.Handler.ServeHTTP(response, httptest.NewRequestWithContext(t.Context(), http.MethodGet, "/api/v1/storage-status", nil))
+		contracttest.Handler(t, application.Handler).ServeHTTP(response, httptest.NewRequestWithContext(t.Context(), http.MethodGet, "/api/v1/storage-status", nil))
 
 		if enabled {
 			if response.Code != http.StatusUnauthorized {
@@ -60,7 +61,7 @@ func TestStorageStatusIsAuthenticatedAndDoesNotPublishBootstrapUsage(t *testing.
 		}
 
 		public := httptest.NewRecorder()
-		application.Handler.ServeHTTP(public, httptest.NewRequestWithContext(t.Context(), http.MethodGet, "/.well-known/savorum", nil))
+		contracttest.Handler(t, application.Handler).ServeHTTP(public, httptest.NewRequestWithContext(t.Context(), http.MethodGet, "/.well-known/savorum", nil))
 
 		var bootstrap map[string]any
 		if err := json.Unmarshal(public.Body.Bytes(), &bootstrap); err != nil {
@@ -94,7 +95,7 @@ func TestStorageStatusFootprintFailureDoesNotReportEmptyLibrary(t *testing.T) {
 	}
 
 	response := httptest.NewRecorder()
-	application.Handler.ServeHTTP(response, httptest.NewRequestWithContext(t.Context(), http.MethodGet, "/api/v1/storage-status", nil))
+	contracttest.Handler(t, application.Handler).ServeHTTP(response, httptest.NewRequestWithContext(t.Context(), http.MethodGet, "/api/v1/storage-status", nil))
 
 	var report struct {
 		State string `json:"state"`

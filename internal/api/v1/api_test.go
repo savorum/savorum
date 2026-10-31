@@ -20,6 +20,7 @@ import (
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/savorum/savorum/internal/assets"
 	"github.com/savorum/savorum/internal/configuration"
+	"github.com/savorum/savorum/internal/contracttest"
 	"github.com/savorum/savorum/internal/idempotency"
 	"github.com/savorum/savorum/internal/library"
 	domainmeal "github.com/savorum/savorum/internal/meal"
@@ -108,7 +109,7 @@ func testAPI(t *testing.T) (*routecatalog.Mux, *sqlite.Store, huma.API) {
 	}
 
 	handler, definition, err := New(service, store, printer, Options{
-		Idempotency: idempotency.New(store), Assets: assetService, Configuration: configurationService, Meals: mealService, Shopping: shopping.NewService(store).WithSources(service, mealService),
+		Idempotency: idempotency.New(store), Wrap: func(next http.Handler) http.Handler { return contracttest.Handler(t, next) }, Assets: assetService, Configuration: configurationService, Meals: mealService, Shopping: shopping.NewService(store).WithSources(service, mealService),
 	})
 	if err != nil {
 		t.Fatal(err)
