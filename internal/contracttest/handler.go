@@ -59,16 +59,29 @@ func Handler(t testing.TB, next http.Handler) http.Handler {
 
 type recorder struct {
 	http.ResponseWriter
-	status int
-	body   bytes.Buffer
+	status      int
+	wroteHeader bool
+	body        bytes.Buffer
 }
 
+// WriteHeader keeps the first status, as net/http does.
 func (r *recorder) WriteHeader(status int) {
-	r.status = status
+	if !r.wroteHeader {
+		r.status = status
+		r.wroteHeader = true
+	}
+
 	r.ResponseWriter.WriteHeader(status)
 }
 
+func (r *recorder) Flush() {
+	r.wroteHeader = true
+
+	http.NewResponseController(r.ResponseWriter).Flush() //nolint:errcheck,gosec // The wrapped writer may not flush.
+}
+
 func (r *recorder) Write(data []byte) (int, error) {
+	r.wroteHeader = true
 	r.body.Write(data)
 
 	written, err := r.ResponseWriter.Write(data)

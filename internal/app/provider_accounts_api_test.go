@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"slices"
 	"testing"
 )
 
@@ -110,9 +111,15 @@ func TestSignInMethodsAreLinkedUnlinkedAndForceUnlinked(t *testing.T) {
 		t.Fatalf("methods = %s (%v)", listed, err)
 	}
 
-	f.call(alice, http.MethodDelete, "/api/v1/account/methods/"+methods.Methods[1].ID, nil)
+	removed := methods.Methods[1].ID
+
+	f.call(alice, http.MethodDelete, "/api/v1/account/methods/"+removed, nil)
 
 	alice = f.signInAs(aliceID, "alice", "carol")
+
+	if slices.Contains(f.methodIDs(alice, "/api/v1/account/methods"), removed) {
+		t.Fatalf("method %s is still linked after deletion", removed)
+	}
 
 	bob := f.link(f.signIn("bob"), "erin")
 	userID := f.userID(bob)
@@ -122,9 +129,36 @@ func TestSignInMethodsAreLinkedUnlinkedAndForceUnlinked(t *testing.T) {
 		t.Fatalf("managed methods = %s (%v)", listed, err)
 	}
 
-	f.call(alice, http.MethodDelete, "/api/v1/users/"+userID+"/methods/"+methods.Methods[1].ID, nil)
+	forced := methods.Methods[1].ID
+
+	f.call(alice, http.MethodDelete, "/api/v1/users/"+userID+"/methods/"+forced, nil)
+
+	if slices.Contains(f.methodIDs(alice, "/api/v1/users/"+userID+"/methods"), forced) {
+		t.Fatalf("method %s is still linked after force unlink", forced)
+	}
 
 	library := field[string](t, f.call(alice, http.MethodPost, "/api/v1/libraries", map[string]any{"name": "Shared"}), "id")
 
 	f.call(alice, http.MethodPost, "/api/v1/account/group-mappings", map[string]any{"id": "cooks", "provider_id": "work", "group": "cooks", "library_id": library, "role": "viewer"})
+}
+
+// methodIDs lists the identifiers of the sign-in methods at path.
+func (f *nativeFixture) methodIDs(session redemption, path string) []string {
+	f.t.Helper()
+
+	var listed struct {
+		Methods []struct {
+			ID string `json:"id"`
+		} `json:"methods"`
+	}
+	if err := json.Unmarshal(f.call(session, http.MethodGet, path, nil), &listed); err != nil {
+		f.t.Fatal(err)
+	}
+
+	ids := make([]string, 0, len(listed.Methods))
+	for _, method := range listed.Methods {
+		ids = append(ids, method.ID)
+	}
+
+	return ids
 }

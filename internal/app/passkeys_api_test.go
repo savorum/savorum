@@ -201,7 +201,22 @@ func TestAPasskeyIsRegisteredRenamedUsedToSignInAndRemoved(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	anonymous.raw(http.MethodPost, "/api/v1/account/passkeys/login/finish", assertion, "application/json", http.StatusOK)
+	login := anonymous.raw(http.MethodPost, "/api/v1/account/passkeys/login/finish", assertion, "application/json", http.StatusOK)
+
+	signedIn := &session{accounts: instance}
+
+	for _, cookie := range login.Result().Cookies() {
+		if cookie.Name == "savorum_session" {
+			signedIn.cookie = cookie.Value
+		}
+	}
+
+	signedIn.csrf = field[string](t, login.Body.Bytes(), "csrf_token")
+
+	if got, want := text(t, field[map[string]any](t, signedIn.send(http.MethodGet, "/api/v1/account", nil).Body.Bytes(), "user"), "id"),
+		text(t, field[map[string]any](t, admin.send(http.MethodGet, "/api/v1/account", nil).Body.Bytes(), "user"), "id"); got != want {
+		t.Fatalf("passkey session belongs to %s, want %s", got, want)
+	}
 
 	admin.send(http.MethodDelete, "/api/v1/account/passkeys/"+passkey, nil)
 }

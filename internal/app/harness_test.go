@@ -78,6 +78,8 @@ func newHarnessWith(t *testing.T, adjust func(*app.Options)) *harness {
 		t.Fatal(err)
 	}
 
+	closeServices(t, application)
+
 	worker, stop := context.WithCancel(context.Background())
 	done := make(chan struct{})
 
@@ -237,4 +239,20 @@ func (h *harness) uploadAll(files map[string][]byte, want int) *httptest.Respons
 	_ = writer.Close()
 
 	return h.raw(http.MethodPost, "/api/v1/recipes/import-preview", body.Bytes(), writer.FormDataContentType(), want)
+}
+
+// closeServices finishes background work before the store and temporary
+// directories are removed.
+func closeServices(t *testing.T, application *app.Application) {
+	t.Helper()
+
+	t.Cleanup(func() {
+		if application.ImportJobs != nil {
+			application.ImportJobs.Close()
+		}
+
+		if application.Renderer != nil {
+			_ = application.Renderer.Close()
+		}
+	})
 }
