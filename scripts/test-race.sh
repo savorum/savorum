@@ -46,5 +46,8 @@ if $list_only; then
 	printf '%s\n' "${packages[@]}"
 	exit 0
 fi
-go test "${packages[@]}"
-go test -race -timeout=30m "${packages[@]}"
+# Recorded contract coverage is written by running tests, so cached results would leave it incomplete.
+uncached=()
+if [[ -n "${SAVORUM_CONTRACT_COVERAGE:-}" ]]; then uncached=(-count=1); fi
+go test ${uncached[@]+"${uncached[@]}"} "${packages[@]}"
+go test ${uncached[@]+"${uncached[@]}"} -race -timeout=30m "${packages[@]}"
