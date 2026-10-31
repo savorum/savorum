@@ -1,6 +1,7 @@
 package library
 
 import (
+	"cmp"
 	"context"
 	"encoding/json"
 	"errors"
@@ -440,7 +441,7 @@ func (s *Service) DraftTranslation(ctx context.Context, id EntryID, request Tran
 	document := recipe.Document{
 		SchemaVersion: recipe.CurrentDocumentSchemaVersion,
 		ID:            recipe.RecipeID(documentID),
-		Title:         strings.TrimSpace(request.Title),
+		Title:         cmp.Or(strings.TrimSpace(request.Title), source.Recipe.Title),
 		Language:      strings.TrimSpace(request.Language),
 	}
 

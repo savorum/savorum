@@ -100,6 +100,7 @@ func (s *Store) EditShoppingList(ctx context.Context, id string, edit shopping.E
 
 	list.Revision++
 	shopping.RefreshAmounts(&list)
+	ensureShoppingMaps(&list)
 
 	data, err := json.Marshal(list)
 	if err != nil {
@@ -176,6 +177,7 @@ func readShoppingLists(ctx context.Context, db dbQueryer, libraryID string) ([]s
 		}
 
 		shopping.RefreshAmounts(&list)
+		ensureShoppingMaps(&list)
 		result = append(result, list)
 	}
 
@@ -184,7 +186,7 @@ func readShoppingLists(ctx context.Context, db dbQueryer, libraryID string) ([]s
 	}
 
 	if !defaultFound {
-		result = append([]shopping.ShoppingList{{ID: "groceries", Name: "Groceries", Items: []shopping.ShoppingItem{}}}, result...)
+		result = append([]shopping.ShoppingList{{ID: "groceries", Name: "Groceries", Items: []shopping.ShoppingItem{}, Selections: map[string]shopping.ShoppingSelection{}, Requirements: map[string]shopping.ShoppingRequirement{}}}, result...)
 	}
 
 	return result, nil
@@ -194,7 +196,7 @@ func readShoppingList(ctx context.Context, q interface {
 	QueryRowContext(context.Context, string, ...any) *sql.Row
 }, libraryID, id string,
 ) (shopping.ShoppingList, error) {
-	list := shopping.ShoppingList{ID: id, Name: "Groceries", Items: []shopping.ShoppingItem{}}
+	list := shopping.ShoppingList{ID: id, Name: "Groceries", Items: []shopping.ShoppingItem{}, Selections: map[string]shopping.ShoppingSelection{}, Requirements: map[string]shopping.ShoppingRequirement{}}
 
 	var data string
 
@@ -212,8 +214,25 @@ func readShoppingList(ctx context.Context, q interface {
 	}
 
 	shopping.RefreshAmounts(&list)
+	ensureShoppingMaps(&list)
 
 	return list, nil
+}
+
+func ensureShoppingMaps(list *shopping.ShoppingList) {
+	if list.Selections == nil {
+		list.Selections = map[string]shopping.ShoppingSelection{}
+	}
+
+	if list.Requirements == nil {
+		list.Requirements = map[string]shopping.ShoppingRequirement{}
+	}
+
+	for i := range list.Items {
+		if list.Items[i].Fields == nil {
+			list.Items[i].Fields = map[string]uint64{}
+		}
+	}
 }
 
 const maximumActivityItems = 50

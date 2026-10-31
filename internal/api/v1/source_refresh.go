@@ -3,9 +3,11 @@ package v1
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"net/http"
 
 	"github.com/danielgtaylor/huma/v2"
+	"github.com/savorum/savorum/internal/importer/webrecipe"
 	"github.com/savorum/savorum/internal/library"
 	"github.com/savorum/savorum/internal/recipe"
 )
@@ -99,6 +101,10 @@ func registerSourceRefreshURL(api huma.API, service SourceRefreshURLService) {
 	huma.Register(api, huma.Operation{OperationID: "preview-recipe-source-refresh", Method: http.MethodPost, Path: "/api/v1/recipes/{id}/source-refresh/preview-url", Summary: "Check a source URL", Tags: []string{"Recipes"}, Errors: []int{404, 409, 422, 502, 504}}, func(ctx context.Context, input *sourceRefreshURLInput) (*sourceRefreshPreviewOutput, error) {
 		preview, err := service.PreviewSourceRefreshURL(ctx, library.EntryID(input.ID), input.Body.URL, input.Body.ExpectedRevision)
 		if err != nil {
+			if _, fetch := errors.AsType[*webrecipe.Failure](err); fetch {
+				return nil, mapImportError(err)
+			}
+
 			return nil, mapError(err)
 		}
 
