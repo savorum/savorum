@@ -2543,6 +2543,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/recipes/merge": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Merge duplicate recipes */
+        post: operations["merge-recipes"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recipes/merge/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Compare duplicate recipes */
+        post: operations["preview-recipe-merge"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/recipes/suggestions": {
         parameters: {
             query?: never;
@@ -2792,6 +2826,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/recipes/{id}/source-refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Apply reviewed source updates */
+        post: operations["commit-source-refresh"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recipes/{id}/source-refresh/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Check a recipe source */
+        post: operations["preview-source-refresh"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/recipes/{id}/source-refresh/preview-url": {
         parameters: {
             query?: never;
@@ -2844,7 +2912,7 @@ export interface paths {
         put?: never;
         /**
          * Start a translation
-         * @description Returns an unsaved document for a new rendition. Nothing is stored. Copied content is ordinary text with no binding to this recipe.
+         * @description Returns an unsaved document for a new rendition. Nothing is stored. The title is the source recipe's when the request gives none. Copied content is ordinary text with no binding to this recipe.
          */
         post: operations["start-recipe-translation"];
         delete?: never;
@@ -5500,6 +5568,34 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        MergeConflictWire: {
+            left?: string;
+            path: string;
+            right?: string;
+        } & {
+            [key: string]: unknown;
+        };
+        MergeInputBody: {
+            duplicate: string;
+            /** Format: int64 */
+            expected_duplicate_revision: number;
+            /** Format: int64 */
+            expected_survivor_revision: number;
+            recipe: components["schemas"]["RecipeDocument"];
+            survivor: string;
+        };
+        MergePreviewInputBody: {
+            left_id: string;
+            right_id: string;
+        };
+        MergePreviewWire: {
+            conflicts: components["schemas"]["MergeConflictWire"][] | null;
+            left: components["schemas"]["LibraryEntry"];
+            right: components["schemas"]["LibraryEntry"];
+            suggested: components["schemas"]["RecipeDocument"];
+        } & {
+            [key: string]: unknown;
+        };
         MergeTaxonomyInputBody: {
             target_id: string;
         };
@@ -6013,6 +6109,10 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        RefreshResolution: {
+            choice: string;
+            path: string;
+        };
         RemovedResponse: {
             removed: boolean;
         } & {
@@ -6337,6 +6437,12 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        SourceRefreshCommitInputBody: {
+            /** Format: int64 */
+            expected_revision: number;
+            remote: components["schemas"]["RecipeDocument"];
+            resolutions?: components["schemas"]["RefreshResolution"][] | null;
+        };
         SourceRefreshConflictWire: {
             area: string;
             base?: string;
@@ -6345,6 +6451,11 @@ export interface components {
             remote?: string;
         } & {
             [key: string]: unknown;
+        };
+        SourceRefreshPreviewInputBody: {
+            /** Format: int64 */
+            expected_revision: number;
+            remote: components["schemas"]["RecipeDocument"];
         };
         SourceRefreshPreviewWire: {
             base: components["schemas"]["RecipeDocument"];
@@ -7064,6 +7175,15 @@ export interface operations {
                     "application/problem+json": components["schemas"]["AccountProblem"];
                 };
             };
+            /** @description Stable account problem code; authentication, authority, validation or lifecycle conflict. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
         };
     };
     "set-provider-group-mapping": {
@@ -7090,6 +7210,15 @@ export interface operations {
             };
             /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Stable account problem code; authentication, authority, validation or lifecycle conflict. */
+            default: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7128,6 +7257,15 @@ export interface operations {
                     "application/problem+json": components["schemas"]["AccountProblem"];
                 };
             };
+            /** @description Stable account problem code; authentication, authority, validation or lifecycle conflict. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
         };
     };
     "accept-library-invitation": {
@@ -7154,6 +7292,15 @@ export interface operations {
             };
             /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Stable account problem code; authentication, authority, validation or lifecycle conflict. */
+            default: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7197,6 +7344,15 @@ export interface operations {
                     "application/problem+json": components["schemas"]["AccountProblem"];
                 };
             };
+            /** @description Stable account problem code; authentication, authority, validation or lifecycle conflict. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
         };
     };
     "revoke-library-invitation": {
@@ -7221,6 +7377,15 @@ export interface operations {
             };
             /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Stable account problem code; authentication, authority, validation or lifecycle conflict. */
+            default: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7385,6 +7550,15 @@ export interface operations {
                     "application/problem+json": components["schemas"]["AccountProblem"];
                 };
             };
+            /** @description Stable account problem code; authentication, authority, validation or lifecycle conflict. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
         };
     };
     "unlink-sign-in-method": {
@@ -7409,6 +7583,15 @@ export interface operations {
             };
             /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Stable account problem code; authentication, authority, validation or lifecycle conflict. */
+            default: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7801,6 +7984,15 @@ export interface operations {
             };
             /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Stable account problem code; authentication, authority, validation or lifecycle conflict. */
+            default: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -8365,6 +8557,21 @@ export interface operations {
                 };
             };
             /** @description Structured authentication boundary failure */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
             429: {
                 headers: {
                     [name: string]: unknown;
@@ -8457,6 +8664,21 @@ export interface operations {
             };
             /** @description Structured authentication boundary failure */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -8570,6 +8792,21 @@ export interface operations {
             };
             /** @description Structured authentication boundary failure */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -8711,6 +8948,21 @@ export interface operations {
                 };
             };
             /** @description Structured authentication boundary failure */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
             429: {
                 headers: {
                     [name: string]: unknown;
@@ -8799,6 +9051,21 @@ export interface operations {
             };
             /** @description Structured authentication boundary failure */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -8915,6 +9182,21 @@ export interface operations {
                 };
             };
             /** @description Structured authentication boundary failure */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
             429: {
                 headers: {
                     [name: string]: unknown;
@@ -8999,6 +9281,21 @@ export interface operations {
             };
             /** @description Structured authentication boundary failure */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -9134,6 +9431,21 @@ export interface operations {
                 };
             };
             /** @description Structured authentication boundary failure */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
             429: {
                 headers: {
                     [name: string]: unknown;
@@ -9228,6 +9540,21 @@ export interface operations {
             };
             /** @description Structured authentication boundary failure */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -9339,6 +9666,21 @@ export interface operations {
                 };
             };
             /** @description Structured authentication boundary failure */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
             429: {
                 headers: {
                     [name: string]: unknown;
@@ -9430,6 +9772,21 @@ export interface operations {
             };
             /** @description Structured authentication boundary failure */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -9555,6 +9912,21 @@ export interface operations {
                 };
             };
             /** @description Structured authentication boundary failure */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
             429: {
                 headers: {
                     [name: string]: unknown;
@@ -9636,6 +10008,21 @@ export interface operations {
             };
             /** @description Structured authentication boundary failure */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        code: string;
+                        detail: string;
+                        status: number;
+                        title: string;
+                        type: string;
+                    };
+                };
+            };
+            /** @description Structured authentication boundary failure */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -11408,6 +11795,15 @@ export interface operations {
                     "application/problem+json": components["schemas"]["AccountProblem"];
                 };
             };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
             /** @description Creation retry refused */
             409: {
                 headers: {
@@ -11967,6 +12363,15 @@ export interface operations {
                 };
                 content: {
                     "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
                 };
             };
             /** @description Conflict */
@@ -14106,6 +14511,15 @@ export interface operations {
                     "application/problem+json": components["schemas"]["AccountProblem"];
                 };
             };
+            /** @description Stable account problem code; authentication, authority, validation or lifecycle conflict. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
         };
     };
     "create-library-invitation": {
@@ -14134,6 +14548,15 @@ export interface operations {
             };
             /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Stable account problem code; authentication, authority, validation or lifecycle conflict. */
+            default: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -14485,6 +14908,15 @@ export interface operations {
                 };
                 content: {
                     "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
                 };
             };
             /** @description Not Found */
@@ -15578,6 +16010,15 @@ export interface operations {
                 };
                 content: {
                     "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
                 };
             };
             /** @description Conflict */
@@ -17211,6 +17652,154 @@ export interface operations {
             };
         };
     };
+    "merge-recipes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MergeInputBody"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    ETag?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LibraryEntry"];
+                };
+            };
+            /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+            /** @description Precondition Failed */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+        };
+    };
+    "preview-recipe-merge": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MergePreviewInputBody"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MergePreviewWire"];
+                };
+            };
+            /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+        };
+    };
     "list-recipes-suggestions": {
         parameters: {
             query?: {
@@ -18605,6 +19194,167 @@ export interface operations {
             };
             /** @description Precondition Required */
             428: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+        };
+    };
+    "commit-source-refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SourceRefreshCommitInputBody"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    ETag?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LibraryEntry"];
+                };
+            };
+            /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+            /** @description Precondition Failed */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+        };
+    };
+    "preview-source-refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SourceRefreshPreviewInputBody"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SourceRefreshPreviewWire"];
+                };
+            };
+            /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+            /** @description Precondition Failed */
+            412: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -20139,6 +20889,15 @@ export interface operations {
                     "application/problem+json": components["schemas"]["AccountProblem"];
                 };
             };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
             /** @description Conflict */
             409: {
                 headers: {
@@ -20927,6 +21686,15 @@ export interface operations {
                     "application/problem+json": components["schemas"]["AccountProblem"];
                 };
             };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
             /** @description Conflict */
             409: {
                 headers: {
@@ -21123,6 +21891,15 @@ export interface operations {
                 };
                 content: {
                     "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
                 };
             };
             /** @description Conflict */
@@ -22071,6 +22848,15 @@ export interface operations {
                     "application/problem+json": components["schemas"]["AccountProblem"];
                 };
             };
+            /** @description Stable account problem code; authentication, authority, validation or lifecycle conflict. */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
         };
     };
     "force-unlink-sign-in-method": {
@@ -22096,6 +22882,15 @@ export interface operations {
             };
             /** @description No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`). */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AccountProblem"];
+                };
+            };
+            /** @description Stable account problem code; authentication, authority, validation or lifecycle conflict. */
+            default: {
                 headers: {
                     [name: string]: unknown;
                 };
