@@ -343,72 +343,7 @@ func (s *Service) deliver(ctx context.Context, delivery Delivery) error {
 	}
 
 	started := time.Now()
-	retry := true
-
-	var retryAfter time.Duration
-
-	secret, err := s.secrets.ReadFile(subscription.SecretRef)
-	if err != nil {
-		attempt.Code = "signing-key-unavailable"
-		retry = false
-	} else if _, err := destinationURL(subscription.URL); err != nil {
-		attempt.Code = "destination-rejected"
-		retry = false
-	} else {
-		request, err := http.NewRequestWithContext(ctx, http.MethodPost, subscription.URL, bytes.NewReader(delivery.Body))
-		if err != nil {
-			attempt.Code = "destination-rejected"
-			retry = false
-		} else {
-			request.Header.Set("Content-Type", "application/json")
-			request.Header.Set("User-Agent", "Savorum-Webhooks/1")
-			request.Header.Set("Savorum-Delivery-ID", delivery.ID)
-			request.Header.Set("Savorum-Event-ID", delivery.EventID)
-			request.Header.Set("Savorum-Event-Type", delivery.EventType)
-			request.Header.Set("Savorum-Event-Version", "1")
-			request.Header.Set("Savorum-Signature", Signature(string(secret), attempt.At, delivery.Body))
-
-			response, requestErr := s.client.Do(request)
-			if requestErr != nil {
-				if errors.Is(requestErr, ErrDestination) {
-					attempt.Code = "destination-rejected"
-					retry = false
-				}
-			} else {
-				attempt.Status = response.StatusCode
-				body, _ := io.ReadAll(io.LimitReader(response.Body, 512))
-				_ = response.Body.Close()
-				excerpt := strings.ReplaceAll(string(body), string(secret), "[redacted]")
-				excerpt = strings.ReplaceAll(excerpt, subscription.URL, "[destination]")
-
-				attempt.Excerpt = strings.Map(func(r rune) rune {
-					if unicode.IsControl(r) && r != '\n' && r != '\t' {
-						return -1
-					}
-
-					return r
-				}, excerpt)
-				for len(attempt.Excerpt) > 512 {
-					_, size := utf8.DecodeLastRuneInString(attempt.Excerpt)
-					attempt.Excerpt = attempt.Excerpt[:len(attempt.Excerpt)-size]
-				}
-
-				retry = response.StatusCode == http.StatusRequestTimeout || response.StatusCode == http.StatusTooManyRequests || response.StatusCode >= 500
-
-				attempt.Code = "receiver-rejected"
-				if response.StatusCode >= 200 && response.StatusCode < 300 {
-					attempt.Code = "delivered"
-					retry = false
-				}
-
-				if response.StatusCode >= 300 && response.StatusCode < 400 {
-					attempt.Code = "redirect-refused"
-				}
-
-				retryAfter = parseRetryAfter(response.Header.Get("Retry-After"), attempt.At)
-			}
-		}
-	}
+	retry, retryAfter := s.send(ctx, subscription, delivery, &attempt)
 
 	if ctx.Err() != nil {
 		return ctx.Err()
@@ -429,6 +364,81 @@ func (s *Service) deliver(ctx context.Context, delivery Delivery) error {
 	}
 
 	return s.repository.FinishWebhookAttempt(ctx, delivery, attempt, state, next, s.failureLimit)
+}
+
+// send performs one delivery request and records its outcome in attempt. It
+// reports whether the delivery may be retried and any server-requested delay.
+func (s *Service) send(ctx context.Context, subscription Subscription, delivery Delivery, attempt *Attempt) (bool, time.Duration) {
+	secret, err := s.secrets.ReadFile(subscription.SecretRef)
+	if err != nil {
+		attempt.Code = "signing-key-unavailable"
+		return false, 0
+	}
+
+	if _, err := destinationURL(subscription.URL); err != nil {
+		attempt.Code = "destination-rejected"
+		return false, 0
+	}
+
+	request, err := http.NewRequestWithContext(ctx, http.MethodPost, subscription.URL, bytes.NewReader(delivery.Body))
+	if err != nil {
+		attempt.Code = "destination-rejected"
+		return false, 0
+	}
+
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("User-Agent", "Savorum-Webhooks/1")
+	request.Header.Set("Savorum-Delivery-ID", delivery.ID)
+	request.Header.Set("Savorum-Event-ID", delivery.EventID)
+	request.Header.Set("Savorum-Event-Type", delivery.EventType)
+	request.Header.Set("Savorum-Event-Version", "1")
+	request.Header.Set("Savorum-Signature", Signature(string(secret), attempt.At, delivery.Body))
+
+	response, err := s.client.Do(request)
+	if err != nil {
+		if errors.Is(err, ErrDestination) {
+			attempt.Code = "destination-rejected"
+			return false, 0
+		}
+
+		return true, 0
+	}
+
+	attempt.Status = response.StatusCode
+	body, _ := io.ReadAll(io.LimitReader(response.Body, 512))
+	_ = response.Body.Close()
+	excerpt := strings.ReplaceAll(string(body), string(secret), "[redacted]")
+	attempt.Excerpt = sanitizeExcerpt(strings.ReplaceAll(excerpt, subscription.URL, "[destination]"))
+
+	retry := response.StatusCode == http.StatusRequestTimeout || response.StatusCode == http.StatusTooManyRequests || response.StatusCode >= 500
+
+	attempt.Code = "receiver-rejected"
+	if response.StatusCode >= 200 && response.StatusCode < 300 {
+		attempt.Code = "delivered"
+		retry = false
+	}
+
+	if response.StatusCode >= 300 && response.StatusCode < 400 {
+		attempt.Code = "redirect-refused"
+	}
+
+	return retry, parseRetryAfter(response.Header.Get("Retry-After"), attempt.At)
+}
+
+func sanitizeExcerpt(excerpt string) string {
+	excerpt = strings.Map(func(r rune) rune {
+		if unicode.IsControl(r) && r != '\n' && r != '\t' {
+			return -1
+		}
+
+		return r
+	}, excerpt)
+	for len(excerpt) > 512 {
+		_, size := utf8.DecodeLastRuneInString(excerpt)
+		excerpt = excerpt[:len(excerpt)-size]
+	}
+
+	return excerpt
 }
 
 func retryDelay(attempt int, retryAfter time.Duration) time.Duration {
