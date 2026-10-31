@@ -25,7 +25,7 @@ func New() *Mux {
 	return &Mux{ServeMux: http.NewServeMux()}
 }
 
-// Wrap makes every handler registered afterwards pass through wrap.
+// Wrap makes every handler registered afterwards with HandleFunc pass through wrap.
 func (m *Mux) Wrap(wrap func(http.Handler) http.Handler) { m.wrap = wrap }
 
 // HandleFunc records a method-specific pattern and registers its handler.
