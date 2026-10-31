@@ -219,7 +219,7 @@ func (h *Handler) managedBegin(w http.ResponseWriter, r *http.Request, p Provide
 func (h *Handler) managedStart(w http.ResponseWriter, r *http.Request) {
 	p, ok := h.providers[r.PathValue("provider")]
 	if !ok || p.Kind != "managed" {
-		http.NotFound(w, r)
+		httpsecurity.WriteProblem(w, http.StatusNotFound, "not_found", "not_found")
 		return
 	}
 

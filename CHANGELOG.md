@@ -4,7 +4,12 @@ Notable changes to Savorum Core. Each release publishes
 `ghcr.io/savorum/savorum` and, with PDF and photo import,
 `ghcr.io/savorum/savorum` with a `-documents` tag.
 
-## Unreleased
+## 0.4.3
+
+- Fix new shopping lists returning `null` for empty `selections` and `requirements`.
+- Fix refreshing a recipe from a web page without one recipe answering 500 instead of 422.
+- Fix translation drafts without a title to use the source recipe's title.
+- Improve the OpenAPI document with recipe merge, source refresh, and more error responses.
 
 ## 0.4.2
 

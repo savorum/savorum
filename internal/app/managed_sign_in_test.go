@@ -20,6 +20,7 @@ import (
 	"github.com/savorum/savorum/internal/access"
 	"github.com/savorum/savorum/internal/app"
 	"github.com/savorum/savorum/internal/configuration"
+	"github.com/savorum/savorum/internal/contracttest"
 	"github.com/savorum/savorum/internal/federation"
 	"github.com/savorum/savorum/internal/hosting"
 	"github.com/savorum/savorum/internal/identity"
@@ -154,7 +155,7 @@ func TestManagedWebAndNativeSignInUseOrdinaryLocalSessions(t *testing.T) {
 		t.Fatal("hosted OpenAPI selected legacy cookie")
 	}
 
-	handler := application.Handler
+	handler := contracttest.Handler(t, application.Handler)
 	perform := func(method, path, body string, cookies ...*http.Cookie) *httptest.ResponseRecorder {
 		request := httptest.NewRequestWithContext(ctx, method, path, strings.NewReader(body))
 		request.Header.Set("Origin", origin)

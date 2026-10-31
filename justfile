@@ -43,6 +43,15 @@ print-fixtures output="tmp/print":
 openapi-check:
     go run ./cmd/openapi --check
 
+# Runs every test with response validation recording, then fails on any
+# operation that never produced a validated success response.
+contract-coverage:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    coverage="$(mktemp)"
+    SAVORUM_CONTRACT_COVERAGE="$coverage" go test -count=1 ./...
+    go run ./cmd/openapi --coverage "$coverage"
+
 # The frontend must convert through the catalog the server validates against.
 units-check:
     go run ./cmd/units --check

@@ -11,6 +11,7 @@ import (
 
 	"github.com/savorum/savorum/internal/app"
 	"github.com/savorum/savorum/internal/configuration"
+	"github.com/savorum/savorum/internal/contracttest"
 	"github.com/savorum/savorum/internal/storage/sqlite"
 	"github.com/savorum/savorum/internal/units"
 )
@@ -41,7 +42,7 @@ func TestAStrangerCanFindTheGuide(t *testing.T) {
 		request := httptest.NewRequestWithContext(t.Context(), http.MethodGet, target, nil)
 		request.Host = "recipes.example.com"
 		response := httptest.NewRecorder()
-		application.Handler.ServeHTTP(response, request)
+		contracttest.Handler(t, application.Handler).ServeHTTP(response, request)
 
 		return response
 	}

@@ -11,6 +11,8 @@ import (
 	"sync/atomic"
 	"testing"
 	"time"
+
+	"github.com/savorum/savorum/internal/contracttest"
 )
 
 type samlTestTransport func(*http.Request) (*http.Response, error)
@@ -46,7 +48,7 @@ func TestSAMLMetadataRefreshAdmission(t *testing.T) {
 	})
 	request := httptest.NewRequestWithContext(t.Context(), http.MethodGet, "https://recipes.example/api/v1/auth/saml/metadata", nil)
 	w := httptest.NewRecorder()
-	h.ServeHTTP(w, request)
+	contracttest.Handler(t, h).ServeHTTP(w, request)
 
 	if w.Code != 200 || calls.Load() != 0 {
 		t.Fatal("public SP metadata fetched IdP", w.Code, calls.Load())

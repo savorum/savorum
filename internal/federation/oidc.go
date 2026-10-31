@@ -10,6 +10,8 @@ import (
 
 	"github.com/coreos/go-oidc/v3/oidc"
 	"golang.org/x/oauth2"
+
+	"github.com/savorum/savorum/internal/httpsecurity"
 )
 
 func (h *Handler) oidcClient(ctx context.Context, p Provider) (*oidc.Provider, *oauth2.Config, error) {
@@ -75,7 +77,7 @@ func (h *Handler) oidcAuthorization(w http.ResponseWriter, r *http.Request, p Pr
 func (h *Handler) oidcCallback(w http.ResponseWriter, r *http.Request) {
 	p, ok := h.providers[r.PathValue("provider")]
 	if !ok || p.Kind != "oidc" {
-		http.NotFound(w, r)
+		httpsecurity.WriteProblem(w, http.StatusNotFound, "not_found", "not_found")
 		return
 	}
 

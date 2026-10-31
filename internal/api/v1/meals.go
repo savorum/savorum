@@ -176,7 +176,7 @@ type listSavedMealsInput struct {
 }
 
 func registerMeals(api huma.API, service MealService) {
-	huma.Register(api, huma.Operation{OperationID: "create-meal", Method: http.MethodPost, Path: "/api/v1/meals", Summary: "Plan a meal", Tags: []string{"Plan"}, DefaultStatus: 201, Errors: []int{404, 422}}, func(ctx context.Context, input *struct{ Body MealInput }) (*mealOutput, error) {
+	huma.Register(api, huma.Operation{OperationID: "create-meal", Method: http.MethodPost, Path: "/api/v1/meals", Summary: "Plan a meal", Tags: []string{"Plan"}, DefaultStatus: 201, Errors: []int{403, 404, 422}}, func(ctx context.Context, input *struct{ Body MealInput }) (*mealOutput, error) {
 		mealInput, err := mealFromInput(input.Body)
 		if err != nil {
 			return nil, mapMealError(err, "meal")

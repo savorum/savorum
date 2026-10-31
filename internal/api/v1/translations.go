@@ -149,7 +149,7 @@ func registerTranslations(api huma.API, service TranslationService) {
 		Method:      http.MethodPost,
 		Path:        "/api/v1/recipes/{id}/translations/draft",
 		Summary:     "Start a translation",
-		Description: "Returns an unsaved document for a new rendition. Nothing is stored. Copied content is ordinary text with no binding to this recipe.",
+		Description: "Returns an unsaved document for a new rendition. Nothing is stored. The title is the source recipe's when the request gives none. Copied content is ordinary text with no binding to this recipe.",
 		Tags:        []string{"Recipes"},
 		Errors:      []int{http.StatusNotFound, http.StatusUnprocessableEntity},
 	}, func(ctx context.Context, input *draftTranslationInput) (*draftTranslationOutput, error) {

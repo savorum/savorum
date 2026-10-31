@@ -82,26 +82,19 @@ type ConfigurationService interface {
 // Options are application capabilities supplied by the composition root.
 // Their presence determines which optional routes exist.
 type Options struct {
-	EventStreamShutdown  <-chan struct{}
-	Selection            SelectionService
-	SuggestionLimit      int
-	LookupLimit          int
-	GroceryAdditionLimit int
-	Webhooks             *webhook.Service
-	Automation           *automation.Service
-	Idempotency          *idempotency.Coordinator
-	Events               event.Reader
-	AuthMethods          []CapabilityAuthMethod
-	BulkLimit            int
-	Pantry               pantry.Repository
-	AuthEnabled          bool
-	Preferences          PreferencesService
-	Assets               AssetService
-	SourceAttachments    SourceAttachmentService
-	Configuration        ConfigurationService
-	Meals                MealService
-	Shopping             ShoppingService
-	MealCalendar         MealCalendarService
+	Selection         SelectionService
+	Preferences       PreferencesService
+	Assets            AssetService
+	SourceAttachments SourceAttachmentService
+	Configuration     ConfigurationService
+	Meals             MealService
+	MealCalendar      MealCalendarService
+	Shopping          ShoppingService
+	Pantry            pantry.Repository
+	Webhooks          *webhook.Service
+	Automation        *automation.Service
+	Idempotency       *idempotency.Coordinator
+	Events            event.Reader
 	// Exchange is supplied when the composition root already holds one,
 	// because a background import job and this API must be reviewing the same
 	// staged previews rather than each holding their own.
@@ -109,6 +102,17 @@ type Options struct {
 	// ImportJobs makes bulk import durable. Without it imports run
 	// synchronously.
 	ImportJobs ImportJobService
+
+	SuggestionLimit      int
+	LookupLimit          int
+	GroceryAdditionLimit int
+	BulkLimit            int
+
+	AuthEnabled         bool
+	AuthMethods         []CapabilityAuthMethod
+	EventStreamShutdown <-chan struct{}
+
+	Wrap func(http.Handler) http.Handler
 }
 
 // registerImportRoutes registers every recipe import route and returns the
@@ -180,6 +184,8 @@ func New(service RecipeService, health HealthChecker, printer PrintService, opti
 	}
 
 	mux := routecatalog.New()
+	mux.Wrap(options.Wrap)
+
 	humaMux := http.NewServeMux()
 	config := huma.DefaultConfig("Savorum API", Version)
 	config.OpenAPIPath = "/openapi"
@@ -308,8 +314,10 @@ func New(service RecipeService, health HealthChecker, printer PrintService, opti
 	documentResponseCompatibility(api)
 	describeSecurity(api.OpenAPI())
 
-	mux.Handle("/api/", humaMux)
-	mux.Handle("/openapi.json", humaMux)
+	operations := wrapped(humaMux, options.Wrap)
+
+	mux.Handle("/api/", operations)
+	mux.Handle("/openapi.json", operations)
 
 	describeRetry(api)
 
@@ -408,4 +416,12 @@ func printRecipeLimit(printer PrintService) int {
 	}
 
 	return printer.RecipeLimit()
+}
+
+func wrapped(handler http.Handler, wrap func(http.Handler) http.Handler) http.Handler {
+	if wrap == nil {
+		return handler
+	}
+
+	return wrap(handler)
 }

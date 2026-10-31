@@ -25,6 +25,7 @@ import (
 	jose "github.com/go-jose/go-jose/v4"
 	"github.com/savorum/savorum/internal/app"
 	"github.com/savorum/savorum/internal/configuration"
+	"github.com/savorum/savorum/internal/contracttest"
 	"github.com/savorum/savorum/internal/federation"
 	"github.com/savorum/savorum/internal/httpsecurity"
 	"github.com/savorum/savorum/internal/storage/sqlite"
@@ -211,7 +212,7 @@ func newNativeFixture(t *testing.T) *nativeFixture {
 		t.Fatal(err)
 	}
 
-	secured := httpsecurity.NewHandler(application.Handler, httpsecurity.Options{ApplicationOrigin: func(context.Context) (string, error) { return publicURL, nil }})
+	secured := httpsecurity.NewHandler(contracttest.Handler(t, application.Handler), httpsecurity.Options{ApplicationOrigin: func(context.Context) (string, error) { return publicURL, nil }})
 	handler.Store(&secured)
 
 	return &nativeFixture{t: t, idp: idp, server: server, database: database}

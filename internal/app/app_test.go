@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/savorum/savorum/internal/app"
+	"github.com/savorum/savorum/internal/contracttest"
 	"github.com/savorum/savorum/internal/httpsecurity"
 	"github.com/savorum/savorum/internal/library"
 	"github.com/savorum/savorum/internal/storage/sqlite"
@@ -40,7 +41,7 @@ func TestApplicationSeparatesAPIAndWebFallbacks(t *testing.T) {
 
 	apiRequest := httptest.NewRequestWithContext(t.Context(), http.MethodGet, "/api/v1/not-a-route", nil)
 	apiResponse := httptest.NewRecorder()
-	application.Handler.ServeHTTP(apiResponse, apiRequest)
+	contracttest.Handler(t, application.Handler).ServeHTTP(apiResponse, apiRequest)
 
 	if apiResponse.Code != http.StatusNotFound {
 		t.Fatalf("API miss status = %d", apiResponse.Code)
@@ -52,7 +53,7 @@ func TestApplicationSeparatesAPIAndWebFallbacks(t *testing.T) {
 
 	webRequest := httptest.NewRequestWithContext(t.Context(), http.MethodGet, "/recipes/example", nil)
 	webResponse := httptest.NewRecorder()
-	application.Handler.ServeHTTP(webResponse, webRequest)
+	contracttest.Handler(t, application.Handler).ServeHTTP(webResponse, webRequest)
 
 	if webResponse.Code != http.StatusOK || !strings.Contains(webResponse.Body.String(), ">Recipes · Savorum</title>") {
 		t.Fatalf("web route did not serve shell: status=%d body=%s", webResponse.Code, webResponse.Body.String())
@@ -74,7 +75,7 @@ func TestApplicationSecurityPolicyCoversAPIAndWebResponses(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	handler := httpsecurity.NewHandler(application.Handler, httpsecurity.Options{})
+	handler := httpsecurity.NewHandler(contracttest.Handler(t, application.Handler), httpsecurity.Options{})
 
 	for _, target := range []string{"/", "/api/v1/health", "/api/v1/not-a-route"} {
 		response := httptest.NewRecorder()
@@ -112,7 +113,7 @@ func TestTheConfiguredPrintRecipeLimitIsReportedAndEnforced(t *testing.T) {
 	t.Cleanup(func() { _ = application.Renderer.Close() })
 
 	capabilities := httptest.NewRecorder()
-	application.Handler.ServeHTTP(capabilities, httptest.NewRequestWithContext(t.Context(), http.MethodGet, "/api/v1/capabilities", nil))
+	contracttest.Handler(t, application.Handler).ServeHTTP(capabilities, httptest.NewRequestWithContext(t.Context(), http.MethodGet, "/api/v1/capabilities", nil))
 
 	if !strings.Contains(capabilities.Body.String(), `"print_recipes":3`) {
 		t.Fatalf("capabilities do not report the print limit: %s", capabilities.Body.String())
@@ -129,7 +130,7 @@ func TestTheConfiguredPrintRecipeLimitIsReportedAndEnforced(t *testing.T) {
 		request.Header.Set("Content-Type", "application/json")
 
 		response := httptest.NewRecorder()
-		application.Handler.ServeHTTP(response, request)
+		contracttest.Handler(t, application.Handler).ServeHTTP(response, request)
 
 		if response.Code != test.status {
 			t.Errorf("printing %s: status %d, want %d: %s", test.recipes, response.Code, test.status, response.Body.String())

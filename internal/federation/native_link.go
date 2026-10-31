@@ -52,7 +52,7 @@ func decodeStrict(w http.ResponseWriter, r *http.Request, limit int64, v any) bo
 func (h *Handler) nativeLinkTicket(w http.ResponseWriter, r *http.Request) {
 	p, ok := h.providers[r.PathValue("provider")]
 	if !ok || (p.Kind != "oidc" && p.Kind != "saml") {
-		http.NotFound(w, r)
+		httpsecurity.WriteProblem(w, http.StatusNotFound, "not_found", "not_found")
 		return
 	}
 

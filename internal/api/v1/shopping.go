@@ -172,7 +172,7 @@ func registerShopping(api huma.API, service ShoppingService) {
 }
 
 func registerGroceryAdditions(api huma.API, service ShoppingService, maximum int) {
-	huma.Register(api, huma.Operation{OperationID: "create-grocery-items", Method: "POST", Path: "/api/v1/shopping/lists/{list_id}/items", Summary: "Add groceries atomically", Tags: []string{"Shopping"}, Errors: []int{409, 422}}, func(ctx context.Context, input *struct {
+	huma.Register(api, huma.Operation{OperationID: "create-grocery-items", Method: "POST", Path: "/api/v1/shopping/lists/{list_id}/items", Summary: "Add groceries atomically", Tags: []string{"Shopping"}, Errors: []int{404, 409, 422}}, func(ctx context.Context, input *struct {
 		ShoppingListHeaders
 		IdempotencyKey string `header:"Idempotency-Key" required:"true" maxLength:"200"`
 		Body           struct {

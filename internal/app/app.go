@@ -33,6 +33,7 @@ import (
 	"github.com/savorum/savorum/internal/httpsecurity"
 	"github.com/savorum/savorum/internal/idempotency"
 	"github.com/savorum/savorum/internal/identity"
+	"github.com/savorum/savorum/internal/importer"
 	"github.com/savorum/savorum/internal/importjob"
 	"github.com/savorum/savorum/internal/library"
 	"github.com/savorum/savorum/internal/meal"
@@ -118,6 +119,8 @@ type Options struct {
 	SessionAbsolute       time.Duration
 	Assets                api.AssetService
 	Configuration         api.ConfigurationService
+	// PageFetcher replaces how recipe pages are retrieved by address.
+	PageFetcher importer.PageFetcher
 	// PrintCacheDirectory keeps the print compiler's machine code between
 	// processes. Empty compiles it in memory in every process.
 	PrintCacheDirectory string
@@ -193,7 +196,7 @@ func New(store Store, catalog recipe.UnitCatalog, options Options) (*Application
 
 	// The job service shares the exchange service that holds staged previews.
 	if options.Assets != nil {
-		exchanger = exchange.NewService(service, options.Assets, exchange.WithSourceAttachments(store), exchange.WithPreviewScopeResolver(func(ctx context.Context) string {
+		exchanger = exchange.NewService(service, options.Assets, exchange.WithSourceAttachments(store), exchange.WithPageFetcher(options.PageFetcher), exchange.WithPreviewScopeResolver(func(ctx context.Context) string {
 			p, ok := identity.FromContext(ctx)
 			if !ok {
 				return "offline"

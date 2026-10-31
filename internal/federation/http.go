@@ -258,7 +258,7 @@ func (h *Handler) originOK(r *http.Request) bool {
 func (h *Handler) begin(w http.ResponseWriter, r *http.Request) {
 	p, ok := h.providers[r.PathValue("provider")]
 	if !ok {
-		http.NotFound(w, r)
+		httpsecurity.WriteProblem(w, http.StatusNotFound, "not_found", "not_found")
 		return
 	}
 

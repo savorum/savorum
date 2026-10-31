@@ -277,6 +277,20 @@ func DefaultRegistry() Registry {
 	return NewRegistry(newSREFAdapter(), plainTextAdapter{}, webRecipeAdapter{}, cookbookManagerAdapter{}, paprikaAdapter{}, mealieAdapter{}, tandoorAdapter{}, documentAdapter{})
 }
 
+// WithPageFetcher returns a registry whose web page adapter retrieves pages
+// with fetch.
+func (r Registry) WithPageFetcher(fetch PageFetcher) Registry {
+	adapters := append([]Adapter(nil), r.adapters...)
+
+	for index, adapter := range adapters {
+		if _, ok := adapter.(webRecipeAdapter); ok {
+			adapters[index] = webRecipeAdapter{fetch: fetch}
+		}
+	}
+
+	return Registry{adapters: adapters}
+}
+
 // Formats returns immutable adapter declarations for API and UI discovery.
 func (r Registry) Formats() []Format {
 	formats := make([]Format, len(r.adapters))

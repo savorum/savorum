@@ -17,6 +17,7 @@ import (
 	"github.com/savorum/savorum/internal/assets"
 	"github.com/savorum/savorum/internal/automation"
 	"github.com/savorum/savorum/internal/configuration"
+	"github.com/savorum/savorum/internal/contracttest"
 	"github.com/savorum/savorum/internal/exchange"
 	"github.com/savorum/savorum/internal/export"
 	"github.com/savorum/savorum/internal/idempotency"
@@ -91,6 +92,7 @@ func importJobAPI(t *testing.T, fetcher exchange.RemoteAssetFetcher) http.Handle
 	handler, _, err := New(service, store, printer, Options{
 		Assets: assetService, Configuration: configurationService, Exchange: exchanger, ImportJobs: jobs,
 		Automation: automationJobs, Idempotency: receipts,
+		Wrap: func(next http.Handler) http.Handler { return contracttest.Handler(t, next) },
 	})
 	if err != nil {
 		t.Fatal(err)

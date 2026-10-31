@@ -17,6 +17,7 @@ type Route struct {
 type Mux struct {
 	*http.ServeMux
 	routes []Route
+	wrap   func(http.Handler) http.Handler
 }
 
 // New returns an empty recording mux.
@@ -24,10 +25,19 @@ func New() *Mux {
 	return &Mux{ServeMux: http.NewServeMux()}
 }
 
+// Wrap makes every handler registered afterwards pass through wrap.
+func (m *Mux) Wrap(wrap func(http.Handler) http.Handler) { m.wrap = wrap }
+
 // HandleFunc records a method-specific pattern and registers its handler.
 func (m *Mux) HandleFunc(pattern string, handler http.HandlerFunc) {
 	if method, path, found := strings.Cut(pattern, " "); found {
 		m.routes = append(m.routes, Route{Method: method, Path: path})
+	}
+
+	if m.wrap != nil {
+		m.Handle(pattern, m.wrap(handler))
+
+		return
 	}
 
 	m.ServeMux.HandleFunc(pattern, handler)

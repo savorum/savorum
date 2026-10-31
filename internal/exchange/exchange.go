@@ -78,6 +78,7 @@ type Service struct {
 	assets              Assets
 	sources             SourceAttachments
 	registry            importer.Registry
+	pageFetcher         importer.PageFetcher
 	limits              sref.Limits
 	bundleLimits        bundle.Limits
 	fetcher             RemoteAssetFetcher
@@ -107,7 +108,7 @@ func (s *Service) PreviewSourceRefreshURL(ctx context.Context, id library.EntryI
 
 	if len(preview.Items) != 1 {
 		s.CancelPreview(preview.ID)
-		return library.SourceRefreshPreview{}, fmt.Errorf("source refresh requires exactly one recipe candidate")
+		return library.SourceRefreshPreview{}, &webrecipe.Failure{Code: webrecipe.NoRecipeStructuredData, Message: "source refresh requires exactly one recipe on the page"}
 	}
 
 	refresh, ok := s.library.(SourceRefreshLibrary)
@@ -337,6 +338,11 @@ func WithRemoteAssetFetcher(fetcher RemoteAssetFetcher) Option {
 	return func(service *Service) { service.fetcher = fetcher }
 }
 
+// WithPageFetcher replaces how recipe pages are retrieved by address.
+func WithPageFetcher(fetch importer.PageFetcher) Option {
+	return func(s *Service) { s.pageFetcher = fetch }
+}
+
 // WithImporterRegistry replaces the compiled adapter registry. It is useful to
 // applications that compose additional built-in adapters and to contract
 // tests; adapters still receive no persistence handles.
@@ -390,6 +396,10 @@ func NewService(recipes Library, blobs Assets, options ...Option) *Service {
 
 	if len(service.registry.Formats()) == 0 {
 		service.registry = importer.DefaultRegistryWithSREFLimits(service.limits, service.bundleLimits)
+	}
+
+	if service.pageFetcher != nil {
+		service.registry = service.registry.WithPageFetcher(service.pageFetcher)
 	}
 
 	if service.previewScope == nil {

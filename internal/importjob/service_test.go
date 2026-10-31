@@ -187,7 +187,12 @@ func bareRecipe(t *testing.T, number int) []byte {
 func waitFor(t *testing.T, service *importjob.Service, id string, want func(importjob.Job) bool) importjob.Job {
 	t.Helper()
 
-	deadline := time.Now().Add(20 * time.Second)
+	// A job that keeps finishing items is still working however long it takes,
+	// so the deadline restarts whenever its progress moves.
+	const stall = 20 * time.Second
+
+	deadline := time.Now().Add(stall)
+	settled := -1
 
 	for {
 		job, err := service.Get(context.Background(), id)
@@ -199,8 +204,12 @@ func waitFor(t *testing.T, service *importjob.Service, id string, want func(impo
 			return job
 		}
 
+		if done := job.Progress.Imported + job.Progress.Skipped + job.Progress.AlreadyInLibrary + job.Progress.Failed + job.Progress.Cancelled; done != settled {
+			settled, deadline = done, time.Now().Add(stall)
+		}
+
 		if time.Now().After(deadline) {
-			t.Fatalf("import job %s never reached the expected state: %#v", id, job)
+			t.Fatalf("import job %s stopped making progress: %#v", id, job)
 		}
 
 		time.Sleep(5 * time.Millisecond)
