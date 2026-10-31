@@ -350,7 +350,6 @@
 /** @typedef {{}} Account_Sessions_Other_HeadingInputs */
 /** @typedef {{}} Account_Sessions_Others_RevokedInputs */
 /** @typedef {{}} Account_Sessions_RevokeInputs */
-/** @typedef {{ last: NonNullable<unknown> }} Account_Sessions_Revoke_NamedInputs */
 /** @typedef {{}} Account_Sessions_Revoke_OthersInputs */
 /** @typedef {{}} Account_Sessions_RevokedInputs */
 /** @typedef {{ date: NonNullable<unknown> }} Account_Sessions_Signed_InInputs */
@@ -3727,11 +3726,11 @@ export const account_recovery_hint = /** @type {(inputs: Account_Recovery_HintIn
 	return /** @type {LocalizedString} */ (`Use a code if you lose your other sign-in methods. Each code works once.`)
 };
 
-export const account_recovery_remaining = /** @type {(inputs: Account_Recovery_RemainingInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const account_recovery_remaining = /** @type {(inputs: Account_Recovery_RemainingInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recovery code remaining.`);
 	return /** @type {LocalizedString} */ (`${countText} recovery codes remaining.`)
-	
 };
 
 export const account_recovery_replace = /** @type {(inputs: Account_Recovery_ReplaceInputs) => LocalizedString} */ () => {
@@ -3864,10 +3863,6 @@ export const account_sessions_others_revoked = /** @type {(inputs: Account_Sessi
 
 export const account_sessions_revoke = /** @type {(inputs: Account_Sessions_RevokeInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Revoke session`)
-};
-
-export const account_sessions_revoke_named = /** @type {(inputs: Account_Sessions_Revoke_NamedInputs) => LocalizedString} */ (i) => {
-	return /** @type {LocalizedString} */ (`Revoke the session last active ${i?.last}`)
 };
 
 export const account_sessions_revoke_others = /** @type {(inputs: Account_Sessions_Revoke_OthersInputs) => LocalizedString} */ () => {
@@ -4100,7 +4095,6 @@ export const api_export_asset_unavailable = /** @type {(inputs: Api_Export_Asset
 	if (i?.reason === "size-mismatch") return /** @type {LocalizedString} */ (`“${i?.title}” references a file whose size does not match the recipe. Export needs every file a recipe references, so nothing was written.`);
 	if (i?.reason === "integrity") return /** @type {LocalizedString} */ (`“${i?.title}” references a file that failed its integrity check. Export needs every file a recipe references, so nothing was written.`);
 	return /** @type {LocalizedString} */ (`“${i?.title}” references a file that could not be read. Export needs every file a recipe references, so nothing was written.`)
-	
 };
 
 export const api_problem_access_denied = /** @type {(inputs: Api_Problem_Access_DeniedInputs) => LocalizedString} */ () => {
@@ -5771,11 +5765,11 @@ export const cooking_timer_setup = /** @type {(inputs: Cooking_Timer_SetupInputs
 	return /** @type {LocalizedString} */ (`Timers`)
 };
 
-export const cooking_times_cooked = /** @type {(inputs: Cooking_Times_CookedInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const cooking_times_cooked = /** @type {(inputs: Cooking_Times_CookedInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`Cooked ${countText} time`);
 	return /** @type {LocalizedString} */ (`Cooked ${countText} times`)
-	
 };
 
 export const cooking_together = /** @type {(inputs: Cooking_TogetherInputs) => LocalizedString} */ () => {
@@ -6042,8 +6036,9 @@ export const editor_hands_on = /** @type {(inputs: Editor_Hands_OnInputs) => Loc
 	return /** @type {LocalizedString} */ (`Hands-on work`)
 };
 
-export const editor_ingredient_count = /** @type {(inputs: Editor_Ingredient_CountInputs) => LocalizedString} */ (i) => {const countPlural = registry.plural("en", i?.count, {});
-	const formattedCount = registry.number("en", i?.count, {});
+export const editor_ingredient_count = /** @type {(inputs: Editor_Ingredient_CountInputs) => LocalizedString} */ (i) => {
+	const countPlural = registry.plural("en", i?.count, {}, true);
+	const formattedCount = registry.number("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${formattedCount} ingredient`);
 	if (countPlural === "other") return /** @type {LocalizedString} */ (`${formattedCount} ingredients`);
 	return /** @type {LocalizedString} */ ("editor_ingredient_count");
@@ -6129,8 +6124,9 @@ export const editor_package_size = /** @type {(inputs: Editor_Package_SizeInputs
 	return /** @type {LocalizedString} */ (`Each package: ${i?.value}`)
 };
 
-export const editor_photo_count = /** @type {(inputs: Editor_Photo_CountInputs) => LocalizedString} */ (i) => {const countPlural = registry.plural("en", i?.count, {});
-	const formattedCount = registry.number("en", i?.count, {});
+export const editor_photo_count = /** @type {(inputs: Editor_Photo_CountInputs) => LocalizedString} */ (i) => {
+	const countPlural = registry.plural("en", i?.count, {}, true);
+	const formattedCount = registry.number("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${formattedCount} photo`);
 	if (countPlural === "other") return /** @type {LocalizedString} */ (`${formattedCount} photos`);
 	return /** @type {LocalizedString} */ ("editor_photo_count");
@@ -6400,11 +6396,11 @@ export const help_shopping = /** @type {(inputs: Help_ShoppingInputs) => Localiz
 	return /** @type {LocalizedString} */ (`Help with shopping lists`)
 };
 
-export const import_about_hours = /** @type {(inputs: Import_About_HoursInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_about_hours = /** @type {(inputs: Import_About_HoursInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`about ${countText} hour`);
 	return /** @type {LocalizedString} */ (`about ${countText} hours`)
-	
 };
 
 export const import_candidate_already_here = /** @type {(inputs: Import_Candidate_Already_HereInputs) => LocalizedString} */ () => {
@@ -6447,11 +6443,11 @@ export const import_candidate_import_as_a_separate_recipe = /** @type {(inputs: 
 	return /** @type {LocalizedString} */ (`Import as a separate recipe`)
 };
 
-export const import_candidate_ingredient_count = /** @type {(inputs: Import_Candidate_Ingredient_CountInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_candidate_ingredient_count = /** @type {(inputs: Import_Candidate_Ingredient_CountInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} ingredient`);
 	return /** @type {LocalizedString} */ (`${countText} ingredients`)
-	
 };
 
 export const import_candidate_ingredients_label = /** @type {(inputs: Import_Candidate_Ingredients_LabelInputs) => LocalizedString} */ () => {
@@ -6558,10 +6554,11 @@ export const import_job_automatic = /** @type {(inputs: Import_Job_AutomaticInpu
 	return /** @type {LocalizedString} */ (`The import begins automatically.`)
 };
 
-export const import_job_diagnostic = /** @type {(inputs: Import_Job_DiagnosticInputs) => LocalizedString} */ (i) => {const occurrencesText = registry.number("en", i?.occurrences, {});
-	const recipesText = registry.number("en", i?.recipes, {});
-	const occurrencePlural = registry.plural("en", i?.occurrences, {});
-	const recipePlural = registry.plural("en", i?.recipes, {});
+export const import_job_diagnostic = /** @type {(inputs: Import_Job_DiagnosticInputs) => LocalizedString} */ (i) => {
+	const occurrencesText = registry.number("en", i?.occurrences, {}, true);
+	const recipesText = registry.number("en", i?.recipes, {}, true);
+	const occurrencePlural = registry.plural("en", i?.occurrences, {}, true);
+	const recipePlural = registry.plural("en", i?.recipes, {}, true);
 	if (i?.classification === "actionable" && i?.area === "assets" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} photograph detail in ${recipesText} recipe`);
 	if (i?.classification === "actionable" && i?.area === "content" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} content detail in ${recipesText} recipe`);
 	if (i?.classification === "actionable" && i?.area === "duplicate" && occurrencePlural === "one" && recipePlural === "one") return /** @type {LocalizedString} */ (`Review ${occurrencesText} duplicate detail in ${recipesText} recipe`);
@@ -6634,25 +6631,24 @@ export const import_job_diagnostic = /** @type {(inputs: Import_Job_DiagnosticIn
 	if (occurrencePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} detail in ${recipesText} recipes`);
 	if (recipePlural === "one") return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} details in ${recipesText} recipe`);
 	return /** @type {LocalizedString} */ (`Preserved ${occurrencesText} details in ${recipesText} recipes`)
-	
 };
 
-export const import_job_failed = /** @type {(inputs: Import_Job_FailedInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_job_failed = /** @type {(inputs: Import_Job_FailedInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recipe could not be imported`);
 	return /** @type {LocalizedString} */ (`${countText} recipes could not be imported`)
-	
 };
 
 export const import_job_failed_headline = /** @type {(inputs: Import_Job_Failed_HeadlineInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Import could not continue`)
 };
 
-export const import_job_imported = /** @type {(inputs: Import_Job_ImportedInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_job_imported = /** @type {(inputs: Import_Job_ImportedInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recipe imported`);
 	return /** @type {LocalizedString} */ (`${countText} recipes imported`)
-	
 };
 
 export const import_job_interrupted = /** @type {(inputs: Import_Job_InterruptedInputs) => LocalizedString} */ () => {
@@ -6663,11 +6659,11 @@ export const import_job_interrupted_guidance = /** @type {(inputs: Import_Job_In
 	return /** @type {LocalizedString} */ (`Imported recipes are in your library. You can import the remaining recipes.`)
 };
 
-export const import_job_not_imported = /** @type {(inputs: Import_Job_Not_ImportedInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_job_not_imported = /** @type {(inputs: Import_Job_Not_ImportedInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recipe not imported`);
 	return /** @type {LocalizedString} */ (`${countText} recipes not imported`)
-	
 };
 
 export const import_job_page_back_to_imports = /** @type {(inputs: Import_Job_Page_Back_To_ImportsInputs) => LocalizedString} */ () => {
@@ -6718,11 +6714,11 @@ export const import_job_page_left = /** @type {(inputs: Import_Job_Page_LeftInpu
 	return /** @type {LocalizedString} */ (`${i?.value1} left`)
 };
 
-export const import_job_page_need_a_look = /** @type {(inputs: Import_Job_Page_Need_A_LookInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_job_page_need_a_look = /** @type {(inputs: Import_Job_Page_Need_A_LookInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recipe needs a look`);
 	return /** @type {LocalizedString} */ (`${countText} recipes need a look`)
-	
 };
 
 export const import_job_page_of_recipes = /** @type {(inputs: Import_Job_Page_Of_RecipesInputs) => LocalizedString} */ (i) => {
@@ -6797,11 +6793,11 @@ export const import_job_presentation_you_can_import_the_remaining_recipes_when_y
 	return /** @type {LocalizedString} */ (`You can import the remaining recipes when you are ready.`)
 };
 
-export const import_job_processed = /** @type {(inputs: Import_Job_ProcessedInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_job_processed = /** @type {(inputs: Import_Job_ProcessedInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recipe processed so far.`);
 	return /** @type {LocalizedString} */ (`${countText} recipes processed so far.`)
-	
 };
 
 export const import_job_results_affected_content = /** @type {(inputs: Import_Job_Results_Affected_ContentInputs) => LocalizedString} */ () => {
@@ -6904,19 +6900,19 @@ export const import_job_review_failed = /** @type {(inputs: Import_Job_Review_Fa
 	return /** @type {LocalizedString} */ (`Review the recipes that could not be imported.`)
 };
 
-export const import_job_running = /** @type {(inputs: Import_Job_RunningInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
-	const finishedText = registry.number("en", i?.finished, {});
+export const import_job_running = /** @type {(inputs: Import_Job_RunningInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
+	const finishedText = registry.number("en", i?.finished, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`Importing ${finishedText} of ${countText} recipe`);
 	return /** @type {LocalizedString} */ (`Importing ${finishedText} of ${countText} recipes`)
-	
 };
 
-export const import_job_skipped = /** @type {(inputs: Import_Job_SkippedInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_job_skipped = /** @type {(inputs: Import_Job_SkippedInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recipe already in your library`);
 	return /** @type {LocalizedString} */ (`${countText} recipes already in your library`)
-	
 };
 
 export const import_job_stopping = /** @type {(inputs: Import_Job_StoppingInputs) => LocalizedString} */ () => {
@@ -6927,11 +6923,11 @@ export const import_job_timing = /** @type {(inputs: Import_Job_TimingInputs) =>
 	return /** @type {LocalizedString} */ (`Timing`)
 };
 
-export const import_job_waiting = /** @type {(inputs: Import_Job_WaitingInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_job_waiting = /** @type {(inputs: Import_Job_WaitingInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recipe waiting to import`);
 	return /** @type {LocalizedString} */ (`${countText} recipes waiting to import`)
-	
 };
 
 export const import_jobs_that_import_could_not_be_read = /** @type {(inputs: Import_Jobs_That_Import_Could_Not_Be_ReadInputs) => LocalizedString} */ () => {
@@ -7002,18 +6998,18 @@ export const import_menu_recipe_collections_pdfs_and_photos = /** @type {(inputs
 	return /** @type {LocalizedString} */ (`Recipe collections, PDFs and photos`)
 };
 
-export const import_photos_pending = /** @type {(inputs: Import_Photos_PendingInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_photos_pending = /** @type {(inputs: Import_Photos_PendingInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} photograph still to fetch`);
 	return /** @type {LocalizedString} */ (`${countText} photographs still to fetch`)
-	
 };
 
-export const import_photos_unavailable = /** @type {(inputs: Import_Photos_UnavailableInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_photos_unavailable = /** @type {(inputs: Import_Photos_UnavailableInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} photograph unavailable`);
 	return /** @type {LocalizedString} */ (`${countText} photographs unavailable`)
-	
 };
 
 export const import_previews_the_corrected_recipe_text_could_not_be_applied = /** @type {(inputs: Import_Previews_The_Corrected_Recipe_Text_Could_Not_Be_AppliedInputs) => LocalizedString} */ () => {
@@ -7052,14 +7048,14 @@ export const import_previews_the_staged_import_could_not_be_reopened = /** @type
 	return /** @type {LocalizedString} */ (`That import review is no longer available.`)
 };
 
-export const import_progress_bytes = /** @type {(inputs: Import_Progress_BytesInputs) => LocalizedString} */ (i) => {const valueText = registry.number("en", i?.value, {});
-	const plural = registry.plural("en", i?.value, {});
+export const import_progress_bytes = /** @type {(inputs: Import_Progress_BytesInputs) => LocalizedString} */ (i) => {
+	const valueText = registry.number("en", i?.value, {}, true);
+	const plural = registry.plural("en", i?.value, {}, true);
 	if (i?.unit === "bytes" && plural === "one") return /** @type {LocalizedString} */ (`${valueText} byte`);
 	if (i?.unit === "bytes") return /** @type {LocalizedString} */ (`${valueText} bytes`);
 	if (i?.unit === "KB") return /** @type {LocalizedString} */ (`${valueText} KB`);
 	if (i?.unit === "MB") return /** @type {LocalizedString} */ (`${valueText} MB`);
 	return /** @type {LocalizedString} */ (`${valueText} GB`)
-	
 };
 
 export const import_progress_bytes_of = /** @type {(inputs: Import_Progress_Bytes_OfInputs) => LocalizedString} */ (i) => {
@@ -7070,12 +7066,12 @@ export const import_progress_fetching_the_recipe_page = /** @type {(inputs: Impo
 	return /** @type {LocalizedString} */ (`Fetching the recipe page`)
 };
 
-export const import_progress_finished = /** @type {(inputs: Import_Progress_FinishedInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
-	const finishedText = registry.number("en", i?.finished, {});
+export const import_progress_finished = /** @type {(inputs: Import_Progress_FinishedInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
+	const finishedText = registry.number("en", i?.finished, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${finishedText} of ${countText} recipe`);
 	return /** @type {LocalizedString} */ (`${finishedText} of ${countText} recipes`)
-	
 };
 
 export const import_progress_hr = /** @type {(inputs: Import_Progress_HrInputs) => LocalizedString} */ (i) => {
@@ -7102,18 +7098,18 @@ export const import_progress_minute = /** @type {(inputs: Import_Progress_Minute
 	return /** @type {LocalizedString} */ (`about a minute`)
 };
 
-export const import_progress_minutes = /** @type {(inputs: Import_Progress_MinutesInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_progress_minutes = /** @type {(inputs: Import_Progress_MinutesInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`about ${countText} minute`);
 	return /** @type {LocalizedString} */ (`about ${countText} minutes`)
-	
 };
 
-export const import_progress_rate = /** @type {(inputs: Import_Progress_RateInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_progress_rate = /** @type {(inputs: Import_Progress_RateInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`about ${countText} recipe per minute`);
 	return /** @type {LocalizedString} */ (`about ${countText} recipes per minute`)
-	
 };
 
 export const import_progress_reading_detail = /** @type {(inputs: Import_Progress_Reading_DetailInputs) => LocalizedString} */ () => {
@@ -7124,29 +7120,29 @@ export const import_progress_sec = /** @type {(inputs: Import_Progress_SecInputs
 	return /** @type {LocalizedString} */ (`${i?.value1} sec`)
 };
 
-export const import_reading_files = /** @type {(inputs: Import_Reading_FilesInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_reading_files = /** @type {(inputs: Import_Reading_FilesInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`Reading ${countText} file`);
 	return /** @type {LocalizedString} */ (`Reading ${countText} files`)
-	
 };
 
 export const import_review_panel_all_recipes = /** @type {(inputs: Import_Review_Panel_All_RecipesInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`All recipes`)
 };
 
-export const import_review_panel_already_here_note = /** @type {(inputs: Import_Review_Panel_Already_Here_NoteInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const import_review_panel_already_here_note = /** @type {(inputs: Import_Review_Panel_Already_Here_NoteInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${countText} recipe is already in your library.`);
 	return /** @type {LocalizedString} */ (`${countText} recipes are already in your library.`)
-	
 };
 
-export const import_review_panel_blocked_note = /** @type {(inputs: Import_Review_Panel_Blocked_NoteInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const import_review_panel_blocked_note = /** @type {(inputs: Import_Review_Panel_Blocked_NoteInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${countText} recipe could not be read.`);
 	return /** @type {LocalizedString} */ (`${countText} recipes could not be read.`)
-	
 };
 
 export const import_review_panel_cannot_be_imported = /** @type {(inputs: Import_Review_Panel_Cannot_Be_ImportedInputs) => LocalizedString} */ () => {
@@ -7173,11 +7169,11 @@ export const import_review_panel_needs_a_decision = /** @type {(inputs: Import_R
 	return /** @type {LocalizedString} */ (`Needs a decision`)
 };
 
-export const import_review_panel_needs_decision = /** @type {(inputs: Import_Review_Panel_Needs_DecisionInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const import_review_panel_needs_decision = /** @type {(inputs: Import_Review_Panel_Needs_DecisionInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${countText} recipe needs a decision.`);
 	return /** @type {LocalizedString} */ (`${countText} recipes need a decision.`)
-	
 };
 
 export const import_review_panel_needs_review = /** @type {(inputs: Import_Review_Panel_Needs_ReviewInputs) => LocalizedString} */ () => {
@@ -7220,29 +7216,29 @@ export const import_review_panel_select_visible = /** @type {(inputs: Import_Rev
 	return /** @type {LocalizedString} */ (`Select visible`)
 };
 
-export const import_review_panel_selection_note = /** @type {(inputs: Import_Review_Panel_Selection_NoteInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const import_review_panel_selection_note = /** @type {(inputs: Import_Review_Panel_Selection_NoteInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${countText} recipe selected`);
 	return /** @type {LocalizedString} */ (`${countText} recipes selected`)
-	
 };
 
 export const import_review_panel_the_recipes = /** @type {(inputs: Import_Review_Panel_The_RecipesInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`The recipes`)
 };
 
-export const import_review_panel_what_is = /** @type {(inputs: Import_Review_Panel_What_IsInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const import_review_panel_what_is = /** @type {(inputs: Import_Review_Panel_What_IsInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${countText} recipe will be added to your library.`);
 	return /** @type {LocalizedString} */ (`${countText} recipes will be added to your library.`)
-	
 };
 
-export const import_sending_files = /** @type {(inputs: Import_Sending_FilesInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const import_sending_files = /** @type {(inputs: Import_Sending_FilesInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`Sending ${countText} file`);
 	return /** @type {LocalizedString} */ (`Sending ${countText} files`)
-	
 };
 
 export const import_source_dialogs_edit_recipe_text = /** @type {(inputs: Import_Source_Dialogs_Edit_Recipe_TextInputs) => LocalizedString} */ () => {
@@ -7293,11 +7289,11 @@ export const imports_page_imports = /** @type {(inputs: Imports_Page_ImportsInpu
 	return /** @type {LocalizedString} */ (`Imports`)
 };
 
-export const imports_page_lead_and_others = /** @type {(inputs: Imports_Page_Lead_And_OthersInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const imports_page_lead_and_others = /** @type {(inputs: Imports_Page_Lead_And_OthersInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${i?.title} and ${countText} other`);
 	return /** @type {LocalizedString} */ (`${i?.title} and ${countText} others`)
-	
 };
 
 export const imports_page_load_more_imports = /** @type {(inputs: Imports_Page_Load_More_ImportsInputs) => LocalizedString} */ () => {
@@ -8416,11 +8412,11 @@ export const measurement_decisions_exceptions = /** @type {(inputs: Measurement_
 	return /** @type {LocalizedString} */ (`Exceptions`)
 };
 
-export const measurement_decisions_intro = /** @type {(inputs: Measurement_Decisions_IntroInputs) => LocalizedString} */ (i) => {const measurementsText = registry.number("en", i?.measurements, {});
-	const measurementsPlural = registry.plural("en", i?.measurements, {});
+export const measurement_decisions_intro = /** @type {(inputs: Measurement_Decisions_IntroInputs) => LocalizedString} */ (i) => {
+	const measurementsText = registry.number("en", i?.measurements, {}, true);
+	const measurementsPlural = registry.plural("en", i?.measurements, {}, true);
 	if (measurementsPlural === "one") return /** @type {LocalizedString} */ (`${measurementsText} measurement names a size that differs by country. Unanswered ones import as written.`);
 	return /** @type {LocalizedString} */ (`${measurementsText} measurements name sizes that differ by country. Unanswered ones import as written.`)
-	
 };
 
 export const measurement_decisions_keep_as_written = /** @type {(inputs: Measurement_Decisions_Keep_As_WrittenInputs) => LocalizedString} */ () => {
@@ -8431,69 +8427,69 @@ export const measurement_decisions_loading = /** @type {(inputs: Measurement_Dec
 	return /** @type {LocalizedString} */ (`Loading…`)
 };
 
-export const measurement_decisions_outcome_excluded = /** @type {(inputs: Measurement_Decisions_Outcome_ExcludedInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const measurement_decisions_outcome_excluded = /** @type {(inputs: Measurement_Decisions_Outcome_ExcludedInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${countText} excluded.`);
 	return /** @type {LocalizedString} */ (`${countText} excluded.`)
-	
 };
 
-export const measurement_decisions_outcome_kept = /** @type {(inputs: Measurement_Decisions_Outcome_KeptInputs) => LocalizedString} */ (i) => {const measurementsText = registry.number("en", i?.measurements, {});
-	const measurementsPlural = registry.plural("en", i?.measurements, {});
-	const recipesText = registry.number("en", i?.recipes, {});
-	const recipesPlural = registry.plural("en", i?.recipes, {});
+export const measurement_decisions_outcome_kept = /** @type {(inputs: Measurement_Decisions_Outcome_KeptInputs) => LocalizedString} */ (i) => {
+	const measurementsText = registry.number("en", i?.measurements, {}, true);
+	const measurementsPlural = registry.plural("en", i?.measurements, {}, true);
+	const recipesText = registry.number("en", i?.recipes, {}, true);
+	const recipesPlural = registry.plural("en", i?.recipes, {}, true);
 	if (measurementsPlural === "one" && recipesPlural === "one") return /** @type {LocalizedString} */ (`Keeps ${measurementsText} measurement in ${recipesText} recipe as written.`);
 	if (measurementsPlural === "one") return /** @type {LocalizedString} */ (`Keeps ${measurementsText} measurement in ${recipesText} recipes as written.`);
 	if (recipesPlural === "one") return /** @type {LocalizedString} */ (`Keeps ${measurementsText} measurements in ${recipesText} recipe as written.`);
 	return /** @type {LocalizedString} */ (`Keeps ${measurementsText} measurements in ${recipesText} recipes as written.`)
-	
 };
 
-export const measurement_decisions_outcome_pending = /** @type {(inputs: Measurement_Decisions_Outcome_PendingInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const measurement_decisions_outcome_pending = /** @type {(inputs: Measurement_Decisions_Outcome_PendingInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${countText} waits for another measure in the same ingredient.`);
 	return /** @type {LocalizedString} */ (`${countText} wait for another measure in the same ingredient.`)
-	
 };
 
-export const measurement_decisions_outcome_read = /** @type {(inputs: Measurement_Decisions_Outcome_ReadInputs) => LocalizedString} */ (i) => {const measurementsText = registry.number("en", i?.measurements, {});
-	const measurementsPlural = registry.plural("en", i?.measurements, {});
-	const recipesText = registry.number("en", i?.recipes, {});
-	const recipesPlural = registry.plural("en", i?.recipes, {});
+export const measurement_decisions_outcome_read = /** @type {(inputs: Measurement_Decisions_Outcome_ReadInputs) => LocalizedString} */ (i) => {
+	const measurementsText = registry.number("en", i?.measurements, {}, true);
+	const measurementsPlural = registry.plural("en", i?.measurements, {}, true);
+	const recipesText = registry.number("en", i?.recipes, {}, true);
+	const recipesPlural = registry.plural("en", i?.recipes, {}, true);
 	if (measurementsPlural === "one" && recipesPlural === "one") return /** @type {LocalizedString} */ (`Reads ${measurementsText} measurement in ${recipesText} recipe.`);
 	if (measurementsPlural === "one") return /** @type {LocalizedString} */ (`Reads ${measurementsText} measurement in ${recipesText} recipes.`);
 	if (recipesPlural === "one") return /** @type {LocalizedString} */ (`Reads ${measurementsText} measurements in ${recipesText} recipe.`);
 	return /** @type {LocalizedString} */ (`Reads ${measurementsText} measurements in ${recipesText} recipes.`)
-	
 };
 
-export const measurement_decisions_outcome_unreadable = /** @type {(inputs: Measurement_Decisions_Outcome_UnreadableInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const measurement_decisions_outcome_unreadable = /** @type {(inputs: Measurement_Decisions_Outcome_UnreadableInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${countText} unreadable, kept as written.`);
 	return /** @type {LocalizedString} */ (`${countText} unreadable, kept as written.`)
-	
 };
 
-export const measurement_decisions_reach = /** @type {(inputs: Measurement_Decisions_ReachInputs) => LocalizedString} */ (i) => {const measurementsText = registry.number("en", i?.measurements, {});
-	const measurementsPlural = registry.plural("en", i?.measurements, {});
-	const recipesText = registry.number("en", i?.recipes, {});
-	const recipesPlural = registry.plural("en", i?.recipes, {});
+export const measurement_decisions_reach = /** @type {(inputs: Measurement_Decisions_ReachInputs) => LocalizedString} */ (i) => {
+	const measurementsText = registry.number("en", i?.measurements, {}, true);
+	const measurementsPlural = registry.plural("en", i?.measurements, {}, true);
+	const recipesText = registry.number("en", i?.recipes, {}, true);
+	const recipesPlural = registry.plural("en", i?.recipes, {}, true);
 	if (measurementsPlural === "one" && recipesPlural === "one") return /** @type {LocalizedString} */ (`${measurementsText} measurement · ${recipesText} recipe`);
 	if (measurementsPlural === "one") return /** @type {LocalizedString} */ (`${measurementsText} measurement · ${recipesText} recipes`);
 	if (recipesPlural === "one") return /** @type {LocalizedString} */ (`${measurementsText} measurements · ${recipesText} recipe`);
 	return /** @type {LocalizedString} */ (`${measurementsText} measurements · ${recipesText} recipes`)
-	
 };
 
 export const measurement_decisions_read_these_as = /** @type {(inputs: Measurement_Decisions_Read_These_AsInputs) => LocalizedString} */ (i) => {
 	return /** @type {LocalizedString} */ (`Read ${i?.measure} as`)
 };
 
-export const measurement_decisions_separately = /** @type {(inputs: Measurement_Decisions_SeparatelyInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const measurement_decisions_separately = /** @type {(inputs: Measurement_Decisions_SeparatelyInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`Answer the measure separately`);
 	return /** @type {LocalizedString} */ (`Answer the ${countText} measures separately`)
-	
 };
 
 export const measurement_decisions_title = /** @type {(inputs: Measurement_Decisions_TitleInputs) => LocalizedString} */ () => {
@@ -9288,15 +9284,17 @@ export const pdf_preview_page = /** @type {(inputs: Pdf_Preview_PageInputs) => L
 	return /** @type {LocalizedString} */ (`Page ${i?.value1}`)
 };
 
-export const pdf_preview_page_number = /** @type {(inputs: Pdf_Preview_Page_NumberInputs) => LocalizedString} */ (i) => {const pageText = registry.number("en", i?.page, {});
+export const pdf_preview_page_number = /** @type {(inputs: Pdf_Preview_Page_NumberInputs) => LocalizedString} */ (i) => {
+	const pageText = registry.number("en", i?.page, {}, true);
 	if (i?.unit === "page") return /** @type {LocalizedString} */ (`page ${pageText}`);
 	if (i?.unit === "sheet") return /** @type {LocalizedString} */ (`sheet ${pageText}`);
 	if (i?.unit === "card") return /** @type {LocalizedString} */ (`card ${pageText}`);
 	return /** @type {LocalizedString} */ ("pdf_preview_page_number");
 };
 
-export const pdf_preview_pages_count = /** @type {(inputs: Pdf_Preview_Pages_CountInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.pages, {});
-	const plural = registry.plural("en", i?.pages, {});
+export const pdf_preview_pages_count = /** @type {(inputs: Pdf_Preview_Pages_CountInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.pages, {}, true);
+	const plural = registry.plural("en", i?.pages, {}, true);
 	if (i?.unit === "page" && plural === "one") return /** @type {LocalizedString} */ (`${countText} page`);
 	if (i?.unit === "sheet" && plural === "one") return /** @type {LocalizedString} */ (`${countText} sheet`);
 	if (i?.unit === "card" && plural === "one") return /** @type {LocalizedString} */ (`${countText} card`);
@@ -10356,7 +10354,6 @@ export const quantity_label_part_position = /** @type {(inputs: Quantity_Label_P
 export const quantity_one_amount = /** @type {(inputs: Quantity_One_AmountInputs) => LocalizedString} */ (i) => {
 	if (i?.level === "nested") return /** @type {LocalizedString} */ (`One amount`);
 	return /** @type {LocalizedString} */ (`One amount or wording`)
-	
 };
 
 export const quantity_placeholder_example = /** @type {(inputs: Quantity_Placeholder_ExampleInputs) => LocalizedString} */ () => {
@@ -11191,11 +11188,11 @@ export const scale_controls_how_many = /** @type {(inputs: Scale_Controls_How_Ma
 	return /** @type {LocalizedString} */ (`How many ${i?.value1}`)
 };
 
-export const scale_controls_kept_as_written = /** @type {(inputs: Scale_Controls_Kept_As_WrittenInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const countPlural = registry.plural("en", i?.count, {});
+export const scale_controls_kept_as_written = /** @type {(inputs: Scale_Controls_Kept_As_WrittenInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const countPlural = registry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`Some amounts could not be scaled: ${countText} ingredient still reads as the recipe wrote it.`);
 	return /** @type {LocalizedString} */ (`Some amounts could not be scaled: ${countText} ingredients still read as the recipe wrote them.`)
-	
 };
 
 export const scale_controls_make_less = /** @type {(inputs: Scale_Controls_Make_LessInputs) => LocalizedString} */ () => {
@@ -11266,11 +11263,11 @@ export const selection_print_page_choose_some_recipes_to_print = /** @type {(inp
 	return /** @type {LocalizedString} */ (`Choose some recipes to print.`)
 };
 
-export const selection_print_page_recipes = /** @type {(inputs: Selection_Print_Page_RecipesInputs) => LocalizedString} */ (i) => {const countText = registry.number("en", i?.count, {});
-	const plural = registry.plural("en", i?.count, {});
+export const selection_print_page_recipes = /** @type {(inputs: Selection_Print_Page_RecipesInputs) => LocalizedString} */ (i) => {
+	const countText = registry.number("en", i?.count, {}, true);
+	const plural = registry.plural("en", i?.count, {}, true);
 	if (plural === "one") return /** @type {LocalizedString} */ (`${countText} recipe`);
 	return /** @type {LocalizedString} */ (`${countText} recipes`)
-	
 };
 
 export const selection_print_page_recipes_heading = /** @type {(inputs: Selection_Print_Page_Recipes_HeadingInputs) => LocalizedString} */ () => {

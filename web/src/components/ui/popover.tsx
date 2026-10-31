@@ -1,9 +1,10 @@
-import { Popover as ArkPopover } from "@ark-ui/solid/popover"
-import { type ComponentProps, type JSX, Show, splitProps } from "solid-js"
-import { Portal } from "solid-js/web"
+import { Popover as ArkPopover, usePopoverContext } from "@ark-ui/solid/popover"
+import { type ComponentProps, type JSX, onMount, Show, splitProps } from "solid-js"
 import { createSlotRecipeContext } from "styled-system/jsx"
 import { visuallyHidden } from "styled-system/patterns"
 import { popover } from "styled-system/recipes"
+
+import { PresencePortal } from "./presence-portal"
 
 const { withRootProvider, withContext } = createSlotRecipeContext(popover)
 
@@ -13,6 +14,17 @@ const Root = withRootProvider(ArkPopover.Root, {
 const Positioner = withContext(ArkPopover.Positioner, "positioner")
 const Content = withContext(ArkPopover.Content, "content")
 const Title = withContext(ArkPopover.Title, "title")
+
+/**
+ * The popover positions its panel once, a frame after it opens. A panel that
+ * mounts later is never positioned and stays off screen, so position it when
+ * it mounts.
+ */
+const PositionOnMount = () => {
+  const popover = usePopoverContext()
+  onMount(() => popover().reposition())
+  return null
+}
 
 type TriggerRender = NonNullable<ComponentProps<typeof ArkPopover.Trigger>["asChild"]>
 type CloseRender = NonNullable<ComponentProps<typeof ArkPopover.CloseTrigger>["asChild"]>
@@ -34,8 +46,9 @@ export const Popover = (props: PopoverProps) => {
   return (
     <Root {...rootProps}>
       <ArkPopover.Trigger asChild={local.trigger} />
-      <Portal>
+      <PresencePortal>
         <Positioner>
+          <PositionOnMount />
           <Content>
             <Show
               when={!local.hideTitle}
@@ -46,7 +59,7 @@ export const Popover = (props: PopoverProps) => {
             {local.children}
           </Content>
         </Positioner>
-      </Portal>
+      </PresencePortal>
     </Root>
   )
 }

@@ -15,12 +15,13 @@ import {
   type JSX,
   Show,
 } from "solid-js"
-import { Portal } from "solid-js/web"
 import { css } from "styled-system/css"
 import { createSlotRecipeContext } from "styled-system/jsx"
 import { select } from "styled-system/recipes"
 
 import { interfaceAttributes } from "@/lib/i18n"
+
+import { PresencePortal } from "./presence-portal"
 
 const { withRootProvider, withContext } = createSlotRecipeContext(select)
 
@@ -220,7 +221,7 @@ export const Select = (props: SelectProps) => {
             </Indicator>
           </Trigger>
         </Control>
-        <Portal>
+        <PresencePortal>
           <Positioner>
             <Content>
               <List>
@@ -228,7 +229,7 @@ export const Select = (props: SelectProps) => {
               </List>
             </Content>
           </Positioner>
-        </Portal>
+        </PresencePortal>
       </Root>
     </LocaleProvider>
   )

@@ -1,10 +1,10 @@
 import { Dialog as ArkDialog } from "@ark-ui/solid/dialog"
 import { type ComponentProps, type JSX, Show, onCleanup, splitProps } from "solid-js"
-import { Portal } from "solid-js/web"
 import { createSlotRecipeContext } from "styled-system/jsx"
 import { dialog } from "styled-system/recipes"
 
 import { Button } from "./button"
+import { PresencePortal } from "./presence-portal"
 
 const { withRootProvider, withContext } = createSlotRecipeContext(dialog)
 
@@ -79,7 +79,7 @@ export const Dialog = (props: DialogProps) => {
       }}
     >
       <Show when={local.trigger}>{(trigger) => <ArkDialog.Trigger asChild={trigger()} />}</Show>
-      <Portal>
+      <PresencePortal>
         <Backdrop />
         <Positioner>
           <Content class={local.contentClass}>
@@ -93,7 +93,7 @@ export const Dialog = (props: DialogProps) => {
             </Show>
           </Content>
         </Positioner>
-      </Portal>
+      </PresencePortal>
     </Root>
   )
 }

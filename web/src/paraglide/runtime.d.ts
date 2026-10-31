@@ -155,12 +155,14 @@ export function extractLocaleFromUrl(url: URL | string): Locale | undefined;
  * // => URL("https://de.example.com/store")
  * ```
  *
- * @param {string | URL} url - The URL to localize. If string, must be absolute.
+ * @param {string | { readonly href: string }} url - The URL to localize. Accepts readonly URL objects. If string, must be absolute.
  * @param {object} [options] - Options for localization
  * @param {Locale} [options.locale] - Target locale. If not provided, uses getLocale()
  * @returns {URL} The localized URL, always absolute
  */
-export function localizeUrl(url: string | URL, options?: {
+export function localizeUrl(url: string | {
+    readonly href: string;
+}, options?: {
     locale?: Locale;
 }): URL;
 /**
@@ -199,10 +201,12 @@ export function localizeUrl(url: string | URL, options?: {
  * deLocalizeUrl(url); // => URL("https://example.com/store")
  * ```
  *
- * @param {string | URL} url - The URL to de-localize. If string, must be absolute.
+ * @param {string | { readonly href: string }} url - The URL to de-localize. Accepts readonly URL objects. If string, must be absolute.
  * @returns {URL} The de-localized URL, always absolute
  */
-export function deLocalizeUrl(url: string | URL): URL;
+export function deLocalizeUrl(url: string | {
+    readonly href: string;
+}): URL;
 /**
  * Aggregates named groups from various parts of the URLPattern match result.
  *
@@ -344,6 +348,10 @@ export function shouldRedirect(input?: ShouldRedirectInput): Promise<ShouldRedir
  * // Cross-origin links remain absolute
  * localizeHref("https://other-site.com/about")
  * // => "https://other-site.com/de/about"
+ *
+ * // Protocol-relative links stay protocol-relative
+ * localizeHref("//other-site.com/about")
+ * // => "//other-site.com/de/about"
  * ```
  *
  * For server-side URL localization (e.g., in middleware), use `localizeUrl()`
@@ -389,6 +397,10 @@ export function localizeHref(href: string, options?: {
  * // Cross-origin links remain absolute
  * deLocalizeHref("https://example.com/de/about")
  * // => "https://example.com/about"
+ *
+ * // Protocol-relative links stay protocol-relative
+ * deLocalizeHref("//example.com/de/about")
+ * // => "//example.com/about"
  * ```
  *
  * For server-side URL de-localization (e.g., in middleware), use `deLocalizeUrl()`
@@ -501,6 +513,8 @@ export const cookieName: string;
 export const cookieMaxAge: number;
 /** @type {string} */
 export const cookieDomain: string;
+export const cookieSameSite: "lax" | "strict" | "none" | undefined;
+export const cookieSecure: boolean | "auto";
 /** @type {string} */
 export const localStorageKey: string;
 /**

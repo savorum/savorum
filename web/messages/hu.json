@@ -2053,7 +2053,6 @@
   "account_sessions_other": "Másik böngésző",
   "account_sessions_detail": "{method} · Utoljára aktív: {last} · Bejelentkezés: {created}",
   "account_sessions_revoke": "Munkamenet visszavonása",
-  "account_sessions_revoke_named": "A(z) {last} időpontban utoljára aktív munkamenet visszavonása",
   "account_sessions_revoked": "Munkamenet visszavonva.",
   "account_sessions_revoke_others": "Kijelentkezés az összes többi munkamenetből",
   "account_sessions_others_revoked": "A többi munkamenet visszavonva.",

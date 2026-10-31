@@ -1942,7 +1942,6 @@
   "account_sessions_other": "เบราว์เซอร์อื่น",
   "account_sessions_detail": "{method} · ใช้งานล่าสุด {last} · ลงชื่อเข้าใช้ {created}",
   "account_sessions_revoke": "เพิกถอนเซสชัน",
-  "account_sessions_revoke_named": "เพิกถอนเซสชันที่ใช้งานล่าสุด {last}",
   "account_sessions_revoked": "เพิกถอนเซสชันแล้ว",
   "account_sessions_revoke_others": "ลงชื่อออกจากเซสชันอื่นทั้งหมด",
   "account_sessions_others_revoked": "เพิกถอนเซสชันอื่นแล้ว",

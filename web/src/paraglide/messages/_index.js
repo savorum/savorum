@@ -352,7 +352,6 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Account_Sessions_Other_HeadingInputs */
 /** @typedef {{}} Account_Sessions_Others_RevokedInputs */
 /** @typedef {{}} Account_Sessions_RevokeInputs */
-/** @typedef {{ last: NonNullable<unknown> }} Account_Sessions_Revoke_NamedInputs */
 /** @typedef {{}} Account_Sessions_Revoke_OthersInputs */
 /** @typedef {{}} Account_Sessions_RevokedInputs */
 /** @typedef {{ date: NonNullable<unknown> }} Account_Sessions_Signed_InInputs */
@@ -16841,47 +16840,6 @@ export const account_sessions_revoke = /** @type {((inputs?: Account_Sessions_Re
 	if (locale === "zh-Hans") return __zh_hans1.account_sessions_revoke(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_sessions_revoke(inputs)
 	return __en.account_sessions_revoke(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "Revoke the session last active {last}" |
-*
-* @param {Account_Sessions_Revoke_NamedInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const account_sessions_revoke_named = /** @type {((inputs: Account_Sessions_Revoke_NamedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Sessions_Revoke_NamedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.account_sessions_revoke_named(inputs)
-	if (locale === "cs") return __cs.account_sessions_revoke_named(inputs)
-	if (locale === "da") return __da.account_sessions_revoke_named(inputs)
-	if (locale === "de") return __de.account_sessions_revoke_named(inputs)
-	if (locale === "el") return __el.account_sessions_revoke_named(inputs)
-	if (locale === "es") return __es.account_sessions_revoke_named(inputs)
-	if (locale === "fi") return __fi.account_sessions_revoke_named(inputs)
-	if (locale === "fr") return __fr.account_sessions_revoke_named(inputs)
-	if (locale === "he") return __he.account_sessions_revoke_named(inputs)
-	if (locale === "hu") return __hu.account_sessions_revoke_named(inputs)
-	if (locale === "id") return __id.account_sessions_revoke_named(inputs)
-	if (locale === "it") return __it.account_sessions_revoke_named(inputs)
-	if (locale === "ja") return __ja.account_sessions_revoke_named(inputs)
-	if (locale === "ko") return __ko.account_sessions_revoke_named(inputs)
-	if (locale === "nb") return __nb.account_sessions_revoke_named(inputs)
-	if (locale === "nl") return __nl.account_sessions_revoke_named(inputs)
-	if (locale === "pl") return __pl.account_sessions_revoke_named(inputs)
-	if (locale === "pt-BR") return __pt_br2.account_sessions_revoke_named(inputs)
-	if (locale === "pt-PT") return __pt_pt2.account_sessions_revoke_named(inputs)
-	if (locale === "ro") return __ro.account_sessions_revoke_named(inputs)
-	if (locale === "ru") return __ru.account_sessions_revoke_named(inputs)
-	if (locale === "sv") return __sv.account_sessions_revoke_named(inputs)
-	if (locale === "th") return __th.account_sessions_revoke_named(inputs)
-	if (locale === "tr") return __tr.account_sessions_revoke_named(inputs)
-	if (locale === "uk") return __uk.account_sessions_revoke_named(inputs)
-	if (locale === "vi") return __vi.account_sessions_revoke_named(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.account_sessions_revoke_named(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.account_sessions_revoke_named(inputs)
-	return __en.account_sessions_revoke_named(inputs)
 });
 /**
 * | output |

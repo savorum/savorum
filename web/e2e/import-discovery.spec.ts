@@ -183,8 +183,10 @@ test("the bar is the places a cook reads from and the rest is grouped by what it
   await page.getByRole("button", { name: "Add recipes", exact: true }).click()
   const menu = page.getByRole("menu")
   await expect(menu.getByRole("group", { name: "Bring recipes in", exact: true })).toBeVisible()
-  for (const name of ["From a file", "From a website", "From text", "Recent imports"])
-    await expect(menu.getByRole("menuitem", { name, exact: true })).toBeVisible()
+  for (const name of [/^From a file/, /^From a website/, /^From text/, "Recent imports"])
+    await expect(
+      menu.getByRole("menuitem", { name, exact: name === "Recent imports" }),
+    ).toBeVisible()
   await expect(menu).not.toContainText("Compare")
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390)
   await menu.getByRole("menuitem", { name: "Recent imports", exact: true }).click()

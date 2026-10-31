@@ -2060,7 +2060,6 @@
   "account_sessions_other": "En annan webbläsare",
   "account_sessions_detail": "{method} · Senast aktiv {last} · Inloggad {created}",
   "account_sessions_revoke": "Återkalla session",
-  "account_sessions_revoke_named": "Återkalla sessionen som senast var aktiv {last}",
   "account_sessions_revoked": "Session återkallad.",
   "account_sessions_revoke_others": "Logga ut alla andra sessioner",
   "account_sessions_others_revoked": "Övriga sessioner återkallade.",

@@ -4902,20 +4902,6 @@ export const account_sessions_revoke: ((inputs?: Account_Sessions_RevokeInputs, 
 /**
 * | output |
 * | --- |
-* | "Revoke the session last active {last}" |
-*
-* @param {Account_Sessions_Revoke_NamedInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const account_sessions_revoke_named: ((inputs: Account_Sessions_Revoke_NamedInputs, options?: {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}) => LocalizedString) & import("../runtime.js").MessageMetadata<Account_Sessions_Revoke_NamedInputs, {
-    locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
-}, {}>;
-/**
-* | output |
-* | --- |
 * | "Sign out all other sessions" |
 *
 * @param {Account_Sessions_Revoke_OthersInputs} inputs
@@ -34862,9 +34848,6 @@ export type Account_Sessions_OtherInputs = {};
 export type Account_Sessions_Other_HeadingInputs = {};
 export type Account_Sessions_Others_RevokedInputs = {};
 export type Account_Sessions_RevokeInputs = {};
-export type Account_Sessions_Revoke_NamedInputs = {
-    last: NonNullable<unknown>;
-};
 export type Account_Sessions_Revoke_OthersInputs = {};
 export type Account_Sessions_RevokedInputs = {};
 export type Account_Sessions_Signed_InInputs = {

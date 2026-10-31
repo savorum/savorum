@@ -2059,7 +2059,6 @@
   "account_sessions_other": "Başka bir tarayıcı",
   "account_sessions_detail": "{method} · Son etkinlik: {last} · Giriş: {created}",
   "account_sessions_revoke": "Oturumu iptal et",
-  "account_sessions_revoke_named": "Son etkinliği {last} olan oturumu iptal et",
   "account_sessions_revoked": "Oturum iptal edildi.",
   "account_sessions_revoke_others": "Diğer tüm oturumları kapat",
   "account_sessions_others_revoked": "Diğer oturumlar iptal edildi.",

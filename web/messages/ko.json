@@ -1945,7 +1945,6 @@
   "account_sessions_other": "다른 브라우저",
   "account_sessions_detail": "{method} · 마지막 활동 {last} · 로그인 {created}",
   "account_sessions_revoke": "세션 해제",
-  "account_sessions_revoke_named": "마지막 활동이 {last}인 세션 해제",
   "account_sessions_revoked": "세션을 해제했습니다.",
   "account_sessions_revoke_others": "다른 모든 세션 로그아웃",
   "account_sessions_others_revoked": "다른 세션을 해제했습니다.",

@@ -2386,7 +2386,6 @@
   "account_sessions_other": "Jiný prohlížeč",
   "account_sessions_detail": "{method} · Poslední aktivita {last} · Přihlášení {created}",
   "account_sessions_revoke": "Odvolat relaci",
-  "account_sessions_revoke_named": "Odvolat relaci naposledy aktivní {last}",
   "account_sessions_revoked": "Relace odvolána.",
   "account_sessions_revoke_others": "Odhlásit všechny ostatní relace",
   "account_sessions_others_revoked": "Ostatní relace odvolány.",

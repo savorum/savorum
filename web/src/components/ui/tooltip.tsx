@@ -1,8 +1,9 @@
 import { Tooltip as ArkTooltip } from "@ark-ui/solid/tooltip"
 import { type ComponentProps, type JSX, Show, splitProps } from "solid-js"
-import { Portal } from "solid-js/web"
 import { createSlotRecipeContext } from "styled-system/jsx"
 import { tooltip } from "styled-system/recipes"
+
+import { PresencePortal } from "./presence-portal"
 
 const { withRootProvider, withContext } = createSlotRecipeContext(tooltip)
 
@@ -65,7 +66,7 @@ export const Tooltip = (props: TooltipProps) => {
             </Positioner>
           }
         >
-          <Portal mount={local.portalRef}>
+          <PresencePortal mount={local.portalRef}>
             <Positioner>
               <Content {...local.contentProps}>
                 <Show when={local.showArrow}>
@@ -76,7 +77,7 @@ export const Tooltip = (props: TooltipProps) => {
                 {local.content}
               </Content>
             </Positioner>
-          </Portal>
+          </PresencePortal>
         </Show>
       </Root>
     </Show>

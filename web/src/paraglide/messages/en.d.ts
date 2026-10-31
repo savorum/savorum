@@ -348,7 +348,6 @@ export const account_sessions_other: (inputs: Account_Sessions_OtherInputs) => L
 export const account_sessions_other_heading: (inputs: Account_Sessions_Other_HeadingInputs) => LocalizedString;
 export const account_sessions_others_revoked: (inputs: Account_Sessions_Others_RevokedInputs) => LocalizedString;
 export const account_sessions_revoke: (inputs: Account_Sessions_RevokeInputs) => LocalizedString;
-export const account_sessions_revoke_named: (inputs: Account_Sessions_Revoke_NamedInputs) => LocalizedString;
 export const account_sessions_revoke_others: (inputs: Account_Sessions_Revoke_OthersInputs) => LocalizedString;
 export const account_sessions_revoked: (inputs: Account_Sessions_RevokedInputs) => LocalizedString;
 export const account_sessions_signed_in: (inputs: Account_Sessions_Signed_InInputs) => LocalizedString;
@@ -2890,9 +2889,6 @@ export type Account_Sessions_OtherInputs = {};
 export type Account_Sessions_Other_HeadingInputs = {};
 export type Account_Sessions_Others_RevokedInputs = {};
 export type Account_Sessions_RevokeInputs = {};
-export type Account_Sessions_Revoke_NamedInputs = {
-    last: NonNullable<unknown>;
-};
 export type Account_Sessions_Revoke_OthersInputs = {};
 export type Account_Sessions_RevokedInputs = {};
 export type Account_Sessions_Signed_InInputs = {

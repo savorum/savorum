@@ -2054,7 +2054,6 @@
   "account_sessions_other": "Toinen selain",
   "account_sessions_detail": "{method} · Viimeksi aktiivinen {last} · Kirjautunut {created}",
   "account_sessions_revoke": "Peru istunto",
-  "account_sessions_revoke_named": "Peru istunto, joka oli viimeksi aktiivinen {last}",
   "account_sessions_revoked": "Istunto peruttu.",
   "account_sessions_revoke_others": "Kirjaa kaikki muut istunnot ulos",
   "account_sessions_others_revoked": "Muut istunnot peruttu.",

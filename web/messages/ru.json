@@ -2399,7 +2399,6 @@
   "account_sessions_other": "Другой браузер",
   "account_sessions_detail": "{method} · Последняя активность: {last} · Вход: {created}",
   "account_sessions_revoke": "Отозвать сеанс",
-  "account_sessions_revoke_named": "Отозвать сеанс с последней активностью {last}",
   "account_sessions_revoked": "Сеанс отозван.",
   "account_sessions_revoke_others": "Выйти из всех остальных сеансов",
   "account_sessions_others_revoked": "Остальные сеансы отозваны.",

@@ -3,11 +3,12 @@ import { LocaleProvider } from "@ark-ui/solid/locale"
 import { Menu as ArkMenu } from "@ark-ui/solid/menu"
 import { Check } from "lucide-solid"
 import { type ComponentProps, type JSX, splitProps } from "solid-js"
-import { Portal } from "solid-js/web"
 import { createSlotRecipeContext } from "styled-system/jsx"
 import { menu } from "styled-system/recipes"
 
 import { interfaceAttributes } from "@/lib/i18n"
+
+import { PresencePortal } from "./presence-portal"
 
 const { withRootProvider, withContext } = createSlotRecipeContext(menu)
 
@@ -103,11 +104,11 @@ export const Menu = (props: MenuProps) => {
     <LocaleProvider locale={interfaceAttributes().lang}>
       <Root {...rootProps}>
         <ArkMenu.Trigger asChild={local.trigger} />
-        <Portal>
+        <PresencePortal>
           <Positioner>
             <Content>{local.children}</Content>
           </Positioner>
-        </Portal>
+        </PresencePortal>
       </Root>
     </LocaleProvider>
   )

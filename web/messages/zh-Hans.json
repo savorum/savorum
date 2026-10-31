@@ -1945,7 +1945,6 @@
   "account_sessions_other": "其他浏览器",
   "account_sessions_detail": "{method} · 上次活跃 {last} · 登录时间 {created}",
   "account_sessions_revoke": "撤销会话",
-  "account_sessions_revoke_named": "撤销上次活跃于 {last} 的会话",
   "account_sessions_revoked": "会话已撤销。",
   "account_sessions_revoke_others": "退出所有其他会话",
   "account_sessions_others_revoked": "其他会话已撤销。",

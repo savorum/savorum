@@ -2060,7 +2060,6 @@
   "account_sessions_other": "Een andere browser",
   "account_sessions_detail": "{method} · Laatst actief {last} · Aangemeld {created}",
   "account_sessions_revoke": "Sessie intrekken",
-  "account_sessions_revoke_named": "Sessie intrekken die voor het laatst actief was op {last}",
   "account_sessions_revoked": "Sessie ingetrokken.",
   "account_sessions_revoke_others": "Alle andere sessies afmelden",
   "account_sessions_others_revoked": "Andere sessies ingetrokken.",

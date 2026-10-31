@@ -79,7 +79,7 @@ export function SessionsPanel() {
                 <div
                   class={css({ display: "flex", flexWrap: "wrap", columnGap: "3", rowGap: "1" })}
                 >
-                  <p class={styles.muted}>
+                  <p class={styles.muted} id={`session-last-active-${session.id}`}>
                     <time dateTime={session.last_seen_at}>
                       {m.account_sessions_last_active({
                         date: formatDateTime(session.last_seen_at),
@@ -99,9 +99,7 @@ export function SessionsPanel() {
                     size="sm"
                     variant="outline"
                     disabled={busy()}
-                    aria-label={m.account_sessions_revoke_named({
-                      last: formatDateTime(session.last_seen_at),
-                    })}
+                    aria-describedby={`session-last-active-${session.id}`}
                     onClick={() =>
                       void run(
                         () =>

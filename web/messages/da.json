@@ -2060,7 +2060,6 @@
   "account_sessions_other": "En anden browser",
   "account_sessions_detail": "{method} · Sidst aktiv {last} · Logget ind {created}",
   "account_sessions_revoke": "Tilbagekald session",
-  "account_sessions_revoke_named": "Tilbagekald sessionen, der sidst var aktiv {last}",
   "account_sessions_revoked": "Session tilbagekaldt.",
   "account_sessions_revoke_others": "Log alle andre sessioner ud",
   "account_sessions_others_revoked": "Andre sessioner tilbagekaldt.",

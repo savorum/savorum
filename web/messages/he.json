@@ -2062,7 +2062,6 @@
   "account_sessions_other": "דפדפן אחר",
   "account_sessions_detail": "{method} · פעילות אחרונה: {last} · התחברות: {created}",
   "account_sessions_revoke": "ביטול הפעלה",
-  "account_sessions_revoke_named": "ביטול ההפעלה שהפעילות האחרונה בה הייתה ב־{last}",
   "account_sessions_revoked": "ההפעלה בוטלה.",
   "account_sessions_revoke_others": "יציאה מכל ההפעלות האחרות",
   "account_sessions_others_revoked": "ההפעלות האחרות בוטלו.",

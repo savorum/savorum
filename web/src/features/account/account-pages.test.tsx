@@ -382,7 +382,7 @@ test("sessions put the current browser first and keep both activity dates", asyn
   expect(within(rows[0]!).queryByRole("button")).toBeNull()
   expect(screen.getAllByText(/^Last active /)).toHaveLength(2)
   expect(screen.getAllByText(/^Signed in /)).toHaveLength(2)
-  expect(within(rows[1]!).getByRole("button", { name: /^Revoke the session/ })).toBeTruthy()
+  expect(within(rows[1]!).getByRole("button", { name: "Revoke session" })).toBeTruthy()
 })
 
 test("a large session list stays bounded and keeps this browser on every page", async () => {
@@ -811,7 +811,7 @@ test("browser handoff sessions show their provenance and can be revoked", async 
   const screen = render(() => <SessionsPanel />)
   await screen.findByText("App via browser sign-in")
   expect(screen.getByRole("heading", { name: "Password" })).toBeTruthy()
-  fireEvent.click(screen.getByRole("button", { name: /^Revoke the session/ }))
+  fireEvent.click(screen.getByRole("button", { name: "Revoke session" }))
   await waitFor(() =>
     expect(accountRequest).toHaveBeenCalledWith("/account/sessions/app-session", "DELETE"),
   )
