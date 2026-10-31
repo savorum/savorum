@@ -6,7 +6,11 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+## 0.4.2
+
 - Fix saving a time zone in container images.
+- Fix popovers, such as the book and tag filters, opening in the wrong place the first time.
+- Improve screen reader names for session revoke buttons and the add menu.
 
 ## 0.4.1
 
