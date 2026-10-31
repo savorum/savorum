@@ -218,10 +218,10 @@ func (a Agent) Run(ctx context.Context) error {
 
 	_ = server.Close()
 
-	<-serveDone
+	<-serveDone //nolint:errcheck // Serve reports the closed listener once shutdown has begun.
 
 	if challengeDone != nil {
-		<-challengeDone
+		<-challengeDone //nolint:errcheck // Serve reports the closed listener once shutdown has begun.
 	}
 
 	if ctx.Err() != nil && result == nil {

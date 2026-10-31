@@ -353,29 +353,9 @@ func (s *Store) BootstrapHostingMember(ctx context.Context, m hosting.MemberRequ
 		return result, err
 	}
 
-	var (
-		p      identity.Principal
-		active bool
-	)
-
-	err = tx.QueryRowContext(ctx, `SELECT u.id,u.status='active' AND i.enabled=1 FROM identities i JOIN users u ON u.id=i.user_id WHERE i.provider=? AND i.provider_subject=?`, tenant.ProviderID, m.Subject).Scan(&p.UserID, &active)
-	if err == nil && !active {
-		return result, identity.ErrCredentials
-	}
-
-	if err != nil && !errors.Is(err, sql.ErrNoRows) {
-		return result, fmt.Errorf("read member identity: %w", err)
-	}
-
-	if p.UserID == "" {
-		p, err = provisionExternalUser(ctx, tx, tenant.ProviderID, m.DisplayName, "", false, "", "")
-		if err != nil {
-			return result, err
-		}
-
-		if _, err = tx.ExecContext(ctx, `INSERT INTO identities(user_id,provider,provider_subject) VALUES(?,?,?)`, p.UserID, tenant.ProviderID, m.Subject); err != nil {
-			return result, fmt.Errorf("link member: %w", err)
-		}
+	p, err := resolveHostedMember(ctx, tx, tenant, m)
+	if err != nil {
+		return result, err
 	}
 
 	if m.InvitationToken == "" {
@@ -403,6 +383,37 @@ func (s *Store) BootstrapHostingMember(ctx context.Context, m hosting.MemberRequ
 	}
 
 	return result, nil
+}
+
+func resolveHostedMember(ctx context.Context, tx *sql.Tx, tenant hosting.Tenant, m hosting.MemberRequest) (identity.Principal, error) {
+	var (
+		p      identity.Principal
+		active bool
+	)
+
+	err := tx.QueryRowContext(ctx, `SELECT u.id,u.status='active' AND i.enabled=1 FROM identities i JOIN users u ON u.id=i.user_id WHERE i.provider=? AND i.provider_subject=?`, tenant.ProviderID, m.Subject).Scan(&p.UserID, &active)
+	if err == nil && !active {
+		return p, identity.ErrCredentials
+	}
+
+	if err != nil && !errors.Is(err, sql.ErrNoRows) {
+		return p, fmt.Errorf("read member identity: %w", err)
+	}
+
+	if p.UserID != "" {
+		return p, nil
+	}
+
+	p, err = provisionExternalUser(ctx, tx, tenant.ProviderID, m.DisplayName, "", false, "", "")
+	if err != nil {
+		return p, err
+	}
+
+	if _, err = tx.ExecContext(ctx, `INSERT INTO identities(user_id,provider,provider_subject) VALUES(?,?,?)`, p.UserID, tenant.ProviderID, m.Subject); err != nil {
+		return p, fmt.Errorf("link member: %w", err)
+	}
+
+	return p, nil
 }
 
 func configureHostedInstance(ctx context.Context, tx *sql.Tx, b hosting.Bootstrap) error {

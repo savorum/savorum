@@ -147,13 +147,13 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	capabilities := (r.Method == http.MethodGet || r.Method == http.MethodHead) && r.URL.Path == "/api/v1/capabilities"
 
-	public := capabilities || publicPasskeyRecoveryRoute(r) || (r.Method == http.MethodPost && r.URL.Path == "/api/v1/account/invitations/register") || (r.Method == http.MethodGet && r.URL.Path == "/api/v1/account") || (r.Method == http.MethodPost && r.URL.Path == "/api/v1/account/login")
+	public := capabilities || publicAccountRoute(r)
 	if !public && b.principal.UserID == "" {
 		challenge(w, problemAuthenticationRequired, "Sign in, or send a personal API token as \"Authorization: Bearer <token>\". Create a token in Savorum under Account, API tokens (/account/tokens). /llms.txt explains the API.")
 		return
 	}
 
-	if r.Method != http.MethodGet && r.Method != http.MethodHead && r.Method != http.MethodOptions && r.URL.Path != "/api/v1/account/login" && !publicPasskeyRecoveryRoute(r) && r.URL.Path != "/api/v1/account/invitations/register" && h.options.Enabled && b.personalToken == nil {
+	if h.csrfRequired(r, b) {
 		if !h.store.CheckCSRF(ctx, b.token, r.Header.Get("X-CSRF-Token")) {
 			problem(w, 403, problemCSRFRequired)
 			return
@@ -204,6 +204,32 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	h.next.ServeHTTP(w, r.WithContext(access.WithLibrary(ctx, selected)))
+}
+
+func publicAccountRoute(r *http.Request) bool {
+	switch {
+	case publicPasskeyRecoveryRoute(r):
+		return true
+	case r.Method == http.MethodPost:
+		return r.URL.Path == "/api/v1/account/invitations/register" || r.URL.Path == "/api/v1/account/login"
+	case r.Method == http.MethodGet:
+		return r.URL.Path == "/api/v1/account"
+	}
+
+	return false
+}
+
+func (h *Handler) csrfRequired(r *http.Request, b browser) bool {
+	switch r.Method {
+	case http.MethodGet, http.MethodHead, http.MethodOptions:
+		return false
+	}
+
+	if r.URL.Path == "/api/v1/account/login" || r.URL.Path == "/api/v1/account/invitations/register" || publicPasskeyRecoveryRoute(r) {
+		return false
+	}
+
+	return h.options.Enabled && b.personalToken == nil
 }
 
 func (h *Handler) selectedLibrary(r *http.Request, libs []access.Library) string {

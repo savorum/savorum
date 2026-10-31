@@ -157,6 +157,8 @@ linters:
       # internal delegation boundary.
       ignore-package-globs:
         - github.com/savorum/savorum/internal/*
+        # Huma status errors are the API response type and must stay unwrapped.
+        - github.com/danielgtaylor/huma/v2
       # Cancellation already identifies why an operation stopped. Forward its
       # standard sentinel without requiring another context-only wrapper.
       extra-ignore-sigs:

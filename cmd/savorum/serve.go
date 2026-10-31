@@ -387,7 +387,7 @@ func (w *integrationWorkers) stop() {
 	w.cancel()
 
 	for w.count > 0 {
-		<-w.done
+		<-w.done //nolint:errcheck // Workers stop because they were cancelled.
 		w.count--
 	}
 }

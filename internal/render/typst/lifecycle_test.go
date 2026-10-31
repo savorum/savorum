@@ -55,8 +55,8 @@ func TestClosingARendererWaitsForItsActiveRenders(t *testing.T) {
 	}
 
 	select {
-	case <-closed:
-		t.Fatal("the compiler was closed while a render held it")
+	case err := <-closed:
+		t.Fatalf("the compiler was closed while a render held it: %v", err)
 	case <-time.After(50 * time.Millisecond):
 	}
 

@@ -1,10 +1,10 @@
 # syntax=docker/dockerfile:1.7
 
 ARG GO_VERSION=1.27.3
-ARG NODE_VERSION=26.9.0
+ARG NODE_VERSION=26.13.0
 
 # Release builds supply the verified frontend through the web build context.
-FROM --platform=$BUILDPLATFORM node:${NODE_VERSION}-bookworm@sha256:347d9d5391493c2fc3f0d161b75a9cab64a9805064b1b01b099f8ee97f98ed47 AS web
+FROM --platform=$BUILDPLATFORM node:${NODE_VERSION}-bookworm@sha256:fa52d1669505e29b58c042875b1d65c229e0787a3610fd52869b22b68e480853 AS web
 WORKDIR /src
 COPY scripts/corepack/package.json scripts/corepack/package-lock.json /opt/corepack/
 ENV PATH="/opt/corepack/node_modules/.bin:${PATH}"
