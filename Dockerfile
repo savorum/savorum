@@ -39,7 +39,7 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
     CGO_ENABLED=0 go run -trimpath -tags nodynamic ./cmd/savorum admin compatibility > /out/savorum-compatibility.json
 RUN mkdir -p /out/data /out/tmp && chmod 0750 /out/data && chmod 1777 /out/tmp
 
-FROM alpine:3.24.2@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6 AS runtime
+FROM alpine:3.24.3@sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a AS runtime
 ARG VERSION=development
 ARG REVISION=
 ARG WEB_BUNDLE_SHA256=
