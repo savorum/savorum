@@ -86,7 +86,7 @@ jobs:
             e2e=true
           elif [[ "$EVENT" == pull_request ]]; then
             changed="$(git diff --name-only "$BASE" HEAD)"
-            e2e_paths='^(\.github/|go\.mod$|go\.sum$|justfile$|web/|api/|cmd/savorum/|cmd/scalecheck/|scripts/scale-check\.sh$|internal/(scalefixture|capacity|recovery|access|account|api|app|assets|configuration|export|exchange|federation|httpsecurity|identity|importjob|importer|library|print|recipe|render|storage|webui)/)'
+            e2e_paths='^(\.github/|go\.mod$|go\.sum$|justfile$|web/|api/|cmd/savorum/|cmd/scalecheck/|scripts/(corepack/|scale-check\.sh$)|internal/(scalefixture|capacity|recovery|access|account|api|app|assets|configuration|export|exchange|federation|httpsecurity|identity|importjob|importer|library|print|recipe|render|storage|webui)/)'
             container_paths='^(\.github/|\.dockerignore$|Dockerfile$|compose\.yaml$|scripts/(container-smoke-test|publish-container|prepare-containers|bootstrap-pnpm)\.sh$|cmd/savorum/(healthcheck|healthcheck_test|main)\.go$|internal/buildinfo/)'
             if grep -qE "$e2e_paths" <<< "$changed"; then e2e=true; fi
             if grep -qE "$container_paths" <<< "$changed"; then container=true; fi
@@ -399,7 +399,9 @@ jobs:
           name: binaries
           path: bin
       - run: |
-          corepack enable
+          npm ci --prefix scripts/corepack --ignore-scripts --no-fund --no-audit
+          export PATH="$PWD/scripts/corepack/node_modules/.bin:$PATH"
+          echo "$PWD/scripts/corepack/node_modules/.bin" >> "$GITHUB_PATH"
           corepack install --global "$(node -p "require('./web/package.json').packageManager")"
           pnpm --dir web install --frozen-lockfile
       - run: |
@@ -431,7 +433,9 @@ jobs:
           name: binaries
           path: bin
       - run: |
-          corepack enable
+          npm ci --prefix scripts/corepack --ignore-scripts --no-fund --no-audit
+          export PATH="$PWD/scripts/corepack/node_modules/.bin:$PATH"
+          echo "$PWD/scripts/corepack/node_modules/.bin" >> "$GITHUB_PATH"
           corepack install --global "$(node -p "require('./web/package.json').packageManager")"
           pnpm --dir web install --frozen-lockfile
       - run: |
