@@ -45,7 +45,7 @@ ARG REVISION=
 ARG WEB_BUNDLE_SHA256=
 RUN apk add --no-cache \
        bash=5.3.9-r1 \
-       ca-certificates-bundle=20260909-r0 \
+       ca-certificates-bundle=20261020-r0 \
        setpriv=2.42.3-r1 \
        zlib=1.3.2-r1 \
     && addgroup -g 65532 savorum \
