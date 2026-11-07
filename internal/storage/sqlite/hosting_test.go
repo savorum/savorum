@@ -262,6 +262,10 @@ func TestHostingMigrationPreservesExistingLocalAuthentication(t *testing.T) {
 	}
 
 	for _, query := range []string{
+		`DROP TRIGGER assistant_requests_status_insert`, `DROP TRIGGER assistant_requests_status_update`,
+		`DROP TRIGGER webhook_deliveries_state_insert`, `DROP TRIGGER webhook_deliveries_state_update`,
+		`DROP TRIGGER automation_jobs_state_insert`, `DROP TRIGGER automation_jobs_state_update`,
+		`DELETE FROM schema_migrations WHERE version=21`,
 		`DROP TABLE native_sign_in_grants`,
 		`CREATE TABLE native_sign_in_grants (code_hash TEXT PRIMARY KEY,user_id TEXT NOT NULL REFERENCES users(id),provider TEXT NOT NULL REFERENCES auth_providers(id),challenge TEXT NOT NULL,redirect_uri TEXT NOT NULL,expires_at INTEGER NOT NULL,identity_id TEXT NOT NULL DEFAULT '')`,
 		`CREATE INDEX native_sign_in_grants_expiry ON native_sign_in_grants(expires_at)`,

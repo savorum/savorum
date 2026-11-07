@@ -313,8 +313,10 @@ func TestRecoveryInterruptsUnfinishedJobsAndLeavesFinishedOnesAlone(t *testing.T
 		t.Fatal(err)
 	}
 
-	if err := store.UpdateImportJobState(ctx, "job-done", importjob.JobStateUpdate{State: importjob.StateCompleted, FinishedAt: &started}); err != nil {
-		t.Fatal(err)
+	for _, state := range []importjob.State{importjob.StateRunning, importjob.StateCompleted} {
+		if err := store.UpdateImportJobState(ctx, "job-done", importjob.JobStateUpdate{State: state, FinishedAt: &started}); err != nil {
+			t.Fatal(err)
+		}
 	}
 
 	interrupted, err := store.InterruptImportJobs(ctx, time.Now().UTC())
@@ -575,5 +577,42 @@ func TestResumingImportClearsCancellationRequest(t *testing.T) {
 		}
 
 		assertCancellation(state == importjob.StateCancelled)
+	}
+}
+
+func TestImportJobStateFollowsTheLifecycle(t *testing.T) {
+	t.Parallel()
+
+	ctx := t.Context()
+	store := openStore(ctx, t)
+	seedImportJob(ctx, t, store, "job", []importjob.Item{pending("one", nil)})
+
+	move := func(state importjob.State) error {
+		return store.UpdateImportJobState(ctx, "job", importjob.JobStateUpdate{State: state})
+	}
+
+	if err := move(importjob.StateCompleted); !errors.Is(err, importjob.ErrJobState) {
+		t.Fatalf("pending to completed error = %v", err)
+	}
+
+	for _, state := range []importjob.State{importjob.StateRunning, importjob.StateInterrupted, importjob.StatePending, importjob.StateRunning, importjob.StateCompleted} {
+		if err := move(state); err != nil {
+			t.Fatalf("move to %s: %v", state, err)
+		}
+	}
+
+	for _, state := range []importjob.State{importjob.StateCancelled, importjob.StatePending, importjob.StateRunning} {
+		if err := move(state); !errors.Is(err, importjob.ErrJobState) {
+			t.Fatalf("completed to %s error = %v", state, err)
+		}
+	}
+
+	job, err := store.GetImportJob(ctx, "job")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if job.State != importjob.StateCompleted {
+		t.Fatalf("state = %s, want completed", job.State)
 	}
 }

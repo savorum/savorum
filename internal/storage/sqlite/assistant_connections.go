@@ -265,7 +265,7 @@ func (s *Store) ExchangeAssistantCredential(ctx context.Context, kind, secret, c
 		remaining              int
 	)
 
-	err = tx.QueryRowContext(ctx, `SELECT t.scopes,t.libraries,c.renewable,MIN(900,c.expires_at-unixepoch()) FROM personal_tokens t JOIN assistant_connections c ON c.token_id=t.id JOIN users u ON u.id=t.user_id WHERE t.id=? AND t.revoked_at=0 AND c.expires_at>unixepoch() AND u.status='active' AND `+tokenProviderAuthority, id).Scan(&scopeJSON, &libraryJSON, &renewable, &remaining)
+	err = tx.QueryRowContext(ctx, `SELECT t.scopes,t.libraries,c.renewable,MIN(900,c.expires_at-unixepoch()) FROM personal_tokens t JOIN assistant_connections c ON c.token_id=t.id JOIN users u ON u.id=t.user_id WHERE t.id=? AND t.revoked_at=0 AND c.expires_at>unixepoch() AND u.status='active' AND `+issuingProviderEnabled, id).Scan(&scopeJSON, &libraryJSON, &renewable, &remaining)
 	if errors.Is(err, sql.ErrNoRows) {
 		return out, "invalid_grant", nil
 	}

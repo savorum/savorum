@@ -30,6 +30,16 @@ themselves in import history or the audit log.
 
 ## Import jobs
 
+| State | Can become |
+| --- | --- |
+| `pending` | `running`, `cancelled`, `failed`, `interrupted` |
+| `running` | `completed`, `completed-with-errors`, `cancelled`, `failed`, `interrupted` |
+| `completed-with-errors`, `cancelled`, `failed`, `interrupted` | `pending` when resumed, or `completed-with-errors` when no recipe can run again |
+| `completed` | nothing |
+
+Storage refuses any other change, so a late cancellation can't overwrite a
+finished import.
+
 Resumed import work uses the job's duplicate policy, not any per-recipe
 choice. After a restart, Savorum can't prove an interrupted batch didn't
 already commit.

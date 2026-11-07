@@ -8,6 +8,7 @@ package importjob
 import (
 	"context"
 	"errors"
+	"slices"
 	"time"
 
 	"github.com/savorum/savorum/internal/identity"
@@ -48,9 +49,7 @@ const (
 	StateInterrupted         State = "interrupted"
 )
 
-// Terminal reports whether a job has stopped for good. An interrupted job has
-// stopped but is not finished: it is the one terminal state that can be
-// resumed.
+// Terminal reports whether a job has no active run.
 func (state State) Terminal() bool {
 	switch state {
 	case StatePending, StateRunning:
@@ -70,6 +69,37 @@ func (state State) valid() bool {
 	default:
 		return false
 	}
+}
+
+var jobTransitions = map[State][]State{
+	StatePending:             {StateRunning, StateCancelled, StateFailed, StateInterrupted},
+	StateRunning:             {StateCompleted, StateCompletedWithErrors, StateCancelled, StateFailed, StateInterrupted},
+	StateCompletedWithErrors: {StatePending, StateCompletedWithErrors},
+	StateCancelled:           {StatePending, StateCompletedWithErrors},
+	StateFailed:              {StatePending, StateCompletedWithErrors},
+	StateInterrupted:         {StatePending, StateCompletedWithErrors},
+	StateCompleted:           {},
+}
+
+// CanBecome reports whether the lifecycle permits a transition to next.
+func (state State) CanBecome(next State) bool {
+	return slices.Contains(jobTransitions[state], next)
+}
+
+// Sources returns predecessor states in lifecycle order.
+func (state State) Sources() []State {
+	var sources []State
+
+	for _, from := range []State{
+		StatePending, StateRunning, StateCompleted, StateCompletedWithErrors,
+		StateCancelled, StateFailed, StateInterrupted,
+	} {
+		if from.CanBecome(state) {
+			sources = append(sources, from)
+		}
+	}
+
+	return sources
 }
 
 // ItemState is what became of one recipe. Whether it still needs a look is

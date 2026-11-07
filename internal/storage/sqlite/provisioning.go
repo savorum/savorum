@@ -152,7 +152,7 @@ func (s *Store) RevokeInvitation(ctx context.Context, id string) error {
 		return err
 	}
 
-	result, err := tx.ExecContext(ctx, `UPDATE invitations SET revoked_at=unixepoch() WHERE id=? AND accepted_at IS NULL AND revoked_at IS NULL`, id)
+	result, err := tx.ExecContext(ctx, `UPDATE invitations AS i SET revoked_at=unixepoch() WHERE i.id=? AND `+pendingInvitation, id)
 	if err != nil {
 		return fmt.Errorf("revoke invitation: %w", err)
 	}
@@ -179,7 +179,7 @@ func acceptInvitation(ctx context.Context, tx *sql.Tx, user, token string) error
 		role          access.Role
 	)
 
-	err := tx.QueryRowContext(ctx, `SELECT i.id,i.library_id,i.role FROM invitations i JOIN libraries l ON l.id=i.library_id WHERE token_hash=? AND accepted_at IS NULL AND revoked_at IS NULL AND expires_at>unixepoch() AND l.deleted_at IS NULL AND EXISTS(SELECT 1 FROM users WHERE id=? AND status='active')`, tokenHash(token), user).Scan(&id, &libraryID, &role)
+	err := tx.QueryRowContext(ctx, `SELECT i.id,i.library_id,i.role FROM invitations i JOIN libraries l ON l.id=i.library_id WHERE i.token_hash=? AND `+usableInvitation+` AND l.deleted_at IS NULL AND EXISTS(SELECT 1 FROM users WHERE id=? AND status='active')`, tokenHash(token), user).Scan(&id, &libraryID, &role)
 	if errors.Is(err, sql.ErrNoRows) {
 		return identity.ErrCredentials
 	}
@@ -192,7 +192,7 @@ func acceptInvitation(ctx context.Context, tx *sql.Tx, user, token string) error
 		return fmt.Errorf("accept membership: %w", err)
 	}
 
-	result, err := tx.ExecContext(ctx, `UPDATE invitations SET accepted_at=unixepoch(),accepted_by=? WHERE id=? AND accepted_at IS NULL AND revoked_at IS NULL`, user, id)
+	result, err := tx.ExecContext(ctx, `UPDATE invitations AS i SET accepted_at=unixepoch(),accepted_by=? WHERE i.id=? AND `+pendingInvitation, user, id)
 	if err != nil {
 		return fmt.Errorf("consume invitation: %w", err)
 	}
@@ -240,7 +240,7 @@ func (s *Store) RegisterInvitedLocalUser(ctx context.Context, token, login, disp
 
 	// Recheck and consume inside the creation transaction after hashing.
 	var usable bool
-	if err := s.db.QueryRowContext(ctx, `SELECT EXISTS(SELECT 1 FROM invitations i JOIN libraries l ON l.id=i.library_id WHERE token_hash=? AND accepted_at IS NULL AND revoked_at IS NULL AND expires_at>unixepoch() AND l.deleted_at IS NULL)`, tokenHash(token)).Scan(&usable); err != nil {
+	if err := s.db.QueryRowContext(ctx, `SELECT EXISTS(SELECT 1 FROM invitations i JOIN libraries l ON l.id=i.library_id WHERE i.token_hash=? AND `+usableInvitation+` AND l.deleted_at IS NULL)`, tokenHash(token)).Scan(&usable); err != nil {
 		return p, fmt.Errorf("validate invitation: %w", err)
 	}
 

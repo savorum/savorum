@@ -451,6 +451,16 @@ func (s *Store) UpdateImportJobState(ctx context.Context, id string, update impo
 		return operationError("UpdateImportJobState", err)
 	}
 
+	sources := update.State.Sources()
+	if len(sources) == 0 {
+		return operationError("UpdateImportJobState", fmt.Errorf("%w: no job can become %s", importjob.ErrJobState, update.State))
+	}
+
+	sourcesJSON, err := json.Marshal(sources)
+	if err != nil {
+		return fmt.Errorf("encode import job state sources: %w", err)
+	}
+
 	// started_at only ever moves forward from nothing, so a resumed job keeps
 	// the moment it first began. finished_at is written as given, because a
 	// job that starts again is not finished any more.
@@ -464,14 +474,18 @@ func (s *Store) UpdateImportJobState(ctx context.Context, id string, update impo
 		UPDATE import_jobs
 		SET cancellation_requested_at = CASE WHEN ? = 'pending' THEN NULL ELSE cancellation_requested_at END,
             state = ?, error = ?, started_at = COALESCE(?, started_at), finished_at = ?
-		WHERE id = ?`,
+		WHERE id = ? AND state IN (SELECT value FROM json_each(?))`,
 		string(update.State), string(update.State), nullableText(update.Error),
-		nullableInstant(update.StartedAt), nullableInstant(update.FinishedAt), id)
+		nullableInstant(update.StartedAt), nullableInstant(update.FinishedAt), id, string(sourcesJSON))
 	if err != nil {
 		return fmt.Errorf("record import job state: %w", err)
 	}
 
 	if err := requireImportJobRow(result); err != nil {
+		if errors.Is(err, importjob.ErrNotFound) {
+			err = fmt.Errorf("%w: it cannot become %s", importjob.ErrJobState, update.State)
+		}
+
 		return operationError("UpdateImportJobState", err)
 	}
 
