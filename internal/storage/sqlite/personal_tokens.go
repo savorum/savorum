@@ -14,8 +14,6 @@ import (
 	"github.com/savorum/savorum/internal/identity"
 )
 
-const tokenProviderAuthority = `(source_provider='' OR EXISTS(SELECT 1 FROM auth_providers WHERE id=source_provider AND enabled=1))`
-
 // CreatePersonalToken creates a secret once, retaining only its SHA-256 digest.
 func (s *Store) CreatePersonalToken(ctx context.Context, in identity.TokenRequest, policy identity.TokenPolicy) (identity.TokenGrant, error) {
 	return s.createPersonalToken(ctx, in, policy, nil)
@@ -190,7 +188,7 @@ func (s *Store) ResolvePersonalToken(ctx context.Context, secret string) (identi
 
 	var scopes, libraries string
 
-	err := s.db.QueryRowContext(ctx, `SELECT u.id,u.display_name,t.id,t.scopes,t.libraries,t.expires_at,COALESCE((SELECT resource FROM assistant_connections WHERE token_id=t.id),'') FROM personal_tokens t JOIN users u ON u.id=t.user_id WHERE token_hash=? AND revoked_at=0 AND (expires_at=0 OR expires_at>unixepoch()) AND u.status='active' AND `+tokenProviderAuthority, tokenHash(secret)).Scan(&p.UserID, &p.DisplayName, &t.ID, &scopes, &libraries, &t.ExpiresAt, &t.Audience)
+	err := s.db.QueryRowContext(ctx, `SELECT u.id,u.display_name,t.id,t.scopes,t.libraries,t.expires_at,COALESCE((SELECT resource FROM assistant_connections WHERE token_id=t.id),'') FROM personal_tokens t JOIN users u ON u.id=t.user_id WHERE t.token_hash=? AND `+livePersonalToken, tokenHash(secret)).Scan(&p.UserID, &p.DisplayName, &t.ID, &scopes, &libraries, &t.ExpiresAt, &t.Audience)
 	if errors.Is(err, sql.ErrNoRows) {
 		return p, t, identity.ErrCredentials
 	}
@@ -257,7 +255,7 @@ func (*Store) authorizeTokenLibrary(ctx context.Context, queryer accessQueryer, 
 
 	var scopes, libraries string
 
-	err := queryer.QueryRowContext(ctx, `SELECT scopes,libraries FROM personal_tokens WHERE id=? AND user_id=? AND revoked_at=0 AND (expires_at=0 OR expires_at>unixepoch()) AND `+tokenProviderAuthority, p.CredentialID, p.UserID).Scan(&scopes, &libraries)
+	err := queryer.QueryRowContext(ctx, `SELECT t.scopes,t.libraries FROM personal_tokens t WHERE t.id=? AND t.user_id=? AND `+livePersonalToken, p.CredentialID, p.UserID).Scan(&scopes, &libraries)
 	if errors.Is(err, sql.ErrNoRows) {
 		return access.ErrForbidden
 	}
@@ -356,7 +354,7 @@ func tokenScopes(ctx context.Context, queryer accessQueryer) ([]string, error) {
 	}
 
 	var data string
-	if err := queryer.QueryRowContext(ctx, `SELECT scopes FROM personal_tokens WHERE id=? AND user_id=? AND revoked_at=0 AND (expires_at=0 OR expires_at>unixepoch()) AND `+tokenProviderAuthority, p.CredentialID, p.UserID).Scan(&data); err != nil {
+	if err := queryer.QueryRowContext(ctx, `SELECT t.scopes FROM personal_tokens t WHERE t.id=? AND t.user_id=? AND `+livePersonalToken, p.CredentialID, p.UserID).Scan(&data); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, access.ErrForbidden
 		}

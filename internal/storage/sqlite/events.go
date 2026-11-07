@@ -99,7 +99,7 @@ func (s *Store) eventAuthority(ctx context.Context) (bool, []string, error) {
 		if len(p.CredentialID) < 4 || p.CredentialID[:4] != "pat:" {
 			var active bool
 
-			err := s.db.QueryRowContext(ctx, `SELECT EXISTS(SELECT 1 FROM browser_sessions WHERE id=? AND user_id=? AND revoked_at IS NULL AND idle_expires>unixepoch() AND absolute_expires>unixepoch())`, p.CredentialID, p.UserID).Scan(&active)
+			err := s.db.QueryRowContext(ctx, `SELECT EXISTS(SELECT 1 FROM browser_sessions b WHERE b.id=? AND b.user_id=? AND `+liveBrowserSession+`)`, p.CredentialID, p.UserID).Scan(&active)
 			if err != nil {
 				return false, nil, operationError("ReadEvents", err)
 			}

@@ -169,7 +169,7 @@ func (s *Store) RedeemNativeGrant(ctx context.Context, code string) (federation.
 	}
 
 	if grant.SourceSessionID != "" {
-		e = s.db.QueryRowContext(ctx, `SELECT u.id,u.display_name,u.instance_admin,b.provider FROM users u JOIN browser_sessions b ON b.user_id=u.id WHERE u.id=? AND u.status='active' AND b.id=? AND b.revoked_at IS NULL AND b.idle_expires>unixepoch() AND b.absolute_expires>unixepoch()`, grant.UserID, grant.SourceSessionID).Scan(&p.UserID, &p.DisplayName, &p.InstanceAdmin, &grant.Provider)
+		e = s.db.QueryRowContext(ctx, `SELECT u.id,u.display_name,u.instance_admin,b.provider FROM users u JOIN browser_sessions b ON b.user_id=u.id WHERE u.id=? AND b.id=? AND `+liveBrowserSession, grant.UserID, grant.SourceSessionID).Scan(&p.UserID, &p.DisplayName, &p.InstanceAdmin, &grant.Provider)
 		if errors.Is(e, sql.ErrNoRows) {
 			return grant, p, identity.ErrCredentials
 		}

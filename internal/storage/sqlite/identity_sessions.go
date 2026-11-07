@@ -117,7 +117,7 @@ func (s *Store) ResolveSession(ctx context.Context, token string) (identity.Prin
 
 	var created, seen, idle, absolute int64
 
-	err := s.db.QueryRowContext(ctx, `SELECT u.id,u.display_name,u.instance_admin,b.id,b.created_at,b.last_seen,b.idle_expires,b.absolute_expires,b.provider,b.browser_handoff FROM browser_sessions b JOIN users u ON u.id=b.user_id WHERE b.token_hash=? AND b.revoked_at IS NULL AND b.idle_expires>unixepoch() AND b.absolute_expires>unixepoch() AND u.status='active'`, tokenHash(token)).Scan(&p.UserID, &p.DisplayName, &p.InstanceAdmin, &session.ID, &created, &seen, &idle, &absolute, &session.Provider, &session.BrowserHandoff)
+	err := s.db.QueryRowContext(ctx, `SELECT u.id,u.display_name,u.instance_admin,b.id,b.created_at,b.last_seen,b.idle_expires,b.absolute_expires,b.provider,b.browser_handoff FROM browser_sessions b JOIN users u ON u.id=b.user_id WHERE b.token_hash=? AND `+liveBrowserSession, tokenHash(token)).Scan(&p.UserID, &p.DisplayName, &p.InstanceAdmin, &session.ID, &created, &seen, &idle, &absolute, &session.Provider, &session.BrowserHandoff)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return p, session, identity.ErrCredentials
@@ -149,14 +149,14 @@ func (s *Store) CheckCSRF(ctx context.Context, token, csrf string) bool {
 
 	var hash string
 
-	err := s.db.QueryRowContext(ctx, `SELECT csrf_hash FROM browser_sessions WHERE token_hash=? AND revoked_at IS NULL AND idle_expires>unixepoch() AND absolute_expires>unixepoch()`, tokenHash(token)).Scan(&hash)
+	err := s.db.QueryRowContext(ctx, `SELECT csrf_hash FROM browser_sessions b WHERE b.token_hash=? AND `+liveBrowserSession, tokenHash(token)).Scan(&hash)
 
 	return err == nil && subtle.ConstantTimeCompare([]byte(hash), []byte(tokenHash(csrf))) == 1
 }
 
 // Sessions lists active sessions without any authentication secrets.
 func (s *Store) Sessions(ctx context.Context, userID string) ([]identity.Session, error) {
-	rows, err := s.db.QueryContext(ctx, `SELECT id,created_at,last_seen,idle_expires,absolute_expires,provider,browser_handoff FROM browser_sessions WHERE user_id=? AND revoked_at IS NULL AND idle_expires>unixepoch() AND absolute_expires>unixepoch() ORDER BY created_at DESC,id`, userID)
+	rows, err := s.db.QueryContext(ctx, `SELECT b.id,b.created_at,b.last_seen,b.idle_expires,b.absolute_expires,b.provider,b.browser_handoff FROM browser_sessions b WHERE b.user_id=? AND `+liveBrowserSession+` ORDER BY b.created_at DESC,b.id`, userID)
 	if err != nil {
 		return nil, fmt.Errorf("list sessions: %w", err)
 	}
@@ -238,7 +238,7 @@ func consumeBrowserSession(ctx context.Context, tx *sql.Tx, userID, provider str
 			return identity.ErrCredentials
 		}
 
-		result, e := tx.ExecContext(ctx, `UPDATE browser_sessions SET revoked_at=unixepoch(), revocation_reason='native-exchange' WHERE id=? AND user_id=? AND provider=? AND revoked_at IS NULL AND idle_expires>unixepoch() AND absolute_expires>unixepoch()`, source, userID, provider)
+		result, e := tx.ExecContext(ctx, `UPDATE browser_sessions AS b SET revoked_at=unixepoch(), revocation_reason='native-exchange' WHERE b.id=? AND b.user_id=? AND b.provider=? AND `+liveBrowserSession, source, userID, provider)
 		if e != nil {
 			return fmt.Errorf("consume browser session: %w", e)
 		}

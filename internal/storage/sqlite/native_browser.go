@@ -13,7 +13,7 @@ func (s *Store) saveBrowserNativeGrant(ctx context.Context, code string, grant f
 		return federationStorageError("expire native grants", err)
 	}
 
-	result, err := s.db.ExecContext(ctx, `INSERT INTO native_sign_in_grants(code_hash,user_id,provider,challenge,redirect_uri,expires_at,identity_id,source_session_id) SELECT ?,b.user_id,NULL,?,?,?,'',b.id FROM browser_sessions b JOIN users u ON u.id=b.user_id WHERE b.id=? AND b.user_id=? AND b.revoked_at IS NULL AND b.idle_expires>unixepoch() AND b.absolute_expires>unixepoch() AND u.status='active'`, tokenHash(code), grant.Challenge, grant.RedirectURI, expires.Unix(), grant.SourceSessionID, grant.UserID)
+	result, err := s.db.ExecContext(ctx, `INSERT INTO native_sign_in_grants(code_hash,user_id,provider,challenge,redirect_uri,expires_at,identity_id,source_session_id) SELECT ?,b.user_id,NULL,?,?,?,'',b.id FROM browser_sessions b JOIN users u ON u.id=b.user_id WHERE b.id=? AND b.user_id=? AND `+liveBrowserSession, tokenHash(code), grant.Challenge, grant.RedirectURI, expires.Unix(), grant.SourceSessionID, grant.UserID)
 	if err != nil {
 		return federationStorageError("save browser grant", err)
 	}
