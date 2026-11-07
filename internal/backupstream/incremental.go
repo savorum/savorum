@@ -123,15 +123,15 @@ func (h *Handler) startIncremental(w http.ResponseWriter, r *http.Request) {
 
 	h.current = current
 	go h.prepareIncremental(ctx, current, maxBytes, limits)
-	go func() {
-		<-ctx.Done()
+
+	context.AfterFunc(ctx, func() {
 		h.mu.Lock()
 		defer h.mu.Unlock()
 
 		if h.current == current {
 			h.discard()
 		}
-	}()
+	})
 
 	writeJSON(w, http.StatusAccepted, map[string]string{"id": current.id, "state": string(preparing)})
 }
