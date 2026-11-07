@@ -495,24 +495,15 @@ func purgedDishes(ctx context.Context, tx *sql.Tx, table, parent, parentID strin
 	if err != nil {
 		return nil, fmt.Errorf("read purged dishes: %w", err)
 	}
-	defer rows.Close()
 
-	var purged []string
-
-	for rows.Next() {
+	return scanRows(rows, "purged dishes", func(rows *sql.Rows) (string, error) {
 		var id string
 		if err := rows.Scan(&id); err != nil {
-			return nil, fmt.Errorf("scan purged dish: %w", err)
+			return id, fmt.Errorf("scan purged dish: %w", err)
 		}
 
-		purged = append(purged, id)
-	}
-
-	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("iterate purged dishes: %w", err)
-	}
-
-	return purged, nil
+		return id, nil
+	})
 }
 
 // replaceDishes keeps recipe_dish on purged dishes, which clients cannot resend.
@@ -664,7 +655,7 @@ func scanMealRow(row *sql.Row) (meal.Meal, error) {
 	)
 
 	if err := row.Scan(&m.ID, &m.LibraryID, &m.Name, &dateValue, &mealType, &m.Notes, &m.Revision, &createdAt, &updatedAt, &m.Skipped, &m.CreatedBy, &m.CreatedByName, &m.UpdatedBy, &m.UpdatedByName); err != nil {
-		if err == sql.ErrNoRows {
+		if errors.Is(err, sql.ErrNoRows) {
 			return meal.Meal{}, meal.ErrNotFound
 		}
 
@@ -737,7 +728,7 @@ func queryDishes(ctx context.Context, db dbQueryer, mealID string) ([]meal.Dish,
 	}
 
 	for i := range dishes {
-		items, err := queryPlainItems(ctx, db, dishes[i].ID)
+		items, err := queryPlainItems(ctx, db, mealPlainItems, dishes[i].ID)
 		if err != nil {
 			return nil, operationError("queryDishes", err)
 		}
@@ -757,7 +748,7 @@ func queryDishesForMeals(ctx context.Context, db dbQueryer, mealIDs []string) (m
 		return nil, nil
 	}
 
-	placeholders := strings.TrimSuffix(strings.Repeat("?,", len(mealIDs)), ",")
+	placeholders := sqlPlaceholders(len(mealIDs))
 
 	args := make([]any, len(mealIDs))
 	for i, id := range mealIDs {
@@ -791,7 +782,7 @@ func queryDishesForMeals(ctx context.Context, db dbQueryer, mealIDs []string) (m
 	}
 
 	if len(allDishIDs) > 0 {
-		itemMap, err := queryPlainItemsForDishes(ctx, db, allDishIDs)
+		itemMap, err := queryPlainItemsForDishes(ctx, db, mealPlainItems, allDishIDs)
 		if err != nil {
 			return nil, operationError("queryDishesForMeals", err)
 		}
@@ -842,46 +833,44 @@ func scanDishRow(rows *sql.Rows) (meal.Dish, error) {
 	return d, nil
 }
 
-func queryPlainItems(ctx context.Context, db dbQueryer, dishID string) ([]meal.PlainItem, error) {
-	rows, err := db.QueryContext(ctx, `SELECT id, name, quantity FROM meal_dish_plain_items WHERE dish_id = ?`, dishID)
+type plainItemTable struct{ table, noun string }
+
+var (
+	mealPlainItems  = plainItemTable{"meal_dish_plain_items", "plain item"}
+	savedPlainItems = plainItemTable{"saved_meal_dish_plain_items", "saved plain item"}
+)
+
+func queryPlainItems(ctx context.Context, db dbQueryer, source plainItemTable, dishID string) ([]meal.PlainItem, error) {
+	rows, err := db.QueryContext(ctx, `SELECT id, name, quantity FROM `+source.table+` WHERE dish_id = ?`, dishID)
 	if err != nil {
-		return nil, fmt.Errorf("query plain items: %w", err)
+		return nil, fmt.Errorf("query %ss: %w", source.noun, err)
 	}
-	defer rows.Close()
 
-	var items []meal.PlainItem
-
-	for rows.Next() {
+	return scanRows(rows, source.noun+"s", func(rows *sql.Rows) (meal.PlainItem, error) {
 		var pi meal.PlainItem
 		if err := rows.Scan(&pi.ID, &pi.Name, &pi.Quantity); err != nil {
-			return nil, fmt.Errorf("scan plain item: %w", err)
+			return pi, fmt.Errorf("scan %s: %w", source.noun, err)
 		}
 
-		items = append(items, pi)
-	}
-
-	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("iterate plain items: %w", err)
-	}
-
-	return items, nil
+		return pi, nil
+	})
 }
 
-func queryPlainItemsForDishes(ctx context.Context, db dbQueryer, dishIDs []string) (map[string][]meal.PlainItem, error) {
+func queryPlainItemsForDishes(ctx context.Context, db dbQueryer, source plainItemTable, dishIDs []string) (map[string][]meal.PlainItem, error) {
 	if len(dishIDs) == 0 {
 		return nil, nil
 	}
 
-	placeholders := strings.TrimSuffix(strings.Repeat("?,", len(dishIDs)), ",")
+	placeholders := sqlPlaceholders(len(dishIDs))
 
 	args := make([]any, len(dishIDs))
 	for i, id := range dishIDs {
 		args[i] = id
 	}
 
-	rows, err := db.QueryContext(ctx, `SELECT id, dish_id, name, quantity FROM meal_dish_plain_items WHERE dish_id IN (`+placeholders+`)`, args...)
+	rows, err := db.QueryContext(ctx, `SELECT id, dish_id, name, quantity FROM `+source.table+` WHERE dish_id IN (`+placeholders+`)`, args...)
 	if err != nil {
-		return nil, fmt.Errorf("query plain items batch: %w", err)
+		return nil, fmt.Errorf("query %ss batch: %w", source.noun, err)
 	}
 	defer rows.Close()
 
@@ -894,14 +883,14 @@ func queryPlainItemsForDishes(ctx context.Context, db dbQueryer, dishIDs []strin
 		)
 
 		if err := rows.Scan(&pi.ID, &dishID, &pi.Name, &pi.Quantity); err != nil {
-			return nil, fmt.Errorf("scan plain item: %w", err)
+			return nil, fmt.Errorf("scan %s: %w", source.noun, err)
 		}
 
 		result[dishID] = append(result[dishID], pi)
 	}
 
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("iterate plain items batch: %w", err)
+		return nil, fmt.Errorf("iterate %ss batch: %w", source.noun, err)
 	}
 
 	return result, nil

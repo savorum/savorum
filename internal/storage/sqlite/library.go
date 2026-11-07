@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"strings"
 	"time"
 
 	"github.com/savorum/savorum/internal/access"
@@ -143,24 +142,15 @@ func (s *Store) ListReferences(ctx context.Context, state library.State) ([]libr
 	if err != nil {
 		return nil, fmt.Errorf("query recipe references: %w", err)
 	}
-	defer rows.Close()
 
-	references := []library.RecipeReference{}
-
-	for rows.Next() {
+	return scanRowsNonNil(rows, "recipe references", func(rows *sql.Rows) (library.RecipeReference, error) {
 		var reference library.RecipeReference
 		if err := rows.Scan(&reference.ID, &reference.Title, &reference.Revision); err != nil {
-			return nil, fmt.Errorf("scan recipe reference: %w", err)
+			return reference, fmt.Errorf("scan recipe reference: %w", err)
 		}
 
-		references = append(references, reference)
-	}
-
-	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("iterate recipe references: %w", err)
-	}
-
-	return references, nil
+		return reference, nil
+	})
 }
 
 // Revise applies a revision command and records its resulting entry revision.
@@ -547,7 +537,7 @@ func (s *Store) RegisteredAssets(ctx context.Context, hashes []string) (map[stri
 		return present, nil
 	}
 
-	placeholders := strings.TrimSuffix(strings.Repeat("?,", len(hashes)), ",")
+	placeholders := sqlPlaceholders(len(hashes))
 
 	args := make([]any, len(hashes)+1)
 	for index, hash := range hashes {

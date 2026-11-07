@@ -66,24 +66,15 @@ func (s *Store) AuditEvents(ctx context.Context, f identity.AuditFilter) ([]iden
 	if err != nil {
 		return nil, fmt.Errorf("query audit events: %w", err)
 	}
-	defer rows.Close()
 
-	events := []identity.AuditEvent{}
-
-	for rows.Next() {
+	return scanRowsNonNil(rows, "audit events", func(rows *sql.Rows) (identity.AuditEvent, error) {
 		var e identity.AuditEvent
 		if err := rows.Scan(&e.ID, &e.CreatedAt, &e.ActorID, &e.CredentialID, &e.Action, &e.TargetType, &e.TargetID, &e.LibraryID, &e.CorrelationID, &e.Outcome); err != nil {
-			return nil, fmt.Errorf("scan audit event: %w", err)
+			return e, fmt.Errorf("scan audit event: %w", err)
 		}
 
-		events = append(events, e)
-	}
-
-	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("iterate audit events: %w", err)
-	}
-
-	return events, nil
+		return e, nil
+	})
 }
 
 func identityAuditEvent(actor, target, action string) identity.AuditEvent {

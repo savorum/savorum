@@ -3,7 +3,6 @@ package sqlite
 import (
 	"context"
 	"fmt"
-	"strings"
 
 	"github.com/savorum/savorum/internal/access"
 	"github.com/savorum/savorum/internal/library"
@@ -47,7 +46,7 @@ func (s *Store) FindRecipeAuthors(ctx context.Context, query string, limit int) 
 	}
 
 	args = append(args, authorCandidateLimit+1)
-	placeholders := strings.TrimSuffix(strings.Repeat("?,", len(keys)), ",")
+	placeholders := sqlPlaceholders(len(keys))
 
 	rows, err := s.db.QueryContext(ctx, `SELECT keys.name FROM recipe_author_search_keys AS keys
 		WHERE keys.library_id=? AND keys.key IN (`+placeholders+`)
@@ -99,7 +98,7 @@ func (s *Store) FindRecipeAuthors(ctx context.Context, query string, limit int) 
 		return authorCandidatePage(nil, limit, bounded), nil
 	}
 
-	placeholders = strings.TrimSuffix(strings.Repeat("?,", len(matches)), ",")
+	placeholders = sqlPlaceholders(len(matches))
 
 	items, err := s.authorCandidates(ctx, "names.name IN ("+placeholders+")", matches, limit+1, "fuzzy")
 	if err != nil {

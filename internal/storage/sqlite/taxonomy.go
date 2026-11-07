@@ -151,37 +151,7 @@ func (s *Store) ReplaceTag(ctx context.Context, expectedRevision uint64, tag lib
 // DeleteTag removes a tag, and takes it off every recipe that carries it, when
 // its revision matches expectedRevision.
 func (s *Store) DeleteTag(ctx context.Context, id string, expectedRevision uint64, timestamp time.Time) error {
-	if err := s.scopedObject(ctx, "tags", id, access.Editor); err != nil {
-		return err
-	}
-
-	tx, err := s.db.BeginTx(ctx, nil)
-	if err != nil {
-		return fmt.Errorf("begin tag deletion: %w", err)
-	}
-	defer tx.Rollback()
-
-	if err := requireTaxonomyRevision(ctx, tx, "tags", id, expectedRevision); err != nil {
-		return err
-	}
-
-	if err := advanceAssignedOrganizationRevisions(ctx, tx, "recipe_tags", "tag_id", id, timestamp); err != nil {
-		return err
-	}
-
-	if _, err := tx.ExecContext(ctx, "DELETE FROM recipe_tags WHERE tag_id = ?", id); err != nil {
-		return fmt.Errorf("delete tag assignments: %w", err)
-	}
-
-	if _, err := tx.ExecContext(ctx, "DELETE FROM tags WHERE id = ? AND revision = ?", id, expectedRevision); err != nil {
-		return fmt.Errorf("delete tag: %w", err)
-	}
-
-	if err := tx.Commit(); err != nil {
-		return fmt.Errorf("commit tag deletion: %w", err)
-	}
-
-	return nil
+	return s.deleteTaxonomy(ctx, taxonomyDeletion{"tags", "recipe_tags", "tag_id", "tag", "DELETE FROM recipe_tags WHERE tag_id = ?", "DELETE FROM tags WHERE id = ? AND revision = ?"}, id, expectedRevision, timestamp)
 }
 
 // MergeTag replaces a tag with targetID when the source revision matches.
@@ -381,34 +351,40 @@ func (s *Store) ReplaceFacet(ctx context.Context, expectedRevision uint64, facet
 // DeleteFacet removes a facet, and takes it off every recipe that carries it,
 // when its revision matches expectedRevision.
 func (s *Store) DeleteFacet(ctx context.Context, id string, expectedRevision uint64, timestamp time.Time) error {
-	if err := s.scopedObject(ctx, "facets", id, access.Editor); err != nil {
+	return s.deleteTaxonomy(ctx, taxonomyDeletion{"facets", "recipe_facets", "facet_id", "facet", "DELETE FROM recipe_facets WHERE facet_id = ?", "DELETE FROM facets WHERE id = ? AND revision = ?"}, id, expectedRevision, timestamp)
+}
+
+type taxonomyDeletion struct{ table, assignments, column, noun, deleteAssignments, deleteRow string }
+
+func (s *Store) deleteTaxonomy(ctx context.Context, kind taxonomyDeletion, id string, expectedRevision uint64, timestamp time.Time) error {
+	if err := s.scopedObject(ctx, kind.table, id, access.Editor); err != nil {
 		return err
 	}
 
 	tx, err := s.db.BeginTx(ctx, nil)
 	if err != nil {
-		return fmt.Errorf("begin facet deletion: %w", err)
+		return fmt.Errorf("begin %s deletion: %w", kind.noun, err)
 	}
 	defer tx.Rollback()
 
-	if err := requireTaxonomyRevision(ctx, tx, "facets", id, expectedRevision); err != nil {
+	if err := requireTaxonomyRevision(ctx, tx, kind.table, id, expectedRevision); err != nil {
 		return err
 	}
 
-	if err := advanceAssignedOrganizationRevisions(ctx, tx, "recipe_facets", "facet_id", id, timestamp); err != nil {
+	if err := advanceAssignedOrganizationRevisions(ctx, tx, kind.assignments, kind.column, id, timestamp); err != nil {
 		return err
 	}
 
-	if _, err := tx.ExecContext(ctx, "DELETE FROM recipe_facets WHERE facet_id = ?", id); err != nil {
-		return fmt.Errorf("delete facet assignments: %w", err)
+	if _, err := tx.ExecContext(ctx, kind.deleteAssignments, id); err != nil {
+		return fmt.Errorf("delete %s assignments: %w", kind.noun, err)
 	}
 
-	if _, err := tx.ExecContext(ctx, "DELETE FROM facets WHERE id = ? AND revision = ?", id, expectedRevision); err != nil {
-		return fmt.Errorf("delete facet: %w", err)
+	if _, err := tx.ExecContext(ctx, kind.deleteRow, id, expectedRevision); err != nil {
+		return fmt.Errorf("delete %s: %w", kind.noun, err)
 	}
 
 	if err := tx.Commit(); err != nil {
-		return fmt.Errorf("commit facet deletion: %w", err)
+		return fmt.Errorf("commit %s deletion: %w", kind.noun, err)
 	}
 
 	return nil
