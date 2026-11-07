@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"strings"
 	"time"
 
 	"github.com/savorum/savorum/internal/access"
@@ -26,7 +25,7 @@ func bookIDsForRecipeEntries(ctx context.Context, transaction *sql.Tx, entryIDs 
 		return []string{}, nil
 	}
 
-	placeholders := strings.TrimSuffix(strings.Repeat("?,", len(entryIDs)), ",")
+	placeholders := sqlPlaceholders(len(entryIDs))
 
 	args := make([]any, 0, len(entryIDs))
 	for _, entryID := range entryIDs {

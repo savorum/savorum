@@ -54,7 +54,7 @@ func (s *Store) nameTermAlternatives(ctx context.Context, word string, keys []st
 	}
 
 	args = append(args, authorCandidateLimit)
-	placeholders := strings.TrimSuffix(strings.Repeat("?,", len(keys)), ",")
+	placeholders := sqlPlaceholders(len(keys))
 
 	rows, err := s.db.QueryContext(ctx, `SELECT keys.term FROM recipe_name_term_keys AS keys
 		WHERE keys.library_id=? AND keys.key IN (`+placeholders+`)

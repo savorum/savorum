@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"strings"
 
 	"github.com/savorum/savorum/internal/access"
 	"github.com/savorum/savorum/internal/library"
@@ -75,7 +74,7 @@ func (s *Store) selectBooks(ctx context.Context, ids []string, q string, limit, 
 	args := []any{scopeID(ctx)}
 
 	if len(ids) > 0 {
-		where += " AND id IN (" + strings.TrimSuffix(strings.Repeat("?,", len(ids)), ",") + ")"
+		where += " AND id IN (" + sqlPlaceholders(len(ids)) + ")"
 		for _, id := range ids {
 			args = append(args, id)
 		}

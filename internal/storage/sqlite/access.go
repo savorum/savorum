@@ -120,7 +120,7 @@ func (*Store) scopedObjectsWith(ctx context.Context, queryer accessQueryer, tabl
 		unique[id] = struct{}{}
 	}
 
-	placeholders := strings.TrimSuffix(strings.Repeat("?,", len(unique)), ",")
+	placeholders := sqlPlaceholders(len(unique))
 
 	args := make([]any, 0, len(unique)+1)
 
@@ -154,24 +154,15 @@ func (s *Store) Libraries(ctx context.Context) ([]Library, error) {
 	if err != nil {
 		return nil, fmt.Errorf("read library access: %w", err)
 	}
-	defer rows.Close()
 
-	result := []Library{}
-
-	for rows.Next() {
+	return scanRowsNonNil(rows, "library access", func(rows *sql.Rows) (Library, error) {
 		var v Library
 		if err := rows.Scan(&v.ID, &v.Name, &v.Role); err != nil {
-			return nil, fmt.Errorf("read library access: %w", err)
+			return v, fmt.Errorf("read library access: %w", err)
 		}
 
-		result = append(result, v)
-	}
-
-	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("iterate library access: %w", err)
-	}
-
-	return result, nil
+		return v, nil
+	})
 }
 
 // LibraryMembers lists effective membership roles for an owner.
@@ -184,24 +175,15 @@ func (s *Store) LibraryMembers(ctx context.Context, id string) ([]Member, error)
 	if err != nil {
 		return nil, fmt.Errorf("read library access: %w", err)
 	}
-	defer rows.Close()
 
-	result := []Member{}
-
-	for rows.Next() {
+	return scanRowsNonNil(rows, "library access", func(rows *sql.Rows) (Member, error) {
 		var v Member
 		if err := rows.Scan(&v.UserID, &v.DisplayName, &v.Role); err != nil {
-			return nil, fmt.Errorf("read library access: %w", err)
+			return v, fmt.Errorf("read library access: %w", err)
 		}
 
-		result = append(result, v)
-	}
-
-	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("iterate library access: %w", err)
-	}
-
-	return result, nil
+		return v, nil
+	})
 }
 
 // CreateLibrary explicitly grants the creating administrator ownership.

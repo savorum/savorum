@@ -119,24 +119,15 @@ func (s *Store) ListSourceAttachments(ctx context.Context, entryID library.Entry
 	if err != nil {
 		return nil, fmt.Errorf("query recipe sources: %w", err)
 	}
-	defer rows.Close()
 
-	result := []library.SourceAttachment{}
-
-	for rows.Next() {
+	return scanRowsNonNil(rows, "recipe sources", func(rows *sql.Rows) (library.SourceAttachment, error) {
 		var value library.SourceAttachment
 		if err := rows.Scan(&value.EntryID, &value.Revision, &value.AssetID, &value.Filename, &value.MediaType, &value.Size); err != nil {
-			return nil, fmt.Errorf("scan recipe source: %w", err)
+			return value, fmt.Errorf("scan recipe source: %w", err)
 		}
 
-		result = append(result, value)
-	}
-
-	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("iterate recipe sources: %w", err)
-	}
-
-	return result, nil
+		return value, nil
+	})
 }
 
 // GetSourceAttachment returns one attachment for an entry revision.

@@ -2,6 +2,7 @@ package sqlite
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"strings"
 
@@ -288,7 +289,7 @@ func (s *Store) populateRecipeSummaryAssociations(ctx context.Context, entries [
 		args[index] = entries[index].ID
 	}
 
-	placeholders := strings.TrimSuffix(strings.Repeat("?,", len(entries)), ",")
+	placeholders := sqlPlaceholders(len(entries))
 
 	rows, err := s.db.QueryContext(ctx, `
 		SELECT recipe_tags.entry_id, tags.id, tags.name, COALESCE(tags.color, '')
@@ -658,7 +659,7 @@ func searchTextConditions(search library.SearchCriteria) ([]string, []any, bool)
 				args = append(args, searchExpression(word))
 				if alternatives := search.TextAlternatives[word]; len(alternatives) > 0 {
 					values := alternatives
-					placeholders := strings.TrimSuffix(strings.Repeat("?,", len(values)), ",")
+					placeholders := sqlPlaceholders(len(values))
 					condition = "(" + condition + ` OR EXISTS (
 						SELECT 1 FROM recipe_name_term_entries AS term_entry
 						WHERE term_entry.entry_id=recipes.id AND term_entry.library_id=recipes.library_id
@@ -883,24 +884,15 @@ func (s *Store) matchingRecipeIDs(ctx context.Context, options library.ListOptio
 	if err != nil {
 		return nil, fmt.Errorf("query matching recipes: %w", err)
 	}
-	defer rows.Close()
 
-	ids := []library.EntryID{}
-
-	for rows.Next() {
+	return scanRowsNonNil(rows, "matching recipes", func(rows *sql.Rows) (library.EntryID, error) {
 		var id library.EntryID
 		if err := rows.Scan(&id); err != nil {
-			return nil, fmt.Errorf("scan matching recipe: %w", err)
+			return id, fmt.Errorf("scan matching recipe: %w", err)
 		}
 
-		ids = append(ids, id)
-	}
-
-	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("iterate matching recipes: %w", err)
-	}
-
-	return ids, nil
+		return id, nil
+	})
 }
 
 // summariesByID reads summaries for the given entries, in the given order.
@@ -916,7 +908,7 @@ func (s *Store) summariesByID(ctx context.Context, ids []library.EntryID) ([]lib
 		args = append(args, id)
 	}
 
-	placeholders := strings.TrimSuffix(strings.Repeat("?,", len(ids)), ",")
+	placeholders := sqlPlaceholders(len(ids))
 
 	rows, err := s.db.QueryContext(ctx, `
 		SELECT recipes.id, recipes.document_id, recipes.title, recipes.description,
@@ -972,7 +964,7 @@ func restrictRecipeIDs(where string, args []any, ids []library.EntryID) (string,
 		return where, args
 	}
 
-	where += " AND recipes.id IN (" + strings.TrimSuffix(strings.Repeat("?,", len(ids)), ",") + ")"
+	where += " AND recipes.id IN (" + sqlPlaceholders(len(ids)) + ")"
 	for _, id := range ids {
 		args = append(args, string(id))
 	}
