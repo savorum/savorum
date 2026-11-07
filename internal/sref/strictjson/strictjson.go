@@ -4,11 +4,11 @@ package strictjson
 import (
 	"bytes"
 	"encoding/json"
+	"encoding/json/jsontext"
 	"errors"
 	"fmt"
 	"io"
 	"strings"
-	"unicode/utf8"
 )
 
 const maxJSONDepth = 128
@@ -22,140 +22,53 @@ func Validate(data []byte) (err error) {
 		}
 	}()
 
-	if !utf8.Valid(data) {
-		return errors.New("JSON is not valid UTF-8")
+	// jsontext rejects duplicate names, invalid UTF-8 and a byte-order mark by default.
+	decoder := jsontext.NewDecoder(bytes.NewReader(data))
+
+	for {
+		_, err := decoder.ReadToken()
+		if err != nil {
+			return classify(data, err)
+		}
+
+		if decoder.StackDepth() > maxJSONDepth {
+			return fmt.Errorf("JSON nesting exceeds depth limit %d", maxJSONDepth)
+		}
+
+		if decoder.StackDepth() == 0 {
+			break
+		}
 	}
 
-	if bytes.HasPrefix(data, []byte{0xef, 0xbb, 0xbf}) {
-		return errors.New("JSON begins with a byte-order mark")
-	}
-
-	if err := checkDepth(data); err != nil {
-		return err
-	}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.UseNumber()
-
-	if err := validateValue(decoder); err != nil {
-		return fmt.Errorf("read trailing JSON token: %w", err)
-	}
-
-	if _, err := decoder.Token(); !errors.Is(err, io.EOF) {
+	if _, err := decoder.ReadToken(); !errors.Is(err, io.EOF) {
 		if err == nil {
 			return &Failure{kind: Trailing, cause: errors.New("trailing JSON content")}
 		}
 
-		return fmt.Errorf("read content after JSON value: %w", err)
+		return fmt.Errorf("read content after JSON value: %w", classify(data, err))
 	}
 
 	return nil
 }
 
-func checkDepth(data []byte) error {
-	depth := 0
-	inString := false
-	escaped := false
+func classify(data []byte, err error) error {
+	syntax, ok := errors.AsType[*jsontext.SyntacticError](err)
+	if !ok {
+		return err
+	}
 
-	for index, c := range data {
-		if inString {
-			switch {
-			case escaped:
-				escaped = false
-			case c == '\\':
-				escaped = true
-			case c == '"':
-				inString = false
-			}
+	if errors.Is(syntax.Err, jsontext.ErrDuplicateName) {
+		return &Failure{kind: Duplicate, cause: fmt.Errorf("duplicate JSON member %q", syntax.JSONPointer.LastToken())}
+	}
 
-			continue
-		}
-
-		if (c == 'N' || c == 'I' || c == '-') && nonfiniteToken(data, index) {
+	// Decoder errors may point one byte past the rejected token.
+	for _, offset := range []int64{syntax.ByteOffset, syntax.ByteOffset - 1} {
+		if offset >= 0 && offset < int64(len(data)) && nonfiniteToken(data, int(offset)) {
 			return &Failure{kind: Nonfinite, cause: errors.New("nonfinite JSON number")}
 		}
-
-		switch c {
-		case '"':
-			inString = true
-		case '{', '[':
-			depth++
-			if depth > maxJSONDepth {
-				return fmt.Errorf("JSON nesting exceeds depth limit %d", maxJSONDepth)
-			}
-		case '}', ']':
-			depth--
-		}
 	}
 
-	return nil
-}
-
-func validateValue(decoder *json.Decoder) error {
-	token, err := decoder.Token()
-	if err != nil {
-		return fmt.Errorf("read JSON token: %w", err)
-	}
-
-	delimiter, nested := token.(json.Delim)
-	if !nested {
-		return nil
-	}
-
-	switch delimiter {
-	case '{':
-		return validateObject(decoder)
-	case '[':
-		return validateArray(decoder)
-	default:
-		return errors.New("unexpected JSON delimiter")
-	}
-}
-
-func validateObject(decoder *json.Decoder) error {
-	seen := map[string]struct{}{}
-
-	for decoder.More() {
-		memberToken, err := decoder.Token()
-		if err != nil {
-			return fmt.Errorf("read JSON object member: %w", err)
-		}
-
-		member, ok := memberToken.(string)
-		if !ok {
-			return errors.New("object member name is not a string")
-		}
-
-		if _, repeated := seen[member]; repeated {
-			return &Failure{kind: Duplicate, cause: fmt.Errorf("duplicate JSON member %q", member)}
-		}
-
-		seen[member] = struct{}{}
-
-		if err := validateValue(decoder); err != nil {
-			return err
-		}
-	}
-
-	if _, err := decoder.Token(); err != nil {
-		return fmt.Errorf("read JSON object terminator: %w", err)
-	}
-
-	return nil
-}
-
-func validateArray(decoder *json.Decoder) error {
-	for decoder.More() {
-		if err := validateValue(decoder); err != nil {
-			return err
-		}
-	}
-
-	if _, err := decoder.Token(); err != nil {
-		return fmt.Errorf("read JSON array terminator: %w", err)
-	}
-
-	return nil
+	return err
 }
 
 // Decode validates the original bytes before decoding them with unknown-field

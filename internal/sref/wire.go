@@ -1,12 +1,12 @@
 package sref
 
 import (
-	"bytes"
 	"encoding/json"
+	"encoding/json/jsontext"
+	jsonv2 "encoding/json/v2"
 	"errors"
 	"fmt"
-	"io"
-	"reflect"
+	"strconv"
 	"strings"
 
 	"github.com/savorum/savorum/internal/recipe"
@@ -207,29 +207,26 @@ func toWire(document recipe.Document) (map[string]json.RawMessage, error) {
 	return members, nil
 }
 
-// decodeStandard reads the standard members strictly, so a member SREF does not
-// define is reported rather than silently dropped.
+func memberPath(pointer jsontext.Pointer) string {
+	var names []string
+
+	for token := range pointer.Tokens() {
+		if _, err := strconv.Atoi(token); err != nil {
+			names = append(names, token)
+		}
+	}
+
+	return strings.Join(names, ".")
+}
+
 func decodeStandard(body []byte) (recipe.Document, error) {
-	var root map[string]any
-	if err := decodeWithNumbers(body, &root); err != nil {
-		return recipe.Document{}, fmt.Errorf("%w: %w", ErrInvalidDocument, err)
-	}
-
-	if member := unknownWireMember(root, reflect.TypeFor[wireDocument]()); member != "" {
-		return recipe.Document{}, fmt.Errorf("%w: %w", ErrInvalidDocument, shapeFailure("member-not-defined-by-version", "member %q is not defined by this version", member))
-	}
-
 	var shaped wireDocument
+	if err := jsonv2.Unmarshal(body, &shaped, jsonv2.RejectUnknownMembers(true)); err != nil {
+		if semantic, ok := errors.AsType[*jsonv2.SemanticError](err); ok && errors.Is(err, jsonv2.ErrUnknownName) {
+			return recipe.Document{}, fmt.Errorf("%w: %w", ErrInvalidDocument, shapeFailure("member-not-defined-by-version", "member %q is not defined by this version", memberPath(semantic.JSONPointer)))
+		}
 
-	decoder := json.NewDecoder(bytes.NewReader(body))
-	decoder.DisallowUnknownFields()
-
-	if err := decoder.Decode(&shaped); err != nil {
 		return recipe.Document{}, fmt.Errorf("%w: %w", ErrInvalidDocument, err)
-	}
-
-	if err := decoder.Decode(&struct{}{}); !errors.Is(err, io.EOF) {
-		return recipe.Document{}, fmt.Errorf("%w: trailing content", ErrInvalidDocument)
 	}
 
 	if err := requireStepText(shaped.InstructionSections); err != nil {
