@@ -3,8 +3,10 @@ package sqlite
 import (
 	"errors"
 	"testing"
+	"time"
 
 	"github.com/savorum/savorum/internal/access"
+	"github.com/savorum/savorum/internal/federation"
 	"github.com/savorum/savorum/internal/identity"
 )
 
@@ -123,5 +125,83 @@ func TestUnlinkingOneOfTwoIdentitiesAtAProviderKeepsItsGrants(t *testing.T) {
 
 	if err = s.UnlinkIdentity(ctx, user.UserID, user.UserID, "999999", false); !errors.Is(err, identity.ErrConflict) {
 		t.Fatalf("unknown identity: %v", err)
+	}
+}
+
+func TestUnlinkingAnIdentityInvalidatesItsNativeGrants(t *testing.T) {
+	ctx := t.Context()
+	s := openStore(ctx, t)
+
+	user, err := s.LocalPrincipal(ctx)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if err = s.RegisterProviders(ctx, []federation.Provider{{ID: "sso", Kind: "saml", DisplayName: "SSO"}}); err != nil {
+		t.Fatal(err)
+	}
+
+	if _, err = s.db.ExecContext(ctx, `INSERT INTO identities(user_id,provider,provider_subject) VALUES(?,'sso','subject')`, user.UserID); err != nil {
+		t.Fatal(err)
+	}
+
+	grant := federation.NativeGrant{UserID: user.UserID, Provider: "sso", Subject: "subject", Challenge: "challenge", RedirectURI: "savorum://auth/callback"}
+	save := func(code string) {
+		t.Helper()
+
+		if e := s.SaveNativeGrant(ctx, code, grant, time.Now().Add(time.Minute)); e != nil {
+			t.Fatal(e)
+		}
+	}
+	save("before-unlink")
+
+	var id string
+	if err = s.db.QueryRowContext(ctx, `SELECT id FROM identities WHERE provider='sso'`).Scan(&id); err != nil {
+		t.Fatal(err)
+	}
+
+	if err = s.UnlinkIdentity(ctx, user.UserID, user.UserID, id, true); err != nil {
+		t.Fatal(err)
+	}
+
+	if _, _, err = s.RedeemNativeGrant(ctx, "before-unlink"); !errors.Is(err, identity.ErrCredentials) {
+		t.Fatal("unlinked grant redeemed", err)
+	}
+
+	if _, err = s.db.ExecContext(ctx, `INSERT INTO identities(user_id,provider,provider_subject) VALUES(?,'sso','subject')`, user.UserID); err != nil {
+		t.Fatal(err)
+	}
+
+	save("valid")
+
+	got, _, err := s.RedeemNativeGrant(ctx, "valid")
+	if err != nil || got.IdentityID == "" {
+		t.Fatal(got, err)
+	}
+
+	if _, _, err = s.RedeemNativeGrant(ctx, "valid"); !errors.Is(err, identity.ErrCredentials) {
+		t.Fatal("replay", err)
+	}
+
+	bound := identity.WithSessionIdentity(ctx, got.IdentityID)
+	if _, err = s.CreateSession(bound, user.UserID, "sso", 0, 0); err != nil {
+		t.Fatal("valid identity session", err)
+	}
+
+	if err = s.UnlinkIdentity(ctx, user.UserID, user.UserID, got.IdentityID, true); err != nil {
+		t.Fatal(err)
+	}
+
+	if _, err = s.db.ExecContext(ctx, `INSERT INTO identities(user_id,provider,provider_subject) VALUES(?,'sso','subject')`, user.UserID); err != nil {
+		t.Fatal(err)
+	}
+
+	if _, err = s.CreateSession(bound, user.UserID, "sso", 0, 0); !errors.Is(err, identity.ErrCredentials) {
+		t.Fatal("unlink/relink revived redeemed authority", err)
+	}
+
+	grant.Subject = "missing"
+	if err = s.SaveNativeGrant(ctx, "missing", grant, time.Now().Add(time.Minute)); !errors.Is(err, identity.ErrCredentials) {
+		t.Fatal("missing identity issued grant", err)
 	}
 }

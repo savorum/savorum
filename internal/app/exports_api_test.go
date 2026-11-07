@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 	"time"
 )
@@ -33,8 +34,18 @@ func TestRecipesAreBulkedIntoABookExportedAndImportedElsewhere(t *testing.T) {
 
 	bundle := source.send(http.MethodPost, "/api/v1/exports/sref-bundle", map[string]any{"recipes": []string{entry}}, http.StatusOK)
 
+	title := decode[struct {
+		Recipe struct {
+			Title string `json:"title"`
+		} `json:"recipe"`
+	}](t, source.send(http.MethodGet, "/api/v1/recipes/"+entry, nil, http.StatusOK)).Recipe.Title
+
 	elsewhere := newHarness(t)
 	elsewhere.raw(http.MethodPost, "/api/v1/recipes/import-package", bundle.Body.Bytes(), "application/zip", http.StatusOK)
+
+	if body := elsewhere.send(http.MethodGet, "/api/v1/recipes", nil, http.StatusOK).Body.String(); !strings.Contains(body, title) {
+		t.Fatalf("imported library lacks %q: %s", title, body)
+	}
 }
 
 func TestTheEventStreamOpensForALiveClient(t *testing.T) {

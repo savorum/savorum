@@ -33,5 +33,9 @@ func TestFinishedWebhookDeliveriesAreRetried(t *testing.T) {
 		}
 
 		h.send(http.MethodPost, path+"/deliveries/"+delivery.ID+"/redeliver", nil, http.StatusAccepted)
+
+		if again := decode[[]webhook.Delivery](t, h.send(http.MethodGet, path+"/deliveries", nil, http.StatusOK))[0]; again.ID != delivery.ID || again.State != "pending" {
+			t.Fatalf("redelivered delivery = %+v", again)
+		}
 	}
 }

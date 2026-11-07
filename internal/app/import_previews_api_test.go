@@ -3,6 +3,7 @@ package app_test
 import (
 	"fmt"
 	"net/http"
+	"slices"
 	"testing"
 	"time"
 )
@@ -48,6 +49,7 @@ func TestImportPreviewsAreReadCommittedQueuedAndDiscarded(t *testing.T) {
 
 	discarded := stage("discarded")
 	h.send(http.MethodDelete, "/api/v1/recipes/import-previews/"+discarded.ID, nil, http.StatusNoContent)
+	h.send(http.MethodGet, "/api/v1/recipes/import-previews/"+discarded.ID, nil, http.StatusNotFound)
 }
 
 func TestMeasurementPlansAreProposedAppliedAndReverted(t *testing.T) {
@@ -81,11 +83,29 @@ func TestMeasurementPlansAreProposedAppliedAndReverted(t *testing.T) {
 
 	h.send(http.MethodPost, path+"/measurement-resolution-plans/"+plan.PlanID+"/apply", map[string]any{"expected_preview_revision": preview.Revision}, http.StatusOK)
 
-	current := decode[struct {
-		Revision uint64 `json:"preview_revision"`
-	}](t, h.send(http.MethodGet, path, nil, http.StatusOK))
+	type group struct {
+		ID string `json:"id"`
+	}
+
+	type groups struct {
+		Revision uint64  `json:"preview_revision"`
+		Groups   []group `json:"resolution_groups"`
+	}
+
+	unresolved := func(state groups) bool {
+		return slices.Contains(state.Groups, group{ID: preview.Groups[0].ID})
+	}
+
+	current := decode[groups](t, h.send(http.MethodGet, path, nil, http.StatusOK))
+	if unresolved(current) {
+		t.Fatal("applied plan left its group unresolved")
+	}
 
 	h.send(http.MethodDelete, path+"/measurement-resolution-plans/"+plan.PlanID, map[string]any{"expected_preview_revision": current.Revision}, http.StatusOK)
+
+	if !unresolved(decode[groups](t, h.send(http.MethodGet, path, nil, http.StatusOK))) {
+		t.Fatal("reverted plan did not reopen its group")
+	}
 }
 
 // A job finishes quickly, so a cancel can arrive after the last batch; the

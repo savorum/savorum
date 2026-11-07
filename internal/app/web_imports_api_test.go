@@ -32,6 +32,10 @@ func TestRecipesAreImportedFromAnAddress(t *testing.T) {
 
 	h.send(http.MethodPost, "/api/v1/recipes/import-url/preview", map[string]any{"url": soupAddress}, http.StatusOK)
 	h.send(http.MethodPost, "/api/v1/recipes/import-url", map[string]any{"url": soupAddress}, http.StatusOK)
+
+	if body := h.send(http.MethodGet, "/api/v1/recipes", nil, http.StatusOK).Body.String(); !strings.Contains(body, "Tomato Soup") {
+		t.Fatalf("imported recipe is not in the library: %s", body)
+	}
 }
 
 func TestARecipeFromAnAddressIsRefreshedWhenThePageChanges(t *testing.T) {
