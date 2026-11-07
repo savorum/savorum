@@ -16,6 +16,11 @@ func TestLexicalKindsPreserveStructuredCauses(t *testing.T) {
 		{`{"a":--1}`, Malformed},
 		{`{"a":`, Malformed},
 		{string([]byte{0xff}), Malformed},
+		{"\ufeff{}", Malformed},
+		{`{"a":"\ud800"}`, Malformed},
+		{`{"a":{"b":1,"b":2}}`, Duplicate},
+		{`[{"a":1},{"a":1,"a":1}]`, Duplicate},
+		{`{"a":"\u0061","\u0061":1}`, Duplicate},
 	} {
 		t.Run(example.source, func(t *testing.T) {
 			err := Validate([]byte(example.source))

@@ -4,6 +4,12 @@ Notable changes to Savorum Core. Each release publishes
 `ghcr.io/savorum/savorum` and, with PDF and photo import,
 `ghcr.io/savorum/savorum` with a `-documents` tag.
 
+## Unreleased
+
+### Fixed
+
+- Fix SREF import accepting member names that differ only in letter case.
+
 ## 0.4.3
 
 - Fix new shopping lists returning `null` for empty `selections` and `requirements`.
