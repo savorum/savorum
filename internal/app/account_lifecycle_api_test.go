@@ -92,6 +92,21 @@ type session struct {
 
 func (a *accounts) anonymous() *session { return &session{accounts: a} }
 
+func (a *accounts) assistantCall(token string) int {
+	a.t.Helper()
+
+	request := httptest.NewRequestWithContext(a.t.Context(), http.MethodPost, publicURL+"/mcp", strings.NewReader(`{"jsonrpc":"2.0","id":1,"method":"ping"}`))
+	request.Host = "savorum.test"
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Accept", "application/json, text/event-stream")
+	request.Header.Set("Authorization", "Bearer "+token)
+
+	response := httptest.NewRecorder()
+	a.handler.ServeHTTP(response, request)
+
+	return response.Code
+}
+
 // signIn logs in with a local password and returns the browser session.
 func (a *accounts) signIn(login, password string) *session {
 	a.t.Helper()
@@ -218,8 +233,15 @@ func TestInvitationsAreAcceptedRegisteredAndRevoked(t *testing.T) {
 	_, accepting := invite("viewer")
 	instance.signIn("bob", bobPassword).send(http.MethodPost, "/api/v1/account/invitations/accept", map[string]any{"token": accepting})
 
-	revoked, _ := invite("viewer")
+	revoked, revokedToken := invite("viewer")
 	admin.send(http.MethodDelete, "/api/v1/account/invitations/"+revoked, nil)
+
+	registration, err := json.Marshal(map[string]any{"token": revokedToken, "login": "dave", "display_name": "Dave", "password": "a long enough passphrase"})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	instance.anonymous().raw(http.MethodPost, "/api/v1/account/invitations/register", registration, "application/json", http.StatusUnauthorized)
 }
 
 func TestLibraryMembersAreAssignedRemovedRecoveredAndTheLibraryDeleted(t *testing.T) {
@@ -235,6 +257,10 @@ func TestLibraryMembersAreAssignedRemovedRecoveredAndTheLibraryDeleted(t *testin
 	admin.send(http.MethodDelete, member, nil)
 	admin.send(http.MethodGet, "/api/v1/users/"+bob+"/methods", nil)
 	admin.send(http.MethodDelete, "/api/v1/libraries/"+libraryID, map[string]any{"confirmation": "Shared"})
+
+	if body := admin.send(http.MethodGet, "/api/v1/libraries", nil).Body.String(); strings.Contains(body, libraryID) {
+		t.Fatalf("deleted library is still listed: %s", body)
+	}
 }
 
 func TestAPersonalAccountChangesItsPasswordRecoversAndIsDeleted(t *testing.T) {
@@ -253,6 +279,17 @@ func TestAPersonalAccountChangesItsPasswordRecoversAndIsDeleted(t *testing.T) {
 
 	bob = instance.signIn("bob", bobChanged)
 	bob.send(http.MethodDelete, "/api/v1/account", map[string]any{"confirmation": "DELETE", "password": bobChanged})
+
+	if user := field[any](t, bob.send(http.MethodGet, "/api/v1/account", nil).Body.Bytes(), "user"); user != nil {
+		t.Fatalf("deleted account's session still signs in as %v", user)
+	}
+
+	login, err := json.Marshal(map[string]any{"login": "bob", "password": bobChanged})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	instance.anonymous().raw(http.MethodPost, "/api/v1/account/login", login, "application/json", http.StatusUnauthorized)
 }
 
 func fieldList(t *testing.T, payload []byte, name string) []string {
@@ -311,10 +348,19 @@ func TestAnAssistantIsAuthorizedListedAndDisconnected(t *testing.T) {
 	}
 
 	exchange := url.Values{"grant_type": {"authorization_code"}, "client_id": {client}, "redirect_uri": {"https://client.example/callback"}, "resource": {publicURL + "/mcp"}, "code": {granted.Query().Get("code")}, "code_verifier": {verifier}}
-	anonymous.raw(http.MethodPost, "/oauth/token", []byte(exchange.Encode()), "application/x-www-form-urlencoded", http.StatusOK)
+	issued := anonymous.raw(http.MethodPost, "/oauth/token", []byte(exchange.Encode()), "application/x-www-form-urlencoded", http.StatusOK)
+	token := field[string](t, issued.Body.Bytes(), "access_token")
+
+	if status := instance.assistantCall(token); status != http.StatusOK {
+		t.Fatalf("connected assistant call status = %d", status)
+	}
 
 	connections := admin.send(http.MethodGet, "/api/v1/account/connections", nil)
 	admin.send(http.MethodDelete, "/api/v1/account/connections/"+firstConnection(t, connections.Body.Bytes()), nil)
+
+	if status := instance.assistantCall(token); status != http.StatusUnauthorized {
+		t.Fatalf("disconnected assistant call status = %d", status)
+	}
 }
 
 func firstConnection(t *testing.T, payload []byte) string {
@@ -354,5 +400,14 @@ func TestRemoteAccessIsConfiguredReadAndDisconnected(t *testing.T) {
 		"version": 1, "relay": relay.URL, "instance": "25e155cd-a53f-4797-91bf-38e056570a59",
 		"remote_origin": "https://acorn-apple-basil-basket.via.example.test", "credential": strings.Repeat("a", 43),
 	})
+
+	if body := admin.send(http.MethodGet, "/api/v1/instance/connect", nil).Body.String(); !strings.Contains(body, "acorn-apple-basil-basket") {
+		t.Fatalf("configured remote access is not reported: %s", body)
+	}
+
 	admin.send(http.MethodDelete, "/api/v1/instance/connect", nil)
+
+	if body := admin.send(http.MethodGet, "/api/v1/instance/connect", nil).Body.String(); strings.Contains(body, "acorn-apple-basil-basket") {
+		t.Fatalf("disconnected remote access is still reported: %s", body)
+	}
 }

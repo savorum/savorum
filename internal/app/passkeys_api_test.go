@@ -10,6 +10,7 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"net/http"
+	"strings"
 	"testing"
 )
 
@@ -219,6 +220,10 @@ func TestAPasskeyIsRegisteredRenamedUsedToSignInAndRemoved(t *testing.T) {
 	}
 
 	admin.send(http.MethodDelete, "/api/v1/account/passkeys/"+passkey, nil)
+
+	if body := admin.send(http.MethodGet, "/api/v1/account/passkeys", nil).Body.String(); strings.Contains(body, passkey) {
+		t.Fatalf("removed passkey is still listed: %s", body)
+	}
 }
 
 func firstPasskey(t *testing.T, payload []byte) string {

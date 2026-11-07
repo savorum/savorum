@@ -62,6 +62,10 @@ func TestImportJobsAreReviewedCommittedAndCancelled(t *testing.T) {
 	h.waitFor(cancelled)
 	current = h.send(http.MethodGet, cancelled, nil, http.StatusOK)
 	h.send(http.MethodPost, cancelled+"/cancel", nil, http.StatusOK, "If-Match", current.Header().Get("ETag"))
+
+	if state := decode[map[string]any](t, h.send(http.MethodGet, cancelled, nil, http.StatusOK))["state"]; state != "cancelled" {
+		t.Fatalf("cancelled import job state = %v", state)
+	}
 }
 
 func TestAnInterruptedExportJobIsResumed(t *testing.T) {
@@ -97,4 +101,8 @@ func TestAnInterruptedExportJobIsResumed(t *testing.T) {
 
 	current := h.send(http.MethodGet, path, nil, http.StatusOK)
 	h.send(http.MethodPost, path+"/resume", nil, http.StatusOK, "If-Match", current.Header().Get("ETag"))
+
+	if state := decode[map[string]any](t, h.send(http.MethodGet, path, nil, http.StatusOK))["state"]; state == "interrupted" {
+		t.Fatal("resumed export job is still interrupted")
+	}
 }

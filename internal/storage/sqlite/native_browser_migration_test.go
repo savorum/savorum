@@ -6,10 +6,13 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/savorum/savorum/internal/hosting"
 	"github.com/savorum/savorum/internal/identity"
 )
 
-func TestReleasedDatabaseUpgradePreservesNativeSignIn(t *testing.T) {
+func openReleasedDatabase(t *testing.T) *Store {
+	t.Helper()
+
 	data, err := os.ReadFile("testdata/migrations/0.3.0.db")
 	if err != nil {
 		t.Fatal(err)
@@ -34,6 +37,25 @@ func TestReleasedDatabaseUpgradePreservesNativeSignIn(t *testing.T) {
 	}
 
 	t.Cleanup(func() { _ = s.Close() })
+
+	return s
+}
+
+func TestReleasedDatabaseUpgradeStaysSelfHosted(t *testing.T) {
+	s := openReleasedDatabase(t)
+
+	if _, err := s.HostingTenant(t.Context()); !errors.Is(err, hosting.ErrNotHosted) {
+		t.Fatalf("upgrade enabled hosting: %v", err)
+	}
+
+	var mismatch *hosting.MismatchError
+	if _, err := s.BootstrapHosting(t.Context(), testBootstrap()); !errors.As(err, &mismatch) {
+		t.Fatalf("hosting bootstrap claimed an upgraded installation: %v", err)
+	}
+}
+
+func TestReleasedDatabaseUpgradePreservesNativeSignIn(t *testing.T) {
+	s := openReleasedDatabase(t)
 
 	user, browser, err := s.ResolveSession(t.Context(), "fixture-browser-token")
 	if err != nil || user.DisplayName != "Release fixture" || browser.ID != "fixture-browser" || browser.BrowserHandoff {
