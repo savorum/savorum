@@ -6,6 +6,10 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+### Changed
+
+- Improve social recipe imports, including post and caption extraction, recipes split across author comments, discovery of full recipes on creator websites, and partial-recipe recovery.
+
 ### Fixed
 
 - Fix SREF import accepting member names that differ only in letter case.

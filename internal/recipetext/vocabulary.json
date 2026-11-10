@@ -3,14 +3,21 @@
     "locale": "en",
     "ingredients": [
       "ingredients",
-      "ingredient"
+      "ingredient",
+      "what you need",
+      "what you'll need",
+      "you will need"
     ],
     "instructions": [
       "instructions",
       "instruction",
       "directions",
       "method",
-      "preparation"
+      "preparation",
+      "steps",
+      "how to make it",
+      "how to make",
+      "how to"
     ],
     "actions": {
       "cook": [

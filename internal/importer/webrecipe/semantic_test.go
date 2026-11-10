@@ -127,3 +127,19 @@ func TestSemanticArticleBoundsCandidateRegions(t *testing.T) {
 		t.Fatalf("candidate budget = %s", got)
 	}
 }
+
+func TestSemanticArticleTitleIntroducesSectionsAfterCompetingHeadings(t *testing.T) {
+	body := `<main><article><h1>To make ahead</h1><p>Assemble the day before.</p><h1>Tips</h1><p>Shred your own cheese.</p>
+<h2>Baked macaroni</h2><h3>Ingredients</h3><ul><li>1 lb pasta</li><li>2 cups milk</li><li>8 oz cheddar</li></ul>
+<h3>Instructions</h3><ol><li>Boil the pasta until tender.</li><li>Bake the pasta with milk and cheddar.</li></ol></article></main>`
+
+	result := mustExtract(t, body, "https://example.test/macaroni")
+	if result.Name != "Baked macaroni" || len(allIngredients(result.IngredientGroups)) != 3 || len(allSteps(result.Sections)) != 2 {
+		t.Fatalf("recipe section title = %+v", result)
+	}
+
+	competing := strings.Replace(body, "<h2>Baked macaroni</h2>", "", 1)
+	if result := mustExtract(t, competing, "https://example.test/macaroni"); !hasWarning(result, "semantic-html-review") {
+		t.Fatalf("competing titles without a section heading = %+v", result)
+	}
+}

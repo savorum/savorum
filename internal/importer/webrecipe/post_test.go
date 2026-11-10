@@ -170,7 +170,7 @@ func TestPostRejectsOversizedAuthoredText(t *testing.T) {
 		t.Fatal("oversized paragraphs retained")
 	}
 
-	post.readObject(map[string]any{"@type": "VideoObject", "description": strings.Repeat("a", (256<<10)+1)}, "")
+	post.readObject(map[string]any{"@type": "VideoObject", "description": strings.Repeat("a", (256<<10)+1)}, "", nil)
 
 	if post.AuthoredText != "" {
 		t.Fatal("oversized structured caption retained")
