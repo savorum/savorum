@@ -411,11 +411,6 @@ export function localizeHref(href: string, options?: {
  */
 export function deLocalizeHref(href: string): string;
 /**
- * @param {string} safeModuleId
- * @param {Locale} locale
- */
-export function trackMessageCall(safeModuleId: string, locale: Locale): void;
-/**
  * Generates localized URL variants for all provided URLs based on your configured locales and URL patterns.
  *
  * This function is essential for Static Site Generation (SSG) where you need to tell your framework
@@ -506,7 +501,7 @@ export const baseLocale: "en";
  *     throw new Error('Locale is not available');
  *   }
  */
-export const locales: readonly ["en", "ar", "cs", "da", "de", "el", "es", "fi", "fr", "he", "hu", "id", "it", "ja", "ko", "nb", "nl", "pl", "pt-BR", "pt-PT", "ro", "ru", "sv", "th", "tr", "uk", "vi", "zh-Hans", "zh-Hant"];
+export const locales: readonly ["en","ar","cs","da","de","el","es","fi","fr","he","hu","id","it","ja","ko","nb","nl","pl","pt-BR","pt-PT","ro","ru","sv","th","tr","uk","vi","zh-Hans","zh-Hant"];
 /** @type {string} */
 export const cookieName: string;
 /** @type {number} */
@@ -557,9 +552,8 @@ export const trailingSlash: "always" | "never" | undefined;
  * 		getStore(): {
  *   		locale?: Locale,
  * 			origin?: string,
- * 			messageCalls?: Set<string>
  *   	} | undefined,
- * 		run: (store: { locale?: Locale, origin?: string, messageCalls?: Set<string>},
+ * 		run: (store: { locale?: Locale, origin?: string },
  *    cb: any) => any
  * }} ParaglideAsyncLocalStorage
  */
@@ -573,8 +567,9 @@ export const trailingSlash: "always" | "never" | undefined;
  */
 export let serverAsyncLocalStorage: ParaglideAsyncLocalStorage | undefined;
 export const disableAsyncLocalStorage: false;
-export const experimentalMiddlewareLocaleSplitting: false;
 export const isServer: any;
+/** Controls development-only runtime diagnostics. */
+export const isDevelopment: true;
 /** @type {Locale | undefined} */
 export const experimentalStaticLocale: Locale | undefined;
 export function getLocale(): Locale;
@@ -678,12 +673,10 @@ export type ParaglideAsyncLocalStorage = {
     getStore(): {
         locale?: Locale;
         origin?: string;
-        messageCalls?: Set<string>;
     } | undefined;
     run: (store: {
         locale?: Locale;
         origin?: string;
-        messageCalls?: Set<string>;
     }, cb: any) => any;
 };
 export type SetLocaleFn = (newLocale: Locale, options?: {
@@ -793,7 +786,7 @@ export type MessageMarkupSchema = Record<string, MessageMarkupTag>;
 /**
  * Type-only metadata attached to compiled message functions.
  */
-export type MessageMetadata<Inputs, Options, Markup extends MessageMarkupSchema = Record<string, MessageMarkupTag>> = {
+export type MessageMetadata<Inputs, Options, Markup extends MessageMarkupSchema = MessageMarkupSchema> = {
     readonly __paraglide?: {
         inputs: Inputs;
         options: Options;
