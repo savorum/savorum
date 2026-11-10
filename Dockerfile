@@ -4,7 +4,7 @@ ARG GO_VERSION=1.27.3
 ARG NODE_VERSION=26.13.0
 
 # Release builds supply the verified frontend through the web build context.
-FROM --platform=$BUILDPLATFORM node:${NODE_VERSION}-bookworm@sha256:fa52d1669505e29b58c042875b1d65c229e0787a3610fd52869b22b68e480853 AS web
+FROM --platform=$BUILDPLATFORM node:${NODE_VERSION}-bookworm@sha256:a546d3f8acd2af4382668a7e6acd3bc4418e6a27478373e3246f8162f5181509 AS web
 WORKDIR /src
 COPY scripts/corepack/package.json scripts/corepack/package-lock.json /opt/corepack/
 ENV PATH="/opt/corepack/node_modules/.bin:${PATH}"
@@ -19,7 +19,7 @@ COPY web/ web/
 RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
     pnpm --dir web install --frozen-lockfile && pnpm --dir web run build
 
-FROM --platform=$BUILDPLATFORM golang:${GO_VERSION}-bookworm@sha256:972b4110ba0f47539a975c31e52c64765e1ff19f2d74469ae4a595c6676e80a5 AS build
+FROM --platform=$BUILDPLATFORM golang:${GO_VERSION}-bookworm@sha256:dc0963f32053e4bc451d24d87e3892d42d01021b61f093e98eb95c0352bb84b0 AS build
 ARG TARGETOS
 ARG TARGETARCH
 ARG VERSION=development
@@ -39,7 +39,7 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
     CGO_ENABLED=0 go run -trimpath -tags nodynamic ./cmd/savorum admin compatibility > /out/savorum-compatibility.json
 RUN mkdir -p /out/data /out/tmp && chmod 0750 /out/data && chmod 1777 /out/tmp
 
-FROM alpine:3.24.3@sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a AS runtime
+FROM alpine:3.24.4@sha256:f59abe656b692d901e184be3445e084786602108599d2a51d229c0f5a48c71bf AS runtime
 ARG VERSION=development
 ARG REVISION=
 ARG WEB_BUNDLE_SHA256=
@@ -47,7 +47,7 @@ RUN apk add --no-cache \
        bash=5.3.9-r1 \
        ca-certificates-bundle=20261020-r0 \
        setpriv=2.42.3-r1 \
-       zlib=1.3.2-r1 \
+       zlib=1.4-r0 \
     && addgroup -g 65532 savorum \
     && adduser -D -H -h /data -s /bin/bash -u 65532 -G savorum savorum \
     && ln -s /savorum /usr/local/bin/savorum

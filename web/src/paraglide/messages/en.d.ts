@@ -2462,13 +2462,9 @@ export type _Root_Skip_To_Main_ContentInputs = {};
 export type Account_Access_BackInputs = {};
 export type Account_Access_ForbiddenInputs = {};
 export type Account_Access_LedeInputs = {};
-export type Account_Access_Owner_OnlyInputs = {
-    library: NonNullable<unknown>;
-};
+export type Account_Access_Owner_OnlyInputs = { library: NonNullable<unknown> };
 export type Account_Access_Page_TitleInputs = {};
-export type Account_Access_TitleInputs = {
-    library: NonNullable<unknown>;
-};
+export type Account_Access_TitleInputs = { library: NonNullable<unknown> };
 export type Account_Activity_HeadingInputs = {};
 export type Account_Admin_ActiveInputs = {};
 export type Account_Admin_Audit_LedeInputs = {};
@@ -2482,21 +2478,13 @@ export type Account_Admin_Create_Library_SubmitInputs = {};
 export type Account_Admin_Create_SubmitInputs = {};
 export type Account_Admin_Dependencies_HeadingInputs = {};
 export type Account_Admin_Dependencies_SafeInputs = {};
-export type Account_Admin_Dependencies_UsersInputs = {
-    names: NonNullable<unknown>;
-};
+export type Account_Admin_Dependencies_UsersInputs = { names: NonNullable<unknown> };
 export type Account_Admin_DisableInputs = {};
 export type Account_Admin_Disable_DescriptionInputs = {};
-export type Account_Admin_Disable_NamedInputs = {
-    name: NonNullable<unknown>;
-};
-export type Account_Admin_Disable_TitleInputs = {
-    name: NonNullable<unknown>;
-};
+export type Account_Admin_Disable_NamedInputs = { name: NonNullable<unknown> };
+export type Account_Admin_Disable_TitleInputs = { name: NonNullable<unknown> };
 export type Account_Admin_EnableInputs = {};
-export type Account_Admin_Enable_NamedInputs = {
-    name: NonNullable<unknown>;
-};
+export type Account_Admin_Enable_NamedInputs = { name: NonNullable<unknown> };
 export type Account_Admin_Initial_PasswordInputs = {};
 export type Account_Admin_Invite_HeadingInputs = {};
 export type Account_Admin_Invite_HintInputs = {};
@@ -2505,16 +2493,12 @@ export type Account_Admin_Libraries_LedeInputs = {};
 export type Account_Admin_Libraries_Page_TitleInputs = {};
 export type Account_Admin_Libraries_TitleInputs = {};
 export type Account_Admin_LibraryInputs = {};
-export type Account_Admin_Library_CreatedInputs = {
-    library: NonNullable<unknown>;
-};
+export type Account_Admin_Library_CreatedInputs = { library: NonNullable<unknown> };
 export type Account_Admin_Library_NameInputs = {};
 export type Account_Admin_Library_NoneInputs = {};
 export type Account_Admin_Library_RoleInputs = {};
 export type Account_Admin_ManageInputs = {};
-export type Account_Admin_Manage_NamedInputs = {
-    name: NonNullable<unknown>;
-};
+export type Account_Admin_Manage_NamedInputs = { name: NonNullable<unknown> };
 export type Account_Admin_Mapping_AddInputs = {};
 export type Account_Admin_Mapping_Choose_LibraryInputs = {};
 export type Account_Admin_Mapping_Choose_ProviderInputs = {};
@@ -2525,17 +2509,9 @@ export type Account_Admin_Mapping_LibraryInputs = {};
 export type Account_Admin_Mapping_NoneInputs = {};
 export type Account_Admin_Mapping_ProviderInputs = {};
 export type Account_Admin_Mapping_RemoveInputs = {};
-export type Account_Admin_Mapping_Remove_NamedInputs = {
-    group: NonNullable<unknown>;
-    library: NonNullable<unknown>;
-};
+export type Account_Admin_Mapping_Remove_NamedInputs = { group: NonNullable<unknown>, library: NonNullable<unknown> };
 export type Account_Admin_Mapping_RoleInputs = {};
-export type Account_Admin_Mapping_SummaryInputs = {
-    provider: NonNullable<unknown>;
-    group: NonNullable<unknown>;
-    library: NonNullable<unknown>;
-    role: NonNullable<unknown>;
-};
+export type Account_Admin_Mapping_SummaryInputs = { provider: NonNullable<unknown>, group: NonNullable<unknown>, library: NonNullable<unknown>, role: NonNullable<unknown> };
 export type Account_Admin_Mappings_HeadingInputs = {};
 export type Account_Admin_Nav_AuditInputs = {};
 export type Account_Admin_Nav_LabelInputs = {};
@@ -2550,9 +2526,7 @@ export type Account_Admin_People_Page_TitleInputs = {};
 export type Account_Admin_People_TitleInputs = {};
 export type Account_Admin_Person_AdminInputs = {};
 export type Account_Admin_Person_DisabledInputs = {};
-export type Account_Admin_Person_IdInputs = {
-    id: NonNullable<unknown>;
-};
+export type Account_Admin_Person_IdInputs = { id: NonNullable<unknown> };
 export type Account_Admin_Person_SelfInputs = {};
 export type Account_Admin_Providers_LedeInputs = {};
 export type Account_Admin_Providers_NoneInputs = {};
@@ -2567,9 +2541,7 @@ export type Account_Admin_Recover_SubmitInputs = {};
 export type Account_Admin_RecoveredInputs = {};
 export type Account_Admin_Reset_ActionInputs = {};
 export type Account_Admin_Reset_HintInputs = {};
-export type Account_Admin_Reset_PasswordInputs = {
-    name: NonNullable<unknown>;
-};
+export type Account_Admin_Reset_PasswordInputs = { name: NonNullable<unknown> };
 export type Account_Admin_Reset_SubmitInputs = {};
 export type Account_Admin_UnavailableInputs = {};
 export type Account_Assistant_Access_ReadInputs = {};
@@ -2578,9 +2550,7 @@ export type Account_Assistant_Access_Viewer_HintInputs = {};
 export type Account_Assistant_Access_WriteInputs = {};
 export type Account_Assistant_Access_Write_HintInputs = {};
 export type Account_Assistant_AllowInputs = {};
-export type Account_Assistant_Check_CodeInputs = {
-    code: NonNullable<unknown>;
-};
+export type Account_Assistant_Check_CodeInputs = { code: NonNullable<unknown> };
 export type Account_Assistant_CodeInputs = {};
 export type Account_Assistant_ConnectionsInputs = {};
 export type Account_Assistant_ContinueInputs = {};
@@ -2588,14 +2558,10 @@ export type Account_Assistant_DoneInputs = {};
 export type Account_Assistant_HeadingInputs = {};
 export type Account_Assistant_Prompt_LabelInputs = {};
 export type Account_Assistant_RememberInputs = {};
-export type Account_Assistant_Request_FromInputs = {
-    name: NonNullable<unknown>;
-};
+export type Account_Assistant_Request_FromInputs = { name: NonNullable<unknown> };
 export type Account_Assistant_Request_UnavailableInputs = {};
 export type Account_Assistant_Setup_HintInputs = {};
-export type Account_Assistant_Setup_PromptInputs = {
-    guide: NonNullable<unknown>;
-};
+export type Account_Assistant_Setup_PromptInputs = { guide: NonNullable<unknown> };
 export type Account_Assistant_TemporaryInputs = {};
 export type Account_Audit_Access_ChangedInputs = {};
 export type Account_Audit_Action_CodeInputs = {};
@@ -2614,12 +2580,7 @@ export type Account_Audit_DetailsInputs = {};
 export type Account_Audit_EmptyInputs = {};
 export type Account_Audit_EnabledInputs = {};
 export type Account_Audit_ErrorInputs = {};
-export type Account_Audit_Event_DetailInputs = {
-    actor: NonNullable<unknown>;
-    targetType: NonNullable<unknown>;
-    target: NonNullable<unknown>;
-    outcome: NonNullable<unknown>;
-};
+export type Account_Audit_Event_DetailInputs = { actor: NonNullable<unknown>, targetType: NonNullable<unknown>, target: NonNullable<unknown>, outcome: NonNullable<unknown> };
 export type Account_Audit_Event_IdInputs = {};
 export type Account_Audit_FailedInputs = {};
 export type Account_Audit_Forced_UnlinkInputs = {};
@@ -2683,32 +2644,24 @@ export type Account_Delete_SubmitInputs = {};
 export type Account_Display_NameInputs = {};
 export type Account_Invitation_AcceptInputs = {};
 export type Account_Invitation_HeadingInputs = {};
-export type Account_Invitation_Join_AsInputs = {
-    name: NonNullable<unknown>;
-};
+export type Account_Invitation_Join_AsInputs = { name: NonNullable<unknown> };
 export type Account_Invitation_Open_AppInputs = {};
 export type Account_Invitation_State_AcceptedInputs = {};
 export type Account_Invitation_State_ExpiredInputs = {};
-export type Account_Invitation_State_ExpiresInputs = {
-    date: NonNullable<unknown>;
-};
+export type Account_Invitation_State_ExpiresInputs = { date: NonNullable<unknown> };
 export type Account_Invitation_State_RevokedInputs = {};
 export type Account_Invitations_CreateInputs = {};
 export type Account_Invitations_DismissInputs = {};
 export type Account_Invitations_ExpiryInputs = {};
 export type Account_Invitations_HeadingInputs = {};
-export type Account_Invitations_HintInputs = {
-    library: NonNullable<unknown>;
-};
+export type Account_Invitations_HintInputs = { library: NonNullable<unknown> };
 export type Account_Invitations_LabelInputs = {};
 export type Account_Invitations_Label_HintInputs = {};
 export type Account_Invitations_LinkInputs = {};
 export type Account_Invitations_Link_HintInputs = {};
 export type Account_Invitations_NoneInputs = {};
 export type Account_Invitations_RevokeInputs = {};
-export type Account_Invitations_Revoke_NamedInputs = {
-    label: NonNullable<unknown>;
-};
+export type Account_Invitations_Revoke_NamedInputs = { label: NonNullable<unknown> };
 export type Account_Invitations_RoleInputs = {};
 export type Account_Invitations_Role_EditorInputs = {};
 export type Account_Invitations_Role_OwnerInputs = {};
@@ -2716,9 +2669,7 @@ export type Account_Invitations_Role_ViewerInputs = {};
 export type Account_Invitations_UnnamedInputs = {};
 export type Account_Load_ErrorInputs = {};
 export type Account_Local_Mode_UnavailableInputs = {};
-export type Account_Login_Continue_WithInputs = {
-    provider: NonNullable<unknown>;
-};
+export type Account_Login_Continue_WithInputs = { provider: NonNullable<unknown> };
 export type Account_Login_Directory_PasswordInputs = {};
 export type Account_Login_Directory_UsernameInputs = {};
 export type Account_Login_NameInputs = {};
@@ -2731,15 +2682,10 @@ export type Account_Login_Recovery_HintInputs = {};
 export type Account_Login_Recovery_LoginInputs = {};
 export type Account_Login_Recovery_SubmitInputs = {};
 export type Account_Login_Recovery_SummaryInputs = {};
-export type Account_Login_WithInputs = {
-    provider: NonNullable<unknown>;
-};
+export type Account_Login_WithInputs = { provider: NonNullable<unknown> };
 export type Account_Managed_ForceInputs = {};
 export type Account_Managed_Force_ConfirmInputs = {};
-export type Account_Managed_Force_NamedInputs = {
-    method: NonNullable<unknown>;
-    name: NonNullable<unknown>;
-};
+export type Account_Managed_Force_NamedInputs = { method: NonNullable<unknown>, name: NonNullable<unknown> };
 export type Account_Managed_Methods_HintInputs = {};
 export type Account_Members_AddInputs = {};
 export type Account_Members_Add_HeadingInputs = {};
@@ -2749,14 +2695,9 @@ export type Account_Members_ErrorInputs = {};
 export type Account_Members_HeadingInputs = {};
 export type Account_Members_PersonInputs = {};
 export type Account_Members_RemoveInputs = {};
-export type Account_Members_Remove_NamedInputs = {
-    name: NonNullable<unknown>;
-    library: NonNullable<unknown>;
-};
+export type Account_Members_Remove_NamedInputs = { name: NonNullable<unknown>, library: NonNullable<unknown> };
 export type Account_Members_RoleInputs = {};
-export type Account_Members_Role_ForInputs = {
-    name: NonNullable<unknown>;
-};
+export type Account_Members_Role_ForInputs = { name: NonNullable<unknown> };
 export type Account_Members_User_IdInputs = {};
 export type Account_Method_LocalInputs = {};
 export type Account_Method_PasskeyInputs = {};
@@ -2769,9 +2710,7 @@ export type Account_Methods_HintInputs = {};
 export type Account_Methods_Provider_PasswordInputs = {};
 export type Account_Methods_Provider_UsernameInputs = {};
 export type Account_Methods_RemoveInputs = {};
-export type Account_Methods_Remove_NamedInputs = {
-    method: NonNullable<unknown>;
-};
+export type Account_Methods_Remove_NamedInputs = { method: NonNullable<unknown> };
 export type Account_Methods_UnavailableInputs = {};
 export type Account_Methods_VerifyInputs = {};
 export type Account_Name_HeadingInputs = {};
@@ -2799,9 +2738,7 @@ export type Account_Overview_Recovery_TitleInputs = {};
 export type Account_Overview_Session_HeadingInputs = {};
 export type Account_Overview_Sign_OutInputs = {};
 export type Account_Overview_Sign_Out_HintInputs = {};
-export type Account_Overview_Signed_In_AsInputs = {
-    name: NonNullable<unknown>;
-};
+export type Account_Overview_Signed_In_AsInputs = { name: NonNullable<unknown> };
 export type Account_Overview_TitleInputs = {};
 export type Account_Overview_User_IdInputs = {};
 export type Account_Overview_User_Id_HintInputs = {};
@@ -2809,25 +2746,17 @@ export type Account_PasskeysInputs = {};
 export type Account_Passkeys_AddInputs = {};
 export type Account_Passkeys_HeadingInputs = {};
 export type Account_Passkeys_HintInputs = {};
-export type Account_Passkeys_Last_UsedInputs = {
-    date: NonNullable<unknown>;
-};
+export type Account_Passkeys_Last_UsedInputs = { date: NonNullable<unknown> };
 export type Account_Passkeys_NameInputs = {};
-export type Account_Passkeys_Name_ForInputs = {
-    name: NonNullable<unknown>;
-};
+export type Account_Passkeys_Name_ForInputs = { name: NonNullable<unknown> };
 export type Account_Passkeys_Name_PlaceholderInputs = {};
 export type Account_Passkeys_Never_UsedInputs = {};
 export type Account_Passkeys_RemoveInputs = {};
 export type Account_Passkeys_Remove_ConfirmInputs = {};
-export type Account_Passkeys_Remove_NamedInputs = {
-    name: NonNullable<unknown>;
-};
+export type Account_Passkeys_Remove_NamedInputs = { name: NonNullable<unknown> };
 export type Account_Passkeys_RemovedInputs = {};
 export type Account_Passkeys_RenameInputs = {};
-export type Account_Passkeys_Rename_NamedInputs = {
-    name: NonNullable<unknown>;
-};
+export type Account_Passkeys_Rename_NamedInputs = { name: NonNullable<unknown> };
 export type Account_Passkeys_RenamedInputs = {};
 export type Account_Passkeys_Save_NameInputs = {};
 export type Account_Passkeys_UnavailableInputs = {};
@@ -2845,9 +2774,7 @@ export type Account_Recovery_GenerateInputs = {};
 export type Account_Recovery_HeadingInputs = {};
 export type Account_Recovery_HiddenInputs = {};
 export type Account_Recovery_HintInputs = {};
-export type Account_Recovery_RemainingInputs = {
-    count: NonNullable<unknown>;
-};
+export type Account_Recovery_RemainingInputs = { count: NonNullable<unknown> };
 export type Account_Recovery_ReplaceInputs = {};
 export type Account_Recovery_Replace_ConfirmInputs = {};
 export type Account_Recovery_Replace_WarningInputs = {};
@@ -2860,9 +2787,7 @@ export type Account_Retire_BodyInputs = {};
 export type Account_Retire_ConfirmationInputs = {};
 export type Account_Retire_HeadingInputs = {};
 export type Account_Retire_OpenInputs = {};
-export type Account_Retire_SubmitInputs = {
-    library: NonNullable<unknown>;
-};
+export type Account_Retire_SubmitInputs = { library: NonNullable<unknown> };
 export type Account_RetryInputs = {};
 export type Account_Role_EditorInputs = {};
 export type Account_Role_OwnerInputs = {};
@@ -2874,26 +2799,18 @@ export type Account_Session_EndedInputs = {};
 export type Account_Session_Ended_DismissInputs = {};
 export type Account_Session_Ended_Sign_InInputs = {};
 export type Account_Sessions_Browser_HandoffInputs = {};
-export type Account_Sessions_DetailInputs = {
-    method: NonNullable<unknown>;
-    last: NonNullable<unknown>;
-    created: NonNullable<unknown>;
-};
+export type Account_Sessions_DetailInputs = { method: NonNullable<unknown>, last: NonNullable<unknown>, created: NonNullable<unknown> };
 export type Account_Sessions_ErrorInputs = {};
 export type Account_Sessions_HeadingInputs = {};
 export type Account_Sessions_HintInputs = {};
-export type Account_Sessions_Last_ActiveInputs = {
-    date: NonNullable<unknown>;
-};
+export type Account_Sessions_Last_ActiveInputs = { date: NonNullable<unknown> };
 export type Account_Sessions_OtherInputs = {};
 export type Account_Sessions_Other_HeadingInputs = {};
 export type Account_Sessions_Others_RevokedInputs = {};
 export type Account_Sessions_RevokeInputs = {};
 export type Account_Sessions_Revoke_OthersInputs = {};
 export type Account_Sessions_RevokedInputs = {};
-export type Account_Sessions_Signed_InInputs = {
-    date: NonNullable<unknown>;
-};
+export type Account_Sessions_Signed_InInputs = { date: NonNullable<unknown> };
 export type Account_Sessions_ThisInputs = {};
 export type Account_Sign_InInputs = {};
 export type Account_Sign_In_Page_TitleInputs = {};
@@ -2908,16 +2825,10 @@ export type Account_Tokens_DismissInputs = {};
 export type Account_Tokens_ErrorInputs = {};
 export type Account_Tokens_Existing_HeadingInputs = {};
 export type Account_Tokens_ExpiresInputs = {};
-export type Account_Tokens_Expiry_DaysInputs = {
-    days: NonNullable<unknown>;
-};
-export type Account_Tokens_Expiry_DefaultInputs = {
-    days: NonNullable<unknown>;
-};
+export type Account_Tokens_Expiry_DaysInputs = { days: NonNullable<unknown> };
+export type Account_Tokens_Expiry_DefaultInputs = { days: NonNullable<unknown> };
 export type Account_Tokens_Expiry_NeverInputs = {};
-export type Account_Tokens_Last_UsedInputs = {
-    date: NonNullable<unknown>;
-};
+export type Account_Tokens_Last_UsedInputs = { date: NonNullable<unknown> };
 export type Account_Tokens_LedeInputs = {};
 export type Account_Tokens_LibrariesInputs = {};
 export type Account_Tokens_NameInputs = {};
@@ -2927,9 +2838,7 @@ export type Account_Tokens_New_HintInputs = {};
 export type Account_Tokens_NoneInputs = {};
 export type Account_Tokens_Page_TitleInputs = {};
 export type Account_Tokens_PermissionsInputs = {};
-export type Account_Tokens_RevokeInputs = {
-    name: NonNullable<unknown>;
-};
+export type Account_Tokens_RevokeInputs = { name: NonNullable<unknown> };
 export type Account_Tokens_RevokedInputs = {};
 export type Account_Tokens_Scope_Imports_WriteInputs = {};
 export type Account_Tokens_Scope_Library_ReadInputs = {};
@@ -2938,9 +2847,7 @@ export type Account_Tokens_Scope_Recipes_ReadInputs = {};
 export type Account_Tokens_Scope_Recipes_WriteInputs = {};
 export type Account_Tokens_Secret_LabelInputs = {};
 export type Account_Tokens_State_ExpiredInputs = {};
-export type Account_Tokens_State_ExpiresInputs = {
-    date: NonNullable<unknown>;
-};
+export type Account_Tokens_State_ExpiresInputs = { date: NonNullable<unknown> };
 export type Account_Tokens_State_PermanentInputs = {};
 export type Account_Tokens_State_RevokedInputs = {};
 export type Account_Tokens_TitleInputs = {};
@@ -2957,10 +2864,7 @@ export type Api_Error_Rate_LimitInputs = {};
 export type Api_Error_Storage_CapacityInputs = {};
 export type Api_Error_Too_LargeInputs = {};
 export type Api_Error_UnavailableInputs = {};
-export type Api_Export_Asset_UnavailableInputs = {
-    title: NonNullable<unknown>;
-    reason: NonNullable<unknown>;
-};
+export type Api_Export_Asset_UnavailableInputs = { title: NonNullable<unknown>, reason: NonNullable<unknown> };
 export type Api_Problem_Access_DeniedInputs = {};
 export type Api_Problem_Account_ConflictInputs = {};
 export type Api_Problem_Account_UnavailableInputs = {};
@@ -3090,9 +2994,7 @@ export type App_Loading_3Inputs = {};
 export type App_Loading_4Inputs = {};
 export type Assets_Only_Image_Files_Can_Be_Attached_To_A_RecipeInputs = {};
 export type Assets_The_Image_Could_Not_Be_UploadedInputs = {};
-export type Body_About_AmountInputs = {
-    amount: NonNullable<unknown>;
-};
+export type Body_About_AmountInputs = { amount: NonNullable<unknown> };
 export type Body_Amount_As_WrittenInputs = {};
 export type Body_Amount_As_Written_HintInputs = {};
 export type Body_Cooking_MethodsInputs = {};
@@ -3109,23 +3011,15 @@ export type Body_VariationsInputs = {};
 export type Body_Wording_As_WrittenInputs = {};
 export type Body_Wording_As_Written_HintInputs = {};
 export type Book_Add_Already_InInputs = {};
-export type Book_Add_Chosen_ManyInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Book_Add_Chosen_ManyInputs = { value1: NonNullable<unknown> };
 export type Book_Add_Chosen_OneInputs = {};
-export type Book_Add_Confirm_ManyInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Book_Add_Confirm_ManyInputs = { value1: NonNullable<unknown> };
 export type Book_Add_Confirm_OneInputs = {};
 export type Book_Add_NothingInputs = {};
 export type Book_Add_SearchInputs = {};
-export type Book_Add_TitleInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Book_Add_TitleInputs = { value1: NonNullable<unknown> };
 export type Book_History_CreatedInputs = {};
-export type Book_History_Page_As_It_Was_OnInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Book_History_Page_As_It_Was_OnInputs = { value1: NonNullable<unknown> };
 export type Book_History_Page_Back_To_The_BookInputs = {};
 export type Book_History_Page_Choose_A_Version_To_See_How_The_Book_Read_ThenInputs = {};
 export type Book_History_Page_CurrentInputs = {};
@@ -3134,25 +3028,17 @@ export type Book_History_Page_Restore_Confirm_TitleInputs = {};
 export type Book_History_Page_Restore_This_VersionInputs = {};
 export type Book_History_Page_The_Book_Goes_Back_To_How_It_Read_Then_Including_Its_ChInputs = {};
 export type Book_Membership_Add_RecipesInputs = {};
-export type Book_Membership_Chapter_ForInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Book_Membership_Chapter_ForInputs = { value1: NonNullable<unknown> };
 export type Book_Membership_Chapter_NameInputs = {};
 export type Book_Membership_In_The_TrashInputs = {};
-export type Book_Membership_Move_DownInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Book_Membership_Move_UpInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Book_Membership_Move_DownInputs = { value1: NonNullable<unknown> };
+export type Book_Membership_Move_UpInputs = { value1: NonNullable<unknown> };
 export type Book_Membership_No_ChapterInputs = {};
 export type Book_Membership_No_Recipes_YetInputs = {};
 export type Book_Membership_Nothing_In_This_Chapter_YetInputs = {};
 export type Book_Membership_RecipesInputs = {};
 export type Book_Membership_Remove_ChapterInputs = {};
-export type Book_Membership_Remove_From_BookInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Book_Membership_Remove_From_BookInputs = { value1: NonNullable<unknown> };
 export type Book_Metadata_About_This_BookInputs = {};
 export type Book_Metadata_AuthorInputs = {};
 export type Book_Metadata_Book_DetailsInputs = {};
@@ -3180,9 +3066,7 @@ export type Book_Reader_Add_RecipesInputs = {};
 export type Book_Reader_In_The_TrashInputs = {};
 export type Book_Reader_No_Recipes_YetInputs = {};
 export type Book_Reader_PageInputs = {};
-export type Book_Reader_Recipe_CountInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Book_Reader_Recipe_CountInputs = { value1: NonNullable<unknown> };
 export type Book_Reader_Recipe_Count_OneInputs = {};
 export type Book_Reader_RecipesInputs = {};
 export type Book_Reader_Recipes_Taken_From_This_BookInputs = {};
@@ -3190,9 +3074,7 @@ export type Book_Version_No_Recipes_In_This_VersionInputs = {};
 export type Book_Version_Nothing_In_This_ChapterInputs = {};
 export type Book_View_DiscardInputs = {};
 export type Book_View_Move_To_TrashInputs = {};
-export type Book_View_Move_To_Trash_ConfirmInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Book_View_Move_To_Trash_ConfirmInputs = { value1: NonNullable<unknown> };
 export type Book_View_The_Recipes_Will_Stay_In_Your_Library_You_Can_Restore_TInputs = {};
 export type Books_Bookid_History_Earlier_Versions_Savorum1Inputs = {};
 export type Books_Bookid_Index_Book_Savorum1Inputs = {};
@@ -3207,12 +3089,7 @@ export type Books_Page_Create_BookInputs = {};
 export type Books_Page_Group_Recipes_However_You_LikeInputs = {};
 export type Books_Page_Keeps_The_Publishing_Details_And_Recipes_Can_Cite_It_AsInputs = {};
 export type Books_Page_New_BookInputs = {};
-export type Books_Page_OfInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-    value3: NonNullable<unknown>;
-    value4: NonNullable<unknown>;
-};
+export type Books_Page_OfInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown>, value3: NonNullable<unknown>, value4: NonNullable<unknown> };
 export type Books_Page_Start_With_Its_Title_And_What_Kind_Of_Collection_It_IsInputs = {};
 export type Books_Page_Sunday_BakingInputs = {};
 export type Books_Page_TitleInputs = {};
@@ -3226,82 +3103,42 @@ export type Books_The_Book_Could_Not_Be_Moved_To_TrashInputs = {};
 export type Books_The_Book_Could_Not_Be_RestoredInputs = {};
 export type Books_The_Book_Could_Not_Be_SavedInputs = {};
 export type Books_The_Book_History_Could_Not_Be_LoadedInputs = {};
-export type Bulk_Organize_Dialog_Add_A_CategoryInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Bulk_Organize_Dialog_Add_A_CategoryInputs = { value1: NonNullable<unknown> };
 export type Bulk_Organize_Dialog_Add_A_TagInputs = {};
-export type Bulk_Organize_Dialog_Add_ToInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
+export type Bulk_Organize_Dialog_Add_ToInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
 export type Bulk_Organize_Dialog_Add_To_A_BookInputs = {};
-export type Bulk_Organize_Dialog_Apply_ToInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Bulk_Organize_Dialog_Apply_ToInputs = { value1: NonNullable<unknown> };
 export type Bulk_Organize_Dialog_BooksInputs = {};
-export type Bulk_Organize_Dialog_CategoriesInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Bulk_Organize_Dialog_CategoriesInputs = { value1: NonNullable<unknown> };
 export type Bulk_Organize_Dialog_CuisineInputs = {};
 export type Bulk_Organize_Dialog_DietaryInputs = {};
 export type Bulk_Organize_Dialog_Every_Book_Is_NamedInputs = {};
-export type Bulk_Organize_Dialog_Every_Category_Is_NamedInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Bulk_Organize_Dialog_Every_Category_Is_NamedInputs = { value1: NonNullable<unknown> };
 export type Bulk_Organize_Dialog_Every_Tag_Is_NamedInputs = {};
 export type Bulk_Organize_Dialog_Everything_Else_Is_Left_AloneInputs = {};
-export type Bulk_Organize_Dialog_Many_RecipesInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Bulk_Organize_Dialog_Many_RecipesInputs = { value1: NonNullable<unknown> };
 export type Bulk_Organize_Dialog_MealInputs = {};
 export type Bulk_Organize_Dialog_MethodInputs = {};
 export type Bulk_Organize_Dialog_No_Books_YetInputs = {};
 export type Bulk_Organize_Dialog_No_Tags_YetInputs = {};
 export type Bulk_Organize_Dialog_Nothing_Chosen_YetInputs = {};
-export type Bulk_Organize_Dialog_Of_Could_Not_Be_Saved_The_Rest_WereInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
+export type Bulk_Organize_Dialog_Of_Could_Not_Be_Saved_The_Rest_WereInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
 export type Bulk_Organize_Dialog_One_RecipeInputs = {};
-export type Bulk_Organize_Dialog_OrganizeInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Bulk_Organize_Dialog_Put_In_BookInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
-export type Bulk_Organize_Dialog_Saving_OfInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
-export type Bulk_Organize_Dialog_Search_To_AddInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Bulk_Organize_Dialog_Search_To_Take_OffInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Bulk_Organize_Dialog_OrganizeInputs = { value1: NonNullable<unknown> };
+export type Bulk_Organize_Dialog_Put_In_BookInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
+export type Bulk_Organize_Dialog_Saving_OfInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
+export type Bulk_Organize_Dialog_Search_To_AddInputs = { value1: NonNullable<unknown> };
+export type Bulk_Organize_Dialog_Search_To_Take_OffInputs = { value1: NonNullable<unknown> };
 export type Bulk_Organize_Dialog_TagsInputs = {};
-export type Bulk_Organize_Dialog_Take_A_Category_OffInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Bulk_Organize_Dialog_Take_A_Category_OffInputs = { value1: NonNullable<unknown> };
 export type Bulk_Organize_Dialog_Take_A_Tag_OffInputs = {};
-export type Bulk_Organize_Dialog_Take_OffInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
+export type Bulk_Organize_Dialog_Take_OffInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
 export type Bulk_Organize_Dialog_Take_Out_Of_A_BookInputs = {};
-export type Bulk_Organize_Dialog_Take_Out_Of_BookInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
+export type Bulk_Organize_Dialog_Take_Out_Of_BookInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
 export type Bulk_Organize_Dialog_These_ChangesInputs = {};
-export type Bulk_Organize_Dialog_Try_AgainInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Bulk_Organize_Dialog_Try_AgainInputs = { value1: NonNullable<unknown> };
 export type Bulk_Organize_Dialog_UndoInputs = {};
-export type Bulk_Organize_Dialog_Undo_ChangeInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Bulk_Organize_Dialog_Undo_ChangeInputs = { value1: NonNullable<unknown> };
 export type Capture_Page_Copy_The_ShortcutInputs = {};
 export type Capture_Page_DragInputs = {};
 export type Capture_Page_Enter_A_Recipe_Link_Beginning_With_Http_Or_HttpsInputs = {};
@@ -3314,9 +3151,7 @@ export type Capture_Page_Shortcut_CopiedInputs = {};
 export type Capture_Page_To_Your_Bookmarks_BarInputs = {};
 export type Capture_Page_Touch_InstructionsInputs = {};
 export type Capture_Save_A_Recipe_SavorumInputs = {};
-export type Claims_ConditionInputs = {
-    condition: NonNullable<unknown>;
-};
+export type Claims_ConditionInputs = { condition: NonNullable<unknown> };
 export type Claims_ContainsInputs = {};
 export type Claims_Editor_Add_AllergenInputs = {};
 export type Claims_Editor_Add_DietaryInputs = {};
@@ -3338,16 +3173,12 @@ export type Claims_Editor_SuitableInputs = {};
 export type Claims_Editor_TitleInputs = {};
 export type Claims_Editor_UnsuitableInputs = {};
 export type Claims_Editor_Whole_RecipeInputs = {};
-export type Claims_For_VariantInputs = {
-    variant: NonNullable<unknown>;
-};
+export type Claims_For_VariantInputs = { variant: NonNullable<unknown> };
 export type Claims_Free_FromInputs = {};
 export type Claims_May_ContainInputs = {};
 export type Claims_Not_VerifiedInputs = {};
 export type Claims_TitleInputs = {};
-export type Claims_Variant_NumberInputs = {
-    number: NonNullable<unknown>;
-};
+export type Claims_Variant_NumberInputs = { number: NonNullable<unknown> };
 export type Common_CancelInputs = {};
 export type Common_Dash_SeparatorInputs = {};
 export type Common_Dot_SeparatorInputs = {};
@@ -3355,22 +3186,14 @@ export type Common_Earlier_VersionsInputs = {};
 export type Common_Keep_ItInputs = {};
 export type Common_LoadingInputs = {};
 export type Common_NextInputs = {};
-export type Common_Pagination_RangeInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-    value3: NonNullable<unknown>;
-};
+export type Common_Pagination_RangeInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown>, value3: NonNullable<unknown> };
 export type Common_Plus_SymbolInputs = {};
 export type Common_Preview_RecipeInputs = {};
 export type Common_PreviousInputs = {};
-export type Common_Rating_Stars_MinInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Common_Rating_Stars_MinInputs = { value1: NonNullable<unknown> };
 export type Common_RestoreInputs = {};
 export type Common_Save_ChangesInputs = {};
-export type Common_Step_NumberInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Common_Step_NumberInputs = { value1: NonNullable<unknown> };
 export type Common_Times_SymbolInputs = {};
 export type Common_Untitled_RecipeInputs = {};
 export type Connect_Authentication_RequiredInputs = {};
@@ -3399,9 +3222,7 @@ export type Cooking_Add_TimerInputs = {};
 export type Cooking_Another_BatchInputs = {};
 export type Cooking_DiscardInputs = {};
 export type Cooking_Discard_ConfirmInputs = {};
-export type Cooking_Discard_DescriptionInputs = {
-    name: NonNullable<unknown>;
-};
+export type Cooking_Discard_DescriptionInputs = { name: NonNullable<unknown> };
 export type Cooking_Discard_TitleInputs = {};
 export type Cooking_Find_RecipeInputs = {};
 export type Cooking_Finish_ConfirmInputs = {};
@@ -3410,28 +3231,20 @@ export type Cooking_Finish_NoteInputs = {};
 export type Cooking_Finish_Note_HintInputs = {};
 export type Cooking_Finished_MealInputs = {};
 export type Cooking_Ingredients_Amounts_GuidanceInputs = {};
-export type Cooking_Ingredients_BatchInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Cooking_Ingredients_BatchInputs = { value1: NonNullable<unknown> };
 export type Cooking_Ingredients_EquipmentInputs = {};
 export type Cooking_Ingredients_For_This_StepInputs = {};
 export type Cooking_Ingredients_IngredientsInputs = {};
 export type Cooking_Ingredients_One_BatchInputs = {};
 export type Cooking_Ingredients_The_Rest_Of_The_IngredientsInputs = {};
 export type Cooking_Keep_CookingInputs = {};
-export type Cooking_Log_BatchInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Cooking_Log_BatchInputs = { value1: NonNullable<unknown> };
 export type Cooking_Log_Cooking_HistoryInputs = {};
 export type Cooking_Log_Cooking_Note_OptionalInputs = {};
 export type Cooking_Log_DateInputs = {};
 export type Cooking_Log_Edit_CookInputs = {};
-export type Cooking_Log_Edit_Cook_OnInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Cooking_Log_Forget_The_Cooking_OnInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Cooking_Log_Edit_Cook_OnInputs = { value1: NonNullable<unknown> };
+export type Cooking_Log_Forget_The_Cooking_OnInputs = { value1: NonNullable<unknown> };
 export type Cooking_Log_LoadingInputs = {};
 export type Cooking_Log_Log_CookInputs = {};
 export type Cooking_Log_Not_Cooked_YetInputs = {};
@@ -3439,9 +3252,7 @@ export type Cooking_Log_Older_CooksInputs = {};
 export type Cooking_Log_Previous_CooksInputs = {};
 export type Cooking_Log_Save_CookInputs = {};
 export type Cooking_Log_TimeInputs = {};
-export type Cooking_Mode_CookingInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Cooking_Mode_CookingInputs = { value1: NonNullable<unknown> };
 export type Cooking_Mode_Exit_CookingInputs = {};
 export type Cooking_Mode_Finish_CookingInputs = {};
 export type Cooking_Mode_Next_StepInputs = {};
@@ -3459,17 +3270,9 @@ export type Cooking_Reminder_ExplanationInputs = {};
 export type Cooking_Start_ReminderInputs = {};
 export type Cooking_Step_All_StepsInputs = {};
 export type Cooking_Step_CompletedInputs = {};
-export type Cooking_Step_OfInputs = {
-    done: NonNullable<unknown>;
-    total: NonNullable<unknown>;
-};
-export type Cooking_Step_StepInputs = {
-    number: NonNullable<unknown>;
-};
-export type Cooking_Step_Step_OfInputs = {
-    number: NonNullable<unknown>;
-    total: NonNullable<unknown>;
-};
+export type Cooking_Step_OfInputs = { done: NonNullable<unknown>, total: NonNullable<unknown> };
+export type Cooking_Step_StepInputs = { number: NonNullable<unknown> };
+export type Cooking_Step_Step_OfInputs = { number: NonNullable<unknown>, total: NonNullable<unknown> };
 export type Cooking_Step_Steps_DoneInputs = {};
 export type Cooking_Step_This_Recipe_Has_No_StepsInputs = {};
 export type Cooking_Step_TimersInputs = {};
@@ -3479,9 +3282,7 @@ export type Cooking_Timer_InvalidInputs = {};
 export type Cooking_Timer_LabelInputs = {};
 export type Cooking_Timer_MinutesInputs = {};
 export type Cooking_Timer_SetupInputs = {};
-export type Cooking_Times_CookedInputs = {
-    count: NonNullable<unknown>;
-};
+export type Cooking_Times_CookedInputs = { count: NonNullable<unknown> };
 export type Cooking_TogetherInputs = {};
 export type Cookings_The_Cooking_Could_Not_Be_RecordedInputs = {};
 export type Cookings_The_Cooking_Could_Not_Be_RemovedInputs = {};
@@ -3493,19 +3294,10 @@ export type Create_Labels_DietaryInputs = {};
 export type Create_Labels_MealsInputs = {};
 export type Create_Labels_MethodsInputs = {};
 export type Create_Labels_TagsInputs = {};
-export type Create_Library_Selection_Printing_And_Sref_Bundles_Hold_Different_LimitsInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
-export type Create_Library_Selection_Printing_And_Sref_Bundles_Hold_Up_To_Recipes_Narrow_ThiInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Create_Library_Selection_Printing_Holds_Up_To_RecipesInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Create_Library_Selection_Sref_Bundles_Hold_Up_To_RecipesInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Create_Library_Selection_Printing_And_Sref_Bundles_Hold_Different_LimitsInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
+export type Create_Library_Selection_Printing_And_Sref_Bundles_Hold_Up_To_Recipes_Narrow_ThiInputs = { value1: NonNullable<unknown> };
+export type Create_Library_Selection_Printing_Holds_Up_To_RecipesInputs = { value1: NonNullable<unknown> };
+export type Create_Library_Selection_Sref_Bundles_Hold_Up_To_RecipesInputs = { value1: NonNullable<unknown> };
 export type Create_Measurement_Resolution_The_Updated_Import_Preview_Was_Not_ReturnedInputs = {};
 export type Create_Recipe_Reader_CookInputs = {};
 export type Create_Recipe_Reader_Resume_CookingInputs = {};
@@ -3516,9 +3308,7 @@ export type Dependency_Editor_HintInputs = {};
 export type Dependency_Editor_Recipe_TitleInputs = {};
 export type Dependency_Editor_Recipe_UrlInputs = {};
 export type Dependency_Editor_TitleInputs = {};
-export type Dependency_SeeInputs = {
-    recipe: NonNullable<unknown>;
-};
+export type Dependency_SeeInputs = { recipe: NonNullable<unknown> };
 export type Dialog_DoneInputs = {};
 export type Diet_DiabeticInputs = {};
 export type Diet_Gluten_FreeInputs = {};
@@ -3531,93 +3321,43 @@ export type Diet_Low_LactoseInputs = {};
 export type Diet_Low_SaltInputs = {};
 export type Diet_VeganInputs = {};
 export type Diet_VegetarianInputs = {};
-export type Duration_AboutInputs = {
-    duration: NonNullable<unknown>;
-};
-export type Duration_At_LeastInputs = {
-    duration: NonNullable<unknown>;
-};
+export type Duration_AboutInputs = { duration: NonNullable<unknown> };
+export type Duration_At_LeastInputs = { duration: NonNullable<unknown> };
 export type Edit_Recipe_Page_Edit_RecipeInputs = {};
 export type Editor_Add_Row_ShortcutInputs = {};
 export type Editor_Additional_TimeInputs = {};
 export type Editor_AlternativeInputs = {};
-export type Editor_Alternative_MovedInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Alternative_Position_AmountInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Alternative_Position_Amount_TermpositionInputs = {
-    position: NonNullable<unknown>;
-    termPosition: NonNullable<unknown>;
-};
-export type Editor_Alternative_Position_MeasureInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Alternative_Position_Measure_TermpositionInputs = {
-    position: NonNullable<unknown>;
-    termPosition: NonNullable<unknown>;
-};
-export type Editor_Alternative_Position_TypeInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Alternative_RemovedInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Amount_PositionInputs = {
-    position: NonNullable<unknown>;
-};
+export type Editor_Alternative_MovedInputs = { position: NonNullable<unknown> };
+export type Editor_Alternative_Position_AmountInputs = { position: NonNullable<unknown> };
+export type Editor_Alternative_Position_Amount_TermpositionInputs = { position: NonNullable<unknown>, termPosition: NonNullable<unknown> };
+export type Editor_Alternative_Position_MeasureInputs = { position: NonNullable<unknown> };
+export type Editor_Alternative_Position_Measure_TermpositionInputs = { position: NonNullable<unknown>, termPosition: NonNullable<unknown> };
+export type Editor_Alternative_Position_TypeInputs = { position: NonNullable<unknown> };
+export type Editor_Alternative_RemovedInputs = { position: NonNullable<unknown> };
+export type Editor_Amount_PositionInputs = { position: NonNullable<unknown> };
 export type Editor_Approximate_TimeInputs = {};
-export type Editor_Author_PositionInputs = {
-    position: NonNullable<unknown>;
-};
+export type Editor_Author_PositionInputs = { position: NonNullable<unknown> };
 export type Editor_Confirm_Group_RemovalInputs = {};
 export type Editor_Context_ChangedInputs = {};
 export type Editor_Cook_TimeInputs = {};
 export type Editor_DiscardInputs = {};
 export type Editor_Duration_DetailsInputs = {};
-export type Editor_Equipment_Position_NameInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Equipment_Position_NoteInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Equipment_Position_QuantityInputs = {
-    position: NonNullable<unknown>;
-};
+export type Editor_Equipment_Position_NameInputs = { position: NonNullable<unknown> };
+export type Editor_Equipment_Position_NoteInputs = { position: NonNullable<unknown> };
+export type Editor_Equipment_Position_QuantityInputs = { position: NonNullable<unknown> };
 export type Editor_Finish_Before_SwitchingInputs = {};
-export type Editor_Group_MovedInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Group_RemovedInputs = {
-    position: NonNullable<unknown>;
-};
+export type Editor_Group_MovedInputs = { position: NonNullable<unknown> };
+export type Editor_Group_RemovedInputs = { position: NonNullable<unknown> };
 export type Editor_Hands_OnInputs = {};
-export type Editor_Ingredient_CountInputs = {
-    count: NonNullable<unknown>;
-};
+export type Editor_Ingredient_CountInputs = { count: NonNullable<unknown> };
 export type Editor_Ingredient_FallbackInputs = {};
-export type Editor_Ingredient_InsertedInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Ingredient_MovedInputs = {
-    name: NonNullable<unknown>;
-    position: NonNullable<unknown>;
-};
-export type Editor_Ingredient_PositionInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Ingredient_RemovedInputs = {
-    name: NonNullable<unknown>;
-};
+export type Editor_Ingredient_InsertedInputs = { position: NonNullable<unknown> };
+export type Editor_Ingredient_MovedInputs = { name: NonNullable<unknown>, position: NonNullable<unknown> };
+export type Editor_Ingredient_PositionInputs = { position: NonNullable<unknown> };
+export type Editor_Ingredient_RemovedInputs = { name: NonNullable<unknown> };
 export type Editor_Keep_EditingInputs = {};
-export type Editor_Label_PositionInputs = {
-    label: NonNullable<unknown>;
-    position: NonNullable<unknown>;
-};
-export type Editor_Measure_PositionInputs = {
-    position: NonNullable<unknown>;
-};
+export type Editor_Label_PositionInputs = { label: NonNullable<unknown>, position: NonNullable<unknown> };
+export type Editor_Measure_PositionInputs = { position: NonNullable<unknown> };
 export type Editor_MeasurementsInputs = {};
 export type Editor_Measurements_AustralianInputs = {};
 export type Editor_Measurements_ImperialInputs = {};
@@ -3629,31 +3369,20 @@ export type Editor_More_DetailsInputs = {};
 export type Editor_Name_GroupInputs = {};
 export type Editor_Name_StageInputs = {};
 export type Editor_OptionalInputs = {};
-export type Editor_Package_SizeInputs = {
-    value: NonNullable<unknown>;
-};
-export type Editor_Photo_CountInputs = {
-    count: NonNullable<unknown>;
-};
-export type Editor_Photo_MovedInputs = {
-    position: NonNullable<unknown>;
-};
+export type Editor_Package_SizeInputs = { value: NonNullable<unknown> };
+export type Editor_Photo_CountInputs = { count: NonNullable<unknown> };
+export type Editor_Photo_MovedInputs = { position: NonNullable<unknown> };
 export type Editor_Photo_Not_In_RecipeInputs = {};
 export type Editor_Prep_TimeInputs = {};
 export type Editor_Recovered_DiscardInputs = {};
-export type Editor_Recovered_HeadingInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Editor_Recovered_HeadingInputs = { value1: NonNullable<unknown> };
 export type Editor_Recovered_Replace_ConfirmInputs = {};
 export type Editor_Recovered_Replace_DescriptionInputs = {};
 export type Editor_Recovered_Replace_TitleInputs = {};
 export type Editor_Recovered_RestoreInputs = {};
 export type Editor_Remove_Ingredient_Group_WarningInputs = {};
 export type Editor_Remove_Instruction_Group_WarningInputs = {};
-export type Editor_Remove_Label_PositionInputs = {
-    label: NonNullable<unknown>;
-    position: NonNullable<unknown>;
-};
+export type Editor_Remove_Label_PositionInputs = { label: NonNullable<unknown>, position: NonNullable<unknown> };
 export type Editor_Save_RecipeInputs = {};
 export type Editor_See_The_ProblemInputs = {};
 export type Editor_Session_EndedInputs = {};
@@ -3662,33 +3391,15 @@ export type Editor_Source_AttributionInputs = {};
 export type Editor_Source_IdentifierInputs = {};
 export type Editor_Source_RecordInputs = {};
 export type Editor_Source_RetrievedInputs = {};
-export type Editor_Stage_MovedInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Stage_RemovedInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Step_ActionsInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Step_InsertedInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Step_LabelInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Step_MovedInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Step_RemovedInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Temperature_Position_FormatInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Temperature_Position_WordingInputs = {
-    position: NonNullable<unknown>;
-};
+export type Editor_Stage_MovedInputs = { position: NonNullable<unknown> };
+export type Editor_Stage_RemovedInputs = { position: NonNullable<unknown> };
+export type Editor_Step_ActionsInputs = { position: NonNullable<unknown> };
+export type Editor_Step_InsertedInputs = { position: NonNullable<unknown> };
+export type Editor_Step_LabelInputs = { position: NonNullable<unknown> };
+export type Editor_Step_MovedInputs = { position: NonNullable<unknown> };
+export type Editor_Step_RemovedInputs = { position: NonNullable<unknown> };
+export type Editor_Temperature_Position_FormatInputs = { position: NonNullable<unknown> };
+export type Editor_Temperature_Position_WordingInputs = { position: NonNullable<unknown> };
 export type Editor_Time_As_WrittenInputs = {};
 export type Editor_Time_Upper_BoundInputs = {};
 export type Editor_Timing_AddInputs = {};
@@ -3698,16 +3409,10 @@ export type Editor_Timing_NameInputs = {};
 export type Editor_Timing_NoteInputs = {};
 export type Editor_Unsaved_DescriptionInputs = {};
 export type Editor_Unsaved_TitleInputs = {};
-export type Editor_Use_LabelInputs = {
-    label: NonNullable<unknown>;
-};
+export type Editor_Use_LabelInputs = { label: NonNullable<unknown> };
 export type Editor_ValidationInputs = {};
-export type Editor_Variation_PositionInputs = {
-    position: NonNullable<unknown>;
-};
-export type Editor_Variation_Position_NameInputs = {
-    position: NonNullable<unknown>;
-};
+export type Editor_Variation_PositionInputs = { position: NonNullable<unknown> };
+export type Editor_Variation_Position_NameInputs = { position: NonNullable<unknown> };
 export type Editor_WaitingInputs = {};
 export type Editor_Yield_Add_AnotherInputs = {};
 export type Editor_Yield_AmountInputs = {};
@@ -3723,9 +3428,7 @@ export type Equipment_Equipment_Is_What_This_Recipe_Expects_Not_A_Record_Of_WInp
 export type Equipment_NameInputs = {};
 export type Equipment_Note_OptionalInputs = {};
 export type Equipment_QuantityInputs = {};
-export type Equipment_Remove_EquipmentInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Equipment_Remove_EquipmentInputs = { value1: NonNullable<unknown> };
 export type Export_Menu_ExportInputs = {};
 export type Export_Menu_Preparing_ExportInputs = {};
 export type Export_Menu_The_Export_Could_Not_Be_CompletedInputs = {};
@@ -3734,120 +3437,70 @@ export type Exports_The_Export_Could_Not_Be_CompletedInputs = {};
 export type Help_ImportsInputs = {};
 export type Help_PlanInputs = {};
 export type Help_ShoppingInputs = {};
-export type Import_About_HoursInputs = {
-    count: NonNullable<unknown>;
-};
+export type Import_About_HoursInputs = { count: NonNullable<unknown> };
 export type Import_Candidate_Already_HereInputs = {};
 export type Import_Candidate_BlockedInputs = {};
 export type Import_Candidate_CompareInputs = {};
-export type Import_Candidate_Compare_WithInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
+export type Import_Candidate_Compare_WithInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
 export type Import_Candidate_DecisionInputs = {};
 export type Import_Candidate_DescriptionInputs = {};
 export type Import_Candidate_DirectionsInputs = {};
 export type Import_Candidate_Edit_Recipe_TextInputs = {};
-export type Import_Candidate_ImportInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Import_Candidate_ImportInputs = { value1: NonNullable<unknown> };
 export type Import_Candidate_Import_As_A_Separate_RecipeInputs = {};
-export type Import_Candidate_Ingredient_CountInputs = {
-    count: NonNullable<unknown>;
-};
+export type Import_Candidate_Ingredient_CountInputs = { count: NonNullable<unknown> };
 export type Import_Candidate_Ingredients_LabelInputs = {};
-export type Import_Candidate_Keep_OriginalInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Import_Candidate_Keep_OriginalInputs = { value1: NonNullable<unknown> };
 export type Import_Candidate_Keep_The_Existing_RecipeInputs = {};
 export type Import_Candidate_Keep_The_Original_FileInputs = {};
 export type Import_Candidate_Match_Evidence_Canonical_UrlInputs = {};
 export type Import_Candidate_Match_Evidence_Portable_IdInputs = {};
-export type Import_Candidate_Match_Evidence_SimilarityInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Import_Candidate_Match_Evidence_SimilarityInputs = { value1: NonNullable<unknown> };
 export type Import_Candidate_Match_Evidence_Source_IdentityInputs = {};
-export type Import_Candidate_None_AvailableInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Import_Candidate_None_AvailableInputs = { value1: NonNullable<unknown> };
 export type Import_Candidate_Optional_Available_In_Recipe_HistoryInputs = {};
 export type Import_Candidate_PhotographsInputs = {};
 export type Import_Candidate_Possible_DuplicateInputs = {};
 export type Import_Candidate_ReadyInputs = {};
-export type Import_Candidate_ReconcileInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Import_Candidate_ReconcileInputs = { value1: NonNullable<unknown> };
 export type Import_Candidate_ReviewInputs = {};
 export type Import_Candidate_Same_Source_Already_In_The_LibraryInputs = {};
 export type Import_Candidate_Several_Source_MatchesInputs = {};
 export type Import_Candidate_Source_FileInputs = {};
 export type Import_Candidate_StepsInputs = {};
-export type Import_Candidate_UnavailableInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
+export type Import_Candidate_UnavailableInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
 export type Import_Candidate_Unreadable_RecipeInputs = {};
 export type Import_Candidate_Update_The_Existing_RecipeInputs = {};
 export type Import_Candidate_When_This_Recipe_Is_SelectedInputs = {};
 export type Import_Candidate_YieldInputs = {};
 export type Import_History_This_Recipe_S_Import_History_Could_Not_Be_ReadInputs = {};
 export type Import_Job_AutomaticInputs = {};
-export type Import_Job_DiagnosticInputs = {
-    classification: NonNullable<unknown>;
-    area: NonNullable<unknown>;
-    occurrences: NonNullable<unknown>;
-    recipes: NonNullable<unknown>;
-};
-export type Import_Job_FailedInputs = {
-    count: NonNullable<unknown>;
-};
+export type Import_Job_DiagnosticInputs = { classification: NonNullable<unknown>, area: NonNullable<unknown>, occurrences: NonNullable<unknown>, recipes: NonNullable<unknown> };
+export type Import_Job_FailedInputs = { count: NonNullable<unknown> };
 export type Import_Job_Failed_HeadlineInputs = {};
-export type Import_Job_ImportedInputs = {
-    count: NonNullable<unknown>;
-};
+export type Import_Job_ImportedInputs = { count: NonNullable<unknown> };
 export type Import_Job_InterruptedInputs = {};
 export type Import_Job_Interrupted_GuidanceInputs = {};
-export type Import_Job_Not_ImportedInputs = {
-    count: NonNullable<unknown>;
-};
+export type Import_Job_Not_ImportedInputs = { count: NonNullable<unknown> };
 export type Import_Job_Page_Back_To_ImportsInputs = {};
 export type Import_Job_Page_Back_To_Your_LibraryInputs = {};
-export type Import_Job_Page_Batch_OfInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-    value3: NonNullable<unknown>;
-};
-export type Import_Job_Page_ElapsedInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Import_Job_Page_Batch_OfInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown>, value3: NonNullable<unknown> };
+export type Import_Job_Page_ElapsedInputs = { value1: NonNullable<unknown> };
 export type Import_Job_Page_Find_These_RecipesInputs = {};
 export type Import_Job_Page_Finish_The_RestInputs = {};
-export type Import_Job_Page_FinishedInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Import_Job_Page_FinishedInputs = { value1: NonNullable<unknown> };
 export type Import_Job_Page_ImportInputs = {};
 export type Import_Job_Page_Import_ProgressInputs = {};
 export type Import_Job_Page_Import_Review_DetailsInputs = {};
 export type Import_Job_Page_Import_The_RestInputs = {};
-export type Import_Job_Page_LeftInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Import_Job_Page_Need_A_LookInputs = {
-    count: NonNullable<unknown>;
-};
-export type Import_Job_Page_Of_RecipesInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
+export type Import_Job_Page_LeftInputs = { value1: NonNullable<unknown> };
+export type Import_Job_Page_Need_A_LookInputs = { count: NonNullable<unknown> };
+export type Import_Job_Page_Of_RecipesInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
 export type Import_Job_Page_Reading_This_ImportInputs = {};
 export type Import_Job_Page_Review_DetailsInputs = {};
-export type Import_Job_Page_StartedInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Import_Job_Page_StartedInputs = { value1: NonNullable<unknown> };
 export type Import_Job_Page_Stop_ImportingInputs = {};
-export type Import_Job_Page_To_GoInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Import_Job_Page_To_GoInputs = { value1: NonNullable<unknown> };
 export type Import_Job_Presentation_Already_In_Your_LibraryInputs = {};
 export type Import_Job_Presentation_Could_Not_Be_ImportedInputs = {};
 export type Import_Job_Presentation_Import_CompleteInputs = {};
@@ -3860,9 +3513,7 @@ export type Import_Job_Presentation_No_Further_Recipes_Were_ImportedInputs = {};
 export type Import_Job_Presentation_Not_ImportedInputs = {};
 export type Import_Job_Presentation_Waiting_To_ImportInputs = {};
 export type Import_Job_Presentation_You_Can_Import_The_Remaining_Recipes_When_You_Are_ReadyInputs = {};
-export type Import_Job_ProcessedInputs = {
-    count: NonNullable<unknown>;
-};
+export type Import_Job_ProcessedInputs = { count: NonNullable<unknown> };
 export type Import_Job_Results_Affected_ContentInputs = {};
 export type Import_Job_Results_All_RecipesInputs = {};
 export type Import_Job_Results_Already_In_LibraryInputs = {};
@@ -3881,27 +3532,18 @@ export type Import_Job_Results_Find_In_LibraryInputs = {};
 export type Import_Job_Results_Import_DetailsInputs = {};
 export type Import_Job_Results_ImportedInputs = {};
 export type Import_Job_Results_Load_More_RecipesInputs = {};
-export type Import_Job_Results_More_FieldsInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Import_Job_Results_More_FieldsInputs = { value1: NonNullable<unknown> };
 export type Import_Job_Results_Needs_ReviewInputs = {};
 export type Import_Job_Results_No_Recipes_In_This_Import_Match_That_FilterInputs = {};
 export type Import_Job_Results_Preserved_DetailsInputs = {};
 export type Import_Job_Results_RecipesInputs = {};
 export type Import_Job_Results_Review_DetailsInputs = {};
 export type Import_Job_Review_FailedInputs = {};
-export type Import_Job_RunningInputs = {
-    count: NonNullable<unknown>;
-    finished: NonNullable<unknown>;
-};
-export type Import_Job_SkippedInputs = {
-    count: NonNullable<unknown>;
-};
+export type Import_Job_RunningInputs = { count: NonNullable<unknown>, finished: NonNullable<unknown> };
+export type Import_Job_SkippedInputs = { count: NonNullable<unknown> };
 export type Import_Job_StoppingInputs = {};
 export type Import_Job_TimingInputs = {};
-export type Import_Job_WaitingInputs = {
-    count: NonNullable<unknown>;
-};
+export type Import_Job_WaitingInputs = { count: NonNullable<unknown> };
 export type Import_Jobs_That_Import_Could_Not_Be_ReadInputs = {};
 export type Import_Jobs_The_Recipes_In_This_Import_Could_Not_Be_ReadInputs = {};
 export type Import_Jobs_The_Selected_Recipes_Could_Not_Be_ImportedInputs = {};
@@ -3919,12 +3561,8 @@ export type Import_Menu_ImportInputs = {};
 export type Import_Menu_Import_RecipesInputs = {};
 export type Import_Menu_Recent_ImportsInputs = {};
 export type Import_Menu_Recipe_Collections_Pdfs_And_PhotosInputs = {};
-export type Import_Photos_PendingInputs = {
-    count: NonNullable<unknown>;
-};
-export type Import_Photos_UnavailableInputs = {
-    count: NonNullable<unknown>;
-};
+export type Import_Photos_PendingInputs = { count: NonNullable<unknown> };
+export type Import_Photos_UnavailableInputs = { count: NonNullable<unknown> };
 export type Import_Previews_The_Corrected_Recipe_Text_Could_Not_Be_AppliedInputs = {};
 export type Import_Previews_The_Import_Preview_Could_Not_Be_ClosedInputs = {};
 export type Import_Previews_The_Measurement_Decision_Could_Not_Be_RemovedInputs = {};
@@ -3934,66 +3572,31 @@ export type Import_Previews_The_Measurement_Plan_Could_Not_Be_GeneratedInputs = 
 export type Import_Previews_The_Recipe_Files_Could_Not_Be_PreviewedInputs = {};
 export type Import_Previews_The_Recipe_Page_Could_Not_Be_PreviewedInputs = {};
 export type Import_Previews_The_Staged_Import_Could_Not_Be_ReopenedInputs = {};
-export type Import_Progress_BytesInputs = {
-    value: NonNullable<unknown>;
-    unit: NonNullable<unknown>;
-};
-export type Import_Progress_Bytes_OfInputs = {
-    sent: NonNullable<unknown>;
-    total: NonNullable<unknown>;
-};
+export type Import_Progress_BytesInputs = { value: NonNullable<unknown>, unit: NonNullable<unknown> };
+export type Import_Progress_Bytes_OfInputs = { sent: NonNullable<unknown>, total: NonNullable<unknown> };
 export type Import_Progress_Fetching_The_Recipe_PageInputs = {};
-export type Import_Progress_FinishedInputs = {
-    count: NonNullable<unknown>;
-    finished: NonNullable<unknown>;
-};
-export type Import_Progress_HrInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Import_Progress_Hr_MinInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
+export type Import_Progress_FinishedInputs = { count: NonNullable<unknown>, finished: NonNullable<unknown> };
+export type Import_Progress_HrInputs = { value1: NonNullable<unknown> };
+export type Import_Progress_Hr_MinInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
 export type Import_Progress_ImportingInputs = {};
-export type Import_Progress_MinInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Import_Progress_Min_SecInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
+export type Import_Progress_MinInputs = { value1: NonNullable<unknown> };
+export type Import_Progress_Min_SecInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
 export type Import_Progress_MinuteInputs = {};
-export type Import_Progress_MinutesInputs = {
-    count: NonNullable<unknown>;
-};
-export type Import_Progress_RateInputs = {
-    count: NonNullable<unknown>;
-};
+export type Import_Progress_MinutesInputs = { count: NonNullable<unknown> };
+export type Import_Progress_RateInputs = { count: NonNullable<unknown> };
 export type Import_Progress_Reading_DetailInputs = {};
-export type Import_Progress_SecInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Import_Reading_FilesInputs = {
-    count: NonNullable<unknown>;
-};
+export type Import_Progress_SecInputs = { value1: NonNullable<unknown> };
+export type Import_Reading_FilesInputs = { count: NonNullable<unknown> };
 export type Import_Review_Panel_All_RecipesInputs = {};
-export type Import_Review_Panel_Already_Here_NoteInputs = {
-    count: NonNullable<unknown>;
-};
-export type Import_Review_Panel_Blocked_NoteInputs = {
-    count: NonNullable<unknown>;
-};
+export type Import_Review_Panel_Already_Here_NoteInputs = { count: NonNullable<unknown> };
+export type Import_Review_Panel_Blocked_NoteInputs = { count: NonNullable<unknown> };
 export type Import_Review_Panel_Cannot_Be_ImportedInputs = {};
 export type Import_Review_Panel_Filter_Import_CandidatesInputs = {};
-export type Import_Review_Panel_From_SourceInputs = {
-    source: NonNullable<unknown>;
-};
+export type Import_Review_Panel_From_SourceInputs = { source: NonNullable<unknown> };
 export type Import_Review_Panel_Import_SelectedInputs = {};
 export type Import_Review_Panel_Import_Selection_ActionsInputs = {};
 export type Import_Review_Panel_Needs_A_DecisionInputs = {};
-export type Import_Review_Panel_Needs_DecisionInputs = {
-    count: NonNullable<unknown>;
-};
+export type Import_Review_Panel_Needs_DecisionInputs = { count: NonNullable<unknown> };
 export type Import_Review_Panel_Needs_ReviewInputs = {};
 export type Import_Review_Panel_Nothing_To_AddInputs = {};
 export type Import_Review_Panel_Preserved_DetailsInputs = {};
@@ -4004,16 +3607,10 @@ export type Import_Review_Panel_Save_This_RecipeInputs = {};
 export type Import_Review_Panel_Select_AllInputs = {};
 export type Import_Review_Panel_Select_NoneInputs = {};
 export type Import_Review_Panel_Select_VisibleInputs = {};
-export type Import_Review_Panel_Selection_NoteInputs = {
-    count: NonNullable<unknown>;
-};
+export type Import_Review_Panel_Selection_NoteInputs = { count: NonNullable<unknown> };
 export type Import_Review_Panel_The_RecipesInputs = {};
-export type Import_Review_Panel_What_IsInputs = {
-    count: NonNullable<unknown>;
-};
-export type Import_Sending_FilesInputs = {
-    count: NonNullable<unknown>;
-};
+export type Import_Review_Panel_What_IsInputs = { count: NonNullable<unknown> };
+export type Import_Sending_FilesInputs = { count: NonNullable<unknown> };
 export type Import_Source_Dialogs_Edit_Recipe_TextInputs = {};
 export type Import_Source_Dialogs_Https_Example_Com_RecipesInputs = {};
 export type Import_Source_Dialogs_Import_A_Recipe_From_The_WebInputs = {};
@@ -4026,10 +3623,7 @@ export type Imports_Page_Empty_HintInputs = {};
 export type Imports_Page_ImportInputs = {};
 export type Imports_Page_Import_JobsInputs = {};
 export type Imports_Page_ImportsInputs = {};
-export type Imports_Page_Lead_And_OthersInputs = {
-    title: NonNullable<unknown>;
-    count: NonNullable<unknown>;
-};
+export type Imports_Page_Lead_And_OthersInputs = { title: NonNullable<unknown>, count: NonNullable<unknown> };
 export type Imports_Page_Load_More_ImportsInputs = {};
 export type Imports_Page_No_Imports_YetInputs = {};
 export type Imports_Page_Reading_Your_ImportsInputs = {};
@@ -4041,9 +3635,7 @@ export type Ingredient_Choice_Choice_WordingInputs = {};
 export type Ingredient_Choice_Either_IngredientInputs = {};
 export type Ingredient_Choice_Either_Or_BothInputs = {};
 export type Ingredient_Choice_First_Preferred_Others_May_SubstituteInputs = {};
-export type Ingredient_Choice_Ingredient_ChoiceInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Ingredient_Choice_Ingredient_ChoiceInputs = { value1: NonNullable<unknown> };
 export type Ingredient_Choice_Move_Choice_DownInputs = {};
 export type Ingredient_Choice_Move_Choice_UpInputs = {};
 export type Ingredient_Choice_Note_Applying_To_The_Whole_ChoiceInputs = {};
@@ -4078,9 +3670,7 @@ export type Ingredient_Row_DetailsInputs = {};
 export type Ingredient_Row_Finely_Chopped_Divided_OptionalInputs = {};
 export type Ingredient_Row_IngredientInputs = {};
 export type Ingredient_Row_Line_ExampleInputs = {};
-export type Ingredient_Row_More_Options_ForInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Ingredient_Row_More_Options_ForInputs = { value1: NonNullable<unknown> };
 export type Ingredient_Row_Move_DownInputs = {};
 export type Ingredient_Row_Move_UpInputs = {};
 export type Ingredient_Row_Preparation_Or_NoteInputs = {};
@@ -4093,12 +3683,8 @@ export type Ingredients_Group_Name_Such_As_DoughInputs = {};
 export type Ingredients_IngredientInputs = {};
 export type Ingredients_Ingredient_GroupInputs = {};
 export type Ingredients_IngredientsInputs = {};
-export type Ingredients_Move_Group_DownInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Ingredients_Move_Group_UpInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Ingredients_Move_Group_DownInputs = { value1: NonNullable<unknown> };
+export type Ingredients_Move_Group_UpInputs = { value1: NonNullable<unknown> };
 export type Ingredients_No_Ingredient_List_You_Can_Save_This_Record_Without_OneInputs = {};
 export type Ingredients_Remove_GroupInputs = {};
 export type Instructions_Add_TitleInputs = {};
@@ -4108,36 +3694,22 @@ export type Instructions_Describe_This_StepInputs = {};
 export type Instructions_Drag_To_ReorderInputs = {};
 export type Instructions_Ingredients_Temperature_And_PhotosInputs = {};
 export type Instructions_MethodInputs = {};
-export type Instructions_Move_Stage_DownInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Instructions_Move_Stage_UpInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Instructions_Move_Step_DownInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Instructions_Move_Step_UpInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Instructions_Move_Stage_DownInputs = { value1: NonNullable<unknown> };
+export type Instructions_Move_Stage_UpInputs = { value1: NonNullable<unknown> };
+export type Instructions_Move_Step_DownInputs = { value1: NonNullable<unknown> };
+export type Instructions_Move_Step_UpInputs = { value1: NonNullable<unknown> };
 export type Instructions_No_Instructions_You_Can_Save_This_Record_Without_Them_RInputs = {};
 export type Instructions_Optional_Step_HeadingInputs = {};
 export type Instructions_RemoveInputs = {};
 export type Instructions_Remove_StageInputs = {};
-export type Instructions_Remove_Title_From_StepInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Instructions_Remove_Title_From_StepInputs = { value1: NonNullable<unknown> };
 export type Instructions_StageInputs = {};
 export type Instructions_Stage_NameInputs = {};
 export type Instructions_Stage_Name_Such_As_BakeInputs = {};
 export type Instructions_Step_LabelInputs = {};
-export type Instructions_Step_NumberInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Instructions_Step_NumberInputs = { value1: NonNullable<unknown> };
 export type Instructions_TimingInputs = {};
-export type Instructions_Title_For_StepInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Instructions_Title_For_StepInputs = { value1: NonNullable<unknown> };
 export type Integrations_ActiveInputs = {};
 export type Integrations_AddInputs = {};
 export type Integrations_Api_HeadingInputs = {};
@@ -4158,21 +3730,15 @@ export type Integrations_Delivery_RedirectInputs = {};
 export type Integrations_DestinationInputs = {};
 export type Integrations_Destination_HintInputs = {};
 export type Integrations_DeveloperInputs = {};
-export type Integrations_Duration_MsInputs = {
-    duration: NonNullable<unknown>;
-};
+export type Integrations_Duration_MsInputs = { duration: NonNullable<unknown> };
 export type Integrations_EmptyInputs = {};
 export type Integrations_Enable_HintInputs = {};
 export type Integrations_EnabledInputs = {};
 export type Integrations_EventsInputs = {};
 export type Integrations_Example_HeadingInputs = {};
-export type Integrations_Example_HintInputs = {
-    id: NonNullable<unknown>;
-};
+export type Integrations_Example_HintInputs = { id: NonNullable<unknown> };
 export type Integrations_FailedInputs = {};
-export type Integrations_FailingInputs = {
-    count: NonNullable<unknown>;
-};
+export type Integrations_FailingInputs = { count: NonNullable<unknown> };
 export type Integrations_FormatsInputs = {};
 export type Integrations_HistoryInputs = {};
 export type Integrations_History_HintInputs = {};
@@ -4181,9 +3747,7 @@ export type Integrations_LedeInputs = {};
 export type Integrations_Library_ScopeInputs = {};
 export type Integrations_NameInputs = {};
 export type Integrations_NextInputs = {};
-export type Integrations_Next_AttemptInputs = {
-    time: NonNullable<unknown>;
-};
+export type Integrations_Next_AttemptInputs = { time: NonNullable<unknown> };
 export type Integrations_Owner_RequiredInputs = {};
 export type Integrations_PausedInputs = {};
 export type Integrations_PreviousInputs = {};
@@ -4220,66 +3784,35 @@ export type Keyboard_Shortcuts_ShoppingInputs = {};
 export type Keyboard_Shortcuts_TitleInputs = {};
 export type Label_Choices_Nothing_Here_Matches_ThatInputs = {};
 export type Label_Choices_Show_FewerInputs = {};
-export type Label_Choices_Show_MoreInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Label_Choices_Show_MoreInputs = { value1: NonNullable<unknown> };
 export type Label_Editor_BackInputs = {};
 export type Label_Editor_Choose_OneInputs = {};
 export type Label_Editor_ColourInputs = {};
 export type Label_Editor_CombineInputs = {};
-export type Label_Editor_Combine_ExplainsInputs = {
-    value2: NonNullable<unknown>;
-    value1: NonNullable<unknown>;
-};
-export type Label_Editor_Combine_With_AnotherInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Label_Editor_Combine_ExplainsInputs = { value2: NonNullable<unknown>, value1: NonNullable<unknown> };
+export type Label_Editor_Combine_With_AnotherInputs = { value1: NonNullable<unknown> };
 export type Label_Editor_CountingInputs = {};
 export type Label_Editor_DeleteInputs = {};
-export type Label_Editor_Delete_From_ManyInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Label_Editor_Delete_From_ManyInputs = { value1: NonNullable<unknown> };
 export type Label_Editor_Delete_From_OneInputs = {};
-export type Label_Editor_Delete_TitleInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Label_Editor_EditInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Label_Editor_Keep_ThisInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Label_Editor_Move_ManyInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-    value3: NonNullable<unknown>;
-};
-export type Label_Editor_Move_NoneInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
-export type Label_Editor_Move_OneInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
+export type Label_Editor_Delete_TitleInputs = { value1: NonNullable<unknown> };
+export type Label_Editor_EditInputs = { value1: NonNullable<unknown> };
+export type Label_Editor_Keep_ThisInputs = { value1: NonNullable<unknown> };
+export type Label_Editor_Move_ManyInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown>, value3: NonNullable<unknown> };
+export type Label_Editor_Move_NoneInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
+export type Label_Editor_Move_OneInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
 export type Label_Editor_NameInputs = {};
 export type Label_Editor_On_No_RecipesInputs = {};
 export type Label_Editor_On_One_RecipeInputs = {};
-export type Label_Editor_On_RecipesInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Label_Editor_On_RecipesInputs = { value1: NonNullable<unknown> };
 export type Label_Editor_SaveInputs = {};
 export type Label_Group_AddInputs = {};
 export type Label_Group_ColourInputs = {};
-export type Label_Group_NewInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Label_Group_NewInputs = { value1: NonNullable<unknown> };
 export type Label_Group_None_YetInputs = {};
 export type Library_Filters_4_StarsInputs = {};
 export type Library_Filters_Choose_A_BookInputs = {};
-export type Library_Filters_Choose_A_CategoryInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Library_Filters_Choose_A_CategoryInputs = { value1: NonNullable<unknown> };
 export type Library_Filters_Choose_A_CookbookInputs = {};
 export type Library_Filters_Choose_A_TagInputs = {};
 export type Library_Filters_Clear_AllInputs = {};
@@ -4288,22 +3821,16 @@ export type Library_Filters_Diet_ManualInputs = {};
 export type Library_Filters_Every_One_ChosenInputs = {};
 export type Library_Filters_FavoritesInputs = {};
 export type Library_Filters_FiltersInputs = {};
-export type Library_Filters_FromInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Library_Filters_FromInputs = { value1: NonNullable<unknown> };
 export type Library_Filters_From_One_ImportInputs = {};
 export type Library_Filters_In_A_BookInputs = {};
 export type Library_Filters_MoreInputs = {};
-export type Library_Filters_Narrow_ToInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Library_Filters_Narrow_ToInputs = { value1: NonNullable<unknown> };
 export type Library_Filters_Needs_Ingredient_ReviewInputs = {};
 export type Library_Filters_Not_Cooked_YetInputs = {};
 export type Library_Filters_Only_ShowInputs = {};
 export type Library_Filters_Stated_By_The_RecipeInputs = {};
-export type Library_Filters_Stop_NarrowingInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Library_Filters_Stop_NarrowingInputs = { value1: NonNullable<unknown> };
 export type Library_Filters_TagsInputs = {};
 export type Library_Filters_Taken_From_A_CookbookInputs = {};
 export type Library_Page_Add_RecipesInputs = {};
@@ -4322,16 +3849,10 @@ export type Library_Query_MethodInputs = {};
 export type Library_Query_MethodsInputs = {};
 export type Library_Query_Needs_Ingredient_ReviewInputs = {};
 export type Library_Query_Not_Cooked_YetInputs = {};
-export type Library_Query_Stated_DietInputs = {
-    diet: NonNullable<unknown>;
-};
-export type Library_Query_Stated_Free_FromInputs = {
-    substance: NonNullable<unknown>;
-};
+export type Library_Query_Stated_DietInputs = { diet: NonNullable<unknown> };
+export type Library_Query_Stated_Free_FromInputs = { substance: NonNullable<unknown> };
 export type Library_Restore_DismissInputs = {};
-export type Library_Restore_MovedInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Library_Restore_MovedInputs = { value1: NonNullable<unknown> };
 export type Library_Restore_Open_TrashInputs = {};
 export type Library_Restore_UndoInputs = {};
 export type Library_Results_Loading_RecipesInputs = {};
@@ -4349,13 +3870,9 @@ export type Library_Selection_Bar_ClearInputs = {};
 export type Library_Selection_Bar_CompareInputs = {};
 export type Library_Selection_Bar_OrganizeInputs = {};
 export type Library_Selection_Bar_PrintInputs = {};
-export type Library_Selection_Bar_Select_All_MatchingInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Library_Selection_Bar_Select_All_MatchingInputs = { value1: NonNullable<unknown> };
 export type Library_Selection_Bar_Select_All_ShownInputs = {};
-export type Library_Selection_Bar_SelectedInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Library_Selection_Bar_SelectedInputs = { value1: NonNullable<unknown> };
 export type Library_Selection_Bar_Selected_RecipesInputs = {};
 export type Library_Selection_Bar_Sref_BundleInputs = {};
 export type Library_Sort_CookedInputs = {};
@@ -4375,12 +3892,8 @@ export type List_Fields_Add_VariationInputs = {};
 export type List_Fields_AuthorInputs = {};
 export type List_Fields_For_A_Richer_Version_Add_100_Ml_Cream_With_The_StockInputs = {};
 export type List_Fields_Name_OptionalInputs = {};
-export type List_Fields_Remove_AuthorInputs = {
-    value1: NonNullable<unknown>;
-};
-export type List_Fields_Remove_VariationInputs = {
-    value1: NonNullable<unknown>;
-};
+export type List_Fields_Remove_AuthorInputs = { value1: NonNullable<unknown> };
+export type List_Fields_Remove_VariationInputs = { value1: NonNullable<unknown> };
 export type List_Fields_VariationsInputs = {};
 export type List_Fields_Written_ByInputs = {};
 export type Measurement_Decisions_All_AnsweredInputs = {};
@@ -4390,45 +3903,21 @@ export type Measurement_Decisions_Convention_HintInputs = {};
 export type Measurement_Decisions_Convention_LegendInputs = {};
 export type Measurement_Decisions_ExamplesInputs = {};
 export type Measurement_Decisions_ExceptionsInputs = {};
-export type Measurement_Decisions_IntroInputs = {
-    measurements: NonNullable<unknown>;
-};
+export type Measurement_Decisions_IntroInputs = { measurements: NonNullable<unknown> };
 export type Measurement_Decisions_Keep_As_WrittenInputs = {};
 export type Measurement_Decisions_LoadingInputs = {};
-export type Measurement_Decisions_Outcome_ExcludedInputs = {
-    count: NonNullable<unknown>;
-};
-export type Measurement_Decisions_Outcome_KeptInputs = {
-    measurements: NonNullable<unknown>;
-    recipes: NonNullable<unknown>;
-};
-export type Measurement_Decisions_Outcome_PendingInputs = {
-    count: NonNullable<unknown>;
-};
-export type Measurement_Decisions_Outcome_ReadInputs = {
-    measurements: NonNullable<unknown>;
-    recipes: NonNullable<unknown>;
-};
-export type Measurement_Decisions_Outcome_UnreadableInputs = {
-    count: NonNullable<unknown>;
-};
-export type Measurement_Decisions_ReachInputs = {
-    measurements: NonNullable<unknown>;
-    recipes: NonNullable<unknown>;
-};
-export type Measurement_Decisions_Read_These_AsInputs = {
-    measure: NonNullable<unknown>;
-};
-export type Measurement_Decisions_SeparatelyInputs = {
-    count: NonNullable<unknown>;
-};
+export type Measurement_Decisions_Outcome_ExcludedInputs = { count: NonNullable<unknown> };
+export type Measurement_Decisions_Outcome_KeptInputs = { measurements: NonNullable<unknown>, recipes: NonNullable<unknown> };
+export type Measurement_Decisions_Outcome_PendingInputs = { count: NonNullable<unknown> };
+export type Measurement_Decisions_Outcome_ReadInputs = { measurements: NonNullable<unknown>, recipes: NonNullable<unknown> };
+export type Measurement_Decisions_Outcome_UnreadableInputs = { count: NonNullable<unknown> };
+export type Measurement_Decisions_ReachInputs = { measurements: NonNullable<unknown>, recipes: NonNullable<unknown> };
+export type Measurement_Decisions_Read_These_AsInputs = { measure: NonNullable<unknown> };
+export type Measurement_Decisions_SeparatelyInputs = { count: NonNullable<unknown> };
 export type Measurement_Decisions_TitleInputs = {};
 export type Measurement_Decisions_Undo_LastInputs = {};
 export type Measurement_Occurrence_List_Exclude_This_RecipeInputs = {};
-export type Measurement_Occurrence_List_Include_FromInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
+export type Measurement_Occurrence_List_Include_FromInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
 export type Media_Details_CreatorInputs = {};
 export type Media_Details_CreditInputs = {};
 export type Media_Details_Editor_HintInputs = {};
@@ -4440,9 +3929,7 @@ export type Media_Details_RightsInputs = {};
 export type Media_Details_SourceInputs = {};
 export type Media_Details_TitleInputs = {};
 export type Metadata_A_Sentence_Or_Two_About_The_RecipeInputs = {};
-export type Metadata_Add_Label_GroupInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Metadata_Add_Label_GroupInputs = { value1: NonNullable<unknown> };
 export type Metadata_AustraliaInputs = {};
 export type Metadata_AustralianInputs = {};
 export type Metadata_Authored_Labels_Are_Not_Your_FilingInputs = {};
@@ -4477,30 +3964,16 @@ export type Metadata_WeeknightInputs = {};
 export type Metadata_Written_ForInputs = {};
 export type Metadata_Written_For_HintInputs = {};
 export type Microwave_Another_OutputInputs = {};
-export type Microwave_As_The_Recipe_Wrote_ItInputs = {
-    watts: NonNullable<unknown>;
-};
-export type Microwave_Authored_ForInputs = {
-    watts: NonNullable<unknown>;
-};
-export type Microwave_Estimate_ForInputs = {
-    watts: NonNullable<unknown>;
-};
+export type Microwave_As_The_Recipe_Wrote_ItInputs = { watts: NonNullable<unknown> };
+export type Microwave_Authored_ForInputs = { watts: NonNullable<unknown> };
+export type Microwave_Estimate_ForInputs = { watts: NonNullable<unknown> };
 export type Microwave_Just_This_OnceInputs = {};
 export type Microwave_Output_LabelInputs = {};
-export type Microwave_Recipe_SaysInputs = {
-    duration: NonNullable<unknown>;
-    watts: NonNullable<unknown>;
-};
+export type Microwave_Recipe_SaysInputs = { duration: NonNullable<unknown>, watts: NonNullable<unknown> };
 export type Microwave_RestrictedInputs = {};
 export type Microwave_SetupInputs = {};
-export type Microwave_Use_ForInputs = {
-    duration: NonNullable<unknown>;
-    watts: NonNullable<unknown>;
-};
-export type Microwave_Use_The_Recipe_SInputs = {
-    duration: NonNullable<unknown>;
-};
+export type Microwave_Use_ForInputs = { duration: NonNullable<unknown>, watts: NonNullable<unknown> };
+export type Microwave_Use_The_Recipe_SInputs = { duration: NonNullable<unknown> };
 export type Microwave_Use_WrittenInputs = {};
 export type Microwave_WattsInputs = {};
 export type New_Recipe_Page_New_RecipeInputs = {};
@@ -4512,9 +3985,7 @@ export type Nutrition_Basis_BatchInputs = {};
 export type Nutrition_Basis_QuantityInputs = {};
 export type Nutrition_Basis_RecipeInputs = {};
 export type Nutrition_Basis_ServingInputs = {};
-export type Nutrition_Basis_Serving_OfInputs = {
-    serving: NonNullable<unknown>;
-};
+export type Nutrition_Basis_Serving_OfInputs = { serving: NonNullable<unknown> };
 export type Nutrition_Basis_UnspecifiedInputs = {};
 export type Nutrition_CarbohydrateInputs = {};
 export type Nutrition_CholesterolInputs = {};
@@ -4529,28 +4000,20 @@ export type Nutrition_Editor_DetailsInputs = {};
 export type Nutrition_Editor_NameInputs = {};
 export type Nutrition_Editor_NoteInputs = {};
 export type Nutrition_Editor_NutrientInputs = {};
-export type Nutrition_Editor_Remove_NamedInputs = {
-    nutrient: NonNullable<unknown>;
-};
+export type Nutrition_Editor_Remove_NamedInputs = { nutrient: NonNullable<unknown> };
 export type Nutrition_Editor_Remove_NutrientInputs = {};
 export type Nutrition_Editor_Remove_StatementInputs = {};
 export type Nutrition_Editor_UnitInputs = {};
-export type Nutrition_Editor_Unit_ForInputs = {
-    nutrient: NonNullable<unknown>;
-};
+export type Nutrition_Editor_Unit_ForInputs = { nutrient: NonNullable<unknown> };
 export type Nutrition_Editor_Unit_UnstatedInputs = {};
 export type Nutrition_Editor_ValueInputs = {};
-export type Nutrition_Editor_Value_ForInputs = {
-    nutrient: NonNullable<unknown>;
-};
+export type Nutrition_Editor_Value_ForInputs = { nutrient: NonNullable<unknown> };
 export type Nutrition_EnergyInputs = {};
 export type Nutrition_FatInputs = {};
 export type Nutrition_FiberInputs = {};
 export type Nutrition_OtherInputs = {};
 export type Nutrition_ProteinInputs = {};
-export type Nutrition_Recipe_ValueInputs = {
-    value: NonNullable<unknown>;
-};
+export type Nutrition_Recipe_ValueInputs = { value: NonNullable<unknown> };
 export type Nutrition_SaltInputs = {};
 export type Nutrition_Saturated_FatInputs = {};
 export type Nutrition_SodiumInputs = {};
@@ -4568,29 +4031,19 @@ export type Organization_Bar_Your_RatingInputs = {};
 export type Organization_CuisineInputs = {};
 export type Organization_Dietary_LabelInputs = {};
 export type Organization_DinnerInputs = {};
-export type Organization_Editor_Add_A_CategoryInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Organization_Editor_Add_A_CategoryInputs = { value1: NonNullable<unknown> };
 export type Organization_Editor_Add_A_TagInputs = {};
-export type Organization_Editor_Add_CategoryInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Organization_Editor_Add_TagInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Organization_Editor_Add_CategoryInputs = { value1: NonNullable<unknown> };
+export type Organization_Editor_Add_TagInputs = { value1: NonNullable<unknown> };
 export type Organization_Editor_Add_To_A_BookInputs = {};
 export type Organization_Editor_BooksInputs = {};
-export type Organization_Editor_Categories_CountInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Organization_Editor_Categories_CountInputs = { value1: NonNullable<unknown> };
 export type Organization_Editor_Categories_LabelInputs = {};
 export type Organization_Editor_Create_A_BookInputs = {};
 export type Organization_Editor_CuisineInputs = {};
 export type Organization_Editor_DietaryInputs = {};
 export type Organization_Editor_Every_Book_Holds_ItInputs = {};
-export type Organization_Editor_Every_Category_On_ItInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Organization_Editor_Every_Category_On_ItInputs = { value1: NonNullable<unknown> };
 export type Organization_Editor_Every_Tag_On_ItInputs = {};
 export type Organization_Editor_Manage_CategoriesInputs = {};
 export type Organization_Editor_Manage_TagsInputs = {};
@@ -4602,21 +4055,13 @@ export type Organization_Editor_Not_In_A_BookInputs = {};
 export type Organization_Editor_Notes_And_SourcesInputs = {};
 export type Organization_Editor_Organize_RecipeInputs = {};
 export type Organization_Editor_Personal_NoteInputs = {};
-export type Organization_Editor_Put_In_BookInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Organization_Editor_Remove_CategoryInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Organization_Editor_Remove_TagInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Organization_Editor_Put_In_BookInputs = { value1: NonNullable<unknown> };
+export type Organization_Editor_Remove_CategoryInputs = { value1: NonNullable<unknown> };
+export type Organization_Editor_Remove_TagInputs = { value1: NonNullable<unknown> };
 export type Organization_Editor_Shared_Categories_HintInputs = {};
 export type Organization_Editor_SourcesInputs = {};
 export type Organization_Editor_TagsInputs = {};
-export type Organization_Editor_Take_Out_Of_BookInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Organization_Editor_Take_Out_Of_BookInputs = { value1: NonNullable<unknown> };
 export type Organization_Facets_Could_Not_Be_LoadedInputs = {};
 export type Organization_Label_BookInputs = {};
 export type Organization_Label_TagInputs = {};
@@ -4641,15 +4086,9 @@ export type Organization_The_Tag_Could_Not_Be_DeletedInputs = {};
 export type Organization_The_Tag_Could_Not_Be_MergedInputs = {};
 export type Organization_The_Tag_Could_Not_Be_SavedInputs = {};
 export type Organization_VegetarianInputs = {};
-export type Page_Title_CookingInputs = {
-    name: NonNullable<unknown>;
-};
-export type Page_Title_EditingInputs = {
-    name: NonNullable<unknown>;
-};
-export type Page_Title_NamedInputs = {
-    name: NonNullable<unknown>;
-};
+export type Page_Title_CookingInputs = { name: NonNullable<unknown> };
+export type Page_Title_EditingInputs = { name: NonNullable<unknown> };
+export type Page_Title_NamedInputs = { name: NonNullable<unknown> };
 export type Pantry_AddInputs = {};
 export type Pantry_AmountInputs = {};
 export type Pantry_CancelInputs = {};
@@ -4657,9 +4096,7 @@ export type Pantry_EditInputs = {};
 export type Pantry_FailedInputs = {};
 export type Pantry_HintInputs = {};
 export type Pantry_LocationInputs = {};
-export type Pantry_May_HaveInputs = {
-    value: NonNullable<unknown>;
-};
+export type Pantry_May_HaveInputs = { value: NonNullable<unknown> };
 export type Pantry_NameInputs = {};
 export type Pantry_NoteInputs = {};
 export type Pantry_RemoveInputs = {};
@@ -4673,28 +4110,14 @@ export type Passkeys_Registration_CancelledInputs = {};
 export type Passkeys_Sign_In_CancelledInputs = {};
 export type Pdf_Preview_KbInputs = {};
 export type Pdf_Preview_No_Document_YetInputs = {};
-export type Pdf_Preview_OfInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-    value3: NonNullable<unknown>;
-};
-export type Pdf_Preview_PageInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Pdf_Preview_Page_NumberInputs = {
-    unit: NonNullable<unknown>;
-    page: NonNullable<unknown>;
-};
-export type Pdf_Preview_Pages_CountInputs = {
-    pages: NonNullable<unknown>;
-    unit: NonNullable<unknown>;
-};
+export type Pdf_Preview_OfInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown>, value3: NonNullable<unknown> };
+export type Pdf_Preview_PageInputs = { value1: NonNullable<unknown> };
+export type Pdf_Preview_Page_NumberInputs = { unit: NonNullable<unknown>, page: NonNullable<unknown> };
+export type Pdf_Preview_Pages_CountInputs = { pages: NonNullable<unknown>, unit: NonNullable<unknown> };
 export type Pdf_Preview_Percent_SymbolInputs = {};
 export type Pdf_Preview_Preparing_The_DocumentInputs = {};
 export type Pdf_Preview_Preview_SizeInputs = {};
-export type Pdf_Preview_Sheet_NounInputs = {
-    unit: NonNullable<unknown>;
-};
+export type Pdf_Preview_Sheet_NounInputs = { unit: NonNullable<unknown> };
 export type Pdf_Preview_Show_LargerInputs = {};
 export type Pdf_Preview_Show_SmallerInputs = {};
 export type Pdf_Preview_The_Document_Could_Not_Be_DisplayedInputs = {};
@@ -4708,15 +4131,11 @@ export type Photos_Move_Recipe_Photo_EarlierInputs = {};
 export type Photos_Move_Recipe_Photo_LaterInputs = {};
 export type Photos_PhotosInputs = {};
 export type Photos_Preview_UnavailableInputs = {};
-export type Photos_Recipe_PhotoInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Photos_Recipe_PhotoInputs = { value1: NonNullable<unknown> };
 export type Photos_Remove_From_Recipe_PhotosInputs = {};
 export type Photos_Remove_PhotoInputs = {};
 export type Photos_Use_As_Cover_PhotoInputs = {};
-export type Plan_Add_Saved_MealInputs = {
-    name: NonNullable<unknown>;
-};
+export type Plan_Add_Saved_MealInputs = { name: NonNullable<unknown> };
 export type Plan_Add_Shopping_ItemInputs = {};
 export type Plan_AgendaInputs = {};
 export type Plan_Agenda_EmptyInputs = {};
@@ -4729,14 +4148,10 @@ export type Plan_Calendar_ExportInputs = {};
 export type Plan_Calendar_Feed_CopiedInputs = {};
 export type Plan_Calendar_Feed_CopyInputs = {};
 export type Plan_Calendar_Feed_CreateInputs = {};
-export type Plan_Calendar_Feed_Created_ByInputs = {
-    name: NonNullable<unknown>;
-};
+export type Plan_Calendar_Feed_Created_ByInputs = { name: NonNullable<unknown> };
 export type Plan_Calendar_Feed_Default_NameInputs = {};
 export type Plan_Calendar_Feed_FailedInputs = {};
-export type Plan_Calendar_Feed_Last_ReadInputs = {
-    date: NonNullable<unknown>;
-};
+export type Plan_Calendar_Feed_Last_ReadInputs = { date: NonNullable<unknown> };
 export type Plan_Calendar_Feed_NameInputs = {};
 export type Plan_Calendar_Feed_Never_ReadInputs = {};
 export type Plan_Calendar_Feed_RevokeInputs = {};
@@ -4755,9 +4170,7 @@ export type Plan_Combination_NameInputs = {};
 export type Plan_Copy_FailedInputs = {};
 export type Plan_Copy_ToInputs = {};
 export type Plan_Create_FailedInputs = {};
-export type Plan_Created_ByInputs = {
-    name: NonNullable<unknown>;
-};
+export type Plan_Created_ByInputs = { name: NonNullable<unknown> };
 export type Plan_DateInputs = {};
 export type Plan_DeleteInputs = {};
 export type Plan_Delete_DescriptionInputs = {};
@@ -4766,15 +4179,9 @@ export type Plan_Delete_SavedInputs = {};
 export type Plan_Delete_Saved_HintInputs = {};
 export type Plan_Delete_TitleInputs = {};
 export type Plan_DinnerInputs = {};
-export type Plan_Dish_BatchesInputs = {
-    name: NonNullable<unknown>;
-    amount: NonNullable<unknown>;
-};
+export type Plan_Dish_BatchesInputs = { name: NonNullable<unknown>, amount: NonNullable<unknown> };
 export type Plan_Dish_NameInputs = {};
-export type Plan_Dish_Part_BatchInputs = {
-    name: NonNullable<unknown>;
-    amount: NonNullable<unknown>;
-};
+export type Plan_Dish_Part_BatchInputs = { name: NonNullable<unknown>, amount: NonNullable<unknown> };
 export type Plan_DishesInputs = {};
 export type Plan_Earlier_This_WeekInputs = {};
 export type Plan_EditInputs = {};
@@ -4786,14 +4193,10 @@ export type Plan_Find_DishInputs = {};
 export type Plan_Index_TitleInputs = {};
 export type Plan_Keep_MealInputs = {};
 export type Plan_LeftoversInputs = {};
-export type Plan_Leftovers_NameInputs = {
-    name: NonNullable<unknown>;
-};
+export type Plan_Leftovers_NameInputs = { name: NonNullable<unknown> };
 export type Plan_Load_FailedInputs = {};
 export type Plan_LunchInputs = {};
-export type Plan_Meal_ActionsInputs = {
-    name: NonNullable<unknown>;
-};
+export type Plan_Meal_ActionsInputs = { name: NonNullable<unknown> };
 export type Plan_Meal_TrayInputs = {};
 export type Plan_Meal_TypeInputs = {};
 export type Plan_Meal_Type_UnspecifiedInputs = {};
@@ -4804,30 +4207,20 @@ export type Plan_Move_ToInputs = {};
 export type Plan_NameInputs = {};
 export type Plan_Name_HintInputs = {};
 export type Plan_New_MealInputs = {};
-export type Plan_New_Meal_OnInputs = {
-    date: NonNullable<unknown>;
-};
+export type Plan_New_Meal_OnInputs = { date: NonNullable<unknown> };
 export type Plan_Next_AgendaInputs = {};
 export type Plan_Next_MonthInputs = {};
 export type Plan_Next_WeekInputs = {};
 export type Plan_No_RecipesInputs = {};
 export type Plan_NotesInputs = {};
-export type Plan_Open_RecipeInputs = {
-    name: NonNullable<unknown>;
-};
-export type Plan_Open_WeekInputs = {
-    date: NonNullable<unknown>;
-};
+export type Plan_Open_RecipeInputs = { name: NonNullable<unknown> };
+export type Plan_Open_WeekInputs = { date: NonNullable<unknown> };
 export type Plan_Plain_DishInputs = {};
 export type Plan_Previous_AgendaInputs = {};
 export type Plan_Previous_MonthInputs = {};
 export type Plan_Previous_WeekInputs = {};
-export type Plan_Recipe_RemovedInputs = {
-    name: NonNullable<unknown>;
-};
-export type Plan_Recipe_TrashedInputs = {
-    name: NonNullable<unknown>;
-};
+export type Plan_Recipe_RemovedInputs = { name: NonNullable<unknown> };
+export type Plan_Recipe_TrashedInputs = { name: NonNullable<unknown> };
 export type Plan_Recipes_FailedInputs = {};
 export type Plan_Recipes_GroupInputs = {};
 export type Plan_Remove_DishInputs = {};
@@ -4853,9 +4246,7 @@ export type Plan_TitleInputs = {};
 export type Plan_TodayInputs = {};
 export type Plan_UnscheduledInputs = {};
 export type Plan_Unscheduled_HintInputs = {};
-export type Plan_Updated_ByInputs = {
-    name: NonNullable<unknown>;
-};
+export type Plan_Updated_ByInputs = { name: NonNullable<unknown> };
 export type Plan_Use_CombinationInputs = {};
 export type Plan_Validation_DishInputs = {};
 export type Plan_WeekInputs = {};
@@ -4864,22 +4255,16 @@ export type Preferences_A4Inputs = {};
 export type Preferences_Account_ScopeInputs = {};
 export type Preferences_AustraliaInputs = {};
 export type Preferences_AutomaticInputs = {};
-export type Preferences_Catalog_UnavailableInputs = {
-    language: NonNullable<unknown>;
-};
+export type Preferences_Catalog_UnavailableInputs = { language: NonNullable<unknown> };
 export type Preferences_CelsiusInputs = {};
 export type Preferences_ComfortableInputs = {};
 export type Preferences_CompactInputs = {};
 export type Preferences_Could_Not_Load_Or_Save_Your_PreferencesInputs = {};
 export type Preferences_DarkInputs = {};
-export type Preferences_Default_IsInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Preferences_Default_IsInputs = { value1: NonNullable<unknown> };
 export type Preferences_FahrenheitInputs = {};
 export type Preferences_IncludeInputs = {};
-export type Preferences_Interface_PreviewInputs = {
-    language: NonNullable<unknown>;
-};
+export type Preferences_Interface_PreviewInputs = { language: NonNullable<unknown> };
 export type Preferences_Language_FallbacksInputs = {};
 export type Preferences_LetterInputs = {};
 export type Preferences_LightInputs = {};
@@ -4907,9 +4292,7 @@ export type Preferences_Page_Preferences_SavedInputs = {};
 export type Preferences_Page_Preferred_Recipe_LanguageInputs = {};
 export type Preferences_Page_PrintingInputs = {};
 export type Preferences_Page_ReadingInputs = {};
-export type Preferences_Page_Recipe_Language_FallbackInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Preferences_Page_Recipe_Language_FallbackInputs = { value1: NonNullable<unknown> };
 export type Preferences_Page_Recipe_SpacingInputs = {};
 export type Preferences_Page_Reduce_MotionInputs = {};
 export type Preferences_Page_Save_PreferencesInputs = {};
@@ -4925,16 +4308,12 @@ export type Preferences_SavingInputs = {};
 export type Preferences_Shared_ScopeInputs = {};
 export type Preferences_Timezone_HintInputs = {};
 export type Preferences_Your_Preferences_SavorumInputs = {};
-export type Print_Controls_Adjusted_For_WattsInputs = {
-    watts: NonNullable<unknown>;
-};
+export type Print_Controls_Adjusted_For_WattsInputs = { watts: NonNullable<unknown> };
 export type Print_Controls_Arrange_On_A4Inputs = {};
 export type Print_Controls_Arrange_On_Us_LetterInputs = {};
 export type Print_Controls_As_The_Recipe_Is_WrittenInputs = {};
 export type Print_Controls_As_You_Are_Reading_ItInputs = {};
-export type Print_Controls_As_You_Are_Reading_It_ScaledInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Print_Controls_As_You_Are_Reading_It_ScaledInputs = { value1: NonNullable<unknown> };
 export type Print_Controls_As_You_Are_Reading_ThemInputs = {};
 export type Print_Controls_AustralianInputs = {};
 export type Print_Controls_AutomaticInputs = {};
@@ -4977,20 +4356,12 @@ export type Print_The_Document_Could_Not_Be_GeneratedInputs = {};
 export type Print_Workspace_Download_PdfInputs = {};
 export type Print_Workspace_PrintInputs = {};
 export type Print_Workspace_Print_DocumentInputs = {};
-export type Print_Workspace_Print_NamedInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Print_Workspace_Print_NamedInputs = { value1: NonNullable<unknown> };
 export type Print_Workspace_Print_SettingsInputs = {};
 export type Print_Workspace_The_Document_Could_Not_Be_GeneratedInputs = {};
-export type Quantity_Add_Label_AlternativeInputs = {
-    label: NonNullable<unknown>;
-};
-export type Quantity_Add_Label_PartInputs = {
-    label: NonNullable<unknown>;
-};
-export type Quantity_Clear_LabelInputs = {
-    label: NonNullable<unknown>;
-};
+export type Quantity_Add_Label_AlternativeInputs = { label: NonNullable<unknown> };
+export type Quantity_Add_Label_PartInputs = { label: NonNullable<unknown> };
+export type Quantity_Clear_LabelInputs = { label: NonNullable<unknown> };
 export type Quantity_Field_Add_AlternativeInputs = {};
 export type Quantity_Field_Add_PartInputs = {};
 export type Quantity_Field_Alternative_AmountsInputs = {};
@@ -5000,32 +4371,14 @@ export type Quantity_Field_Enter_A_Number_Fraction_Or_Range_For_This_AmountInput
 export type Quantity_Field_No_MeasureInputs = {};
 export type Quantity_Field_Remove_AlternativeInputs = {};
 export type Quantity_Field_Remove_PartInputs = {};
-export type Quantity_Label_Alternative_PositionInputs = {
-    label: NonNullable<unknown>;
-    position: NonNullable<unknown>;
-};
-export type Quantity_Label_FormatInputs = {
-    label: NonNullable<unknown>;
-};
-export type Quantity_Label_MeasureInputs = {
-    label: NonNullable<unknown>;
-};
-export type Quantity_Label_Part_PositionInputs = {
-    label: NonNullable<unknown>;
-    position: NonNullable<unknown>;
-};
-export type Quantity_One_AmountInputs = {
-    level: NonNullable<unknown>;
-};
+export type Quantity_Label_Alternative_PositionInputs = { label: NonNullable<unknown>, position: NonNullable<unknown> };
+export type Quantity_Label_FormatInputs = { label: NonNullable<unknown> };
+export type Quantity_Label_MeasureInputs = { label: NonNullable<unknown> };
+export type Quantity_Label_Part_PositionInputs = { label: NonNullable<unknown>, position: NonNullable<unknown> };
+export type Quantity_One_AmountInputs = { level: NonNullable<unknown> };
 export type Quantity_Placeholder_ExampleInputs = {};
-export type Quantity_Remove_Label_Alternative_PositionInputs = {
-    label: NonNullable<unknown>;
-    position: NonNullable<unknown>;
-};
-export type Quantity_Remove_Label_Part_PositionInputs = {
-    label: NonNullable<unknown>;
-    position: NonNullable<unknown>;
-};
+export type Quantity_Remove_Label_Alternative_PositionInputs = { label: NonNullable<unknown>, position: NonNullable<unknown> };
+export type Quantity_Remove_Label_Part_PositionInputs = { label: NonNullable<unknown>, position: NonNullable<unknown> };
 export type Rating_ClearInputs = {};
 export type Reader_Cook_GroupInputs = {};
 export type Reader_Manage_GroupInputs = {};
@@ -5048,75 +4401,45 @@ export type Recipe_Areas_TitleInputs = {};
 export type Recipe_Areas_TranslationsInputs = {};
 export type Recipe_Areas_VariantsInputs = {};
 export type Recipe_Areas_YieldInputs = {};
-export type Recipe_Article_Also_MakesInputs = {
-    yields: NonNullable<unknown>;
-};
+export type Recipe_Article_Also_MakesInputs = { yields: NonNullable<unknown> };
 export type Recipe_Article_Australian_MeasuresInputs = {};
 export type Recipe_Article_Imperial_MeasuresInputs = {};
 export type Recipe_Article_Metric_MeasuresInputs = {};
 export type Recipe_Article_Recipe_PhotosInputs = {};
 export type Recipe_Article_Time_PhasesInputs = {};
 export type Recipe_Article_Us_MeasuresInputs = {};
-export type Recipe_Article_Written_Total_ShorterInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Recipe_Card_ActiveInputs = {
-    active: NonNullable<unknown>;
-};
-export type Recipe_Card_Active_And_TotalInputs = {
-    active: NonNullable<unknown>;
-    total: NonNullable<unknown>;
-};
-export type Recipe_Card_Also_InInputs = {
-    languages: NonNullable<unknown>;
-};
-export type Recipe_Card_Also_Matches_InInputs = {
-    languages: NonNullable<unknown>;
-};
+export type Recipe_Article_Written_Total_ShorterInputs = { value1: NonNullable<unknown> };
+export type Recipe_Card_ActiveInputs = { active: NonNullable<unknown> };
+export type Recipe_Card_Active_And_TotalInputs = { active: NonNullable<unknown>, total: NonNullable<unknown> };
+export type Recipe_Card_Also_InInputs = { languages: NonNullable<unknown> };
+export type Recipe_Card_Also_Matches_InInputs = { languages: NonNullable<unknown> };
 export type Recipe_Card_FavoriteInputs = {};
-export type Recipe_Card_MadeInputs = {
-    when: NonNullable<unknown>;
-};
+export type Recipe_Card_MadeInputs = { when: NonNullable<unknown> };
 export type Recipe_Compare_Apply_Reviewed_UpdatesInputs = {};
 export type Recipe_Compare_ApplyingInputs = {};
 export type Recipe_Compare_Back_To_The_ComparisonInputs = {};
-export type Recipe_Compare_Choose_The_To_KeepInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Recipe_Compare_Choose_The_To_KeepInputs = { value1: NonNullable<unknown> };
 export type Recipe_Compare_Combine_Into_One_RecipeInputs = {};
 export type Recipe_Compare_Combine_RecipesInputs = {};
 export type Recipe_Compare_Combine_These_RecipesInputs = {};
 export type Recipe_Compare_Compare_Two_RecipesInputs = {};
 export type Recipe_Compare_DifferentInputs = {};
-export type Recipe_Compare_Differs_InInputs = {
-    areas: NonNullable<unknown>;
-};
+export type Recipe_Compare_Differs_InInputs = { areas: NonNullable<unknown> };
 export type Recipe_Compare_EmptyInputs = {};
 export type Recipe_Compare_Keep_My_EditInputs = {};
-export type Recipe_Compare_Main_PhotoInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Recipe_Compare_Main_PhotoInputs = { value1: NonNullable<unknown> };
 export type Recipe_Compare_MergingInputs = {};
 export type Recipe_Compare_My_EditInputs = {};
 export type Recipe_Compare_No_Conflicts_Need_Your_AttentionInputs = {};
 export type Recipe_Compare_Nothing_Changes_Until_You_CombineInputs = {};
-export type Recipe_Compare_Part_Comes_FromInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
-export type Recipe_Compare_Part_Not_Chosen_YetInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Recipe_Compare_Part_Comes_FromInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
+export type Recipe_Compare_Part_Not_Chosen_YetInputs = { value1: NonNullable<unknown> };
 export type Recipe_Compare_Review_Source_UpdatesInputs = {};
 export type Recipe_Compare_SourceInputs = {};
 export type Recipe_Compare_SymbolInputs = {};
 export type Recipe_Compare_The_Combined_RecipeInputs = {};
-export type Recipe_Compare_The_Library_KeepsInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Recipe_Compare_The_Other_Goes_To_TrashInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Recipe_Compare_The_Library_KeepsInputs = { value1: NonNullable<unknown> };
+export type Recipe_Compare_The_Other_Goes_To_TrashInputs = { value1: NonNullable<unknown> };
 export type Recipe_Compare_The_Same_In_BothInputs = {};
 export type Recipe_Compare_These_Two_Recipes_Read_AlikeInputs = {};
 export type Recipe_Compare_This_Recipe_Has_NoneInputs = {};
@@ -5129,9 +4452,7 @@ export type Recipe_Compare_Whole_Parts_OnlyInputs = {};
 export type Recipe_Editor_TitleInputs = {};
 export type Recipe_Editor_Untitled_IngredientInputs = {};
 export type Recipe_Editor_What_Are_You_CookingInputs = {};
-export type Recipe_Editor_When_IncludedInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Recipe_Editor_When_IncludedInputs = { value1: NonNullable<unknown> };
 export type Recipe_Fields_Allergen_DeclarationsInputs = {};
 export type Recipe_Fields_AssetsInputs = {};
 export type Recipe_Fields_AuthorsInputs = {};
@@ -5150,14 +4471,9 @@ export type Recipe_Fields_Source_LocaleInputs = {};
 export type Recipe_Format_PreferInputs = {};
 export type Recipe_From_Source_PageInputs = {};
 export type Recipe_History_Page_A_Recipe_In_It_ChangedInputs = {};
-export type Recipe_History_Page_As_It_Was_OnInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Recipe_History_Page_As_It_Was_OnInputs = { value1: NonNullable<unknown> };
 export type Recipe_History_Page_Back_To_The_RecipeInputs = {};
-export type Recipe_History_Page_BytesInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
+export type Recipe_History_Page_BytesInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
 export type Recipe_History_Page_ChangedInputs = {};
 export type Recipe_History_Page_Choose_A_Version_To_See_How_The_Recipe_Read_ThenInputs = {};
 export type Recipe_History_Page_Combined_With_Another_RecipeInputs = {};
@@ -5167,18 +4483,13 @@ export type Recipe_History_Page_EditedInputs = {};
 export type Recipe_History_Page_Import_HistoryInputs = {};
 export type Recipe_History_Page_ImportedInputs = {};
 export type Recipe_History_Page_Imported_FromInputs = {};
-export type Recipe_History_Page_ImporterInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
+export type Recipe_History_Page_ImporterInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
 export type Recipe_History_Page_In_TrashInputs = {};
 export type Recipe_History_Page_Measurements_Read_AgainInputs = {};
 export type Recipe_History_Page_Moved_To_TrashInputs = {};
 export type Recipe_History_Page_OnInputs = {};
 export type Recipe_History_Page_Original_Files_Kept_With_This_VersionInputs = {};
-export type Recipe_History_Page_Recipe_VersionInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Recipe_History_Page_Recipe_VersionInputs = { value1: NonNullable<unknown> };
 export type Recipe_History_Page_Restore_Confirm_TitleInputs = {};
 export type Recipe_History_Page_Restore_This_VersionInputs = {};
 export type Recipe_History_Page_RestoredInputs = {};
@@ -5209,9 +4520,7 @@ export type Recipe_Page_Menu_Copy_GroupInputs = {};
 export type Recipe_Page_Menu_History_GroupInputs = {};
 export type Recipe_Page_More_ActionsInputs = {};
 export type Recipe_Page_Move_To_TrashInputs = {};
-export type Recipe_Page_Move_To_Trash_ConfirmInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Recipe_Page_Move_To_Trash_ConfirmInputs = { value1: NonNullable<unknown> };
 export type Recipe_Page_PrintInputs = {};
 export type Recipe_Page_RecipesInputs = {};
 export type Recipe_Page_You_Can_Restore_It_From_TrashInputs = {};
@@ -5274,92 +4583,43 @@ export type Scale_Controls_As_WrittenInputs = {};
 export type Scale_Controls_AustralianInputs = {};
 export type Scale_Controls_Back_To_What_The_Recipe_MakesInputs = {};
 export type Scale_Controls_Batch_SizeInputs = {};
-export type Scale_Controls_How_ManyInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Scale_Controls_Kept_As_WrittenInputs = {
-    count: NonNullable<unknown>;
-};
+export type Scale_Controls_How_ManyInputs = { value1: NonNullable<unknown> };
+export type Scale_Controls_Kept_As_WrittenInputs = { count: NonNullable<unknown> };
 export type Scale_Controls_Make_LessInputs = {};
 export type Scale_Controls_Make_MoreInputs = {};
 export type Scale_Controls_MakesInputs = {};
 export type Scale_Controls_MeasurementsInputs = {};
 export type Scale_Controls_MetricInputs = {};
 export type Scale_Controls_One_BatchInputs = {};
-export type Scale_Controls_One_FewerInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Scale_Controls_One_MoreInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Scale_Controls_One_FewerInputs = { value1: NonNullable<unknown> };
+export type Scale_Controls_One_MoreInputs = { value1: NonNullable<unknown> };
 export type Scale_Controls_Scale_ByInputs = {};
-export type Scale_Controls_Scale_By_YieldInputs = {
-    yields: NonNullable<unknown>;
-};
+export type Scale_Controls_Scale_By_YieldInputs = { yields: NonNullable<unknown> };
 export type Scale_Controls_UsInputs = {};
-export type Scale_Yield_GroupInputs = {
-    yieldLabel: NonNullable<unknown>;
-};
+export type Scale_Yield_GroupInputs = { yieldLabel: NonNullable<unknown> };
 export type Search_Books_NounInputs = {};
-export type Search_CategoryInputs = {
-    category: NonNullable<unknown>;
-};
+export type Search_CategoryInputs = { category: NonNullable<unknown> };
 export type Search_Cookbooks_NounInputs = {};
 export type Search_Tags_NounInputs = {};
 export type Selection_Print_Page_Choose_Some_Recipes_To_PrintInputs = {};
-export type Selection_Print_Page_RecipesInputs = {
-    count: NonNullable<unknown>;
-};
+export type Selection_Print_Page_RecipesInputs = { count: NonNullable<unknown> };
 export type Selection_Print_Page_Recipes_HeadingInputs = {};
 export type Session_Savorum_Could_Not_Be_ReachedInputs = {};
 export type Shopping_ActivityInputs = {};
-export type Shopping_Activity_AddInputs = {
-    actor: NonNullable<unknown>;
-    items: NonNullable<unknown>;
-};
-export type Shopping_Activity_BoughtInputs = {
-    actor: NonNullable<unknown>;
-    items: NonNullable<unknown>;
-};
-export type Shopping_Activity_Create_ListInputs = {
-    actor: NonNullable<unknown>;
-};
-export type Shopping_Activity_EditInputs = {
-    actor: NonNullable<unknown>;
-    items: NonNullable<unknown>;
-};
+export type Shopping_Activity_AddInputs = { actor: NonNullable<unknown>, items: NonNullable<unknown> };
+export type Shopping_Activity_BoughtInputs = { actor: NonNullable<unknown>, items: NonNullable<unknown> };
+export type Shopping_Activity_Create_ListInputs = { actor: NonNullable<unknown> };
+export type Shopping_Activity_EditInputs = { actor: NonNullable<unknown>, items: NonNullable<unknown> };
 export type Shopping_Activity_EmptyInputs = {};
 export type Shopping_Activity_Load_FailedInputs = {};
-export type Shopping_Activity_MergeInputs = {
-    actor: NonNullable<unknown>;
-    items: NonNullable<unknown>;
-};
-export type Shopping_Activity_MoveInputs = {
-    actor: NonNullable<unknown>;
-    items: NonNullable<unknown>;
-};
-export type Shopping_Activity_RemoveInputs = {
-    actor: NonNullable<unknown>;
-    items: NonNullable<unknown>;
-};
-export type Shopping_Activity_Rename_ListInputs = {
-    actor: NonNullable<unknown>;
-};
-export type Shopping_Activity_ReopenedInputs = {
-    actor: NonNullable<unknown>;
-    items: NonNullable<unknown>;
-};
-export type Shopping_Activity_RestoreInputs = {
-    actor: NonNullable<unknown>;
-    items: NonNullable<unknown>;
-};
-export type Shopping_Activity_ReviewInputs = {
-    actor: NonNullable<unknown>;
-};
-export type Shopping_Activity_SplitInputs = {
-    actor: NonNullable<unknown>;
-    items: NonNullable<unknown>;
-};
+export type Shopping_Activity_MergeInputs = { actor: NonNullable<unknown>, items: NonNullable<unknown> };
+export type Shopping_Activity_MoveInputs = { actor: NonNullable<unknown>, items: NonNullable<unknown> };
+export type Shopping_Activity_RemoveInputs = { actor: NonNullable<unknown>, items: NonNullable<unknown> };
+export type Shopping_Activity_Rename_ListInputs = { actor: NonNullable<unknown> };
+export type Shopping_Activity_ReopenedInputs = { actor: NonNullable<unknown>, items: NonNullable<unknown> };
+export type Shopping_Activity_RestoreInputs = { actor: NonNullable<unknown>, items: NonNullable<unknown> };
+export type Shopping_Activity_ReviewInputs = { actor: NonNullable<unknown> };
+export type Shopping_Activity_SplitInputs = { actor: NonNullable<unknown>, items: NonNullable<unknown> };
 export type Shopping_AddInputs = {};
 export type Shopping_Add_AgainInputs = {};
 export type Shopping_Add_Again_HintInputs = {};
@@ -5374,31 +4634,21 @@ export type Shopping_BoughtInputs = {};
 export type Shopping_BuyInputs = {};
 export type Shopping_CancelInputs = {};
 export type Shopping_CategoryInputs = {};
-export type Shopping_CheckInputs = {
-    name: NonNullable<unknown>;
-};
+export type Shopping_CheckInputs = { name: NonNullable<unknown> };
 export type Shopping_Choices_For_CookingInputs = {};
 export type Shopping_Clear_BoughtInputs = {};
 export type Shopping_CombineInputs = {};
 export type Shopping_Combine_ConfirmInputs = {};
 export type Shopping_Combine_HintInputs = {};
-export type Shopping_Combine_TitleInputs = {
-    name: NonNullable<unknown>;
-};
+export type Shopping_Combine_TitleInputs = { name: NonNullable<unknown> };
 export type Shopping_ConflictInputs = {};
-export type Shopping_Conflict_CurrentInputs = {
-    value: NonNullable<unknown>;
-};
-export type Shopping_Conflict_MineInputs = {
-    value: NonNullable<unknown>;
-};
+export type Shopping_Conflict_CurrentInputs = { value: NonNullable<unknown> };
+export type Shopping_Conflict_MineInputs = { value: NonNullable<unknown> };
 export type Shopping_Create_ListInputs = {};
 export type Shopping_Create_List_FailedInputs = {};
 export type Shopping_Delete_ListInputs = {};
 export type Shopping_Delete_List_DescriptionInputs = {};
-export type Shopping_Delete_List_TitleInputs = {
-    name: NonNullable<unknown>;
-};
+export type Shopping_Delete_List_TitleInputs = { name: NonNullable<unknown> };
 export type Shopping_Deleted_ConflictInputs = {};
 export type Shopping_EditInputs = {};
 export type Shopping_EmptyInputs = {};
@@ -5414,12 +4664,8 @@ export type Shopping_List_Changed_FailedInputs = {};
 export type Shopping_List_NameInputs = {};
 export type Shopping_Load_FailedInputs = {};
 export type Shopping_LoadingInputs = {};
-export type Shopping_Move_DownInputs = {
-    name: NonNullable<unknown>;
-};
-export type Shopping_Move_UpInputs = {
-    name: NonNullable<unknown>;
-};
+export type Shopping_Move_DownInputs = { name: NonNullable<unknown> };
+export type Shopping_Move_UpInputs = { name: NonNullable<unknown> };
 export type Shopping_NeededInputs = {};
 export type Shopping_New_ListInputs = {};
 export type Shopping_Not_BoughtInputs = {};
@@ -5428,17 +4674,13 @@ export type Shopping_Other_SectionInputs = {};
 export type Shopping_Page_TitleInputs = {};
 export type Shopping_PendingInputs = {};
 export type Shopping_Plan_ChangedInputs = {};
-export type Shopping_PreviouslyInputs = {
-    value: NonNullable<unknown>;
-};
+export type Shopping_PreviouslyInputs = { value: NonNullable<unknown> };
 export type Shopping_Refresh_RecipesInputs = {};
 export type Shopping_Refresh_Recipes_HintInputs = {};
 export type Shopping_RemoveInputs = {};
 export type Shopping_Removed_RequirementsInputs = {};
 export type Shopping_Rename_ListInputs = {};
-export type Shopping_ReopenInputs = {
-    name: NonNullable<unknown>;
-};
+export type Shopping_ReopenInputs = { name: NonNullable<unknown> };
 export type Shopping_RetryInputs = {};
 export type Shopping_ReviewInputs = {};
 export type Shopping_Review_ChangedInputs = {};
@@ -5447,15 +4689,10 @@ export type Shopping_Review_HintInputs = {};
 export type Shopping_Review_LoadingInputs = {};
 export type Shopping_SaveInputs = {};
 export type Shopping_Save_FailedInputs = {};
-export type Shopping_Select_MealInputs = {
-    name: NonNullable<unknown>;
-};
+export type Shopping_Select_MealInputs = { name: NonNullable<unknown> };
 export type Shopping_SeparateInputs = {};
 export type Shopping_Shop_MealsInputs = {};
-export type Shopping_Source_DatedInputs = {
-    date: NonNullable<unknown>;
-    label: NonNullable<unknown>;
-};
+export type Shopping_Source_DatedInputs = { date: NonNullable<unknown>, label: NonNullable<unknown> };
 export type Shopping_Storage_FailedInputs = {};
 export type Shopping_SyncingInputs = {};
 export type Shopping_TitleInputs = {};
@@ -5488,24 +4725,16 @@ export type Source_Fields_RemoveInputs = {};
 export type Source_Fields_Somewhere_ElseInputs = {};
 export type Source_Fields_SourceInputs = {};
 export type Source_Fields_Web_PageInputs = {};
-export type Source_Refresh_Page_Add_A_Source_LinkInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Source_Refresh_Page_Back_To_RecipeInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Source_Refresh_Page_Add_A_Source_LinkInputs = { value1: NonNullable<unknown> };
+export type Source_Refresh_Page_Back_To_RecipeInputs = { value1: NonNullable<unknown> };
 export type Source_Refresh_Page_Back_To_The_RecipeInputs = {};
 export type Source_Refresh_Page_Check_SourceInputs = {};
-export type Source_Refresh_Page_Check_The_Source_OfInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Source_Refresh_Page_Check_The_Source_OfInputs = { value1: NonNullable<unknown> };
 export type Source_Refresh_Page_CheckingInputs = {};
 export type Source_Refresh_Page_Https_Example_Com_RecipeInputs = {};
 export type Source_Refresh_Page_No_Source_RecordedInputs = {};
 export type Source_Refresh_Page_Recipe_Source_UrlInputs = {};
-export type Source_Refresh_Page_Recorded_SourceInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Source_Refresh_Page_Recorded_SourceInputs = { value1: NonNullable<unknown> };
 export type Source_Refresh_Page_Review_Before_ReplacingInputs = {};
 export type Status_Loading_SlowInputs = {};
 export type Status_Nothing_Was_Overwritten_Reloading_Replaces_What_Is_On_SInputs = {};
@@ -5521,14 +4750,10 @@ export type Status_Storage_Warning_TitleInputs = {};
 export type Status_The_Request_Could_Not_Be_CompletedInputs = {};
 export type Status_Try_AgainInputs = {};
 export type Step_Details_Add_Ingredients_To_The_Recipe_First_Then_Associate_ThemInputs = {};
-export type Step_Details_Amount_Of_UsedInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Step_Details_Amount_Of_UsedInputs = { value1: NonNullable<unknown> };
 export type Step_Details_Amount_OptionalInputs = {};
 export type Step_Details_Applies_ToInputs = {};
-export type Step_Details_Applies_To_TemperatureInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Step_Details_Applies_To_TemperatureInputs = { value1: NonNullable<unknown> };
 export type Step_Details_Attach_A_Photo_Here_And_It_Will_Also_Be_Available_To_ThInputs = {};
 export type Step_Details_Attach_Step_PhotosInputs = {};
 export type Step_Details_Authored_WordingInputs = {};
@@ -5539,52 +4764,31 @@ export type Step_Details_E_G_Sugar_SyrupInputs = {};
 export type Step_Details_FahrenheitInputs = {};
 export type Step_Details_Ingredients_Used_In_This_StepInputs = {};
 export type Step_Details_Internal_Food_TemperatureInputs = {};
-export type Step_Details_Measure_For_UsedInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Step_Details_Measure_For_UsedInputs = { value1: NonNullable<unknown> };
 export type Step_Details_Moderate_OvenInputs = {};
 export type Step_Details_No_MeasureInputs = {};
 export type Step_Details_Number_And_ScaleInputs = {};
 export type Step_Details_Oil_Or_Cooking_FatInputs = {};
 export type Step_Details_OtherInputs = {};
-export type Step_Details_Other_Purpose_For_TemperatureInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Step_Details_Other_Purpose_For_TemperatureInputs = { value1: NonNullable<unknown> };
 export type Step_Details_OvenInputs = {};
 export type Step_Details_Photos_Of_This_StepInputs = {};
 export type Step_Details_Recipe_PhotoInputs = {};
-export type Step_Details_Remove_TemperatureInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Step_Details_Remove_TemperatureInputs = { value1: NonNullable<unknown> };
 export type Step_Details_SurfaceInputs = {};
 export type Step_Details_TemperatureInputs = {};
 export type Step_Details_Temperature_ScaleInputs = {};
 export type Step_Details_This_Step_Has_No_Wording_YetInputs = {};
 export type Step_Details_Water_Or_Cooking_LiquidInputs = {};
-export type Step_Timer_Check_InInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Step_Timer_Check_InInputs = { value1: NonNullable<unknown> };
 export type Step_Timer_Check_NowInputs = {};
-export type Step_Timer_Check_RemainingInputs = {
-    remaining: NonNullable<unknown>;
-};
+export type Step_Timer_Check_RemainingInputs = { remaining: NonNullable<unknown> };
 export type Step_Timer_DoneInputs = {};
-export type Step_Timer_Label_CheckInputs = {
-    label: NonNullable<unknown>;
-};
-export type Step_Timer_Named_PhaseInputs = {
-    label: NonNullable<unknown>;
-    detail: NonNullable<unknown>;
-};
-export type Step_Timer_Start_A_Check_In_Timer_ForInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Step_Timer_Start_Another_Check_In_Timer_ForInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Step_Timer_Start_Another_TimerInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Step_Timer_Label_CheckInputs = { label: NonNullable<unknown> };
+export type Step_Timer_Named_PhaseInputs = { label: NonNullable<unknown>, detail: NonNullable<unknown> };
+export type Step_Timer_Start_A_Check_In_Timer_ForInputs = { value1: NonNullable<unknown> };
+export type Step_Timer_Start_Another_Check_In_Timer_ForInputs = { value1: NonNullable<unknown> };
+export type Step_Timer_Start_Another_TimerInputs = { value1: NonNullable<unknown> };
 export type Tags_Page_Tags_And_CategoriesInputs = {};
 export type Tags_Tags_And_Categories_SavorumInputs = {};
 export type Text_Import_Choose_A_Text_File_Smaller_Than_8_MbInputs = {};
@@ -5595,63 +4799,36 @@ export type Text_Import_Preview_Pasted_RecipeInputs = {};
 export type Text_Import_Recipe_Template_PlaceholderInputs = {};
 export type Text_Import_The_Recipe_Could_Not_Be_Previewed_Try_AgainInputs = {};
 export type Text_Import_The_Text_File_Could_Not_Be_ReadInputs = {};
-export type Timer_Announcement_FinishedInputs = {
-    label: NonNullable<unknown>;
-};
+export type Timer_Announcement_FinishedInputs = { label: NonNullable<unknown> };
 export type Timer_Default_LabelInputs = {};
-export type Timer_Dismiss_LabelInputs = {
-    label: NonNullable<unknown>;
-};
-export type Timer_Finished_AgoInputs = {
-    elapsed: NonNullable<unknown>;
-};
-export type Timer_Notification_FinishedInputs = {
-    label: NonNullable<unknown>;
-};
-export type Timer_Summary_FinishedInputs = {
-    label: NonNullable<unknown>;
-};
+export type Timer_Dismiss_LabelInputs = { label: NonNullable<unknown> };
+export type Timer_Finished_AgoInputs = { elapsed: NonNullable<unknown> };
+export type Timer_Notification_FinishedInputs = { label: NonNullable<unknown> };
+export type Timer_Summary_FinishedInputs = { label: NonNullable<unknown> };
 export type Timer_Tray_Clear_FinishedInputs = {};
-export type Timer_Tray_LabelInputs = {
-    summary: NonNullable<unknown>;
-};
+export type Timer_Tray_LabelInputs = { summary: NonNullable<unknown> };
 export type Timer_Tray_Sound_When_A_Timer_FinishesInputs = {};
 export type Timer_Tray_System_NotificationsInputs = {};
 export type Timer_Tray_This_Browser_Is_Blocking_Notifications_From_Savorum_AllInputs = {};
 export type Timer_Tray_TimersInputs = {};
 export type Timer_Tray_Timers_Are_Kept_On_This_Device_And_Count_Down_Against_TInputs = {};
-export type Timers_Hr_AgoInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Timers_Hr_AgoInputs = { value1: NonNullable<unknown> };
 export type Timers_Just_NowInputs = {};
-export type Timers_Min_AgoInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Timers_Min_AgoInputs = { value1: NonNullable<unknown> };
 export type Timers_One_Hour_AgoInputs = {};
-export type Timers_PartInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Timers_PartInputs = { value1: NonNullable<unknown> };
 export type Timing_1_Hr_30_MinInputs = {};
 export type Timing_30_MinInputs = {};
 export type Timing_8_HrInputs = {};
 export type Timing_Add_AnotherInputs = {};
-export type Timing_Both_Claims_Are_Kept_And_The_Total_Is_Shown_As_What_TheInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Timing_Both_Claims_Are_Kept_And_The_Total_Is_Shown_As_What_TheInputs = { value1: NonNullable<unknown> };
 export type Timing_Custom_Timing_LabelInputs = {};
 export type Timing_EditInputs = {};
-export type Timing_FromInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Timing_FromInputs = { value1: NonNullable<unknown> };
 export type Timing_Name_This_TimingInputs = {};
 export type Timing_Remove_TimingInputs = {};
-export type Timing_Summary_ActiveInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Timing_Summary_Active_TotalInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-};
+export type Timing_Summary_ActiveInputs = { value1: NonNullable<unknown> };
+export type Timing_Summary_Active_TotalInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
 export type Timing_Summary_At_Least_One_Named_Phase_Is_Longer_Than_The_TotalInputs = {};
 export type Timing_Summary_BakeInputs = {};
 export type Timing_Summary_BrineInputs = {};
@@ -5674,9 +4851,7 @@ export type Timing_Summary_WaitInputs = {};
 export type Timing_Timing_DurationInputs = {};
 export type Timing_Timing_LabelInputs = {};
 export type Timing_Timing_TypeInputs = {};
-export type Timing_Timing_With_ValueInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Timing_Timing_With_ValueInputs = { value1: NonNullable<unknown> };
 export type Timing_Total_TimeInputs = {};
 export type Translations_AddInputs = {};
 export type Translations_Choose_LanguageInputs = {};
@@ -5697,18 +4872,12 @@ export type Translations_Linked_Through_AnotherInputs = {};
 export type Translations_MenuInputs = {};
 export type Translations_Named_ElsewhereInputs = {};
 export type Translations_New_CopiedInputs = {};
-export type Translations_New_HeadingInputs = {
-    language: NonNullable<unknown>;
-};
+export type Translations_New_HeadingInputs = { language: NonNullable<unknown> };
 export type Translations_New_LanguageInputs = {};
-export type Translations_New_LeadInputs = {
-    title: NonNullable<unknown>;
-};
+export type Translations_New_LeadInputs = { title: NonNullable<unknown> };
 export type Translations_New_Page_TitleInputs = {};
 export type Translations_NoneInputs = {};
-export type Translations_RelationInputs = {
-    title: NonNullable<unknown>;
-};
+export type Translations_RelationInputs = { title: NonNullable<unknown> };
 export type Translations_Relation_AlternateInputs = {};
 export type Translations_Relation_Choice_AlternateInputs = {};
 export type Translations_Relation_Choice_OriginalInputs = {};
@@ -5718,36 +4887,23 @@ export type Translations_Relation_TranslationInputs = {};
 export type Translations_SaveInputs = {};
 export type Translations_Set_LanguageInputs = {};
 export type Translations_StartInputs = {};
-export type Translations_This_RecipeInputs = {
-    language: NonNullable<unknown>;
-};
+export type Translations_This_RecipeInputs = { language: NonNullable<unknown> };
 export type Translations_TitleInputs = {};
 export type Translations_UnlinkInputs = {};
 export type Trash_Page_BooksInputs = {};
 export type Trash_Page_Delete_PermanentlyInputs = {};
-export type Trash_Page_Delete_Permanently_ConfirmInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Trash_Page_Delete_Permanently_ConfirmInputs = { value1: NonNullable<unknown> };
 export type Trash_Page_Empty_The_TrashInputs = {};
 export type Trash_Page_Empty_TrashInputs = {};
 export type Trash_Page_Its_Sections_Ordering_Notes_Publishing_Details_And_RetaInputs = {};
 export type Trash_Page_Nothing_In_The_TrashInputs = {};
-export type Trash_Page_OfInputs = {
-    value1: NonNullable<unknown>;
-    value2: NonNullable<unknown>;
-    value3: NonNullable<unknown>;
-    value4: NonNullable<unknown>;
-};
+export type Trash_Page_OfInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown>, value3: NonNullable<unknown>, value4: NonNullable<unknown> };
 export type Trash_Page_RecipesInputs = {};
-export type Trash_Page_RemovedInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Trash_Page_RemovedInputs = { value1: NonNullable<unknown> };
 export type Trash_Page_SrefInputs = {};
 export type Trash_Page_This_Cannot_Be_UndoneInputs = {};
 export type Trash_Page_TrashInputs = {};
-export type Trash_Page_Will_Be_Deleted_Permanently_This_Cannot_Be_UndoneInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Trash_Page_Will_Be_Deleted_Permanently_This_Cannot_Be_UndoneInputs = { value1: NonNullable<unknown> };
 export type Trash_Trash_SavorumInputs = {};
 export type Unit_Choices_CountInputs = {};
 export type Unit_Choices_Used_In_This_RecipeInputs = {};
@@ -5758,10 +4914,6 @@ export type Upload_The_Upload_Could_Not_Be_CompletedInputs = {};
 export type Yield_Timing_How_Long_It_TakesInputs = {};
 export type Yield_Timing_How_ManyInputs = {};
 export type Yield_Timing_Of_WhatInputs = {};
-export type Yield_Timing_This_Recipe_S_Written_Total_Of_Is_One_Its_Own_Steps_RunInputs = {
-    value1: NonNullable<unknown>;
-};
-export type Yield_Timing_Time_Entry_HintInputs = {
-    value1: NonNullable<unknown>;
-};
+export type Yield_Timing_This_Recipe_S_Written_Total_Of_Is_One_Its_Own_Steps_RunInputs = { value1: NonNullable<unknown> };
+export type Yield_Timing_Time_Entry_HintInputs = { value1: NonNullable<unknown> };
 export type Yield_Timing_What_It_MakesInputs = {};
