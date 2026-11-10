@@ -178,6 +178,10 @@ func (p *plainTextParser) parse(lines []string, start int) {
 			p.markInferred()
 		}
 
+		if p.requireHeadings && p.mode == plainModeIngredients && p.listEnded(lines, i) {
+			p.mode = plainModeNotes
+		}
+
 		if p.mode == plainModeInstructions && bulletedStep && i > start && strings.TrimSpace(lines[i-1]) == "" && !textStep.MatchString(clean) && !textBullet.MatchString(line) {
 			p.item.Document.Notes = append(p.item.Document.Notes, line)
 			continue
@@ -209,13 +213,9 @@ func (p *plainTextParser) readHeading(line string) bool {
 	title := ""
 
 	if section == "" && looksPlainSubheading(line) {
-		words := strings.Fields(strings.TrimSuffix(line, ":"))
-		for n := 1; n < len(words); n++ {
-			section, locale = recipetext.Heading(strings.Join(words[:n], " "))
-			if section != "" {
-				title = strings.TrimSuffix(line, ":")
-				break
-			}
+		section, locale = headingWithin(strings.Fields(strings.TrimSuffix(line, ":")))
+		if section != "" {
+			title = strings.TrimSuffix(line, ":")
 		}
 	}
 
@@ -241,6 +241,32 @@ func (p *plainTextParser) readHeading(line string) bool {
 	default:
 		return false
 	}
+}
+
+func (p *plainTextParser) listEnded(lines []string, index int) bool {
+	if index == 0 || strings.TrimSpace(lines[index-1]) != "" || textIngredientCandidate(lines[index], p.readingLocale) {
+		return false
+	}
+
+	for next := index + 1; next < len(lines); next++ {
+		if strings.TrimSpace(lines[next]) != "" {
+			return !textIngredientCandidate(lines[next], p.readingLocale)
+		}
+	}
+
+	return true
+}
+
+func headingWithin(words []string) (section, locale string) {
+	for start := range words {
+		for end := start + 1; end <= len(words) && end-start < len(words); end++ {
+			if section, locale = recipetext.Heading(strings.Join(words[start:end], " ")); section != "" {
+				return section, locale
+			}
+		}
+	}
+
+	return "", ""
 }
 
 func (p *plainTextParser) readIngredient(line string, lineIndex int) {

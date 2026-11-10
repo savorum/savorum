@@ -45,8 +45,25 @@ uses it for duplicate matching.
 Oversized raw-text bodies are omitted from the HTML tree. Caption extraction
 scans script data for matching post objects up to 256 KiB without decoding the
 surrounding application state. The JSON nesting and extraction work limits apply.
+Profile pages are read for `external_url` string values in the page bytes,
+because their inline resources exceed the HTML attribute budget. Sitemaps are
+read up to 50,000 entries.
 
 The other budgets are constants next to the code that enforces them.
+
+## Social post requests
+
+A social post import can request more than the post itself:
+
+- up to three links the post or its author's comments publish
+- the post's canonical page, when the requested page omits its comments
+- when the post yields only a draft, the creator's profile page, then for up to
+  two creator websites `robots.txt` and up to six sitemaps, and the one page
+  whose address best matches the post
+
+Comments count only when the post's author wrote them. A creator website is a
+homepage the author linked, or a profile link whose host contains the account
+name.
 
 ## Document tools
 

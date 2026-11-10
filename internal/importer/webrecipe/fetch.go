@@ -73,7 +73,7 @@ func Fetch(ctx context.Context, rawURL string) (*Page, error) {
 		return nil, failuref(FetchRejected, nil, "that address could not be requested")
 	}
 
-	request.Header.Set("Accept", "text/html,application/xhtml+xml,application/ld+json;q=0.9,application/json;q=0.8,application/atom+xml;q=0.7")
+	request.Header.Set("Accept", "text/html,application/xhtml+xml,application/ld+json;q=0.9,application/json;q=0.8,application/atom+xml;q=0.7,application/xml;q=0.6,text/xml;q=0.6")
 
 	request.Header.Set("Accept-Language", "en;q=0.9,*;q=0.5")
 	request.Header.Set("User-Agent", userAgent)
@@ -210,7 +210,7 @@ func blockedIP(ip net.IP) bool { return httpsecurity.NonPublicIP(ip) }
 
 func supportedPageType(mediaType string) bool {
 	switch mediaType {
-	case "", "text/html", "application/xhtml+xml", "application/json", "application/ld+json", "text/plain", "application/atom+xml":
+	case "", "text/html", "application/xhtml+xml", "application/json", "application/ld+json", "text/plain", "application/atom+xml", "application/xml", "text/xml":
 		return true
 	}
 

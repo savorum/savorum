@@ -14,12 +14,46 @@ import (
 // Pages often publish their full caption in JSON used to render the page,
 // while metadata contains only a shortened teaser. Read literal data only;
 // scripts are never executed and media URLs are never requested.
-func (p *Post) readPageData(ctx context.Context, document *document) error {
+func (p *Post) readPageData(ctx context.Context, document *document, canonical string) error {
 	identifiers := postIdentifiers(document.page.URL)
+
+	story := newStoryReader(document.page.URL, canonical)
+	if story != nil {
+		for _, id := range story.identifiers {
+			if !slices.Contains(identifiers, id) {
+				identifiers = append(identifiers, id)
+			}
+		}
+	}
+
 	if len(identifiers) == 0 {
 		return nil
 	}
 
+	if err := scanPageData(ctx, document, identifiers, func(object map[string]any) {
+		p.readIdentifiedCaption(object, identifiers)
+
+		if story != nil {
+			story.read(object)
+		}
+	}); err != nil {
+		return err
+	}
+
+	if story == nil || story.text == "" {
+		return nil
+	}
+
+	if err := scanPageData(ctx, document, []string{storyCommentType}, story.readComment); err != nil {
+		return err
+	}
+
+	story.apply(p, document.page.URL, canonical)
+
+	return nil
+}
+
+func scanPageData(ctx context.Context, document *document, identifiers []string, visit func(map[string]any)) error {
 	for _, script := range elementsByTag(document.root, "script") {
 		body := strings.TrimSpace(scriptData(script))
 		if raw := document.scripts[script]; raw != nil {
@@ -38,9 +72,7 @@ func (p *Post) readPageData(ctx context.Context, document *document) error {
 			body = body[prefix[1]-1:]
 		}
 
-		if err := visitIdentifiedJSONObjects(ctx, document.budget, body, identifiers, func(object map[string]any) {
-			p.readIdentifiedCaption(object, identifiers)
-		}); err != nil {
+		if err := visitIdentifiedJSONObjects(ctx, document.budget, body, identifiers, visit); err != nil {
 			return controlledExtractionError(err)
 		}
 	}

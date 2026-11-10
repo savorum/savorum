@@ -13,7 +13,7 @@ import (
 
 var (
 	textBullet = regexp.MustCompile(`^(?:[-*•·–—▪◦‣⁃]\s*)?(?:\[[ xX]\]|[☐☑□])\s*|^[-*•·–—▪◦‣⁃]\s*`)
-	textStep   = regexp.MustCompile(`^(?:[\p{N}]+[.)]\s+|[\p{N}]+[、．）]\s*|[（(][\p{N}]+[）)]\s*)`)
+	textStep   = regexp.MustCompile(`^(?:[\p{N}]+[.)]\s+|[\p{N}]+[、．）]\s*|[（(][\p{N}]+[）)]\s*|[\p{N}]\x{FE0F}?\x{20E3}\s*)`)
 	textAmount = regexp.MustCompile(`^[\p{N}¼½¾⅓⅔⅛⅜⅝⅞]`)
 )
 
@@ -44,6 +44,14 @@ func recipeTextMeasured(line, locale string) bool {
 // Infer sections from ingredient lists followed by cooking prose. Isolated
 // quantities and unrelated paragraphs remain notes.
 func inferRecipeSections(item *ImportedRecipe, text, locale string) {
+	inferSections(item, text, locale, false)
+}
+
+func inferIngredientList(item *ImportedRecipe, text, locale string) {
+	inferSections(item, text, locale, true)
+}
+
+func inferSections(item *ImportedRecipe, text, locale string, ingredientsOnly bool) {
 	lines := strings.Split(normalizePlainText([]byte(text)), "\n")
 	if len(lines) > 4096 {
 		return
@@ -117,7 +125,7 @@ func inferRecipeSections(item *ImportedRecipe, text, locale string) {
 		candidate.Document.Notes = append(candidate.Document.Notes, line)
 	}
 
-	if len(candidate.Document.IngredientSections) == 0 || len(candidate.Document.InstructionSections) == 0 {
+	if len(candidate.Document.IngredientSections) == 0 || (len(candidate.Document.InstructionSections) == 0 && !ingredientsOnly) {
 		return
 	}
 

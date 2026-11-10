@@ -39,9 +39,19 @@ func readVocabulary() []vocabulary {
 
 // Heading identifies a source section and its reading vocabulary, without assigning a recipe language.
 func Heading(text string) (section, locale string) {
-	text = strings.ToLower(strings.TrimFunc(text, func(character rune) bool {
-		return unicode.IsSpace(character) || strings.ContainsRune(":：-", character)
-	}))
+	trim := func(text string) string {
+		return strings.TrimFunc(text, func(character rune) bool {
+			return unicode.IsSpace(character) || strings.ContainsRune(":：-•", character) ||
+				unicode.In(character, unicode.So, unicode.Sk, unicode.Cf, unicode.Variation_Selector)
+		})
+	}
+
+	text = trim(text)
+	if note := strings.LastIndexAny(text, "(（"); note > 0 && (strings.HasSuffix(text, ")") || strings.HasSuffix(text, "）")) {
+		text = trim(text[:note])
+	}
+
+	text = strings.ToLower(text)
 
 	var matches []string
 

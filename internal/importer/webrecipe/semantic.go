@@ -2,6 +2,7 @@ package webrecipe
 
 import (
 	"regexp"
+	"slices"
 	"strings"
 	"unicode/utf8"
 
@@ -32,6 +33,7 @@ type semanticBlock struct {
 type semanticCandidate struct {
 	title              string
 	titleLevel         int
+	headings           []semanticBlock
 	blocks             []semanticBlock
 	groups             []IngredientGroup
 	sections           []InstructionSection
@@ -288,6 +290,10 @@ func (r *semanticReading) boundary(c *semanticCandidate, block semanticBlock) bo
 
 	kind, _ := recipetext.Heading(collapseSpace(block.text))
 	if kind != "" {
+		if c.ingredientMarkers+c.instructionMarkers == 0 {
+			c.resolveTitle(block.level)
+		}
+
 		r.mode, r.marker, r.markerLevel = kind, block.node, block.level
 		r.group, r.section = "", ""
 
@@ -311,7 +317,12 @@ func (r *semanticReading) boundary(c *semanticCandidate, block semanticBlock) bo
 }
 
 func (c *semanticCandidate) readTitle(block semanticBlock) {
-	if block.level == 0 || c.ingredientMarkers+c.instructionMarkers != 0 || (c.title != "" && block.level > c.titleLevel) {
+	if block.level == 0 || c.ingredientMarkers+c.instructionMarkers != 0 {
+		return
+	}
+
+	c.headings = append(c.headings, block)
+	if c.title != "" && block.level > c.titleLevel {
 		return
 	}
 
@@ -321,6 +332,24 @@ func (c *semanticCandidate) readTitle(block semanticBlock) {
 
 	c.title = collapseSpace(block.text)
 	c.titleLevel = block.level
+}
+
+func (c *semanticCandidate) resolveTitle(markerLevel int) {
+	if !c.uncertain {
+		return
+	}
+
+	for _, heading := range slices.Backward(c.headings) {
+		if markerLevel != 0 && heading.level >= markerLevel {
+			continue
+		}
+
+		if heading.level > c.titleLevel {
+			c.title, c.titleLevel, c.uncertain = collapseSpace(heading.text), heading.level, false
+		}
+
+		return
+	}
 }
 
 func (r *semanticReading) content(c *semanticCandidate, d *document, block semanticBlock) error {

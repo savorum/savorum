@@ -78,3 +78,19 @@ func TestSharedHeadingsDoNotGuessLanguage(t *testing.T) {
 		t.Fatalf("heading=%s locale=%s", section, locale)
 	}
 }
+
+func TestDecoratedHeadings(t *testing.T) {
+	for text, want := range map[string]string{
+		"✅Ingredients:":             "ingredients",
+		"🍀Ingredients (feeds 6-8) ": "ingredients",
+		"✨Steps":                    "instructions",
+		"Directions 👩‍🍳":            "instructions",
+		"• Method •":                "instructions",
+		"Ingredients for (two)":     "",
+		"(Ingredients)":             "",
+	} {
+		if section, _ := Heading(text); section != want {
+			t.Errorf("Heading(%q) = %q, want %q", text, section, want)
+		}
+	}
+}
