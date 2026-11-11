@@ -109,6 +109,42 @@ func TestServiceRejectsDocumentIdentityChangeBeforeRevision(t *testing.T) {
 	}
 }
 
+func TestServiceTrimsTitlesOnCreateAndEdit(t *testing.T) {
+	t.Parallel()
+
+	repository := &memoryRepository{}
+
+	service, err := NewService(repository, units.DefaultCatalog())
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	document := testfixture.Document()
+	document.Title = "  Padded title\t"
+
+	created, err := service.Create(context.Background(), document)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if created.Recipe.Title != "Padded title" {
+		t.Fatalf("created title = %q", created.Recipe.Title)
+	}
+
+	repository.created = created
+	replacement := created.Recipe
+	replacement.Title = "\n Edited title "
+
+	updated, err := service.Update(context.Background(), created.ID, created.Revision, replacement)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if updated.Recipe.Title != "Edited title" {
+		t.Fatalf("edited title = %q", updated.Recipe.Title)
+	}
+}
+
 func TestServicePreservesOpaqueImportedDataAcrossOrdinaryEdits(t *testing.T) {
 	t.Parallel()
 

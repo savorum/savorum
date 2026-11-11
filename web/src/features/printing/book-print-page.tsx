@@ -51,6 +51,7 @@ export function BookPrintPage(props: {
               </Link>
             }
             source={{ book: props.bookId() }}
+            empty={(loaded().value.entries ?? []).length === 0}
             settings={settings()}
             onSettingsChange={props.onSettingsChange}
             presentation={presentation()}

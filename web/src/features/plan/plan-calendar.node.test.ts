@@ -45,3 +45,12 @@ test("meals order by slot with unspecified ones last", () => {
     ["breakfast", "dinner", ""],
   )
 })
+
+test("a plan date in the first century stays in its own year", () => {
+  const ancient = parseDate("0001-01-01")
+  assert.ok(ancient)
+  assert.equal(iso(ancient), "0001-01-01")
+  assert.equal(parsePlanSearch({ date: "0099-12-31" }).date, "0099-12-31")
+  assert.equal(iso(stepped("month", ancient, 1)), "0001-02-01")
+  assert.equal(iso(visibleDays("agenda", ancient)[0]!), "0001-01-01")
+})

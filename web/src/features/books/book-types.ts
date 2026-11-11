@@ -1,11 +1,11 @@
-import { type Book } from "@/api/client"
-import { type RecipePage } from "@/api/recipes"
+import { type Book, type RecipeSummary } from "@/api/client"
+import type { SuggestionPage } from "@/api/selections"
 
 export interface BookViewProps {
   book: Book
   revision: number
   sourced: { library_entry_id: string; title: string; page_start?: number; page_end?: number }[]
-  candidatePage?: RecipePage
+  candidatePage?: SuggestionPage<RecipeSummary>
   candidateQuery: string
   onCandidateQuery: (query: string) => void
   onCandidatePage: (offset: number) => void

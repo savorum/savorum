@@ -175,6 +175,10 @@ func (w recipeWrite) insertHead(ctx context.Context, transaction *sql.Tx, create
 // verified against the stored head, so a row that moved on reports a
 // precondition failure rather than being overwritten.
 func (w recipeWrite) updateHead(ctx context.Context, transaction *sql.Tx, expectedRevision uint64, deletedAt any) error {
+	if err := renameDishesAfterRecipe(ctx, transaction, w.entryID, w.projection.Title, w.timestamp); err != nil {
+		return err
+	}
+
 	result, err := transaction.ExecContext(ctx, `
 		UPDATE library_recipes
 		SET title = ?, description = ?, authors_json = ?, active_time = ?, total_time = ?,

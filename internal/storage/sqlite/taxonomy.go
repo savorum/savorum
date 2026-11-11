@@ -39,7 +39,7 @@ func (s *Store) CreateTag(ctx context.Context, tag library.Tag) error {
 		formatTime(tag.CreatedAt), formatTime(tag.UpdatedAt))
 	if err != nil {
 		if isConstraint(err) {
-			return library.ErrConflict
+			return tagConflict(ctx, tx, tag)
 		}
 
 		return fmt.Errorf("insert tag: %w", err)
@@ -133,7 +133,7 @@ func (s *Store) ReplaceTag(ctx context.Context, expectedRevision uint64, tag lib
 		tag.Name, normalizeName(tag.Name), nullableString(tag.Color), formatTime(tag.UpdatedAt), tag.ID, expectedRevision)
 	if err != nil {
 		if isConstraint(err) {
-			return library.Tag{}, library.ErrConflict
+			return library.Tag{}, tagConflict(ctx, s.db, tag)
 		}
 
 		return library.Tag{}, fmt.Errorf("update tag: %w", err)
@@ -230,7 +230,7 @@ func (s *Store) CreateFacet(ctx context.Context, facet library.Facet) error {
 		formatTime(facet.CreatedAt), formatTime(facet.UpdatedAt))
 	if err != nil {
 		if isConstraint(err) {
-			return library.ErrConflict
+			return facetConflict(ctx, tx, facet)
 		}
 
 		return fmt.Errorf("insert facet: %w", err)
@@ -333,7 +333,7 @@ func (s *Store) ReplaceFacet(ctx context.Context, expectedRevision uint64, facet
 		facet.Kind, facet.Value, normalizeName(facet.Value), formatTime(facet.UpdatedAt), facet.ID, expectedRevision)
 	if err != nil {
 		if isConstraint(err) {
-			return library.Facet{}, library.ErrConflict
+			return library.Facet{}, facetConflict(ctx, s.db, facet)
 		}
 
 		return library.Facet{}, fmt.Errorf("update facet: %w", err)
@@ -579,4 +579,27 @@ func (s *Store) labelCounts(ctx context.Context, table, column string) (map[stri
 	}
 
 	return counts, nil
+}
+
+func tagConflict(ctx context.Context, db accessQueryer, tag library.Tag) error {
+	return nameConflict(ctx, db, `SELECT EXISTS (SELECT 1 FROM tags WHERE library_id = ? AND normalized_name = ? AND id <> ?)`,
+		scopeID(ctx), normalizeName(tag.Name), tag.ID)
+}
+
+func facetConflict(ctx context.Context, db accessQueryer, facet library.Facet) error {
+	return nameConflict(ctx, db, `SELECT EXISTS (SELECT 1 FROM facets WHERE library_id = ? AND kind = ? AND normalized_name = ? AND id <> ?)`,
+		scopeID(ctx), facet.Kind, normalizeName(facet.Value), facet.ID)
+}
+
+func nameConflict(ctx context.Context, db accessQueryer, query string, args ...any) error {
+	var taken bool
+	if err := db.QueryRowContext(ctx, query, args...).Scan(&taken); err != nil {
+		return fmt.Errorf("check name conflict: %w", err)
+	}
+
+	if taken {
+		return library.ErrNameInUse
+	}
+
+	return library.ErrConflict
 }

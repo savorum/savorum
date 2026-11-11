@@ -178,7 +178,7 @@ export const ErrorState = (props: ErrorStateProps) => (
     tone="neutral"
     role="alert"
     actions={
-      props.onRetry ? (
+      props.onRetry && !(props.error instanceof ApiError && props.error.isMissing) ? (
         <Button variant="outline" onClick={() => props.onRetry?.()}>
           {m.status_try_again()}
         </Button>

@@ -53,9 +53,9 @@ names, quantities, titles, prose, and notes stay as the author wrote them.
   rounding, and labels. Don't add a second one in print messages or frontend
   code. Run `go run ./cmd/units` to generate unit forms and spacing, and check
   that screen and print use the same data.
-- `internal/recipetext/vocabulary.json` holds the section headings and timing
-  phrases plain-text import recognizes. It isn't interface translation and
-  doesn't translate recipes.
+- `internal/recipetext/vocabulary.json` holds the section headings, timing
+  phrases, and yield and time labels plain-text import recognizes. It isn't
+  interface translation and doesn't translate recipes.
 
 ## Direction
 

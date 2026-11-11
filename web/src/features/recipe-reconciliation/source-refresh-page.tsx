@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-solid"
 import { Show, createEffect, createResource, createSignal } from "solid-js"
 import { css } from "styled-system/css"
 
+import { ApiError } from "@/api/client"
 import { applySourceRefresh, previewSourceRefreshURL } from "@/api/recipe-reconciliation"
 import { getRecipe } from "@/api/recipes"
 import { ErrorState, Loading } from "@/components/status"
@@ -126,38 +127,40 @@ export function SourceRefreshPage(props: { recipeID: () => string; onApplied: ()
             <Show when={entry.error}>
               {(failure) => <ErrorState error={failure()} onRetry={() => void refetch()} />}
             </Show>
-            <h1 class={styles.title}>
-              <Show
-                when={recorded()}
-                fallback={m.source_refresh_page_add_a_source_link({ value1: isolate(title()) })}
-              >
-                {m.source_refresh_page_check_the_source_of({ value1: isolate(title()) })}
-              </Show>
-            </h1>
-            <p class={styles.hint}>
-              <Show when={recorded()} fallback={m.source_refresh_page_no_source_recorded()}>
-                {m.source_refresh_page_recorded_source({
-                  value1: sourceHost(recorded()) ?? recorded(),
-                })}
-              </Show>{" "}
-              {m.source_refresh_page_review_before_replacing()}
-            </p>
-            <div class={styles.form}>
-              <Input
-                aria-label={m.source_refresh_page_recipe_source_url()}
-                type="url"
-                value={source()}
-                onInput={(event) => setSource(event.currentTarget.value)}
-                placeholder={m.source_refresh_page_https_example_com_recipe()}
-              />
-              <Button
-                disabled={!source().trim() || busy() || !settled(entry)}
-                onClick={() => void check()}
-              >
-                {busy() ? m.source_refresh_page_checking() : m.source_refresh_page_check_source()}
-              </Button>
-            </div>
-            <Show when={error()}>{(value) => <ErrorState error={value()} />}</Show>
+            <Show when={!(entry.error instanceof ApiError && entry.error.isMissing)}>
+              <h1 class={styles.title}>
+                <Show
+                  when={recorded()}
+                  fallback={m.source_refresh_page_add_a_source_link({ value1: isolate(title()) })}
+                >
+                  {m.source_refresh_page_check_the_source_of({ value1: isolate(title()) })}
+                </Show>
+              </h1>
+              <p class={styles.hint}>
+                <Show when={recorded()} fallback={m.source_refresh_page_no_source_recorded()}>
+                  {m.source_refresh_page_recorded_source({
+                    value1: sourceHost(recorded()) ?? recorded(),
+                  })}
+                </Show>{" "}
+                {m.source_refresh_page_review_before_replacing()}
+              </p>
+              <div class={styles.form}>
+                <Input
+                  aria-label={m.source_refresh_page_recipe_source_url()}
+                  type="url"
+                  value={source()}
+                  onInput={(event) => setSource(event.currentTarget.value)}
+                  placeholder={m.source_refresh_page_https_example_com_recipe()}
+                />
+                <Button
+                  disabled={!source().trim() || busy() || !settled(entry)}
+                  onClick={() => void check()}
+                >
+                  {busy() ? m.source_refresh_page_checking() : m.source_refresh_page_check_source()}
+                </Button>
+              </div>
+              <Show when={error()}>{(value) => <ErrorState error={value()} />}</Show>
+            </Show>
           </>
         }
       >

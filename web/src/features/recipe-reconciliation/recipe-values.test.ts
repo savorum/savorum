@@ -6,7 +6,10 @@ import {
   areaMatches,
   areaReading,
   comparableAreas,
+  conflictAreas,
   conflictLines,
+  duplicateEvidence,
+  linesOnlyHere,
   readableLines,
   readableValue,
 } from "./recipe-values"
@@ -164,8 +167,65 @@ test("conflictLines formats source members and image references", () => {
 
   const sourceDetails = conflictLines(document, "source", "fallback")
   expect(sourceDetails.some((line) => line.includes("Author Name"))).toBe(true)
-  expect(sourceDetails.some((line) => line.includes("App 1.0"))).toBe(true)
-  expect(sourceDetails.some((line) => line.includes("src-123"))).toBe(true)
+  expect(sourceDetails.some((line) => line.includes("App 1.0"))).toBe(false)
+  expect(sourceDetails.some((line) => line.includes("src-123"))).toBe(false)
   expect(sourceDetails.some((line) => line.includes("2026-01-01"))).toBe(true)
   expect(sourceDetails.some((line) => line.includes("Special edition"))).toBe(true)
+})
+
+const withIngredients = (title: string, names: string[], url?: string) =>
+  recipe({
+    title,
+    source: url ? { url } : undefined,
+    ingredient_sections: [
+      { id: "s", ingredients: names.map((name, i) => ({ id: `i${i}`, name })) },
+    ],
+  })
+
+test("duplicateEvidence weighs source, title and shared ingredients", () => {
+  const stew = withIngredients(
+    "Beef Stew",
+    ["beef", "carrots", "onion", "stock"],
+    "https://www.example.test/stew/",
+  )
+  const copy = withIngredients(
+    "Beef stew",
+    ["Beef", "carrots (diced)", "onion", "stock"],
+    "https://example.test/stew",
+  )
+  expect(duplicateEvidence(stew, copy)).toEqual({
+    verdict: "likely",
+    sameSource: true,
+    sameTitle: true,
+    sharedIngredients: 4,
+    totalIngredients: 4,
+  })
+
+  const variant = withIngredients("Weeknight stew", ["beef", "carrots", "potato", "stock"])
+  expect(duplicateEvidence(stew, variant)).toMatchObject({
+    verdict: "possible",
+    sameSource: undefined,
+  })
+
+  const cake = withIngredients("Lemon cake", ["flour", "sugar", "lemon"], "https://other.test/cake")
+  expect(duplicateEvidence(stew, cake)).toMatchObject({ verdict: "different", sameSource: false })
+})
+
+test("conflictAreas groups fields by area in reading order", () => {
+  expect(
+    conflictAreas([
+      { path: "assets" },
+      { path: "title" },
+      { path: "image_refs" },
+      { path: "ingredient_sections" },
+    ]),
+  ).toEqual([
+    { area: "title", paths: ["title"] },
+    { area: "ingredients", paths: ["ingredient_sections"] },
+    { area: "photos", paths: ["assets", "image_refs"] },
+  ])
+})
+
+test("linesOnlyHere marks lines the other side lacks", () => {
+  expect([...linesOnlyHere(["2 eggs", "Salt", "1 cup milk"], ["salt ", "2 eggs"])]).toEqual([2])
 })

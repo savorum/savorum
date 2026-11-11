@@ -5559,6 +5559,7 @@
         "additionalProperties": false,
         "properties": {
           "display_name": {
+            "description": "A recipe dish named exactly as its recipe takes the recipe's new title when the recipe is renamed.",
             "maxLength": 200,
             "minLength": 1,
             "type": "string"

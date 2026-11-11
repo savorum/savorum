@@ -7,10 +7,14 @@ test("two selected recipes are compared where they were found, then combined", a
   page,
   request,
 }) => {
+  const leftSummary = "A quick version for a weeknight."
+  const rightSummary = "A slower version for a weekend."
   const left = await seedRecipe(request, "Merge first recipe", {
+    description: leftSummary,
     notes: ["Left keeps its own note."],
   })
   const right = await seedRecipe(request, "Merge second recipe", {
+    description: rightSummary,
     notes: ["Left keeps its own note."],
   })
 
@@ -29,13 +33,11 @@ test("two selected recipes are compared where they were found, then combined", a
   await expect(page.getByRole("heading", { name: "Compare two recipes" })).toBeVisible()
   await expect(page.getByRole("heading", { name: left.title, exact: true })).toBeVisible()
   await expect(page.getByRole("heading", { name: right.title, exact: true })).toBeVisible()
-  // What the two disagree about is marked, and what they agree about says so
-  // rather than being read twice.
-  const titles = page.getByRole("region", { name: "Title", exact: true })
-  await expect(titles).toContainText("Different")
-  await expect(page.getByRole("region", { name: "Notes", exact: true })).toContainText(
-    "The same in both",
-  )
+  const summaries = page.getByRole("region", { name: "Summary", exact: true })
+  await expect(summaries.getByRole("listitem")).toHaveText([leftSummary, rightSummary])
+  await expect(page.getByText(/They differ in.*Summary/)).toBeVisible()
+  const notes = page.getByRole("region", { name: "Notes The same in both", exact: true })
+  await expect(notes.getByRole("listitem")).toHaveText(["Left keeps its own note."])
   // Nothing here is a stored field name, in what is shown or in what is read out.
   const comparison = await page.locator("#main-content").innerText()
   expect(comparison).not.toMatch(/ingredient_sections|instruction_sections|source_locale/)
@@ -54,18 +56,19 @@ test("two selected recipes are compared where they were found, then combined", a
   await expect(page.getByRole("button", { name: "Combine recipes", exact: true })).toHaveCount(0)
   await page.getByRole("button", { name: "Combine these recipes", exact: true }).click()
   await expect(page.getByRole("heading", { name: "Combine into one recipe" })).toBeVisible()
-  await expect(page.getByRole("button", { name: "Combine recipes", exact: true })).toBeDisabled()
-  await page
-    .getByRole("group", { name: "Which recipe do you keep?", exact: true })
-    .getByRole("radio", { name: right.title, exact: true })
-    .check()
+  const survivor = page.getByRole("group", { name: /^Which recipe do you keep\?/ })
+  await expect(survivor.getByRole("radio", { name: new RegExp(`^${left.title}`) })).toBeChecked()
+  await expect(page.getByRole("button", { name: "Combine recipes", exact: true })).toBeEnabled()
+  await survivor.getByRole("radio", { name: new RegExp(`^${right.title}`) }).check()
   // The result is stated before it happens, and it names both recipes.
-  await expect(page.getByText(`${left.title} moves to Trash`)).toBeVisible()
+  await expect(page.getByText(new RegExp(`${left.title}.*moves to Trash`))).toBeVisible()
   await page
-    .getByRole("group", { name: "Choose the Title to keep", exact: true })
+    .getByRole("group", { name: "Title", exact: true })
     .getByRole("radio", { name: left.title, exact: true })
     .check()
-  await expect(page.getByText(`Title: from ${left.title}`)).toBeVisible()
+  await expect(
+    page.getByRole("listitem").filter({ hasText: new RegExp(`Title.*from.*${left.title}`) }),
+  ).toBeVisible()
 
   await page.getByRole("button", { name: "Combine recipes", exact: true }).click()
   await expect(page).toHaveURL(`/recipes/${right.id}`)
@@ -167,7 +170,7 @@ test("source refresh shows actual conflicts and keeps independent local edits", 
   ).toBeDisabled()
   // Each side is named and read as the recipe reads it, not as the value that
   // happens to be stored.
-  const titleChoice = page.getByRole("group", { name: "Choose the Title to keep", exact: true })
+  const titleChoice = page.getByRole("group", { name: "Title", exact: true })
   const disputed = page.locator("div").filter({ has: titleChoice }).last()
   await expect(disputed.getByText("My edit", { exact: true })).toBeVisible()
   await expect(disputed.getByRole("listitem").filter({ hasText: "My saffron rice" })).toBeVisible()

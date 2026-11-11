@@ -22,20 +22,11 @@ import { FieldGroup, FormField } from "@/components/ui/field"
 import { IconButton } from "@/components/ui/icon-button"
 import { Input } from "@/components/ui/input"
 import { amountFieldValue, needsAdvancedAmount, parseAmountField } from "@/lib/amount-field"
-import { formatDuration } from "@/lib/duration-format"
-import { asWritten, showQuantity } from "@/lib/recipe-format"
-import { summarizeTimes, timeSummaryLine } from "@/lib/timing-summary"
+import { asWritten, yieldLine } from "@/lib/recipe-format"
+import { timeSummaryLine } from "@/lib/timing-summary"
 import type { MeasurementStyle } from "@/lib/unit-choices"
 
 import { m } from "../../lib/messages.ts"
-
-function yieldReading(value: RecipeYield): string {
-  return (
-    [showQuantity(value.quantity, asWritten)?.text, value.label].filter(Boolean).join(" ") ||
-    value.text ||
-    ""
-  )
-}
 
 /** One authored yield. Each is edited on its own; none is derived from another. */
 function YieldRow(props: {
@@ -68,7 +59,7 @@ function YieldRow(props: {
       update((value) => ({ ...value, text: initialText, quantity: undefined }))
     else update((value) => ({ ...value, quantity: initialQuantity }))
   }
-  const summary = () => yieldReading(current())
+  const summary = () => yieldLine(current(), asWritten)
 
   return (
     <div class={styles.row}>
@@ -179,12 +170,15 @@ export function RecipeYieldTiming(props: {
       "yields",
       yields().filter((_, position) => position !== index),
     )
-  const yieldSummary = () => yields().map(yieldReading).filter(Boolean).join(" · ")
+  const yieldSummary = () =>
+    yields()
+      .map((value) => yieldLine(value, asWritten))
+      .filter(Boolean)
+      .join(" · ")
 
   const makesID = createUniqueId()
   const takesID = createUniqueId()
   const clock = () => timeSummaryLine(draft)
-  const disputedTotal = () => formatDuration(summarizeTimes(draft).writtenTotal)
 
   /** What is already recorded, so the shut row can be read rather than opened. */
   const recorded = () => [yieldSummary(), clock()].filter(Boolean).join(" · ")
@@ -224,15 +218,6 @@ export function RecipeYieldTiming(props: {
             {m.yield_timing_how_long_it_takes()}
           </h3>
           <div class={styles.groupBody}>
-            <Show when={disputedTotal()}>
-              {(total) => (
-                <p class={styles.timingWarning}>
-                  {m.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run({
-                    value1: total(),
-                  })}
-                </p>
-              )}
-            </Show>
             <RecipeTimingEditor
               times={draft.times}
               referencedIDs={referencedTimingIDs()}
@@ -279,13 +264,6 @@ const styles = {
   reading: css({ color: "fg.default", fontSize: "sm", margin: "0" }),
   hint: css({
     color: "fg.muted",
-    fontSize: "xs",
-    lineHeight: "1.5",
-    margin: "0",
-    maxWidth: "44rem",
-  }),
-  timingWarning: css({
-    color: "warning.fg",
     fontSize: "xs",
     lineHeight: "1.5",
     margin: "0",

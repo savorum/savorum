@@ -48,7 +48,7 @@ type (
 )
 
 func registerRecipeMerge(api huma.API, service RecipeMergeService) {
-	huma.Register(api, huma.Operation{OperationID: "preview-recipe-merge", Method: http.MethodPost, Path: "/api/v1/recipes/merge/preview", Summary: "Compare duplicate recipes", Tags: []string{"Recipes"}, Errors: []int{404, 409}}, func(ctx context.Context, input *mergePreviewInput) (*mergePreviewOutput, error) {
+	huma.Register(api, huma.Operation{OperationID: "preview-recipe-merge", Method: http.MethodPost, Path: "/api/v1/recipes/merge/preview", Summary: "Compare duplicate recipes", Tags: []string{"Recipes"}, Errors: []int{404, 409, 422}}, func(ctx context.Context, input *mergePreviewInput) (*mergePreviewOutput, error) {
 		result, err := service.CompareRecipes(ctx, library.EntryID(input.Body.LeftID), library.EntryID(input.Body.RightID))
 		if err != nil {
 			return nil, mapError(err)

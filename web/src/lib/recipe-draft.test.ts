@@ -7,6 +7,7 @@ import {
   emptyIngredient,
   emptyRecipe,
   emptyStep,
+  forgetIngredientUses,
   formatAmountInput,
   moveItem,
   newID,
@@ -302,4 +303,29 @@ test("moveItem reorders array elements and returns original array on out-of-boun
   // Out of bounds
   assert.equal(moveItem(original, 0, -1), original)
   assert.equal(moveItem(original, 0, 3), original)
+})
+
+test("removing an ingredient drops the step uses of it and its alternatives", () => {
+  const recipe = {
+    ...emptyRecipe(),
+    instruction_sections: [
+      {
+        id: "method",
+        steps: [
+          {
+            id: "soak",
+            text: "Soak.",
+            ingredient_uses: [{ ingredient_ref: "porcini" }, { ingredient_ref: "wine" }],
+          },
+          { id: "stir", text: "Stir.", ingredient_uses: [{ ingredient_ref: "shiitake" }] },
+        ],
+      },
+    ],
+  }
+  forgetIngredientUses(recipe, [
+    { id: "porcini", name: "porcini", alternatives: [{ id: "shiitake", name: "shiitake" }] },
+  ])
+  const [soak, stir] = recipe.instruction_sections[0]!.steps
+  assert.deepEqual(soak!.ingredient_uses, [{ ingredient_ref: "wine" }])
+  assert.equal(stir!.ingredient_uses, undefined)
 })

@@ -107,6 +107,10 @@ export class ApiError extends Error {
     return `HTTP ${this.status} · ${kind}`
   }
 
+  get isMissing(): boolean {
+    return this.status === 404 || this.status === 410
+  }
+
   /** True when the resource changed after it was loaded. */
   get isStale(): boolean {
     return this.status === 412 || this.status === 428

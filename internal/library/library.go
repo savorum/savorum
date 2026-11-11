@@ -3,6 +3,7 @@ package library
 import (
 	"context"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/savorum/savorum/internal/recipe"
@@ -13,6 +14,8 @@ var (
 	ErrNotFound = errors.New("library entry not found")
 	// ErrConflict reports an attempt to create an entry that already exists.
 	ErrConflict = errors.New("library entry already exists")
+	// ErrNameInUse reports a tag or category name already in use.
+	ErrNameInUse = fmt.Errorf("%w: name in use", ErrConflict)
 	// ErrInvalidState reports an operation on an entry in the wrong lifecycle state.
 	ErrInvalidState = errors.New("library entry is not in the required state")
 	// ErrPreconditionFailed reports a failed library entry revision precondition.

@@ -46,3 +46,10 @@ test("best match is offered and used only while words are searched", () => {
   expect(effectiveSort("title-asc", "")).toBe("title-asc")
   expect(effectiveSort("rating-desc", "soup")).toBe("rating-desc")
 })
+
+test("a rating filter is a whole number of stars", () => {
+  expect(validateLibrarySearch({ rating: "4" }).rating).toBe(4)
+  for (const rating of ["2.5", "0", "6", "x"]) {
+    expect(validateLibrarySearch({ rating }).rating).toBeUndefined()
+  }
+})

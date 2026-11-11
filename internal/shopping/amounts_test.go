@@ -70,3 +70,29 @@ func TestShoppingRefreshSplitsChangedIngredientsAndKeepsManualRows(t *testing.T)
 		t.Fatalf("refresh = %#v", list)
 	}
 }
+
+func TestShoppingRowsGatherOneIngredientAcrossConventionsAndUnmeasuredNeeds(t *testing.T) {
+	list := ShoppingList{Items: []ShoppingItem{{ID: "oregano", Name: "Dried oregano", Fields: map[string]uint64{}, Sources: []ShoppingSource{{ID: "a", Amount: "1", Unit: "volume.tablespoon.us.customary"}}}}}
+	if !mergeNeed(&list, shoppingNeed{source: ShoppingSource{ID: "b", Amount: "1/4", Unit: "volume.teaspoon.metric.culinary"}, choice: ShoppingChoice{Name: "dried oregano"}}) {
+		t.Fatal("volumes of one ingredient in different conventions should share a row")
+	}
+
+	RefreshAmounts(&list)
+
+	if list.Items[0].Needed != "1 tbsp + 1/4 tsp" {
+		t.Fatalf("needed = %q", list.Items[0].Needed)
+	}
+
+	list.Items = append(list.Items, ShoppingItem{ID: "salt", Name: "Salt", Fields: map[string]uint64{}, Sources: []ShoppingSource{{ID: "c", Quantity: "to taste"}}})
+	if !mergeNeed(&list, shoppingNeed{source: ShoppingSource{ID: "d"}, choice: ShoppingChoice{Name: "salt"}}) || len(list.Items[1].Sources) != 2 {
+		t.Fatalf("unmeasured needs for one ingredient should share a row: %#v", list.Items[1])
+	}
+
+	if mergeNeed(&list, shoppingNeed{source: ShoppingSource{ID: "e", Amount: "1", Unit: "volume.teaspoon.us.customary"}, choice: ShoppingChoice{Name: "Salt"}}) {
+		t.Fatal("a measured need joined a row without amounts")
+	}
+
+	if mergeNeed(&list, shoppingNeed{source: ShoppingSource{ID: "f"}, choice: ShoppingChoice{Name: "Dried oregano"}}) {
+		t.Fatal("an unmeasured need joined a measured row")
+	}
+}

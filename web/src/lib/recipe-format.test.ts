@@ -314,6 +314,14 @@ test("a yield written as words states what the scaled batch makes", () => {
   )
 })
 
+test("a yield written as words keeps the label it was given", () => {
+  const labelled = { text: "about 24", label: "rolls" }
+  assert.equal(yieldLine(labelled, asWritten), "about 24 rolls")
+  assert.equal(yieldLine(labelled, { system: "original", scale: rational(2n) }), "about 48 rolls")
+  assert.equal(yieldLine({ text: "-3", label: "servings" }, asWritten), "-3 servings")
+  assert.equal(yieldLine({ text: "24 rolls", label: "Rolls" }, asWritten), "24 rolls")
+})
+
 test("every duration the model accepts is also one the reader can read", () => {
   // The accepted vocabulary and the displayable vocabulary are the same set.
   assert.equal(formatDuration("PT20M"), "20 min")
@@ -685,6 +693,14 @@ test("a batch reports the amounts it could not recalculate", () => {
     ),
     2,
   )
+})
+
+test("an unread line written with any numerals is reported as kept", () => {
+  const doubled = { system: "original" as const, scale: rational(2n) }
+  for (const text of ["½ cup milk", "٢ كوب دقيق", "३ cups rice"]) {
+    const line = ingredientLine({ id: "line", name: text, source_text: text }, doubled)
+    assert.equal(line.keptAmount, true, text)
+  }
 })
 
 test("an opaque amount is reported as kept rather than silently repeated", () => {

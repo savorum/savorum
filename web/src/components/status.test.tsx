@@ -2,6 +2,8 @@ import { cleanup, render, waitFor } from "@solidjs/testing-library"
 import { createResource } from "solid-js"
 import { afterEach, expect, test } from "vitest"
 
+import { ApiError } from "@/api/client"
+
 import { ResourceState } from "./status"
 
 afterEach(cleanup)
@@ -74,8 +76,24 @@ test("reports a first read that fails without rendering its contents", async () 
 
   await screen.findByRole("alert")
   expect(screen.getByText("The recipe could not be loaded.")).toBeTruthy()
+  expect(screen.getByRole("button", { name: "Try again" })).toBeTruthy()
   expect(screen.queryByText("Contents")).toBeNull()
   expect(screen.queryByText("Loading…")).toBeNull()
+})
+
+test("offers no retry for something that does not exist", async () => {
+  const [resource, { refetch }] = createResource(async (): Promise<string> => {
+    throw new ApiError("The requested library recipe does not exist", 404, "recipe-not-found")
+  })
+  const screen = render(() => (
+    <ResourceState resource={resource} onRetry={() => void refetch()}>
+      {(value) => <p>{value()}</p>}
+    </ResourceState>
+  ))
+
+  await screen.findByRole("alert")
+  expect(screen.getByText("The requested library recipe does not exist")).toBeTruthy()
+  expect(screen.queryByRole("button", { name: "Try again" })).toBeNull()
 })
 
 test("holds the wait and the refusal in the page's own status frame", async () => {

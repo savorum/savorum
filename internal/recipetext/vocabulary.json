@@ -60,12 +60,14 @@
       "minute": [
         "minutes",
         "minute",
-        "min"
+        "min",
+        "mins"
       ],
       "hour": [
         "hours",
         "hour",
-        "hr"
+        "hr",
+        "hrs"
       ],
       "day": [
         "days",
@@ -76,7 +78,33 @@
       "every"
     ],
     "span": "to",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "servings",
+        "serving",
+        "serves",
+        "yield",
+        "yields",
+        "makes"
+      ],
+      "prep": [
+        "preparation time",
+        "prep time",
+        "prep"
+      ],
+      "cook": [
+        "cooking time",
+        "cook time",
+        "baking time",
+        "bake time"
+      ],
+      "total": [
+        "total time",
+        "ready in",
+        "total"
+      ]
+    }
   },
   {
     "locale": "de",
@@ -137,7 +165,29 @@
       "jeden"
     ],
     "span": "bis",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "portionen",
+        "portion",
+        "personen",
+        "ergibt",
+        "menge"
+      ],
+      "prep": [
+        "vorbereitungszeit",
+        "vorbereitung"
+      ],
+      "cook": [
+        "kochzeit",
+        "garzeit",
+        "backzeit"
+      ],
+      "total": [
+        "gesamtzeit",
+        "gesamt"
+      ]
+    }
   },
   {
     "locale": "fr",
@@ -200,7 +250,27 @@
       "chaque"
     ],
     "span": "à",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "portions",
+        "personnes",
+        "rendement",
+        "nombre de parts"
+      ],
+      "prep": [
+        "temps de préparation",
+        "préparation"
+      ],
+      "cook": [
+        "temps de cuisson",
+        "cuisson"
+      ],
+      "total": [
+        "temps total",
+        "total"
+      ]
+    }
   },
   {
     "locale": "es",
@@ -266,7 +336,28 @@
       "cada"
     ],
     "span": "a",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "porciones",
+        "raciones",
+        "personas",
+        "rinde",
+        "rendimiento"
+      ],
+      "prep": [
+        "tiempo de preparación",
+        "preparación"
+      ],
+      "cook": [
+        "tiempo de cocción",
+        "cocción"
+      ],
+      "total": [
+        "tiempo total",
+        "total"
+      ]
+    }
   },
   {
     "locale": "it",
@@ -323,7 +414,26 @@
       "ogni"
     ],
     "span": "a",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "porzioni",
+        "persone",
+        "dosi"
+      ],
+      "prep": [
+        "tempo di preparazione",
+        "preparazione"
+      ],
+      "cook": [
+        "tempo di cottura",
+        "cottura"
+      ],
+      "total": [
+        "tempo totale",
+        "totale"
+      ]
+    }
   },
   {
     "locale": "pt",
@@ -383,7 +493,32 @@
       "cada"
     ],
     "span": "a",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "porções",
+        "rendimento",
+        "rende",
+        "pessoas",
+        "doses"
+      ],
+      "prep": [
+        "tempo de preparação",
+        "tempo de preparo",
+        "preparação",
+        "preparo"
+      ],
+      "cook": [
+        "tempo de cozedura",
+        "tempo de cozimento",
+        "cozedura",
+        "cozimento"
+      ],
+      "total": [
+        "tempo total",
+        "total"
+      ]
+    }
   },
   {
     "locale": "nl",
@@ -439,7 +574,27 @@
       "iedere"
     ],
     "span": "tot",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "porties",
+        "personen",
+        "opbrengst"
+      ],
+      "prep": [
+        "voorbereidingstijd",
+        "voorbereiding"
+      ],
+      "cook": [
+        "kooktijd",
+        "bereidingstijd",
+        "baktijd"
+      ],
+      "total": [
+        "totale tijd",
+        "totaal"
+      ]
+    }
   },
   {
     "locale": "da",
@@ -493,7 +648,27 @@
       "hvert"
     ],
     "span": "til",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "portioner",
+        "personer",
+        "antal"
+      ],
+      "prep": [
+        "forberedelsestid",
+        "forberedelse"
+      ],
+      "cook": [
+        "tilberedningstid",
+        "kogetid",
+        "bagetid"
+      ],
+      "total": [
+        "samlet tid",
+        "i alt"
+      ]
+    }
   },
   {
     "locale": "nb",
@@ -547,7 +722,27 @@
       "hvert"
     ],
     "span": "til",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "porsjoner",
+        "personer",
+        "antall"
+      ],
+      "prep": [
+        "forberedelsestid",
+        "forberedelse"
+      ],
+      "cook": [
+        "tilberedningstid",
+        "koketid",
+        "steketid"
+      ],
+      "total": [
+        "total tid",
+        "totalt"
+      ]
+    }
   },
   {
     "locale": "sv",
@@ -601,7 +796,27 @@
       "var"
     ],
     "span": "till",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "portioner",
+        "personer",
+        "antal"
+      ],
+      "prep": [
+        "förberedelsetid",
+        "förberedelse"
+      ],
+      "cook": [
+        "tillagningstid",
+        "koktid",
+        "tillagning"
+      ],
+      "total": [
+        "total tid",
+        "totalt"
+      ]
+    }
   },
   {
     "locale": "fi",
@@ -656,7 +871,28 @@
       "välein"
     ],
     "span": "–",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "annokset",
+        "annosta",
+        "annoksia",
+        "henkilöä"
+      ],
+      "prep": [
+        "valmisteluaika",
+        "esivalmistelu"
+      ],
+      "cook": [
+        "kypsennysaika",
+        "paistoaika",
+        "keittoaika"
+      ],
+      "total": [
+        "kokonaisaika",
+        "yhteensä"
+      ]
+    }
   },
   {
     "locale": "cs",
@@ -715,7 +951,26 @@
       "každé"
     ],
     "span": "až",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "porce",
+        "počet porcí",
+        "osoby"
+      ],
+      "prep": [
+        "doba přípravy",
+        "příprava"
+      ],
+      "cook": [
+        "doba vaření",
+        "doba pečení"
+      ],
+      "total": [
+        "celková doba",
+        "celkem"
+      ]
+    }
   },
   {
     "locale": "pl",
@@ -772,7 +1027,27 @@
       "każde"
     ],
     "span": "do",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "porcje",
+        "liczba porcji",
+        "porcji",
+        "osoby"
+      ],
+      "prep": [
+        "czas przygotowania",
+        "przygotowanie"
+      ],
+      "cook": [
+        "czas gotowania",
+        "czas pieczenia"
+      ],
+      "total": [
+        "czas całkowity",
+        "łącznie"
+      ]
+    }
   },
   {
     "locale": "hu",
@@ -822,7 +1097,26 @@
       "minden"
     ],
     "span": "–",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "adag",
+        "adagok",
+        "személyre"
+      ],
+      "prep": [
+        "előkészítési idő",
+        "előkészítés"
+      ],
+      "cook": [
+        "főzési idő",
+        "sütési idő"
+      ],
+      "total": [
+        "teljes idő",
+        "összesen"
+      ]
+    }
   },
   {
     "locale": "ro",
@@ -875,7 +1169,26 @@
       "fiecare"
     ],
     "span": "până la",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "porții",
+        "porţii",
+        "persoane"
+      ],
+      "prep": [
+        "timp de preparare",
+        "preparare"
+      ],
+      "cook": [
+        "timp de gătire",
+        "timp de coacere"
+      ],
+      "total": [
+        "timp total",
+        "total"
+      ]
+    }
   },
   {
     "locale": "el",
@@ -925,7 +1238,25 @@
       "κάθε"
     ],
     "span": "έως",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "μερίδες",
+        "άτομα"
+      ],
+      "prep": [
+        "χρόνος προετοιμασίας",
+        "προετοιμασία"
+      ],
+      "cook": [
+        "χρόνος μαγειρέματος",
+        "χρόνος ψησίματος"
+      ],
+      "total": [
+        "συνολικός χρόνος",
+        "σύνολο"
+      ]
+    }
   },
   {
     "locale": "ru",
@@ -986,7 +1317,27 @@
       "каждых"
     ],
     "span": "до",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "порции",
+        "порций",
+        "количество порций",
+        "выход"
+      ],
+      "prep": [
+        "время подготовки",
+        "подготовка"
+      ],
+      "cook": [
+        "время приготовления",
+        "время готовки"
+      ],
+      "total": [
+        "общее время",
+        "всего"
+      ]
+    }
   },
   {
     "locale": "uk",
@@ -1046,7 +1397,26 @@
       "кожних"
     ],
     "span": "до",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "порції",
+        "порцій",
+        "кількість порцій",
+        "вихід"
+      ],
+      "prep": [
+        "час підготовки",
+        "підготовка"
+      ],
+      "cook": [
+        "час приготування"
+      ],
+      "total": [
+        "загальний час",
+        "всього"
+      ]
+    }
   },
   {
     "locale": "tr",
@@ -1096,7 +1466,26 @@
       "her"
     ],
     "span": "ila",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "porsiyon",
+        "kişilik",
+        "kaç kişilik"
+      ],
+      "prep": [
+        "hazırlık süresi",
+        "hazırlık"
+      ],
+      "cook": [
+        "pişirme süresi",
+        "pişirme"
+      ],
+      "total": [
+        "toplam süre",
+        "toplam"
+      ]
+    }
   },
   {
     "locale": "id",
@@ -1145,7 +1534,26 @@
       "setiap"
     ],
     "span": "sampai",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "porsi",
+        "sajian",
+        "untuk"
+      ],
+      "prep": [
+        "waktu persiapan",
+        "persiapan"
+      ],
+      "cook": [
+        "waktu memasak",
+        "waktu masak"
+      ],
+      "total": [
+        "total waktu",
+        "waktu total"
+      ]
+    }
   },
   {
     "locale": "vi",
@@ -1191,7 +1599,24 @@
       "mỗi"
     ],
     "span": "đến",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "khẩu phần",
+        "số người ăn",
+        "phần ăn"
+      ],
+      "prep": [
+        "thời gian chuẩn bị",
+        "chuẩn bị"
+      ],
+      "cook": [
+        "thời gian nấu"
+      ],
+      "total": [
+        "tổng thời gian"
+      ]
+    }
   },
   {
     "locale": "ar",
@@ -1251,7 +1676,26 @@
       "كل"
     ],
     "span": "إلى",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "الحصص",
+        "عدد الحصص",
+        "يكفي"
+      ],
+      "prep": [
+        "وقت التحضير",
+        "التحضير"
+      ],
+      "cook": [
+        "وقت الطهي",
+        "وقت الطبخ"
+      ],
+      "total": [
+        "الوقت الإجمالي",
+        "المدة الإجمالية"
+      ]
+    }
   },
   {
     "locale": "he",
@@ -1305,7 +1749,26 @@
       "כל"
     ],
     "span": "עד",
-    "compact": false
+    "compact": false,
+    "facts": {
+      "yield": [
+        "מנות",
+        "כמות",
+        "סועדים"
+      ],
+      "prep": [
+        "זמן הכנה",
+        "הכנה"
+      ],
+      "cook": [
+        "זמן בישול",
+        "זמן אפייה"
+      ],
+      "total": [
+        "זמן כולל",
+        "סך הכל"
+      ]
+    }
   },
   {
     "locale": "ja",
@@ -1359,7 +1822,28 @@
       "おき"
     ],
     "span": "から",
-    "compact": true
+    "compact": true,
+    "facts": {
+      "yield": [
+        "分量",
+        "人数",
+        "材料の分量"
+      ],
+      "prep": [
+        "下ごしらえ時間",
+        "準備時間",
+        "下準備"
+      ],
+      "cook": [
+        "調理時間",
+        "加熱時間",
+        "焼き時間"
+      ],
+      "total": [
+        "合計時間",
+        "所要時間"
+      ]
+    }
   },
   {
     "locale": "ko",
@@ -1408,7 +1892,26 @@
       "마다"
     ],
     "span": "에서",
-    "compact": true
+    "compact": true,
+    "facts": {
+      "yield": [
+        "분량",
+        "인분"
+      ],
+      "prep": [
+        "준비 시간",
+        "준비시간"
+      ],
+      "cook": [
+        "조리 시간",
+        "조리시간",
+        "요리 시간"
+      ],
+      "total": [
+        "총 시간",
+        "소요 시간"
+      ]
+    }
   },
   {
     "locale": "th",
@@ -1454,7 +1957,25 @@
       "ทุก"
     ],
     "span": "ถึง",
-    "compact": true
+    "compact": true,
+    "facts": {
+      "yield": [
+        "สำหรับ",
+        "จำนวนที่เสิร์ฟ",
+        "ปริมาณ"
+      ],
+      "prep": [
+        "เวลาเตรียม"
+      ],
+      "cook": [
+        "เวลาปรุง",
+        "เวลาทำอาหาร"
+      ],
+      "total": [
+        "เวลาทั้งหมด",
+        "เวลารวม"
+      ]
+    }
   },
   {
     "locale": "zh",
@@ -1515,6 +2036,30 @@
       "每"
     ],
     "span": "至",
-    "compact": true
+    "compact": true,
+    "facts": {
+      "yield": [
+        "份量",
+        "分量",
+        "人份",
+        "份数",
+        "份數"
+      ],
+      "prep": [
+        "准备时间",
+        "準備時間",
+        "备料时间"
+      ],
+      "cook": [
+        "烹饪时间",
+        "烹飪時間",
+        "烹调时间"
+      ],
+      "total": [
+        "总时间",
+        "總時間",
+        "所需时间"
+      ]
+    }
   }
 ]

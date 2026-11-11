@@ -5372,6 +5372,7 @@ export interface components {
             [key: string]: unknown;
         };
         MealDish: {
+            /** @description A recipe dish named exactly as its recipe takes the recipe's new title when the recipe is renamed. */
             display_name: string;
             entry_id?: string;
             id?: string;

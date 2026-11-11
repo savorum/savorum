@@ -1,4 +1,5 @@
-import { Show, createResource, createSignal, untrack } from "solid-js"
+import { ArrowLeft } from "lucide-solid"
+import { Show, createEffect, createResource, createSignal, on, untrack } from "solid-js"
 import { css } from "styled-system/css"
 import { pageShell } from "styled-system/recipes"
 
@@ -6,6 +7,7 @@ import { mergeRecipes, previewRecipeMerge } from "@/api/recipe-reconciliation"
 import { listRecipes } from "@/api/recipes"
 import { ErrorState, Loading } from "@/components/status"
 import { Button } from "@/components/ui/button"
+import { directionalIcon } from "@/components/ui/directional"
 import { FormField } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Select } from "@/components/ui/select"
@@ -20,7 +22,7 @@ const styles = {
   page: css({ marginInline: "auto", maxWidth: "70rem", paddingBlock: "8", paddingInline: "5" }),
   form: css({ display: "grid", gap: "4", maxWidth: "40rem" }),
   field: css({ display: "grid", gap: "2" }),
-  leave: css({ display: "flex", flexWrap: "wrap", gap: "3", marginTop: "6" }),
+  toolbar: css({ display: "flex", flexWrap: "wrap", gap: "2" }),
 }
 export function RecipeMergePage(props: {
   initial: { left?: string; right?: string }
@@ -39,12 +41,28 @@ export function RecipeMergePage(props: {
   )
   const chosenHere = untrack(() => !(props.initial.left && props.initial.right))
   const [submitted, setSubmitted] = createSignal<{ left: string; right: string } | undefined>(
-    untrack(() => (leftID() && rightID() ? { left: leftID(), right: rightID() } : undefined)),
+    untrack(() =>
+      leftID() && rightID() && leftID() !== rightID()
+        ? { left: leftID(), right: rightID() }
+        : undefined,
+    ),
   )
   const [preview] = createResource(submitted, (value) =>
     previewRecipeMerge(value.left, value.right),
   )
   const [combining, setCombining] = createSignal(false)
+  createEffect(
+    on(
+      combining,
+      (step) => {
+        window.scrollTo({ top: 0 })
+        document
+          .getElementById(step ? "recipe-combine-title" : "recipe-comparison-title")
+          ?.focus({ preventScroll: true })
+      },
+      { defer: true },
+    ),
+  )
   const [survivor, setSurvivor] = createSignal<"left" | "right">("left")
   const [busy, setBusy] = createSignal(false)
   const [error, setError] = createSignal<unknown>()
@@ -133,44 +151,55 @@ export function RecipeMergePage(props: {
       </Show>
       <Show keyed when={latestUnlessFailed(preview)}>
         {(value) => (
-          <>
-            <Show
-              when={combining()}
-              fallback={
-                <RecipeComparison
-                  left={value.left.recipe}
-                  right={value.right.recipe}
-                  onCombine={() => setCombining(true)}
-                />
-              }
-            >
-              <RecipeCombine
-                preview={value}
-                survivor={survivor()}
-                onSurvivorChange={setSurvivor}
-                onMerge={(recipe) => void merge(recipe)}
-                onBack={() => setCombining(false)}
-                busy={busy()}
+          <Show
+            when={combining()}
+            fallback={
+              <RecipeComparison
+                left={value.left}
+                right={value.right}
+                onCombine={() => setCombining(true)}
+                onKeepBoth={() => (props.onBackToSelection ?? props.onLeave)()}
+                toolbar={
+                  <Show when={props.onBackToSelection || chosenHere}>
+                    <div class={styles.toolbar}>
+                      <Show
+                        when={props.onBackToSelection}
+                        fallback={
+                          <Button variant="plain" size="sm" onClick={() => setSubmitted(undefined)}>
+                            <ArrowLeft class={directionalIcon} aria-hidden="true" size={16} />
+                            {m.recipe_merge_page_choose_recipes()}
+                          </Button>
+                        }
+                      >
+                        {(back) => (
+                          <Button variant="plain" size="sm" onClick={() => back()()}>
+                            <ArrowLeft class={directionalIcon} aria-hidden="true" size={16} />
+                            {m.recipe_merge_page_back_to_selection()}
+                          </Button>
+                        )}
+                      </Show>
+                    </div>
+                  </Show>
+                }
               />
-            </Show>
-            <div class={styles.leave}>
-              <Show when={props.onBackToSelection}>
-                {(back) => (
-                  <Button variant="outline" onClick={() => back()()}>
-                    {m.recipe_merge_page_back_to_selection()}
+            }
+          >
+            <RecipeCombine
+              preview={value}
+              survivor={survivor()}
+              onSurvivorChange={setSurvivor}
+              onMerge={(recipe) => void merge(recipe)}
+              busy={busy()}
+              toolbar={
+                <div class={styles.toolbar}>
+                  <Button variant="plain" size="sm" onClick={() => setCombining(false)}>
+                    <ArrowLeft class={directionalIcon} aria-hidden="true" size={16} />
+                    {m.recipe_compare_back_to_the_comparison()}
                   </Button>
-                )}
-              </Show>
-              <Show when={chosenHere}>
-                <Button variant="outline" onClick={() => setSubmitted(undefined)}>
-                  {m.recipe_merge_page_choose_recipes()}
-                </Button>
-              </Show>
-              <Button variant="plain" onClick={props.onLeave}>
-                {m.common_cancel()}
-              </Button>
-            </div>
-          </>
+                </div>
+              }
+            />
+          </Show>
         )}
       </Show>
       <Show when={error()}>{(failure) => <ErrorState error={failure()} />}</Show>

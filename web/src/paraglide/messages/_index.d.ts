@@ -2954,6 +2954,13 @@ export const api_problem_export_too_large: ((inputs?: Api_Problem_Export_Too_Lar
 /**
 * | output |
 * | --- |
+* | "That category name is taken" |
+*
+*/
+export const api_problem_facet_name_conflict: ((inputs?: Api_Problem_Facet_Name_ConflictInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Api_Problem_Facet_Name_ConflictInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
 * | "The import could not be read as a set of recipes this library can hold" |
 *
 */
@@ -3280,6 +3287,13 @@ export const api_problem_source_not_found: ((inputs?: Api_Problem_Source_Not_Fou
 *
 */
 export const api_problem_sref_invalid: ((inputs?: Api_Problem_Sref_InvalidInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Api_Problem_Sref_InvalidInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "That tag name is taken" |
+*
+*/
+export const api_problem_tag_name_conflict: ((inputs?: Api_Problem_Tag_Name_ConflictInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Api_Problem_Tag_Name_ConflictInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -5793,6 +5807,41 @@ export const cooking_together: ((inputs?: Cooking_TogetherInputs, options?: { lo
 /**
 * | output |
 * | --- |
+* | "Cook alongside" |
+*
+*/
+export const cooking_together_alongside: ((inputs?: Cooking_Together_AlongsideInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Cooking_Together_AlongsideInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Discard and start" |
+*
+*/
+export const cooking_together_start_fresh: ((inputs?: Cooking_Together_Start_FreshInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Cooking_Together_Start_FreshInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Recipes in progress: {count}." |
+*
+*/
+export const cooking_together_unfinished_count: ((inputs: Cooking_Together_Unfinished_CountInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Cooking_Together_Unfinished_CountInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "In progress: {names}." |
+*
+*/
+export const cooking_together_unfinished_description: ((inputs: Cooking_Together_Unfinished_DescriptionInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Cooking_Together_Unfinished_DescriptionInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Already cooking" |
+*
+*/
+export const cooking_together_unfinished_title: ((inputs?: Cooking_Together_Unfinished_TitleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Cooking_Together_Unfinished_TitleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
 * | "The cooking could not be recorded." |
 *
 */
@@ -6415,6 +6464,13 @@ export const editor_photo_moved: ((inputs: Editor_Photo_MovedInputs, options?: {
 *
 */
 export const editor_photo_not_in_recipe: ((inputs?: Editor_Photo_Not_In_RecipeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Editor_Photo_Not_In_RecipeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Not added: {names}. {reason}" |
+*
+*/
+export const editor_photos_not_added: ((inputs: Editor_Photos_Not_AddedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Editor_Photos_Not_AddedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -13933,13 +13989,6 @@ export const recipe_compare_back_to_the_comparison: ((inputs?: Recipe_Compare_Ba
 /**
 * | output |
 * | --- |
-* | "Choose the {value1} to keep" |
-*
-*/
-export const recipe_compare_choose_the_to_keep: ((inputs: Recipe_Compare_Choose_The_To_KeepInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Recipe_Compare_Choose_The_To_KeepInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
 * | "Combine into one recipe" |
 *
 */
@@ -13968,10 +14017,10 @@ export const recipe_compare_compare_two_recipes: ((inputs?: Recipe_Compare_Compa
 /**
 * | output |
 * | --- |
-* | "Different" |
+* | "Different source links" |
 *
 */
-export const recipe_compare_different: ((inputs?: Recipe_Compare_DifferentInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Recipe_Compare_DifferentInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+export const recipe_compare_different_sources: ((inputs?: Recipe_Compare_Different_SourcesInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Recipe_Compare_Different_SourcesInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -13989,10 +14038,31 @@ export const recipe_compare_empty: ((inputs?: Recipe_Compare_EmptyInputs, option
 /**
 * | output |
 * | --- |
+* | "Ingredients in common: {shared} of {total}" |
+*
+*/
+export const recipe_compare_ingredients_in_common: ((inputs: Recipe_Compare_Ingredients_In_CommonInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Recipe_Compare_Ingredients_In_CommonInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Keep both" |
+*
+*/
+export const recipe_compare_keep_both: ((inputs?: Recipe_Compare_Keep_BothInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Recipe_Compare_Keep_BothInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
 * | "Keep my edit" |
 *
 */
 export const recipe_compare_keep_my_edit: ((inputs?: Recipe_Compare_Keep_My_EditInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Recipe_Compare_Keep_My_EditInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "It keeps its books, meal plans and cooking history." |
+*
+*/
+export const recipe_compare_kept_recipe_keeps_its_place: ((inputs?: Recipe_Compare_Kept_Recipe_Keeps_Its_PlaceInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Recipe_Compare_Kept_Recipe_Keeps_Its_PlaceInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -14031,6 +14101,13 @@ export const recipe_compare_nothing_changes_until_you_combine: ((inputs?: Recipe
 /**
 * | output |
 * | --- |
+* | "only in this recipe" |
+*
+*/
+export const recipe_compare_only_in_this_recipe: ((inputs?: Recipe_Compare_Only_In_This_RecipeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Recipe_Compare_Only_In_This_RecipeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
 * | "{value1}: from {value2}" |
 *
 */
@@ -14038,10 +14115,10 @@ export const recipe_compare_part_comes_from: ((inputs: Recipe_Compare_Part_Comes
 /**
 * | output |
 * | --- |
-* | "{value1}: not chosen yet" |
+* | "Parts that differ: {count} of {total}." |
 *
 */
-export const recipe_compare_part_not_chosen_yet: ((inputs: Recipe_Compare_Part_Not_Chosen_YetInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Recipe_Compare_Part_Not_Chosen_YetInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+export const recipe_compare_parts_differ: ((inputs: Recipe_Compare_Parts_DifferInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Recipe_Compare_Parts_DifferInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -14049,6 +14126,20 @@ export const recipe_compare_part_not_chosen_yet: ((inputs: Recipe_Compare_Part_N
 *
 */
 export const recipe_compare_review_source_updates: ((inputs?: Recipe_Compare_Review_Source_UpdatesInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Recipe_Compare_Review_Source_UpdatesInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Same source link" |
+*
+*/
+export const recipe_compare_same_source: ((inputs?: Recipe_Compare_Same_SourceInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Recipe_Compare_Same_SourceInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Same title" |
+*
+*/
+export const recipe_compare_same_title: ((inputs?: Recipe_Compare_Same_TitleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Recipe_Compare_Same_TitleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -14122,10 +14213,38 @@ export const recipe_compare_updated_recipe: ((inputs?: Recipe_Compare_Updated_Re
 /**
 * | output |
 * | --- |
+* | "Reset choices" |
+*
+*/
+export const recipe_compare_use_kept_recipe_for_every_part: ((inputs?: Recipe_Compare_Use_Kept_Recipe_For_Every_PartInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Recipe_Compare_Use_Kept_Recipe_For_Every_PartInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
 * | "Use source" |
 *
 */
 export const recipe_compare_use_source: ((inputs?: Recipe_Compare_Use_SourceInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Recipe_Compare_Use_SourceInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Likely different recipes." |
+*
+*/
+export const recipe_compare_verdict_different: ((inputs?: Recipe_Compare_Verdict_DifferentInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Recipe_Compare_Verdict_DifferentInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Likely the same recipe." |
+*
+*/
+export const recipe_compare_verdict_likely: ((inputs?: Recipe_Compare_Verdict_LikelyInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Recipe_Compare_Verdict_LikelyInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Possibly the same recipe." |
+*
+*/
+export const recipe_compare_verdict_possible: ((inputs?: Recipe_Compare_Verdict_PossibleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Recipe_Compare_Verdict_PossibleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -16426,10 +16545,10 @@ export const step_details_photos_of_this_step: ((inputs?: Step_Details_Photos_Of
 /**
 * | output |
 * | --- |
-* | "Recipe photo" |
+* | "Recipe photo {position}" |
 *
 */
-export const step_details_recipe_photo: ((inputs?: Step_Details_Recipe_PhotoInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Step_Details_Recipe_PhotoInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+export const step_details_recipe_photo: ((inputs: Step_Details_Recipe_PhotoInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Step_Details_Recipe_PhotoInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -17427,13 +17546,6 @@ export const yield_timing_of_what: ((inputs?: Yield_Timing_Of_WhatInputs, option
 /**
 * | output |
 * | --- |
-* | "The written total of {value1} is shorter than this recipe's own steps. It is kept as written, not shown as the time the recipe takes." |
-*
-*/
-export const yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run: ((inputs: Yield_Timing_This_Recipe_S_Written_Total_Of_Is_One_Its_Own_Steps_RunInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Yield_Timing_This_Recipe_S_Written_Total_Of_Is_One_Its_Own_Steps_RunInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
 * | "Type a time such as {value1}. Times written in the steps, such as “bake 20 minutes”, are recognized automatically." |
 *
 */
@@ -17867,6 +17979,7 @@ export type Api_Problem_Deletion_Confirmation_RequiredInputs = {};
 export type Api_Problem_Export_Source_EmptyInputs = {};
 export type Api_Problem_Export_Source_InvalidInputs = {};
 export type Api_Problem_Export_Too_LargeInputs = {};
+export type Api_Problem_Facet_Name_ConflictInputs = {};
 export type Api_Problem_Import_InvalidInputs = {};
 export type Api_Problem_Import_Job_Not_FoundInputs = {};
 export type Api_Problem_Import_Job_Not_ResumableInputs = {};
@@ -17914,6 +18027,7 @@ export type Api_Problem_Search_InvalidInputs = {};
 export type Api_Problem_Service_UnavailableInputs = {};
 export type Api_Problem_Source_Not_FoundInputs = {};
 export type Api_Problem_Sref_InvalidInputs = {};
+export type Api_Problem_Tag_Name_ConflictInputs = {};
 export type Api_Problem_Token_Scope_RequiredInputs = {};
 export type Api_Problem_Tokens_UnavailableInputs = {};
 export type Api_Violation_Amount_InvalidInputs = {};
@@ -18272,6 +18386,11 @@ export type Cooking_Timer_MinutesInputs = {};
 export type Cooking_Timer_SetupInputs = {};
 export type Cooking_Times_CookedInputs = { count: NonNullable<unknown> };
 export type Cooking_TogetherInputs = {};
+export type Cooking_Together_AlongsideInputs = {};
+export type Cooking_Together_Start_FreshInputs = {};
+export type Cooking_Together_Unfinished_CountInputs = { count: NonNullable<unknown> };
+export type Cooking_Together_Unfinished_DescriptionInputs = { names: NonNullable<unknown> };
+export type Cooking_Together_Unfinished_TitleInputs = {};
 export type Cookings_The_Cooking_Could_Not_Be_RecordedInputs = {};
 export type Cookings_The_Cooking_Could_Not_Be_RemovedInputs = {};
 export type Cookings_The_Cooking_Could_Not_Be_SavedInputs = {};
@@ -18361,6 +18480,7 @@ export type Editor_Package_SizeInputs = { value: NonNullable<unknown> };
 export type Editor_Photo_CountInputs = { count: NonNullable<unknown> };
 export type Editor_Photo_MovedInputs = { position: NonNullable<unknown> };
 export type Editor_Photo_Not_In_RecipeInputs = {};
+export type Editor_Photos_Not_AddedInputs = { names: NonNullable<unknown>, reason: NonNullable<unknown> };
 export type Editor_Prep_TimeInputs = {};
 export type Editor_Recovered_DiscardInputs = {};
 export type Editor_Recovered_HeadingInputs = { value1: NonNullable<unknown> };
@@ -19417,23 +19537,28 @@ export type Recipe_Card_MadeInputs = { when: NonNullable<unknown> };
 export type Recipe_Compare_Apply_Reviewed_UpdatesInputs = {};
 export type Recipe_Compare_ApplyingInputs = {};
 export type Recipe_Compare_Back_To_The_ComparisonInputs = {};
-export type Recipe_Compare_Choose_The_To_KeepInputs = { value1: NonNullable<unknown> };
 export type Recipe_Compare_Combine_Into_One_RecipeInputs = {};
 export type Recipe_Compare_Combine_RecipesInputs = {};
 export type Recipe_Compare_Combine_These_RecipesInputs = {};
 export type Recipe_Compare_Compare_Two_RecipesInputs = {};
-export type Recipe_Compare_DifferentInputs = {};
+export type Recipe_Compare_Different_SourcesInputs = {};
 export type Recipe_Compare_Differs_InInputs = { areas: NonNullable<unknown> };
 export type Recipe_Compare_EmptyInputs = {};
+export type Recipe_Compare_Ingredients_In_CommonInputs = { shared: NonNullable<unknown>, total: NonNullable<unknown> };
+export type Recipe_Compare_Keep_BothInputs = {};
 export type Recipe_Compare_Keep_My_EditInputs = {};
+export type Recipe_Compare_Kept_Recipe_Keeps_Its_PlaceInputs = {};
 export type Recipe_Compare_Main_PhotoInputs = { value1: NonNullable<unknown> };
 export type Recipe_Compare_MergingInputs = {};
 export type Recipe_Compare_My_EditInputs = {};
 export type Recipe_Compare_No_Conflicts_Need_Your_AttentionInputs = {};
 export type Recipe_Compare_Nothing_Changes_Until_You_CombineInputs = {};
+export type Recipe_Compare_Only_In_This_RecipeInputs = {};
 export type Recipe_Compare_Part_Comes_FromInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
-export type Recipe_Compare_Part_Not_Chosen_YetInputs = { value1: NonNullable<unknown> };
+export type Recipe_Compare_Parts_DifferInputs = { count: NonNullable<unknown>, total: NonNullable<unknown> };
 export type Recipe_Compare_Review_Source_UpdatesInputs = {};
+export type Recipe_Compare_Same_SourceInputs = {};
+export type Recipe_Compare_Same_TitleInputs = {};
 export type Recipe_Compare_SourceInputs = {};
 export type Recipe_Compare_SymbolInputs = {};
 export type Recipe_Compare_The_Combined_RecipeInputs = {};
@@ -19444,7 +19569,11 @@ export type Recipe_Compare_These_Two_Recipes_Read_AlikeInputs = {};
 export type Recipe_Compare_This_Recipe_Has_NoneInputs = {};
 export type Recipe_Compare_Unsupported_ValueInputs = {};
 export type Recipe_Compare_Updated_RecipeInputs = {};
+export type Recipe_Compare_Use_Kept_Recipe_For_Every_PartInputs = {};
 export type Recipe_Compare_Use_SourceInputs = {};
+export type Recipe_Compare_Verdict_DifferentInputs = {};
+export type Recipe_Compare_Verdict_LikelyInputs = {};
+export type Recipe_Compare_Verdict_PossibleInputs = {};
 export type Recipe_Compare_What_Combining_DoesInputs = {};
 export type Recipe_Compare_Which_Recipe_Do_You_KeepInputs = {};
 export type Recipe_Compare_Whole_Parts_OnlyInputs = {};
@@ -19772,7 +19901,7 @@ export type Step_Details_OtherInputs = {};
 export type Step_Details_Other_Purpose_For_TemperatureInputs = { value1: NonNullable<unknown> };
 export type Step_Details_OvenInputs = {};
 export type Step_Details_Photos_Of_This_StepInputs = {};
-export type Step_Details_Recipe_PhotoInputs = {};
+export type Step_Details_Recipe_PhotoInputs = { position: NonNullable<unknown> };
 export type Step_Details_Remove_TemperatureInputs = { value1: NonNullable<unknown> };
 export type Step_Details_SurfaceInputs = {};
 export type Step_Details_TemperatureInputs = {};
@@ -19915,7 +20044,6 @@ export type Upload_The_Upload_Could_Not_Be_CompletedInputs = {};
 export type Yield_Timing_How_Long_It_TakesInputs = {};
 export type Yield_Timing_How_ManyInputs = {};
 export type Yield_Timing_Of_WhatInputs = {};
-export type Yield_Timing_This_Recipe_S_Written_Total_Of_Is_One_Its_Own_Steps_RunInputs = { value1: NonNullable<unknown> };
 export type Yield_Timing_Time_Entry_HintInputs = { value1: NonNullable<unknown> };
 export type Yield_Timing_What_It_MakesInputs = {};
 export {};

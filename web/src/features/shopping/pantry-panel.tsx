@@ -83,7 +83,9 @@ export function PantryPanel(props: { canEdit: boolean }) {
             >
               <p class={css({ flex: "1" })}>
                 {entry.name}{" "}
-                {[entry.amount, entry.unit, entry.location].filter(Boolean).join(" · ")}
+                {[[entry.amount, entry.unit].filter(Boolean).join(" "), entry.location]
+                  .filter(Boolean)
+                  .join(" · ")}
                 <Show when={entry.note}>
                   <span class={css({ display: "block", color: "fg.muted" })}>{entry.note}</span>
                 </Show>

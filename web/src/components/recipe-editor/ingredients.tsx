@@ -1,7 +1,7 @@
 import { ChevronDown, ChevronUp, Plus } from "lucide-solid"
 import { For, Show, createSignal, createUniqueId, untrack } from "solid-js"
 import type { JSX } from "solid-js"
-import type { SetStoreFunction } from "solid-js/store"
+import { produce, type SetStoreFunction } from "solid-js/store"
 import { css } from "styled-system/css"
 
 import type { Recipe } from "@/api/client"
@@ -18,7 +18,7 @@ import { createGroupedReorder, reorderRow } from "@/components/ui/reorder"
 import { isolate } from "@/lib/direction"
 import { removeAt } from "@/lib/lists"
 import { formatNumber } from "@/lib/locale-format"
-import { emptyIngredient, moveItem, newID } from "@/lib/recipe-draft"
+import { emptyIngredient, forgetIngredientUses, moveItem, newID } from "@/lib/recipe-draft"
 import type { MeasurementStyle } from "@/lib/unit-choices"
 
 import { m } from "../../lib/messages.ts"
@@ -238,8 +238,14 @@ export function RecipeIngredientsEditor(props: {
                         const sections = props.draft.ingredient_sections ?? []
                         const survivor =
                           sections[initialSection + 1] ?? sections[initialSection - 1]
-                        props.setDraft("ingredient_sections", (sections) =>
-                          removeAt(sections ?? [], initialSection),
+                        props.setDraft(
+                          produce((draft) => {
+                            forgetIngredientUses(draft, section.ingredients ?? [])
+                            draft.ingredient_sections = removeAt(
+                              draft.ingredient_sections ?? [],
+                              initialSection,
+                            )
+                          }),
                         )
                         props.onAnnounce(
                           m.editor_group_removed({ position: formatNumber(initialSection + 1) }),
@@ -302,10 +308,11 @@ export function RecipeIngredientsEditor(props: {
                             items[ingredientIndex() + 1] ?? items[ingredientIndex() - 1]
                           const removedName = ingredient().name || m.editor_ingredient_fallback()
                           props.setDraft(
-                            "ingredient_sections",
-                            sectionIndex(),
-                            "ingredients",
-                            (items) => removeAt(items ?? [], position),
+                            produce((draft) => {
+                              forgetIngredientUses(draft, [ingredient()])
+                              const group = draft.ingredient_sections![sectionIndex()]!
+                              group.ingredients = removeAt(group.ingredients ?? [], position)
+                            }),
                           )
                           props.onAnnounce(
                             m.editor_ingredient_removed({ name: isolate(removedName) }),

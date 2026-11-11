@@ -91,6 +91,8 @@ func NewService(repository Persistence, units recipe.UnitCatalog, options ...Opt
 
 // Create validates a recipe and stores its first revision under a new local identity.
 func (s *Service) Create(ctx context.Context, document recipe.Document) (Entry, error) {
+	document.Title = strings.TrimSpace(document.Title)
+
 	document = recipe.ReconcileTimings(document)
 	if err := s.validate(document, s.units); err != nil {
 		return Entry{}, err
@@ -301,6 +303,7 @@ func (s *Service) Update(ctx context.Context, id EntryID, expectedRevision uint6
 	}
 
 	document = recipe.ReconcileIngredientDiagnostics(entry.Recipe, document)
+	document.Title = strings.TrimSpace(document.Title)
 
 	document = recipe.ReconcileTimings(document)
 	if err := s.validate(document, s.units); err != nil {

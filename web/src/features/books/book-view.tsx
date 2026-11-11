@@ -52,6 +52,7 @@ export function BookView(props: BookViewProps) {
         onArrange={() => setArranging(true)}
         onFinishArranging={() => {
           if (dirty()) void save()
+          if (editor.unnamedChapter()) return
           editor.setEditing(false)
           setArranging(false)
         }}

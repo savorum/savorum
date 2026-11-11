@@ -244,7 +244,7 @@ export interface IngredientLine {
  * equivalent amount, a tin size, or an oven setting.
  */
 function statesNumber(text: string | undefined): boolean {
-  return /\d/.test(text ?? "")
+  return /\p{N}/u.test(text ?? "")
 }
 
 /**
@@ -548,13 +548,15 @@ export function yieldLine(value: Yield | undefined, presentation: Presentation):
         .join(" ")
   }
   if (!value.text) return ""
-  if (compare(presentation.scale, one) === 0) return value.text
+  const label = value.label?.trim()
+  const text =
+    label && !value.text.toLocaleLowerCase().includes(label.toLocaleLowerCase())
+      ? `${value.text} ${label}`
+      : value.text
+  if (compare(presentation.scale, one) === 0) return text
   // Wording that cannot be recalculated keeps the batch size beside it rather
   // than being silently left looking wrong.
-  return (
-    scaledYieldText(value.text, presentation.scale) ??
-    `${value.text} × ${cookNumber(presentation.scale)}`
-  )
+  return scaledYieldText(text, presentation.scale) ?? `${text} × ${cookNumber(presentation.scale)}`
 }
 
 export function temperatureLine(temperature: Temperature, system: MeasurementSystem): string {

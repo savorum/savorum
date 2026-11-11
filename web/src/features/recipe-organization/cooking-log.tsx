@@ -12,8 +12,7 @@ import { IconButton } from "@/components/ui/icon-button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { createAsyncAction } from "@/lib/create-async-action"
-import { formatDate } from "@/lib/date-format"
-import { calendarDate } from "@/lib/date-format"
+import { calendarDate, clockTime, formatDate } from "@/lib/date-format"
 import { type Rational, compare, formatRational, rational } from "@/lib/rational"
 import { latestUnlessFailed } from "@/lib/settled"
 import { uniqueID } from "@/lib/unique-id"
@@ -82,15 +81,13 @@ export const CookingLog = (props: CookingLogProps) => {
   const [note, setNote] = createSignal("")
   const { busy, error, setError, run } = createAsyncAction()
   let sessionID = ""
+  const [now, setNow] = createSignal(new Date())
+  const latestTime = () => (date() === calendarDate(now()) ? clockTime(now()) : undefined)
   const begin = (record?: CookingRecord) => {
+    setNow(new Date())
     setEditing(record)
-    setDate(record?.cooked_on ?? calendarDate())
-    const now = new Date()
-    setTime(
-      record
-        ? (record.cooked_time ?? "")
-        : `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`,
-    )
+    setDate(record?.cooked_on ?? calendarDate(now()))
+    setTime(record ? (record.cooked_time ?? "") : clockTime(now()))
     setNote(record?.note ?? "")
     setError(undefined)
     sessionID = uniqueID()
@@ -258,7 +255,7 @@ export const CookingLog = (props: CookingLogProps) => {
                 <Input
                   type="date"
                   required
-                  max={calendarDate()}
+                  max={calendarDate(now())}
                   value={date()}
                   onInput={(event) => setDate(event.currentTarget.value)}
                 />
@@ -266,6 +263,7 @@ export const CookingLog = (props: CookingLogProps) => {
               <FormField label={m.cooking_log_time()}>
                 <Input
                   type="time"
+                  max={latestTime()}
                   value={time()}
                   onInput={(event) => setTime(event.currentTarget.value)}
                 />

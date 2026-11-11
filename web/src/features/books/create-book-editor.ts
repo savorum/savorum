@@ -69,8 +69,16 @@ export function createBookEditor(props: BookViewProps, onFocus: (id?: string) =>
     setError(undefined)
   }
 
+  const unnamedChapter = () => (draft.sections ?? []).some((section) => !section.title?.trim())
+
   const save = async () => {
     if (pending()) return
+    if (unnamedChapter()) {
+      Array.from(document.querySelectorAll<HTMLInputElement>("[data-chapter-name]"))
+        .find((name) => !name.value.trim())
+        ?.focus()
+      return
+    }
     const submitted = JSON.stringify(draft)
     const expected = base()
     setPending(true)
@@ -196,6 +204,7 @@ export function createBookEditor(props: BookViewProps, onFocus: (id?: string) =>
     credits,
     grouped,
     save,
+    unnamedChapter,
     discard,
     moveToTrash,
     moveWithin,
