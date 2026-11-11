@@ -52,6 +52,11 @@ function LibraryRoute() {
           state: { fromImports: location().state.fromImports === true },
         })
       }
+      onRecipe={(recipeId, view) =>
+        view === "edit"
+          ? navigate({ to: "/recipes/$recipeId/edit", params: { recipeId } })
+          : navigate({ to: "/recipes/$recipeId", params: { recipeId } })
+      }
       onHistory={() => {
         void navigate({ to: "/imports" })
       }}

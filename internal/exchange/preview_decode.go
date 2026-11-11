@@ -92,7 +92,9 @@ func candidatesFromBatch(batch importer.ImportBatch, filename string) []decodedC
 			source.Attribution = document.Source.Attribution
 		}
 
-		if extracted, ok := imported.ImporterMetadata["source_text"].(string); ok && strings.TrimSpace(extracted) != "" {
+		if sharedFrom, ok := imported.ImporterMetadata["shared_from"].(string); ok && sharedFrom != "" {
+			source.SharedFrom = sharedFrom
+		} else if extracted, ok := imported.ImporterMetadata["source_text"].(string); ok && strings.TrimSpace(extracted) != "" {
 			source.ExtractedText = extracted
 		}
 

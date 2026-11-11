@@ -111,14 +111,12 @@ func (e recipeCardEnricher) Enrich(page *document, target *Recipe) {
 
 	if groups := e.ingredientGroups(card); improvesIngredients(groups, target.IngredientGroups) {
 		target.IngredientGroups = groups
-		target.warn("ingredients-enriched",
-			"Ingredient groups were read from the page's %s card, which keeps groups the recipe data leaves out.", e.spec.product)
+		target.warn("ingredients-enriched", "Ingredient groups were read from the page's recipe card.")
 	}
 
 	if sections := e.instructionSections(card); improvesInstructions(sections, target.Sections) {
 		target.Sections = sections
-		target.warn("instructions-enriched",
-			"Instruction groups came from this page's %s card.", e.spec.product)
+		target.warn("instructions-enriched", "Instruction groups were read from the page's recipe card.")
 	}
 
 	if len(target.Equipment) == 0 && e.spec.equipment != "" {

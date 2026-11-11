@@ -59,3 +59,27 @@ func TestDecodeFailureMessageCapitalizesUnicode(t *testing.T) {
 		t.Fatalf("decodeFailureMessage = %q", got)
 	}
 }
+
+func TestALinkedRecipeNamesItsPostInsteadOfOfferingItsCaption(t *testing.T) {
+	t.Parallel()
+
+	batch := importer.ImportBatch{Recipes: []importer.ImportedRecipe{
+		{
+			Document:         recipe.Document{Title: "Soup", Source: &recipe.Source{URL: "https://example.test/soup"}},
+			ImporterMetadata: map[string]any{"shared_from": "https://social.example/post/1", "source_text": "Soup! Recipe in the link."},
+		},
+		{
+			Document:         recipe.Document{Title: "Posset"},
+			ImporterMetadata: map[string]any{"source_text": "Posset\n2 cups cream"},
+		},
+	}}
+
+	candidates := candidatesFromBatch(batch, "")
+	if got := candidates[0].source; got.SharedFrom != "https://social.example/post/1" || got.ExtractedText != "" || got.URL != "https://example.test/soup" {
+		t.Fatalf("linked source=%+v", got)
+	}
+
+	if got := candidates[1].source; got.SharedFrom != "" || got.ExtractedText != "Posset\n2 cups cream" {
+		t.Fatalf("caption source=%+v", got)
+	}
+}

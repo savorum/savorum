@@ -1,6 +1,7 @@
 import { Show, untrack } from "solid-js"
 import { css } from "styled-system/css"
 
+import { ImportProgress } from "@/components/import-progress"
 import { ChangeError } from "@/components/status"
 import { TextImport } from "@/components/text-import"
 import { Button } from "@/components/ui/button"
@@ -26,8 +27,10 @@ export function ImportSourceDialogs(props: {
     | "setURLImportError"
     | "stageImportFiles"
     | "stageImportURL"
+    | "fetchPastedURL"
     | "applyEditedText"
     | "cancelStaging"
+    | "importPhase"
   >
 }) {
   const {
@@ -44,8 +47,10 @@ export function ImportSourceDialogs(props: {
     setURLImportError,
     stageImportFiles,
     stageImportURL,
+    fetchPastedURL,
     applyEditedText,
     cancelStaging,
+    importPhase,
   } = untrack(() => props.workflow)
 
   return (
@@ -83,6 +88,9 @@ export function ImportSourceDialogs(props: {
             <Show when={urlImportError()}>
               <ChangeError error={urlImportError()} />
             </Show>
+            <Show when={previewing()}>
+              <ImportProgress phase={importPhase()} />
+            </Show>
             <Input
               type="url"
               aria-label={m.import_source_dialogs_recipe_url()}
@@ -113,6 +121,7 @@ export function ImportSourceDialogs(props: {
               setTextImportOpen(false)
               return stageImportFiles(files)
             }}
+            onURL={fetchPastedURL}
             cancel={
               <DialogClose>
                 {(closeProps) => (

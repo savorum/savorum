@@ -71,8 +71,9 @@ type ImportPreviewSource struct {
 	// choice at commit time.
 	CanRetain bool `json:"can_retain"`
 	// ExtractedText is the editable text used to interpret document uploads.
-	// It is omitted for sources that already carry structured recipe data.
+	// Omitted for structured sources and pages linked from social posts.
 	ExtractedText string `json:"extracted_text"`
+	SharedFrom    string `json:"shared_from,omitempty"`
 }
 
 // ImportAssetSummary counts photographs by state. Available is on hand;

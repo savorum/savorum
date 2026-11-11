@@ -220,6 +220,6 @@ func (r *Recipe) stepCount() int {
 	return count(r.Sections)
 }
 
-func (r *Recipe) warn(code, format string, arguments ...any) {
-	r.Warnings = append(r.Warnings, Warning{Code: code, Message: fmt.Sprintf(format, arguments...)})
+func (r *Recipe) warn(code, message string) {
+	r.Warnings = append(r.Warnings, Warning{Code: code, Message: message})
 }

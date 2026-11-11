@@ -1,6 +1,11 @@
 import { type Accessor, createEffect, createSignal, onCleanup } from "solid-js"
 
-import { startImportJob } from "@/api/import-jobs"
+import {
+  getImportJob,
+  importJobFinished,
+  listImportJobItems,
+  startImportJob,
+} from "@/api/import-jobs"
 import {
   type ImportPreview,
   type ImportPreviewItem,
@@ -16,10 +21,15 @@ import { m } from "../../lib/messages.ts"
 import { createImportReview } from "./create-import-review"
 import { createMeasurementResolution } from "./create-measurement-resolution"
 
+export type SavedRecipeView = "read" | "edit"
+
+const savePollInterval = 500
+
 export function createImportWorkflow(
   capture: Accessor<string | undefined>,
   onJob: (id: string, remainingPreviewID?: string) => Promise<void>,
   staged: Accessor<string | undefined> = () => undefined,
+  onRecipe?: (entryID: string, view: SavedRecipeView) => Promise<void>,
 ) {
   const review = createImportReview()
   let disposed = false
@@ -133,7 +143,15 @@ export function createImportWorkflow(
       setURLImport("")
     } else {
       setURLImportError(importError())
+      setImportError(undefined)
     }
+  }
+
+  const fetchPastedURL = (url: string) => {
+    setTextImportOpen(false)
+    setURLImport(url)
+    setURLImportOpen(true)
+    void stageImportURL()
   }
 
   /** Reopens a review left staged; an expired one quietly does not reopen. */
@@ -164,8 +182,19 @@ export function createImportWorkflow(
     void stageImportURL()
   })
 
-  /** Hands the selection to a background import and goes to watch it. */
-  const startSelectedImport = async () => {
+  const savedEntry = async (jobID: string) => {
+    let job = await getImportJob(jobID)
+    while (!importJobFinished(job)) {
+      await new Promise((resolve) => setTimeout(resolve, savePollInterval))
+      if (disposed) return undefined
+      job = await getImportJob(jobID)
+    }
+    const { items } = await listImportJobItems(jobID, { limit: 1 })
+    const item = items[0]
+    return item?.state === "imported" ? item.library_entry_id : undefined
+  }
+
+  const startSelectedImport = async (view?: SavedRecipeView) => {
     const preview = importPreview()
     if (!preview.id || selectedImports().length === 0 || !beginMutation()) return
     const isCurrent = review.captureSession()
@@ -184,8 +213,15 @@ export function createImportWorkflow(
       })
       // Unselected recipes stay staged; the job links back to this review.
       if (!isCurrent()) return
+      // Keep the preview visible until navigation to the saved recipe completes.
+      const entryID =
+        view && onRecipe && !started.remaining
+          ? await savedEntry(started.job.id).catch(() => undefined)
+          : undefined
+      if (disposed) return
       review.acceptJobRemainder(started.remaining)
-      await onJob(started.job.id, started.remaining ? preview.id : undefined)
+      if (entryID && view && onRecipe) await onRecipe(entryID, view)
+      else await onJob(started.job.id, started.remaining ? preview.id : undefined)
     } catch (error) {
       if (!disposed) setImportError(error)
     } finally {
@@ -260,6 +296,7 @@ export function createImportWorkflow(
     setURLImportError,
     stageImportFiles,
     stageImportURL,
+    fetchPastedURL,
     startSelectedImport,
     applyEditedText,
     closeImportPreview,

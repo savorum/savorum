@@ -2,7 +2,11 @@ import assert from "node:assert/strict"
 import test from "node:test"
 
 import type { ImportPreviewItem } from "../api/import-previews.ts"
-import { previewDiagnostics, uniqueImportDiagnostics } from "./import-diagnostics.ts"
+import {
+  previewDiagnostics,
+  previewNotices,
+  uniqueImportDiagnostics,
+} from "./import-diagnostics.ts"
 
 test("repeated findings share one message without losing their affected ingredients", () => {
   const diagnostic = { code: "amount", message: "Check the amount.", class: "actionable", count: 1 }
@@ -88,4 +92,45 @@ test("previewDiagnostics separates attention from details and suppresses duplica
   const res2 = previewDiagnostics(itemWithoutMatches)
   assert.deepEqual(res2.attention, [duplicateDiag, sourceMatchDiag, inLibraryDiag, normalDiag])
   assert.deepEqual(res2.details, [infoDiag])
+})
+
+test("previewNotices reports missing content from counts and ranks it before other checks", () => {
+  const item = makeItem({
+    recipe: { title: "Tacos", ingredient_count: 18, step_count: 0 },
+    diagnostics: [
+      { code: "microdata-fallback", class: "actionable", message: "Older format.", count: 1 },
+      { code: "no-instructions", class: "informational", message: "No instructions.", count: 1 },
+    ] as any,
+  })
+  const sorted = previewNotices(item)
+  assert.deepEqual(
+    sorted.notices.map((notice) => notice.text),
+    ["No steps found.", "Some details may be missing."],
+  )
+  assert.deepEqual(sorted.details, [])
+})
+
+test("previewNotices moves provenance out of the notices and links the post", () => {
+  const item = makeItem({
+    source: {
+      format_id: "web-recipe",
+      format_name: "Recipe web page",
+      url: "https://example.com/recipe",
+      shared_from: "https://social.example/post/1",
+    },
+    diagnostics: [
+      { code: "social-linked-recipe", class: "informational", message: "Linked.", count: 1 },
+      {
+        code: "ingredient-review-required",
+        class: "actionable",
+        message: "Measurements need review.",
+        count: 1,
+      },
+    ] as any,
+  })
+  const sorted = previewNotices(item)
+  assert.equal(sorted.provenance, "From the recipe linked in the post")
+  assert.equal(sorted.post, "https://social.example/post/1")
+  assert.equal(sorted.notices.length, 1)
+  assert.equal(previewNotices(item, { measurementsShown: true }).notices.length, 0)
 })

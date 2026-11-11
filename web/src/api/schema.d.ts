@@ -4908,6 +4908,7 @@ export interface components {
             assets: components["schemas"]["ImportPreviewAssets"];
             can_commit: boolean;
             diagnostics: components["schemas"]["ImportPreviewDiagnostic"][] | null;
+            document?: components["schemas"]["RecipeDocument"];
             id: string;
             recipe: components["schemas"]["ImportPreviewRecipe"];
             source: components["schemas"]["ImportPreviewSource"];
@@ -4978,6 +4979,8 @@ export interface components {
             filename?: string;
             format_id: string;
             format_name: string;
+            /** @description The social post that led to url */
+            shared_from?: string;
             url?: string;
         } & {
             [key: string]: unknown;

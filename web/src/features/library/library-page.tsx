@@ -12,7 +12,7 @@ import { RestoreNotice } from "@/features/library/restore-notice"
 import type { TrashedRecipe } from "@/lib/library-return"
 
 import { m } from "../../lib/messages.ts"
-import { createImportWorkflow } from "../import-review/create-import-workflow"
+import { type SavedRecipeView, createImportWorkflow } from "../import-review/create-import-workflow"
 import { createLibraryQuery } from "./create-library-query"
 import { createLibrarySelection } from "./create-library-selection"
 import { styles as filterStyles } from "./filter-styles"
@@ -50,6 +50,7 @@ export function LibraryPage(props: {
   /** Called once the offer to restore has been taken or turned down. */
   onTrashedSettled?: () => void
   onJob: (id: string, remainingPreviewID?: string) => Promise<void>
+  onRecipe?: (entryID: string, view: SavedRecipeView) => Promise<void>
   onHistory: () => void
   /** The selection is carried so that returning from the comparison returns to it. */
   onCompare: (left: string, right: string, selection?: string[]) => void
@@ -71,6 +72,7 @@ export function LibraryPage(props: {
     () => props.search().capture,
     (id, remainingPreviewID) => props.onJob(id, remainingPreviewID),
     () => props.search().preview,
+    (entryID, view) => props.onRecipe?.(entryID, view) ?? Promise.resolve(),
   )
   const {
     previewing,
@@ -128,7 +130,7 @@ export function LibraryPage(props: {
         }}
       />
       <ImportProgress
-        phase={importPhase()}
+        phase={workflow.urlImportOpen() ? { kind: "idle" } : importPhase()}
         onCancel={previewing() ? () => workflow.cancelStaging() : undefined}
       />
       <Show when={importError()}>

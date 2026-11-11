@@ -55,11 +55,9 @@ test("regional measurement ambiguities are previewed, excluded, applied, and rem
   await page.goto("/")
   await page.locator('input[type="file"]').setInputFiles("e2e/fixtures/measurement-review.yml")
 
-  const review = page.getByRole("region", { name: "Save this recipe" })
-  // Two spellings of one measure are one question, and the review says how
-  // many measurements it settles rather than how many words it found.
+  const review = page.getByRole("region", { name: "Review import" })
   await expect(review).toContainText(
-    "3 measurements name sizes that differ by country. Unanswered ones import as written.",
+    "2 measures differ in size by country. Unanswered ones import as written.",
   )
 
   // The whole-library answer is the first thing offered, because most people
@@ -90,9 +88,12 @@ test("regional measurement ambiguities are previewed, excluded, applied, and rem
   await expect(tablespoon).toContainText("1 excluded.")
 
   await tablespoon.getByRole("button", { name: "Apply" }).click()
-  await expect(review).toContainText("2 measurements name sizes that differ by country.")
-  await review.getByRole("button", { name: "Undo last answer" }).click()
-  await expect(review).toContainText("3 measurements name sizes that differ by country.")
+  const undo = review.getByRole("button", { name: "Undo last answer" })
+  await expect(undo).toBeVisible()
+  await expect(review).toContainText("2 measures differ in size by country.")
+  await undo.click()
+  await expect(undo).toHaveCount(0)
+  await expect(review).toContainText("2 measures differ in size by country.")
 
   await decisions.getByRole("radio", { name: "Australian", exact: true }).check()
   await expect(decisions).toContainText("Reads 3 measurements in 1 recipe.")
@@ -101,11 +102,9 @@ test("regional measurement ambiguities are previewed, excluded, applied, and rem
   await expect(review.getByRole("button", { name: "Save recipe", exact: true })).toBeEnabled()
 
   await review.getByRole("button", { name: "Save recipe", exact: true }).click()
-  await expect(page).toHaveURL(/\/imports\//)
-  await expect(page.getByRole("heading", { name: "1 recipe imported" })).toBeVisible()
-  const imported = page.getByRole("link", { name: "Regional dressing" })
-  const recipePath = await imported.getAttribute("href")
-  expect(recipePath).toMatch(/^\/recipes\//)
+  await expect(page).toHaveURL(/\/recipes\/[^/]+$/)
+  await expect(page.getByRole("heading", { name: "Regional dressing", level: 1 })).toBeVisible()
+  const recipePath = new URL(page.url()).pathname
   await page.goto(`${recipePath}/edit`)
   await page.getByRole("button", { name: "More options for olive oil" }).click()
   await page.getByRole("menuitem", { name: "Details, olive oil", exact: true }).click()
@@ -158,7 +157,7 @@ test("a large upload is imported in passes and the rest is taken up again", asyn
 
   // What is left is one recipe, so the surface is the one a single capture
   // gets: the recipe and Save, without the queue's selection machinery.
-  const remainder = page.getByRole("region", { name: "Save this recipe" })
+  const remainder = page.getByRole("region", { name: "Review import" })
   await expect(page).toHaveURL(/\?preview=/)
   await expect(remainder.getByRole("button", { name: "Save recipe", exact: true })).toBeEnabled()
   await expect(remainder).toContainText("Second pass loaf")
@@ -170,18 +169,24 @@ test("a large upload is imported in passes and the rest is taken up again", asyn
   await page.reload()
   await expect(remainder.getByRole("button", { name: "Save recipe", exact: true })).toBeEnabled()
   await remainder.getByRole("button", { name: "Save recipe", exact: true }).click()
-  await expect(page.getByRole("heading", { name: "1 recipe imported" })).toBeVisible()
-  await expect(page.getByRole("link", { name: "Review the rest of this file" })).toHaveCount(0)
+  await expect(page).toHaveURL(/\/recipes\/[^/]+$/)
+  await expect(page.getByRole("heading", { name: "Second pass loaf", level: 1 })).toBeVisible()
 })
 
-test("a single-recipe import keeps its result in focus", async ({ page }) => {
+test("a single-recipe import opens the recipe and its report keeps the result in focus", async ({
+  page,
+}) => {
   const title = "Reported spiced buns"
   await page.goto("/")
   await page.locator('input[type="file"]').setInputFiles("e2e/fixtures/spiced-buns.json")
-  const review = page.getByRole("region", { name: "Save this recipe" })
+  const review = page.getByRole("region", { name: "Review import" })
   await review.getByRole("button", { name: "Save recipe", exact: true }).click()
-  await expect(page).toHaveURL(/\/imports\//)
+  await expect(page).toHaveURL(/\/recipes\/[^/]+$/)
+  await expect(page.getByRole("heading", { name: title, exact: true, level: 1 })).toBeVisible()
 
+  await page.goto("/imports")
+  await page.getByRole("link", { name: /spiced-buns\.json/ }).click()
+  await expect(page).toHaveURL(/\/imports\/[^/]+$/)
   await expect(page.getByRole("heading", { name: "1 recipe imported" })).toBeVisible()
   await expect(page.getByRole("link", { name: title })).toBeVisible()
   await expect(page.getByRole("button", { name: "All recipes", exact: true })).toHaveCount(0)
@@ -464,7 +469,7 @@ test("a chosen file reports which phase it is in, and can be stopped", async ({ 
   await expect(panel.getByRole("button", { name: "Cancel" })).toBeVisible()
 
   releasePreview()
-  await expect(page.getByRole("region", { name: "Save this recipe" })).toBeVisible()
+  await expect(page.getByRole("region", { name: "Review import" })).toBeVisible()
   await expect(progress).toHaveCount(0)
 })
 
@@ -479,7 +484,7 @@ test("a held import can be abandoned from its progress panel", async ({ page }) 
   await expect(panel).toBeVisible()
   await panel.getByRole("button", { name: "Cancel" }).click()
   await expect(page.getByRole("progressbar", { name: /Sending|Reading/ })).toHaveCount(0)
-  await expect(page.getByRole("region", { name: "Save this recipe" })).toHaveCount(0)
+  await expect(page.getByRole("region", { name: "Review import" })).toHaveCount(0)
 })
 
 test("the import menu previews recipe URLs and keeps failures actionable", async ({ page }) => {
@@ -533,9 +538,7 @@ test("the import menu previews recipe URLs and keeps failures actionable", async
   const dialog = page.getByRole("dialog", { name: "Import a recipe from the web" })
   await dialog.getByRole("textbox", { name: "Recipe URL" }).fill("https://recipes.example/noodles")
   await dialog.getByRole("button", { name: "Preview recipe" }).click()
-  await expect(page.getByRole("region", { name: "Save this recipe" })).toContainText(
-    "Web noodle bowl",
-  )
+  await expect(page.getByRole("region", { name: "Review import" })).toContainText("Web noodle bowl")
 
   // A capture is one focused task, so the library and its import menu come back
   // by leaving this one rather than sitting behind it.

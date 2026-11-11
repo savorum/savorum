@@ -987,8 +987,6 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Import_Candidate_CompareInputs */
 /** @typedef {{ value1: NonNullable<unknown>, value2: NonNullable<unknown> }} Import_Candidate_Compare_WithInputs */
 /** @typedef {{}} Import_Candidate_DecisionInputs */
-/** @typedef {{}} Import_Candidate_DescriptionInputs */
-/** @typedef {{}} Import_Candidate_DirectionsInputs */
 /** @typedef {{}} Import_Candidate_Edit_Recipe_TextInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Import_Candidate_ImportInputs */
 /** @typedef {{}} Import_Candidate_Import_As_A_Separate_RecipeInputs */
@@ -1008,7 +1006,6 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Import_Candidate_ReadyInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Import_Candidate_ReconcileInputs */
 /** @typedef {{}} Import_Candidate_ReviewInputs */
-/** @typedef {{}} Import_Candidate_Same_Source_Already_In_The_LibraryInputs */
 /** @typedef {{}} Import_Candidate_Several_Source_MatchesInputs */
 /** @typedef {{}} Import_Candidate_Source_FileInputs */
 /** @typedef {{}} Import_Candidate_StepsInputs */
@@ -1105,6 +1102,19 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Import_Menu_Import_RecipesInputs */
 /** @typedef {{}} Import_Menu_Recent_ImportsInputs */
 /** @typedef {{}} Import_Menu_Recipe_Collections_Pdfs_And_PhotosInputs */
+/** @typedef {{}} Import_Notice_Check_PlacementInputs */
+/** @typedef {{}} Import_Notice_Check_TitleInputs */
+/** @typedef {{}} Import_Notice_Creator_RecipeInputs */
+/** @typedef {{}} Import_Notice_Details_MissingInputs */
+/** @typedef {{}} Import_Notice_From_CaptionInputs */
+/** @typedef {{}} Import_Notice_From_CommentInputs */
+/** @typedef {{}} Import_Notice_From_Creator_SiteInputs */
+/** @typedef {{}} Import_Notice_From_Linked_RecipeInputs */
+/** @typedef {{}} Import_Notice_MeasurementsInputs */
+/** @typedef {{}} Import_Notice_No_IngredientsInputs */
+/** @typedef {{}} Import_Notice_No_StepsInputs */
+/** @typedef {{}} Import_Notice_Nothing_FoundInputs */
+/** @typedef {{}} Import_Notice_View_PostInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Import_Photos_PendingInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Import_Photos_UnavailableInputs */
 /** @typedef {{}} Import_Previews_The_Corrected_Recipe_Text_Could_Not_Be_AppliedInputs */
@@ -1147,13 +1157,15 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Import_Review_Panel_Ready_To_ImportInputs */
 /** @typedef {{}} Import_Review_Panel_Review_ImportInputs */
 /** @typedef {{}} Import_Review_Panel_Save_RecipeInputs */
-/** @typedef {{}} Import_Review_Panel_Save_This_RecipeInputs */
 /** @typedef {{}} Import_Review_Panel_Select_AllInputs */
 /** @typedef {{}} Import_Review_Panel_Select_NoneInputs */
 /** @typedef {{}} Import_Review_Panel_Select_VisibleInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Import_Review_Panel_Selection_NoteInputs */
 /** @typedef {{}} Import_Review_Panel_The_RecipesInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Import_Review_Panel_What_IsInputs */
+/** @typedef {{}} Import_Review_ReplaceInputs */
+/** @typedef {{}} Import_Review_Save_And_EditInputs */
+/** @typedef {{}} Import_Review_Save_CopyInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Import_Sending_FilesInputs */
 /** @typedef {{}} Import_Source_Dialogs_Edit_Recipe_TextInputs */
 /** @typedef {{}} Import_Source_Dialogs_Https_Example_Com_RecipesInputs */
@@ -1443,7 +1455,6 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Measurement_Decisions_All_AnsweredInputs */
 /** @typedef {{}} Measurement_Decisions_ApplyInputs */
 /** @typedef {{}} Measurement_Decisions_Clear_ChoiceInputs */
-/** @typedef {{}} Measurement_Decisions_Convention_HintInputs */
 /** @typedef {{}} Measurement_Decisions_Convention_LegendInputs */
 /** @typedef {{}} Measurement_Decisions_ExamplesInputs */
 /** @typedef {{}} Measurement_Decisions_ExceptionsInputs */
@@ -2336,6 +2347,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Tags_Page_Tags_And_CategoriesInputs */
 /** @typedef {{}} Tags_Tags_And_Categories_SavorumInputs */
 /** @typedef {{}} Text_Import_Choose_A_Text_File_Smaller_Than_8_MbInputs */
+/** @typedef {{}} Text_Import_Fetch_PageInputs */
 /** @typedef {{}} Text_Import_Import_Plain_Text_RecipeInputs */
 /** @typedef {{}} Text_Import_Load_Txt_FileInputs */
 /** @typedef {{}} Text_Import_Paste_Or_Edit_Recipe_TextInputs */
@@ -2343,6 +2355,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Text_Import_Recipe_Template_PlaceholderInputs */
 /** @typedef {{}} Text_Import_The_Recipe_Could_Not_Be_Previewed_Try_AgainInputs */
 /** @typedef {{}} Text_Import_The_Text_File_Could_Not_Be_ReadInputs */
+/** @typedef {{}} Text_Import_Url_DetectedInputs */
 /** @typedef {{ label: NonNullable<unknown> }} Timer_Announcement_FinishedInputs */
 /** @typedef {{}} Timer_Default_LabelInputs */
 /** @typedef {{ label: NonNullable<unknown> }} Timer_Dismiss_LabelInputs */
@@ -42890,88 +42903,6 @@ export const import_candidate_decision = /** @type {((inputs?: Import_Candidate_
 /**
 * | output |
 * | --- |
-* | "Description" |
-*
-* @param {Import_Candidate_DescriptionInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const import_candidate_description = /** @type {((inputs?: Import_Candidate_DescriptionInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Candidate_DescriptionInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.import_candidate_description(inputs)
-	if (locale === "cs") return __cs.import_candidate_description(inputs)
-	if (locale === "da") return __da.import_candidate_description(inputs)
-	if (locale === "de") return __de.import_candidate_description(inputs)
-	if (locale === "el") return __el.import_candidate_description(inputs)
-	if (locale === "es") return __es.import_candidate_description(inputs)
-	if (locale === "fi") return __fi.import_candidate_description(inputs)
-	if (locale === "fr") return __fr.import_candidate_description(inputs)
-	if (locale === "he") return __he.import_candidate_description(inputs)
-	if (locale === "hu") return __hu.import_candidate_description(inputs)
-	if (locale === "id") return __id.import_candidate_description(inputs)
-	if (locale === "it") return __it.import_candidate_description(inputs)
-	if (locale === "ja") return __ja.import_candidate_description(inputs)
-	if (locale === "ko") return __ko.import_candidate_description(inputs)
-	if (locale === "nb") return __nb.import_candidate_description(inputs)
-	if (locale === "nl") return __nl.import_candidate_description(inputs)
-	if (locale === "pl") return __pl.import_candidate_description(inputs)
-	if (locale === "pt-BR") return __pt_br2.import_candidate_description(inputs)
-	if (locale === "pt-PT") return __pt_pt2.import_candidate_description(inputs)
-	if (locale === "ro") return __ro.import_candidate_description(inputs)
-	if (locale === "ru") return __ru.import_candidate_description(inputs)
-	if (locale === "sv") return __sv.import_candidate_description(inputs)
-	if (locale === "th") return __th.import_candidate_description(inputs)
-	if (locale === "tr") return __tr.import_candidate_description(inputs)
-	if (locale === "uk") return __uk.import_candidate_description(inputs)
-	if (locale === "vi") return __vi.import_candidate_description(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.import_candidate_description(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.import_candidate_description(inputs)
-	return __en.import_candidate_description(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "Instructions" |
-*
-* @param {Import_Candidate_DirectionsInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const import_candidate_directions = /** @type {((inputs?: Import_Candidate_DirectionsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Candidate_DirectionsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.import_candidate_directions(inputs)
-	if (locale === "cs") return __cs.import_candidate_directions(inputs)
-	if (locale === "da") return __da.import_candidate_directions(inputs)
-	if (locale === "de") return __de.import_candidate_directions(inputs)
-	if (locale === "el") return __el.import_candidate_directions(inputs)
-	if (locale === "es") return __es.import_candidate_directions(inputs)
-	if (locale === "fi") return __fi.import_candidate_directions(inputs)
-	if (locale === "fr") return __fr.import_candidate_directions(inputs)
-	if (locale === "he") return __he.import_candidate_directions(inputs)
-	if (locale === "hu") return __hu.import_candidate_directions(inputs)
-	if (locale === "id") return __id.import_candidate_directions(inputs)
-	if (locale === "it") return __it.import_candidate_directions(inputs)
-	if (locale === "ja") return __ja.import_candidate_directions(inputs)
-	if (locale === "ko") return __ko.import_candidate_directions(inputs)
-	if (locale === "nb") return __nb.import_candidate_directions(inputs)
-	if (locale === "nl") return __nl.import_candidate_directions(inputs)
-	if (locale === "pl") return __pl.import_candidate_directions(inputs)
-	if (locale === "pt-BR") return __pt_br2.import_candidate_directions(inputs)
-	if (locale === "pt-PT") return __pt_pt2.import_candidate_directions(inputs)
-	if (locale === "ro") return __ro.import_candidate_directions(inputs)
-	if (locale === "ru") return __ru.import_candidate_directions(inputs)
-	if (locale === "sv") return __sv.import_candidate_directions(inputs)
-	if (locale === "th") return __th.import_candidate_directions(inputs)
-	if (locale === "tr") return __tr.import_candidate_directions(inputs)
-	if (locale === "uk") return __uk.import_candidate_directions(inputs)
-	if (locale === "vi") return __vi.import_candidate_directions(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.import_candidate_directions(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.import_candidate_directions(inputs)
-	return __en.import_candidate_directions(inputs)
-});
-/**
-* | output |
-* | --- |
 * | "Edit recipe text" |
 *
 * @param {Import_Candidate_Edit_Recipe_TextInputs} inputs
@@ -43748,47 +43679,6 @@ export const import_candidate_review = /** @type {((inputs?: Import_Candidate_Re
 	if (locale === "zh-Hans") return __zh_hans1.import_candidate_review(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.import_candidate_review(inputs)
 	return __en.import_candidate_review(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "Same source already in the library" |
-*
-* @param {Import_Candidate_Same_Source_Already_In_The_LibraryInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const import_candidate_same_source_already_in_the_library = /** @type {((inputs?: Import_Candidate_Same_Source_Already_In_The_LibraryInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Candidate_Same_Source_Already_In_The_LibraryInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "cs") return __cs.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "da") return __da.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "de") return __de.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "el") return __el.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "es") return __es.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "fi") return __fi.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "fr") return __fr.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "he") return __he.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "hu") return __hu.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "id") return __id.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "it") return __it.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "ja") return __ja.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "ko") return __ko.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "nb") return __nb.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "nl") return __nl.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "pl") return __pl.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "pt-BR") return __pt_br2.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "pt-PT") return __pt_pt2.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "ro") return __ro.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "ru") return __ru.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "sv") return __sv.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "th") return __th.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "tr") return __tr.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "uk") return __uk.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "vi") return __vi.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.import_candidate_same_source_already_in_the_library(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.import_candidate_same_source_already_in_the_library(inputs)
-	return __en.import_candidate_same_source_already_in_the_library(inputs)
 });
 /**
 * | output |
@@ -47806,6 +47696,539 @@ export const import_menu_recipe_collections_pdfs_and_photos = /** @type {((input
 	return __en.import_menu_recipe_collections_pdfs_and_photos(inputs)
 });
 /**
+* | output |
+* | --- |
+* | "Check that ingredients and steps are in the right place." |
+*
+* @param {Import_Notice_Check_PlacementInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_notice_check_placement = /** @type {((inputs?: Import_Notice_Check_PlacementInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Notice_Check_PlacementInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_notice_check_placement(inputs)
+	if (locale === "cs") return __cs.import_notice_check_placement(inputs)
+	if (locale === "da") return __da.import_notice_check_placement(inputs)
+	if (locale === "de") return __de.import_notice_check_placement(inputs)
+	if (locale === "el") return __el.import_notice_check_placement(inputs)
+	if (locale === "es") return __es.import_notice_check_placement(inputs)
+	if (locale === "fi") return __fi.import_notice_check_placement(inputs)
+	if (locale === "fr") return __fr.import_notice_check_placement(inputs)
+	if (locale === "he") return __he.import_notice_check_placement(inputs)
+	if (locale === "hu") return __hu.import_notice_check_placement(inputs)
+	if (locale === "id") return __id.import_notice_check_placement(inputs)
+	if (locale === "it") return __it.import_notice_check_placement(inputs)
+	if (locale === "ja") return __ja.import_notice_check_placement(inputs)
+	if (locale === "ko") return __ko.import_notice_check_placement(inputs)
+	if (locale === "nb") return __nb.import_notice_check_placement(inputs)
+	if (locale === "nl") return __nl.import_notice_check_placement(inputs)
+	if (locale === "pl") return __pl.import_notice_check_placement(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_notice_check_placement(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_notice_check_placement(inputs)
+	if (locale === "ro") return __ro.import_notice_check_placement(inputs)
+	if (locale === "ru") return __ru.import_notice_check_placement(inputs)
+	if (locale === "sv") return __sv.import_notice_check_placement(inputs)
+	if (locale === "th") return __th.import_notice_check_placement(inputs)
+	if (locale === "tr") return __tr.import_notice_check_placement(inputs)
+	if (locale === "uk") return __uk.import_notice_check_placement(inputs)
+	if (locale === "vi") return __vi.import_notice_check_placement(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_notice_check_placement(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_notice_check_placement(inputs)
+	return __en.import_notice_check_placement(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Check before saving" |
+*
+* @param {Import_Notice_Check_TitleInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_notice_check_title = /** @type {((inputs?: Import_Notice_Check_TitleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Notice_Check_TitleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_notice_check_title(inputs)
+	if (locale === "cs") return __cs.import_notice_check_title(inputs)
+	if (locale === "da") return __da.import_notice_check_title(inputs)
+	if (locale === "de") return __de.import_notice_check_title(inputs)
+	if (locale === "el") return __el.import_notice_check_title(inputs)
+	if (locale === "es") return __es.import_notice_check_title(inputs)
+	if (locale === "fi") return __fi.import_notice_check_title(inputs)
+	if (locale === "fr") return __fr.import_notice_check_title(inputs)
+	if (locale === "he") return __he.import_notice_check_title(inputs)
+	if (locale === "hu") return __hu.import_notice_check_title(inputs)
+	if (locale === "id") return __id.import_notice_check_title(inputs)
+	if (locale === "it") return __it.import_notice_check_title(inputs)
+	if (locale === "ja") return __ja.import_notice_check_title(inputs)
+	if (locale === "ko") return __ko.import_notice_check_title(inputs)
+	if (locale === "nb") return __nb.import_notice_check_title(inputs)
+	if (locale === "nl") return __nl.import_notice_check_title(inputs)
+	if (locale === "pl") return __pl.import_notice_check_title(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_notice_check_title(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_notice_check_title(inputs)
+	if (locale === "ro") return __ro.import_notice_check_title(inputs)
+	if (locale === "ru") return __ru.import_notice_check_title(inputs)
+	if (locale === "sv") return __sv.import_notice_check_title(inputs)
+	if (locale === "th") return __th.import_notice_check_title(inputs)
+	if (locale === "tr") return __tr.import_notice_check_title(inputs)
+	if (locale === "uk") return __uk.import_notice_check_title(inputs)
+	if (locale === "vi") return __vi.import_notice_check_title(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_notice_check_title(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_notice_check_title(inputs)
+	return __en.import_notice_check_title(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Found on the creator's website by its name. Check that it matches the post." |
+*
+* @param {Import_Notice_Creator_RecipeInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_notice_creator_recipe = /** @type {((inputs?: Import_Notice_Creator_RecipeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Notice_Creator_RecipeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_notice_creator_recipe(inputs)
+	if (locale === "cs") return __cs.import_notice_creator_recipe(inputs)
+	if (locale === "da") return __da.import_notice_creator_recipe(inputs)
+	if (locale === "de") return __de.import_notice_creator_recipe(inputs)
+	if (locale === "el") return __el.import_notice_creator_recipe(inputs)
+	if (locale === "es") return __es.import_notice_creator_recipe(inputs)
+	if (locale === "fi") return __fi.import_notice_creator_recipe(inputs)
+	if (locale === "fr") return __fr.import_notice_creator_recipe(inputs)
+	if (locale === "he") return __he.import_notice_creator_recipe(inputs)
+	if (locale === "hu") return __hu.import_notice_creator_recipe(inputs)
+	if (locale === "id") return __id.import_notice_creator_recipe(inputs)
+	if (locale === "it") return __it.import_notice_creator_recipe(inputs)
+	if (locale === "ja") return __ja.import_notice_creator_recipe(inputs)
+	if (locale === "ko") return __ko.import_notice_creator_recipe(inputs)
+	if (locale === "nb") return __nb.import_notice_creator_recipe(inputs)
+	if (locale === "nl") return __nl.import_notice_creator_recipe(inputs)
+	if (locale === "pl") return __pl.import_notice_creator_recipe(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_notice_creator_recipe(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_notice_creator_recipe(inputs)
+	if (locale === "ro") return __ro.import_notice_creator_recipe(inputs)
+	if (locale === "ru") return __ru.import_notice_creator_recipe(inputs)
+	if (locale === "sv") return __sv.import_notice_creator_recipe(inputs)
+	if (locale === "th") return __th.import_notice_creator_recipe(inputs)
+	if (locale === "tr") return __tr.import_notice_creator_recipe(inputs)
+	if (locale === "uk") return __uk.import_notice_creator_recipe(inputs)
+	if (locale === "vi") return __vi.import_notice_creator_recipe(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_notice_creator_recipe(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_notice_creator_recipe(inputs)
+	return __en.import_notice_creator_recipe(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Some details may be missing." |
+*
+* @param {Import_Notice_Details_MissingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_notice_details_missing = /** @type {((inputs?: Import_Notice_Details_MissingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Notice_Details_MissingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_notice_details_missing(inputs)
+	if (locale === "cs") return __cs.import_notice_details_missing(inputs)
+	if (locale === "da") return __da.import_notice_details_missing(inputs)
+	if (locale === "de") return __de.import_notice_details_missing(inputs)
+	if (locale === "el") return __el.import_notice_details_missing(inputs)
+	if (locale === "es") return __es.import_notice_details_missing(inputs)
+	if (locale === "fi") return __fi.import_notice_details_missing(inputs)
+	if (locale === "fr") return __fr.import_notice_details_missing(inputs)
+	if (locale === "he") return __he.import_notice_details_missing(inputs)
+	if (locale === "hu") return __hu.import_notice_details_missing(inputs)
+	if (locale === "id") return __id.import_notice_details_missing(inputs)
+	if (locale === "it") return __it.import_notice_details_missing(inputs)
+	if (locale === "ja") return __ja.import_notice_details_missing(inputs)
+	if (locale === "ko") return __ko.import_notice_details_missing(inputs)
+	if (locale === "nb") return __nb.import_notice_details_missing(inputs)
+	if (locale === "nl") return __nl.import_notice_details_missing(inputs)
+	if (locale === "pl") return __pl.import_notice_details_missing(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_notice_details_missing(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_notice_details_missing(inputs)
+	if (locale === "ro") return __ro.import_notice_details_missing(inputs)
+	if (locale === "ru") return __ru.import_notice_details_missing(inputs)
+	if (locale === "sv") return __sv.import_notice_details_missing(inputs)
+	if (locale === "th") return __th.import_notice_details_missing(inputs)
+	if (locale === "tr") return __tr.import_notice_details_missing(inputs)
+	if (locale === "uk") return __uk.import_notice_details_missing(inputs)
+	if (locale === "vi") return __vi.import_notice_details_missing(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_notice_details_missing(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_notice_details_missing(inputs)
+	return __en.import_notice_details_missing(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "From the post's caption" |
+*
+* @param {Import_Notice_From_CaptionInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_notice_from_caption = /** @type {((inputs?: Import_Notice_From_CaptionInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Notice_From_CaptionInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_notice_from_caption(inputs)
+	if (locale === "cs") return __cs.import_notice_from_caption(inputs)
+	if (locale === "da") return __da.import_notice_from_caption(inputs)
+	if (locale === "de") return __de.import_notice_from_caption(inputs)
+	if (locale === "el") return __el.import_notice_from_caption(inputs)
+	if (locale === "es") return __es.import_notice_from_caption(inputs)
+	if (locale === "fi") return __fi.import_notice_from_caption(inputs)
+	if (locale === "fr") return __fr.import_notice_from_caption(inputs)
+	if (locale === "he") return __he.import_notice_from_caption(inputs)
+	if (locale === "hu") return __hu.import_notice_from_caption(inputs)
+	if (locale === "id") return __id.import_notice_from_caption(inputs)
+	if (locale === "it") return __it.import_notice_from_caption(inputs)
+	if (locale === "ja") return __ja.import_notice_from_caption(inputs)
+	if (locale === "ko") return __ko.import_notice_from_caption(inputs)
+	if (locale === "nb") return __nb.import_notice_from_caption(inputs)
+	if (locale === "nl") return __nl.import_notice_from_caption(inputs)
+	if (locale === "pl") return __pl.import_notice_from_caption(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_notice_from_caption(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_notice_from_caption(inputs)
+	if (locale === "ro") return __ro.import_notice_from_caption(inputs)
+	if (locale === "ru") return __ru.import_notice_from_caption(inputs)
+	if (locale === "sv") return __sv.import_notice_from_caption(inputs)
+	if (locale === "th") return __th.import_notice_from_caption(inputs)
+	if (locale === "tr") return __tr.import_notice_from_caption(inputs)
+	if (locale === "uk") return __uk.import_notice_from_caption(inputs)
+	if (locale === "vi") return __vi.import_notice_from_caption(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_notice_from_caption(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_notice_from_caption(inputs)
+	return __en.import_notice_from_caption(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "From the author's comment on the post" |
+*
+* @param {Import_Notice_From_CommentInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_notice_from_comment = /** @type {((inputs?: Import_Notice_From_CommentInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Notice_From_CommentInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_notice_from_comment(inputs)
+	if (locale === "cs") return __cs.import_notice_from_comment(inputs)
+	if (locale === "da") return __da.import_notice_from_comment(inputs)
+	if (locale === "de") return __de.import_notice_from_comment(inputs)
+	if (locale === "el") return __el.import_notice_from_comment(inputs)
+	if (locale === "es") return __es.import_notice_from_comment(inputs)
+	if (locale === "fi") return __fi.import_notice_from_comment(inputs)
+	if (locale === "fr") return __fr.import_notice_from_comment(inputs)
+	if (locale === "he") return __he.import_notice_from_comment(inputs)
+	if (locale === "hu") return __hu.import_notice_from_comment(inputs)
+	if (locale === "id") return __id.import_notice_from_comment(inputs)
+	if (locale === "it") return __it.import_notice_from_comment(inputs)
+	if (locale === "ja") return __ja.import_notice_from_comment(inputs)
+	if (locale === "ko") return __ko.import_notice_from_comment(inputs)
+	if (locale === "nb") return __nb.import_notice_from_comment(inputs)
+	if (locale === "nl") return __nl.import_notice_from_comment(inputs)
+	if (locale === "pl") return __pl.import_notice_from_comment(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_notice_from_comment(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_notice_from_comment(inputs)
+	if (locale === "ro") return __ro.import_notice_from_comment(inputs)
+	if (locale === "ru") return __ru.import_notice_from_comment(inputs)
+	if (locale === "sv") return __sv.import_notice_from_comment(inputs)
+	if (locale === "th") return __th.import_notice_from_comment(inputs)
+	if (locale === "tr") return __tr.import_notice_from_comment(inputs)
+	if (locale === "uk") return __uk.import_notice_from_comment(inputs)
+	if (locale === "vi") return __vi.import_notice_from_comment(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_notice_from_comment(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_notice_from_comment(inputs)
+	return __en.import_notice_from_comment(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "From the creator's website" |
+*
+* @param {Import_Notice_From_Creator_SiteInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_notice_from_creator_site = /** @type {((inputs?: Import_Notice_From_Creator_SiteInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Notice_From_Creator_SiteInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_notice_from_creator_site(inputs)
+	if (locale === "cs") return __cs.import_notice_from_creator_site(inputs)
+	if (locale === "da") return __da.import_notice_from_creator_site(inputs)
+	if (locale === "de") return __de.import_notice_from_creator_site(inputs)
+	if (locale === "el") return __el.import_notice_from_creator_site(inputs)
+	if (locale === "es") return __es.import_notice_from_creator_site(inputs)
+	if (locale === "fi") return __fi.import_notice_from_creator_site(inputs)
+	if (locale === "fr") return __fr.import_notice_from_creator_site(inputs)
+	if (locale === "he") return __he.import_notice_from_creator_site(inputs)
+	if (locale === "hu") return __hu.import_notice_from_creator_site(inputs)
+	if (locale === "id") return __id.import_notice_from_creator_site(inputs)
+	if (locale === "it") return __it.import_notice_from_creator_site(inputs)
+	if (locale === "ja") return __ja.import_notice_from_creator_site(inputs)
+	if (locale === "ko") return __ko.import_notice_from_creator_site(inputs)
+	if (locale === "nb") return __nb.import_notice_from_creator_site(inputs)
+	if (locale === "nl") return __nl.import_notice_from_creator_site(inputs)
+	if (locale === "pl") return __pl.import_notice_from_creator_site(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_notice_from_creator_site(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_notice_from_creator_site(inputs)
+	if (locale === "ro") return __ro.import_notice_from_creator_site(inputs)
+	if (locale === "ru") return __ru.import_notice_from_creator_site(inputs)
+	if (locale === "sv") return __sv.import_notice_from_creator_site(inputs)
+	if (locale === "th") return __th.import_notice_from_creator_site(inputs)
+	if (locale === "tr") return __tr.import_notice_from_creator_site(inputs)
+	if (locale === "uk") return __uk.import_notice_from_creator_site(inputs)
+	if (locale === "vi") return __vi.import_notice_from_creator_site(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_notice_from_creator_site(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_notice_from_creator_site(inputs)
+	return __en.import_notice_from_creator_site(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "From the recipe linked in the post" |
+*
+* @param {Import_Notice_From_Linked_RecipeInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_notice_from_linked_recipe = /** @type {((inputs?: Import_Notice_From_Linked_RecipeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Notice_From_Linked_RecipeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_notice_from_linked_recipe(inputs)
+	if (locale === "cs") return __cs.import_notice_from_linked_recipe(inputs)
+	if (locale === "da") return __da.import_notice_from_linked_recipe(inputs)
+	if (locale === "de") return __de.import_notice_from_linked_recipe(inputs)
+	if (locale === "el") return __el.import_notice_from_linked_recipe(inputs)
+	if (locale === "es") return __es.import_notice_from_linked_recipe(inputs)
+	if (locale === "fi") return __fi.import_notice_from_linked_recipe(inputs)
+	if (locale === "fr") return __fr.import_notice_from_linked_recipe(inputs)
+	if (locale === "he") return __he.import_notice_from_linked_recipe(inputs)
+	if (locale === "hu") return __hu.import_notice_from_linked_recipe(inputs)
+	if (locale === "id") return __id.import_notice_from_linked_recipe(inputs)
+	if (locale === "it") return __it.import_notice_from_linked_recipe(inputs)
+	if (locale === "ja") return __ja.import_notice_from_linked_recipe(inputs)
+	if (locale === "ko") return __ko.import_notice_from_linked_recipe(inputs)
+	if (locale === "nb") return __nb.import_notice_from_linked_recipe(inputs)
+	if (locale === "nl") return __nl.import_notice_from_linked_recipe(inputs)
+	if (locale === "pl") return __pl.import_notice_from_linked_recipe(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_notice_from_linked_recipe(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_notice_from_linked_recipe(inputs)
+	if (locale === "ro") return __ro.import_notice_from_linked_recipe(inputs)
+	if (locale === "ru") return __ru.import_notice_from_linked_recipe(inputs)
+	if (locale === "sv") return __sv.import_notice_from_linked_recipe(inputs)
+	if (locale === "th") return __th.import_notice_from_linked_recipe(inputs)
+	if (locale === "tr") return __tr.import_notice_from_linked_recipe(inputs)
+	if (locale === "uk") return __uk.import_notice_from_linked_recipe(inputs)
+	if (locale === "vi") return __vi.import_notice_from_linked_recipe(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_notice_from_linked_recipe(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_notice_from_linked_recipe(inputs)
+	return __en.import_notice_from_linked_recipe(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Some measures differ in size by country. Choose how to read them below." |
+*
+* @param {Import_Notice_MeasurementsInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_notice_measurements = /** @type {((inputs?: Import_Notice_MeasurementsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Notice_MeasurementsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_notice_measurements(inputs)
+	if (locale === "cs") return __cs.import_notice_measurements(inputs)
+	if (locale === "da") return __da.import_notice_measurements(inputs)
+	if (locale === "de") return __de.import_notice_measurements(inputs)
+	if (locale === "el") return __el.import_notice_measurements(inputs)
+	if (locale === "es") return __es.import_notice_measurements(inputs)
+	if (locale === "fi") return __fi.import_notice_measurements(inputs)
+	if (locale === "fr") return __fr.import_notice_measurements(inputs)
+	if (locale === "he") return __he.import_notice_measurements(inputs)
+	if (locale === "hu") return __hu.import_notice_measurements(inputs)
+	if (locale === "id") return __id.import_notice_measurements(inputs)
+	if (locale === "it") return __it.import_notice_measurements(inputs)
+	if (locale === "ja") return __ja.import_notice_measurements(inputs)
+	if (locale === "ko") return __ko.import_notice_measurements(inputs)
+	if (locale === "nb") return __nb.import_notice_measurements(inputs)
+	if (locale === "nl") return __nl.import_notice_measurements(inputs)
+	if (locale === "pl") return __pl.import_notice_measurements(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_notice_measurements(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_notice_measurements(inputs)
+	if (locale === "ro") return __ro.import_notice_measurements(inputs)
+	if (locale === "ru") return __ru.import_notice_measurements(inputs)
+	if (locale === "sv") return __sv.import_notice_measurements(inputs)
+	if (locale === "th") return __th.import_notice_measurements(inputs)
+	if (locale === "tr") return __tr.import_notice_measurements(inputs)
+	if (locale === "uk") return __uk.import_notice_measurements(inputs)
+	if (locale === "vi") return __vi.import_notice_measurements(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_notice_measurements(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_notice_measurements(inputs)
+	return __en.import_notice_measurements(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "No ingredients found." |
+*
+* @param {Import_Notice_No_IngredientsInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_notice_no_ingredients = /** @type {((inputs?: Import_Notice_No_IngredientsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Notice_No_IngredientsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_notice_no_ingredients(inputs)
+	if (locale === "cs") return __cs.import_notice_no_ingredients(inputs)
+	if (locale === "da") return __da.import_notice_no_ingredients(inputs)
+	if (locale === "de") return __de.import_notice_no_ingredients(inputs)
+	if (locale === "el") return __el.import_notice_no_ingredients(inputs)
+	if (locale === "es") return __es.import_notice_no_ingredients(inputs)
+	if (locale === "fi") return __fi.import_notice_no_ingredients(inputs)
+	if (locale === "fr") return __fr.import_notice_no_ingredients(inputs)
+	if (locale === "he") return __he.import_notice_no_ingredients(inputs)
+	if (locale === "hu") return __hu.import_notice_no_ingredients(inputs)
+	if (locale === "id") return __id.import_notice_no_ingredients(inputs)
+	if (locale === "it") return __it.import_notice_no_ingredients(inputs)
+	if (locale === "ja") return __ja.import_notice_no_ingredients(inputs)
+	if (locale === "ko") return __ko.import_notice_no_ingredients(inputs)
+	if (locale === "nb") return __nb.import_notice_no_ingredients(inputs)
+	if (locale === "nl") return __nl.import_notice_no_ingredients(inputs)
+	if (locale === "pl") return __pl.import_notice_no_ingredients(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_notice_no_ingredients(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_notice_no_ingredients(inputs)
+	if (locale === "ro") return __ro.import_notice_no_ingredients(inputs)
+	if (locale === "ru") return __ru.import_notice_no_ingredients(inputs)
+	if (locale === "sv") return __sv.import_notice_no_ingredients(inputs)
+	if (locale === "th") return __th.import_notice_no_ingredients(inputs)
+	if (locale === "tr") return __tr.import_notice_no_ingredients(inputs)
+	if (locale === "uk") return __uk.import_notice_no_ingredients(inputs)
+	if (locale === "vi") return __vi.import_notice_no_ingredients(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_notice_no_ingredients(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_notice_no_ingredients(inputs)
+	return __en.import_notice_no_ingredients(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "No steps found." |
+*
+* @param {Import_Notice_No_StepsInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_notice_no_steps = /** @type {((inputs?: Import_Notice_No_StepsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Notice_No_StepsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_notice_no_steps(inputs)
+	if (locale === "cs") return __cs.import_notice_no_steps(inputs)
+	if (locale === "da") return __da.import_notice_no_steps(inputs)
+	if (locale === "de") return __de.import_notice_no_steps(inputs)
+	if (locale === "el") return __el.import_notice_no_steps(inputs)
+	if (locale === "es") return __es.import_notice_no_steps(inputs)
+	if (locale === "fi") return __fi.import_notice_no_steps(inputs)
+	if (locale === "fr") return __fr.import_notice_no_steps(inputs)
+	if (locale === "he") return __he.import_notice_no_steps(inputs)
+	if (locale === "hu") return __hu.import_notice_no_steps(inputs)
+	if (locale === "id") return __id.import_notice_no_steps(inputs)
+	if (locale === "it") return __it.import_notice_no_steps(inputs)
+	if (locale === "ja") return __ja.import_notice_no_steps(inputs)
+	if (locale === "ko") return __ko.import_notice_no_steps(inputs)
+	if (locale === "nb") return __nb.import_notice_no_steps(inputs)
+	if (locale === "nl") return __nl.import_notice_no_steps(inputs)
+	if (locale === "pl") return __pl.import_notice_no_steps(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_notice_no_steps(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_notice_no_steps(inputs)
+	if (locale === "ro") return __ro.import_notice_no_steps(inputs)
+	if (locale === "ru") return __ru.import_notice_no_steps(inputs)
+	if (locale === "sv") return __sv.import_notice_no_steps(inputs)
+	if (locale === "th") return __th.import_notice_no_steps(inputs)
+	if (locale === "tr") return __tr.import_notice_no_steps(inputs)
+	if (locale === "uk") return __uk.import_notice_no_steps(inputs)
+	if (locale === "vi") return __vi.import_notice_no_steps(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_notice_no_steps(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_notice_no_steps(inputs)
+	return __en.import_notice_no_steps(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "No ingredients or steps found. Save and edit to add them." |
+*
+* @param {Import_Notice_Nothing_FoundInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_notice_nothing_found = /** @type {((inputs?: Import_Notice_Nothing_FoundInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Notice_Nothing_FoundInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_notice_nothing_found(inputs)
+	if (locale === "cs") return __cs.import_notice_nothing_found(inputs)
+	if (locale === "da") return __da.import_notice_nothing_found(inputs)
+	if (locale === "de") return __de.import_notice_nothing_found(inputs)
+	if (locale === "el") return __el.import_notice_nothing_found(inputs)
+	if (locale === "es") return __es.import_notice_nothing_found(inputs)
+	if (locale === "fi") return __fi.import_notice_nothing_found(inputs)
+	if (locale === "fr") return __fr.import_notice_nothing_found(inputs)
+	if (locale === "he") return __he.import_notice_nothing_found(inputs)
+	if (locale === "hu") return __hu.import_notice_nothing_found(inputs)
+	if (locale === "id") return __id.import_notice_nothing_found(inputs)
+	if (locale === "it") return __it.import_notice_nothing_found(inputs)
+	if (locale === "ja") return __ja.import_notice_nothing_found(inputs)
+	if (locale === "ko") return __ko.import_notice_nothing_found(inputs)
+	if (locale === "nb") return __nb.import_notice_nothing_found(inputs)
+	if (locale === "nl") return __nl.import_notice_nothing_found(inputs)
+	if (locale === "pl") return __pl.import_notice_nothing_found(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_notice_nothing_found(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_notice_nothing_found(inputs)
+	if (locale === "ro") return __ro.import_notice_nothing_found(inputs)
+	if (locale === "ru") return __ru.import_notice_nothing_found(inputs)
+	if (locale === "sv") return __sv.import_notice_nothing_found(inputs)
+	if (locale === "th") return __th.import_notice_nothing_found(inputs)
+	if (locale === "tr") return __tr.import_notice_nothing_found(inputs)
+	if (locale === "uk") return __uk.import_notice_nothing_found(inputs)
+	if (locale === "vi") return __vi.import_notice_nothing_found(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_notice_nothing_found(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_notice_nothing_found(inputs)
+	return __en.import_notice_nothing_found(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "View post" |
+*
+* @param {Import_Notice_View_PostInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_notice_view_post = /** @type {((inputs?: Import_Notice_View_PostInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Notice_View_PostInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_notice_view_post(inputs)
+	if (locale === "cs") return __cs.import_notice_view_post(inputs)
+	if (locale === "da") return __da.import_notice_view_post(inputs)
+	if (locale === "de") return __de.import_notice_view_post(inputs)
+	if (locale === "el") return __el.import_notice_view_post(inputs)
+	if (locale === "es") return __es.import_notice_view_post(inputs)
+	if (locale === "fi") return __fi.import_notice_view_post(inputs)
+	if (locale === "fr") return __fr.import_notice_view_post(inputs)
+	if (locale === "he") return __he.import_notice_view_post(inputs)
+	if (locale === "hu") return __hu.import_notice_view_post(inputs)
+	if (locale === "id") return __id.import_notice_view_post(inputs)
+	if (locale === "it") return __it.import_notice_view_post(inputs)
+	if (locale === "ja") return __ja.import_notice_view_post(inputs)
+	if (locale === "ko") return __ko.import_notice_view_post(inputs)
+	if (locale === "nb") return __nb.import_notice_view_post(inputs)
+	if (locale === "nl") return __nl.import_notice_view_post(inputs)
+	if (locale === "pl") return __pl.import_notice_view_post(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_notice_view_post(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_notice_view_post(inputs)
+	if (locale === "ro") return __ro.import_notice_view_post(inputs)
+	if (locale === "ru") return __ru.import_notice_view_post(inputs)
+	if (locale === "sv") return __sv.import_notice_view_post(inputs)
+	if (locale === "th") return __th.import_notice_view_post(inputs)
+	if (locale === "tr") return __tr.import_notice_view_post(inputs)
+	if (locale === "uk") return __uk.import_notice_view_post(inputs)
+	if (locale === "vi") return __vi.import_notice_view_post(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_notice_view_post(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_notice_view_post(inputs)
+	return __en.import_notice_view_post(inputs)
+});
+/**
 * | plural | output |
 * | --- | --- |
 * | "one" | "{countText} photograph still to fetch" |
@@ -49543,47 +49966,6 @@ export const import_review_panel_save_recipe = /** @type {((inputs?: Import_Revi
 /**
 * | output |
 * | --- |
-* | "Save this recipe" |
-*
-* @param {Import_Review_Panel_Save_This_RecipeInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const import_review_panel_save_this_recipe = /** @type {((inputs?: Import_Review_Panel_Save_This_RecipeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Review_Panel_Save_This_RecipeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.import_review_panel_save_this_recipe(inputs)
-	if (locale === "cs") return __cs.import_review_panel_save_this_recipe(inputs)
-	if (locale === "da") return __da.import_review_panel_save_this_recipe(inputs)
-	if (locale === "de") return __de.import_review_panel_save_this_recipe(inputs)
-	if (locale === "el") return __el.import_review_panel_save_this_recipe(inputs)
-	if (locale === "es") return __es.import_review_panel_save_this_recipe(inputs)
-	if (locale === "fi") return __fi.import_review_panel_save_this_recipe(inputs)
-	if (locale === "fr") return __fr.import_review_panel_save_this_recipe(inputs)
-	if (locale === "he") return __he.import_review_panel_save_this_recipe(inputs)
-	if (locale === "hu") return __hu.import_review_panel_save_this_recipe(inputs)
-	if (locale === "id") return __id.import_review_panel_save_this_recipe(inputs)
-	if (locale === "it") return __it.import_review_panel_save_this_recipe(inputs)
-	if (locale === "ja") return __ja.import_review_panel_save_this_recipe(inputs)
-	if (locale === "ko") return __ko.import_review_panel_save_this_recipe(inputs)
-	if (locale === "nb") return __nb.import_review_panel_save_this_recipe(inputs)
-	if (locale === "nl") return __nl.import_review_panel_save_this_recipe(inputs)
-	if (locale === "pl") return __pl.import_review_panel_save_this_recipe(inputs)
-	if (locale === "pt-BR") return __pt_br2.import_review_panel_save_this_recipe(inputs)
-	if (locale === "pt-PT") return __pt_pt2.import_review_panel_save_this_recipe(inputs)
-	if (locale === "ro") return __ro.import_review_panel_save_this_recipe(inputs)
-	if (locale === "ru") return __ru.import_review_panel_save_this_recipe(inputs)
-	if (locale === "sv") return __sv.import_review_panel_save_this_recipe(inputs)
-	if (locale === "th") return __th.import_review_panel_save_this_recipe(inputs)
-	if (locale === "tr") return __tr.import_review_panel_save_this_recipe(inputs)
-	if (locale === "uk") return __uk.import_review_panel_save_this_recipe(inputs)
-	if (locale === "vi") return __vi.import_review_panel_save_this_recipe(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.import_review_panel_save_this_recipe(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.import_review_panel_save_this_recipe(inputs)
-	return __en.import_review_panel_save_this_recipe(inputs)
-});
-/**
-* | output |
-* | --- |
 * | "Select all" |
 *
 * @param {Import_Review_Panel_Select_AllInputs} inputs
@@ -49828,6 +50210,129 @@ export const import_review_panel_what_is = /** @type {((inputs: Import_Review_Pa
 	if (locale === "zh-Hans") return __zh_hans1.import_review_panel_what_is(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.import_review_panel_what_is(inputs)
 	return __en.import_review_panel_what_is(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Replace" |
+*
+* @param {Import_Review_ReplaceInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_review_replace = /** @type {((inputs?: Import_Review_ReplaceInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Review_ReplaceInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_review_replace(inputs)
+	if (locale === "cs") return __cs.import_review_replace(inputs)
+	if (locale === "da") return __da.import_review_replace(inputs)
+	if (locale === "de") return __de.import_review_replace(inputs)
+	if (locale === "el") return __el.import_review_replace(inputs)
+	if (locale === "es") return __es.import_review_replace(inputs)
+	if (locale === "fi") return __fi.import_review_replace(inputs)
+	if (locale === "fr") return __fr.import_review_replace(inputs)
+	if (locale === "he") return __he.import_review_replace(inputs)
+	if (locale === "hu") return __hu.import_review_replace(inputs)
+	if (locale === "id") return __id.import_review_replace(inputs)
+	if (locale === "it") return __it.import_review_replace(inputs)
+	if (locale === "ja") return __ja.import_review_replace(inputs)
+	if (locale === "ko") return __ko.import_review_replace(inputs)
+	if (locale === "nb") return __nb.import_review_replace(inputs)
+	if (locale === "nl") return __nl.import_review_replace(inputs)
+	if (locale === "pl") return __pl.import_review_replace(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_review_replace(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_review_replace(inputs)
+	if (locale === "ro") return __ro.import_review_replace(inputs)
+	if (locale === "ru") return __ru.import_review_replace(inputs)
+	if (locale === "sv") return __sv.import_review_replace(inputs)
+	if (locale === "th") return __th.import_review_replace(inputs)
+	if (locale === "tr") return __tr.import_review_replace(inputs)
+	if (locale === "uk") return __uk.import_review_replace(inputs)
+	if (locale === "vi") return __vi.import_review_replace(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_review_replace(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_review_replace(inputs)
+	return __en.import_review_replace(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Save and edit" |
+*
+* @param {Import_Review_Save_And_EditInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_review_save_and_edit = /** @type {((inputs?: Import_Review_Save_And_EditInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Review_Save_And_EditInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_review_save_and_edit(inputs)
+	if (locale === "cs") return __cs.import_review_save_and_edit(inputs)
+	if (locale === "da") return __da.import_review_save_and_edit(inputs)
+	if (locale === "de") return __de.import_review_save_and_edit(inputs)
+	if (locale === "el") return __el.import_review_save_and_edit(inputs)
+	if (locale === "es") return __es.import_review_save_and_edit(inputs)
+	if (locale === "fi") return __fi.import_review_save_and_edit(inputs)
+	if (locale === "fr") return __fr.import_review_save_and_edit(inputs)
+	if (locale === "he") return __he.import_review_save_and_edit(inputs)
+	if (locale === "hu") return __hu.import_review_save_and_edit(inputs)
+	if (locale === "id") return __id.import_review_save_and_edit(inputs)
+	if (locale === "it") return __it.import_review_save_and_edit(inputs)
+	if (locale === "ja") return __ja.import_review_save_and_edit(inputs)
+	if (locale === "ko") return __ko.import_review_save_and_edit(inputs)
+	if (locale === "nb") return __nb.import_review_save_and_edit(inputs)
+	if (locale === "nl") return __nl.import_review_save_and_edit(inputs)
+	if (locale === "pl") return __pl.import_review_save_and_edit(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_review_save_and_edit(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_review_save_and_edit(inputs)
+	if (locale === "ro") return __ro.import_review_save_and_edit(inputs)
+	if (locale === "ru") return __ru.import_review_save_and_edit(inputs)
+	if (locale === "sv") return __sv.import_review_save_and_edit(inputs)
+	if (locale === "th") return __th.import_review_save_and_edit(inputs)
+	if (locale === "tr") return __tr.import_review_save_and_edit(inputs)
+	if (locale === "uk") return __uk.import_review_save_and_edit(inputs)
+	if (locale === "vi") return __vi.import_review_save_and_edit(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_review_save_and_edit(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_review_save_and_edit(inputs)
+	return __en.import_review_save_and_edit(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Save copy" |
+*
+* @param {Import_Review_Save_CopyInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const import_review_save_copy = /** @type {((inputs?: Import_Review_Save_CopyInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Import_Review_Save_CopyInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.import_review_save_copy(inputs)
+	if (locale === "cs") return __cs.import_review_save_copy(inputs)
+	if (locale === "da") return __da.import_review_save_copy(inputs)
+	if (locale === "de") return __de.import_review_save_copy(inputs)
+	if (locale === "el") return __el.import_review_save_copy(inputs)
+	if (locale === "es") return __es.import_review_save_copy(inputs)
+	if (locale === "fi") return __fi.import_review_save_copy(inputs)
+	if (locale === "fr") return __fr.import_review_save_copy(inputs)
+	if (locale === "he") return __he.import_review_save_copy(inputs)
+	if (locale === "hu") return __hu.import_review_save_copy(inputs)
+	if (locale === "id") return __id.import_review_save_copy(inputs)
+	if (locale === "it") return __it.import_review_save_copy(inputs)
+	if (locale === "ja") return __ja.import_review_save_copy(inputs)
+	if (locale === "ko") return __ko.import_review_save_copy(inputs)
+	if (locale === "nb") return __nb.import_review_save_copy(inputs)
+	if (locale === "nl") return __nl.import_review_save_copy(inputs)
+	if (locale === "pl") return __pl.import_review_save_copy(inputs)
+	if (locale === "pt-BR") return __pt_br2.import_review_save_copy(inputs)
+	if (locale === "pt-PT") return __pt_pt2.import_review_save_copy(inputs)
+	if (locale === "ro") return __ro.import_review_save_copy(inputs)
+	if (locale === "ru") return __ru.import_review_save_copy(inputs)
+	if (locale === "sv") return __sv.import_review_save_copy(inputs)
+	if (locale === "th") return __th.import_review_save_copy(inputs)
+	if (locale === "tr") return __tr.import_review_save_copy(inputs)
+	if (locale === "uk") return __uk.import_review_save_copy(inputs)
+	if (locale === "vi") return __vi.import_review_save_copy(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.import_review_save_copy(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.import_review_save_copy(inputs)
+	return __en.import_review_save_copy(inputs)
 });
 /**
 * | plural | output |
@@ -61684,47 +62189,6 @@ export const measurement_decisions_clear_choice = /** @type {((inputs?: Measurem
 /**
 * | output |
 * | --- |
-* | "Covers every measure in each ingredient it reaches." |
-*
-* @param {Measurement_Decisions_Convention_HintInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const measurement_decisions_convention_hint = /** @type {((inputs?: Measurement_Decisions_Convention_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Measurement_Decisions_Convention_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.measurement_decisions_convention_hint(inputs)
-	if (locale === "cs") return __cs.measurement_decisions_convention_hint(inputs)
-	if (locale === "da") return __da.measurement_decisions_convention_hint(inputs)
-	if (locale === "de") return __de.measurement_decisions_convention_hint(inputs)
-	if (locale === "el") return __el.measurement_decisions_convention_hint(inputs)
-	if (locale === "es") return __es.measurement_decisions_convention_hint(inputs)
-	if (locale === "fi") return __fi.measurement_decisions_convention_hint(inputs)
-	if (locale === "fr") return __fr.measurement_decisions_convention_hint(inputs)
-	if (locale === "he") return __he.measurement_decisions_convention_hint(inputs)
-	if (locale === "hu") return __hu.measurement_decisions_convention_hint(inputs)
-	if (locale === "id") return __id.measurement_decisions_convention_hint(inputs)
-	if (locale === "it") return __it.measurement_decisions_convention_hint(inputs)
-	if (locale === "ja") return __ja.measurement_decisions_convention_hint(inputs)
-	if (locale === "ko") return __ko.measurement_decisions_convention_hint(inputs)
-	if (locale === "nb") return __nb.measurement_decisions_convention_hint(inputs)
-	if (locale === "nl") return __nl.measurement_decisions_convention_hint(inputs)
-	if (locale === "pl") return __pl.measurement_decisions_convention_hint(inputs)
-	if (locale === "pt-BR") return __pt_br2.measurement_decisions_convention_hint(inputs)
-	if (locale === "pt-PT") return __pt_pt2.measurement_decisions_convention_hint(inputs)
-	if (locale === "ro") return __ro.measurement_decisions_convention_hint(inputs)
-	if (locale === "ru") return __ru.measurement_decisions_convention_hint(inputs)
-	if (locale === "sv") return __sv.measurement_decisions_convention_hint(inputs)
-	if (locale === "th") return __th.measurement_decisions_convention_hint(inputs)
-	if (locale === "tr") return __tr.measurement_decisions_convention_hint(inputs)
-	if (locale === "uk") return __uk.measurement_decisions_convention_hint(inputs)
-	if (locale === "vi") return __vi.measurement_decisions_convention_hint(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.measurement_decisions_convention_hint(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.measurement_decisions_convention_hint(inputs)
-	return __en.measurement_decisions_convention_hint(inputs)
-});
-/**
-* | output |
-* | --- |
 * | "Read every measure as" |
 *
 * @param {Measurement_Decisions_Convention_LegendInputs} inputs
@@ -61848,8 +62312,8 @@ export const measurement_decisions_exceptions = /** @type {((inputs?: Measuremen
 /**
 * | measurementsPlural | output |
 * | --- | --- |
-* | "one" | "{measurementsText} measurement names a size that differs by country. Unanswered ones import as written." |
-* | * | "{measurementsText} measurements name sizes that differ by country. Unanswered ones import as written." |
+* | "one" | "{measurementsText} measure differs in size by country. If unanswered, it imports as written." |
+* | * | "{measurementsText} measures differ in size by country. Unanswered ones import as written." |
 *
 * @param {Measurement_Decisions_IntroInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -98329,6 +98793,47 @@ export const text_import_choose_a_text_file_smaller_than_8_mb = /** @type {((inp
 /**
 * | output |
 * | --- |
+* | "Fetch page" |
+*
+* @param {Text_Import_Fetch_PageInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const text_import_fetch_page = /** @type {((inputs?: Text_Import_Fetch_PageInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Text_Import_Fetch_PageInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.text_import_fetch_page(inputs)
+	if (locale === "cs") return __cs.text_import_fetch_page(inputs)
+	if (locale === "da") return __da.text_import_fetch_page(inputs)
+	if (locale === "de") return __de.text_import_fetch_page(inputs)
+	if (locale === "el") return __el.text_import_fetch_page(inputs)
+	if (locale === "es") return __es.text_import_fetch_page(inputs)
+	if (locale === "fi") return __fi.text_import_fetch_page(inputs)
+	if (locale === "fr") return __fr.text_import_fetch_page(inputs)
+	if (locale === "he") return __he.text_import_fetch_page(inputs)
+	if (locale === "hu") return __hu.text_import_fetch_page(inputs)
+	if (locale === "id") return __id.text_import_fetch_page(inputs)
+	if (locale === "it") return __it.text_import_fetch_page(inputs)
+	if (locale === "ja") return __ja.text_import_fetch_page(inputs)
+	if (locale === "ko") return __ko.text_import_fetch_page(inputs)
+	if (locale === "nb") return __nb.text_import_fetch_page(inputs)
+	if (locale === "nl") return __nl.text_import_fetch_page(inputs)
+	if (locale === "pl") return __pl.text_import_fetch_page(inputs)
+	if (locale === "pt-BR") return __pt_br2.text_import_fetch_page(inputs)
+	if (locale === "pt-PT") return __pt_pt2.text_import_fetch_page(inputs)
+	if (locale === "ro") return __ro.text_import_fetch_page(inputs)
+	if (locale === "ru") return __ru.text_import_fetch_page(inputs)
+	if (locale === "sv") return __sv.text_import_fetch_page(inputs)
+	if (locale === "th") return __th.text_import_fetch_page(inputs)
+	if (locale === "tr") return __tr.text_import_fetch_page(inputs)
+	if (locale === "uk") return __uk.text_import_fetch_page(inputs)
+	if (locale === "vi") return __vi.text_import_fetch_page(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.text_import_fetch_page(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.text_import_fetch_page(inputs)
+	return __en.text_import_fetch_page(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Import plain text recipe" |
 *
 * @param {Text_Import_Import_Plain_Text_RecipeInputs} inputs
@@ -98612,6 +99117,47 @@ export const text_import_the_text_file_could_not_be_read = /** @type {((inputs?:
 	if (locale === "zh-Hans") return __zh_hans1.text_import_the_text_file_could_not_be_read(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.text_import_the_text_file_could_not_be_read(inputs)
 	return __en.text_import_the_text_file_could_not_be_read(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "This is a web address. Fetch the recipe from that page instead?" |
+*
+* @param {Text_Import_Url_DetectedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const text_import_url_detected = /** @type {((inputs?: Text_Import_Url_DetectedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Text_Import_Url_DetectedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.text_import_url_detected(inputs)
+	if (locale === "cs") return __cs.text_import_url_detected(inputs)
+	if (locale === "da") return __da.text_import_url_detected(inputs)
+	if (locale === "de") return __de.text_import_url_detected(inputs)
+	if (locale === "el") return __el.text_import_url_detected(inputs)
+	if (locale === "es") return __es.text_import_url_detected(inputs)
+	if (locale === "fi") return __fi.text_import_url_detected(inputs)
+	if (locale === "fr") return __fr.text_import_url_detected(inputs)
+	if (locale === "he") return __he.text_import_url_detected(inputs)
+	if (locale === "hu") return __hu.text_import_url_detected(inputs)
+	if (locale === "id") return __id.text_import_url_detected(inputs)
+	if (locale === "it") return __it.text_import_url_detected(inputs)
+	if (locale === "ja") return __ja.text_import_url_detected(inputs)
+	if (locale === "ko") return __ko.text_import_url_detected(inputs)
+	if (locale === "nb") return __nb.text_import_url_detected(inputs)
+	if (locale === "nl") return __nl.text_import_url_detected(inputs)
+	if (locale === "pl") return __pl.text_import_url_detected(inputs)
+	if (locale === "pt-BR") return __pt_br2.text_import_url_detected(inputs)
+	if (locale === "pt-PT") return __pt_pt2.text_import_url_detected(inputs)
+	if (locale === "ro") return __ro.text_import_url_detected(inputs)
+	if (locale === "ru") return __ru.text_import_url_detected(inputs)
+	if (locale === "sv") return __sv.text_import_url_detected(inputs)
+	if (locale === "th") return __th.text_import_url_detected(inputs)
+	if (locale === "tr") return __tr.text_import_url_detected(inputs)
+	if (locale === "uk") return __uk.text_import_url_detected(inputs)
+	if (locale === "vi") return __vi.text_import_url_detected(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.text_import_url_detected(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.text_import_url_detected(inputs)
+	return __en.text_import_url_detected(inputs)
 });
 /**
 * | output |

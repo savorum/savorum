@@ -103,13 +103,11 @@ test("source refresh shows actual conflicts and keeps independent local edits", 
   await page.goto("/")
   await page.locator('input[type="file"]').setInputFiles("e2e/fixtures/refresh-source.json")
   await page
-    .getByRole("region", { name: "Save this recipe" })
+    .getByRole("region", { name: "Review import" })
     .getByRole("button", { name: "Save recipe", exact: true })
     .click()
-  await expect(page.getByRole("heading", { name: "1 recipe imported" })).toBeVisible()
-  const path = await page
-    .getByRole("link", { name: "Source refresh saffron rice", exact: true })
-    .getAttribute("href")
+  await expect(page).toHaveURL(/\/recipes\/[^/]+$/)
+  const path = new URL(page.url()).pathname
   const initial = await request.get(`/api/v1${path}`)
   const entry = await initial.json()
   const remote = structuredClone(entry.recipe)

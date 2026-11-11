@@ -750,17 +750,14 @@
   "import_candidate_keep_the_original_file": "Keep the original file",
   "import_candidate_optional_available_in_recipe_history": "Optional · available in recipe history",
   "import_candidate_edit_recipe_text": "Edit recipe text",
-  "import_candidate_same_source_already_in_the_library": "Same source already in the library",
   "import_candidate_possible_duplicate": "Possible duplicate",
   "import_candidate_several_source_matches": "Several source matches",
   "import_candidate_when_this_recipe_is_selected": "Choose what to keep",
   "import_candidate_import_as_a_separate_recipe": "Import as a separate recipe",
   "import_candidate_update_the_existing_recipe": "Update the existing recipe",
   "import_candidate_keep_the_existing_recipe": "Keep the existing recipe",
-  "import_candidate_description": "Description",
   "import_candidate_yield": "Yield",
   "import_candidate_ingredients_label": "Ingredients",
-  "import_candidate_directions": "Instructions",
   "import_review_panel_review_import": "Review import",
   "import_review_panel_filter_import_candidates": "Filter import candidates",
   "import_review_panel_all_recipes": "All recipes",
@@ -2265,15 +2262,14 @@
       ],
       "selectors": ["measurementsPlural"],
       "match": {
-        "measurementsPlural=one": "{measurementsText} measurement names a size that differs by country. Unanswered ones import as written.",
-        "measurementsPlural=*": "{measurementsText} measurements name sizes that differ by country. Unanswered ones import as written."
+        "measurementsPlural=one": "{measurementsText} measure differs in size by country. If unanswered, it imports as written.",
+        "measurementsPlural=*": "{measurementsText} measures differ in size by country. Unanswered ones import as written."
       }
     }
   ],
   "measurement_decisions_all_answered": "Every measurement is settled.",
   "measurement_decisions_undo_last": "Undo last answer",
   "measurement_decisions_convention_legend": "Read every measure as",
-  "measurement_decisions_convention_hint": "Covers every measure in each ingredient it reaches.",
   "measurement_decisions_separately": [
     {
       "declarations": [
@@ -2501,7 +2497,6 @@
   "bulk_organize_dialog_search_to_add": "Search {value1} to add",
   "bulk_organize_dialog_search_to_take_off": "Search {value1} to take off",
   "library_selection_bar_compare": "Compare",
-  "import_review_panel_save_this_recipe": "Save this recipe",
   "import_review_panel_save_recipe": "Save recipe",
   "preferences_shared_scope": "This library has no sign-in, so everyone who uses it shares these settings. They change only how recipes are shown, never a saved recipe.",
   "preferences_default_is": "Default ({value1})",
@@ -3123,5 +3118,23 @@
   "account_audit_credential_id": "Credential ID",
   "account_audit_request_id": "Request ID",
   "account_audit_webhook": "Webhook",
-  "account_audit_retired": "Retired"
+  "account_audit_retired": "Retired",
+  "import_notice_from_caption": "From the post's caption",
+  "import_notice_from_comment": "From the author's comment on the post",
+  "import_notice_from_linked_recipe": "From the recipe linked in the post",
+  "import_notice_from_creator_site": "From the creator's website",
+  "import_notice_creator_recipe": "Found on the creator's website by its name. Check that it matches the post.",
+  "import_notice_check_placement": "Check that ingredients and steps are in the right place.",
+  "import_notice_details_missing": "Some details may be missing.",
+  "import_notice_measurements": "Some measures differ in size by country. Choose how to read them below.",
+  "import_notice_nothing_found": "No ingredients or steps found. Save and edit to add them.",
+  "import_notice_no_ingredients": "No ingredients found.",
+  "import_notice_no_steps": "No steps found.",
+  "import_notice_check_title": "Check before saving",
+  "import_notice_view_post": "View post",
+  "import_review_save_and_edit": "Save and edit",
+  "import_review_replace": "Replace",
+  "import_review_save_copy": "Save copy",
+  "text_import_url_detected": "This is a web address. Fetch the recipe from that page instead?",
+  "text_import_fetch_page": "Fetch page"
 }

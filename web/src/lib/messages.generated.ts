@@ -2979,12 +2979,6 @@ export const import_candidate_compare_with: Messages["import_candidate_compare_w
 export const import_candidate_decision: Messages["import_candidate_decision"] = /* @__PURE__ */ localized("import_candidate_decision", () => {
 	return /** @type {LocalizedString} */ (`Needs a decision`)
 })
-export const import_candidate_description: Messages["import_candidate_description"] = /* @__PURE__ */ localized("import_candidate_description", () => {
-	return /** @type {LocalizedString} */ (`Description`)
-})
-export const import_candidate_directions: Messages["import_candidate_directions"] = /* @__PURE__ */ localized("import_candidate_directions", () => {
-	return /** @type {LocalizedString} */ (`Instructions`)
-})
 export const import_candidate_edit_recipe_text: Messages["import_candidate_edit_recipe_text"] = /* @__PURE__ */ localized("import_candidate_edit_recipe_text", () => {
 	return /** @type {LocalizedString} */ (`Edit recipe text`)
 })
@@ -3044,9 +3038,6 @@ export const import_candidate_reconcile: Messages["import_candidate_reconcile"] 
 })
 export const import_candidate_review: Messages["import_candidate_review"] = /* @__PURE__ */ localized("import_candidate_review", () => {
 	return /** @type {LocalizedString} */ (`Can be saved; some details need a look`)
-})
-export const import_candidate_same_source_already_in_the_library: Messages["import_candidate_same_source_already_in_the_library"] = /* @__PURE__ */ localized("import_candidate_same_source_already_in_the_library", () => {
-	return /** @type {LocalizedString} */ (`Same source already in the library`)
 })
 export const import_candidate_several_source_matches: Messages["import_candidate_several_source_matches"] = /* @__PURE__ */ localized("import_candidate_several_source_matches", () => {
 	return /** @type {LocalizedString} */ (`Several source matches`)
@@ -3436,6 +3427,45 @@ export const import_menu_recent_imports: Messages["import_menu_recent_imports"] 
 export const import_menu_recipe_collections_pdfs_and_photos: Messages["import_menu_recipe_collections_pdfs_and_photos"] = /* @__PURE__ */ localized("import_menu_recipe_collections_pdfs_and_photos", () => {
 	return /** @type {LocalizedString} */ (`Recipe collections, PDFs and photos`)
 })
+export const import_notice_check_placement: Messages["import_notice_check_placement"] = /* @__PURE__ */ localized("import_notice_check_placement", () => {
+	return /** @type {LocalizedString} */ (`Check that ingredients and steps are in the right place.`)
+})
+export const import_notice_check_title: Messages["import_notice_check_title"] = /* @__PURE__ */ localized("import_notice_check_title", () => {
+	return /** @type {LocalizedString} */ (`Check before saving`)
+})
+export const import_notice_creator_recipe: Messages["import_notice_creator_recipe"] = /* @__PURE__ */ localized("import_notice_creator_recipe", () => {
+	return /** @type {LocalizedString} */ (`Found on the creator's website by its name. Check that it matches the post.`)
+})
+export const import_notice_details_missing: Messages["import_notice_details_missing"] = /* @__PURE__ */ localized("import_notice_details_missing", () => {
+	return /** @type {LocalizedString} */ (`Some details may be missing.`)
+})
+export const import_notice_from_caption: Messages["import_notice_from_caption"] = /* @__PURE__ */ localized("import_notice_from_caption", () => {
+	return /** @type {LocalizedString} */ (`From the post's caption`)
+})
+export const import_notice_from_comment: Messages["import_notice_from_comment"] = /* @__PURE__ */ localized("import_notice_from_comment", () => {
+	return /** @type {LocalizedString} */ (`From the author's comment on the post`)
+})
+export const import_notice_from_creator_site: Messages["import_notice_from_creator_site"] = /* @__PURE__ */ localized("import_notice_from_creator_site", () => {
+	return /** @type {LocalizedString} */ (`From the creator's website`)
+})
+export const import_notice_from_linked_recipe: Messages["import_notice_from_linked_recipe"] = /* @__PURE__ */ localized("import_notice_from_linked_recipe", () => {
+	return /** @type {LocalizedString} */ (`From the recipe linked in the post`)
+})
+export const import_notice_measurements: Messages["import_notice_measurements"] = /* @__PURE__ */ localized("import_notice_measurements", () => {
+	return /** @type {LocalizedString} */ (`Some measures differ in size by country. Choose how to read them below.`)
+})
+export const import_notice_no_ingredients: Messages["import_notice_no_ingredients"] = /* @__PURE__ */ localized("import_notice_no_ingredients", () => {
+	return /** @type {LocalizedString} */ (`No ingredients found.`)
+})
+export const import_notice_no_steps: Messages["import_notice_no_steps"] = /* @__PURE__ */ localized("import_notice_no_steps", () => {
+	return /** @type {LocalizedString} */ (`No steps found.`)
+})
+export const import_notice_nothing_found: Messages["import_notice_nothing_found"] = /* @__PURE__ */ localized("import_notice_nothing_found", () => {
+	return /** @type {LocalizedString} */ (`No ingredients or steps found. Save and edit to add them.`)
+})
+export const import_notice_view_post: Messages["import_notice_view_post"] = /* @__PURE__ */ localized("import_notice_view_post", () => {
+	return /** @type {LocalizedString} */ (`View post`)
+})
 export const import_photos_pending: Messages["import_photos_pending"] = /* @__PURE__ */ localized("import_photos_pending", (i) => {
 	const countText = __paraglideRegistry.number("en", i?.count, {}, true);
 	const plural = __paraglideRegistry.plural("en", i?.count, {}, true);
@@ -3596,9 +3626,6 @@ export const import_review_panel_review_import: Messages["import_review_panel_re
 export const import_review_panel_save_recipe: Messages["import_review_panel_save_recipe"] = /* @__PURE__ */ localized("import_review_panel_save_recipe", () => {
 	return /** @type {LocalizedString} */ (`Save recipe`)
 })
-export const import_review_panel_save_this_recipe: Messages["import_review_panel_save_this_recipe"] = /* @__PURE__ */ localized("import_review_panel_save_this_recipe", () => {
-	return /** @type {LocalizedString} */ (`Save this recipe`)
-})
 export const import_review_panel_select_all: Messages["import_review_panel_select_all"] = /* @__PURE__ */ localized("import_review_panel_select_all", () => {
 	return /** @type {LocalizedString} */ (`Select all`)
 })
@@ -3622,6 +3649,15 @@ export const import_review_panel_what_is: Messages["import_review_panel_what_is"
 	const countPlural = __paraglideRegistry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${countText} recipe will be added to your library.`);
 	return /** @type {LocalizedString} */ (`${countText} recipes will be added to your library.`)
+})
+export const import_review_replace: Messages["import_review_replace"] = /* @__PURE__ */ localized("import_review_replace", () => {
+	return /** @type {LocalizedString} */ (`Replace`)
+})
+export const import_review_save_and_edit: Messages["import_review_save_and_edit"] = /* @__PURE__ */ localized("import_review_save_and_edit", () => {
+	return /** @type {LocalizedString} */ (`Save and edit`)
+})
+export const import_review_save_copy: Messages["import_review_save_copy"] = /* @__PURE__ */ localized("import_review_save_copy", () => {
+	return /** @type {LocalizedString} */ (`Save copy`)
 })
 export const import_sending_files: Messages["import_sending_files"] = /* @__PURE__ */ localized("import_sending_files", (i) => {
 	const countText = __paraglideRegistry.number("en", i?.count, {}, true);
@@ -4496,9 +4532,6 @@ export const measurement_decisions_apply: Messages["measurement_decisions_apply"
 export const measurement_decisions_clear_choice: Messages["measurement_decisions_clear_choice"] = /* @__PURE__ */ localized("measurement_decisions_clear_choice", () => {
 	return /** @type {LocalizedString} */ (`Clear`)
 })
-export const measurement_decisions_convention_hint: Messages["measurement_decisions_convention_hint"] = /* @__PURE__ */ localized("measurement_decisions_convention_hint", () => {
-	return /** @type {LocalizedString} */ (`Covers every measure in each ingredient it reaches.`)
-})
 export const measurement_decisions_convention_legend: Messages["measurement_decisions_convention_legend"] = /* @__PURE__ */ localized("measurement_decisions_convention_legend", () => {
 	return /** @type {LocalizedString} */ (`Read every measure as`)
 })
@@ -4511,8 +4544,8 @@ export const measurement_decisions_exceptions: Messages["measurement_decisions_e
 export const measurement_decisions_intro: Messages["measurement_decisions_intro"] = /* @__PURE__ */ localized("measurement_decisions_intro", (i) => {
 	const measurementsText = __paraglideRegistry.number("en", i?.measurements, {}, true);
 	const measurementsPlural = __paraglideRegistry.plural("en", i?.measurements, {}, true);
-	if (measurementsPlural === "one") return /** @type {LocalizedString} */ (`${measurementsText} measurement names a size that differs by country. Unanswered ones import as written.`);
-	return /** @type {LocalizedString} */ (`${measurementsText} measurements name sizes that differ by country. Unanswered ones import as written.`)
+	if (measurementsPlural === "one") return /** @type {LocalizedString} */ (`${measurementsText} measure differs in size by country. If unanswered, it imports as written.`);
+	return /** @type {LocalizedString} */ (`${measurementsText} measures differ in size by country. Unanswered ones import as written.`)
 })
 export const measurement_decisions_keep_as_written: Messages["measurement_decisions_keep_as_written"] = /* @__PURE__ */ localized("measurement_decisions_keep_as_written", () => {
 	return /** @type {LocalizedString} */ (`Keep as written`)
@@ -7233,6 +7266,9 @@ export const tags_tags_and_categories_savorum: Messages["tags_tags_and_categorie
 export const text_import_choose_a_text_file_smaller_than_8_mb: Messages["text_import_choose_a_text_file_smaller_than_8_mb"] = /* @__PURE__ */ localized("text_import_choose_a_text_file_smaller_than_8_mb", () => {
 	return /** @type {LocalizedString} */ (`Choose a text file smaller than 8 MB.`)
 })
+export const text_import_fetch_page: Messages["text_import_fetch_page"] = /* @__PURE__ */ localized("text_import_fetch_page", () => {
+	return /** @type {LocalizedString} */ (`Fetch page`)
+})
 export const text_import_import_plain_text_recipe: Messages["text_import_import_plain_text_recipe"] = /* @__PURE__ */ localized("text_import_import_plain_text_recipe", () => {
 	return /** @type {LocalizedString} */ (`Import plain text recipe`)
 })
@@ -7259,6 +7295,9 @@ export const text_import_the_recipe_could_not_be_previewed_try_again: Messages["
 })
 export const text_import_the_text_file_could_not_be_read: Messages["text_import_the_text_file_could_not_be_read"] = /* @__PURE__ */ localized("text_import_the_text_file_could_not_be_read", () => {
 	return /** @type {LocalizedString} */ (`The text file could not be read.`)
+})
+export const text_import_url_detected: Messages["text_import_url_detected"] = /* @__PURE__ */ localized("text_import_url_detected", () => {
+	return /** @type {LocalizedString} */ (`This is a web address. Fetch the recipe from that page instead?`)
 })
 export const timer_announcement_finished: Messages["timer_announcement_finished"] = /* @__PURE__ */ localized("timer_announcement_finished", (i) => {
 	return /** @type {LocalizedString} */ (`${i?.label} timer finished.`)

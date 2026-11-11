@@ -1,3 +1,4 @@
+import type { Recipe } from "@/api/client"
 import { type UploadResponse, uploadWithProgress } from "@/api/upload"
 
 import { m } from "../lib/messages.ts"
@@ -35,6 +36,7 @@ export interface ImportPreviewItem {
     ingredients?: ImportPreviewSection[]
     instructions?: ImportPreviewSection[]
   }
+  document?: Recipe
   source: {
     format_id: string
     format_name: string
@@ -44,6 +46,7 @@ export interface ImportPreviewItem {
     /** Uploaded PDFs and images may be kept beside the recipe on commit. */
     can_retain?: boolean
     extracted_text?: string
+    shared_from?: string
   }
   analysis: {
     status: "new" | "definite-match" | "likely-duplicate" | "ambiguous"

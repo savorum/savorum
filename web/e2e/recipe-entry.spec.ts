@@ -209,13 +209,9 @@ test("imported recipe retains comprehensive values on an unchanged save", async 
     mimeType: "application/json",
     buffer: Buffer.from(JSON.stringify(source)),
   })
-  const review = page.getByRole("region", { name: "Save this recipe" })
-  const save = review.getByRole("button", { name: "Save recipe", exact: true })
-  await expect(save).toBeVisible()
-  const decide = review.getByRole("checkbox", { name: `Import ${source.title}`, exact: true })
-  if ((await decide.count()) > 0) await decide.check()
-  await save.click()
-  await page.getByRole("link", { name: source.title, exact: true }).click()
+  const review = page.getByRole("region", { name: "Review import" })
+  await review.getByRole("button", { name: "Save recipe", exact: true }).click()
+  await expect(page).toHaveURL(/\/recipes\/[^/]+$/)
   const id = page.url().split("/").at(-1)
   const before = (await (await request.get(`/api/v1/recipes/${id}`)).json()).recipe
   expect(before.sref_opaque_raw).toBeTruthy()

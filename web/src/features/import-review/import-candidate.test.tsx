@@ -12,6 +12,7 @@ vi.mock("@tanstack/solid-router", () => ({
       {props.children}
     </a>
   ),
+  useRouterState: () => () => "",
 }))
 
 afterEach(cleanup)
@@ -93,9 +94,9 @@ test("a match names the evidence that proposed it", () => {
   expect(screen.queryByText("100% similar")).toBeNull()
 })
 
-test("a single caption draft foregrounds its content and states each warning once", () => {
-  const diagnostic = {
-    code: "draft",
+test("a single caption draft says what is missing once and links the post", () => {
+  const draft = {
+    code: "social-caption-draft",
     message: "Add ingredients and steps to finish this draft.",
     class: "actionable",
     severity: "warning",
@@ -115,10 +116,10 @@ test("a single caption draft foregrounds its content and states each warning onc
     },
     analysis: { status: "new", matches: [] },
     diagnostics: [
-      diagnostic,
-      diagnostic,
+      draft,
+      draft,
       {
-        code: "source",
+        code: "social-caption",
         message: "Imported from the public caption.",
         class: "informational",
         severity: "info",
@@ -140,12 +141,69 @@ test("a single caption draft foregrounds its content and states each warning onc
       onEditText={vi.fn()}
     />
   ))
-  expect(screen.getAllByText(diagnostic.message)).toHaveLength(1)
+  expect(screen.getAllByText(/No ingredients or steps found/)).toHaveLength(1)
+  expect(screen.queryByText(draft.message)).toBeNull()
+  expect(screen.getByRole("heading", { level: 1, name: "Lemon posset" })).toBeTruthy()
   expect(screen.getByText(/2 cups cream/).textContent).toBe(item.source.extracted_text)
-  expect(screen.queryByRole("button", { name: "Preview recipe" })).toBeNull()
+  expect(screen.getByText("From the post's caption")).toBeTruthy()
+  expect(screen.getByRole("link", { name: "View post" }).getAttribute("href")).toBe(item.source.url)
   expect(screen.queryByRole("checkbox")).toBeNull()
-  expect(screen.getByRole("button", { name: "Import details" }).getAttribute("aria-expanded")).toBe(
-    "false",
-  )
-  expect(screen.container.querySelector("details, summary")).toBeNull()
+  expect(screen.queryByText("Imported from the public caption.")).toBeNull()
+})
+
+test("a linked recipe asks to compare it with its post and shows the recipe as saved", () => {
+  const item: ImportPreviewItem = {
+    id: "linked",
+    can_commit: true,
+    already_here: false,
+    recipe: { title: "Mac and cheese", ingredient_count: 1, step_count: 1 },
+    document: {
+      id: "linked",
+      schema_version: 1,
+      title: "Mac and cheese",
+      language: "fr",
+      ingredient_sections: [
+        { id: "i", ingredients: [{ id: "i1", name: ["macaroni"], source_text: "macaroni" }] },
+      ],
+      instruction_sections: [{ id: "s", steps: [{ id: "s1", text: "Bake it." }] }],
+    } as unknown as ImportPreviewItem["document"],
+    source: {
+      format_id: "web-recipe",
+      format_name: "Recipe web page",
+      url: "https://example.com/mac",
+      shared_from: "https://social.example/reel/1",
+    },
+    analysis: { status: "new", matches: [] },
+    diagnostics: [
+      {
+        code: "social-creator-recipe",
+        message: "Imported a recipe with a matching name from the creator's website.",
+        class: "actionable",
+        severity: "warning",
+        area: "source",
+        count: 1,
+      },
+    ],
+    assets: { discovered: 0, available: 0, deferred: 0, failed: 0, unavailable: 0 },
+  }
+  const screen = render(() => (
+    <ImportCandidate
+      item={item}
+      sole
+      selected
+      onSelect={vi.fn()}
+      onChoose={vi.fn()}
+      retainSource={false}
+      onRetainSource={vi.fn()}
+      onEditText={vi.fn()}
+    />
+  ))
+  expect(screen.getByText(/Check that it matches the post/)).toBeTruthy()
+  expect(screen.getByText("From the creator's website")).toBeTruthy()
+  for (const link of screen.getAllByRole("link", { name: "View post" })) {
+    expect(link.getAttribute("href")).toBe("https://social.example/reel/1")
+  }
+  expect(screen.getByText("Bake it.")).toBeTruthy()
+  expect(screen.container.querySelector("[lang='fr']")).toBeTruthy()
+  expect(screen.queryByRole("button", { name: "Edit recipe text" })).toBeNull()
 })

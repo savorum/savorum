@@ -985,8 +985,6 @@
 /** @typedef {{}} Import_Candidate_CompareInputs */
 /** @typedef {{ value1: NonNullable<unknown>, value2: NonNullable<unknown> }} Import_Candidate_Compare_WithInputs */
 /** @typedef {{}} Import_Candidate_DecisionInputs */
-/** @typedef {{}} Import_Candidate_DescriptionInputs */
-/** @typedef {{}} Import_Candidate_DirectionsInputs */
 /** @typedef {{}} Import_Candidate_Edit_Recipe_TextInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Import_Candidate_ImportInputs */
 /** @typedef {{}} Import_Candidate_Import_As_A_Separate_RecipeInputs */
@@ -1006,7 +1004,6 @@
 /** @typedef {{}} Import_Candidate_ReadyInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Import_Candidate_ReconcileInputs */
 /** @typedef {{}} Import_Candidate_ReviewInputs */
-/** @typedef {{}} Import_Candidate_Same_Source_Already_In_The_LibraryInputs */
 /** @typedef {{}} Import_Candidate_Several_Source_MatchesInputs */
 /** @typedef {{}} Import_Candidate_Source_FileInputs */
 /** @typedef {{}} Import_Candidate_StepsInputs */
@@ -1103,6 +1100,19 @@
 /** @typedef {{}} Import_Menu_Import_RecipesInputs */
 /** @typedef {{}} Import_Menu_Recent_ImportsInputs */
 /** @typedef {{}} Import_Menu_Recipe_Collections_Pdfs_And_PhotosInputs */
+/** @typedef {{}} Import_Notice_Check_PlacementInputs */
+/** @typedef {{}} Import_Notice_Check_TitleInputs */
+/** @typedef {{}} Import_Notice_Creator_RecipeInputs */
+/** @typedef {{}} Import_Notice_Details_MissingInputs */
+/** @typedef {{}} Import_Notice_From_CaptionInputs */
+/** @typedef {{}} Import_Notice_From_CommentInputs */
+/** @typedef {{}} Import_Notice_From_Creator_SiteInputs */
+/** @typedef {{}} Import_Notice_From_Linked_RecipeInputs */
+/** @typedef {{}} Import_Notice_MeasurementsInputs */
+/** @typedef {{}} Import_Notice_No_IngredientsInputs */
+/** @typedef {{}} Import_Notice_No_StepsInputs */
+/** @typedef {{}} Import_Notice_Nothing_FoundInputs */
+/** @typedef {{}} Import_Notice_View_PostInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Import_Photos_PendingInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Import_Photos_UnavailableInputs */
 /** @typedef {{}} Import_Previews_The_Corrected_Recipe_Text_Could_Not_Be_AppliedInputs */
@@ -1145,13 +1155,15 @@
 /** @typedef {{}} Import_Review_Panel_Ready_To_ImportInputs */
 /** @typedef {{}} Import_Review_Panel_Review_ImportInputs */
 /** @typedef {{}} Import_Review_Panel_Save_RecipeInputs */
-/** @typedef {{}} Import_Review_Panel_Save_This_RecipeInputs */
 /** @typedef {{}} Import_Review_Panel_Select_AllInputs */
 /** @typedef {{}} Import_Review_Panel_Select_NoneInputs */
 /** @typedef {{}} Import_Review_Panel_Select_VisibleInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Import_Review_Panel_Selection_NoteInputs */
 /** @typedef {{}} Import_Review_Panel_The_RecipesInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Import_Review_Panel_What_IsInputs */
+/** @typedef {{}} Import_Review_ReplaceInputs */
+/** @typedef {{}} Import_Review_Save_And_EditInputs */
+/** @typedef {{}} Import_Review_Save_CopyInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Import_Sending_FilesInputs */
 /** @typedef {{}} Import_Source_Dialogs_Edit_Recipe_TextInputs */
 /** @typedef {{}} Import_Source_Dialogs_Https_Example_Com_RecipesInputs */
@@ -1441,7 +1453,6 @@
 /** @typedef {{}} Measurement_Decisions_All_AnsweredInputs */
 /** @typedef {{}} Measurement_Decisions_ApplyInputs */
 /** @typedef {{}} Measurement_Decisions_Clear_ChoiceInputs */
-/** @typedef {{}} Measurement_Decisions_Convention_HintInputs */
 /** @typedef {{}} Measurement_Decisions_Convention_LegendInputs */
 /** @typedef {{}} Measurement_Decisions_ExamplesInputs */
 /** @typedef {{}} Measurement_Decisions_ExceptionsInputs */
@@ -2334,6 +2345,7 @@
 /** @typedef {{}} Tags_Page_Tags_And_CategoriesInputs */
 /** @typedef {{}} Tags_Tags_And_Categories_SavorumInputs */
 /** @typedef {{}} Text_Import_Choose_A_Text_File_Smaller_Than_8_MbInputs */
+/** @typedef {{}} Text_Import_Fetch_PageInputs */
 /** @typedef {{}} Text_Import_Import_Plain_Text_RecipeInputs */
 /** @typedef {{}} Text_Import_Load_Txt_FileInputs */
 /** @typedef {{}} Text_Import_Paste_Or_Edit_Recipe_TextInputs */
@@ -2341,6 +2353,7 @@
 /** @typedef {{}} Text_Import_Recipe_Template_PlaceholderInputs */
 /** @typedef {{}} Text_Import_The_Recipe_Could_Not_Be_Previewed_Try_AgainInputs */
 /** @typedef {{}} Text_Import_The_Text_File_Could_Not_Be_ReadInputs */
+/** @typedef {{}} Text_Import_Url_DetectedInputs */
 /** @typedef {{ label: NonNullable<unknown> }} Timer_Announcement_FinishedInputs */
 /** @typedef {{}} Timer_Default_LabelInputs */
 /** @typedef {{ label: NonNullable<unknown> }} Timer_Dismiss_LabelInputs */
@@ -6423,14 +6436,6 @@ export const import_candidate_decision = /** @type {(inputs: Import_Candidate_De
 	return /** @type {LocalizedString} */ (`Needs a decision`)
 };
 
-export const import_candidate_description = /** @type {(inputs: Import_Candidate_DescriptionInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Description`)
-};
-
-export const import_candidate_directions = /** @type {(inputs: Import_Candidate_DirectionsInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Instructions`)
-};
-
 export const import_candidate_edit_recipe_text = /** @type {(inputs: Import_Candidate_Edit_Recipe_TextInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Edit recipe text`)
 };
@@ -6508,10 +6513,6 @@ export const import_candidate_reconcile = /** @type {(inputs: Import_Candidate_R
 
 export const import_candidate_review = /** @type {(inputs: Import_Candidate_ReviewInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Can be saved; some details need a look`)
-};
-
-export const import_candidate_same_source_already_in_the_library = /** @type {(inputs: Import_Candidate_Same_Source_Already_In_The_LibraryInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Same source already in the library`)
 };
 
 export const import_candidate_several_source_matches = /** @type {(inputs: Import_Candidate_Several_Source_MatchesInputs) => LocalizedString} */ () => {
@@ -6998,6 +6999,58 @@ export const import_menu_recipe_collections_pdfs_and_photos = /** @type {(inputs
 	return /** @type {LocalizedString} */ (`Recipe collections, PDFs and photos`)
 };
 
+export const import_notice_check_placement = /** @type {(inputs: Import_Notice_Check_PlacementInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Check that ingredients and steps are in the right place.`)
+};
+
+export const import_notice_check_title = /** @type {(inputs: Import_Notice_Check_TitleInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Check before saving`)
+};
+
+export const import_notice_creator_recipe = /** @type {(inputs: Import_Notice_Creator_RecipeInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Found on the creator's website by its name. Check that it matches the post.`)
+};
+
+export const import_notice_details_missing = /** @type {(inputs: Import_Notice_Details_MissingInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Some details may be missing.`)
+};
+
+export const import_notice_from_caption = /** @type {(inputs: Import_Notice_From_CaptionInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`From the post's caption`)
+};
+
+export const import_notice_from_comment = /** @type {(inputs: Import_Notice_From_CommentInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`From the author's comment on the post`)
+};
+
+export const import_notice_from_creator_site = /** @type {(inputs: Import_Notice_From_Creator_SiteInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`From the creator's website`)
+};
+
+export const import_notice_from_linked_recipe = /** @type {(inputs: Import_Notice_From_Linked_RecipeInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`From the recipe linked in the post`)
+};
+
+export const import_notice_measurements = /** @type {(inputs: Import_Notice_MeasurementsInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Some measures differ in size by country. Choose how to read them below.`)
+};
+
+export const import_notice_no_ingredients = /** @type {(inputs: Import_Notice_No_IngredientsInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`No ingredients found.`)
+};
+
+export const import_notice_no_steps = /** @type {(inputs: Import_Notice_No_StepsInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`No steps found.`)
+};
+
+export const import_notice_nothing_found = /** @type {(inputs: Import_Notice_Nothing_FoundInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`No ingredients or steps found. Save and edit to add them.`)
+};
+
+export const import_notice_view_post = /** @type {(inputs: Import_Notice_View_PostInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`View post`)
+};
+
 export const import_photos_pending = /** @type {(inputs: Import_Photos_PendingInputs) => LocalizedString} */ (i) => {
 	const countText = __paraglideRegistry.number("en", i?.count, {}, true);
 	const plural = __paraglideRegistry.plural("en", i?.count, {}, true);
@@ -7200,10 +7253,6 @@ export const import_review_panel_save_recipe = /** @type {(inputs: Import_Review
 	return /** @type {LocalizedString} */ (`Save recipe`)
 };
 
-export const import_review_panel_save_this_recipe = /** @type {(inputs: Import_Review_Panel_Save_This_RecipeInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Save this recipe`)
-};
-
 export const import_review_panel_select_all = /** @type {(inputs: Import_Review_Panel_Select_AllInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Select all`)
 };
@@ -7232,6 +7281,18 @@ export const import_review_panel_what_is = /** @type {(inputs: Import_Review_Pan
 	const countPlural = __paraglideRegistry.plural("en", i?.count, {}, true);
 	if (countPlural === "one") return /** @type {LocalizedString} */ (`${countText} recipe will be added to your library.`);
 	return /** @type {LocalizedString} */ (`${countText} recipes will be added to your library.`)
+};
+
+export const import_review_replace = /** @type {(inputs: Import_Review_ReplaceInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Replace`)
+};
+
+export const import_review_save_and_edit = /** @type {(inputs: Import_Review_Save_And_EditInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Save and edit`)
+};
+
+export const import_review_save_copy = /** @type {(inputs: Import_Review_Save_CopyInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Save copy`)
 };
 
 export const import_sending_files = /** @type {(inputs: Import_Sending_FilesInputs) => LocalizedString} */ (i) => {
@@ -8396,10 +8457,6 @@ export const measurement_decisions_clear_choice = /** @type {(inputs: Measuremen
 	return /** @type {LocalizedString} */ (`Clear`)
 };
 
-export const measurement_decisions_convention_hint = /** @type {(inputs: Measurement_Decisions_Convention_HintInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Covers every measure in each ingredient it reaches.`)
-};
-
 export const measurement_decisions_convention_legend = /** @type {(inputs: Measurement_Decisions_Convention_LegendInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Read every measure as`)
 };
@@ -8415,8 +8472,8 @@ export const measurement_decisions_exceptions = /** @type {(inputs: Measurement_
 export const measurement_decisions_intro = /** @type {(inputs: Measurement_Decisions_IntroInputs) => LocalizedString} */ (i) => {
 	const measurementsText = __paraglideRegistry.number("en", i?.measurements, {}, true);
 	const measurementsPlural = __paraglideRegistry.plural("en", i?.measurements, {}, true);
-	if (measurementsPlural === "one") return /** @type {LocalizedString} */ (`${measurementsText} measurement names a size that differs by country. Unanswered ones import as written.`);
-	return /** @type {LocalizedString} */ (`${measurementsText} measurements name sizes that differ by country. Unanswered ones import as written.`)
+	if (measurementsPlural === "one") return /** @type {LocalizedString} */ (`${measurementsText} measure differs in size by country. If unanswered, it imports as written.`);
+	return /** @type {LocalizedString} */ (`${measurementsText} measures differ in size by country. Unanswered ones import as written.`)
 };
 
 export const measurement_decisions_keep_as_written = /** @type {(inputs: Measurement_Decisions_Keep_As_WrittenInputs) => LocalizedString} */ () => {
@@ -12026,6 +12083,10 @@ export const text_import_choose_a_text_file_smaller_than_8_mb = /** @type {(inpu
 	return /** @type {LocalizedString} */ (`Choose a text file smaller than 8 MB.`)
 };
 
+export const text_import_fetch_page = /** @type {(inputs: Text_Import_Fetch_PageInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Fetch page`)
+};
+
 export const text_import_import_plain_text_recipe = /** @type {(inputs: Text_Import_Import_Plain_Text_RecipeInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Import plain text recipe`)
 };
@@ -12058,6 +12119,10 @@ export const text_import_the_recipe_could_not_be_previewed_try_again = /** @type
 
 export const text_import_the_text_file_could_not_be_read = /** @type {(inputs: Text_Import_The_Text_File_Could_Not_Be_ReadInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`The text file could not be read.`)
+};
+
+export const text_import_url_detected = /** @type {(inputs: Text_Import_Url_DetectedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`This is a web address. Fetch the recipe from that page instead?`)
 };
 
 export const timer_announcement_finished = /** @type {(inputs: Timer_Announcement_FinishedInputs) => LocalizedString} */ (i) => {
