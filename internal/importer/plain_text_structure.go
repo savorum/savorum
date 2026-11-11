@@ -12,9 +12,10 @@ import (
 )
 
 var (
-	textBullet = regexp.MustCompile(`^(?:[-*•·–—▪◦‣⁃]\s*)?(?:\[[ xX]\]|[☐☑□])\s*|^[-*•·–—▪◦‣⁃]\s*`)
-	textStep   = regexp.MustCompile(`^(?:[\p{N}]+[.)]\s+|[\p{N}]+[、．）]\s*|[（(][\p{N}]+[）)]\s*|[\p{N}]\x{FE0F}?\x{20E3}\s*)`)
-	textAmount = regexp.MustCompile(`^[\p{N}¼½¾⅓⅔⅛⅜⅝⅞]`)
+	textBullet     = regexp.MustCompile(`^(?:[-*•·–—▪◦‣⁃]\s*)?(?:\[[ xX]\]|[☐☑□])\s*|^[-*•·–—▪◦‣⁃]\s*`)
+	bareStepNumber = regexp.MustCompile(`^(?:[\p{N}]+[.)、．）]|[（(][\p{N}]+[）)])$`)
+	textStep       = regexp.MustCompile(`^(?:[\p{N}]+[.)]\s+|[\p{N}]+[、．）]\s*|[（(][\p{N}]+[）)]\s*|[\p{N}]\x{FE0F}?\x{20E3}\s*)`)
+	textAmount     = regexp.MustCompile(`^[\p{N}¼½¾⅓⅔⅛⅜⅝⅞]`)
 )
 
 func recipeTextLine(line string) string {

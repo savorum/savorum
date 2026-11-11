@@ -1019,6 +1019,8 @@ func mapOrganizationError(err error, entity string) error {
 		return problem(404, strings.ReplaceAll(entity, " ", "-")+"-not-found", "The requested "+entity+" does not exist")
 	case errors.Is(err, library.ErrInvalidState):
 		return problem(409, "organization-state-conflict", "The recipe is not active")
+	case errors.Is(err, library.ErrNameInUse):
+		return problem(409, strings.ReplaceAll(entity, " ", "-")+"-name-conflict", "That "+entity+" name is taken")
 	case errors.Is(err, library.ErrConflict):
 		return problem(409, strings.ReplaceAll(entity, " ", "-")+"-conflict", "The "+entity+" conflicts with retained library data")
 	case errors.Is(err, library.ErrPreconditionFailed):

@@ -247,12 +247,21 @@ func TestCanonicalTaxonomyLifecycleAndOrganizationAssignments(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if response := request(t, handler, http.MethodPost, "/api/v1/tags", duplicateTag); response.Code != http.StatusConflict {
+	if response := request(t, handler, http.MethodPost, "/api/v1/tags", duplicateTag); response.Code != http.StatusConflict || !strings.Contains(response.Body.String(), "tag-name-conflict") {
 		t.Fatalf("normalized duplicate tag status=%d body=%s", response.Code, response.Body.String())
 	}
 
 	italian := createFacet(t, handler, "cuisine", "Italian")
 	tuscan := createFacet(t, handler, "cuisine", "Tuscan")
+
+	duplicateFacet, err := json.Marshal(map[string]any{"kind": "cuisine", "value": "ITALIAN"})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if response := request(t, handler, http.MethodPost, "/api/v1/facets", duplicateFacet); response.Code != http.StatusConflict || !strings.Contains(response.Body.String(), "facet-name-conflict") {
+		t.Fatalf("normalized duplicate facet status=%d body=%s", response.Code, response.Body.String())
+	}
 
 	unknownAssignment, err := json.Marshal(map[string]any{
 		"facet_ids": []string{italian.ID}, "tag_ids": []string{"t-missing"},

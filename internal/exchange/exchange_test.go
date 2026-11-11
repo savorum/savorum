@@ -1179,6 +1179,20 @@ func TestBundlePreviewValidatesMembersAndUsesConfiguredLimits(t *testing.T) {
 		}
 	})
 
+	t.Run("unreadable file reports only why", func(t *testing.T) {
+		preview, err := exchange.NewService(&importLibrary{}, &countingAssets{}).PreviewFiles(
+			context.Background(), []exchange.UploadedImport{{Filename: "empty.txt", Data: []byte{}}})
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(preview.Items) != 1 || preview.Items[0].CanCommit ||
+			!hasDiagnostic(preview.Items[0].Diagnostics, "file-unreadable", exchange.SeverityError) ||
+			hasDiagnostic(preview.Items[0].Diagnostics, "candidate-invalid", exchange.SeverityError) {
+			t.Fatalf("preview = %#v", preview.Items)
+		}
+	})
+
 	t.Run("configured archive limit", func(t *testing.T) {
 		limits := bundle.DefaultLimits()
 		limits.ArchiveBytes = 1

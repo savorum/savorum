@@ -17,10 +17,7 @@ export function createBookQuery(bookID: Accessor<string>) {
       query: candidateQuery(),
       sort: "title-asc" as const,
     }),
-    async (options) => {
-      const page = await suggestRecipes(options.query, options.offset)
-      return { ...page, total: page.offset + page.items.length + (page.has_more ? 1 : 0) }
-    },
+    (options) => suggestRecipes(options.query, options.offset),
   )
 
   return {

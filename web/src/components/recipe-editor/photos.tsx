@@ -5,13 +5,14 @@ import { css } from "styled-system/css"
 
 import { uploadAsset } from "@/api/assets"
 import { type Recipe, assetURL, fallbackToOriginalImage } from "@/api/client"
-import { ChangeError } from "@/components/status"
+import { ChangeError, errorMessage } from "@/components/status"
 import { DetailDialog } from "@/components/ui/detail-dialog"
 import { Disclosure } from "@/components/ui/disclosure"
 import { FormField } from "@/components/ui/field"
 import { IconButton } from "@/components/ui/icon-button"
 import { Input } from "@/components/ui/input"
-import { formatNumber } from "@/lib/locale-format"
+import { isolate } from "@/lib/direction"
+import { formatList, formatNumber } from "@/lib/locale-format"
 import { moveItem, newID } from "@/lib/recipe-draft"
 import { imageCreditLine } from "@/lib/recipe-facts"
 
@@ -113,14 +114,25 @@ const styles = {
   provenanceHint: css({ color: "fg.muted", fontSize: "xs", lineHeight: "1.5", margin: "0" }),
 }
 
+export interface AttachedPhotos {
+  attached: string[]
+  failure?: Error
+}
+
 export async function attachRecipeImages(
   setDraft: SetStoreFunction<Recipe>,
   files: FileList | null,
-): Promise<string[]> {
-  if (!files || files.length === 0) return []
+): Promise<AttachedPhotos> {
   const attached: string[] = []
-  for (const file of Array.from(files)) {
-    const blob = await uploadAsset(file)
+  const failed: { name: string; error: unknown }[] = []
+  for (const file of Array.from(files ?? [])) {
+    let blob: Awaited<ReturnType<typeof uploadAsset>>
+    try {
+      blob = await uploadAsset(file)
+    } catch (error) {
+      failed.push({ name: file.name, error })
+      continue
+    }
     const id = newID("a")
     attached.push(id)
     setDraft(
@@ -142,14 +154,23 @@ export async function attachRecipeImages(
       }),
     )
   }
-  return attached
+  const failure =
+    failed.length > 0
+      ? new Error(
+          m.editor_photos_not_added({
+            names: formatList(failed.map((item) => isolate(item.name))),
+            reason: errorMessage(failed[0]!.error),
+          }),
+        )
+      : undefined
+  return { attached, failure }
 }
 
 export function RecipePhotosEditor(props: {
   draft: Recipe
   setDraft: SetStoreFunction<Recipe>
   entryID?: string
-  onAttachPhotos?: (files: FileList | null) => Promise<string[]>
+  onAttachPhotos?: (files: FileList | null) => Promise<AttachedPhotos>
   onAnnounce?: (message: string) => void
 }) {
   const [uploadError, setUploadError] = createSignal<unknown>()
@@ -204,9 +225,10 @@ export function RecipePhotosEditor(props: {
     setUploadError(undefined)
     setUploading(true)
     try {
-      await (props.onAttachPhotos
+      const { failure } = await (props.onAttachPhotos
         ? props.onAttachPhotos(files)
         : attachRecipeImages(props.setDraft, files))
+      setUploadError(failure)
     } catch (error) {
       setUploadError(error)
     } finally {

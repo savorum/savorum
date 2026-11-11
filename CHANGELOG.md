@@ -9,15 +9,24 @@ Notable changes to Savorum Core. Each release publishes
 ### Added
 
 - Add a web import offer when a URL is pasted into the text importer.
+- Add choices to continue unfinished cooking sessions or start fresh when cooking recipes together.
 
 ### Changed
 
 - Improve social recipe imports, including post and caption extraction, recipes split across author comments, discovery of full recipes on creator websites, and partial-recipe recovery.
+- Improve text imports with serving and timing recognition, UTF-16 support, and more flexible section and step parsing.
 - Improve import review with full recipe previews, clearer source information and warnings, and options to open or edit after saving.
+- Improve recipe comparison and merging, including photo previews, highlighted differences, duplicate guidance, and clearer choices about which recipe and contents to keep.
 
 ### Fixed
 
 - Fix SREF import accepting member names that differ only in letter case.
+- Fix meal plans and saved meals keeping a recipe's old name after a rename, while preserving custom dish names.
+- Fix shopping lists keeping an ingredient separate across compatible US and metric units, or repeating entries without quantities.
+- Fix saving a recipe after removing ingredients or ingredient groups that steps use.
+- Preserve successful photo attachments when another upload fails, and identify the files that could not be added.
+- Fix scaling warnings for unscaled amounts, including written fractions.
+- Fix cooking-log times ignoring the account time zone.
 
 ## 0.4.3
 

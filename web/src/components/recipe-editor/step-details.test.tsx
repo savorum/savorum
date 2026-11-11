@@ -27,7 +27,7 @@ test("step quantities keep decimals and their unit through typing and compositio
       style={measurementStyle}
       onChange={changed}
       onClose={() => {}}
-      onAttachPhotos={() => Promise.resolve([])}
+      onAttachPhotos={() => Promise.resolve({ attached: [] })}
     />
   ))
   const input = (await screen.findByRole("textbox", {

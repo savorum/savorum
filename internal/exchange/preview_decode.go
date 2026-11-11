@@ -225,7 +225,9 @@ func (s *Service) createPreview(ctx context.Context, decoded []decodedCandidate,
 			}
 		}
 
-		view.Diagnostics = append(view.Diagnostics, unwritableDiagnostics(decoded.document, decoded.item)...)
+		if decoded.document.ID != "" {
+			view.Diagnostics = append(view.Diagnostics, unwritableDiagnostics(decoded.document, decoded.item)...)
+		}
 
 		if !hasError(view.Diagnostics) {
 			s.inspectAssets(decoded, &view)

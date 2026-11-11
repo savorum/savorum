@@ -1273,6 +1273,9 @@ export const api_problem_export_source_invalid: Messages["api_problem_export_sou
 export const api_problem_export_too_large: Messages["api_problem_export_too_large"] = /* @__PURE__ */ localized("api_problem_export_too_large", () => {
 	return /** @type {LocalizedString} */ (`A bundle accepts at most 250 recipe entries`)
 })
+export const api_problem_facet_name_conflict: Messages["api_problem_facet_name_conflict"] = /* @__PURE__ */ localized("api_problem_facet_name_conflict", () => {
+	return /** @type {LocalizedString} */ (`That category name is taken`)
+})
 export const api_problem_import_invalid: Messages["api_problem_import_invalid"] = /* @__PURE__ */ localized("api_problem_import_invalid", () => {
 	return /** @type {LocalizedString} */ (`The import could not be read as a set of recipes this library can hold`)
 })
@@ -1413,6 +1416,9 @@ export const api_problem_source_not_found: Messages["api_problem_source_not_foun
 })
 export const api_problem_sref_invalid: Messages["api_problem_sref_invalid"] = /* @__PURE__ */ localized("api_problem_sref_invalid", () => {
 	return /** @type {LocalizedString} */ (`The SREF recipe document is invalid.`)
+})
+export const api_problem_tag_name_conflict: Messages["api_problem_tag_name_conflict"] = /* @__PURE__ */ localized("api_problem_tag_name_conflict", () => {
+	return /** @type {LocalizedString} */ (`That tag name is taken`)
 })
 export const api_problem_token_scope_required: Messages["api_problem_token_scope_required"] = /* @__PURE__ */ localized("api_problem_token_scope_required", () => {
 	return /** @type {LocalizedString} */ (`This API token does not have permission for this action.`)
@@ -2491,6 +2497,21 @@ export const cooking_times_cooked: Messages["cooking_times_cooked"] = /* @__PURE
 export const cooking_together: Messages["cooking_together"] = /* @__PURE__ */ localized("cooking_together", () => {
 	return /** @type {LocalizedString} */ (`Cook together`)
 })
+export const cooking_together_alongside: Messages["cooking_together_alongside"] = /* @__PURE__ */ localized("cooking_together_alongside", () => {
+	return /** @type {LocalizedString} */ (`Cook alongside`)
+})
+export const cooking_together_start_fresh: Messages["cooking_together_start_fresh"] = /* @__PURE__ */ localized("cooking_together_start_fresh", () => {
+	return /** @type {LocalizedString} */ (`Discard and start`)
+})
+export const cooking_together_unfinished_count: Messages["cooking_together_unfinished_count"] = /* @__PURE__ */ localized("cooking_together_unfinished_count", (i) => {
+	return /** @type {LocalizedString} */ (`Recipes in progress: ${i?.count}.`)
+})
+export const cooking_together_unfinished_description: Messages["cooking_together_unfinished_description"] = /* @__PURE__ */ localized("cooking_together_unfinished_description", (i) => {
+	return /** @type {LocalizedString} */ (`In progress: ${i?.names}.`)
+})
+export const cooking_together_unfinished_title: Messages["cooking_together_unfinished_title"] = /* @__PURE__ */ localized("cooking_together_unfinished_title", () => {
+	return /** @type {LocalizedString} */ (`Already cooking`)
+})
 export const cookings_the_cooking_could_not_be_recorded: Messages["cookings_the_cooking_could_not_be_recorded"] = /* @__PURE__ */ localized("cookings_the_cooking_could_not_be_recorded", () => {
 	return /** @type {LocalizedString} */ (`The cooking could not be recorded.`)
 })
@@ -2765,6 +2786,9 @@ export const editor_photo_moved: Messages["editor_photo_moved"] = /* @__PURE__ *
 })
 export const editor_photo_not_in_recipe: Messages["editor_photo_not_in_recipe"] = /* @__PURE__ */ localized("editor_photo_not_in_recipe", () => {
 	return /** @type {LocalizedString} */ (`Not in recipe photos`)
+})
+export const editor_photos_not_added: Messages["editor_photos_not_added"] = /* @__PURE__ */ localized("editor_photos_not_added", (i) => {
+	return /** @type {LocalizedString} */ (`Not added: ${i?.names}. ${i?.reason}`)
 })
 export const editor_prep_time: Messages["editor_prep_time"] = /* @__PURE__ */ localized("editor_prep_time", () => {
 	return /** @type {LocalizedString} */ (`Preparation time`)
@@ -6138,9 +6162,6 @@ export const recipe_compare_applying: Messages["recipe_compare_applying"] = /* @
 export const recipe_compare_back_to_the_comparison: Messages["recipe_compare_back_to_the_comparison"] = /* @__PURE__ */ localized("recipe_compare_back_to_the_comparison", () => {
 	return /** @type {LocalizedString} */ (`Back to the comparison`)
 })
-export const recipe_compare_choose_the_to_keep: Messages["recipe_compare_choose_the_to_keep"] = /* @__PURE__ */ localized("recipe_compare_choose_the_to_keep", (i) => {
-	return /** @type {LocalizedString} */ (`Choose the ${i?.value1} to keep`)
-})
 export const recipe_compare_combine_into_one_recipe: Messages["recipe_compare_combine_into_one_recipe"] = /* @__PURE__ */ localized("recipe_compare_combine_into_one_recipe", () => {
 	return /** @type {LocalizedString} */ (`Combine into one recipe`)
 })
@@ -6153,8 +6174,8 @@ export const recipe_compare_combine_these_recipes: Messages["recipe_compare_comb
 export const recipe_compare_compare_two_recipes: Messages["recipe_compare_compare_two_recipes"] = /* @__PURE__ */ localized("recipe_compare_compare_two_recipes", () => {
 	return /** @type {LocalizedString} */ (`Compare two recipes`)
 })
-export const recipe_compare_different: Messages["recipe_compare_different"] = /* @__PURE__ */ localized("recipe_compare_different", () => {
-	return /** @type {LocalizedString} */ (`Different`)
+export const recipe_compare_different_sources: Messages["recipe_compare_different_sources"] = /* @__PURE__ */ localized("recipe_compare_different_sources", () => {
+	return /** @type {LocalizedString} */ (`Different source links`)
 })
 export const recipe_compare_differs_in: Messages["recipe_compare_differs_in"] = /* @__PURE__ */ localized("recipe_compare_differs_in", (i) => {
 	return /** @type {LocalizedString} */ (`They differ in ${i?.areas}.`)
@@ -6162,8 +6183,17 @@ export const recipe_compare_differs_in: Messages["recipe_compare_differs_in"] = 
 export const recipe_compare_empty: Messages["recipe_compare_empty"] = /* @__PURE__ */ localized("recipe_compare_empty", () => {
 	return /** @type {LocalizedString} */ (`Empty`)
 })
+export const recipe_compare_ingredients_in_common: Messages["recipe_compare_ingredients_in_common"] = /* @__PURE__ */ localized("recipe_compare_ingredients_in_common", (i) => {
+	return /** @type {LocalizedString} */ (`Ingredients in common: ${i?.shared} of ${i?.total}`)
+})
+export const recipe_compare_keep_both: Messages["recipe_compare_keep_both"] = /* @__PURE__ */ localized("recipe_compare_keep_both", () => {
+	return /** @type {LocalizedString} */ (`Keep both`)
+})
 export const recipe_compare_keep_my_edit: Messages["recipe_compare_keep_my_edit"] = /* @__PURE__ */ localized("recipe_compare_keep_my_edit", () => {
 	return /** @type {LocalizedString} */ (`Keep my edit`)
+})
+export const recipe_compare_kept_recipe_keeps_its_place: Messages["recipe_compare_kept_recipe_keeps_its_place"] = /* @__PURE__ */ localized("recipe_compare_kept_recipe_keeps_its_place", () => {
+	return /** @type {LocalizedString} */ (`It keeps its books, meal plans and cooking history.`)
 })
 export const recipe_compare_main_photo: Messages["recipe_compare_main_photo"] = /* @__PURE__ */ localized("recipe_compare_main_photo", (i) => {
 	return /** @type {LocalizedString} */ (`${i?.value1} (main photo)`)
@@ -6180,14 +6210,23 @@ export const recipe_compare_no_conflicts_need_your_attention: Messages["recipe_c
 export const recipe_compare_nothing_changes_until_you_combine: Messages["recipe_compare_nothing_changes_until_you_combine"] = /* @__PURE__ */ localized("recipe_compare_nothing_changes_until_you_combine", () => {
 	return /** @type {LocalizedString} */ (`Nothing changes until you choose to combine them.`)
 })
+export const recipe_compare_only_in_this_recipe: Messages["recipe_compare_only_in_this_recipe"] = /* @__PURE__ */ localized("recipe_compare_only_in_this_recipe", () => {
+	return /** @type {LocalizedString} */ (`only in this recipe`)
+})
 export const recipe_compare_part_comes_from: Messages["recipe_compare_part_comes_from"] = /* @__PURE__ */ localized("recipe_compare_part_comes_from", (i) => {
 	return /** @type {LocalizedString} */ (`${i?.value1}: from ${i?.value2}`)
 })
-export const recipe_compare_part_not_chosen_yet: Messages["recipe_compare_part_not_chosen_yet"] = /* @__PURE__ */ localized("recipe_compare_part_not_chosen_yet", (i) => {
-	return /** @type {LocalizedString} */ (`${i?.value1}: not chosen yet`)
+export const recipe_compare_parts_differ: Messages["recipe_compare_parts_differ"] = /* @__PURE__ */ localized("recipe_compare_parts_differ", (i) => {
+	return /** @type {LocalizedString} */ (`Parts that differ: ${i?.count} of ${i?.total}.`)
 })
 export const recipe_compare_review_source_updates: Messages["recipe_compare_review_source_updates"] = /* @__PURE__ */ localized("recipe_compare_review_source_updates", () => {
 	return /** @type {LocalizedString} */ (`Review source updates`)
+})
+export const recipe_compare_same_source: Messages["recipe_compare_same_source"] = /* @__PURE__ */ localized("recipe_compare_same_source", () => {
+	return /** @type {LocalizedString} */ (`Same source link`)
+})
+export const recipe_compare_same_title: Messages["recipe_compare_same_title"] = /* @__PURE__ */ localized("recipe_compare_same_title", () => {
+	return /** @type {LocalizedString} */ (`Same title`)
 })
 export const recipe_compare_source: Messages["recipe_compare_source"] = /* @__PURE__ */ localized("recipe_compare_source", () => {
 	return /** @type {LocalizedString} */ (`The source`)
@@ -6219,8 +6258,20 @@ export const recipe_compare_unsupported_value: Messages["recipe_compare_unsuppor
 export const recipe_compare_updated_recipe: Messages["recipe_compare_updated_recipe"] = /* @__PURE__ */ localized("recipe_compare_updated_recipe", () => {
 	return /** @type {LocalizedString} */ (`Updated recipe`)
 })
+export const recipe_compare_use_kept_recipe_for_every_part: Messages["recipe_compare_use_kept_recipe_for_every_part"] = /* @__PURE__ */ localized("recipe_compare_use_kept_recipe_for_every_part", () => {
+	return /** @type {LocalizedString} */ (`Reset choices`)
+})
 export const recipe_compare_use_source: Messages["recipe_compare_use_source"] = /* @__PURE__ */ localized("recipe_compare_use_source", () => {
 	return /** @type {LocalizedString} */ (`Use source`)
+})
+export const recipe_compare_verdict_different: Messages["recipe_compare_verdict_different"] = /* @__PURE__ */ localized("recipe_compare_verdict_different", () => {
+	return /** @type {LocalizedString} */ (`Likely different recipes.`)
+})
+export const recipe_compare_verdict_likely: Messages["recipe_compare_verdict_likely"] = /* @__PURE__ */ localized("recipe_compare_verdict_likely", () => {
+	return /** @type {LocalizedString} */ (`Likely the same recipe.`)
+})
+export const recipe_compare_verdict_possible: Messages["recipe_compare_verdict_possible"] = /* @__PURE__ */ localized("recipe_compare_verdict_possible", () => {
+	return /** @type {LocalizedString} */ (`Possibly the same recipe.`)
 })
 export const recipe_compare_what_combining_does: Messages["recipe_compare_what_combining_does"] = /* @__PURE__ */ localized("recipe_compare_what_combining_does", () => {
 	return /** @type {LocalizedString} */ (`What combining does`)
@@ -7209,8 +7260,8 @@ export const step_details_oven: Messages["step_details_oven"] = /* @__PURE__ */ 
 export const step_details_photos_of_this_step: Messages["step_details_photos_of_this_step"] = /* @__PURE__ */ localized("step_details_photos_of_this_step", () => {
 	return /** @type {LocalizedString} */ (`Photos of this step`)
 })
-export const step_details_recipe_photo: Messages["step_details_recipe_photo"] = /* @__PURE__ */ localized("step_details_recipe_photo", () => {
-	return /** @type {LocalizedString} */ (`Recipe photo`)
+export const step_details_recipe_photo: Messages["step_details_recipe_photo"] = /* @__PURE__ */ localized("step_details_recipe_photo", (i) => {
+	return /** @type {LocalizedString} */ (`Recipe photo ${i?.position}`)
 })
 export const step_details_remove_temperature: Messages["step_details_remove_temperature"] = /* @__PURE__ */ localized("step_details_remove_temperature", (i) => {
 	return /** @type {LocalizedString} */ (`Remove temperature ${i?.value1}`)
@@ -7643,9 +7694,6 @@ export const yield_timing_how_many: Messages["yield_timing_how_many"] = /* @__PU
 })
 export const yield_timing_of_what: Messages["yield_timing_of_what"] = /* @__PURE__ */ localized("yield_timing_of_what", () => {
 	return /** @type {LocalizedString} */ (`Of what`)
-})
-export const yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run: Messages["yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run"] = /* @__PURE__ */ localized("yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run", (i) => {
-	return /** @type {LocalizedString} */ (`The written total of ${i?.value1} is shorter than this recipe's own steps. It is kept as written, not shown as the time the recipe takes.`)
 })
 export const yield_timing_time_entry_hint: Messages["yield_timing_time_entry_hint"] = /* @__PURE__ */ localized("yield_timing_time_entry_hint", (i) => {
 	return /** @type {LocalizedString} */ (`Type a time such as ${i?.value1}. Times written in the steps, such as “bake 20 minutes”, are recognized automatically.`)

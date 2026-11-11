@@ -68,7 +68,7 @@ type MealDish struct {
 	RecipeRevision  *uint64         `json:"recipe_revision,omitempty" minimum:"1"`
 	ShoppingChoices []string        `json:"shopping_choices,omitempty" readOnly:"true"`
 	LeftoverOf      string          `json:"leftover_of,omitempty" maxLength:"201" doc:"Source dish ID for leftovers. Omit entry_id on this dish to avoid repeating the recipe requirement."`
-	DisplayName     string          `json:"display_name" minLength:"1" maxLength:"200"`
+	DisplayName     string          `json:"display_name" minLength:"1" maxLength:"200" doc:"A recipe dish named exactly as its recipe takes the recipe's new title when the recipe is renamed."`
 	Scale           *string         `json:"scale,omitempty" maxLength:"100" doc:"Positive rational string multiplying the recipe quantities, such as 1/2 for half a batch. This is not a serving count."`
 	Notes           string          `json:"notes,omitempty" maxLength:"5000"`
 	PlainItems      []MealPlainItem `json:"plain_items,omitempty" maxItems:"100" doc:"Only for a dish without entry_id."`

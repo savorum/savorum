@@ -123,6 +123,7 @@ export interface PrintWorkspaceProps {
   currentBatch?: string
   hasPreferredBatch?: boolean
   showScale?: boolean
+  empty?: boolean
   /** The specification the settings and the presentation resolve to. */
   request: () => Parameters<typeof generatePrintDocument>[1]
 }
@@ -143,6 +144,12 @@ export function PrintWorkspace(props: PrintWorkspaceProps) {
   // new one succeeds, so a reader is never left looking at nothing while they
   // adjust a setting.
   createEffect(() => {
+    if (props.empty) {
+      setDocument(undefined)
+      setError(m.api_problem_print_source_empty())
+      setWorking(false)
+      return
+    }
     const specification = JSON.stringify({ source: props.source, options: props.request() })
     const controller = new AbortController()
     const timer = setTimeout(() => {

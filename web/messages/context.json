@@ -94,5 +94,12 @@
   "import_review_replace": "Saves the imported recipe over the copy already in the library.",
   "import_review_save_copy": "Saves the imported recipe as a second recipe beside the one already in the library.",
   "import_notice_nothing_found": "The quoted action is the button labelled by import_review_save_and_edit; use the same words.",
-  "import_notice_from_caption": "Says where an imported recipe was read: the text written under a social media post."
+  "import_notice_from_caption": "Says where an imported recipe was read: the text written under a social media post.",
+  "cooking_together_unfinished_description": "{names} is a list of recipe titles already being cooked.",
+  "cooking_together_unfinished_count": "{count} is a formatted number of recipes already being cooked.",
+  "api_problem_facet_name_conflict": "A category is a cuisine, meal, dietary, or method label on a recipe.",
+  "editor_photos_not_added": "{names} is a list of file names that could not be added as photos. {reason} is the error message for the first of them.",
+  "recipe_compare_ingredients_in_common": "{shared} and {total} are formatted numbers of distinct ingredient names.",
+  "recipe_compare_parts_differ": "{count} and {total} are formatted numbers of recipe parts, such as ingredients or photos.",
+  "recipe_compare_only_in_this_recipe": "Read by screen readers after a line that the other recipe does not have."
 }

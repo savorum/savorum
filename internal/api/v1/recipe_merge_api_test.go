@@ -23,3 +23,13 @@ func TestDuplicateRecipesAreComparedAndMerged(t *testing.T) {
 		"recipe": merged,
 	}, http.StatusOK)
 }
+
+func TestARecipeIsNotComparedWithItself(t *testing.T) {
+	t.Parallel()
+
+	handler, _, _ := testAPI(t)
+
+	stew, _ := recipeNamed(t, handler, "stew", "Stew", "en")
+
+	send(t, handler, http.MethodPost, "/api/v1/recipes/merge/preview", map[string]any{"left_id": stew.ID, "right_id": stew.ID}, http.StatusUnprocessableEntity)
+}

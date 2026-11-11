@@ -13,6 +13,18 @@ export function calendarDate(value = new Date()): string {
   return `${part("year")}-${part("month")}-${part("day")}`
 }
 
+export function clockTime(value = new Date()): string {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: presentationContext().timeZone,
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(value)
+  const part = (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((entry) => entry.type === type)!.value
+  return `${part("hour")}:${part("minute")}`
+}
+
 /** Calendar-only dates have no timezone; timestamps do. */
 export function formatDate(value: string): string {
   const { locale, timeZone } = presentationContext()

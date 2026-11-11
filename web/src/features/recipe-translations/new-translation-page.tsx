@@ -7,6 +7,7 @@ import { getRecipe } from "@/api/recipes"
 import { createTranslation, draftTranslation } from "@/api/translations"
 import { RecipeEditor } from "@/components/recipe-editor"
 import { Loading, ResourceState } from "@/components/status"
+import { Button } from "@/components/ui/button"
 import {
   checkRecipeEditingScope,
   recipeEditingScope,
@@ -116,6 +117,11 @@ export function NewTranslationPage(props: {
           </>
         )}
       </ResourceState>
+      <Show when={start.error}>
+        <Button variant="outline" onClick={() => props.onCancel()}>
+          {m.common_cancel()}
+        </Button>
+      </Show>
     </main>
   )
 }

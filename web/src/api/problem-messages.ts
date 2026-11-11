@@ -139,6 +139,10 @@ export function problemMessage(
       return m.api_problem_recipe_already_here()
     case "recipe-conflict":
       return m.api_problem_recipe_conflict()
+    case "tag-name-conflict":
+      return m.api_problem_tag_name_conflict()
+    case "facet-name-conflict":
+      return m.api_problem_facet_name_conflict()
     case "recipe-document-identity-change":
       return m.api_problem_recipe_document_identity_change()
     case "recipe-invalid":

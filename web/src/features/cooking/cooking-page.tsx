@@ -57,7 +57,7 @@ export interface CookingSearch {
 export function CookingPage(props: CreateCookingOptions) {
   const cooking = createCooking(props)
   usePageTitle(() => {
-    const title = cooking.session()?.snapshot?.title
+    const title = cooking.entry.error ? undefined : cooking.session()?.snapshot?.title
     return title ? m.page_title_cooking({ name: title }) : undefined
   })
   const [finishOpen, setFinishOpen] = createSignal(false)

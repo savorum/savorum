@@ -1,4 +1,5 @@
-import type { Recipe } from "@/api/client"
+import type { Recipe, RecipeAsset } from "@/api/client"
+import type { RecipeMergeConflict } from "@/api/recipe-reconciliation"
 import { areaFields, areaOf, fieldName, recipeAreas, type RecipeArea } from "@/lib/recipe-areas"
 import { nutrientName, nutrientValue, nutritionBasisLabel, presenceLabel } from "@/lib/recipe-facts"
 import { asWritten, ingredientLine, yieldLine } from "@/lib/recipe-format"
@@ -95,15 +96,14 @@ function unnamedFields(recipe: Recipe): string[] {
     .sort()
 }
 
-/** The source record, member by member, each under the name the editor gives it. */
 const sourceMembers: { key: string; label: () => string }[] = [
   { key: "name", label: () => m.metadata_recipe_s_credited_source() },
   { key: "url", label: () => m.metadata_link() },
   { key: "attribution", label: () => m.editor_source_attribution() },
-  { key: "application", label: () => m.editor_source_application() },
-  { key: "source_id", label: () => m.editor_source_identifier() },
   { key: "retrieved_at", label: () => m.editor_source_retrieved() },
 ]
+
+const sourceBookkeeping = new Set(["application", "source_id"])
 
 function sourceLines(source: Record<string, unknown> | undefined): string[] {
   if (!source) return []
@@ -113,7 +113,12 @@ function sourceLines(source: Record<string, unknown> | undefined): string[] {
     if (typeof value === "string" && value.trim() !== "") lines.push(`${member.label()}: ${value}`)
   }
   for (const [key, value] of Object.entries(source)) {
-    if (bookkeeping.has(key) || sourceMembers.some((member) => member.key === key)) continue
+    if (
+      bookkeeping.has(key) ||
+      sourceBookkeeping.has(key) ||
+      sourceMembers.some((member) => member.key === key)
+    )
+      continue
     if (value !== undefined && value !== null && value !== "")
       lines.push(`${humanizeKey(key)}: ${readableValue(value)}`)
   }
@@ -167,29 +172,38 @@ export function conflictLines(recipe: Recipe | undefined, path: string, stored: 
   return readableLines(stored)
 }
 
-/**
- * A recipe's imagery as one list, with the leading photograph marked.
- *
- * The main photograph, the ordered references and the stored files are three
- * views of the same pictures.
- */
-function photoReading(recipe: Recipe): FieldReading[] {
+export function photoAssets(
+  recipe: Recipe,
+): { asset: RecipeAsset; main: boolean; label: string }[] {
   const referenced = [
     ...new Set([
       ...(recipe.primary_image ? [recipe.primary_image] : []),
       ...(recipe.image_refs ?? []),
     ]),
   ]
-  const known = new Set((recipe.assets ?? []).map((asset) => asset.id))
+  const assets = recipe.assets ?? []
   const order = [
-    ...referenced.filter((id) => known.has(id)),
-    ...[...known].filter((id) => !referenced.includes(id)),
+    ...referenced.flatMap((id) => assets.filter((asset) => asset.id === id)),
+    ...assets.filter((asset) => !referenced.includes(asset.id)),
   ]
-  const lines = order.map((id) => {
-    const label = referencedAsset(recipe, id)
-    return id === recipe.primary_image ? m.recipe_compare_main_photo({ value1: label }) : label
-  })
-  const unresolved = referenced.filter((id) => !known.has(id))
+  return order.map((asset) => ({
+    asset,
+    main: asset.id === recipe.primary_image,
+    label: assetLine(asset as unknown as Record<string, unknown>),
+  }))
+}
+
+function photoReading(recipe: Recipe): FieldReading[] {
+  const known = new Set((recipe.assets ?? []).map((asset) => asset.id))
+  const lines = photoAssets(recipe).map(({ main, label }) =>
+    main ? m.recipe_compare_main_photo({ value1: label }) : label,
+  )
+  const unresolved = [
+    ...new Set([
+      ...(recipe.primary_image ? [recipe.primary_image] : []),
+      ...(recipe.image_refs ?? []),
+    ]),
+  ].filter((id) => !known.has(id))
   return lines.length + unresolved.length === 0
     ? []
     : [{ field: "assets", label: fieldName("image_refs"), lines: [...lines, ...unresolved] }]
@@ -228,6 +242,85 @@ export function comparableAreas(left: Recipe, right: Recipe): RecipeArea[] {
   return recipeAreas.filter(
     (area) => areaReading(left, area).length > 0 || areaReading(right, area).length > 0,
   )
+}
+
+export function conflictAreas(
+  conflicts: readonly RecipeMergeConflict[],
+): { area: RecipeArea; paths: string[] }[] {
+  return recipeAreas
+    .map((area) => ({
+      area,
+      paths: conflicts.map((conflict) => conflict.path).filter((path) => areaOf(path) === area),
+    }))
+    .filter((group) => group.paths.length > 0)
+}
+
+const lineKey = (line: string) => line.trim().toLocaleLowerCase()
+
+export function linesOnlyHere(lines: readonly string[], others: readonly string[]): Set<number> {
+  const elsewhere = new Set(others.map(lineKey))
+  return new Set(lines.flatMap((line, index) => (elsewhere.has(lineKey(line)) ? [] : [index])))
+}
+
+export type DuplicateVerdict = "likely" | "possible" | "different"
+
+export interface DuplicateEvidence {
+  verdict: DuplicateVerdict
+  /** Undefined when either recipe records no source link. */
+  sameSource?: boolean
+  sameTitle: boolean
+  sharedIngredients: number
+  totalIngredients: number
+}
+
+const words = (text: string) =>
+  text
+    .toLocaleLowerCase()
+    .replace(/\([^)]*\)/g, " ")
+    .split(/[^\p{L}\p{N}]+/u)
+    .filter(Boolean)
+
+function sourceKey(url: string | undefined): string | undefined {
+  if (!url) return undefined
+  try {
+    const parsed = new URL(url)
+    return `${parsed.hostname.replace(/^www\./, "")}${parsed.pathname.replace(/\/+$/, "")}`.toLowerCase()
+  } catch {
+    return url.trim().toLowerCase()
+  }
+}
+
+function ingredientNames(recipe: Recipe): Set<string> {
+  return new Set(
+    (recipe.ingredient_sections ?? [])
+      .flatMap((section) => section.ingredients ?? [])
+      .flatMap((ingredient) => [ingredient, ...(ingredient.alternatives ?? [])])
+      .map((ingredient) => words(ingredient.name ?? "").join(" "))
+      .filter(Boolean),
+  )
+}
+
+export function duplicateEvidence(left: Recipe, right: Recipe): DuplicateEvidence {
+  const leftSource = sourceKey(left.source?.url)
+  const rightSource = sourceKey(right.source?.url)
+  const sameSource = leftSource && rightSource ? leftSource === rightSource : undefined
+  const leftTitle = words(left.title)
+  const rightTitle = words(right.title)
+  const sameTitle = leftTitle.join(" ") === rightTitle.join(" ")
+  const sharedTitleWords = leftTitle.filter((word) => rightTitle.includes(word)).length
+  const titleOverlap = sharedTitleWords / (new Set([...leftTitle, ...rightTitle]).size || 1)
+  const leftNames = ingredientNames(left)
+  const rightNames = ingredientNames(right)
+  const sharedIngredients = [...leftNames].filter((name) => rightNames.has(name)).length
+  const totalIngredients = new Set([...leftNames, ...rightNames]).size
+  const ingredientOverlap = totalIngredients ? sharedIngredients / totalIngredients : 0
+  const verdict: DuplicateVerdict =
+    sameSource || (sameTitle && ingredientOverlap >= 0.5) || ingredientOverlap >= 0.8
+      ? "likely"
+      : sameTitle || ingredientOverlap >= 0.4 || (titleOverlap >= 0.5 && ingredientOverlap >= 0.2)
+        ? "possible"
+        : "different"
+  return { verdict, sameSource, sameTitle, sharedIngredients, totalIngredients }
 }
 
 export { areaOf }

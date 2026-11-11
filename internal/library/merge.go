@@ -51,6 +51,10 @@ type MergeRepository interface {
 
 // CompareRecipes proposes a merged document and identifies conflicting values without writing.
 func (s *Service) CompareRecipes(ctx context.Context, leftID, rightID EntryID) (RecipeMergePreview, error) {
+	if leftID == rightID {
+		return RecipeMergePreview{}, fmt.Errorf("%w: two distinct recipes are required", ErrInvalidOrganization)
+	}
+
 	left, err := s.repository.Get(ctx, leftID, StateActive)
 	if err != nil {
 		return RecipeMergePreview{}, err

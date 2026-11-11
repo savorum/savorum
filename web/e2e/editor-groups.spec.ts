@@ -145,6 +145,7 @@ test("step move buttons cross stage boundaries and preserve content, focus, and 
   await expect(prepare.getByRole("button", { name: "Move step 1 up", exact: true })).toBeDisabled()
   await expect(bake.getByRole("button", { name: "Move step 1 down", exact: true })).toBeDisabled()
   await rest.getByRole("button", { name: "Move step 1 down", exact: true }).press("Enter")
+  await expect(bake.getByRole("textbox", { name: "Step 1", exact: true })).toBeFocused()
   await prepare.getByRole("button", { name: "Move step 2 down", exact: true }).press("Enter")
   await expect(rest.locator('[data-editor-id="chill"]')).toBeVisible()
   await expect(chill.getByRole("textbox", { name: "Step 1", exact: true })).toBeFocused()
@@ -157,7 +158,9 @@ test("step move buttons cross stage boundaries and preserve content, focus, and 
   await expect(bake.getByRole("textbox", { name: "Step 1", exact: true })).toHaveValue(
     "Chill the dough.",
   )
+  await expect(bake.getByRole("textbox", { name: "Step 1", exact: true })).toBeFocused()
   await bake.getByRole("button", { name: "Move step 1 up", exact: true }).press("Enter")
+  await expect(rest.getByRole("textbox", { name: "Step 1", exact: true })).toBeFocused()
   await rest.getByRole("button", { name: "Move step 1 up", exact: true }).press("Enter")
   await expect(prepare.getByRole("textbox", { name: "Step 2", exact: true })).toBeFocused()
 
@@ -165,10 +168,13 @@ test("step move buttons cross stage boundaries and preserve content, focus, and 
   await expect(prepare.getByRole("textbox", { name: "Step 1", exact: true })).toHaveValue(
     "Chill the dough.",
   )
+  await expect(prepare.getByRole("textbox", { name: "Step 1", exact: true })).toBeFocused()
   await prepare.getByRole("button", { name: "Move step 1 down", exact: true }).press("Enter")
+  await expect(prepare.getByRole("textbox", { name: "Step 2", exact: true })).toBeFocused()
   await prepare.getByRole("button", { name: "Move step 2 down", exact: true }).press("Enter")
 
   const text = chill.getByRole("textbox", { name: "Step 1", exact: true })
+  await expect(text).toBeFocused()
   await text.press("End")
   await text.pressSequentially(" Keep covered.")
   await text.evaluate((element) => {

@@ -96,7 +96,7 @@ export const validateLibrarySearch = (search: Record<string, unknown>): LibraryS
     author: list(search.author),
     ingredient: list(search.ingredient),
     favorite: search.favorite === true || search.favorite === "true" ? true : undefined,
-    rating: rating >= 1 && rating <= 5 ? rating : undefined,
+    rating: Number.isInteger(rating) && rating >= 1 && rating <= 5 ? rating : undefined,
     unmade: search.unmade === true || search.unmade === "true" ? true : undefined,
     review: search.review === true || search.review === "true" ? true : undefined,
     imported:

@@ -101,3 +101,75 @@ func TestMealAttributionAndPlannedRecipeLifecycle(t *testing.T) {
 		t.Fatalf("erased name leaked: %#v", got)
 	}
 }
+
+func TestRecipeRenameRenamesDishesStillNamedAfterIt(t *testing.T) {
+	ctx := t.Context()
+	store := openStore(ctx, t)
+
+	principal, err := store.LocalPrincipal(ctx)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	ctx = access.WithLibrary(identity.WithPrincipal(ctx, principal), "default")
+	timestamp := time.Date(2026, time.September, 1, 12, 0, 0, 0, time.UTC)
+	document := testfixture.Document()
+	document.ID = recipe.RecipeID("renamed-document")
+	original := document.Title
+
+	if err := store.Create(ctx, library.Entry{ID: "renamed", Recipe: document, Revision: 1, CreatedAt: timestamp, UpdatedAt: timestamp}, library.RevisionMetadata{Cause: library.RevisionCauseAPI}); err != nil {
+		t.Fatal(err)
+	}
+
+	entry := library.EntryID("renamed")
+
+	planned := meal.Meal{
+		ID: "m-renamed", Revision: 1, CreatedAt: timestamp, UpdatedAt: timestamp,
+		Dishes: []meal.Dish{
+			{ID: "d-follows", MealID: "m-renamed", EntryID: &entry, DisplayName: original},
+			{ID: "d-own", MealID: "m-renamed", EntryID: &entry, DisplayName: "Sunday pies", Position: 1},
+		},
+	}
+	if err := store.CreateMeal(ctx, "default", planned); err != nil {
+		t.Fatal(err)
+	}
+
+	saved := meal.SavedMeal{
+		ID: "s-renamed", Name: "Pie night", Revision: 1, CreatedAt: timestamp, UpdatedAt: timestamp,
+		Dishes: []meal.SavedDish{{ID: "sd-follows", EntryID: &entry, DisplayName: original}},
+	}
+	if err := store.CreateSavedMeal(ctx, "default", saved); err != nil {
+		t.Fatal(err)
+	}
+
+	document.Title = "Vegetable hand pies"
+	if _, err := store.Revise(ctx, library.RevisionCommand{
+		ID: entry, ExpectedRevision: 1, Recipe: document,
+		CurrentState: library.StateActive, TargetState: library.StateActive,
+		Metadata: library.RevisionMetadata{Cause: library.RevisionCauseManualEdit}, Timestamp: timestamp.Add(time.Minute),
+	}); err != nil {
+		t.Fatal(err)
+	}
+
+	got, err := store.GetMeal(ctx, "default", "m-renamed")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if got.Dishes[0].DisplayName != "Vegetable hand pies" || got.Dishes[1].DisplayName != "Sunday pies" {
+		t.Fatalf("dish names = %q / %q", got.Dishes[0].DisplayName, got.Dishes[1].DisplayName)
+	}
+
+	if got.Revision != planned.Revision+1 {
+		t.Fatalf("meal revision = %d, want %d", got.Revision, planned.Revision+1)
+	}
+
+	gotSaved, err := store.GetSavedMeal(ctx, "default", "s-renamed")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if gotSaved.Dishes[0].DisplayName != "Vegetable hand pies" || gotSaved.Revision != saved.Revision+1 {
+		t.Fatalf("saved meal = %#v", gotSaved)
+	}
+}

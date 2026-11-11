@@ -423,6 +423,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Api_Problem_Export_Source_EmptyInputs */
 /** @typedef {{}} Api_Problem_Export_Source_InvalidInputs */
 /** @typedef {{}} Api_Problem_Export_Too_LargeInputs */
+/** @typedef {{}} Api_Problem_Facet_Name_ConflictInputs */
 /** @typedef {{}} Api_Problem_Import_InvalidInputs */
 /** @typedef {{}} Api_Problem_Import_Job_Not_FoundInputs */
 /** @typedef {{}} Api_Problem_Import_Job_Not_ResumableInputs */
@@ -470,6 +471,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Api_Problem_Service_UnavailableInputs */
 /** @typedef {{}} Api_Problem_Source_Not_FoundInputs */
 /** @typedef {{}} Api_Problem_Sref_InvalidInputs */
+/** @typedef {{}} Api_Problem_Tag_Name_ConflictInputs */
 /** @typedef {{}} Api_Problem_Token_Scope_RequiredInputs */
 /** @typedef {{}} Api_Problem_Tokens_UnavailableInputs */
 /** @typedef {{}} Api_Violation_Amount_InvalidInputs */
@@ -828,6 +830,11 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Cooking_Timer_SetupInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Cooking_Times_CookedInputs */
 /** @typedef {{}} Cooking_TogetherInputs */
+/** @typedef {{}} Cooking_Together_AlongsideInputs */
+/** @typedef {{}} Cooking_Together_Start_FreshInputs */
+/** @typedef {{ count: NonNullable<unknown> }} Cooking_Together_Unfinished_CountInputs */
+/** @typedef {{ names: NonNullable<unknown> }} Cooking_Together_Unfinished_DescriptionInputs */
+/** @typedef {{}} Cooking_Together_Unfinished_TitleInputs */
 /** @typedef {{}} Cookings_The_Cooking_Could_Not_Be_RecordedInputs */
 /** @typedef {{}} Cookings_The_Cooking_Could_Not_Be_RemovedInputs */
 /** @typedef {{}} Cookings_The_Cooking_Could_Not_Be_SavedInputs */
@@ -917,6 +924,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{ count: NonNullable<unknown> }} Editor_Photo_CountInputs */
 /** @typedef {{ position: NonNullable<unknown> }} Editor_Photo_MovedInputs */
 /** @typedef {{}} Editor_Photo_Not_In_RecipeInputs */
+/** @typedef {{ names: NonNullable<unknown>, reason: NonNullable<unknown> }} Editor_Photos_Not_AddedInputs */
 /** @typedef {{}} Editor_Prep_TimeInputs */
 /** @typedef {{}} Editor_Recovered_DiscardInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Editor_Recovered_HeadingInputs */
@@ -1973,23 +1981,28 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Recipe_Compare_Apply_Reviewed_UpdatesInputs */
 /** @typedef {{}} Recipe_Compare_ApplyingInputs */
 /** @typedef {{}} Recipe_Compare_Back_To_The_ComparisonInputs */
-/** @typedef {{ value1: NonNullable<unknown> }} Recipe_Compare_Choose_The_To_KeepInputs */
 /** @typedef {{}} Recipe_Compare_Combine_Into_One_RecipeInputs */
 /** @typedef {{}} Recipe_Compare_Combine_RecipesInputs */
 /** @typedef {{}} Recipe_Compare_Combine_These_RecipesInputs */
 /** @typedef {{}} Recipe_Compare_Compare_Two_RecipesInputs */
-/** @typedef {{}} Recipe_Compare_DifferentInputs */
+/** @typedef {{}} Recipe_Compare_Different_SourcesInputs */
 /** @typedef {{ areas: NonNullable<unknown> }} Recipe_Compare_Differs_InInputs */
 /** @typedef {{}} Recipe_Compare_EmptyInputs */
+/** @typedef {{ shared: NonNullable<unknown>, total: NonNullable<unknown> }} Recipe_Compare_Ingredients_In_CommonInputs */
+/** @typedef {{}} Recipe_Compare_Keep_BothInputs */
 /** @typedef {{}} Recipe_Compare_Keep_My_EditInputs */
+/** @typedef {{}} Recipe_Compare_Kept_Recipe_Keeps_Its_PlaceInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Recipe_Compare_Main_PhotoInputs */
 /** @typedef {{}} Recipe_Compare_MergingInputs */
 /** @typedef {{}} Recipe_Compare_My_EditInputs */
 /** @typedef {{}} Recipe_Compare_No_Conflicts_Need_Your_AttentionInputs */
 /** @typedef {{}} Recipe_Compare_Nothing_Changes_Until_You_CombineInputs */
+/** @typedef {{}} Recipe_Compare_Only_In_This_RecipeInputs */
 /** @typedef {{ value1: NonNullable<unknown>, value2: NonNullable<unknown> }} Recipe_Compare_Part_Comes_FromInputs */
-/** @typedef {{ value1: NonNullable<unknown> }} Recipe_Compare_Part_Not_Chosen_YetInputs */
+/** @typedef {{ count: NonNullable<unknown>, total: NonNullable<unknown> }} Recipe_Compare_Parts_DifferInputs */
 /** @typedef {{}} Recipe_Compare_Review_Source_UpdatesInputs */
+/** @typedef {{}} Recipe_Compare_Same_SourceInputs */
+/** @typedef {{}} Recipe_Compare_Same_TitleInputs */
 /** @typedef {{}} Recipe_Compare_SourceInputs */
 /** @typedef {{}} Recipe_Compare_SymbolInputs */
 /** @typedef {{}} Recipe_Compare_The_Combined_RecipeInputs */
@@ -2000,7 +2013,11 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Recipe_Compare_This_Recipe_Has_NoneInputs */
 /** @typedef {{}} Recipe_Compare_Unsupported_ValueInputs */
 /** @typedef {{}} Recipe_Compare_Updated_RecipeInputs */
+/** @typedef {{}} Recipe_Compare_Use_Kept_Recipe_For_Every_PartInputs */
 /** @typedef {{}} Recipe_Compare_Use_SourceInputs */
+/** @typedef {{}} Recipe_Compare_Verdict_DifferentInputs */
+/** @typedef {{}} Recipe_Compare_Verdict_LikelyInputs */
+/** @typedef {{}} Recipe_Compare_Verdict_PossibleInputs */
 /** @typedef {{}} Recipe_Compare_What_Combining_DoesInputs */
 /** @typedef {{}} Recipe_Compare_Which_Recipe_Do_You_KeepInputs */
 /** @typedef {{}} Recipe_Compare_Whole_Parts_OnlyInputs */
@@ -2328,7 +2345,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{ value1: NonNullable<unknown> }} Step_Details_Other_Purpose_For_TemperatureInputs */
 /** @typedef {{}} Step_Details_OvenInputs */
 /** @typedef {{}} Step_Details_Photos_Of_This_StepInputs */
-/** @typedef {{}} Step_Details_Recipe_PhotoInputs */
+/** @typedef {{ position: NonNullable<unknown> }} Step_Details_Recipe_PhotoInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Step_Details_Remove_TemperatureInputs */
 /** @typedef {{}} Step_Details_SurfaceInputs */
 /** @typedef {{}} Step_Details_TemperatureInputs */
@@ -2471,7 +2488,6 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Yield_Timing_How_Long_It_TakesInputs */
 /** @typedef {{}} Yield_Timing_How_ManyInputs */
 /** @typedef {{}} Yield_Timing_Of_WhatInputs */
-/** @typedef {{ value1: NonNullable<unknown> }} Yield_Timing_This_Recipe_S_Written_Total_Of_Is_One_Its_Own_Steps_RunInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Yield_Timing_Time_Entry_HintInputs */
 /** @typedef {{}} Yield_Timing_What_It_MakesInputs */
 import * as __en from "./en.js"
@@ -19772,6 +19788,47 @@ export const api_problem_export_too_large = /** @type {((inputs?: Api_Problem_Ex
 /**
 * | output |
 * | --- |
+* | "That category name is taken" |
+*
+* @param {Api_Problem_Facet_Name_ConflictInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const api_problem_facet_name_conflict = /** @type {((inputs?: Api_Problem_Facet_Name_ConflictInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Api_Problem_Facet_Name_ConflictInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.api_problem_facet_name_conflict(inputs)
+	if (locale === "cs") return __cs.api_problem_facet_name_conflict(inputs)
+	if (locale === "da") return __da.api_problem_facet_name_conflict(inputs)
+	if (locale === "de") return __de.api_problem_facet_name_conflict(inputs)
+	if (locale === "el") return __el.api_problem_facet_name_conflict(inputs)
+	if (locale === "es") return __es.api_problem_facet_name_conflict(inputs)
+	if (locale === "fi") return __fi.api_problem_facet_name_conflict(inputs)
+	if (locale === "fr") return __fr.api_problem_facet_name_conflict(inputs)
+	if (locale === "he") return __he.api_problem_facet_name_conflict(inputs)
+	if (locale === "hu") return __hu.api_problem_facet_name_conflict(inputs)
+	if (locale === "id") return __id.api_problem_facet_name_conflict(inputs)
+	if (locale === "it") return __it.api_problem_facet_name_conflict(inputs)
+	if (locale === "ja") return __ja.api_problem_facet_name_conflict(inputs)
+	if (locale === "ko") return __ko.api_problem_facet_name_conflict(inputs)
+	if (locale === "nb") return __nb.api_problem_facet_name_conflict(inputs)
+	if (locale === "nl") return __nl.api_problem_facet_name_conflict(inputs)
+	if (locale === "pl") return __pl.api_problem_facet_name_conflict(inputs)
+	if (locale === "pt-BR") return __pt_br2.api_problem_facet_name_conflict(inputs)
+	if (locale === "pt-PT") return __pt_pt2.api_problem_facet_name_conflict(inputs)
+	if (locale === "ro") return __ro.api_problem_facet_name_conflict(inputs)
+	if (locale === "ru") return __ru.api_problem_facet_name_conflict(inputs)
+	if (locale === "sv") return __sv.api_problem_facet_name_conflict(inputs)
+	if (locale === "th") return __th.api_problem_facet_name_conflict(inputs)
+	if (locale === "tr") return __tr.api_problem_facet_name_conflict(inputs)
+	if (locale === "uk") return __uk.api_problem_facet_name_conflict(inputs)
+	if (locale === "vi") return __vi.api_problem_facet_name_conflict(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.api_problem_facet_name_conflict(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.api_problem_facet_name_conflict(inputs)
+	return __en.api_problem_facet_name_conflict(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "The import could not be read as a set of recipes this library can hold" |
 *
 * @param {Api_Problem_Import_InvalidInputs} inputs
@@ -21695,6 +21752,47 @@ export const api_problem_sref_invalid = /** @type {((inputs?: Api_Problem_Sref_I
 	if (locale === "zh-Hans") return __zh_hans1.api_problem_sref_invalid(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.api_problem_sref_invalid(inputs)
 	return __en.api_problem_sref_invalid(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "That tag name is taken" |
+*
+* @param {Api_Problem_Tag_Name_ConflictInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const api_problem_tag_name_conflict = /** @type {((inputs?: Api_Problem_Tag_Name_ConflictInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Api_Problem_Tag_Name_ConflictInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.api_problem_tag_name_conflict(inputs)
+	if (locale === "cs") return __cs.api_problem_tag_name_conflict(inputs)
+	if (locale === "da") return __da.api_problem_tag_name_conflict(inputs)
+	if (locale === "de") return __de.api_problem_tag_name_conflict(inputs)
+	if (locale === "el") return __el.api_problem_tag_name_conflict(inputs)
+	if (locale === "es") return __es.api_problem_tag_name_conflict(inputs)
+	if (locale === "fi") return __fi.api_problem_tag_name_conflict(inputs)
+	if (locale === "fr") return __fr.api_problem_tag_name_conflict(inputs)
+	if (locale === "he") return __he.api_problem_tag_name_conflict(inputs)
+	if (locale === "hu") return __hu.api_problem_tag_name_conflict(inputs)
+	if (locale === "id") return __id.api_problem_tag_name_conflict(inputs)
+	if (locale === "it") return __it.api_problem_tag_name_conflict(inputs)
+	if (locale === "ja") return __ja.api_problem_tag_name_conflict(inputs)
+	if (locale === "ko") return __ko.api_problem_tag_name_conflict(inputs)
+	if (locale === "nb") return __nb.api_problem_tag_name_conflict(inputs)
+	if (locale === "nl") return __nl.api_problem_tag_name_conflict(inputs)
+	if (locale === "pl") return __pl.api_problem_tag_name_conflict(inputs)
+	if (locale === "pt-BR") return __pt_br2.api_problem_tag_name_conflict(inputs)
+	if (locale === "pt-PT") return __pt_pt2.api_problem_tag_name_conflict(inputs)
+	if (locale === "ro") return __ro.api_problem_tag_name_conflict(inputs)
+	if (locale === "ru") return __ru.api_problem_tag_name_conflict(inputs)
+	if (locale === "sv") return __sv.api_problem_tag_name_conflict(inputs)
+	if (locale === "th") return __th.api_problem_tag_name_conflict(inputs)
+	if (locale === "tr") return __tr.api_problem_tag_name_conflict(inputs)
+	if (locale === "uk") return __uk.api_problem_tag_name_conflict(inputs)
+	if (locale === "vi") return __vi.api_problem_tag_name_conflict(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.api_problem_tag_name_conflict(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.api_problem_tag_name_conflict(inputs)
+	return __en.api_problem_tag_name_conflict(inputs)
 });
 /**
 * | output |
@@ -36381,6 +36479,211 @@ export const cooking_together = /** @type {((inputs?: Cooking_TogetherInputs, op
 /**
 * | output |
 * | --- |
+* | "Cook alongside" |
+*
+* @param {Cooking_Together_AlongsideInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const cooking_together_alongside = /** @type {((inputs?: Cooking_Together_AlongsideInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Cooking_Together_AlongsideInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.cooking_together_alongside(inputs)
+	if (locale === "cs") return __cs.cooking_together_alongside(inputs)
+	if (locale === "da") return __da.cooking_together_alongside(inputs)
+	if (locale === "de") return __de.cooking_together_alongside(inputs)
+	if (locale === "el") return __el.cooking_together_alongside(inputs)
+	if (locale === "es") return __es.cooking_together_alongside(inputs)
+	if (locale === "fi") return __fi.cooking_together_alongside(inputs)
+	if (locale === "fr") return __fr.cooking_together_alongside(inputs)
+	if (locale === "he") return __he.cooking_together_alongside(inputs)
+	if (locale === "hu") return __hu.cooking_together_alongside(inputs)
+	if (locale === "id") return __id.cooking_together_alongside(inputs)
+	if (locale === "it") return __it.cooking_together_alongside(inputs)
+	if (locale === "ja") return __ja.cooking_together_alongside(inputs)
+	if (locale === "ko") return __ko.cooking_together_alongside(inputs)
+	if (locale === "nb") return __nb.cooking_together_alongside(inputs)
+	if (locale === "nl") return __nl.cooking_together_alongside(inputs)
+	if (locale === "pl") return __pl.cooking_together_alongside(inputs)
+	if (locale === "pt-BR") return __pt_br2.cooking_together_alongside(inputs)
+	if (locale === "pt-PT") return __pt_pt2.cooking_together_alongside(inputs)
+	if (locale === "ro") return __ro.cooking_together_alongside(inputs)
+	if (locale === "ru") return __ru.cooking_together_alongside(inputs)
+	if (locale === "sv") return __sv.cooking_together_alongside(inputs)
+	if (locale === "th") return __th.cooking_together_alongside(inputs)
+	if (locale === "tr") return __tr.cooking_together_alongside(inputs)
+	if (locale === "uk") return __uk.cooking_together_alongside(inputs)
+	if (locale === "vi") return __vi.cooking_together_alongside(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.cooking_together_alongside(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.cooking_together_alongside(inputs)
+	return __en.cooking_together_alongside(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Discard and start" |
+*
+* @param {Cooking_Together_Start_FreshInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const cooking_together_start_fresh = /** @type {((inputs?: Cooking_Together_Start_FreshInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Cooking_Together_Start_FreshInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.cooking_together_start_fresh(inputs)
+	if (locale === "cs") return __cs.cooking_together_start_fresh(inputs)
+	if (locale === "da") return __da.cooking_together_start_fresh(inputs)
+	if (locale === "de") return __de.cooking_together_start_fresh(inputs)
+	if (locale === "el") return __el.cooking_together_start_fresh(inputs)
+	if (locale === "es") return __es.cooking_together_start_fresh(inputs)
+	if (locale === "fi") return __fi.cooking_together_start_fresh(inputs)
+	if (locale === "fr") return __fr.cooking_together_start_fresh(inputs)
+	if (locale === "he") return __he.cooking_together_start_fresh(inputs)
+	if (locale === "hu") return __hu.cooking_together_start_fresh(inputs)
+	if (locale === "id") return __id.cooking_together_start_fresh(inputs)
+	if (locale === "it") return __it.cooking_together_start_fresh(inputs)
+	if (locale === "ja") return __ja.cooking_together_start_fresh(inputs)
+	if (locale === "ko") return __ko.cooking_together_start_fresh(inputs)
+	if (locale === "nb") return __nb.cooking_together_start_fresh(inputs)
+	if (locale === "nl") return __nl.cooking_together_start_fresh(inputs)
+	if (locale === "pl") return __pl.cooking_together_start_fresh(inputs)
+	if (locale === "pt-BR") return __pt_br2.cooking_together_start_fresh(inputs)
+	if (locale === "pt-PT") return __pt_pt2.cooking_together_start_fresh(inputs)
+	if (locale === "ro") return __ro.cooking_together_start_fresh(inputs)
+	if (locale === "ru") return __ru.cooking_together_start_fresh(inputs)
+	if (locale === "sv") return __sv.cooking_together_start_fresh(inputs)
+	if (locale === "th") return __th.cooking_together_start_fresh(inputs)
+	if (locale === "tr") return __tr.cooking_together_start_fresh(inputs)
+	if (locale === "uk") return __uk.cooking_together_start_fresh(inputs)
+	if (locale === "vi") return __vi.cooking_together_start_fresh(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.cooking_together_start_fresh(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.cooking_together_start_fresh(inputs)
+	return __en.cooking_together_start_fresh(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Recipes in progress: {count}." |
+*
+* @param {Cooking_Together_Unfinished_CountInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const cooking_together_unfinished_count = /** @type {((inputs: Cooking_Together_Unfinished_CountInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Cooking_Together_Unfinished_CountInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.cooking_together_unfinished_count(inputs)
+	if (locale === "cs") return __cs.cooking_together_unfinished_count(inputs)
+	if (locale === "da") return __da.cooking_together_unfinished_count(inputs)
+	if (locale === "de") return __de.cooking_together_unfinished_count(inputs)
+	if (locale === "el") return __el.cooking_together_unfinished_count(inputs)
+	if (locale === "es") return __es.cooking_together_unfinished_count(inputs)
+	if (locale === "fi") return __fi.cooking_together_unfinished_count(inputs)
+	if (locale === "fr") return __fr.cooking_together_unfinished_count(inputs)
+	if (locale === "he") return __he.cooking_together_unfinished_count(inputs)
+	if (locale === "hu") return __hu.cooking_together_unfinished_count(inputs)
+	if (locale === "id") return __id.cooking_together_unfinished_count(inputs)
+	if (locale === "it") return __it.cooking_together_unfinished_count(inputs)
+	if (locale === "ja") return __ja.cooking_together_unfinished_count(inputs)
+	if (locale === "ko") return __ko.cooking_together_unfinished_count(inputs)
+	if (locale === "nb") return __nb.cooking_together_unfinished_count(inputs)
+	if (locale === "nl") return __nl.cooking_together_unfinished_count(inputs)
+	if (locale === "pl") return __pl.cooking_together_unfinished_count(inputs)
+	if (locale === "pt-BR") return __pt_br2.cooking_together_unfinished_count(inputs)
+	if (locale === "pt-PT") return __pt_pt2.cooking_together_unfinished_count(inputs)
+	if (locale === "ro") return __ro.cooking_together_unfinished_count(inputs)
+	if (locale === "ru") return __ru.cooking_together_unfinished_count(inputs)
+	if (locale === "sv") return __sv.cooking_together_unfinished_count(inputs)
+	if (locale === "th") return __th.cooking_together_unfinished_count(inputs)
+	if (locale === "tr") return __tr.cooking_together_unfinished_count(inputs)
+	if (locale === "uk") return __uk.cooking_together_unfinished_count(inputs)
+	if (locale === "vi") return __vi.cooking_together_unfinished_count(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.cooking_together_unfinished_count(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.cooking_together_unfinished_count(inputs)
+	return __en.cooking_together_unfinished_count(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "In progress: {names}." |
+*
+* @param {Cooking_Together_Unfinished_DescriptionInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const cooking_together_unfinished_description = /** @type {((inputs: Cooking_Together_Unfinished_DescriptionInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Cooking_Together_Unfinished_DescriptionInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.cooking_together_unfinished_description(inputs)
+	if (locale === "cs") return __cs.cooking_together_unfinished_description(inputs)
+	if (locale === "da") return __da.cooking_together_unfinished_description(inputs)
+	if (locale === "de") return __de.cooking_together_unfinished_description(inputs)
+	if (locale === "el") return __el.cooking_together_unfinished_description(inputs)
+	if (locale === "es") return __es.cooking_together_unfinished_description(inputs)
+	if (locale === "fi") return __fi.cooking_together_unfinished_description(inputs)
+	if (locale === "fr") return __fr.cooking_together_unfinished_description(inputs)
+	if (locale === "he") return __he.cooking_together_unfinished_description(inputs)
+	if (locale === "hu") return __hu.cooking_together_unfinished_description(inputs)
+	if (locale === "id") return __id.cooking_together_unfinished_description(inputs)
+	if (locale === "it") return __it.cooking_together_unfinished_description(inputs)
+	if (locale === "ja") return __ja.cooking_together_unfinished_description(inputs)
+	if (locale === "ko") return __ko.cooking_together_unfinished_description(inputs)
+	if (locale === "nb") return __nb.cooking_together_unfinished_description(inputs)
+	if (locale === "nl") return __nl.cooking_together_unfinished_description(inputs)
+	if (locale === "pl") return __pl.cooking_together_unfinished_description(inputs)
+	if (locale === "pt-BR") return __pt_br2.cooking_together_unfinished_description(inputs)
+	if (locale === "pt-PT") return __pt_pt2.cooking_together_unfinished_description(inputs)
+	if (locale === "ro") return __ro.cooking_together_unfinished_description(inputs)
+	if (locale === "ru") return __ru.cooking_together_unfinished_description(inputs)
+	if (locale === "sv") return __sv.cooking_together_unfinished_description(inputs)
+	if (locale === "th") return __th.cooking_together_unfinished_description(inputs)
+	if (locale === "tr") return __tr.cooking_together_unfinished_description(inputs)
+	if (locale === "uk") return __uk.cooking_together_unfinished_description(inputs)
+	if (locale === "vi") return __vi.cooking_together_unfinished_description(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.cooking_together_unfinished_description(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.cooking_together_unfinished_description(inputs)
+	return __en.cooking_together_unfinished_description(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Already cooking" |
+*
+* @param {Cooking_Together_Unfinished_TitleInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const cooking_together_unfinished_title = /** @type {((inputs?: Cooking_Together_Unfinished_TitleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Cooking_Together_Unfinished_TitleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.cooking_together_unfinished_title(inputs)
+	if (locale === "cs") return __cs.cooking_together_unfinished_title(inputs)
+	if (locale === "da") return __da.cooking_together_unfinished_title(inputs)
+	if (locale === "de") return __de.cooking_together_unfinished_title(inputs)
+	if (locale === "el") return __el.cooking_together_unfinished_title(inputs)
+	if (locale === "es") return __es.cooking_together_unfinished_title(inputs)
+	if (locale === "fi") return __fi.cooking_together_unfinished_title(inputs)
+	if (locale === "fr") return __fr.cooking_together_unfinished_title(inputs)
+	if (locale === "he") return __he.cooking_together_unfinished_title(inputs)
+	if (locale === "hu") return __hu.cooking_together_unfinished_title(inputs)
+	if (locale === "id") return __id.cooking_together_unfinished_title(inputs)
+	if (locale === "it") return __it.cooking_together_unfinished_title(inputs)
+	if (locale === "ja") return __ja.cooking_together_unfinished_title(inputs)
+	if (locale === "ko") return __ko.cooking_together_unfinished_title(inputs)
+	if (locale === "nb") return __nb.cooking_together_unfinished_title(inputs)
+	if (locale === "nl") return __nl.cooking_together_unfinished_title(inputs)
+	if (locale === "pl") return __pl.cooking_together_unfinished_title(inputs)
+	if (locale === "pt-BR") return __pt_br2.cooking_together_unfinished_title(inputs)
+	if (locale === "pt-PT") return __pt_pt2.cooking_together_unfinished_title(inputs)
+	if (locale === "ro") return __ro.cooking_together_unfinished_title(inputs)
+	if (locale === "ru") return __ru.cooking_together_unfinished_title(inputs)
+	if (locale === "sv") return __sv.cooking_together_unfinished_title(inputs)
+	if (locale === "th") return __th.cooking_together_unfinished_title(inputs)
+	if (locale === "tr") return __tr.cooking_together_unfinished_title(inputs)
+	if (locale === "uk") return __uk.cooking_together_unfinished_title(inputs)
+	if (locale === "vi") return __vi.cooking_together_unfinished_title(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.cooking_together_unfinished_title(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.cooking_together_unfinished_title(inputs)
+	return __en.cooking_together_unfinished_title(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "The cooking could not be recorded." |
 *
 * @param {Cookings_The_Cooking_Could_Not_Be_RecordedInputs} inputs
@@ -40028,6 +40331,47 @@ export const editor_photo_not_in_recipe = /** @type {((inputs?: Editor_Photo_Not
 	if (locale === "zh-Hans") return __zh_hans1.editor_photo_not_in_recipe(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.editor_photo_not_in_recipe(inputs)
 	return __en.editor_photo_not_in_recipe(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Not added: {names}. {reason}" |
+*
+* @param {Editor_Photos_Not_AddedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const editor_photos_not_added = /** @type {((inputs: Editor_Photos_Not_AddedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Editor_Photos_Not_AddedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.editor_photos_not_added(inputs)
+	if (locale === "cs") return __cs.editor_photos_not_added(inputs)
+	if (locale === "da") return __da.editor_photos_not_added(inputs)
+	if (locale === "de") return __de.editor_photos_not_added(inputs)
+	if (locale === "el") return __el.editor_photos_not_added(inputs)
+	if (locale === "es") return __es.editor_photos_not_added(inputs)
+	if (locale === "fi") return __fi.editor_photos_not_added(inputs)
+	if (locale === "fr") return __fr.editor_photos_not_added(inputs)
+	if (locale === "he") return __he.editor_photos_not_added(inputs)
+	if (locale === "hu") return __hu.editor_photos_not_added(inputs)
+	if (locale === "id") return __id.editor_photos_not_added(inputs)
+	if (locale === "it") return __it.editor_photos_not_added(inputs)
+	if (locale === "ja") return __ja.editor_photos_not_added(inputs)
+	if (locale === "ko") return __ko.editor_photos_not_added(inputs)
+	if (locale === "nb") return __nb.editor_photos_not_added(inputs)
+	if (locale === "nl") return __nl.editor_photos_not_added(inputs)
+	if (locale === "pl") return __pl.editor_photos_not_added(inputs)
+	if (locale === "pt-BR") return __pt_br2.editor_photos_not_added(inputs)
+	if (locale === "pt-PT") return __pt_pt2.editor_photos_not_added(inputs)
+	if (locale === "ro") return __ro.editor_photos_not_added(inputs)
+	if (locale === "ru") return __ru.editor_photos_not_added(inputs)
+	if (locale === "sv") return __sv.editor_photos_not_added(inputs)
+	if (locale === "th") return __th.editor_photos_not_added(inputs)
+	if (locale === "tr") return __tr.editor_photos_not_added(inputs)
+	if (locale === "uk") return __uk.editor_photos_not_added(inputs)
+	if (locale === "vi") return __vi.editor_photos_not_added(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.editor_photos_not_added(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.editor_photos_not_added(inputs)
+	return __en.editor_photos_not_added(inputs)
 });
 /**
 * | output |
@@ -83451,47 +83795,6 @@ export const recipe_compare_back_to_the_comparison = /** @type {((inputs?: Recip
 /**
 * | output |
 * | --- |
-* | "Choose the {value1} to keep" |
-*
-* @param {Recipe_Compare_Choose_The_To_KeepInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const recipe_compare_choose_the_to_keep = /** @type {((inputs: Recipe_Compare_Choose_The_To_KeepInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Recipe_Compare_Choose_The_To_KeepInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "cs") return __cs.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "da") return __da.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "de") return __de.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "el") return __el.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "es") return __es.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "fi") return __fi.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "fr") return __fr.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "he") return __he.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "hu") return __hu.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "id") return __id.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "it") return __it.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "ja") return __ja.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "ko") return __ko.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "nb") return __nb.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "nl") return __nl.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "pl") return __pl.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "pt-BR") return __pt_br2.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "pt-PT") return __pt_pt2.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "ro") return __ro.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "ru") return __ru.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "sv") return __sv.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "th") return __th.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "tr") return __tr.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "uk") return __uk.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "vi") return __vi.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.recipe_compare_choose_the_to_keep(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.recipe_compare_choose_the_to_keep(inputs)
-	return __en.recipe_compare_choose_the_to_keep(inputs)
-});
-/**
-* | output |
-* | --- |
 * | "Combine into one recipe" |
 *
 * @param {Recipe_Compare_Combine_Into_One_RecipeInputs} inputs
@@ -83656,43 +83959,43 @@ export const recipe_compare_compare_two_recipes = /** @type {((inputs?: Recipe_C
 /**
 * | output |
 * | --- |
-* | "Different" |
+* | "Different source links" |
 *
-* @param {Recipe_Compare_DifferentInputs} inputs
+* @param {Recipe_Compare_Different_SourcesInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
 * @returns {LocalizedString}
 */
-export const recipe_compare_different = /** @type {((inputs?: Recipe_Compare_DifferentInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Recipe_Compare_DifferentInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+export const recipe_compare_different_sources = /** @type {((inputs?: Recipe_Compare_Different_SourcesInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Recipe_Compare_Different_SourcesInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
 	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.recipe_compare_different(inputs)
-	if (locale === "cs") return __cs.recipe_compare_different(inputs)
-	if (locale === "da") return __da.recipe_compare_different(inputs)
-	if (locale === "de") return __de.recipe_compare_different(inputs)
-	if (locale === "el") return __el.recipe_compare_different(inputs)
-	if (locale === "es") return __es.recipe_compare_different(inputs)
-	if (locale === "fi") return __fi.recipe_compare_different(inputs)
-	if (locale === "fr") return __fr.recipe_compare_different(inputs)
-	if (locale === "he") return __he.recipe_compare_different(inputs)
-	if (locale === "hu") return __hu.recipe_compare_different(inputs)
-	if (locale === "id") return __id.recipe_compare_different(inputs)
-	if (locale === "it") return __it.recipe_compare_different(inputs)
-	if (locale === "ja") return __ja.recipe_compare_different(inputs)
-	if (locale === "ko") return __ko.recipe_compare_different(inputs)
-	if (locale === "nb") return __nb.recipe_compare_different(inputs)
-	if (locale === "nl") return __nl.recipe_compare_different(inputs)
-	if (locale === "pl") return __pl.recipe_compare_different(inputs)
-	if (locale === "pt-BR") return __pt_br2.recipe_compare_different(inputs)
-	if (locale === "pt-PT") return __pt_pt2.recipe_compare_different(inputs)
-	if (locale === "ro") return __ro.recipe_compare_different(inputs)
-	if (locale === "ru") return __ru.recipe_compare_different(inputs)
-	if (locale === "sv") return __sv.recipe_compare_different(inputs)
-	if (locale === "th") return __th.recipe_compare_different(inputs)
-	if (locale === "tr") return __tr.recipe_compare_different(inputs)
-	if (locale === "uk") return __uk.recipe_compare_different(inputs)
-	if (locale === "vi") return __vi.recipe_compare_different(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.recipe_compare_different(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.recipe_compare_different(inputs)
-	return __en.recipe_compare_different(inputs)
+	if (locale === "ar") return __ar.recipe_compare_different_sources(inputs)
+	if (locale === "cs") return __cs.recipe_compare_different_sources(inputs)
+	if (locale === "da") return __da.recipe_compare_different_sources(inputs)
+	if (locale === "de") return __de.recipe_compare_different_sources(inputs)
+	if (locale === "el") return __el.recipe_compare_different_sources(inputs)
+	if (locale === "es") return __es.recipe_compare_different_sources(inputs)
+	if (locale === "fi") return __fi.recipe_compare_different_sources(inputs)
+	if (locale === "fr") return __fr.recipe_compare_different_sources(inputs)
+	if (locale === "he") return __he.recipe_compare_different_sources(inputs)
+	if (locale === "hu") return __hu.recipe_compare_different_sources(inputs)
+	if (locale === "id") return __id.recipe_compare_different_sources(inputs)
+	if (locale === "it") return __it.recipe_compare_different_sources(inputs)
+	if (locale === "ja") return __ja.recipe_compare_different_sources(inputs)
+	if (locale === "ko") return __ko.recipe_compare_different_sources(inputs)
+	if (locale === "nb") return __nb.recipe_compare_different_sources(inputs)
+	if (locale === "nl") return __nl.recipe_compare_different_sources(inputs)
+	if (locale === "pl") return __pl.recipe_compare_different_sources(inputs)
+	if (locale === "pt-BR") return __pt_br2.recipe_compare_different_sources(inputs)
+	if (locale === "pt-PT") return __pt_pt2.recipe_compare_different_sources(inputs)
+	if (locale === "ro") return __ro.recipe_compare_different_sources(inputs)
+	if (locale === "ru") return __ru.recipe_compare_different_sources(inputs)
+	if (locale === "sv") return __sv.recipe_compare_different_sources(inputs)
+	if (locale === "th") return __th.recipe_compare_different_sources(inputs)
+	if (locale === "tr") return __tr.recipe_compare_different_sources(inputs)
+	if (locale === "uk") return __uk.recipe_compare_different_sources(inputs)
+	if (locale === "vi") return __vi.recipe_compare_different_sources(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.recipe_compare_different_sources(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.recipe_compare_different_sources(inputs)
+	return __en.recipe_compare_different_sources(inputs)
 });
 /**
 * | output |
@@ -83779,6 +84082,88 @@ export const recipe_compare_empty = /** @type {((inputs?: Recipe_Compare_EmptyIn
 /**
 * | output |
 * | --- |
+* | "Ingredients in common: {shared} of {total}" |
+*
+* @param {Recipe_Compare_Ingredients_In_CommonInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const recipe_compare_ingredients_in_common = /** @type {((inputs: Recipe_Compare_Ingredients_In_CommonInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Recipe_Compare_Ingredients_In_CommonInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "cs") return __cs.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "da") return __da.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "de") return __de.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "el") return __el.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "es") return __es.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "fi") return __fi.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "fr") return __fr.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "he") return __he.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "hu") return __hu.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "id") return __id.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "it") return __it.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "ja") return __ja.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "ko") return __ko.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "nb") return __nb.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "nl") return __nl.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "pl") return __pl.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "pt-BR") return __pt_br2.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "pt-PT") return __pt_pt2.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "ro") return __ro.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "ru") return __ru.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "sv") return __sv.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "th") return __th.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "tr") return __tr.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "uk") return __uk.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "vi") return __vi.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.recipe_compare_ingredients_in_common(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.recipe_compare_ingredients_in_common(inputs)
+	return __en.recipe_compare_ingredients_in_common(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Keep both" |
+*
+* @param {Recipe_Compare_Keep_BothInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const recipe_compare_keep_both = /** @type {((inputs?: Recipe_Compare_Keep_BothInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Recipe_Compare_Keep_BothInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.recipe_compare_keep_both(inputs)
+	if (locale === "cs") return __cs.recipe_compare_keep_both(inputs)
+	if (locale === "da") return __da.recipe_compare_keep_both(inputs)
+	if (locale === "de") return __de.recipe_compare_keep_both(inputs)
+	if (locale === "el") return __el.recipe_compare_keep_both(inputs)
+	if (locale === "es") return __es.recipe_compare_keep_both(inputs)
+	if (locale === "fi") return __fi.recipe_compare_keep_both(inputs)
+	if (locale === "fr") return __fr.recipe_compare_keep_both(inputs)
+	if (locale === "he") return __he.recipe_compare_keep_both(inputs)
+	if (locale === "hu") return __hu.recipe_compare_keep_both(inputs)
+	if (locale === "id") return __id.recipe_compare_keep_both(inputs)
+	if (locale === "it") return __it.recipe_compare_keep_both(inputs)
+	if (locale === "ja") return __ja.recipe_compare_keep_both(inputs)
+	if (locale === "ko") return __ko.recipe_compare_keep_both(inputs)
+	if (locale === "nb") return __nb.recipe_compare_keep_both(inputs)
+	if (locale === "nl") return __nl.recipe_compare_keep_both(inputs)
+	if (locale === "pl") return __pl.recipe_compare_keep_both(inputs)
+	if (locale === "pt-BR") return __pt_br2.recipe_compare_keep_both(inputs)
+	if (locale === "pt-PT") return __pt_pt2.recipe_compare_keep_both(inputs)
+	if (locale === "ro") return __ro.recipe_compare_keep_both(inputs)
+	if (locale === "ru") return __ru.recipe_compare_keep_both(inputs)
+	if (locale === "sv") return __sv.recipe_compare_keep_both(inputs)
+	if (locale === "th") return __th.recipe_compare_keep_both(inputs)
+	if (locale === "tr") return __tr.recipe_compare_keep_both(inputs)
+	if (locale === "uk") return __uk.recipe_compare_keep_both(inputs)
+	if (locale === "vi") return __vi.recipe_compare_keep_both(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.recipe_compare_keep_both(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.recipe_compare_keep_both(inputs)
+	return __en.recipe_compare_keep_both(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Keep my edit" |
 *
 * @param {Recipe_Compare_Keep_My_EditInputs} inputs
@@ -83816,6 +84201,47 @@ export const recipe_compare_keep_my_edit = /** @type {((inputs?: Recipe_Compare_
 	if (locale === "zh-Hans") return __zh_hans1.recipe_compare_keep_my_edit(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.recipe_compare_keep_my_edit(inputs)
 	return __en.recipe_compare_keep_my_edit(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "It keeps its books, meal plans and cooking history." |
+*
+* @param {Recipe_Compare_Kept_Recipe_Keeps_Its_PlaceInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const recipe_compare_kept_recipe_keeps_its_place = /** @type {((inputs?: Recipe_Compare_Kept_Recipe_Keeps_Its_PlaceInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Recipe_Compare_Kept_Recipe_Keeps_Its_PlaceInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "cs") return __cs.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "da") return __da.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "de") return __de.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "el") return __el.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "es") return __es.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "fi") return __fi.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "fr") return __fr.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "he") return __he.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "hu") return __hu.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "id") return __id.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "it") return __it.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "ja") return __ja.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "ko") return __ko.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "nb") return __nb.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "nl") return __nl.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "pl") return __pl.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "pt-BR") return __pt_br2.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "pt-PT") return __pt_pt2.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "ro") return __ro.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "ru") return __ru.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "sv") return __sv.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "th") return __th.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "tr") return __tr.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "uk") return __uk.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "vi") return __vi.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.recipe_compare_kept_recipe_keeps_its_place(inputs)
+	return __en.recipe_compare_kept_recipe_keeps_its_place(inputs)
 });
 /**
 * | output |
@@ -84025,6 +84451,47 @@ export const recipe_compare_nothing_changes_until_you_combine = /** @type {((inp
 /**
 * | output |
 * | --- |
+* | "only in this recipe" |
+*
+* @param {Recipe_Compare_Only_In_This_RecipeInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const recipe_compare_only_in_this_recipe = /** @type {((inputs?: Recipe_Compare_Only_In_This_RecipeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Recipe_Compare_Only_In_This_RecipeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "cs") return __cs.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "da") return __da.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "de") return __de.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "el") return __el.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "es") return __es.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "fi") return __fi.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "fr") return __fr.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "he") return __he.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "hu") return __hu.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "id") return __id.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "it") return __it.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "ja") return __ja.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "ko") return __ko.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "nb") return __nb.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "nl") return __nl.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "pl") return __pl.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "pt-BR") return __pt_br2.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "pt-PT") return __pt_pt2.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "ro") return __ro.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "ru") return __ru.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "sv") return __sv.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "th") return __th.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "tr") return __tr.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "uk") return __uk.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "vi") return __vi.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.recipe_compare_only_in_this_recipe(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.recipe_compare_only_in_this_recipe(inputs)
+	return __en.recipe_compare_only_in_this_recipe(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "{value1}: from {value2}" |
 *
 * @param {Recipe_Compare_Part_Comes_FromInputs} inputs
@@ -84066,43 +84533,43 @@ export const recipe_compare_part_comes_from = /** @type {((inputs: Recipe_Compar
 /**
 * | output |
 * | --- |
-* | "{value1}: not chosen yet" |
+* | "Parts that differ: {count} of {total}." |
 *
-* @param {Recipe_Compare_Part_Not_Chosen_YetInputs} inputs
+* @param {Recipe_Compare_Parts_DifferInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
 * @returns {LocalizedString}
 */
-export const recipe_compare_part_not_chosen_yet = /** @type {((inputs: Recipe_Compare_Part_Not_Chosen_YetInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Recipe_Compare_Part_Not_Chosen_YetInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+export const recipe_compare_parts_differ = /** @type {((inputs: Recipe_Compare_Parts_DifferInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Recipe_Compare_Parts_DifferInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
 	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "cs") return __cs.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "da") return __da.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "de") return __de.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "el") return __el.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "es") return __es.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "fi") return __fi.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "fr") return __fr.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "he") return __he.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "hu") return __hu.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "id") return __id.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "it") return __it.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "ja") return __ja.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "ko") return __ko.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "nb") return __nb.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "nl") return __nl.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "pl") return __pl.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "pt-BR") return __pt_br2.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "pt-PT") return __pt_pt2.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "ro") return __ro.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "ru") return __ru.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "sv") return __sv.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "th") return __th.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "tr") return __tr.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "uk") return __uk.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "vi") return __vi.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.recipe_compare_part_not_chosen_yet(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.recipe_compare_part_not_chosen_yet(inputs)
-	return __en.recipe_compare_part_not_chosen_yet(inputs)
+	if (locale === "ar") return __ar.recipe_compare_parts_differ(inputs)
+	if (locale === "cs") return __cs.recipe_compare_parts_differ(inputs)
+	if (locale === "da") return __da.recipe_compare_parts_differ(inputs)
+	if (locale === "de") return __de.recipe_compare_parts_differ(inputs)
+	if (locale === "el") return __el.recipe_compare_parts_differ(inputs)
+	if (locale === "es") return __es.recipe_compare_parts_differ(inputs)
+	if (locale === "fi") return __fi.recipe_compare_parts_differ(inputs)
+	if (locale === "fr") return __fr.recipe_compare_parts_differ(inputs)
+	if (locale === "he") return __he.recipe_compare_parts_differ(inputs)
+	if (locale === "hu") return __hu.recipe_compare_parts_differ(inputs)
+	if (locale === "id") return __id.recipe_compare_parts_differ(inputs)
+	if (locale === "it") return __it.recipe_compare_parts_differ(inputs)
+	if (locale === "ja") return __ja.recipe_compare_parts_differ(inputs)
+	if (locale === "ko") return __ko.recipe_compare_parts_differ(inputs)
+	if (locale === "nb") return __nb.recipe_compare_parts_differ(inputs)
+	if (locale === "nl") return __nl.recipe_compare_parts_differ(inputs)
+	if (locale === "pl") return __pl.recipe_compare_parts_differ(inputs)
+	if (locale === "pt-BR") return __pt_br2.recipe_compare_parts_differ(inputs)
+	if (locale === "pt-PT") return __pt_pt2.recipe_compare_parts_differ(inputs)
+	if (locale === "ro") return __ro.recipe_compare_parts_differ(inputs)
+	if (locale === "ru") return __ru.recipe_compare_parts_differ(inputs)
+	if (locale === "sv") return __sv.recipe_compare_parts_differ(inputs)
+	if (locale === "th") return __th.recipe_compare_parts_differ(inputs)
+	if (locale === "tr") return __tr.recipe_compare_parts_differ(inputs)
+	if (locale === "uk") return __uk.recipe_compare_parts_differ(inputs)
+	if (locale === "vi") return __vi.recipe_compare_parts_differ(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.recipe_compare_parts_differ(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.recipe_compare_parts_differ(inputs)
+	return __en.recipe_compare_parts_differ(inputs)
 });
 /**
 * | output |
@@ -84144,6 +84611,88 @@ export const recipe_compare_review_source_updates = /** @type {((inputs?: Recipe
 	if (locale === "zh-Hans") return __zh_hans1.recipe_compare_review_source_updates(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.recipe_compare_review_source_updates(inputs)
 	return __en.recipe_compare_review_source_updates(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Same source link" |
+*
+* @param {Recipe_Compare_Same_SourceInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const recipe_compare_same_source = /** @type {((inputs?: Recipe_Compare_Same_SourceInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Recipe_Compare_Same_SourceInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.recipe_compare_same_source(inputs)
+	if (locale === "cs") return __cs.recipe_compare_same_source(inputs)
+	if (locale === "da") return __da.recipe_compare_same_source(inputs)
+	if (locale === "de") return __de.recipe_compare_same_source(inputs)
+	if (locale === "el") return __el.recipe_compare_same_source(inputs)
+	if (locale === "es") return __es.recipe_compare_same_source(inputs)
+	if (locale === "fi") return __fi.recipe_compare_same_source(inputs)
+	if (locale === "fr") return __fr.recipe_compare_same_source(inputs)
+	if (locale === "he") return __he.recipe_compare_same_source(inputs)
+	if (locale === "hu") return __hu.recipe_compare_same_source(inputs)
+	if (locale === "id") return __id.recipe_compare_same_source(inputs)
+	if (locale === "it") return __it.recipe_compare_same_source(inputs)
+	if (locale === "ja") return __ja.recipe_compare_same_source(inputs)
+	if (locale === "ko") return __ko.recipe_compare_same_source(inputs)
+	if (locale === "nb") return __nb.recipe_compare_same_source(inputs)
+	if (locale === "nl") return __nl.recipe_compare_same_source(inputs)
+	if (locale === "pl") return __pl.recipe_compare_same_source(inputs)
+	if (locale === "pt-BR") return __pt_br2.recipe_compare_same_source(inputs)
+	if (locale === "pt-PT") return __pt_pt2.recipe_compare_same_source(inputs)
+	if (locale === "ro") return __ro.recipe_compare_same_source(inputs)
+	if (locale === "ru") return __ru.recipe_compare_same_source(inputs)
+	if (locale === "sv") return __sv.recipe_compare_same_source(inputs)
+	if (locale === "th") return __th.recipe_compare_same_source(inputs)
+	if (locale === "tr") return __tr.recipe_compare_same_source(inputs)
+	if (locale === "uk") return __uk.recipe_compare_same_source(inputs)
+	if (locale === "vi") return __vi.recipe_compare_same_source(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.recipe_compare_same_source(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.recipe_compare_same_source(inputs)
+	return __en.recipe_compare_same_source(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Same title" |
+*
+* @param {Recipe_Compare_Same_TitleInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const recipe_compare_same_title = /** @type {((inputs?: Recipe_Compare_Same_TitleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Recipe_Compare_Same_TitleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.recipe_compare_same_title(inputs)
+	if (locale === "cs") return __cs.recipe_compare_same_title(inputs)
+	if (locale === "da") return __da.recipe_compare_same_title(inputs)
+	if (locale === "de") return __de.recipe_compare_same_title(inputs)
+	if (locale === "el") return __el.recipe_compare_same_title(inputs)
+	if (locale === "es") return __es.recipe_compare_same_title(inputs)
+	if (locale === "fi") return __fi.recipe_compare_same_title(inputs)
+	if (locale === "fr") return __fr.recipe_compare_same_title(inputs)
+	if (locale === "he") return __he.recipe_compare_same_title(inputs)
+	if (locale === "hu") return __hu.recipe_compare_same_title(inputs)
+	if (locale === "id") return __id.recipe_compare_same_title(inputs)
+	if (locale === "it") return __it.recipe_compare_same_title(inputs)
+	if (locale === "ja") return __ja.recipe_compare_same_title(inputs)
+	if (locale === "ko") return __ko.recipe_compare_same_title(inputs)
+	if (locale === "nb") return __nb.recipe_compare_same_title(inputs)
+	if (locale === "nl") return __nl.recipe_compare_same_title(inputs)
+	if (locale === "pl") return __pl.recipe_compare_same_title(inputs)
+	if (locale === "pt-BR") return __pt_br2.recipe_compare_same_title(inputs)
+	if (locale === "pt-PT") return __pt_pt2.recipe_compare_same_title(inputs)
+	if (locale === "ro") return __ro.recipe_compare_same_title(inputs)
+	if (locale === "ru") return __ru.recipe_compare_same_title(inputs)
+	if (locale === "sv") return __sv.recipe_compare_same_title(inputs)
+	if (locale === "th") return __th.recipe_compare_same_title(inputs)
+	if (locale === "tr") return __tr.recipe_compare_same_title(inputs)
+	if (locale === "uk") return __uk.recipe_compare_same_title(inputs)
+	if (locale === "vi") return __vi.recipe_compare_same_title(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.recipe_compare_same_title(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.recipe_compare_same_title(inputs)
+	return __en.recipe_compare_same_title(inputs)
 });
 /**
 * | output |
@@ -84558,6 +85107,47 @@ export const recipe_compare_updated_recipe = /** @type {((inputs?: Recipe_Compar
 /**
 * | output |
 * | --- |
+* | "Reset choices" |
+*
+* @param {Recipe_Compare_Use_Kept_Recipe_For_Every_PartInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const recipe_compare_use_kept_recipe_for_every_part = /** @type {((inputs?: Recipe_Compare_Use_Kept_Recipe_For_Every_PartInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Recipe_Compare_Use_Kept_Recipe_For_Every_PartInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "cs") return __cs.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "da") return __da.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "de") return __de.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "el") return __el.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "es") return __es.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "fi") return __fi.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "fr") return __fr.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "he") return __he.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "hu") return __hu.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "id") return __id.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "it") return __it.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "ja") return __ja.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "ko") return __ko.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "nb") return __nb.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "nl") return __nl.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "pl") return __pl.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "pt-BR") return __pt_br2.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "pt-PT") return __pt_pt2.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "ro") return __ro.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "ru") return __ru.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "sv") return __sv.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "th") return __th.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "tr") return __tr.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "uk") return __uk.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "vi") return __vi.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.recipe_compare_use_kept_recipe_for_every_part(inputs)
+	return __en.recipe_compare_use_kept_recipe_for_every_part(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Use source" |
 *
 * @param {Recipe_Compare_Use_SourceInputs} inputs
@@ -84595,6 +85185,129 @@ export const recipe_compare_use_source = /** @type {((inputs?: Recipe_Compare_Us
 	if (locale === "zh-Hans") return __zh_hans1.recipe_compare_use_source(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.recipe_compare_use_source(inputs)
 	return __en.recipe_compare_use_source(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Likely different recipes." |
+*
+* @param {Recipe_Compare_Verdict_DifferentInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const recipe_compare_verdict_different = /** @type {((inputs?: Recipe_Compare_Verdict_DifferentInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Recipe_Compare_Verdict_DifferentInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.recipe_compare_verdict_different(inputs)
+	if (locale === "cs") return __cs.recipe_compare_verdict_different(inputs)
+	if (locale === "da") return __da.recipe_compare_verdict_different(inputs)
+	if (locale === "de") return __de.recipe_compare_verdict_different(inputs)
+	if (locale === "el") return __el.recipe_compare_verdict_different(inputs)
+	if (locale === "es") return __es.recipe_compare_verdict_different(inputs)
+	if (locale === "fi") return __fi.recipe_compare_verdict_different(inputs)
+	if (locale === "fr") return __fr.recipe_compare_verdict_different(inputs)
+	if (locale === "he") return __he.recipe_compare_verdict_different(inputs)
+	if (locale === "hu") return __hu.recipe_compare_verdict_different(inputs)
+	if (locale === "id") return __id.recipe_compare_verdict_different(inputs)
+	if (locale === "it") return __it.recipe_compare_verdict_different(inputs)
+	if (locale === "ja") return __ja.recipe_compare_verdict_different(inputs)
+	if (locale === "ko") return __ko.recipe_compare_verdict_different(inputs)
+	if (locale === "nb") return __nb.recipe_compare_verdict_different(inputs)
+	if (locale === "nl") return __nl.recipe_compare_verdict_different(inputs)
+	if (locale === "pl") return __pl.recipe_compare_verdict_different(inputs)
+	if (locale === "pt-BR") return __pt_br2.recipe_compare_verdict_different(inputs)
+	if (locale === "pt-PT") return __pt_pt2.recipe_compare_verdict_different(inputs)
+	if (locale === "ro") return __ro.recipe_compare_verdict_different(inputs)
+	if (locale === "ru") return __ru.recipe_compare_verdict_different(inputs)
+	if (locale === "sv") return __sv.recipe_compare_verdict_different(inputs)
+	if (locale === "th") return __th.recipe_compare_verdict_different(inputs)
+	if (locale === "tr") return __tr.recipe_compare_verdict_different(inputs)
+	if (locale === "uk") return __uk.recipe_compare_verdict_different(inputs)
+	if (locale === "vi") return __vi.recipe_compare_verdict_different(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.recipe_compare_verdict_different(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.recipe_compare_verdict_different(inputs)
+	return __en.recipe_compare_verdict_different(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Likely the same recipe." |
+*
+* @param {Recipe_Compare_Verdict_LikelyInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const recipe_compare_verdict_likely = /** @type {((inputs?: Recipe_Compare_Verdict_LikelyInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Recipe_Compare_Verdict_LikelyInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.recipe_compare_verdict_likely(inputs)
+	if (locale === "cs") return __cs.recipe_compare_verdict_likely(inputs)
+	if (locale === "da") return __da.recipe_compare_verdict_likely(inputs)
+	if (locale === "de") return __de.recipe_compare_verdict_likely(inputs)
+	if (locale === "el") return __el.recipe_compare_verdict_likely(inputs)
+	if (locale === "es") return __es.recipe_compare_verdict_likely(inputs)
+	if (locale === "fi") return __fi.recipe_compare_verdict_likely(inputs)
+	if (locale === "fr") return __fr.recipe_compare_verdict_likely(inputs)
+	if (locale === "he") return __he.recipe_compare_verdict_likely(inputs)
+	if (locale === "hu") return __hu.recipe_compare_verdict_likely(inputs)
+	if (locale === "id") return __id.recipe_compare_verdict_likely(inputs)
+	if (locale === "it") return __it.recipe_compare_verdict_likely(inputs)
+	if (locale === "ja") return __ja.recipe_compare_verdict_likely(inputs)
+	if (locale === "ko") return __ko.recipe_compare_verdict_likely(inputs)
+	if (locale === "nb") return __nb.recipe_compare_verdict_likely(inputs)
+	if (locale === "nl") return __nl.recipe_compare_verdict_likely(inputs)
+	if (locale === "pl") return __pl.recipe_compare_verdict_likely(inputs)
+	if (locale === "pt-BR") return __pt_br2.recipe_compare_verdict_likely(inputs)
+	if (locale === "pt-PT") return __pt_pt2.recipe_compare_verdict_likely(inputs)
+	if (locale === "ro") return __ro.recipe_compare_verdict_likely(inputs)
+	if (locale === "ru") return __ru.recipe_compare_verdict_likely(inputs)
+	if (locale === "sv") return __sv.recipe_compare_verdict_likely(inputs)
+	if (locale === "th") return __th.recipe_compare_verdict_likely(inputs)
+	if (locale === "tr") return __tr.recipe_compare_verdict_likely(inputs)
+	if (locale === "uk") return __uk.recipe_compare_verdict_likely(inputs)
+	if (locale === "vi") return __vi.recipe_compare_verdict_likely(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.recipe_compare_verdict_likely(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.recipe_compare_verdict_likely(inputs)
+	return __en.recipe_compare_verdict_likely(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Possibly the same recipe." |
+*
+* @param {Recipe_Compare_Verdict_PossibleInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const recipe_compare_verdict_possible = /** @type {((inputs?: Recipe_Compare_Verdict_PossibleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Recipe_Compare_Verdict_PossibleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.recipe_compare_verdict_possible(inputs)
+	if (locale === "cs") return __cs.recipe_compare_verdict_possible(inputs)
+	if (locale === "da") return __da.recipe_compare_verdict_possible(inputs)
+	if (locale === "de") return __de.recipe_compare_verdict_possible(inputs)
+	if (locale === "el") return __el.recipe_compare_verdict_possible(inputs)
+	if (locale === "es") return __es.recipe_compare_verdict_possible(inputs)
+	if (locale === "fi") return __fi.recipe_compare_verdict_possible(inputs)
+	if (locale === "fr") return __fr.recipe_compare_verdict_possible(inputs)
+	if (locale === "he") return __he.recipe_compare_verdict_possible(inputs)
+	if (locale === "hu") return __hu.recipe_compare_verdict_possible(inputs)
+	if (locale === "id") return __id.recipe_compare_verdict_possible(inputs)
+	if (locale === "it") return __it.recipe_compare_verdict_possible(inputs)
+	if (locale === "ja") return __ja.recipe_compare_verdict_possible(inputs)
+	if (locale === "ko") return __ko.recipe_compare_verdict_possible(inputs)
+	if (locale === "nb") return __nb.recipe_compare_verdict_possible(inputs)
+	if (locale === "nl") return __nl.recipe_compare_verdict_possible(inputs)
+	if (locale === "pl") return __pl.recipe_compare_verdict_possible(inputs)
+	if (locale === "pt-BR") return __pt_br2.recipe_compare_verdict_possible(inputs)
+	if (locale === "pt-PT") return __pt_pt2.recipe_compare_verdict_possible(inputs)
+	if (locale === "ro") return __ro.recipe_compare_verdict_possible(inputs)
+	if (locale === "ru") return __ru.recipe_compare_verdict_possible(inputs)
+	if (locale === "sv") return __sv.recipe_compare_verdict_possible(inputs)
+	if (locale === "th") return __th.recipe_compare_verdict_possible(inputs)
+	if (locale === "tr") return __tr.recipe_compare_verdict_possible(inputs)
+	if (locale === "uk") return __uk.recipe_compare_verdict_possible(inputs)
+	if (locale === "vi") return __vi.recipe_compare_verdict_possible(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.recipe_compare_verdict_possible(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.recipe_compare_verdict_possible(inputs)
+	return __en.recipe_compare_verdict_possible(inputs)
 });
 /**
 * | output |
@@ -98014,13 +98727,13 @@ export const step_details_photos_of_this_step = /** @type {((inputs?: Step_Detai
 /**
 * | output |
 * | --- |
-* | "Recipe photo" |
+* | "Recipe photo {position}" |
 *
 * @param {Step_Details_Recipe_PhotoInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
 * @returns {LocalizedString}
 */
-export const step_details_recipe_photo = /** @type {((inputs?: Step_Details_Recipe_PhotoInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Step_Details_Recipe_PhotoInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+export const step_details_recipe_photo = /** @type {((inputs: Step_Details_Recipe_PhotoInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Step_Details_Recipe_PhotoInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
 	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
 	if (locale === "ar") return __ar.step_details_recipe_photo(inputs)
 	if (locale === "cs") return __cs.step_details_recipe_photo(inputs)
@@ -103873,47 +104586,6 @@ export const yield_timing_of_what = /** @type {((inputs?: Yield_Timing_Of_WhatIn
 	if (locale === "zh-Hans") return __zh_hans1.yield_timing_of_what(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.yield_timing_of_what(inputs)
 	return __en.yield_timing_of_what(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "The written total of {value1} is shorter than this recipe's own steps. It is kept as written, not shown as the time the recipe takes." |
-*
-* @param {Yield_Timing_This_Recipe_S_Written_Total_Of_Is_One_Its_Own_Steps_RunInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run = /** @type {((inputs: Yield_Timing_This_Recipe_S_Written_Total_Of_Is_One_Its_Own_Steps_RunInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Yield_Timing_This_Recipe_S_Written_Total_Of_Is_One_Its_Own_Steps_RunInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "cs") return __cs.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "da") return __da.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "de") return __de.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "el") return __el.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "es") return __es.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "fi") return __fi.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "fr") return __fr.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "he") return __he.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "hu") return __hu.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "id") return __id.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "it") return __it.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "ja") return __ja.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "ko") return __ko.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "nb") return __nb.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "nl") return __nl.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "pl") return __pl.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "pt-BR") return __pt_br2.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "pt-PT") return __pt_pt2.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "ro") return __ro.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "ru") return __ru.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "sv") return __sv.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "th") return __th.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "tr") return __tr.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "uk") return __uk.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "vi") return __vi.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
-	return __en.yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run(inputs)
 });
 /**
 * | output |

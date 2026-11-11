@@ -170,17 +170,27 @@ func preferred(candidate, current measure) bool {
 }
 
 func compatible(left, right string) bool {
-	return left == right || (groupKey(left) == groupKey(right) && strings.HasPrefix(groupKey(left), "dimension:"))
+	if left == right {
+		return true
+	}
+
+	leftUnit, leftKnown := catalog().Lookup(left)
+	rightUnit, rightKnown := catalog().Lookup(right)
+
+	return leftKnown && rightKnown && leftUnit.Kind == recipe.UnitPhysical && rightUnit.Kind == recipe.UnitPhysical &&
+		leftUnit.Dimension == rightUnit.Dimension
 }
 
 func mergeNeed(list *ShoppingList, need shoppingNeed) bool {
-	if need.source.Amount == "" {
-		return false
-	}
+	measured := need.source.Amount != ""
 
 	for i := range list.Items {
 		item := &list.Items[i]
-		if item.Bought || item.Deleted || item.Arranged || len(item.Fields) > 0 || len(item.Sources) == 0 || item.Sources[0].Amount == "" || !compatible(item.Sources[0].Unit, need.source.Unit) {
+		if item.Bought || item.Deleted || item.Arranged || len(item.Fields) > 0 || len(item.Sources) == 0 {
+			continue
+		}
+
+		if (item.Sources[0].Amount != "") != measured || (measured && !compatible(item.Sources[0].Unit, need.source.Unit)) {
 			continue
 		}
 

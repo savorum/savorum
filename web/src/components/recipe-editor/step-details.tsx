@@ -5,6 +5,7 @@ import { css } from "styled-system/css"
 
 import { type Recipe, assetURL, fallbackToOriginalImage } from "@/api/client"
 import type { components } from "@/api/schema"
+import type { AttachedPhotos } from "@/components/recipe-editor/photos"
 import { ChangeError } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -172,7 +173,7 @@ export function StepDetails(props: {
   ingredients: { id: string; label: string; name: string; choice?: boolean }[]
   style: MeasurementStyle
   onChange: (step: Step) => void
-  onAttachPhotos: (files: FileList | null) => Promise<string[]>
+  onAttachPhotos: (files: FileList | null) => Promise<AttachedPhotos>
   onClose: () => void
 }) {
   // Store nodes must be unwrapped before cloning.
@@ -196,11 +197,12 @@ export function StepDetails(props: {
     setAttachError(undefined)
     setAttaching(true)
     try {
-      const ids = await props.onAttachPhotos(files)
+      const { attached, failure } = await props.onAttachPhotos(files)
       setDraft({
         ...draft(),
-        image_refs: [...new Set([...chosen(), ...ids])],
+        image_refs: [...new Set([...chosen(), ...attached])],
       })
+      setAttachError(failure)
     } catch (error) {
       setAttachError(error)
     } finally {
@@ -568,11 +570,14 @@ export function StepDetails(props: {
           <Show when={props.photos.length > 0}>
             <div class={styles.stepPhotos}>
               <For each={props.photos}>
-                {(asset) => (
+                {(asset, index) => (
                   <button
                     type="button"
                     aria-pressed={chosen().includes(asset.id)}
-                    aria-label={asset.alt || m.step_details_recipe_photo()}
+                    aria-label={
+                      asset.alt ||
+                      m.step_details_recipe_photo({ position: formatNumber(index() + 1) })
+                    }
                     class={`${styles.stepPhoto} ${chosen().includes(asset.id) ? styles.stepPhotoChosen : ""}`}
                     onClick={() => togglePhoto(asset.id)}
                   >

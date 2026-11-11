@@ -1,7 +1,8 @@
 import { For, Show, createSignal } from "solid-js"
 import { css } from "styled-system/css"
 
-import type { RecipePage } from "@/api/recipes"
+import type { RecipeSummary } from "@/api/client"
+import type { SuggestionPage } from "@/api/selections"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogClose } from "@/components/ui/dialog"
 import { ToggleField } from "@/components/ui/field"
@@ -13,7 +14,7 @@ import { m } from "../../lib/messages.ts"
 
 export interface AddRecipesDialogProps {
   bookTitle: string
-  page?: RecipePage
+  page?: SuggestionPage<RecipeSummary>
   query: string
   onQuery: (query: string) => void
   onPage: (offset: number) => void
@@ -30,9 +31,9 @@ export function AddRecipesDialog(props: AddRecipesDialogProps) {
   const held = () => new Set(props.members)
   const limit = () => props.page?.limit ?? 25
   const offset = () => props.page?.offset ?? 0
-  const total = () => props.page?.total ?? 0
+  const more = () => props.page?.has_more ?? false
   const items = () => props.page?.items ?? []
-  const paged = () => total() > limit()
+  const paged = () => offset() > 0 || more()
 
   const choose = (id: string, add: boolean) =>
     setChosen((current) =>
@@ -127,17 +128,10 @@ export function AddRecipesDialog(props: AddRecipesDialogProps) {
             >
               {m.common_previous()}
             </Button>
-            <span class={styles.hint}>
-              {m.common_pagination_range({
-                value1: formatNumber(offset() + 1),
-                value2: formatNumber(Math.min(offset() + items().length, total())),
-                value3: formatNumber(total()),
-              })}
-            </span>
             <Button
               size="sm"
               variant="plain"
-              disabled={offset() + limit() >= total() || props.pending}
+              disabled={!more() || props.pending}
               onClick={() => props.onPage(offset() + limit())}
             >
               {m.common_next()}

@@ -21,6 +21,7 @@ type vocabulary struct {
 	Instructions []string            `json:"instructions"`
 	Actions      map[string][]string `json:"actions"`
 	Units        map[string][]string `json:"units"`
+	Facts        map[string][]string `json:"facts"`
 	Cadence      []string            `json:"cadence"`
 	Span         string              `json:"span"`
 	Compact      bool                `json:"compact"`

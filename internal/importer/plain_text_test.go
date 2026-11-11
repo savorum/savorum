@@ -2,7 +2,9 @@ package importer_test
 
 import (
 	"context"
+	"encoding/binary"
 	"testing"
+	"unicode/utf16"
 
 	"github.com/savorum/savorum/internal/importer"
 	"github.com/savorum/savorum/internal/recipe"
@@ -222,5 +224,65 @@ func TestPlainTextKeepsALoneTimedStep(t *testing.T) {
 	doc := batch.Recipes[0].Document
 	if len(doc.InstructionSections) != 1 || len(doc.InstructionSections[0].Steps) != 2 {
 		t.Fatalf("instructions=%+v", doc.InstructionSections)
+	}
+}
+
+func TestPlainTextReadsLabeledYieldAndTimes(t *testing.T) {
+	text := "Weeknight chili\nServes: 4\nPrep time: 15 min\nCook time: 1 hr 30 min\nTotal time: about two hours\n\nIngredients\n1 onion\n\nInstructions\n1. Cook the onion.\n"
+
+	batch, err := importer.DefaultRegistry().Import(context.Background(), importer.Input{Name: "chili.txt", Data: []byte(text)}, importer.Options{})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	doc := batch.Recipes[0].Document
+	if len(doc.Yields) != 1 || doc.Yields[0].Text != "4" || len(doc.Notes) != 0 {
+		t.Fatalf("yields=%#v notes=%#v", doc.Yields, doc.Notes)
+	}
+
+	if doc.Times == nil || doc.Times.Prep == nil || doc.Times.Prep.Value != "PT15M" || doc.Times.Prep.SourceText != "15 min" ||
+		doc.Times.Cook == nil || doc.Times.Cook.Value != "PT1H30M" ||
+		doc.Times.Total == nil || doc.Times.Total.Value != "" || doc.Times.Total.Text != "about two hours" {
+		t.Fatalf("times=%#v", doc.Times)
+	}
+
+	if err := recipe.ValidateForWrite(doc, units.DefaultCatalog()); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestPlainTextNumberAloneOpensTheStepBelowIt(t *testing.T) {
+	text := "Toast\n\nIngredients\n1 slice bread\n\nInstructions\n1.\nToast the bread.\nUntil golden.\n2.\nButter it.\n3.\n"
+
+	batch, err := importer.DefaultRegistry().Import(context.Background(), importer.Input{Name: "toast.txt", Data: []byte(text)}, importer.Options{})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	steps := batch.Recipes[0].Document.InstructionSections[0].Steps
+	if len(steps) != 2 || steps[0].Text != "Toast the bread. Until golden." || steps[1].Text != "Butter it." {
+		t.Fatalf("steps=%+v", steps)
+	}
+}
+
+func TestPlainTextReadsUTF16WithByteOrderMark(t *testing.T) {
+	text := "Crêpes\n\nIngredients\n2 eggs\n\nInstructions\n1. Whisk.\n"
+	units := utf16.Encode([]rune(text))
+
+	for name, order := range map[string]binary.AppendByteOrder{"little endian": binary.LittleEndian, "big endian": binary.BigEndian} {
+		data := order.AppendUint16(nil, 0xfeff)
+		for _, unit := range units {
+			data = order.AppendUint16(data, unit)
+		}
+
+		batch, err := importer.DefaultRegistry().Import(context.Background(), importer.Input{Name: "crepes.txt", Data: data}, importer.Options{})
+		if err != nil {
+			t.Fatalf("%s: %v", name, err)
+		}
+
+		doc := batch.Recipes[0].Document
+		if doc.Title != "Crêpes" || len(doc.IngredientSections) != 1 || len(doc.InstructionSections) != 1 {
+			t.Fatalf("%s: document=%#v", name, doc)
+		}
 	}
 }

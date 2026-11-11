@@ -1,11 +1,14 @@
 import type { DurationExpression } from "@/api/client"
 import type { Recipe } from "@/api/client"
+import type { components } from "@/api/schema"
 
 import { parseDurationInput } from "./duration-input.ts"
 export { parseDurationInput } from "./duration-input.ts"
 
 import { normalizeNumericInput } from "./locale-format.ts"
 import { totalContradictions } from "./timing-summary.ts"
+
+type Ingredient = components["schemas"]["Ingredient"]
 
 const idAlphabet = "abcdefghijklmnopqrstuvwxyz0123456789"
 const idByteLimit = 256 - (256 % idAlphabet.length)
@@ -199,4 +202,15 @@ export function moveItem<T>(items: T[], from: number, to: number): T[] {
   const [moved] = next.splice(from, 1)
   next.splice(to, 0, moved)
   return next
+}
+
+export function forgetIngredientUses(recipe: Recipe, removed: readonly Ingredient[]): void {
+  const ids = new Set(
+    removed.flatMap((item) => [item.id, ...(item.alternatives ?? []).map((branch) => branch.id)]),
+  )
+  for (const section of recipe.instruction_sections ?? [])
+    for (const step of section.steps ?? []) {
+      const uses = step.ingredient_uses?.filter((use) => !ids.has(use.ingredient_ref))
+      step.ingredient_uses = uses?.length ? uses : undefined
+    }
 }

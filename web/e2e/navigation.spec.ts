@@ -33,28 +33,40 @@ test("reader Recipes returns through editor history to the exact library view", 
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(libraryScroll)
 })
 
-test("offline continuation preserves the library address and retries from the footer", async ({
+test("a failed continuation preserves the library address and retries from the footer", async ({
   page,
   request,
-  context,
 }) => {
+  const query = `Offline browsing ${Math.random().toString(36).slice(2, 10)}`
   await Promise.all(
     Array.from({ length: 50 }, (_, index) =>
-      seedRecipe(request, `Offline browsing recipe ${String(index + 1).padStart(2, "0")}`),
+      seedRecipe(request, `${query} recipe ${String(index + 1).padStart(2, "0")}`),
     ),
   )
-  await page.goto("/?q=Offline%20browsing&sort=title-asc")
+  // Keep background resync from replacing the retry error under test.
+  await page.route("**/api/v1/events", (route) =>
+    route.fulfill({ contentType: "text/event-stream", body: ": keepalive\n\n" }),
+  )
+  let failContinuation = true
+  await page.route("**/api/v1/recipes?*", async (route) => {
+    const url = new URL(route.request().url())
+    if (failContinuation && url.searchParams.get("offset") === "36") {
+      await route.abort("internetdisconnected")
+    } else {
+      await route.continue()
+    }
+  })
+  await page.goto(`/?q=${encodeURIComponent(query)}&sort=title-asc`)
   const cards = page.locator("#library-results > ul > li")
   await expect(cards).toHaveCount(36)
   const address = page.url()
-  await context.setOffline(true)
   await page.getByRole("button", { name: "Load more recipes" }).click()
   const footer = page.locator("#library-continuation")
   await expect(footer.getByRole("alert")).toBeVisible()
   await expect(page.getByRole("alert")).toHaveCount(1)
   await expect(cards).toHaveCount(36)
   await expect(page).toHaveURL(address)
-  await context.setOffline(false)
+  failContinuation = false
   await footer.getByRole("button", { name: "Try again" }).click()
   await expect(cards).toHaveCount(50)
   await expect(page).toHaveURL(/shown=72$/)

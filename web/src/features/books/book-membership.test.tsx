@@ -11,6 +11,11 @@ vi.mock("@tanstack/solid-router", () => ({
 vi.mock("@/api/selections", () => ({
   lookupRecipes: async () => ({ items: [], unresolved_ids: [] }),
 }))
+const replaceBook = vi.fn()
+vi.mock("@/api/books", async (original) => ({
+  ...(await original<typeof import("@/api/books")>()),
+  replaceBook: (...args: unknown[]) => replaceBook(...args),
+}))
 afterEach(cleanup)
 test("repeated book moves use the current neighbors and button states", () => {
   const props: BookViewProps = {
@@ -48,4 +53,34 @@ test("repeated book moves use the current neighbors and button states", () => {
       node.getAttribute("data-book-entry-id"),
     ),
   ).toEqual(["A", "B", "C"])
+})
+
+test("a chapter without a name is not saved", async () => {
+  const props: BookViewProps = {
+    book: {
+      id: "book",
+      title: "Book",
+      kind: "personal",
+      revision: 1,
+      created_at: "",
+      updated_at: "",
+      sections: [{ id: "chapter", title: "Starters", position: 0 }],
+      entries: [],
+    },
+    revision: 1,
+    sourced: [],
+    candidateQuery: "",
+    onCandidateQuery: vi.fn(),
+    onCandidatePage: vi.fn(),
+    onReload: vi.fn(),
+    onTrashed: vi.fn(async () => {}),
+  }
+  const editor = createBookEditor(props, () => {})
+  render(() => <BookMembership {...props} editor={editor} onAdd={() => {}} />)
+  const name = document.querySelector<HTMLInputElement>("[data-chapter-name]")!
+  fireEvent.input(name, { target: { value: "  " } })
+
+  await editor.save()
+  expect(replaceBook).not.toHaveBeenCalled()
+  expect(document.activeElement).toBe(name)
 })

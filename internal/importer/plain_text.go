@@ -4,10 +4,12 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
+	"encoding/binary"
 	"fmt"
 	"net/url"
 	"regexp"
 	"strings"
+	"unicode/utf16"
 	"unicode/utf8"
 
 	"github.com/savorum/savorum/internal/ingredientparser"
@@ -39,7 +41,7 @@ func (plainTextAdapter) Probe(_ context.Context, input Input) ProbeResult {
 		return ProbeResult{Confidence: ConfidenceExtension, Reason: "plain-text extension"}
 	}
 
-	text := normalizePlainText(input.Data)
+	text := normalizePlainText(plainTextBytes(input.Data))
 	if len(input.Data) > 8<<20 || !isLikelyPlainText(text) {
 		return ProbeResult{Confidence: ConfidenceNone}
 	}
@@ -55,11 +57,12 @@ func (plainTextAdapter) Probe(_ context.Context, input Input) ProbeResult {
 }
 
 func (plainTextAdapter) Import(_ context.Context, input Input, _ Options) (ImportBatch, error) {
-	if len(input.Data) > 8<<20 || !isLikelyPlainText(string(input.Data)) {
+	data := plainTextBytes(input.Data)
+	if len(input.Data) > 8<<20 || !isLikelyPlainText(string(data)) {
 		return ImportBatch{}, fmt.Errorf("recipe text must be valid UTF-8 text under 8 MiB")
 	}
 
-	text := normalizePlainText(input.Data)
+	text := normalizePlainText(data)
 	if strings.TrimSpace(text) == "" {
 		return ImportBatch{}, fmt.Errorf("plain-text recipe is empty")
 	}
@@ -139,15 +142,21 @@ func plainTextSource(inputURL string, lines []string) *recipe.Source {
 	return nil
 }
 
+type stepRun struct {
+	numbered bool
+	bulleted bool
+	opened   bool
+}
+
 func (p *plainTextParser) parse(lines []string, start int) {
 	ingredients := textIngredientLines(lines, p.readingLocale)
-	numberedStep := false
-	bulletedStep := false
+
+	var run stepRun
 
 	for i := start; i < len(lines); i++ {
 		line := strings.TrimSpace(lines[i])
 		if line == "" {
-			numberedStep = false
+			run.numbered = false
 			continue
 		}
 
@@ -166,8 +175,8 @@ func (p *plainTextParser) parse(lines []string, start int) {
 		}
 
 		if p.readHeading(line) {
-			numberedStep = false
-			bulletedStep = false
+			run.numbered = false
+			run.bulleted = false
 
 			continue
 		}
@@ -188,7 +197,7 @@ func (p *plainTextParser) parse(lines []string, start int) {
 			p.mode = plainModeNotes
 		}
 
-		if p.mode == plainModeInstructions && bulletedStep && i > start && strings.TrimSpace(lines[i-1]) == "" && !textStep.MatchString(clean) && !textBullet.MatchString(line) {
+		if p.mode == plainModeInstructions && run.bulleted && i > start && strings.TrimSpace(lines[i-1]) == "" && !textStep.MatchString(clean) && !textBullet.MatchString(line) {
 			p.item.Document.Notes = append(p.item.Document.Notes, line)
 			continue
 		}
@@ -197,20 +206,34 @@ func (p *plainTextParser) parse(lines []string, start int) {
 		case plainModeIngredients:
 			p.readIngredientLine(lines, i)
 		case plainModeInstructions:
-			if numberedStep && !textStep.MatchString(clean) && !textBullet.MatchString(line) && !isPlainNote(clean) && !strings.Contains(clean, ":") {
-				steps := p.item.Document.InstructionSections[p.instructionSection-1].Steps
-				steps[len(steps)-1].Text += " " + clean
-
-				continue
-			}
-
-			p.readInstruction(clean, i)
-			numberedStep = textStep.MatchString(clean) && !looksPlainSubheading(clean)
-			bulletedStep = textBullet.MatchString(line)
+			p.readStepLine(line, clean, i, &run)
 		case plainModeNotes:
-			p.readUnclassified(line, i)
+			if !p.readFact(line) {
+				p.readUnclassified(line, i)
+			}
 		}
 	}
+}
+
+func (p *plainTextParser) readStepLine(line, clean string, lineIndex int, run *stepRun) {
+	if bareStepNumber.MatchString(clean) {
+		run.numbered = false
+		run.opened = true
+
+		return
+	}
+
+	if run.numbered && !run.opened && !textStep.MatchString(clean) && !textBullet.MatchString(line) && !isPlainNote(clean) && !strings.Contains(clean, ":") {
+		steps := p.item.Document.InstructionSections[p.instructionSection-1].Steps
+		steps[len(steps)-1].Text += " " + clean
+
+		return
+	}
+
+	p.readInstruction(clean, lineIndex)
+	run.numbered = (run.opened || textStep.MatchString(clean)) && !looksPlainSubheading(clean)
+	run.opened = false
+	run.bulleted = textBullet.MatchString(line)
 }
 
 func (p *plainTextParser) readHeading(line string) bool {
@@ -375,6 +398,44 @@ func (p *plainTextParser) readInstruction(line string, lineIndex int) {
 	section.Steps = append(section.Steps, recipe.Step{ID: fmt.Sprintf("step-%d", lineIndex+1), Text: stripNumber(line)})
 }
 
+func (p *plainTextParser) readFact(line string) bool {
+	kind, value := recipetext.Fact(recipeTextLine(line))
+	if kind == "" {
+		return false
+	}
+
+	document := &p.item.Document
+	if kind == recipetext.FactYield {
+		if len(document.Yields) > 0 {
+			return false
+		}
+
+		document.Yields = []recipe.Yield{{Text: value}}
+
+		return true
+	}
+
+	if document.Times == nil {
+		document.Times = &recipe.Times{}
+	}
+
+	field := map[string]**recipe.DurationExpression{
+		recipetext.FactPrep:  &document.Times.Prep,
+		recipetext.FactCook:  &document.Times.Cook,
+		recipetext.FactTotal: &document.Times.Total,
+	}[kind]
+	if *field != nil {
+		return false
+	}
+
+	*field = &recipe.DurationExpression{Text: value}
+	if length, ok := recipetext.Duration(value); ok {
+		*field = &recipe.DurationExpression{Value: recipe.FormatDuration(length), SourceText: value}
+	}
+
+	return true
+}
+
 func (p *plainTextParser) readUnclassified(line string, lineIndex int) {
 	if p.requireHeadings {
 		p.item.Document.Notes = append(p.item.Document.Notes, line)
@@ -396,6 +457,31 @@ func (p *plainTextParser) readUnclassified(line string, lineIndex int) {
 
 	p.item.Document.Notes = append(p.item.Document.Notes, line)
 	p.item.Diagnostics = append(p.item.Diagnostics, plainUncertain(fmt.Sprintf("line-%d", lineIndex+1), "content", line))
+}
+
+func plainTextBytes(data []byte) []byte {
+	var order binary.ByteOrder
+
+	switch {
+	case bytes.HasPrefix(data, []byte{0xff, 0xfe}):
+		order = binary.LittleEndian
+	case bytes.HasPrefix(data, []byte{0xfe, 0xff}):
+		order = binary.BigEndian
+	default:
+		return data
+	}
+
+	body := data[2:]
+	if len(body)%2 != 0 {
+		return data
+	}
+
+	units := make([]uint16, len(body)/2)
+	for index := range units {
+		units[index] = order.Uint16(body[2*index:])
+	}
+
+	return []byte(string(utf16.Decode(units)))
 }
 
 func normalizePlainText(data []byte) string {

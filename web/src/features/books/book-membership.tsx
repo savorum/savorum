@@ -128,6 +128,8 @@ export function BookMembership(props: BookViewProps & { editor: BookEditor; onAd
                   size="sm"
                   class={styles.addSelect}
                   aria-label={m.book_membership_chapter_name()}
+                  data-chapter-name
+                  required
                   value={section().title}
                   onInput={(event) =>
                     setDraft("sections", index, "title", event.currentTarget.value)

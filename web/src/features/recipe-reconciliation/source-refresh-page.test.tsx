@@ -3,6 +3,7 @@ import { createSignal } from "solid-js"
 import type { JSX } from "solid-js"
 import { afterEach, expect, test, vi } from "vitest"
 
+import { ApiError } from "@/api/client"
 import {
   type SourceRefreshPreview,
   applySourceRefresh,
@@ -209,4 +210,13 @@ test("a failed recipe load can be retried before checking its source", async () 
   expect(screen.queryByText("recipe load unavailable")).toBeNull()
   expect(input.value).toBe("https://recipes.example/supper")
   expect(getRecipe).toHaveBeenCalledTimes(2)
+})
+
+test("a recipe that does not exist offers no source to check", async () => {
+  vi.mocked(getRecipe).mockRejectedValueOnce(
+    new ApiError("The requested library recipe does not exist", 404, "recipe-not-found"),
+  )
+  const screen = setup("missing")
+  await screen.findByText("The requested library recipe does not exist")
+  expect(screen.queryByRole("textbox", { name: "Recipe source URL" })).toBeNull()
 })

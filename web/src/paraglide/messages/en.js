@@ -421,6 +421,7 @@
 /** @typedef {{}} Api_Problem_Export_Source_EmptyInputs */
 /** @typedef {{}} Api_Problem_Export_Source_InvalidInputs */
 /** @typedef {{}} Api_Problem_Export_Too_LargeInputs */
+/** @typedef {{}} Api_Problem_Facet_Name_ConflictInputs */
 /** @typedef {{}} Api_Problem_Import_InvalidInputs */
 /** @typedef {{}} Api_Problem_Import_Job_Not_FoundInputs */
 /** @typedef {{}} Api_Problem_Import_Job_Not_ResumableInputs */
@@ -468,6 +469,7 @@
 /** @typedef {{}} Api_Problem_Service_UnavailableInputs */
 /** @typedef {{}} Api_Problem_Source_Not_FoundInputs */
 /** @typedef {{}} Api_Problem_Sref_InvalidInputs */
+/** @typedef {{}} Api_Problem_Tag_Name_ConflictInputs */
 /** @typedef {{}} Api_Problem_Token_Scope_RequiredInputs */
 /** @typedef {{}} Api_Problem_Tokens_UnavailableInputs */
 /** @typedef {{}} Api_Violation_Amount_InvalidInputs */
@@ -826,6 +828,11 @@
 /** @typedef {{}} Cooking_Timer_SetupInputs */
 /** @typedef {{ count: NonNullable<unknown> }} Cooking_Times_CookedInputs */
 /** @typedef {{}} Cooking_TogetherInputs */
+/** @typedef {{}} Cooking_Together_AlongsideInputs */
+/** @typedef {{}} Cooking_Together_Start_FreshInputs */
+/** @typedef {{ count: NonNullable<unknown> }} Cooking_Together_Unfinished_CountInputs */
+/** @typedef {{ names: NonNullable<unknown> }} Cooking_Together_Unfinished_DescriptionInputs */
+/** @typedef {{}} Cooking_Together_Unfinished_TitleInputs */
 /** @typedef {{}} Cookings_The_Cooking_Could_Not_Be_RecordedInputs */
 /** @typedef {{}} Cookings_The_Cooking_Could_Not_Be_RemovedInputs */
 /** @typedef {{}} Cookings_The_Cooking_Could_Not_Be_SavedInputs */
@@ -915,6 +922,7 @@
 /** @typedef {{ count: NonNullable<unknown> }} Editor_Photo_CountInputs */
 /** @typedef {{ position: NonNullable<unknown> }} Editor_Photo_MovedInputs */
 /** @typedef {{}} Editor_Photo_Not_In_RecipeInputs */
+/** @typedef {{ names: NonNullable<unknown>, reason: NonNullable<unknown> }} Editor_Photos_Not_AddedInputs */
 /** @typedef {{}} Editor_Prep_TimeInputs */
 /** @typedef {{}} Editor_Recovered_DiscardInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Editor_Recovered_HeadingInputs */
@@ -1971,23 +1979,28 @@
 /** @typedef {{}} Recipe_Compare_Apply_Reviewed_UpdatesInputs */
 /** @typedef {{}} Recipe_Compare_ApplyingInputs */
 /** @typedef {{}} Recipe_Compare_Back_To_The_ComparisonInputs */
-/** @typedef {{ value1: NonNullable<unknown> }} Recipe_Compare_Choose_The_To_KeepInputs */
 /** @typedef {{}} Recipe_Compare_Combine_Into_One_RecipeInputs */
 /** @typedef {{}} Recipe_Compare_Combine_RecipesInputs */
 /** @typedef {{}} Recipe_Compare_Combine_These_RecipesInputs */
 /** @typedef {{}} Recipe_Compare_Compare_Two_RecipesInputs */
-/** @typedef {{}} Recipe_Compare_DifferentInputs */
+/** @typedef {{}} Recipe_Compare_Different_SourcesInputs */
 /** @typedef {{ areas: NonNullable<unknown> }} Recipe_Compare_Differs_InInputs */
 /** @typedef {{}} Recipe_Compare_EmptyInputs */
+/** @typedef {{ shared: NonNullable<unknown>, total: NonNullable<unknown> }} Recipe_Compare_Ingredients_In_CommonInputs */
+/** @typedef {{}} Recipe_Compare_Keep_BothInputs */
 /** @typedef {{}} Recipe_Compare_Keep_My_EditInputs */
+/** @typedef {{}} Recipe_Compare_Kept_Recipe_Keeps_Its_PlaceInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Recipe_Compare_Main_PhotoInputs */
 /** @typedef {{}} Recipe_Compare_MergingInputs */
 /** @typedef {{}} Recipe_Compare_My_EditInputs */
 /** @typedef {{}} Recipe_Compare_No_Conflicts_Need_Your_AttentionInputs */
 /** @typedef {{}} Recipe_Compare_Nothing_Changes_Until_You_CombineInputs */
+/** @typedef {{}} Recipe_Compare_Only_In_This_RecipeInputs */
 /** @typedef {{ value1: NonNullable<unknown>, value2: NonNullable<unknown> }} Recipe_Compare_Part_Comes_FromInputs */
-/** @typedef {{ value1: NonNullable<unknown> }} Recipe_Compare_Part_Not_Chosen_YetInputs */
+/** @typedef {{ count: NonNullable<unknown>, total: NonNullable<unknown> }} Recipe_Compare_Parts_DifferInputs */
 /** @typedef {{}} Recipe_Compare_Review_Source_UpdatesInputs */
+/** @typedef {{}} Recipe_Compare_Same_SourceInputs */
+/** @typedef {{}} Recipe_Compare_Same_TitleInputs */
 /** @typedef {{}} Recipe_Compare_SourceInputs */
 /** @typedef {{}} Recipe_Compare_SymbolInputs */
 /** @typedef {{}} Recipe_Compare_The_Combined_RecipeInputs */
@@ -1998,7 +2011,11 @@
 /** @typedef {{}} Recipe_Compare_This_Recipe_Has_NoneInputs */
 /** @typedef {{}} Recipe_Compare_Unsupported_ValueInputs */
 /** @typedef {{}} Recipe_Compare_Updated_RecipeInputs */
+/** @typedef {{}} Recipe_Compare_Use_Kept_Recipe_For_Every_PartInputs */
 /** @typedef {{}} Recipe_Compare_Use_SourceInputs */
+/** @typedef {{}} Recipe_Compare_Verdict_DifferentInputs */
+/** @typedef {{}} Recipe_Compare_Verdict_LikelyInputs */
+/** @typedef {{}} Recipe_Compare_Verdict_PossibleInputs */
 /** @typedef {{}} Recipe_Compare_What_Combining_DoesInputs */
 /** @typedef {{}} Recipe_Compare_Which_Recipe_Do_You_KeepInputs */
 /** @typedef {{}} Recipe_Compare_Whole_Parts_OnlyInputs */
@@ -2326,7 +2343,7 @@
 /** @typedef {{ value1: NonNullable<unknown> }} Step_Details_Other_Purpose_For_TemperatureInputs */
 /** @typedef {{}} Step_Details_OvenInputs */
 /** @typedef {{}} Step_Details_Photos_Of_This_StepInputs */
-/** @typedef {{}} Step_Details_Recipe_PhotoInputs */
+/** @typedef {{ position: NonNullable<unknown> }} Step_Details_Recipe_PhotoInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Step_Details_Remove_TemperatureInputs */
 /** @typedef {{}} Step_Details_SurfaceInputs */
 /** @typedef {{}} Step_Details_TemperatureInputs */
@@ -2469,7 +2486,6 @@
 /** @typedef {{}} Yield_Timing_How_Long_It_TakesInputs */
 /** @typedef {{}} Yield_Timing_How_ManyInputs */
 /** @typedef {{}} Yield_Timing_Of_WhatInputs */
-/** @typedef {{ value1: NonNullable<unknown> }} Yield_Timing_This_Recipe_S_Written_Total_Of_Is_One_Its_Own_Steps_RunInputs */
 /** @typedef {{ value1: NonNullable<unknown> }} Yield_Timing_Time_Entry_HintInputs */
 /** @typedef {{}} Yield_Timing_What_It_MakesInputs */
 import * as __paraglideRegistry from "../registry.js"
@@ -4166,6 +4182,10 @@ export const api_problem_export_too_large = /** @type {(inputs: Api_Problem_Expo
 	return /** @type {LocalizedString} */ (`A bundle accepts at most 250 recipe entries`)
 };
 
+export const api_problem_facet_name_conflict = /** @type {(inputs: Api_Problem_Facet_Name_ConflictInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`That category name is taken`)
+};
+
 export const api_problem_import_invalid = /** @type {(inputs: Api_Problem_Import_InvalidInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`The import could not be read as a set of recipes this library can hold`)
 };
@@ -4352,6 +4372,10 @@ export const api_problem_source_not_found = /** @type {(inputs: Api_Problem_Sour
 
 export const api_problem_sref_invalid = /** @type {(inputs: Api_Problem_Sref_InvalidInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`The SREF recipe document is invalid.`)
+};
+
+export const api_problem_tag_name_conflict = /** @type {(inputs: Api_Problem_Tag_Name_ConflictInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`That tag name is taken`)
 };
 
 export const api_problem_token_scope_required = /** @type {(inputs: Api_Problem_Token_Scope_RequiredInputs) => LocalizedString} */ () => {
@@ -5789,6 +5813,26 @@ export const cooking_together = /** @type {(inputs: Cooking_TogetherInputs) => L
 	return /** @type {LocalizedString} */ (`Cook together`)
 };
 
+export const cooking_together_alongside = /** @type {(inputs: Cooking_Together_AlongsideInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Cook alongside`)
+};
+
+export const cooking_together_start_fresh = /** @type {(inputs: Cooking_Together_Start_FreshInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Discard and start`)
+};
+
+export const cooking_together_unfinished_count = /** @type {(inputs: Cooking_Together_Unfinished_CountInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`Recipes in progress: ${i?.count}.`)
+};
+
+export const cooking_together_unfinished_description = /** @type {(inputs: Cooking_Together_Unfinished_DescriptionInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`In progress: ${i?.names}.`)
+};
+
+export const cooking_together_unfinished_title = /** @type {(inputs: Cooking_Together_Unfinished_TitleInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Already cooking`)
+};
+
 export const cookings_the_cooking_could_not_be_recorded = /** @type {(inputs: Cookings_The_Cooking_Could_Not_Be_RecordedInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`The cooking could not be recorded.`)
 };
@@ -6151,6 +6195,10 @@ export const editor_photo_moved = /** @type {(inputs: Editor_Photo_MovedInputs) 
 
 export const editor_photo_not_in_recipe = /** @type {(inputs: Editor_Photo_Not_In_RecipeInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Not in recipe photos`)
+};
+
+export const editor_photos_not_added = /** @type {(inputs: Editor_Photos_Not_AddedInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`Not added: ${i?.names}. ${i?.reason}`)
 };
 
 export const editor_prep_time = /** @type {(inputs: Editor_Prep_TimeInputs) => LocalizedString} */ () => {
@@ -10581,10 +10629,6 @@ export const recipe_compare_back_to_the_comparison = /** @type {(inputs: Recipe_
 	return /** @type {LocalizedString} */ (`Back to the comparison`)
 };
 
-export const recipe_compare_choose_the_to_keep = /** @type {(inputs: Recipe_Compare_Choose_The_To_KeepInputs) => LocalizedString} */ (i) => {
-	return /** @type {LocalizedString} */ (`Choose the ${i?.value1} to keep`)
-};
-
 export const recipe_compare_combine_into_one_recipe = /** @type {(inputs: Recipe_Compare_Combine_Into_One_RecipeInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Combine into one recipe`)
 };
@@ -10601,8 +10645,8 @@ export const recipe_compare_compare_two_recipes = /** @type {(inputs: Recipe_Com
 	return /** @type {LocalizedString} */ (`Compare two recipes`)
 };
 
-export const recipe_compare_different = /** @type {(inputs: Recipe_Compare_DifferentInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Different`)
+export const recipe_compare_different_sources = /** @type {(inputs: Recipe_Compare_Different_SourcesInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Different source links`)
 };
 
 export const recipe_compare_differs_in = /** @type {(inputs: Recipe_Compare_Differs_InInputs) => LocalizedString} */ (i) => {
@@ -10613,8 +10657,20 @@ export const recipe_compare_empty = /** @type {(inputs: Recipe_Compare_EmptyInpu
 	return /** @type {LocalizedString} */ (`Empty`)
 };
 
+export const recipe_compare_ingredients_in_common = /** @type {(inputs: Recipe_Compare_Ingredients_In_CommonInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`Ingredients in common: ${i?.shared} of ${i?.total}`)
+};
+
+export const recipe_compare_keep_both = /** @type {(inputs: Recipe_Compare_Keep_BothInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Keep both`)
+};
+
 export const recipe_compare_keep_my_edit = /** @type {(inputs: Recipe_Compare_Keep_My_EditInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Keep my edit`)
+};
+
+export const recipe_compare_kept_recipe_keeps_its_place = /** @type {(inputs: Recipe_Compare_Kept_Recipe_Keeps_Its_PlaceInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`It keeps its books, meal plans and cooking history.`)
 };
 
 export const recipe_compare_main_photo = /** @type {(inputs: Recipe_Compare_Main_PhotoInputs) => LocalizedString} */ (i) => {
@@ -10637,16 +10693,28 @@ export const recipe_compare_nothing_changes_until_you_combine = /** @type {(inpu
 	return /** @type {LocalizedString} */ (`Nothing changes until you choose to combine them.`)
 };
 
+export const recipe_compare_only_in_this_recipe = /** @type {(inputs: Recipe_Compare_Only_In_This_RecipeInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`only in this recipe`)
+};
+
 export const recipe_compare_part_comes_from = /** @type {(inputs: Recipe_Compare_Part_Comes_FromInputs) => LocalizedString} */ (i) => {
 	return /** @type {LocalizedString} */ (`${i?.value1}: from ${i?.value2}`)
 };
 
-export const recipe_compare_part_not_chosen_yet = /** @type {(inputs: Recipe_Compare_Part_Not_Chosen_YetInputs) => LocalizedString} */ (i) => {
-	return /** @type {LocalizedString} */ (`${i?.value1}: not chosen yet`)
+export const recipe_compare_parts_differ = /** @type {(inputs: Recipe_Compare_Parts_DifferInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`Parts that differ: ${i?.count} of ${i?.total}.`)
 };
 
 export const recipe_compare_review_source_updates = /** @type {(inputs: Recipe_Compare_Review_Source_UpdatesInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Review source updates`)
+};
+
+export const recipe_compare_same_source = /** @type {(inputs: Recipe_Compare_Same_SourceInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Same source link`)
+};
+
+export const recipe_compare_same_title = /** @type {(inputs: Recipe_Compare_Same_TitleInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Same title`)
 };
 
 export const recipe_compare_source = /** @type {(inputs: Recipe_Compare_SourceInputs) => LocalizedString} */ () => {
@@ -10689,8 +10757,24 @@ export const recipe_compare_updated_recipe = /** @type {(inputs: Recipe_Compare_
 	return /** @type {LocalizedString} */ (`Updated recipe`)
 };
 
+export const recipe_compare_use_kept_recipe_for_every_part = /** @type {(inputs: Recipe_Compare_Use_Kept_Recipe_For_Every_PartInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Reset choices`)
+};
+
 export const recipe_compare_use_source = /** @type {(inputs: Recipe_Compare_Use_SourceInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Use source`)
+};
+
+export const recipe_compare_verdict_different = /** @type {(inputs: Recipe_Compare_Verdict_DifferentInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Likely different recipes.`)
+};
+
+export const recipe_compare_verdict_likely = /** @type {(inputs: Recipe_Compare_Verdict_LikelyInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Likely the same recipe.`)
+};
+
+export const recipe_compare_verdict_possible = /** @type {(inputs: Recipe_Compare_Verdict_PossibleInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Possibly the same recipe.`)
 };
 
 export const recipe_compare_what_combining_does = /** @type {(inputs: Recipe_Compare_What_Combining_DoesInputs) => LocalizedString} */ () => {
@@ -12007,8 +12091,8 @@ export const step_details_photos_of_this_step = /** @type {(inputs: Step_Details
 	return /** @type {LocalizedString} */ (`Photos of this step`)
 };
 
-export const step_details_recipe_photo = /** @type {(inputs: Step_Details_Recipe_PhotoInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Recipe photo`)
+export const step_details_recipe_photo = /** @type {(inputs: Step_Details_Recipe_PhotoInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`Recipe photo ${i?.position}`)
 };
 
 export const step_details_remove_temperature = /** @type {(inputs: Step_Details_Remove_TemperatureInputs) => LocalizedString} */ (i) => {
@@ -12583,10 +12667,6 @@ export const yield_timing_how_many = /** @type {(inputs: Yield_Timing_How_ManyIn
 
 export const yield_timing_of_what = /** @type {(inputs: Yield_Timing_Of_WhatInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Of what`)
-};
-
-export const yield_timing_this_recipe_s_written_total_of_is_one_its_own_steps_run = /** @type {(inputs: Yield_Timing_This_Recipe_S_Written_Total_Of_Is_One_Its_Own_Steps_RunInputs) => LocalizedString} */ (i) => {
-	return /** @type {LocalizedString} */ (`The written total of ${i?.value1} is shorter than this recipe's own steps. It is kept as written, not shown as the time the recipe takes.`)
 };
 
 export const yield_timing_time_entry_hint = /** @type {(inputs: Yield_Timing_Time_Entry_HintInputs) => LocalizedString} */ (i) => {

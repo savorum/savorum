@@ -43,13 +43,22 @@ export function BookReader(props: BookViewProps & { editor: BookEditor; onAdd: (
           </Show>
         </span>
         <div class={styles.entry}>
-          <Link
-            class={styles.entryLink}
-            to="/recipes/$recipeId"
-            params={{ recipeId: entry.library_entry_id }}
+          <Show
+            when={props.editor.entryState(entry.library_entry_id) === "trash"}
+            fallback={
+              <Link
+                class={styles.entryLink}
+                to="/recipes/$recipeId"
+                params={{ recipeId: entry.library_entry_id }}
+              >
+                {props.editor.recipeTitle(entry.library_entry_id)}
+              </Link>
+            }
           >
-            {props.editor.recipeTitle(entry.library_entry_id)}
-          </Link>
+            <Link class={styles.entryLink} to="/trash">
+              {props.editor.recipeTitle(entry.library_entry_id)}
+            </Link>
+          </Show>
           <Show when={time()}>
             <p class={styles.entryNote}>{time()}</p>
           </Show>

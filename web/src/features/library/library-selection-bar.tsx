@@ -9,10 +9,17 @@ import { ExportMenu } from "@/components/export-menu"
 import { ChangeError } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import { buttonLink } from "@/components/ui/button-link"
+import { Dialog, DialogClose } from "@/components/ui/dialog"
 import { withCookingLock } from "@/features/cooking/cooking-lock"
 import { cookingOwner, cookingDisplay } from "@/features/cooking/cooking-owner"
-import { startCookingSession } from "@/features/cooking/cooking-session"
-import { formatNumber } from "@/lib/locale-format"
+import {
+  activeCookingDishes,
+  finishCookingSession,
+  startCookingSession,
+  type CookingSession,
+} from "@/features/cooking/cooking-session"
+import { isolate } from "@/lib/direction"
+import { formatList, formatNumber } from "@/lib/locale-format"
 import { rational } from "@/lib/rational"
 
 import { m } from "../../lib/messages.ts"
@@ -43,10 +50,25 @@ export function LibrarySelectionBar(props: {
   const navigate = useNavigate()
   const [cooking, setCooking] = createSignal(false)
   const [cookingError, setCookingError] = createSignal<unknown>()
+  const [unfinished, setUnfinished] = createSignal<CookingSession[]>([])
+  const requestCookTogether = () => {
+    const owner = cookingOwner()
+    if (!owner) return
+    const chosen = new Set(selected())
+    const others = activeCookingDishes(owner).filter((dish) => !chosen.has(dish.recipeID))
+    if (others.length) setUnfinished(others)
+    else void cookTogether()
+  }
+  const startFresh = () => {
+    const owner = cookingOwner()
+    if (owner) for (const dish of activeCookingDishes(owner)) finishCookingSession(dish)
+    void cookTogether()
+  }
   const cookTogether = async () => {
     const owner = cookingOwner()
     const ids = [...selected()]
     if (!owner || !ids.length || cooking()) return
+    setUnfinished([])
     setCooking(true)
     setCookingError(undefined)
     try {
@@ -124,7 +146,7 @@ export function LibrarySelectionBar(props: {
             <Button
               size="sm"
               disabled={!selected().length || cooking()}
-              onClick={() => void cookTogether()}
+              onClick={requestCookTogether}
             >
               {m.cooking_together()}
             </Button>
@@ -176,6 +198,37 @@ export function LibrarySelectionBar(props: {
             </Button>
           </div>
         </div>
+      </Show>
+      <Show when={unfinished().length > 0}>
+        <Dialog
+          open
+          onClose={() => setUnfinished([])}
+          title={m.cooking_together_unfinished_title()}
+          description={
+            unfinished().length > 3
+              ? m.cooking_together_unfinished_count({ count: formatNumber(unfinished().length) })
+              : m.cooking_together_unfinished_description({
+                  names: formatList(
+                    unfinished().map((dish) => isolate(dish.snapshot?.title ?? "")),
+                  ),
+                })
+          }
+          footer={
+            <>
+              <DialogClose>
+                {(closeProps) => (
+                  <Button {...closeProps()} variant="outline">
+                    {m.common_cancel()}
+                  </Button>
+                )}
+              </DialogClose>
+              <Button variant="outline" colorPalette="red" onClick={startFresh}>
+                {m.cooking_together_start_fresh()}
+              </Button>
+              <Button onClick={() => void cookTogether()}>{m.cooking_together_alongside()}</Button>
+            </>
+          }
+        />
       </Show>
       <Show when={organizing()}>
         <BulkOrganizeDialog
