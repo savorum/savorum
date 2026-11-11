@@ -1,31 +1,29 @@
 import { expect, test } from "@playwright/test"
 
-test("a committed import remains discoverable after leaving and reloading its job page", async ({
+test("a saved recipe opens, and its import stays discoverable through a reload", async ({
   page,
 }) => {
   await page.goto("/")
   await page.locator('input[type="file"]').setInputFiles("e2e/fixtures/discovery-tart.json")
-  const review = page.getByRole("region", { name: "Save this recipe" })
+  const review = page.getByRole("region", { name: "Review import" })
   await review.getByRole("button", { name: "Save recipe", exact: true }).click()
-  await expect(page).toHaveURL(/\/imports\/[^/]+$/)
-  await expect(page.getByRole("link", { name: "Back to your library", exact: true })).toBeVisible()
-  const jobURL = page.url()
-  await expect(page.getByRole("heading", { name: "1 recipe imported" })).toBeVisible()
+  await expect(page).toHaveURL(/\/recipes\/[^/]+$/)
+  await expect(page.getByRole("heading", { name: "Import discovery tart", level: 1 })).toBeVisible()
 
-  await page.getByRole("link", { name: "Recipes", exact: true }).click()
-  await expect(page).toHaveURL("/")
+  await page.goto("/")
   await page.getByRole("button", { name: "More", exact: true }).click()
   await page.getByRole("menuitem", { name: "Imports", exact: true }).click()
   await expect(page).toHaveURL("/imports")
   await expect(page.getByRole("link", { name: /discovery-tart\.json/ })).toBeVisible()
   await page.getByRole("link", { name: /discovery-tart\.json/ }).click()
-  await expect(page).toHaveURL(jobURL)
+  await expect(page).toHaveURL(/\/imports\/[^/]+$/)
+  await expect(page.getByRole("heading", { name: "1 recipe imported" })).toBeVisible()
   await page.reload()
   await expect(page.getByRole("heading", { name: "1 recipe imported" })).toBeVisible()
   await expect(page.getByRole("link", { name: "Import discovery tart" })).toBeVisible()
 })
 
-test("an import started from Imports keeps its return path through review and reload", async ({
+test("an import started from Imports opens the saved recipe and stays listed there", async ({
   page,
 }) => {
   const recipe = {
@@ -43,13 +41,14 @@ test("an import started from Imports keeps its return path through review and re
     mimeType: "application/json",
     buffer: Buffer.from(JSON.stringify(recipe)),
   })
-  const review = page.getByRole("region", { name: "Save this recipe" })
+  const review = page.getByRole("region", { name: "Review import" })
   await review.getByRole("button", { name: "Save recipe", exact: true }).click()
-  await expect(page).toHaveURL(/\/imports\/[^/]+$/)
-  await expect(page.getByRole("link", { name: "Back to imports", exact: true })).toBeVisible()
-  await page.reload()
-  await page.getByRole("link", { name: "Back to imports", exact: true }).click()
-  await expect(page).toHaveURL(/\/imports$/)
+  await expect(page).toHaveURL(/\/recipes\/[^/]+$/)
+  await expect(
+    page.getByRole("heading", { name: "Import from history soup", level: 1 }),
+  ).toBeVisible()
+  await page.goto("/imports")
+  await expect(page.getByRole("link", { name: /history-soup\.json/ })).toBeVisible()
 })
 
 test("loading more imports and refreshing keeps one row per job", async ({ page }) => {

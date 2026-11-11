@@ -66,8 +66,10 @@ test("URL composition retains the input and waits for a separate Enter", async (
       setTextImportOpen: vi.fn(),
       setEditingTextItem: vi.fn(),
       stageImportFiles: vi.fn(),
+      fetchPastedURL: vi.fn(),
       applyEditedText: vi.fn(),
       cancelStaging: vi.fn(),
+      importPhase: () => ({ kind: "idle" as const }),
     }
     return <ImportSourceDialogs workflow={workflow} />
   })

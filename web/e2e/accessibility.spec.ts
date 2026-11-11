@@ -117,7 +117,7 @@ test("no surface gives two elements the same id", async ({ page, request }) => {
 test("the import progress page passes axe", async ({ page }) => {
   await page.goto("/")
   await page.locator('input[type="file"]').setInputFiles("e2e/fixtures/accessible-import.json")
-  const review = page.getByRole("region", { name: "Save this recipe" })
+  const review = page.getByRole("region", { name: "Review import" })
   await expect(review).toBeVisible()
   await expectAccessible(page)
 
@@ -139,7 +139,12 @@ test("the import progress page passes axe", async ({ page }) => {
   await expect(review).toBeVisible()
 
   await review.getByRole("button", { name: "Save recipe", exact: true }).click()
-  await expect(page).toHaveURL(/\/imports\//)
+  await expect(page).toHaveURL(/\/recipes\/[^/]+$/)
+  await page.goto("/imports")
+  await page
+    .getByRole("link", { name: /accessible-import\.json/ })
+    .first()
+    .click()
   await expect(page.getByRole("heading", { name: "1 recipe imported" })).toBeVisible()
   await expectAccessible(page)
 })

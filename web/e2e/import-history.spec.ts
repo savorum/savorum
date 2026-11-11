@@ -7,12 +7,12 @@ test("import history presents persisted diagnostics behind concise provenance", 
   await page.goto("/")
   await page.locator('input[type="file"]').setInputFiles("e2e/fixtures/import-history-warning.html")
   await page
-    .getByRole("region", { name: "Save this recipe" })
+    .getByRole("region", { name: "Review import" })
     .getByRole("button", { name: "Save recipe", exact: true })
     .click()
-  await expect(page.getByRole("link", { name: title })).toBeVisible()
-  const recipePath = await page.getByRole("link", { name: title }).getAttribute("href")
-  expect(recipePath).toMatch(/^\/recipes\//)
+  await expect(page).toHaveURL(/\/recipes\/[^/]+$/)
+  await expect(page.getByRole("heading", { name: title, level: 1 })).toBeVisible()
+  const recipePath = new URL(page.url()).pathname
 
   await page.goto(`${recipePath}/history`)
   const history = page.getByRole("region", { name: "Import history" })

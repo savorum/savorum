@@ -90,5 +90,9 @@
   "account_audit_details": "Disclosure for exact identifiers and outcome in an immutable audit record.",
   "account_audit_by": "Audit table column and filter for the person or service that performed an event.",
   "account_audit_affected": "Type of object affected by an audit event, such as an account or recipe.",
-  "account_audit_sign_in": "Activity name, a noun, for an attempted sign-in. Its result is shown separately."
+  "account_audit_sign_in": "Activity name, a noun, for an attempted sign-in. Its result is shown separately.",
+  "import_review_replace": "Saves the imported recipe over the copy already in the library.",
+  "import_review_save_copy": "Saves the imported recipe as a second recipe beside the one already in the library.",
+  "import_notice_nothing_found": "The quoted action is the button labelled by import_review_save_and_edit; use the same words.",
+  "import_notice_from_caption": "Says where an imported recipe was read: the text written under a social media post."
 }

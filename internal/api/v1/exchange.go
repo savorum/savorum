@@ -515,6 +515,7 @@ type ImportPreviewSource struct {
 	Attribution   string `json:"attribution,omitempty"`
 	CanRetain     bool   `json:"can_retain" doc:"The uploaded original can be retained explicitly when this preview item is committed"`
 	ExtractedText string `json:"extracted_text,omitempty" doc:"Text extracted from a document upload, editable before commit"`
+	SharedFrom    string `json:"shared_from,omitempty" doc:"The social post that led to url"`
 }
 
 // ImportPreviewAssets counts photographs that are available, deferred until
@@ -569,8 +570,10 @@ type ImportPreviewRecipe struct {
 
 // ImportPreviewItem describes one candidate recipe in an import preview.
 type ImportPreviewItem struct {
-	ID          string                    `json:"id"`
-	Recipe      ImportPreviewRecipe       `json:"recipe"`
+	ID     string              `json:"id"`
+	Recipe ImportPreviewRecipe `json:"recipe"`
+	// Document is the recipe to save, omitted for untitled candidates.
+	Document    *RecipeDocument           `json:"document,omitempty"`
 	Source      ImportPreviewSource       `json:"source"`
 	Analysis    ImportPreviewAnalysis     `json:"analysis"`
 	Diagnostics []ImportPreviewDiagnostic `json:"diagnostics"`
@@ -873,7 +876,7 @@ func importPreviewResponse(preview exchange.ImportPreview) ImportPreviewResponse
 			Source: ImportPreviewSource{
 				FormatID: item.Source.FormatID, FormatName: item.Source.FormatName,
 				Filename: item.Source.Filename, URL: item.Source.URL, Attribution: item.Source.Attribution, CanRetain: item.Source.CanRetain,
-				ExtractedText: item.Source.ExtractedText,
+				ExtractedText: item.Source.ExtractedText, SharedFrom: item.Source.SharedFrom,
 			},
 			Analysis: ImportPreviewAnalysis{
 				Status:  string(item.Analysis.Status),
@@ -885,6 +888,8 @@ func importPreviewResponse(preview exchange.ImportPreview) ImportPreviewResponse
 			},
 			AlreadyHere: item.AlreadyHere, CanCommit: item.CanCommit,
 		}
+		mapped.Document = previewDocument(item.ID, item.Recipe, mapped.Recipe.Title)
+
 		// Retrieval is on demand, so offer the image whenever one may exist.
 		if item.Assets.Discovered > item.Assets.Unavailable {
 			mapped.Assets.PreviewURL = "/api/v1/recipes/import-previews/" + preview.ID + "/items/" + item.ID + "/image"
@@ -1031,6 +1036,25 @@ func measurementResolutionPlanResponse(plan exchange.MeasurementResolutionPlan) 
 	}
 
 	return result
+}
+
+func previewDocument(itemID string, document recipe.Document, title string) *RecipeDocument {
+	if title == "" {
+		return nil
+	}
+
+	mapped := fromDomain(document)
+	mapped.Title = title
+
+	if mapped.ID == "" {
+		mapped.ID = itemID
+	}
+
+	if mapped.SchemaVersion == 0 {
+		mapped.SchemaVersion = recipe.CurrentDocumentSchemaVersion
+	}
+
+	return &mapped
 }
 
 func previewRecipe(document recipe.Document, fallback string) ImportPreviewRecipe {

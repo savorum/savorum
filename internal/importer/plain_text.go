@@ -159,6 +159,12 @@ func (p *plainTextParser) parse(lines []string, start int) {
 			continue
 		}
 
+		if videoChapter(lines, i) {
+			p.item.Document.Notes = append(p.item.Document.Notes, line)
+
+			continue
+		}
+
 		if p.readHeading(line) {
 			numberedStep = false
 			bulletedStep = false
@@ -419,7 +425,23 @@ func plainTitle(lines []string) (string, int) {
 var (
 	plainMarkdownHeading = regexp.MustCompile(`^#{1,6}\s+`)
 	plainStepNumber      = regexp.MustCompile(`^(?:\d+|[ivxlcdm]+)[.)-]\s*`)
+	plainChapter         = regexp.MustCompile(`^[(\[]?(?:\d{1,2}:)?\d{1,2}:\d{2}[)\]]?\s*[-–—:]?\s+\S`)
 )
+
+// Require adjacent timestamps to distinguish video chapters from timed steps.
+func videoChapter(lines []string, index int) bool {
+	if !plainChapter.MatchString(strings.TrimSpace(lines[index])) {
+		return false
+	}
+
+	for _, neighbour := range []int{index - 1, index + 1} {
+		if neighbour >= 0 && neighbour < len(lines) && plainChapter.MatchString(strings.TrimSpace(lines[neighbour])) {
+			return true
+		}
+	}
+
+	return false
+}
 
 func plainHeadingText(s string) string {
 	return strings.TrimSpace(strings.Trim(plainMarkdownHeading.ReplaceAllString(s, ""), "*_"))

@@ -32,11 +32,14 @@ const styles = {
     marginInlineStart: "-1em",
     rowGap: "1",
   }),
+  // Keep separators outside text clipping.
   metaItem: css({
+    display: "flex",
+    minWidth: "0",
     _before: {
       color: "border.default",
       content: "attr(data-separator) / ''",
-      display: "inline-block",
+      flexShrink: "0",
       paddingInlineEnd: "0.6em",
       textAlign: "end",
       width: "1em",
@@ -122,8 +125,8 @@ export interface RecipeArticleProps {
   footer?: JSX.Element
   /** The recipe's other languages, shown beside its secondary details. */
   languages?: JSX.Element
-  /** Set for a read-only look at an earlier version. */
   readOnly?: boolean
+  image?: (className: string) => JSX.Element
   scale?: Rational
   onScaleChange?: (scale: Rational) => void
   /** The yield this reader asked Savorum to open at, when they set one. */
@@ -153,14 +156,16 @@ export const RecipeArticle = (props: RecipeArticleProps) => {
   const primaryImage = () =>
     recipe().primary_image ? assetByID(recipe().primary_image ?? "") : undefined
   const galleryImages = () =>
-    (recipe().image_refs ?? [])
+    (props.image ? [] : (recipe().image_refs ?? []))
       .filter((id) => id !== recipe().primary_image)
       .map(assetByID)
       .filter((asset) => asset !== undefined)
   const sourceURL = () => safeSourceURL(recipe().source?.url)
   const sourceName = () => recipe().source?.name ?? sourceHost(recipe().source?.url)
   const region = createMemo(() => recipeMeasurementRegion(recipe()))
-  const layout = createMemo(() => recipePage({ illustrated: Boolean(primaryImage()) }))
+  const layout = createMemo(() =>
+    recipePage({ illustrated: Boolean(props.image ?? primaryImage()) }),
+  )
   const shownYield = createMemo(() => displayYield(recipe(), props.preferredYield))
   const writtenYield = createMemo(() => yieldAmount(shownYield().value))
   const alsoMakes = createMemo(() =>
@@ -298,7 +303,8 @@ export const RecipeArticle = (props: RecipeArticleProps) => {
           </Show>
         </div>
 
-        <Show when={primaryImage()}>
+        <Show when={props.image}>{(image) => image()(layout().image)}</Show>
+        <Show when={!props.image && primaryImage()}>
           {(asset) => (
             <div class={styles.imageFrame}>
               <img

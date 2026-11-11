@@ -195,7 +195,7 @@ export function ImportsPage(props: {
       </div>
       <p class={styles.intro}>{m.imports_page_your_recent_imports_newest_first()}</p>
       <ImportProgress
-        phase={workflow.importPhase()}
+        phase={workflow.urlImportOpen() ? { kind: "idle" } : workflow.importPhase()}
         onCancel={workflow.previewing() ? () => workflow.cancelStaging() : undefined}
       />
       <Show when={workflow.importError()}>

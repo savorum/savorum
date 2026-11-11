@@ -27,8 +27,8 @@ sign-in enabled, authorization protects the same workflows.
   beside writing a recipe. Imports sits with library maintenance. Secondary
   menus group items by purpose, keeping library maintenance apart from personal
   settings. An action on selected recipes is offered where they're selected.
-- A capture is one task. Under review it fills the screen, and the library
-  returns when it's saved or cancelled. Browser capture tools are offered after
+- A capture is one task. Under review it fills the screen. Saving opens the
+  saved recipe, and cancelling returns to the library. Browser capture tools are offered after
   a first capture, never before pasting a link.
 
 ## Consistent controls and wording
@@ -98,8 +98,9 @@ sign-in enabled, authorization protects the same workflows.
 - Destructive actions move items to the trash, where they can be restored.
   Permanent deletion needs a separate confirmation.
 - An import preview gives enough information to decide. A single captured
-  recipe shows as that recipe with a way to save it, without queue controls. A
-  possible duplicate still waits for a decision.
+  recipe shows as the recipe page will show it, after what to check, with
+  ways to save it or save and edit it, without queue controls. A possible
+  duplicate offers replacing the match or saving a copy.
 
 ## Tests
 

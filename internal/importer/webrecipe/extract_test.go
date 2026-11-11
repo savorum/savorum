@@ -969,3 +969,17 @@ func TestExtractionNeverExecutesPageScripts(t *testing.T) {
 		}
 	}
 }
+
+func TestStepNamesThatOnlyNumberTheStepAreDropped(t *testing.T) {
+	body := `{"@type":"Recipe","name":"Bites","recipeIngredient":["brie"],
+		"recipeInstructions":[
+			{"@type":"HowToStep","name":"step 1","text":"Heat the oven."},
+			{"@type":"HowToStep","name":"Étape 2","text":"Bake."},
+			{"@type":"HowToStep","name":"Glaze","text":"Brush with jam."},
+			{"@type":"HowToStep","name":"Step 4"}]}`
+
+	got := allSteps(mustExtract(t, body, "").Sections)
+	if len(got) != 4 || got[0].Name != "" || got[1].Name != "" || got[2].Name != "Glaze" || got[3].Name != "Step 4" {
+		t.Fatalf("steps = %#v", got)
+	}
+}

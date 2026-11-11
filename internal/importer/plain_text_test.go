@@ -192,3 +192,35 @@ func TestPlainTextKeepsAStepThatCitesALink(t *testing.T) {
 		t.Fatalf("notes=%#v source=%#v", doc.Notes, doc.Source)
 	}
 }
+
+func TestPlainTextKeepsVideoChaptersOutOfTheMethod(t *testing.T) {
+	text := "Crêpes\nIngrédients\n250 g de farine\n3 œufs\nPréparation\nMélanger la farine et les œufs.\nCuire à feu moyen.\n00:00 Intro\n04:02 Les ingrédients\n1:16:14 La cuisson\n"
+
+	batch, err := importer.DefaultRegistry().Import(context.Background(), importer.Input{Name: "crepes.txt", Data: []byte(text)}, importer.Options{})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	doc := batch.Recipes[0].Document
+	if len(doc.InstructionSections) != 1 || len(doc.InstructionSections[0].Steps) != 2 {
+		t.Fatalf("instructions=%+v", doc.InstructionSections)
+	}
+
+	if len(doc.Notes) != 3 || doc.Notes[1] != "04:02 Les ingrédients" {
+		t.Fatalf("notes=%#v", doc.Notes)
+	}
+}
+
+func TestPlainTextKeepsALoneTimedStep(t *testing.T) {
+	text := "Bread\nIngredients\n500 g flour\nInstructions\nMix and knead.\n10:00 Shape the loaf and bake.\n"
+
+	batch, err := importer.DefaultRegistry().Import(context.Background(), importer.Input{Name: "bread.txt", Data: []byte(text)}, importer.Options{})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	doc := batch.Recipes[0].Document
+	if len(doc.InstructionSections) != 1 || len(doc.InstructionSections[0].Steps) != 2 {
+		t.Fatalf("instructions=%+v", doc.InstructionSections)
+	}
+}

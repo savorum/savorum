@@ -6,9 +6,14 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+### Added
+
+- Add a web import offer when a URL is pasted into the text importer.
+
 ### Changed
 
 - Improve social recipe imports, including post and caption extraction, recipes split across author comments, discovery of full recipes on creator websites, and partial-recipe recovery.
+- Improve import review with full recipe previews, clearer source information and warnings, and options to open or edit after saving.
 
 ### Fixed
 

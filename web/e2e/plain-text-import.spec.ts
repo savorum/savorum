@@ -21,15 +21,12 @@ test("paste remains editable through caret and composition before commit", async
     `Corrected soup\n\nIngredients\n2 grams flour\n1 tsp salt\n\nInstructions\nStir well.\nServe warm.\n\nNote: family recipe`,
   )
   await page.getByRole("button", { name: "Preview pasted recipe" }).click()
-  const review = page.getByRole("region", { name: "Save this recipe" })
+  const review = page.getByRole("region", { name: "Review import" })
   await expect(review).toContainText("Corrected soup")
   await review.getByRole("button", { name: "Save recipe", exact: true }).click()
-  await expect(page).toHaveURL(/\/imports\//)
-  await expect(page.getByRole("heading", { name: "1 recipe imported" })).toBeVisible()
-  const link = page.getByRole("link", { name: "Corrected soup" })
-  const href = await link.getAttribute("href")
-  expect(href).toMatch(/^\/recipes\//)
-  const stored = await request.get(`/api/v1${href}`)
+  await expect(page).toHaveURL(/\/recipes\/[^/]+$/)
+  await expect(page.getByRole("heading", { name: "Corrected soup", level: 1 })).toBeVisible()
+  const stored = await request.get(`/api/v1${new URL(page.url()).pathname}`)
   expect(stored.ok()).toBe(true)
   const body = await stored.json()
   expect(
@@ -53,7 +50,7 @@ test(".txt files load into the editable text surface before preview", async ({ p
   await expect(editor).toHaveValue(/File soup/)
   await editor.fill(`Corrected file soup\n\nIngredients\n3 grams flour\n\nInstructions\nStir.`)
   await page.getByRole("button", { name: "Preview pasted recipe" }).click()
-  await expect(page.getByRole("region", { name: "Save this recipe" })).toContainText(
+  await expect(page.getByRole("region", { name: "Review import" })).toContainText(
     "Corrected file soup",
   )
 })

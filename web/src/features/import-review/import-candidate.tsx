@@ -1,9 +1,11 @@
 import { Link } from "@tanstack/solid-router"
-import { For, Show } from "solid-js"
+import { For, type JSX, Show } from "solid-js"
 import { css, cva } from "styled-system/css"
 
+import type { Recipe } from "@/api/client"
 import type { ImportPreviewItem } from "@/api/import-previews"
 import { ImportThumbnail } from "@/components/import-thumbnail"
+import { RecipeArticle } from "@/components/recipe-article"
 import { Callout } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -16,7 +18,8 @@ import {
   matchFacts,
   standingLabels,
 } from "@/lib/import-candidate"
-import { previewDiagnostics } from "@/lib/import-diagnostics"
+import { type PreviewNotice, previewDiagnostics, previewNotices } from "@/lib/import-diagnostics"
+import { safeSourceURL } from "@/lib/source-url"
 
 import { m } from "../../lib/messages.ts"
 
@@ -34,8 +37,34 @@ const standingStyle = cva({
 })
 
 const styles = {
-  singleRow: css({ paddingBlock: "2" }),
-  singleTitle: css({ fontFamily: "editorial", fontSize: "2xl", fontWeight: "normal", margin: "0" }),
+  // Prevent the recipe article from shrinking or receiving duplicate page padding.
+  sole: css({ display: "block", marginInline: { base: "-5", md: "-8", lg: "-10" } }),
+  soleNotes: css({
+    display: "grid",
+    gap: "3",
+    marginBottom: "2",
+    marginInline: "auto",
+    maxWidth: "84rem",
+    paddingInline: { base: "5", md: "8", lg: "10" },
+    width: "100%",
+  }),
+  provenance: css({
+    alignItems: "center",
+    color: "fg.muted",
+    columnGap: "3",
+    display: "flex",
+    flexWrap: "wrap",
+    fontSize: "sm",
+    margin: "0",
+    rowGap: "1",
+  }),
+  link: css({
+    color: "accent.default",
+    textDecoration: "underline",
+    textUnderlineOffset: "3px",
+  }),
+  noticeList: css({ display: "grid", gap: "1", margin: "0", paddingInlineStart: "5" }),
+  noticeLink: css({ marginInlineStart: "2" }),
   row: css({
     borderColor: "border.default",
     borderRadius: "l2",
@@ -48,14 +77,7 @@ const styles = {
     gap: "3",
     gridTemplateColumns: "auto 5rem minmax(0, 1fr)",
   }),
-  headingSingle: css({ display: "flex", gap: "3", alignItems: "start" }),
   caption: css({ whiteSpace: "pre-wrap", overflowWrap: "anywhere", lineHeight: "1.7" }),
-  headingAlone: css({
-    alignItems: "start",
-    display: "grid",
-    gap: "3",
-    gridTemplateColumns: "5rem minmax(0, 1fr)",
-  }),
   checkbox: css({ marginTop: "0.5" }),
   thumbnail: css({
     alignItems: "center",
@@ -111,16 +133,6 @@ const styles = {
     marginTop: "3",
     padding: "0",
   }),
-  note: css({
-    borderInlineStartWidth: "2px",
-    color: "fg.muted",
-    fontSize: "sm",
-    lineHeight: "1.5",
-    paddingInlineStart: "3",
-  }),
-  noteReview: css({ borderColor: "accent.default" }),
-  noteProblem: css({ borderColor: "danger.default", color: "danger.default" }),
-  noteQuiet: css({ borderColor: "border.subtle" }),
   matches: css({
     background: "bg.subtle",
     borderRadius: "l1",
@@ -129,6 +141,7 @@ const styles = {
     marginTop: "3",
     padding: "3",
   }),
+  matchesSole: css({ marginTop: "0" }),
   matchesTitle: css({ fontSize: "sm", fontWeight: "semibold", margin: "0" }),
   matchList: css({ display: "grid", gap: "1", listStyle: "none", margin: "0", padding: "0" }),
   match: css({
@@ -156,12 +169,7 @@ const styles = {
   resolution: css({ display: "grid", gap: "1", marginTop: "3", maxWidth: "22rem" }),
   resolutionLabel: css({ color: "fg.muted", fontSize: "xs", fontWeight: "semibold" }),
   details: css({ marginTop: "3" }),
-  detailsSummary: css({ color: "accent.default", cursor: "pointer", fontSize: "sm" }),
-  recipe: css({ display: "grid", gap: "5", marginTop: "4", maxWidth: "58rem" }),
-  hero: css({ borderRadius: "l2", maxHeight: "24rem", objectFit: "cover", width: "100%" }),
-  heading2: css({ fontFamily: "editorial", fontSize: "lg" }),
-  section: css({ display: "grid", gap: "1" }),
-  list: css({ margin: "0", marginTop: "1", paddingInlineStart: "5" }),
+  photo: css({ background: "bg.subtle", overflow: "hidden" }),
 }
 
 export type ImportChoice = {
@@ -182,49 +190,213 @@ export interface ImportCandidateProps {
   /** Whether this is the only recipe under review. */
   sole?: boolean
   onCompare?: (leftEntryID: string, rightEntryID: string) => void
+  decisions?: JSX.Element
 }
 
-/** One recipe in a review queue, as every import surface presents it. */
 export function ImportCandidate(props: ImportCandidateProps) {
+  return (
+    <Show when={props.sole} fallback={<CandidateRow {...props} />}>
+      <SoleCandidate {...props} />
+    </Show>
+  )
+}
+
+function SoleCandidate(props: ImportCandidateProps) {
+  const sorted = () => previewNotices(props.item, { measurementsShown: Boolean(props.decisions) })
+  const post = () =>
+    sorted().notices.some((notice) => notice.post) ? undefined : safeSourceURL(sorted().post)
+  const hasLead = () =>
+    Boolean(sorted().provenance || post() || props.item.source.extracted_text) ||
+    Boolean(props.item.source.can_retain)
+  return (
+    <li class={styles.sole}>
+      <div class={styles.soleNotes}>
+        <Show when={hasLead()}>
+          <p class={styles.provenance}>
+            <Show when={sorted().provenance}>{(text) => <span>{text()}</span>}</Show>
+            <Show when={post()}>
+              {(href) => (
+                <a class={styles.link} href={href()} target="_blank" rel="noreferrer">
+                  {m.import_notice_view_post()}
+                </a>
+              )}
+            </Show>
+            <Show when={props.item.source.extracted_text}>
+              <Button size="xs" variant="plain" onClick={() => props.onEditText()}>
+                {m.import_candidate_edit_recipe_text()}
+              </Button>
+            </Show>
+          </p>
+          <RetainSource {...props} />
+        </Show>
+        <Notices notices={sorted().notices} />
+        {props.decisions}
+        <Show when={props.item.analysis.matches.length > 0}>
+          <Matches item={props.item} sole onCompare={props.onCompare} />
+        </Show>
+      </div>
+      <PreviewArticle
+        item={props.item}
+        footer={<Details details={sorted().details.map((detail) => detail.message)} />}
+      />
+    </li>
+  )
+}
+
+function Notices(props: { notices: PreviewNotice[] }) {
+  const tone = () =>
+    props.notices.some((notice) => notice.tone === "danger") ? "danger" : "warning"
+  const line = (notice: PreviewNotice) => (
+    <>
+      {notice.text}
+      <Show when={safeSourceURL(notice.post)}>
+        {(href) => (
+          <a
+            class={`${styles.link} ${styles.noticeLink}`}
+            href={href()}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {m.import_notice_view_post()}
+          </a>
+        )}
+      </Show>
+    </>
+  )
+  return (
+    <Show when={props.notices.length > 0}>
+      <Show
+        when={props.notices.length > 1}
+        fallback={<Callout tone={tone()}>{line(props.notices[0])}</Callout>}
+      >
+        <Callout tone={tone()} title={m.import_notice_check_title()}>
+          <ul class={styles.noticeList}>
+            <For each={props.notices}>{(notice) => <li>{line(notice)}</li>}</For>
+          </ul>
+        </Callout>
+      </Show>
+    </Show>
+  )
+}
+
+function Details(props: { details: string[] }) {
+  return (
+    <Show when={props.details.length > 0}>
+      <Disclosure class={styles.details} label={m.import_job_results_import_details()}>
+        <ul class={styles.notes}>
+          <For each={props.details}>{(detail) => <li>{detail}</li>}</For>
+        </ul>
+      </Disclosure>
+    </Show>
+  )
+}
+
+function RetainSource(props: ImportCandidateProps) {
+  return (
+    <Show when={props.item.source.can_retain}>
+      <label class={styles.retention}>
+        <Checkbox
+          aria-label={m.import_candidate_keep_original({
+            value1: props.item.source.filename || m.import_candidate_source_file(),
+          })}
+          checked={props.retainSource}
+          onChange={(event) => props.onRetainSource(event.currentTarget.checked)}
+        />
+        <span>
+          {" "}
+          {m.import_candidate_keep_the_original_file()}{" "}
+          <span class={styles.retentionHint}>
+            {m.import_candidate_optional_available_in_recipe_history()}
+          </span>
+        </span>
+      </label>
+    </Show>
+  )
+}
+
+function Matches(props: {
+  item: ImportPreviewItem
+  sole?: boolean
+  onCompare?: (leftEntryID: string, rightEntryID: string) => void
+}) {
+  return (
+    <div class={props.sole ? `${styles.matches} ${styles.matchesSole}` : styles.matches}>
+      <p class={styles.matchesTitle}>
+        {props.item.analysis.status === "definite-match"
+          ? m.import_candidate_already_here()
+          : props.item.analysis.status === "likely-duplicate"
+            ? m.import_candidate_possible_duplicate()
+            : m.import_candidate_several_source_matches()}
+      </p>
+      <ul class={styles.matchList}>
+        <For each={props.item.analysis.matches}>
+          {(match, index) => (
+            <li class={styles.match}>
+              <div class={styles.matchBody}>
+                <Link
+                  class={styles.matchLink}
+                  to="/recipes/$recipeId"
+                  params={{ recipeId: match.entry_id }}
+                >
+                  {match.title}
+                </Link>
+                <p class={styles.matchFacts}>
+                  <For each={matchFacts(match)}>
+                    {(fact) => <span class={styles.matchFact}>{fact}</span>}
+                  </For>
+                </p>
+              </div>
+              <Show when={index() > 0 && props.onCompare}>
+                <Button
+                  size="xs"
+                  variant="outline"
+                  aria-label={m.import_candidate_compare_with({
+                    value1: props.item.analysis.matches[0].title,
+                    value2: match.title,
+                  })}
+                  onClick={() =>
+                    props.onCompare?.(props.item.analysis.matches[0].entry_id, match.entry_id)
+                  }
+                >
+                  {m.import_candidate_compare()}
+                </Button>
+              </Show>
+            </li>
+          )}
+        </For>
+      </ul>
+    </div>
+  )
+}
+
+function CandidateRow(props: ImportCandidateProps) {
   const standing = () => candidateStanding(props.item)
   const diagnostics = () => previewDiagnostics(props.item)
-  /**
-   * Whether this is a sole recipe with no possible duplicate, which needs no
-   * selection checkbox.
-   */
-  const implied = () => Boolean(props.sole) && props.item.analysis.matches.length === 0
+  const notices = () => previewNotices(props.item)
   const title = () =>
     props.item.recipe.title || props.item.source.filename || m.import_candidate_unreadable_recipe()
   let shift = false
 
   return (
-    <li class={props.sole ? styles.singleRow : styles.row}>
-      <div
-        class={props.sole ? styles.headingSingle : implied() ? styles.headingAlone : styles.heading}
-      >
-        <Show when={!props.sole && !implied()}>
-          <Checkbox
-            class={styles.checkbox}
-            aria-label={m.import_candidate_import({ value1: title() })}
-            checked={props.selected}
-            disabled={!props.item.can_commit}
-            onPointerDown={(event) => {
-              shift = event.shiftKey
-            }}
-            onInput={(event) => {
-              props.onSelect(event.currentTarget.checked, shift)
-              shift = false
-            }}
-          />
-        </Show>
-        <Show when={!props.sole}>
-          <ImportThumbnail class={styles.thumbnail} source={props.item.assets.preview_url} />
-        </Show>
+    <li class={styles.row}>
+      <div class={styles.heading}>
+        <Checkbox
+          class={styles.checkbox}
+          aria-label={m.import_candidate_import({ value1: title() })}
+          checked={props.selected}
+          disabled={!props.item.can_commit}
+          onPointerDown={(event) => {
+            shift = event.shiftKey
+          }}
+          onInput={(event) => {
+            props.onSelect(event.currentTarget.checked, shift)
+            shift = false
+          }}
+        />
+        <ImportThumbnail class={styles.thumbnail} source={props.item.assets.preview_url} />
         <div class={styles.body}>
-          <h3 class={props.sole ? styles.singleTitle : styles.title}>{title()}</h3>
-          <Show when={!props.sole}>
-            <p class={standingStyle({ standing: standing() })}>{standingLabels[standing()]}</p>
-          </Show>
+          <h3 class={styles.title}>{title()}</h3>
+          <p class={standingStyle({ standing: standing() })}>{standingLabels[standing()]}</p>
           <p class={styles.source}>
             {props.item.source.url
               ? new URL(props.item.source.url).hostname
@@ -233,111 +405,34 @@ export function ImportCandidate(props: ImportCandidateProps) {
               ? ` · ${props.item.source.filename}`
               : ""}
           </p>
-          <Show
-            when={
-              !props.sole ||
-              props.item.recipe.ingredient_count > 0 ||
-              props.item.recipe.step_count > 0
-            }
-          >
-            <dl class={styles.facts}>
-              <For each={candidateFacts(props.item)}>
-                {(fact) => (
-                  <div class={styles.fact}>
-                    <dt class={styles.factLabel}>{fact.label}</dt>
-                    <dd class={styles.factValue}>{fact.value}</dd>
-                  </div>
-                )}
-              </For>
-            </dl>
-          </Show>
-          <Show when={props.item.source.can_retain}>
-            <label class={styles.retention}>
-              <Checkbox
-                aria-label={m.import_candidate_keep_original({
-                  value1: props.item.source.filename || m.import_candidate_source_file(),
-                })}
-                checked={props.retainSource}
-                onChange={(event) => props.onRetainSource(event.currentTarget.checked)}
-              />
-              <span>
-                {" "}
-                {m.import_candidate_keep_the_original_file()}{" "}
-                <span class={styles.retentionHint}>
-                  {m.import_candidate_optional_available_in_recipe_history()}
-                </span>
-              </span>
-            </label>
-          </Show>
+          <dl class={styles.facts}>
+            <For each={candidateFacts(props.item)}>
+              {(fact) => (
+                <div class={styles.fact}>
+                  <dt class={styles.factLabel}>{fact.label}</dt>
+                  <dd class={styles.factValue}>{fact.value}</dd>
+                </div>
+              )}
+            </For>
+          </dl>
+          <RetainSource {...props} />
           <Show when={props.item.source.extracted_text}>
             <Button size="xs" variant="plain" onClick={() => props.onEditText?.()}>
-              {" "}
-              {m.import_candidate_edit_recipe_text()}{" "}
+              {m.import_candidate_edit_recipe_text()}
             </Button>
           </Show>
         </div>
       </div>
-
       <Show when={diagnostics().attention.length > 0}>
         <div class={styles.notes}>
-          <For each={diagnostics().attention}>
-            {(diagnostic) => (
-              <Callout tone={diagnostic.class === "blocking" ? "danger" : "warning"}>
-                {diagnostic.message}
-              </Callout>
-            )}
+          <For each={notices().notices}>
+            {(notice) => <Callout tone={notice.tone}>{notice.text}</Callout>}
           </For>
         </div>
       </Show>
       <Show when={props.item.analysis.matches.length > 0}>
-        <div class={styles.matches}>
-          <p class={styles.matchesTitle}>
-            {props.item.analysis.status === "definite-match"
-              ? m.import_candidate_same_source_already_in_the_library()
-              : props.item.analysis.status === "likely-duplicate"
-                ? m.import_candidate_possible_duplicate()
-                : m.import_candidate_several_source_matches()}
-          </p>
-          <ul class={styles.matchList}>
-            <For each={props.item.analysis.matches}>
-              {(match, index) => (
-                <li class={styles.match}>
-                  <div class={styles.matchBody}>
-                    <Link
-                      class={styles.matchLink}
-                      to="/recipes/$recipeId"
-                      params={{ recipeId: match.entry_id }}
-                    >
-                      {match.title}
-                    </Link>
-                    <p class={styles.matchFacts}>
-                      <For each={matchFacts(match)}>
-                        {(fact) => <span class={styles.matchFact}>{fact}</span>}
-                      </For>
-                    </p>
-                  </div>
-                  <Show when={index() > 0 && props.onCompare}>
-                    <Button
-                      size="xs"
-                      variant="outline"
-                      aria-label={m.import_candidate_compare_with({
-                        value1: props.item.analysis.matches[0].title,
-                        value2: match.title,
-                      })}
-                      onClick={() =>
-                        props.onCompare?.(props.item.analysis.matches[0].entry_id, match.entry_id)
-                      }
-                    >
-                      {m.import_candidate_compare()}
-                    </Button>
-                  </Show>
-                </li>
-              )}
-            </For>
-          </ul>
-        </div>
+        <Matches item={props.item} onCompare={props.onCompare} />
       </Show>
-
       <Show when={props.item.analysis.matches.length > 0 && props.item.can_commit}>
         <label class={styles.resolution}>
           <span class={styles.resolutionLabel}>
@@ -373,91 +468,58 @@ export function ImportCandidate(props: ImportCandidateProps) {
           />
         </label>
       </Show>
-
       <Show when={props.item.can_commit}>
-        <Show
-          when={props.sole}
-          fallback={
-            <Disclosure class={styles.details} label={m.common_preview_recipe()}>
-              <CandidateRecipe item={props.item} />
-            </Disclosure>
-          }
-        >
-          <CandidateRecipe item={props.item} />
-        </Show>
-      </Show>
-      <Show when={diagnostics().details.length > 0}>
-        <Disclosure class={styles.details} label={m.import_job_results_import_details()}>
-          <ul class={styles.notes}>
-            <For each={diagnostics().details}>{(diagnostic) => <li>{diagnostic.message}</li>}</For>
-          </ul>
+        <Disclosure class={styles.details} label={m.common_preview_recipe()}>
+          <PreviewArticle item={props.item} />
         </Disclosure>
       </Show>
+      <Details details={notices().details.map((detail) => detail.message)} />
     </li>
   )
 }
 
-function CandidateRecipe(props: { item: ImportPreviewItem }) {
+function PreviewArticle(props: { item: ImportPreviewItem; footer?: JSX.Element }) {
+  const recipe = (): Recipe => {
+    const document = props.item.document
+    const title = document?.title || props.item.recipe.title
+    if (document) return { ...document, title }
+    return {
+      id: props.item.id,
+      schema_version: 1,
+      title,
+      description: props.item.recipe.description,
+      ingredient_sections: [],
+      instruction_sections: [],
+    }
+  }
+  const empty = () =>
+    !props.item.document &&
+    props.item.recipe.ingredient_count === 0 &&
+    props.item.recipe.step_count === 0
   return (
-    <div class={styles.recipe}>
-      <Show when={props.item.assets.preview_url}>
-        <ImportThumbnail class={styles.hero} source={props.item.assets.preview_url} />
-      </Show>
-      <Show
-        when={
-          !props.item.recipe.ingredient_count &&
-          !props.item.recipe.step_count &&
-          props.item.source.extracted_text
-        }
-      >
-        <p class={styles.caption}>{props.item.source.extracted_text}</p>
-      </Show>
-      <Show when={props.item.recipe.description}>
-        <section>
-          <h4 class={styles.heading2}>{m.import_candidate_description()}</h4>
-          <p>{props.item.recipe.description}</p>
-        </section>
-      </Show>
-      <Show when={props.item.recipe.yield}>
-        <section>
-          <h4 class={styles.heading2}>{m.import_candidate_yield()}</h4>
-          <p>{props.item.recipe.yield}</p>
-        </section>
-      </Show>
-      <Show when={(props.item.recipe.ingredients?.length ?? 0) > 0}>
-        <section>
-          <h4 class={styles.heading2}>{m.import_candidate_ingredients_label()}</h4>
-          <For each={props.item.recipe.ingredients ?? []}>
-            {(section) => (
-              <div class={styles.section}>
-                <Show when={section.title}>
-                  <strong>{section.title}</strong>
-                </Show>
-                <ul class={styles.list}>
-                  <For each={section.items}>{(ingredient) => <li>{ingredient}</li>}</For>
-                </ul>
-              </div>
-            )}
-          </For>
-        </section>
-      </Show>
-      <Show when={(props.item.recipe.instructions?.length ?? 0) > 0}>
-        <section>
-          <h4 class={styles.heading2}>{m.import_candidate_directions()}</h4>
-          <For each={props.item.recipe.instructions ?? []}>
-            {(section) => (
-              <div class={styles.section}>
-                <Show when={section.title}>
-                  <strong>{section.title}</strong>
-                </Show>
-                <ol class={styles.list}>
-                  <For each={section.items}>{(step) => <li>{step}</li>}</For>
-                </ol>
-              </div>
-            )}
-          </For>
-        </section>
-      </Show>
-    </div>
+    <RecipeArticle
+      recipe={recipe()}
+      readOnly
+      image={
+        props.item.assets.preview_url
+          ? (className) => (
+              <ImportThumbnail
+                class={`${className} ${styles.photo}`}
+                source={props.item.assets.preview_url}
+              />
+            )
+          : undefined
+      }
+      footer={
+        <>
+          <Show when={empty() && props.item.source.extracted_text}>
+            <p class={styles.caption} dir="auto">
+              {props.item.source.extracted_text}
+            </p>
+          </Show>
+          {props.footer}
+        </>
+      }
+    />
   )
 }

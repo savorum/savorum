@@ -231,17 +231,12 @@ function DecisionRow(props: {
   )
 }
 
-/**
- * Every measurement question this import asks. A convention for every
- * measurement is offered first; it reaches every measure of each ingredient,
- * including ones nobody was asked about, so the hint says so.
- */
+/** Convention choices apply to all measures, including those already resolved. */
 export function MeasurementDecisions(props: { measurement: MeasurementResolution }) {
   const measurement = untrack(() => props.measurement)
   const {
     decisions,
     resolutionProfiles,
-    resolutionOccurrenceCount,
     answer,
     answerBusy,
     chooseConvention,
@@ -277,7 +272,7 @@ export function MeasurementDecisions(props: { measurement: MeasurementResolution
         </div>
         <p class={styles.lead}>
           <Show when={decisions().length > 0} fallback={m.measurement_decisions_all_answered()}>
-            {m.measurement_decisions_intro({ measurements: resolutionOccurrenceCount() })}
+            {m.measurement_decisions_intro({ measurements: decisions().length })}
           </Show>
         </p>
 
@@ -302,7 +297,6 @@ export function MeasurementDecisions(props: { measurement: MeasurementResolution
                 )}
               </For>
             </div>
-            <p class={styles.hint}>{m.measurement_decisions_convention_hint()}</p>
             <Show when={conventionState().plan}>
               {(plan) => <PlanOutcome plan={plan()} keepWritten={false} />}
             </Show>
@@ -353,7 +347,6 @@ const styles = {
   lead: css({ color: "fg.muted", fontSize: "sm", maxWidth: "44rem" }),
   convention: css({ border: "0", display: "grid", gap: "2", margin: "0", padding: "0" }),
   legend: css({ fontSize: "sm", fontWeight: "semibold", padding: "0" }),
-  hint: css({ color: "fg.muted", fontSize: "xs" }),
   choices: css({ display: "flex", flexWrap: "wrap", rowGap: "2", columnGap: "5" }),
   choice: css({
     alignItems: "baseline",

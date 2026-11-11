@@ -1,7 +1,7 @@
 import { type JSX, Show, createSignal } from "solid-js"
 import { css } from "styled-system/css"
 
-import { Problem } from "@/components/status"
+import { Callout, Problem } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 
@@ -13,6 +13,17 @@ export interface TextImportProps {
   submitLabel?: string
   /** Rendered beside the actions so a surface that can be left says so. */
   cancel?: JSX.Element
+  onURL?: (url: string) => void
+}
+
+export function pastedURL(text: string): string | undefined {
+  const value = text.trim()
+  if (!/^https?:\/\/\S+$/i.test(value)) return undefined
+  try {
+    return new URL(value).toString()
+  } catch {
+    return undefined
+  }
 }
 
 const styles = {
@@ -79,9 +90,24 @@ export function TextImport(props: TextImportProps) {
         placeholder={m.text_import_recipe_template_placeholder()}
       />
       <Problem message={error()} />
+      <Show when={props.onURL && pastedURL(source())}>
+        {(url) => (
+          <Callout
+            tone="info"
+            actions={
+              <Button size="sm" colorPalette="accent" onClick={() => props.onURL?.(url())}>
+                {m.text_import_fetch_page()}
+              </Button>
+            }
+          >
+            {m.text_import_url_detected()}
+          </Callout>
+        )}
+      </Show>
       <div class={styles.actions}>
         <Button
           size="sm"
+          variant={props.onURL && pastedURL(source()) ? "outline" : undefined}
           onClick={() => void previewText()}
           loading={submitting()}
           disabled={reading() || source().trim() === ""}

@@ -3950,6 +3950,9 @@
               "null"
             ]
           },
+          "document": {
+            "$ref": "#/components/schemas/RecipeDocument"
+          },
           "id": {
             "type": "string"
           },
@@ -4211,6 +4214,10 @@
             "type": "string"
           },
           "format_name": {
+            "type": "string"
+          },
+          "shared_from": {
+            "description": "The social post that led to url",
             "type": "string"
           },
           "url": {

@@ -6909,20 +6909,6 @@ export const import_candidate_decision: ((inputs?: Import_Candidate_DecisionInpu
 /**
 * | output |
 * | --- |
-* | "Description" |
-*
-*/
-export const import_candidate_description: ((inputs?: Import_Candidate_DescriptionInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Candidate_DescriptionInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
-* | "Instructions" |
-*
-*/
-export const import_candidate_directions: ((inputs?: Import_Candidate_DirectionsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Candidate_DirectionsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
 * | "Edit recipe text" |
 *
 */
@@ -7054,13 +7040,6 @@ export const import_candidate_reconcile: ((inputs: Import_Candidate_ReconcileInp
 *
 */
 export const import_candidate_review: ((inputs?: Import_Candidate_ReviewInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Candidate_ReviewInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
-* | "Same source already in the library" |
-*
-*/
-export const import_candidate_same_source_already_in_the_library: ((inputs?: Import_Candidate_Same_Source_Already_In_The_LibraryInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Candidate_Same_Source_Already_In_The_LibraryInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -7813,6 +7792,97 @@ export const import_menu_recent_imports: ((inputs?: Import_Menu_Recent_ImportsIn
 */
 export const import_menu_recipe_collections_pdfs_and_photos: ((inputs?: Import_Menu_Recipe_Collections_Pdfs_And_PhotosInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Menu_Recipe_Collections_Pdfs_And_PhotosInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
+* | output |
+* | --- |
+* | "Check that ingredients and steps are in the right place." |
+*
+*/
+export const import_notice_check_placement: ((inputs?: Import_Notice_Check_PlacementInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Notice_Check_PlacementInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Check before saving" |
+*
+*/
+export const import_notice_check_title: ((inputs?: Import_Notice_Check_TitleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Notice_Check_TitleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Found on the creator's website by its name. Check that it matches the post." |
+*
+*/
+export const import_notice_creator_recipe: ((inputs?: Import_Notice_Creator_RecipeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Notice_Creator_RecipeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Some details may be missing." |
+*
+*/
+export const import_notice_details_missing: ((inputs?: Import_Notice_Details_MissingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Notice_Details_MissingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "From the post's caption" |
+*
+*/
+export const import_notice_from_caption: ((inputs?: Import_Notice_From_CaptionInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Notice_From_CaptionInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "From the author's comment on the post" |
+*
+*/
+export const import_notice_from_comment: ((inputs?: Import_Notice_From_CommentInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Notice_From_CommentInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "From the creator's website" |
+*
+*/
+export const import_notice_from_creator_site: ((inputs?: Import_Notice_From_Creator_SiteInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Notice_From_Creator_SiteInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "From the recipe linked in the post" |
+*
+*/
+export const import_notice_from_linked_recipe: ((inputs?: Import_Notice_From_Linked_RecipeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Notice_From_Linked_RecipeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Some measures differ in size by country. Choose how to read them below." |
+*
+*/
+export const import_notice_measurements: ((inputs?: Import_Notice_MeasurementsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Notice_MeasurementsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "No ingredients found." |
+*
+*/
+export const import_notice_no_ingredients: ((inputs?: Import_Notice_No_IngredientsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Notice_No_IngredientsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "No steps found." |
+*
+*/
+export const import_notice_no_steps: ((inputs?: Import_Notice_No_StepsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Notice_No_StepsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "No ingredients or steps found. Save and edit to add them." |
+*
+*/
+export const import_notice_nothing_found: ((inputs?: Import_Notice_Nothing_FoundInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Notice_Nothing_FoundInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "View post" |
+*
+*/
+export const import_notice_view_post: ((inputs?: Import_Notice_View_PostInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Notice_View_PostInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
 * | plural | output |
 * | --- | --- |
 * | "one" | "{countText} photograph still to fetch" |
@@ -8122,13 +8192,6 @@ export const import_review_panel_save_recipe: ((inputs?: Import_Review_Panel_Sav
 /**
 * | output |
 * | --- |
-* | "Save this recipe" |
-*
-*/
-export const import_review_panel_save_this_recipe: ((inputs?: Import_Review_Panel_Save_This_RecipeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Review_Panel_Save_This_RecipeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
 * | "Select all" |
 *
 */
@@ -8170,6 +8233,27 @@ export const import_review_panel_the_recipes: ((inputs?: Import_Review_Panel_The
 *
 */
 export const import_review_panel_what_is: ((inputs: Import_Review_Panel_What_IsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Review_Panel_What_IsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Replace" |
+*
+*/
+export const import_review_replace: ((inputs?: Import_Review_ReplaceInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Review_ReplaceInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Save and edit" |
+*
+*/
+export const import_review_save_and_edit: ((inputs?: Import_Review_Save_And_EditInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Review_Save_And_EditInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Save copy" |
+*
+*/
+export const import_review_save_copy: ((inputs?: Import_Review_Save_CopyInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Import_Review_Save_CopyInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | plural | output |
 * | --- | --- |
@@ -10199,13 +10283,6 @@ export const measurement_decisions_clear_choice: ((inputs?: Measurement_Decision
 /**
 * | output |
 * | --- |
-* | "Covers every measure in each ingredient it reaches." |
-*
-*/
-export const measurement_decisions_convention_hint: ((inputs?: Measurement_Decisions_Convention_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Measurement_Decisions_Convention_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
 * | "Read every measure as" |
 *
 */
@@ -10227,8 +10304,8 @@ export const measurement_decisions_exceptions: ((inputs?: Measurement_Decisions_
 /**
 * | measurementsPlural | output |
 * | --- | --- |
-* | "one" | "{measurementsText} measurement names a size that differs by country. Unanswered ones import as written." |
-* | * | "{measurementsText} measurements name sizes that differ by country. Unanswered ones import as written." |
+* | "one" | "{measurementsText} measure differs in size by country. If unanswered, it imports as written." |
+* | * | "{measurementsText} measures differ in size by country. Unanswered ones import as written." |
 *
 */
 export const measurement_decisions_intro: ((inputs: Measurement_Decisions_IntroInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Measurement_Decisions_IntroInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
@@ -16482,6 +16559,13 @@ export const text_import_choose_a_text_file_smaller_than_8_mb: ((inputs?: Text_I
 /**
 * | output |
 * | --- |
+* | "Fetch page" |
+*
+*/
+export const text_import_fetch_page: ((inputs?: Text_Import_Fetch_PageInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Text_Import_Fetch_PageInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
 * | "Import plain text recipe" |
 *
 */
@@ -16528,6 +16612,13 @@ export const text_import_the_recipe_could_not_be_previewed_try_again: ((inputs?:
 *
 */
 export const text_import_the_text_file_could_not_be_read: ((inputs?: Text_Import_The_Text_File_Could_Not_Be_ReadInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Text_Import_The_Text_File_Could_Not_Be_ReadInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "This is a web address. Fetch the recipe from that page instead?" |
+*
+*/
+export const text_import_url_detected: ((inputs?: Text_Import_Url_DetectedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Text_Import_Url_DetectedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -18340,8 +18431,6 @@ export type Import_Candidate_BlockedInputs = {};
 export type Import_Candidate_CompareInputs = {};
 export type Import_Candidate_Compare_WithInputs = { value1: NonNullable<unknown>, value2: NonNullable<unknown> };
 export type Import_Candidate_DecisionInputs = {};
-export type Import_Candidate_DescriptionInputs = {};
-export type Import_Candidate_DirectionsInputs = {};
 export type Import_Candidate_Edit_Recipe_TextInputs = {};
 export type Import_Candidate_ImportInputs = { value1: NonNullable<unknown> };
 export type Import_Candidate_Import_As_A_Separate_RecipeInputs = {};
@@ -18361,7 +18450,6 @@ export type Import_Candidate_Possible_DuplicateInputs = {};
 export type Import_Candidate_ReadyInputs = {};
 export type Import_Candidate_ReconcileInputs = { value1: NonNullable<unknown> };
 export type Import_Candidate_ReviewInputs = {};
-export type Import_Candidate_Same_Source_Already_In_The_LibraryInputs = {};
 export type Import_Candidate_Several_Source_MatchesInputs = {};
 export type Import_Candidate_Source_FileInputs = {};
 export type Import_Candidate_StepsInputs = {};
@@ -18458,6 +18546,19 @@ export type Import_Menu_ImportInputs = {};
 export type Import_Menu_Import_RecipesInputs = {};
 export type Import_Menu_Recent_ImportsInputs = {};
 export type Import_Menu_Recipe_Collections_Pdfs_And_PhotosInputs = {};
+export type Import_Notice_Check_PlacementInputs = {};
+export type Import_Notice_Check_TitleInputs = {};
+export type Import_Notice_Creator_RecipeInputs = {};
+export type Import_Notice_Details_MissingInputs = {};
+export type Import_Notice_From_CaptionInputs = {};
+export type Import_Notice_From_CommentInputs = {};
+export type Import_Notice_From_Creator_SiteInputs = {};
+export type Import_Notice_From_Linked_RecipeInputs = {};
+export type Import_Notice_MeasurementsInputs = {};
+export type Import_Notice_No_IngredientsInputs = {};
+export type Import_Notice_No_StepsInputs = {};
+export type Import_Notice_Nothing_FoundInputs = {};
+export type Import_Notice_View_PostInputs = {};
 export type Import_Photos_PendingInputs = { count: NonNullable<unknown> };
 export type Import_Photos_UnavailableInputs = { count: NonNullable<unknown> };
 export type Import_Previews_The_Corrected_Recipe_Text_Could_Not_Be_AppliedInputs = {};
@@ -18500,13 +18601,15 @@ export type Import_Review_Panel_Preserved_DetailsInputs = {};
 export type Import_Review_Panel_Ready_To_ImportInputs = {};
 export type Import_Review_Panel_Review_ImportInputs = {};
 export type Import_Review_Panel_Save_RecipeInputs = {};
-export type Import_Review_Panel_Save_This_RecipeInputs = {};
 export type Import_Review_Panel_Select_AllInputs = {};
 export type Import_Review_Panel_Select_NoneInputs = {};
 export type Import_Review_Panel_Select_VisibleInputs = {};
 export type Import_Review_Panel_Selection_NoteInputs = { count: NonNullable<unknown> };
 export type Import_Review_Panel_The_RecipesInputs = {};
 export type Import_Review_Panel_What_IsInputs = { count: NonNullable<unknown> };
+export type Import_Review_ReplaceInputs = {};
+export type Import_Review_Save_And_EditInputs = {};
+export type Import_Review_Save_CopyInputs = {};
 export type Import_Sending_FilesInputs = { count: NonNullable<unknown> };
 export type Import_Source_Dialogs_Edit_Recipe_TextInputs = {};
 export type Import_Source_Dialogs_Https_Example_Com_RecipesInputs = {};
@@ -18796,7 +18899,6 @@ export type List_Fields_Written_ByInputs = {};
 export type Measurement_Decisions_All_AnsweredInputs = {};
 export type Measurement_Decisions_ApplyInputs = {};
 export type Measurement_Decisions_Clear_ChoiceInputs = {};
-export type Measurement_Decisions_Convention_HintInputs = {};
 export type Measurement_Decisions_Convention_LegendInputs = {};
 export type Measurement_Decisions_ExamplesInputs = {};
 export type Measurement_Decisions_ExceptionsInputs = {};
@@ -19689,6 +19791,7 @@ export type Step_Timer_Start_Another_TimerInputs = { value1: NonNullable<unknown
 export type Tags_Page_Tags_And_CategoriesInputs = {};
 export type Tags_Tags_And_Categories_SavorumInputs = {};
 export type Text_Import_Choose_A_Text_File_Smaller_Than_8_MbInputs = {};
+export type Text_Import_Fetch_PageInputs = {};
 export type Text_Import_Import_Plain_Text_RecipeInputs = {};
 export type Text_Import_Load_Txt_FileInputs = {};
 export type Text_Import_Paste_Or_Edit_Recipe_TextInputs = {};
@@ -19696,6 +19799,7 @@ export type Text_Import_Preview_Pasted_RecipeInputs = {};
 export type Text_Import_Recipe_Template_PlaceholderInputs = {};
 export type Text_Import_The_Recipe_Could_Not_Be_Previewed_Try_AgainInputs = {};
 export type Text_Import_The_Text_File_Could_Not_Be_ReadInputs = {};
+export type Text_Import_Url_DetectedInputs = {};
 export type Timer_Announcement_FinishedInputs = { label: NonNullable<unknown> };
 export type Timer_Default_LabelInputs = {};
 export type Timer_Dismiss_LabelInputs = { label: NonNullable<unknown> };

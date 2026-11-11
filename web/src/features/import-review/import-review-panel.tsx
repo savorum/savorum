@@ -1,4 +1,4 @@
-import { For, Show, untrack } from "solid-js"
+import { For, Show, createSignal, untrack } from "solid-js"
 import { css } from "styled-system/css"
 
 import { Button } from "@/components/ui/button"
@@ -8,8 +8,10 @@ import { isolate } from "@/lib/direction"
 import { type CandidateFilter, describeCandidateOutcome } from "@/lib/import-candidate"
 
 import { m } from "../../lib/messages.ts"
-import type { ImportWorkflow } from "./create-import-workflow"
+import type { ImportWorkflow, SavedRecipeView } from "./create-import-workflow"
 import { MeasurementDecisions } from "./measurement-decisions"
+
+type SoleSave = { action: "separate" | "update"; view: SavedRecipeView }
 
 export function ImportReviewPanel(props: {
   workflow: ImportWorkflow
@@ -37,106 +39,87 @@ export function ImportReviewPanel(props: {
   } = review
   const sole = () => previewItems().length === 1
   const soleItem = () => (sole() ? previewItems()[0] : undefined)
-  /**
-   * Whether the reader has said enough to save: a lone recipe needs no
-   * selection unless it may be a duplicate.
-   */
-  const canSave = () => {
+  const match = () => soleItem()?.analysis.matches[0]
+  const [saving, setSaving] = createSignal<SoleSave>()
+  const busy = () => props.workflow.busy()
+  const measurementQuestions = () => importPreview().resolution_decisions.length > 0
+
+  const saveSole = async (save: SoleSave) => {
     const item = soleItem()
-    if (!item) return selectedImports().length > 0
-    return (
-      Boolean(item.can_commit) &&
-      (item.analysis.matches.length === 0 || selectedImports().includes(item.id))
+    if (!item?.can_commit) return
+    if (!selectedImports().includes(item.id)) selectImportRange(item.id, true, false)
+    chooseImport(
+      item.id,
+      save.action === "update"
+        ? { action: "update", target_entry_id: match()?.entry_id }
+        : { action: "separate" },
     )
+    setSaving(save)
+    try {
+      await startSelectedImport(save.view)
+    } finally {
+      setSaving(undefined)
+    }
   }
-  const save = async () => {
-    const item = soleItem()
-    if (item && !selectedImports().includes(item.id)) selectImportRange(item.id, true, false)
-    await startSelectedImport()
-  }
+  const loading = (save: SoleSave) =>
+    importing() && saving()?.action === save.action && saving()?.view === save.view
   const singleSource = () =>
     importPreview().items.length > 1 &&
     importPreview().items.every(
       (item) => item.source.filename === importPreview().items[0]?.source.filename,
     )
 
+  const cancel = () => (
+    <Button variant="plain" disabled={busy()} onClick={() => void closeImportPreview()}>
+      {m.common_cancel()}
+    </Button>
+  )
+
   return (
     <section
       class={styles.importReview}
-      aria-labelledby="import-review-title"
+      aria-label={m.import_review_panel_review_import()}
       hidden={previewItems().length === 0}
     >
-      <div class={styles.summary}>
-        <h1 id="import-review-title" class={styles.title}>
-          {sole()
-            ? m.import_review_panel_save_this_recipe()
-            : m.import_review_panel_review_import()}
-        </h1>
-        <Show when={singleSource() && importPreview().items[0]?.source.filename}>
-          {(filename) => (
-            <p class={styles.source}>
-              {m.import_review_panel_from_source({ source: isolate(filename()) })}
-            </p>
-          )}
-        </Show>
-        <Show when={!sole()}>
+      <Show when={!sole()}>
+        <div class={styles.summary}>
+          <h1 class={styles.title}>{m.import_review_panel_review_import()}</h1>
+          <Show when={singleSource() && importPreview().items[0]?.source.filename}>
+            {(filename) => (
+              <p class={styles.source}>
+                {m.import_review_panel_from_source({ source: isolate(filename()) })}
+              </p>
+            )}
+          </Show>
           <div class={styles.outcome} role="status">
             <For each={describeCandidateOutcome(importSummary())}>{(line) => <p>{line}</p>}</For>
           </div>
-        </Show>
-        <div class={styles.actions}>
-          <Button
-            colorPalette="accent"
-            loading={importing()}
-            disabled={!canSave() || props.workflow.busy()}
-            onClick={() => void save()}
-          >
-            {sole() ? m.import_review_panel_save_recipe() : m.import_review_panel_import_selected()}
-          </Button>
-          <Show when={!sole()}>
-            <span class={styles.muted}>
-              {m.import_review_panel_selection_note({ count: selectedImports().length })}
-            </span>
-          </Show>
-          <Button
-            size="sm"
-            variant="plain"
-            disabled={props.workflow.busy()}
-            onClick={() => void closeImportPreview()}
-          >
-            {m.common_cancel()}
-          </Button>
         </div>
-      </div>
+      </Show>
 
-      <div class={styles.queue}>
+      <div class={sole() ? undefined : styles.queue}>
         <Show when={!sole()}>
           <div class={styles.queueHeader}>
-            <h3 class={styles.queueTitle}>{m.import_review_panel_the_recipes()}</h3>
+            <h2 class={styles.queueTitle}>{m.import_review_panel_the_recipes()}</h2>
             <div class={styles.queueControls}>
-              <label>
-                <span class={styles.visuallyHidden}>
-                  {m.import_review_panel_filter_import_candidates()}
-                </span>
-                <Select
-                  class={styles.filter}
-                  size="sm"
-                  aria-label={m.import_review_panel_filter_import_candidates()}
-                  value={importFilter()}
-                  onValueChange={(value) => setImportFilter(value as CandidateFilter)}
-                  items={[
-                    { value: "all", label: m.import_review_panel_all_recipes() },
-                    { value: "ready", label: m.import_review_panel_ready_to_import() },
-                    { value: "decision", label: m.import_review_panel_needs_a_decision() },
-                    { value: "review", label: m.import_review_panel_needs_review() },
-                    {
-                      value: "informational",
-                      label: m.import_review_panel_preserved_details(),
-                    },
-                    { value: "blocked", label: m.import_review_panel_cannot_be_imported() },
-                  ]}
-                />
-              </label>
+              <Select
+                class={styles.filter}
+                size="sm"
+                aria-label={m.import_review_panel_filter_import_candidates()}
+                value={importFilter()}
+                onValueChange={(value) => setImportFilter(value as CandidateFilter)}
+                items={[
+                  { value: "all", label: m.import_review_panel_all_recipes() },
+                  { value: "ready", label: m.import_review_panel_ready_to_import() },
+                  { value: "decision", label: m.import_review_panel_needs_a_decision() },
+                  { value: "review", label: m.import_review_panel_needs_review() },
+                  {
+                    value: "informational",
+                    label: m.import_review_panel_preserved_details(),
+                  },
+                  { value: "blocked", label: m.import_review_panel_cannot_be_imported() },
+                ]}
+              />
               <div
                 class={styles.queueControls}
                 aria-label={m.import_review_panel_import_selection_actions()}
@@ -155,7 +138,7 @@ export function ImportReviewPanel(props: {
           </div>
         </Show>
 
-        <ul class={styles.candidates}>
+        <ul class={sole() ? styles.soleList : styles.candidates}>
           <For each={shownImports()}>
             {(item) => (
               <ImportCandidate
@@ -177,15 +160,90 @@ export function ImportReviewPanel(props: {
                 onCompare={(leftEntryID, rightEntryID) =>
                   props.onCompare(leftEntryID, rightEntryID)
                 }
+                decisions={
+                  sole() && measurementQuestions() ? (
+                    <MeasurementDecisions measurement={props.workflow.measurement} />
+                  ) : undefined
+                }
               />
             )}
           </For>
         </ul>
       </div>
-      <MeasurementDecisions measurement={props.workflow.measurement} />
+      <Show when={!sole() || !measurementQuestions()}>
+        <MeasurementDecisions measurement={props.workflow.measurement} />
+      </Show>
+
+      <div class={styles.actions}>
+        <Show
+          when={soleItem()}
+          fallback={
+            <>
+              <Button
+                colorPalette="accent"
+                loading={importing()}
+                disabled={selectedImports().length === 0 || busy()}
+                onClick={() => void startSelectedImport()}
+              >
+                {m.import_review_panel_import_selected()}
+              </Button>
+              <span class={styles.muted}>
+                {m.import_review_panel_selection_note({ count: selectedImports().length })}
+              </span>
+              {cancel()}
+            </>
+          }
+        >
+          {(item) => (
+            <>
+              <Show when={item().can_commit && !match()}>
+                <Button
+                  colorPalette="accent"
+                  loading={loading({ action: "separate", view: "read" })}
+                  disabled={busy()}
+                  onClick={() => void saveSole({ action: "separate", view: "read" })}
+                >
+                  {m.import_review_panel_save_recipe()}
+                </Button>
+                <Button
+                  variant="outline"
+                  loading={loading({ action: "separate", view: "edit" })}
+                  disabled={busy()}
+                  onClick={() => void saveSole({ action: "separate", view: "edit" })}
+                >
+                  {m.import_review_save_and_edit()}
+                </Button>
+              </Show>
+              <Show when={item().can_commit && match()}>
+                <Show when={item().analysis.status === "definite-match"}>
+                  <Button
+                    colorPalette="accent"
+                    loading={loading({ action: "update", view: "read" })}
+                    disabled={busy()}
+                    onClick={() => void saveSole({ action: "update", view: "read" })}
+                  >
+                    {m.import_review_replace()}
+                  </Button>
+                </Show>
+                <Button
+                  colorPalette={item().analysis.status === "definite-match" ? undefined : "accent"}
+                  variant={item().analysis.status === "definite-match" ? "outline" : undefined}
+                  loading={loading({ action: "separate", view: "read" })}
+                  disabled={busy()}
+                  onClick={() => void saveSole({ action: "separate", view: "read" })}
+                >
+                  {m.import_review_save_copy()}
+                </Button>
+              </Show>
+              {cancel()}
+            </>
+          )}
+        </Show>
+      </div>
     </section>
   )
 }
+
 const styles = {
   importReview: css({
     display: "grid",
@@ -203,7 +261,19 @@ const styles = {
   source: css({ color: "fg.muted", fontSize: "xs", marginTop: "-2", overflowWrap: "anywhere" }),
   outcome: css({ display: "grid", gap: "1", maxWidth: "44rem" }),
   muted: css({ color: "fg.muted", fontSize: "sm" }),
-  actions: css({ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "3" }),
+  actions: css({
+    alignItems: "center",
+    background: "bg.canvas",
+    borderColor: "border.subtle",
+    borderTopWidth: "1px",
+    bottom: "0",
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "3",
+    paddingBlock: "4",
+    position: "sticky",
+    zIndex: "docked",
+  }),
   queue: css({
     borderTopColor: "border.default",
     borderTopWidth: "1px",
@@ -226,9 +296,7 @@ const styles = {
     gap: "3",
     listStyle: "none",
     margin: "0",
-    maxHeight: "36rem",
-    overflowY: "auto",
     padding: "0",
   }),
-  visuallyHidden: css({ display: "none" }),
+  soleList: css({ listStyle: "none", margin: "0", padding: "0" }),
 }

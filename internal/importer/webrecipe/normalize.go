@@ -560,6 +560,10 @@ func (d *document) normalizeStep(node map[string]any, into *Recipe) (Step, bool)
 	step.Tools = trimmedList(flatStrings(d.resolveAll(node["tool"])))
 	step.Images = normalizeImages(d.resolveAll(node["image"]))
 
+	if step.Text != "" && numberingOnly.MatchString(step.Name) {
+		step.Name = ""
+	}
+
 	if step.Text == "" && len(step.Directions) == 0 && len(step.Tips) == 0 {
 		// A step with a name and nothing else is still something the page said.
 		if step.Name == "" {
@@ -598,6 +602,8 @@ func splitInstructionText(value string) []string {
 }
 
 var numberedStep = regexp.MustCompile(`(?:^|\s)(\d{1,2})[.)]\s+`)
+
+var numberingOnly = regexp.MustCompile(`^(?:\p{L}{1,12}\.?\s*)?\p{Nd}{1,3}[.:]?$`)
 
 // splitNumberedSteps recovers steps from a single line that numbers them, but
 // only when the numbers run consecutively from one. Anything else is prose
