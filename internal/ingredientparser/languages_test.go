@@ -643,3 +643,18 @@ func TestAStatedEnglishIsCheckedAgainstTheIngredients(t *testing.T) {
 		t.Errorf("another stated language is kept, got %q", got)
 	}
 }
+
+func TestADozenReadsInEveryLanguage(t *testing.T) {
+	t.Parallel()
+
+	for _, test := range []struct{ locale, line, want, name string }{
+		{"pt", "uma dúzia de ovos", "12 count.egg", "ovos"},
+		{"es", "media docena de huevos", "6 count.egg", "huevos"},
+		{"de", "ein Dutzend Eier", "12 count.egg", "Eier"},
+	} {
+		parsed := ingredientparser.Parse(test.line, "i1", test.locale)
+		if got := reading(parsed); got != test.want || parsed.Name != test.name {
+			t.Errorf("%s %q: %s, name %q", test.locale, test.line, got, parsed.Name)
+		}
+	}
+}

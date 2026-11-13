@@ -325,7 +325,10 @@
         "unit": "container.tub",
         "name": "(?:sahne|schlagsahne|schmand|saure sahne|crème fraîche|creme fraiche|joghurt|jogurt|quark|frischkäse|skyr)"
       }
-    ]
+    ],
+    "multipliers": {
+      "dutzend": "12"
+    }
   },
   {
     "locale": "fr",
@@ -443,7 +446,11 @@
         "unit": "count.knob",
         "name": "(?:de\\s+)?beurre"
       }
-    ]
+    ],
+    "multipliers": {
+      "douzaine": "12",
+      "demi-douzaine": "6"
+    }
   },
   {
     "locale": "es",
@@ -527,7 +534,11 @@
       "libras",
       "cucharada de postre",
       "cucharadas de postre"
-    ]
+    ],
+    "multipliers": {
+      "docena": "12",
+      "media docena": "6"
+    }
   },
   {
     "locale": "it",
@@ -644,7 +655,11 @@
         "unit": "count.knob",
         "name": "(?:di\\s+)?burro"
       }
-    ]
+    ],
+    "multipliers": {
+      "dozzina": "12",
+      "mezza dozzina": "6"
+    }
   },
   {
     "locale": "pt",
@@ -740,7 +755,11 @@
     "mixed_joiner": "e",
     "plus_words": [
       "e"
-    ]
+    ],
+    "multipliers": {
+      "dúzia": "12",
+      "meia dúzia": "6"
+    }
   },
   {
     "locale": "nl",
