@@ -120,6 +120,9 @@ repository's [`docs/`](docs/README.md) holds contributor material only:
 `contribute/` for how to work on Savorum, and `reference/` for internals the
 code doesn't make obvious.
 
+Group unreleased changelog entries under `Added`, `Changed`, and `Fixed`.
+Omit empty sections and keep entries concise and focused on user-visible changes.
+
 When you write a page:
 
 - Open with a sentence or two on what it covers and who needs it.
