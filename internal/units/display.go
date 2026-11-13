@@ -79,6 +79,7 @@ var labels = map[string]Label{
 	"volume.tablespoon.au":              {One: "tbsp", Many: "tbsp"},
 	"volume.teaspoon.au":                {One: "tsp", Many: "tsp"},
 	"volume.cup.jp":                     {One: "cup", Many: "cups"},
+	"volume.cup.gr":                     {One: "cup", Many: "cups"},
 	"volume.go.jp":                      {One: "gō", Many: "gō"},
 	"volume.cup.kr":                     {One: "cup", Many: "cups"},
 	"volume.fluidounce.imperial":        {One: "fl oz", Many: "fl oz"},

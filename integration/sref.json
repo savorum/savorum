@@ -2,7 +2,7 @@
   "schema_version": 1,
   "sref": {
     "repository": "https://github.com/savorum/sref.git",
-    "commit": "b6a873bdeeb25b6c28835387f663b96bd76d2fd3",
+    "commit": "81651191eb533e064aed046bfaa3e5b72f9ec65f",
     "version": "0.5.0",
     "unit_registry_version": "0.3.0"
   },

@@ -369,6 +369,18 @@
       "many": "cups"
     },
     {
+      "id": "volume.cup.gr",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "metric",
+      "base": "volume.milliliter",
+      "factor": "200",
+      "offset": "0",
+      "exact": true,
+      "one": "cup",
+      "many": "cups"
+    },
+    {
       "id": "volume.go.jp",
       "kind": "physical",
       "dimension": "volume",

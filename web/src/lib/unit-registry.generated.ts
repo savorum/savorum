@@ -53,6 +53,7 @@ export type UnitId =
   | 'volume.tablespoon.au'
   | 'volume.teaspoon.au'
   | 'volume.cup.jp'
+  | 'volume.cup.gr'
   | 'volume.go.jp'
   | 'volume.cup.kr'
   | 'volume.fluidounce.imperial'
@@ -152,6 +153,7 @@ export const unitRegistry: readonly RegistryUnit[] = [
   { id: 'volume.tablespoon.au', kind: 'physical', dimension: 'volume', convention: 'au', base: 'volume.milliliter', factor: '20', exact: true },
   { id: 'volume.teaspoon.au', kind: 'physical', dimension: 'volume', convention: 'au', base: 'volume.milliliter', factor: '5', exact: true },
   { id: 'volume.cup.jp', kind: 'physical', dimension: 'volume', convention: 'metric', base: 'volume.milliliter', factor: '200', exact: true },
+  { id: 'volume.cup.gr', kind: 'physical', dimension: 'volume', convention: 'metric', base: 'volume.milliliter', factor: '200', exact: true },
   { id: 'volume.go.jp', kind: 'physical', dimension: 'volume', convention: 'metric', base: 'volume.milliliter', factor: '240100/1331', exact: true },
   { id: 'volume.cup.kr', kind: 'physical', dimension: 'volume', convention: 'metric', base: 'volume.milliliter', factor: '200', exact: true },
   { id: 'volume.fluidounce.imperial', kind: 'physical', dimension: 'volume', convention: 'imperial', base: 'volume.milliliter', factor: '454609/16000', exact: true },
@@ -244,6 +246,7 @@ export const unitLabels: Readonly<Record<UnitId, UnitLabel>> = {
   'volume.tablespoon.au': { one: "tbsp", many: "tbsp" },
   'volume.teaspoon.au': { one: "tsp", many: "tsp" },
   'volume.cup.jp': { one: "cup", many: "cups" },
+  'volume.cup.gr': { one: "cup", many: "cups" },
   'volume.go.jp': { one: "gō", many: "gō" },
   'volume.cup.kr': { one: "cup", many: "cups" },
   'volume.fluidounce.imperial': { one: "fl oz", many: "fl oz" },

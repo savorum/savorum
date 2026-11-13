@@ -202,14 +202,22 @@ func TestAMeasureWithNoSingleSizeStaysOpaque(t *testing.T) {
 func TestCupWordsOfferBothCulinaryReadings(t *testing.T) {
 	t.Parallel()
 
-	want := []string{"volume.cup.metric.culinary", "volume.cup.us.culinary"}
+	middleEastern := []string{"volume.cup.metric.culinary", "volume.cup.us.culinary"}
+	greek := []string{"volume.cup.gr", "volume.cup.metric.culinary"}
 
-	for _, test := range []struct{ locale, line, name string }{
-		{"he-IL", "1 כוס גבינת מוצרלה", "גבינת מוצרלה"},
-		{"he-IL", "2 כוסות קישואים", "קישואים"},
-		{"ar-SA", "1 كوب ماء دافئ", "ماء دافئ"},
-		{"ar-EG", "3 أكواب طحين", "طحين"},
+	for _, test := range []struct {
+		locale, line, name string
+		want               []string
+	}{
+		{"he-IL", "1 כוס גבינת מוצרלה", "גבינת מוצרלה", middleEastern},
+		{"he-IL", "2 כוסות קישואים", "קישואים", middleEastern},
+		{"ar-SA", "1 كوب ماء دافئ", "ماء دافئ", middleEastern},
+		{"ar-EG", "3 أكواب طحين", "طحين", middleEastern},
+		{"el", "1 φλιτζάνι τσαγιού αλεύρι", "αλεύρι", greek},
+		{"el-GR", "2 κούπες γάλα", "γάλα", greek},
 	} {
+		want := test.want
+
 		parsed := ingredientparser.ParseDetailed(test.line, "i1", test.locale)
 		if parsed.Ingredient.Quantity != nil || len(parsed.Ambiguities) != 1 {
 			t.Fatalf("%s: result = %#v", test.line, parsed)

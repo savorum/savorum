@@ -10,7 +10,7 @@ Notable changes to Savorum Core. Each release publishes
 
 - Add a web import offer when a URL is pasted into the text importer.
 - Add choices to continue unfinished cooking sessions or start fresh when cooking recipes together.
-- Add SREF 0.5.0 with unit registry 0.3.0 for import and export, supporting decagrams, hectograms, Japanese rice measures, and more count and container units.
+- Add SREF 0.5.0 with unit registry 0.3.0 for import and export, supporting decagrams, hectograms, Japanese rice measures, Greek cups, and more count and container units.
 
 ### Changed
 
