@@ -416,3 +416,14 @@ func TestSemanticArticleLeavesAWideTableForReview(t *testing.T) {
 		t.Fatalf("a data sheet was read as ingredients: %+v", result.IngredientGroups)
 	}
 }
+
+func TestSemanticArticleTitlesAListAfterAShortLineBetweenLists(t *testing.T) {
+	body := `<main><article><h1>Fig pinsa</h1><h3>Ingredients</h3><ul><li>1 pinsa base</li><li>100 g gorgonzola</li><li>40 g walnuts</li></ul>` +
+		`<div>After baking</div><ul><li>50 g ham</li><li>3 figs</li></ul>` +
+		`<h3>Instructions</h3><ol><li>Bake the base with the cheese and walnuts.</li><li>Top with the ham and figs.</li></ol></article></main>`
+
+	result := mustExtract(t, body, "https://example.test/pinsa")
+	if len(result.IngredientGroups) != 2 || result.IngredientGroups[1].Title != "After baking" || len(allIngredients(result.IngredientGroups)) != 5 {
+		t.Fatalf("groups %+v, review %q", result.IngredientGroups, result.ReviewText)
+	}
+}

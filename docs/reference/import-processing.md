@@ -59,7 +59,7 @@ ingredient and instruction extraction:
 
 - A label may say what its section is for, such as "Ingredients for the dough"
   or "なす田楽の材料". A further label of the same kind within a section starts
-  a titled group.
+  a titled group, as does a short line between two ingredient lists.
 - Ingredient lines may give the amount first or last, in digits or words, and
   may start with a bullet character. The ingredient parser decides whether a
   line states an amount.
