@@ -43,6 +43,10 @@
     "one": "tasse",
     "other": "tasses"
   },
+  "go": {
+    "one": "gō",
+    "other": "gō"
+  },
   "tablespoon": {
     "one": "c. à s.",
     "other": "c. à s."
@@ -66,5 +70,117 @@
   "fluidounce": {
     "one": "oz liq.",
     "other": "oz liq."
+  },
+  "piece": {
+    "one": "morceau",
+    "other": "morceaux"
+  },
+  "slice": {
+    "one": "tranche",
+    "other": "tranches"
+  },
+  "stick": {
+    "one": "bâton",
+    "other": "bâtons"
+  },
+  "stalk": {
+    "one": "branche",
+    "other": "branches"
+  },
+  "head": {
+    "one": "tête",
+    "other": "têtes"
+  },
+  "sheet": {
+    "one": "feuille",
+    "other": "feuilles"
+  },
+  "leaf": {
+    "one": "feuille",
+    "other": "feuilles"
+  },
+  "strip": {
+    "one": "lanière",
+    "other": "lanières"
+  },
+  "fillet": {
+    "one": "filet",
+    "other": "filets"
+  },
+  "cube": {
+    "one": "cube",
+    "other": "cubes"
+  },
+  "knob": {
+    "one": "noix",
+    "other": "noix"
+  },
+  "ear": {
+    "one": "épi",
+    "other": "épis"
+  },
+  "loaf": {
+    "one": "pain",
+    "other": "pains"
+  },
+  "dash": {
+    "one": "trait",
+    "other": "traits"
+  },
+  "drop": {
+    "one": "goutte",
+    "other": "gouttes"
+  },
+  "splash": {
+    "one": "trait",
+    "other": "traits"
+  },
+  "square": {
+    "one": "carré",
+    "other": "carrés"
+  },
+  "wheel": {
+    "one": "meule",
+    "other": "meules"
+  },
+  "rack": {
+    "one": "carré",
+    "other": "carrés"
+  },
+  "jar": {
+    "one": "bocal",
+    "other": "bocaux"
+  },
+  "bottle": {
+    "one": "bouteille",
+    "other": "bouteilles"
+  },
+  "bag": {
+    "one": "sachet",
+    "other": "sachets"
+  },
+  "box": {
+    "one": "boîte",
+    "other": "boîtes"
+  },
+  "carton": {
+    "one": "brique",
+    "other": "briques"
+  },
+  "tub": {
+    "one": "barquette",
+    "other": "barquettes"
+  },
+  "envelope": {
+    "one": "sachet",
+    "other": "sachets"
+  },
+  "pot": {
+    "one": "pot",
+    "other": "pots"
+  },
+  "punnet": {
+    "one": "barquette",
+    "other": "barquettes"
   }
 }

@@ -18,7 +18,7 @@ import (
 // RegistryVersion identifies the SREF unit vocabulary implemented by this
 // catalog. Resolution plans bind themselves to it so a preview made against
 // one vocabulary cannot be replayed after the aliases have changed.
-const RegistryVersion = "0.2.0"
+const RegistryVersion = "0.3.0"
 
 // AliasSet is one SREF parser vocabulary under one BCP 47 language or locale.
 // Aliases are source evidence, not display labels; changing a viewer's locale
@@ -76,7 +76,7 @@ func registerAliasSets(c *Catalog, sets []AliasSet) error {
 				return fmt.Errorf("unit %q has an empty alias", set.UnitID)
 			}
 
-			key := matchKey(form, set.CaseSensitive)
+			key := formKey(form, set.CaseSensitive)
 
 			if seen[key] {
 				return fmt.Errorf("unit %q repeats alias %q", set.UnitID, form)
@@ -100,6 +100,11 @@ func registerAliasSets(c *Catalog, sets []AliasSet) error {
 
 		for position, form := range copied.Forms {
 			key := matchKey(form, copied.CaseSensitive)
+			// An alias set may contain equivalent spellings such as "gr" and "gr.".
+			if refs := index[key]; len(refs) > 0 && refs[len(refs)-1].set == len(c.aliasSets)-1 {
+				continue
+			}
+
 			index[key] = append(index[key], aliasRef{set: len(c.aliasSets) - 1, form: position})
 		}
 	}
@@ -252,13 +257,17 @@ func resolvedCandidate(candidates []string) (string, AliasResolution) {
 	return "", AliasAmbiguous
 }
 
-// matchKey is the text alias comparison sees. Both sides are put in canonical
-// composition, so a composed and a decomposed spelling of one form match; a
-// case-insensitive set additionally compares under Unicode case folding.
-// Compatibility mappings (fullwidth forms, ligatures, ℃), accent stripping, and
-// script conversion are never applied, so a form that is not registered as
-// written does not match.
+// Normalize aliases with NFC, remove trailing periods, and optionally fold case.
+// Preserve accents, script, and compatibility distinctions.
 func matchKey(value string, caseSensitive bool) string {
+	if len(value) > 1 {
+		value = strings.TrimSuffix(value, ".")
+	}
+
+	return formKey(value, caseSensitive)
+}
+
+func formKey(value string, caseSensitive bool) string {
 	value = norm.NFC.String(value)
 	if caseSensitive {
 		return value
@@ -302,6 +311,10 @@ func localeLookupChain(value string) []string {
 		if len(parts) > 1 && len(parts[len(parts)-1]) == 1 {
 			parts = parts[:len(parts)-1]
 		}
+	}
+
+	if strings.EqualFold(result[len(result)-1], "no") {
+		result = append(result, "nb")
 	}
 
 	return result

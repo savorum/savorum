@@ -1,6 +1,7 @@
 package units_test
 
 import (
+	"slices"
 	"testing"
 
 	"github.com/savorum/savorum/internal/units"
@@ -20,6 +21,11 @@ func TestAliasLookupUsesTheMostSpecificSourceLocale(t *testing.T) {
 		{name: "qualified metric teaspoon", form: "metric teaspoon", locale: "en-CA", unit: "volume.teaspoon.metric.culinary"},
 		{name: "language fallback", form: "grams", locale: "en-US", unit: "mass.gram"},
 		{name: "extension fallback", form: "cup", locale: "en-US-u-nu-latn", unit: "volume.cup.us.customary"},
+		{name: "Turkish teaspoon", form: "ÇK", locale: "tr-TR-u-nu-latn", unit: "volume.teaspoon.metric.culinary"},
+		{name: "Turkish tablespoon", form: "YK", locale: "tr-TR", unit: "volume.tablespoon.metric.culinary"},
+		{name: "dotted Turkish tablespoon", form: "y.k.", locale: "tr", unit: "volume.tablespoon.metric.culinary"},
+		{name: "older decagram symbol", form: "dkg", locale: "hu-HU", unit: "mass.decagram"},
+		{name: "Portuguese culinary cup", form: "XÍCARA CHÁ", locale: "pt-BR", unit: "volume.cup.us.culinary"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
@@ -29,6 +35,39 @@ func TestAliasLookupUsesTheMostSpecificSourceLocale(t *testing.T) {
 				t.Fatalf("ResolveAlias(%q, %q) = %q, %v", test.form, test.locale, unit, resolution)
 			}
 		})
+	}
+}
+
+func TestCupAliasesExposeBothCulinaryCandidates(t *testing.T) {
+	t.Parallel()
+
+	catalog := units.DefaultCatalog()
+	want := []string{"volume.cup.metric.culinary", "volume.cup.us.culinary"}
+
+	for _, test := range []struct{ form, locale string }{
+		{"כוס", "he-IL"},
+		{"כוסות", "he-IL-u-nu-latn"},
+		{"كوب", "ar-SA"},
+		{"أكواب", "ar-EG"},
+	} {
+		if unit, resolution := catalog.ResolveAlias(test.form, test.locale); unit != "" || resolution != units.AliasAmbiguous {
+			t.Errorf("%q under %q = %q, %v", test.form, test.locale, unit, resolution)
+		}
+
+		descriptor, found := catalog.DescribeAlias(test.form)
+		if !found || !slices.Equal(descriptor.CandidateUnitIDs, want) || descriptor.CaseSensitive {
+			t.Errorf("%q descriptor = %#v, found=%v", test.form, descriptor, found)
+		}
+
+		if unit, resolution := catalog.ResolveAlias(test.form, "en-US"); unit != "" || resolution != units.AliasUnknown {
+			t.Errorf("%q leaked into en-US: %q, %v", test.form, unit, resolution)
+		}
+	}
+
+	for _, form := range []string{"su bardağı", "tatlı kaşığı", "tk"} {
+		if unit, resolution := catalog.ResolveAlias(form, "tr"); unit != "" || resolution != units.AliasUnknown {
+			t.Errorf("%q under tr = %q, %v", form, unit, resolution)
+		}
 	}
 }
 
@@ -120,5 +159,11 @@ func TestAliasDescriptorsControlBulkResolution(t *testing.T) {
 
 	if lower, found := catalog.DescribeAlias("t"); !found || !lower.CaseSensitive || lower.NormalizedForm != "t" || lower.NormalizedForm == exact.NormalizedForm {
 		t.Fatalf("lower descriptor = %#v", lower)
+	}
+}
+
+func TestNorwegianMacrolanguageReadsBokmalAliases(t *testing.T) {
+	if id, resolution := units.DefaultCatalog().ResolveAlias("dl", "no"); id != "volume.deciliter" || resolution != units.AliasResolved {
+		t.Fatalf("dl in no = %q, %v", id, resolution)
 	}
 }

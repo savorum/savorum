@@ -57,7 +57,7 @@ func validateUnitID(path, id string, catalog recipe.UnitCatalog) error {
 	}
 
 	if _, known := catalog.Lookup(id); !known {
-		return shapeFailure("unknown-unit", "%s names unknown unit %q in registry %s", path, id, UnitRegistryVersion)
+		return shapeFailure("unknown-unit", "%s names unknown unit %q", path, id)
 	}
 
 	return nil

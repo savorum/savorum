@@ -127,7 +127,7 @@ test("imported recipe retains comprehensive values on an unchanged save", async 
     options: [simple("2"), { kind: "sum", terms: [simple("1"), simple("1/2")] }],
   }
   const source = {
-    sref: { version: "0.4.1", unit_registry: "0.2.0" },
+    sref: { version: "0.5.1", unit_registry: "0.3.0" },
     id: `entry-${shape}`,
     title: `Imported ${shape} supper`,
     source: {

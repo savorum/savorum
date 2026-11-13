@@ -110,7 +110,7 @@ func TestHowTheJSONWasWrittenIsNotPartOfTheRecipe(t *testing.T) {
 // no binary float can hold, and a unit identifier from a registry Savorum does
 // not have.
 const futureDocument = `{
-	"sref": {"version": "0.5.0", "unit_registry": "0.3.0", "compatibility_notes": {"introduced_by": "0.5.0"}},
+	"sref": {"version": "0.6.0", "unit_registry": "0.4.0", "compatibility_notes": {"introduced_by": "0.6.0"}},
 	"id": "future-braise",
 	"title": "Future braise",
 	"publication": {"status": "draft", "sequence": 184467440737095516160},

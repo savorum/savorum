@@ -124,11 +124,8 @@ func categoryForRequirement(requirement string) FailureCategory {
 
 func unsupportedVersionCode(err error) string {
 	if unsupported, ok := errors.AsType[*UnsupportedVersionError](err); ok {
-		// A document can be refused for either version, and the two are
-		// separate requirements; the format line is reported first because a
-		// document from another format line says nothing usable about its
-		// registry.
-		if compatible, _ := compatibleVersion(unsupported.Version, Version); !compatible {
+		// Report an unreadable format before checking its registry.
+		if readable, _ := readableVersion(unsupported.Version, Version, EarlierReadableFormats); !readable {
 			return "unsupported-format-version"
 		}
 

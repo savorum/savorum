@@ -65,6 +65,12 @@
     "many": "hrnku",
     "other": "hrnků"
   },
+  "go": {
+    "one": "gó",
+    "few": "gó",
+    "many": "gó",
+    "other": "gó"
+  },
   "tablespoon": {
     "one": "lžíce",
     "other": "lžíce"
@@ -96,5 +102,173 @@
   "fluidounce": {
     "one": "tek. oz",
     "other": "tek. oz"
+  },
+  "piece": {
+    "one": "kus",
+    "few": "kusy",
+    "many": "kusu",
+    "other": "kusů"
+  },
+  "slice": {
+    "one": "plátek",
+    "few": "plátky",
+    "many": "plátku",
+    "other": "plátků"
+  },
+  "stick": {
+    "one": "kostka",
+    "few": "kostky",
+    "many": "kostky",
+    "other": "kostek"
+  },
+  "stalk": {
+    "one": "řapík",
+    "few": "řapíky",
+    "many": "řapíku",
+    "other": "řapíků"
+  },
+  "head": {
+    "one": "hlávka",
+    "few": "hlávky",
+    "many": "hlávky",
+    "other": "hlávek"
+  },
+  "sheet": {
+    "one": "plát",
+    "few": "pláty",
+    "many": "plátu",
+    "other": "plátů"
+  },
+  "leaf": {
+    "one": "list",
+    "few": "listy",
+    "many": "listu",
+    "other": "listů"
+  },
+  "strip": {
+    "one": "proužek",
+    "few": "proužky",
+    "many": "proužku",
+    "other": "proužků"
+  },
+  "fillet": {
+    "one": "filet",
+    "few": "filety",
+    "many": "filetu",
+    "other": "filetů"
+  },
+  "cube": {
+    "one": "kostka",
+    "few": "kostky",
+    "many": "kostky",
+    "other": "kostek"
+  },
+  "knob": {
+    "one": "kousek",
+    "few": "kousky",
+    "many": "kousku",
+    "other": "kousků"
+  },
+  "ear": {
+    "one": "klas",
+    "few": "klasy",
+    "many": "klasu",
+    "other": "klasů"
+  },
+  "loaf": {
+    "one": "bochník",
+    "few": "bochníky",
+    "many": "bochníku",
+    "other": "bochníků"
+  },
+  "dash": {
+    "one": "střik",
+    "few": "střiky",
+    "many": "střiku",
+    "other": "střiků"
+  },
+  "drop": {
+    "one": "kapka",
+    "few": "kapky",
+    "many": "kapky",
+    "other": "kapek"
+  },
+  "splash": {
+    "one": "šplouch",
+    "few": "šplouchy",
+    "many": "šplouchu",
+    "other": "šplouchů"
+  },
+  "square": {
+    "one": "čtvereček",
+    "few": "čtverečky",
+    "many": "čtverečku",
+    "other": "čtverečků"
+  },
+  "wheel": {
+    "one": "kolo",
+    "few": "kola",
+    "many": "kola",
+    "other": "kol"
+  },
+  "rack": {
+    "one": "kus",
+    "few": "kusy",
+    "many": "kusu",
+    "other": "kusů"
+  },
+  "jar": {
+    "one": "sklenice",
+    "few": "sklenice",
+    "many": "sklenice",
+    "other": "sklenic"
+  },
+  "bottle": {
+    "one": "láhev",
+    "few": "láhve",
+    "many": "láhve",
+    "other": "lahví"
+  },
+  "bag": {
+    "one": "sáček",
+    "few": "sáčky",
+    "many": "sáčku",
+    "other": "sáčků"
+  },
+  "box": {
+    "one": "krabička",
+    "few": "krabičky",
+    "many": "krabičky",
+    "other": "krabiček"
+  },
+  "carton": {
+    "one": "krabice",
+    "few": "krabice",
+    "many": "krabice",
+    "other": "krabic"
+  },
+  "tub": {
+    "one": "vanička",
+    "few": "vaničky",
+    "many": "vaničky",
+    "other": "vaniček"
+  },
+  "envelope": {
+    "one": "sáček",
+    "few": "sáčky",
+    "many": "sáčku",
+    "other": "sáčků"
+  },
+  "pot": {
+    "one": "kelímek",
+    "few": "kelímky",
+    "many": "kelímku",
+    "other": "kelímků"
+  },
+  "punnet": {
+    "one": "vanička",
+    "few": "vaničky",
+    "many": "vaničky",
+    "other": "vaniček"
   }
 }

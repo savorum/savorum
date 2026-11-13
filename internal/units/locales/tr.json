@@ -43,6 +43,10 @@
     "one": "su bardağı",
     "other": "su bardağı"
   },
+  "go": {
+    "one": "gō",
+    "other": "gō"
+  },
   "tablespoon": {
     "one": "yemek kaşığı",
     "other": "yemek kaşığı"
@@ -66,5 +70,117 @@
   "fluidounce": {
     "one": "sıvı ons",
     "other": "sıvı ons"
+  },
+  "piece": {
+    "one": "parça",
+    "other": "parça"
+  },
+  "slice": {
+    "one": "dilim",
+    "other": "dilim"
+  },
+  "stick": {
+    "one": "kalıp",
+    "other": "kalıp"
+  },
+  "stalk": {
+    "one": "sap",
+    "other": "sap"
+  },
+  "head": {
+    "one": "baş",
+    "other": "baş"
+  },
+  "sheet": {
+    "one": "yaprak",
+    "other": "yaprak"
+  },
+  "leaf": {
+    "one": "yaprak",
+    "other": "yaprak"
+  },
+  "strip": {
+    "one": "şerit",
+    "other": "şerit"
+  },
+  "fillet": {
+    "one": "fileto",
+    "other": "fileto"
+  },
+  "cube": {
+    "one": "küp",
+    "other": "küp"
+  },
+  "knob": {
+    "one": "topak",
+    "other": "topak"
+  },
+  "ear": {
+    "one": "koçan",
+    "other": "koçan"
+  },
+  "loaf": {
+    "one": "somun",
+    "other": "somun"
+  },
+  "dash": {
+    "one": "fışkırtma",
+    "other": "fışkırtma"
+  },
+  "drop": {
+    "one": "damla",
+    "other": "damla"
+  },
+  "splash": {
+    "one": "fışkırtma",
+    "other": "fışkırtma"
+  },
+  "square": {
+    "one": "kare",
+    "other": "kare"
+  },
+  "wheel": {
+    "one": "teker",
+    "other": "teker"
+  },
+  "rack": {
+    "one": "kaburga",
+    "other": "kaburga"
+  },
+  "jar": {
+    "one": "kavanoz",
+    "other": "kavanoz"
+  },
+  "bottle": {
+    "one": "şişe",
+    "other": "şişe"
+  },
+  "bag": {
+    "one": "poşet",
+    "other": "poşet"
+  },
+  "box": {
+    "one": "kutu",
+    "other": "kutu"
+  },
+  "carton": {
+    "one": "karton",
+    "other": "karton"
+  },
+  "tub": {
+    "one": "kase",
+    "other": "kase"
+  },
+  "envelope": {
+    "one": "paket",
+    "other": "paket"
+  },
+  "pot": {
+    "one": "kap",
+    "other": "kap"
+  },
+  "punnet": {
+    "one": "kap",
+    "other": "kap"
   }
 }

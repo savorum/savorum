@@ -532,7 +532,7 @@ func TestCompatibleFutureMembersSurviveStorageEditingAndExport(t *testing.T) {
 	t.Parallel()
 
 	future := []byte(`{
-		"sref":{"version":"0.5.0","unit_registry":"0.3.0","compatibility_notes":{"introduced_by":"0.5.0"}},
+		"sref":{"version":"0.6.0","unit_registry":"0.4.0","compatibility_notes":{"introduced_by":"0.6.0"}},
 		"id":"future","title":"Future recipe","publication":{"status":"draft","sequence":184467440737095516160},
 		"ingredient_sections":[{"id":"main","ingredients":[
 			{"id":"salt","name":"salt"},
@@ -595,7 +595,7 @@ func TestCompatibleFutureMembersSurviveStorageEditingAndExport(t *testing.T) {
 	}
 
 	header := mustType[map[string]any](output["sref"])
-	if header["version"] != "0.5.0" || header["unit_registry"] != "0.3.0" {
+	if header["version"] != "0.6.0" || header["unit_registry"] != "0.4.0" {
 		t.Fatalf("writer did not preserve the declared future versions: %s", written)
 	}
 
@@ -642,7 +642,7 @@ func TestAnUnknownUnitRequiresANewerCompatibleRegistry(t *testing.T) {
 func TestDetachedFutureDataMakesExportFail(t *testing.T) {
 	t.Parallel()
 
-	future := []byte(`{"sref":{"version":"0.5.0","unit_registry":"0.2.0"},"id":"r","title":"T","ingredient_sections":[{"id":"s","ingredients":[{"id":"keep","name":"salt"},{"id":"drop","name":"herbs","future_detail":true}]}],"instruction_sections":[{"id":"n","steps":[{"id":"p","text":"Wait."}]}]}`)
+	future := []byte(`{"sref":{"version":"0.6.0","unit_registry":"0.2.0"},"id":"r","title":"T","ingredient_sections":[{"id":"s","ingredients":[{"id":"keep","name":"salt"},{"id":"drop","name":"herbs","future_detail":true}]}],"instruction_sections":[{"id":"n","steps":[{"id":"p","text":"Wait."}]}]}`)
 
 	document, err := sref.Decode(future)
 	if err != nil {
@@ -1058,7 +1058,7 @@ func TestAMemberIsAdmittedByTheVersionThatDeclaresIt(t *testing.T) {
 
 		// The same member under a newer version in the same line is exactly
 		// what forward-compatible reading is for, and must survive.
-		mustType[map[string]any](shaped["sref"])["version"] = "0.5.0"
+		mustType[map[string]any](shaped["sref"])["version"] = "0.6.0"
 
 		newer, err := json.Marshal(shaped)
 		if err != nil {
@@ -1081,7 +1081,7 @@ func TestAMemberIsAdmittedByTheVersionThatDeclaresIt(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		if mustType[map[string]any](round["sref"])["version"] != "0.5.0" {
+		if mustType[map[string]any](round["sref"])["version"] != "0.6.0" {
 			t.Errorf("%s: the declared newer version was not preserved", name)
 		}
 
@@ -1301,7 +1301,7 @@ func mustType[T any](value any) T {
 func TestCompatibleCompoundAlternativeKeepsSupportedTermsAndUnknownMembers(t *testing.T) {
 	t.Parallel()
 
-	input := []byte(`{"sref":{"version":"0.5.0","unit_registry":"0.2.0"},"id":"future-compound","title":"Compound recipe",
+	input := []byte(`{"sref":{"version":"0.6.0","unit_registry":"0.2.0"},"id":"future-compound","title":"Compound recipe",
  "ingredient_sections":[{"id":"main","ingredients":[{"id":"oil","name":"oil","quantity":{"kind":"alternatives","options":[
  {"kind":"sum","terms":[{"kind":"simple","amount":{"value":"2"},"unit":"volume.tablespoon.us.customary"},{"kind":"simple","amount":{"value":"2"},"unit":"volume.teaspoon.us.customary"}],"future_note":{"blank":"","empty":[],"missing":null}},
  {"kind":"simple","amount":{"value":"40"},"unit":"volume.milliliter"}
@@ -1334,5 +1334,154 @@ func TestCompatibleCompoundAlternativeKeepsSupportedTermsAndUnknownMembers(t *te
 
 	if !reflect.DeepEqual(before["ingredient_sections"], after["ingredient_sections"]) {
 		t.Fatalf("quantity or unknown members changed: %s", encoded)
+	}
+}
+
+func declaredVersions(t *testing.T, written []byte) string {
+	t.Helper()
+
+	var header struct {
+		SREF struct {
+			Version      string `json:"version"`
+			UnitRegistry string `json:"unit_registry"`
+		} `json:"sref"`
+	}
+	if err := json.Unmarshal(written, &header); err != nil {
+		t.Fatal(err)
+	}
+
+	return header.SREF.Version + "/" + header.SREF.UnitRegistry
+}
+
+func TestAnEarlierDocumentKeepsItsVersionsUntilItUsesANewerUnit(t *testing.T) {
+	t.Parallel()
+
+	document, err := sref.Decode([]byte(`{
+		"sref":{"version":"0.4.0","unit_registry":"0.2.0"},
+		"id":"bread","title":"Bread",
+		"ingredient_sections":[{"id":"main","ingredients":[
+			{"id":"flour","name":"flour","quantity":{"kind":"simple","amount":{"value":"500"},"unit":"mass.gram"}}
+		]}],
+		"instruction_sections":[{"id":"method","steps":[{"id":"bake","text":"Bake."}]}]
+	}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	written, err := sref.Encode(document)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if got := declaredVersions(t, written); got != "0.4.0/0.2.0" {
+		t.Fatalf("round trip declares %s, want 0.4.0/0.2.0", got)
+	}
+
+	document.IngredientSections[0].Ingredients[0].Quantity.Unit = "mass.decagram"
+
+	written, err = sref.Encode(document)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if got, want := declaredVersions(t, written), sref.Version+"/"+sref.UnitRegistryVersion; got != want {
+		t.Fatalf("a decagram declares %s, want %s", got, want)
+	}
+}
+
+func TestEarlierRegistriesRejectNewerUnits(t *testing.T) {
+	t.Parallel()
+
+	for _, registry := range []string{"0.1.0", "0.2.0"} {
+		t.Run(registry, func(t *testing.T) {
+			t.Parallel()
+
+			_, err := sref.Decode(fmt.Appendf(nil, `{
+				"sref":{"version":"0.4.0","unit_registry":%q},
+				"id":"bread","title":"Bread",
+				"ingredient_sections":[{"id":"main","ingredients":[
+					{"id":"flour","name":"flour","quantity":{"kind":"simple","amount":{"value":"50"},"unit":"mass.decagram"}}
+				]}]
+			}`, registry))
+			if !errors.Is(err, sref.ErrInvalidDocument) || !strings.Contains(err.Error(), "unknown unit") {
+				t.Fatalf("registry %s with a decagram: %v", registry, err)
+			}
+		})
+	}
+}
+
+func TestRegistryUpgradeRetainsNewerFormatAndUnknownData(t *testing.T) {
+	t.Parallel()
+
+	document, err := sref.Decode([]byte(`{
+		"sref":{"version":"0.5.1","unit_registry":"0.2.0","future_header":{"nested":["kept"]}},
+		"id":"bread","title":"Bread","future_recipe":{"key":"value"},
+		"ingredient_sections":[{"id":"main","ingredients":[
+			{"id":"flour","name":"flour","quantity":{"kind":"simple","amount":{"value":"50"},"unit":"mass.gram"}}
+		]}]
+	}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	opaqueBefore, err := json.Marshal(document.SREFOpaque)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	document.IngredientSections[0].Ingredients[0].Quantity.Unit = "mass.decagram"
+
+	encoded, err := sref.Encode(document)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if got, want := declaredVersions(t, encoded), "0.5.1/"+sref.UnitRegistryVersion; got != want {
+		t.Fatalf("declared versions = %s, want %s", got, want)
+	}
+
+	var written struct {
+		SREF         map[string]any `json:"sref"`
+		FutureRecipe map[string]any `json:"future_recipe"`
+	}
+	if err := json.Unmarshal(encoded, &written); err != nil {
+		t.Fatal(err)
+	}
+
+	if !reflect.DeepEqual(written.SREF["future_header"], map[string]any{"nested": []any{"kept"}}) ||
+		!reflect.DeepEqual(written.FutureRecipe, map[string]any{"key": "value"}) {
+		t.Fatalf("unknown data changed: %s", encoded)
+	}
+
+	opaqueAfter, err := json.Marshal(document.SREFOpaque)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !bytes.Equal(opaqueBefore, opaqueAfter) {
+		t.Fatal("encoding mutated the document's preserved data")
+	}
+}
+
+func TestEarlierFormatUpgradeRetainsNewerRegistry(t *testing.T) {
+	t.Parallel()
+
+	document, err := sref.Decode([]byte(`{
+		"sref":{"version":"0.1.0","unit_registry":"0.3.1"},
+		"id":"r","title":"R",
+		"yield":{"quantity":{"kind":"simple","amount":{"value":"4"},"unit":"count.item"}},
+		"instruction_sections":[{"id":"m","steps":[{"id":"s","text":"Mix."}]}]
+	}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	encoded, err := sref.Encode(document)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if got, want := declaredVersions(t, encoded), sref.Version+"/0.3.1"; got != want {
+		t.Fatalf("declared versions = %s, want %s", got, want)
 	}
 }

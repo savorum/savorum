@@ -1035,11 +1035,9 @@ func TestMeasurementResolutionUnsupportedOnlyCannotApplyEmptyPlan(t *testing.T) 
 		t.Run(kind, func(t *testing.T) {
 			service := exchange.NewService(&importLibrary{}, &countingAssets{})
 
-			// A dash is not a measure the registry holds, so no answer about
-			// the tablespoon can finish this line and the plan changes nothing.
 			preview, err := service.PreviewFiles(context.Background(), []exchange.UploadedImport{{
 				Filename: "compound.yml",
-				Data:     []byte("name: Compound\ningredients:\n  - 1 tablespoon plus 2 dashes hot sauce\ndirections:\n  - Mix.\n"),
+				Data:     []byte("name: Compound\ningredients:\n  - 1 tablespoon plus 2 glugs hot sauce\ndirections:\n  - Mix.\n"),
 			}})
 			if err != nil {
 				t.Fatal(err)

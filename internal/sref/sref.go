@@ -26,10 +26,10 @@ import (
 // Version and related constants identify the SREF format and unit registry implemented here.
 const (
 	// Version is the recipe specification version this build reads and writes.
-	Version = "0.4.0"
+	Version = "0.5.0"
 	// UnitRegistryVersion is the registry against which unit IDs are read.
 	// Savorum's own catalog holds exactly the identities this registry names.
-	UnitRegistryVersion = "0.2.0"
+	UnitRegistryVersion = "0.3.0"
 	// StandardExtensionsMember is SREF's own namespaced extension container.
 	StandardExtensionsMember = "extensions"
 )
@@ -77,8 +77,7 @@ type envelope struct {
 	UnitRegistry string `json:"unit_registry"`
 }
 
-// Encode writes a recipe as an SREF recipe document. Savorum's own storage
-// discriminator is not part of the format and is left behind.
+// Encode writes an SREF recipe, preserving declared versions while the document remains valid under them.
 func Encode(document recipe.Document) ([]byte, error) {
 	if len(document.IngredientSections) == 0 && len(document.InstructionSections) == 0 {
 		return nil, fmt.Errorf("%w: SREF requires ingredients or instructions; this local stub cannot be exported", ErrInvalidDocument)
@@ -88,7 +87,7 @@ func Encode(document recipe.Document) ([]byte, error) {
 		return nil, fmt.Errorf("%w: %w", ErrInvalidDocument, err)
 	}
 
-	_, newerRegistry, err := versionsForWrite(document.SREFOpaque)
+	declared, newerRegistry, err := versionsForWrite(document.SREFOpaque)
 	if err != nil {
 		return nil, fmt.Errorf("%w: %w", ErrInvalidDocument, err)
 	}
@@ -99,6 +98,21 @@ func Encode(document recipe.Document) ([]byte, error) {
 		}
 	}
 
+	encoded, err := encodeWire(document)
+	if err != nil || declared == currentVersions() {
+		return encoded, err
+	}
+
+	if _, err := Decode(encoded); err == nil {
+		return encoded, nil
+	}
+
+	document.SREFOpaque = upgradeDeclaredVersions(document.SREFOpaque, declared)
+
+	return encodeWire(document)
+}
+
+func encodeWire(document recipe.Document) ([]byte, error) {
 	shaped, err := toWire(document)
 	if err != nil {
 		return nil, err
@@ -110,6 +124,10 @@ func Encode(document recipe.Document) ([]byte, error) {
 	}
 
 	return append(encoded, '\n'), nil
+}
+
+func currentVersions() envelope {
+	return envelope{Version: Version, UnitRegistry: UnitRegistryVersion}
 }
 
 // Decode reads an SREF recipe document. Compatible newer minor versions are
@@ -154,7 +172,7 @@ func Decode(data []byte) (recipe.Document, error) {
 		}
 	}
 
-	if newerFormat || newerRegistry {
+	if newerFormat || newerRegistry || version != currentVersions() {
 		opaque = preserveDeclaredVersions(opaque, version)
 	}
 
@@ -204,7 +222,12 @@ func Decode(data []byte) (recipe.Document, error) {
 	}
 
 	if !newerRegistry {
-		if err := validateKnownUnitIDs(document, units.DefaultCatalog()); err != nil {
+		var catalog recipe.UnitCatalog = units.DefaultCatalog()
+		if earlier, known := earlierRegistryUnits(version.UnitRegistry); known {
+			catalog = earlier
+		}
+
+		if err := validateKnownUnitIDs(document, catalog); err != nil {
 			return recipe.Document{}, fmt.Errorf("%w: %w", ErrInvalidDocument, err)
 		}
 	}
@@ -317,17 +340,13 @@ func versionsForWrite(opaque map[string]any) (envelope, bool, error) {
 // admitting a release is a reviewed decision. Savorum's own exports before the
 // 0.2.0 registry declare 0.1.0, which removed one alias and no unit ID.
 var (
-	EarlierReadableFormats    = []string{"0.1.0", "0.2.0"}
-	EarlierReadableRegistries = []string{"0.1.0"}
+	EarlierReadableFormats    = []string{"0.1.0", "0.2.0", "0.4.0"}
+	EarlierReadableRegistries = []string{"0.1.0", "0.2.0"}
 )
 
 // readableVersion reports whether this build reads a declared version: its own,
 // a compatible newer one in the same line, or one of the earlier releases it
 // explicitly admits.
-//
-// Version and UnitRegistryVersion happen to share a value today; keeping the
-// supported version parameter avoids tying the format and registry release lines
-// together.
 func readableVersion(declared, supported string, earlier []string) (compatible, newer bool) {
 	if compatible, newer := compatibleVersion(declared, supported); compatible {
 		return compatible, newer
@@ -961,7 +980,9 @@ func checkChoiceBranch(value any) error {
 func validateYieldMember(members map[string]json.RawMessage, declared string) error {
 	_, singular := members["yield"]
 	_, plural := members["yields"]
-	earlier := slices.Contains(EarlierReadableFormats, strings.TrimSpace(declared))
+	// SREF 0.4.0 and later accept only the plural yields member.
+	since, _ := compatibleVersion(strings.TrimSpace(declared), "0.4.0")
+	earlier := !since
 
 	switch {
 	case singular && !earlier:

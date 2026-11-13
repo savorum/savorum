@@ -43,6 +43,10 @@
     "one": "カップ",
     "other": "カップ"
   },
+  "go": {
+    "one": "合",
+    "other": "合"
+  },
   "tablespoon": {
     "one": "大さじ",
     "other": "大さじ"
@@ -66,5 +70,117 @@
   "fluidounce": {
     "one": "液量オンス",
     "other": "液量オンス"
+  },
+  "piece": {
+    "one": "切れ",
+    "other": "切れ"
+  },
+  "slice": {
+    "one": "枚",
+    "other": "枚"
+  },
+  "stick": {
+    "one": "本",
+    "other": "本"
+  },
+  "stalk": {
+    "one": "本",
+    "other": "本"
+  },
+  "head": {
+    "one": "株",
+    "other": "株"
+  },
+  "sheet": {
+    "one": "枚",
+    "other": "枚"
+  },
+  "leaf": {
+    "one": "枚",
+    "other": "枚"
+  },
+  "strip": {
+    "one": "本",
+    "other": "本"
+  },
+  "fillet": {
+    "one": "切れ",
+    "other": "切れ"
+  },
+  "cube": {
+    "one": "個",
+    "other": "個"
+  },
+  "knob": {
+    "one": "かけ",
+    "other": "かけ"
+  },
+  "ear": {
+    "one": "本",
+    "other": "本"
+  },
+  "loaf": {
+    "one": "斤",
+    "other": "斤"
+  },
+  "dash": {
+    "one": "振り",
+    "other": "振り"
+  },
+  "drop": {
+    "one": "滴",
+    "other": "滴"
+  },
+  "splash": {
+    "one": "振り",
+    "other": "振り"
+  },
+  "square": {
+    "one": "かけ",
+    "other": "かけ"
+  },
+  "wheel": {
+    "one": "ホール",
+    "other": "ホール"
+  },
+  "rack": {
+    "one": "ラック",
+    "other": "ラック"
+  },
+  "jar": {
+    "one": "瓶",
+    "other": "瓶"
+  },
+  "bottle": {
+    "one": "本",
+    "other": "本"
+  },
+  "bag": {
+    "one": "袋",
+    "other": "袋"
+  },
+  "box": {
+    "one": "箱",
+    "other": "箱"
+  },
+  "carton": {
+    "one": "パック",
+    "other": "パック"
+  },
+  "tub": {
+    "one": "パック",
+    "other": "パック"
+  },
+  "envelope": {
+    "one": "袋",
+    "other": "袋"
+  },
+  "pot": {
+    "one": "カップ",
+    "other": "カップ"
+  },
+  "punnet": {
+    "one": "パック",
+    "other": "パック"
   }
 }

@@ -43,6 +43,10 @@
     "one": "kop",
     "other": "koppen"
   },
+  "go": {
+    "one": "gō",
+    "other": "gō"
+  },
   "tablespoon": {
     "one": "el",
     "other": "el"
@@ -66,5 +70,117 @@
   "fluidounce": {
     "one": "fl oz",
     "other": "fl oz"
+  },
+  "piece": {
+    "one": "stuk",
+    "other": "stukken"
+  },
+  "slice": {
+    "one": "plak",
+    "other": "plakken"
+  },
+  "stick": {
+    "one": "staafje",
+    "other": "staafjes"
+  },
+  "stalk": {
+    "one": "stengel",
+    "other": "stengels"
+  },
+  "head": {
+    "one": "krop",
+    "other": "kroppen"
+  },
+  "sheet": {
+    "one": "vel",
+    "other": "vellen"
+  },
+  "leaf": {
+    "one": "blaadje",
+    "other": "blaadjes"
+  },
+  "strip": {
+    "one": "reep",
+    "other": "repen"
+  },
+  "fillet": {
+    "one": "filet",
+    "other": "filets"
+  },
+  "cube": {
+    "one": "blokje",
+    "other": "blokjes"
+  },
+  "knob": {
+    "one": "klontje",
+    "other": "klontjes"
+  },
+  "ear": {
+    "one": "kolf",
+    "other": "kolven"
+  },
+  "loaf": {
+    "one": "brood",
+    "other": "broden"
+  },
+  "dash": {
+    "one": "scheutje",
+    "other": "scheutjes"
+  },
+  "drop": {
+    "one": "druppel",
+    "other": "druppels"
+  },
+  "splash": {
+    "one": "scheut",
+    "other": "scheuten"
+  },
+  "square": {
+    "one": "blokje",
+    "other": "blokjes"
+  },
+  "wheel": {
+    "one": "wiel",
+    "other": "wielen"
+  },
+  "rack": {
+    "one": "rack",
+    "other": "racks"
+  },
+  "jar": {
+    "one": "pot",
+    "other": "potten"
+  },
+  "bottle": {
+    "one": "fles",
+    "other": "flessen"
+  },
+  "bag": {
+    "one": "zak",
+    "other": "zakken"
+  },
+  "box": {
+    "one": "doos",
+    "other": "dozen"
+  },
+  "carton": {
+    "one": "pak",
+    "other": "pakken"
+  },
+  "tub": {
+    "one": "bakje",
+    "other": "bakjes"
+  },
+  "envelope": {
+    "one": "zakje",
+    "other": "zakjes"
+  },
+  "pot": {
+    "one": "potje",
+    "other": "potjes"
+  },
+  "punnet": {
+    "one": "bakje",
+    "other": "bakjes"
   }
 }

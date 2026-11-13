@@ -43,6 +43,10 @@
     "one": "chávena",
     "other": "chávenas"
   },
+  "go": {
+    "one": "gō",
+    "other": "gō"
+  },
   "tablespoon": {
     "one": "colher de sopa",
     "other": "colheres de sopa"
@@ -66,5 +70,117 @@
   "fluidounce": {
     "one": "onça líquida",
     "other": "onças líquidas"
+  },
+  "piece": {
+    "one": "pedaço",
+    "other": "pedaços"
+  },
+  "slice": {
+    "one": "fatia",
+    "other": "fatias"
+  },
+  "stick": {
+    "one": "tablete",
+    "other": "tabletes"
+  },
+  "stalk": {
+    "one": "talo",
+    "other": "talos"
+  },
+  "head": {
+    "one": "cabeça",
+    "other": "cabeças"
+  },
+  "sheet": {
+    "one": "folha",
+    "other": "folhas"
+  },
+  "leaf": {
+    "one": "folha",
+    "other": "folhas"
+  },
+  "strip": {
+    "one": "tira",
+    "other": "tiras"
+  },
+  "fillet": {
+    "one": "filete",
+    "other": "filetes"
+  },
+  "cube": {
+    "one": "cubo",
+    "other": "cubos"
+  },
+  "knob": {
+    "one": "noz",
+    "other": "nozes"
+  },
+  "ear": {
+    "one": "espiga",
+    "other": "espigas"
+  },
+  "loaf": {
+    "one": "pão",
+    "other": "pães"
+  },
+  "dash": {
+    "one": "pingo",
+    "other": "pingos"
+  },
+  "drop": {
+    "one": "gota",
+    "other": "gotas"
+  },
+  "splash": {
+    "one": "fio",
+    "other": "fios"
+  },
+  "square": {
+    "one": "quadrado",
+    "other": "quadrados"
+  },
+  "wheel": {
+    "one": "peça",
+    "other": "peças"
+  },
+  "rack": {
+    "one": "carré",
+    "other": "carrés"
+  },
+  "jar": {
+    "one": "frasco",
+    "other": "frascos"
+  },
+  "bottle": {
+    "one": "garrafa",
+    "other": "garrafas"
+  },
+  "bag": {
+    "one": "saco",
+    "other": "sacos"
+  },
+  "box": {
+    "one": "caixa",
+    "other": "caixas"
+  },
+  "carton": {
+    "one": "embalagem",
+    "other": "embalagens"
+  },
+  "tub": {
+    "one": "pote",
+    "other": "potes"
+  },
+  "envelope": {
+    "one": "saqueta",
+    "other": "saquetas"
+  },
+  "pot": {
+    "one": "pote",
+    "other": "potes"
+  },
+  "punnet": {
+    "one": "cuvete",
+    "other": "cuvetes"
   }
 }
