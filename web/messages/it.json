@@ -3307,5 +3307,11 @@
   "import_review_replace": "Sostituisci",
   "import_review_save_copy": "Salva una copia",
   "text_import_url_detected": "Questo è un indirizzo web. Vuoi invece recuperare la ricetta da quella pagina?",
-  "text_import_fetch_page": "Recupera pagina"
+  "text_import_fetch_page": "Recupera pagina",
+  "library_sort_added": "Aggiunte di recente",
+  "library_sort_longest_since_cooked": "Non cucinate da più tempo",
+  "library_sort_active_time": "Minor tempo attivo",
+  "library_sort_most_cooked": "Più cucinate",
+  "library_sort_shuffle": "Ordine casuale",
+  "library_shuffle_again": "Mescola di nuovo"
 }

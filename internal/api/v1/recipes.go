@@ -37,7 +37,8 @@ type listRecipesInput struct {
 	Offset int    `query:"offset" default:"0" minimum:"0" doc:"Number of entries to skip"`
 	Query  string `query:"q" maxLength:"200" doc:"Recipe text with bounded title/author typo matching and structured filters. author: requires full author-name membership with Unicode case, NFC, and whitespace normalization; accents and punctuation are preserved. ingredient: requires literal word-prefix matches within one ingredient name, including optional and alternative names, with original-line fallback only when that name is absent"`
 	State  string `query:"state" default:"active" enum:"active,trash" doc:"Library state to list"`
-	Sort   string `query:"sort" default:"relevance" enum:"relevance,updated-desc,title-asc,rating-desc,total-time-asc,cooked-desc" doc:"Recipe list ordering"`
+	Sort   string `query:"sort" default:"relevance" enum:"relevance,updated-desc,title-asc,rating-desc,total-time-asc,cooked-desc,created-desc,cooked-asc,active-time-asc,times-cooked-desc,random" doc:"Recipe list ordering"`
+	Seed   int64  `query:"seed" default:"0" minimum:"0" maximum:"2147483647" doc:"Shuffle seed for random ordering. Reuse it across pages; change it to reshuffle. Other sort modes ignore it"`
 	// Huma reads query parameters from direct fields only, so these repeat on
 	// each input that groups translations.
 	GroupTranslations bool   `query:"group_translations" doc:"Present each set of translated recipes once, as the rendition the preferred languages choose among those that match"`
@@ -133,7 +134,7 @@ func registerRecipes(api huma.API, service RecipeService) {
 	}, func(ctx context.Context, input *listRecipesInput) (*listRecipesOutput, error) {
 		options := library.ListOptions{
 			Limit: input.Limit, Offset: input.Offset, Query: input.Query,
-			State: library.State(input.State), Sort: library.ListSort(input.Sort),
+			State: library.State(input.State), Sort: library.ListSort(input.Sort), Seed: input.Seed,
 		}
 
 		return readRecipePage(ctx, service, groupTranslations(options, input.GroupTranslations, input.Languages))

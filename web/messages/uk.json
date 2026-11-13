@@ -3727,5 +3727,11 @@
   "import_review_replace": "Замінити",
   "import_review_save_copy": "Зберегти копію",
   "text_import_url_detected": "Це вебадреса. Завантажити рецепт із цієї сторінки?",
-  "text_import_fetch_page": "Завантажити сторінку"
+  "text_import_fetch_page": "Завантажити сторінку",
+  "library_sort_added": "Нещодавно додані",
+  "library_sort_longest_since_cooked": "Найдавніше готували",
+  "library_sort_active_time": "Найменше активного часу",
+  "library_sort_most_cooked": "Найчастіше готували",
+  "library_sort_shuffle": "Випадковий порядок",
+  "library_shuffle_again": "Перемішати знову"
 }

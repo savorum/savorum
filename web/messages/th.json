@@ -3155,5 +3155,11 @@
   "import_review_replace": "แทนที่",
   "import_review_save_copy": "บันทึกสำเนา",
   "text_import_url_detected": "นี่คือที่อยู่เว็บ ดึงสูตรอาหารจากหน้านั้นแทนไหม",
-  "text_import_fetch_page": "ดึงหน้าเว็บ"
+  "text_import_fetch_page": "ดึงหน้าเว็บ",
+  "library_sort_added": "เพิ่มล่าสุด",
+  "library_sort_longest_since_cooked": "ไม่ได้ทำมานานที่สุด",
+  "library_sort_active_time": "ใช้เวลาลงมือน้อยที่สุด",
+  "library_sort_most_cooked": "ทำบ่อยที่สุด",
+  "library_sort_shuffle": "ลำดับสุ่ม",
+  "library_shuffle_again": "สุ่มอีกครั้ง"
 }

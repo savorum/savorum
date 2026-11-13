@@ -10,6 +10,7 @@ export interface LibraryPageRequest {
   offset: number
   query: string
   sort: RecipeSort
+  seed?: number
   id: string
   groupTranslations: string[]
 }

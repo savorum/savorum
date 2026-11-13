@@ -443,7 +443,7 @@ func TestRecipeListSortsAndSavedViewExecution(t *testing.T) {
 		}
 	}
 
-	assertTitles := func(path string, want []string) {
+	assertTitles := func(path string, want []string) []string {
 		t.Helper()
 
 		response := request(t, handler, http.MethodGet, path, nil)
@@ -463,20 +463,35 @@ func TestRecipeListSortsAndSavedViewExecution(t *testing.T) {
 			got[index] = page.Items[index].Title
 		}
 
-		if !reflect.DeepEqual(got, want) {
-			t.Fatalf("list %s titles=%#v", path, got)
+		if want != nil && !reflect.DeepEqual(got, want) {
+			t.Fatalf("list %s titles=%#v, want %#v", path, got, want)
 		}
+
+		return got
 	}
 	assertTitles("/api/v1/recipes?limit=10&sort=title-asc", []string{"Alpha", "Beta", "Zulu"})
 	assertTitles("/api/v1/recipes?limit=10&sort=rating-desc", []string{"Zulu", "Beta", "Alpha"})
+	random := assertTitles("/api/v1/recipes?limit=10&sort=random&seed=432", nil)
+	assertTitles("/api/v1/recipes?limit=1&offset=1&sort=random&seed=432", random[1:2])
+
+	for _, seed := range []string{"-1", "2147483648", "invalid"} {
+		if response := request(t, handler, http.MethodGet, "/api/v1/recipes?sort=random&seed="+seed, nil); response.Code != http.StatusUnprocessableEntity {
+			t.Fatalf("invalid seed %q status=%d", seed, response.Code)
+		}
+	}
 
 	if invalid := request(t, handler, http.MethodGet, "/api/v1/recipes?sort=unsupported", nil); invalid.Code != http.StatusUnprocessableEntity {
 		t.Fatalf("invalid list sort status=%d body=%s", invalid.Code, invalid.Body.String())
 	}
 
 	for sort, want := range map[string][]string{
-		"title-asc":   {"Alpha", "Beta", "Zulu"},
-		"rating-desc": {"Zulu", "Beta", "Alpha"},
+		"title-asc":         {"Alpha", "Beta", "Zulu"},
+		"rating-desc":       {"Zulu", "Beta", "Alpha"},
+		"created-desc":      assertTitles("/api/v1/recipes?limit=10&sort=created-desc", nil),
+		"cooked-asc":        {"Alpha", "Beta", "Zulu"},
+		"active-time-asc":   {"Alpha", "Beta", "Zulu"},
+		"times-cooked-desc": {"Alpha", "Beta", "Zulu"},
+		"random":            random,
 	} {
 		body, err := json.Marshal(map[string]any{"title": sort, "query": "", "sort": sort})
 		if err != nil {
@@ -493,7 +508,7 @@ func TestRecipeListSortsAndSavedViewExecution(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		assertTitles("/api/v1/saved-views/"+view.ID+"/recipes?limit=10", want)
+		assertTitles("/api/v1/saved-views/"+view.ID+"/recipes?limit=10&seed=432", want)
 	}
 
 	if missing := request(t, handler, http.MethodGet, "/api/v1/saved-views/vmissing/recipes", nil); missing.Code != http.StatusNotFound {

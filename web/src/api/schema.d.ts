@@ -6187,7 +6187,7 @@ export interface components {
             /** Format: int64 */
             revision: number;
             /** @enum {string} */
-            sort?: "relevance" | "updated-desc" | "title-asc" | "rating-desc" | "total-time-asc" | "cooked-desc";
+            sort?: "relevance" | "updated-desc" | "title-asc" | "rating-desc" | "total-time-asc" | "cooked-desc" | "created-desc" | "cooked-asc" | "active-time-asc" | "times-cooked-desc" | "random";
             title: string;
             /** Format: date-time */
             updated_at: string;
@@ -6197,7 +6197,7 @@ export interface components {
         SavedViewInput: {
             query: string;
             /** @enum {string} */
-            sort?: "relevance" | "updated-desc" | "title-asc" | "rating-desc" | "total-time-asc" | "cooked-desc";
+            sort?: "relevance" | "updated-desc" | "title-asc" | "rating-desc" | "total-time-asc" | "cooked-desc" | "created-desc" | "cooked-asc" | "active-time-asc" | "times-cooked-desc" | "random";
             title: string;
         };
         SavedViewsOutputBody: {
@@ -15941,7 +15941,9 @@ export interface operations {
                 /** @description Library state to list */
                 state?: "active" | "trash";
                 /** @description Recipe list ordering */
-                sort?: "relevance" | "updated-desc" | "title-asc" | "rating-desc" | "total-time-asc" | "cooked-desc";
+                sort?: "relevance" | "updated-desc" | "title-asc" | "rating-desc" | "total-time-asc" | "cooked-desc" | "created-desc" | "cooked-asc" | "active-time-asc" | "times-cooked-desc" | "random";
+                /** @description Shuffle seed for random ordering. Reuse it across pages; change it to reshuffle. Other sort modes ignore it */
+                seed?: number;
                 /** @description Present each set of translated recipes once, as the rendition the preferred languages choose among those that match */
                 group_translations?: boolean;
                 /** @description Comma-separated BCP 47 content languages in order of preference, used when grouping translations */
@@ -21201,6 +21203,8 @@ export interface operations {
     "list-saved-view-recipes": {
         parameters: {
             query?: {
+                /** @description Shuffle seed for a saved view with random ordering. Reuse it across pages; change it to reshuffle */
+                seed?: number;
                 /** @description Maximum number of entries to return */
                 limit?: number;
                 /** @description Number of entries to skip */

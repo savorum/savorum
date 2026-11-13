@@ -14,7 +14,7 @@ const printLimit = () => capabilities()?.limits?.print_recipes ?? 250
 const bundleLimit = () => capabilities()?.limits?.export_recipes ?? maximumBundleRecipes
 
 export function createLibrarySelection(
-  query: Pick<LibraryQuery, "text" | "filters" | "viewID" | "sort">,
+  query: Pick<LibraryQuery, "text" | "filters" | "viewID" | "sort" | "seed">,
   /**
    * Recipes already chosen when the library was reached. Returning from an
    * action taken on a selection returns to that selection; nothing else opens
@@ -22,7 +22,7 @@ export function createLibrarySelection(
    */
   resumed?: { selected?: () => string[] | undefined; onLeft?: () => void },
 ) {
-  const { text, filters, viewID, sort } = query
+  const { text, filters, viewID, sort, seed } = query
   const initial = untrack(() => resumed?.selected?.() ?? [])
   let generation = 0
   const [selectionBusy, setSelectionBusy] = createSignal(false)
@@ -83,15 +83,31 @@ export function createLibrarySelection(
   const selectAllMatching = async () => {
     invalidate()
     const request = generation
-    const snapshot = { query: filterQuery(text(), filters()), id: viewID(), sort: sort() }
+    const snapshot = {
+      query: filterQuery(text(), filters()),
+      id: viewID(),
+      sort: sort(),
+      seed: seed(),
+    }
     setSelectionBusy(true)
     try {
       const found: string[] = []
       const size = 200
       for (let offset = 0; ; offset += size) {
         const result = snapshot.id
-          ? await listSavedViewRecipes({ id: snapshot.id, limit: size, offset })
-          : await listRecipes({ limit: size, offset, query: snapshot.query, sort: snapshot.sort })
+          ? await listSavedViewRecipes({
+              id: snapshot.id,
+              limit: size,
+              offset,
+              seed: snapshot.seed,
+            })
+          : await listRecipes({
+              limit: size,
+              offset,
+              query: snapshot.query,
+              sort: snapshot.sort,
+              seed: snapshot.seed,
+            })
         if (request !== generation) return
         found.push(...result.items.map((entry) => entry.id))
         if (found.length >= result.total || result.items.length === 0) break

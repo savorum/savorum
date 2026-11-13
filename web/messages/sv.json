@@ -3305,5 +3305,11 @@
   "import_review_replace": "Ersätt",
   "import_review_save_copy": "Spara kopia",
   "text_import_url_detected": "Det här är en webbadress. Vill du hämta receptet från den sidan i stället?",
-  "text_import_fetch_page": "Hämta sida"
+  "text_import_fetch_page": "Hämta sida",
+  "library_sort_added": "Nyligen tillagda",
+  "library_sort_longest_since_cooked": "Längst sedan tillagning",
+  "library_sort_active_time": "Minst aktiv tid",
+  "library_sort_most_cooked": "Oftast tillagade",
+  "library_sort_shuffle": "Slumpmässig ordning",
+  "library_shuffle_again": "Blanda igen"
 }

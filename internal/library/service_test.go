@@ -437,6 +437,8 @@ func TestServiceListAppliesBounds(t *testing.T) {
 		{Limit: 1, Offset: -1},
 		{Query: strings.Repeat("x", MaximumSearchLength+1)},
 		{Sort: "unsupported"},
+		{Seed: -1},
+		{Seed: 2147483648},
 	} {
 		if _, err := service.List(context.Background(), options); err == nil {
 			t.Fatalf("invalid options %#v unexpectedly succeeded", options)

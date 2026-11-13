@@ -3299,5 +3299,11 @@
   "import_review_replace": "Αντικατάσταση",
   "import_review_save_copy": "Αποθήκευση αντιγράφου",
   "text_import_url_detected": "Αυτή είναι διεύθυνση ιστού. Να ανακτηθεί η συνταγή από εκείνη τη σελίδα;",
-  "text_import_fetch_page": "Ανάκτηση σελίδας"
+  "text_import_fetch_page": "Ανάκτηση σελίδας",
+  "library_sort_added": "Πρόσφατη προσθήκη",
+  "library_sort_longest_since_cooked": "Μεγαλύτερο διάστημα από το μαγείρεμα",
+  "library_sort_active_time": "Λιγότερος ενεργός χρόνος",
+  "library_sort_most_cooked": "Πιο συχνά μαγειρεμένες",
+  "library_sort_shuffle": "Τυχαία σειρά",
+  "library_shuffle_again": "Νέα τυχαία σειρά"
 }

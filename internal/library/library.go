@@ -241,6 +241,7 @@ type ListOptions struct {
 	Query    string
 	State    State
 	Sort     ListSort
+	Seed     int64
 	Search   SearchCriteria
 	// GroupTranslations presents each translation set among active results
 	// once, as the matching rendition PreferredLanguages chooses.
@@ -253,12 +254,17 @@ type ListSort string
 
 // Supported orderings of library summaries.
 const (
-	ListSortRelevance    ListSort = "relevance"
-	ListSortUpdatedDesc  ListSort = "updated-desc"
-	ListSortTitleAsc     ListSort = "title-asc"
-	ListSortRatingDesc   ListSort = "rating-desc"
-	ListSortTotalTimeAsc ListSort = "total-time-asc"
-	ListSortCookedDesc   ListSort = "cooked-desc"
+	ListSortRelevance       ListSort = "relevance"
+	ListSortUpdatedDesc     ListSort = "updated-desc"
+	ListSortTitleAsc        ListSort = "title-asc"
+	ListSortRatingDesc      ListSort = "rating-desc"
+	ListSortTotalTimeAsc    ListSort = "total-time-asc"
+	ListSortCookedDesc      ListSort = "cooked-desc"
+	ListSortCreatedDesc     ListSort = "created-desc"
+	ListSortCookedAsc       ListSort = "cooked-asc"
+	ListSortActiveTimeAsc   ListSort = "active-time-asc"
+	ListSortTimesCookedDesc ListSort = "times-cooked-desc"
+	ListSortRandom          ListSort = "random"
 )
 
 // SearchCriteria combines text, taxonomy, provenance, and user-state filters.

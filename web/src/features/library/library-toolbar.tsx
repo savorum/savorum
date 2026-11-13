@@ -1,4 +1,4 @@
-import { BookmarkPlus, CheckSquare } from "lucide-solid"
+import { BookmarkPlus, CheckSquare, Shuffle } from "lucide-solid"
 import { Show, createMemo, untrack } from "solid-js"
 import { css } from "styled-system/css"
 
@@ -25,6 +25,7 @@ export function LibraryToolbar(props: { query: LibraryQuery; selection: LibraryS
     filters,
     applyFilters,
     sort,
+    reshuffle,
     text,
     editSearch,
     entries,
@@ -62,14 +63,27 @@ export function LibraryToolbar(props: { query: LibraryQuery; selection: LibraryS
               onToggleOpen={() => setFiltersOpen((open) => !open)}
             />
           </div>
-          <Select
-            class={styles.sort}
-            size="sm"
-            aria-label={m.library_toolbar_sort_recipes()}
-            value={sort()}
-            onValueChange={(value) => editSearch({ sort: value as RecipeSort })}
-            items={sortChoices(text()).map((value) => ({ value, label: sortLabels[value] }))}
-          />
+          <div class={styles.sort}>
+            <Select
+              size="sm"
+              aria-label={m.library_toolbar_sort_recipes()}
+              value={sort()}
+              onValueChange={(value) => editSearch({ sort: value as RecipeSort })}
+              items={sortChoices(text()).map((value) => ({ value, label: sortLabels[value] }))}
+            />
+            <Show when={sort() === "random"}>
+              <Button
+                class={styles.shuffle}
+                size="sm"
+                variant="plain"
+                onClick={reshuffle}
+                aria-label={m.library_shuffle_again()}
+                title={m.library_shuffle_again()}
+              >
+                <Shuffle size={16} aria-hidden="true" />
+              </Button>
+            </Show>
+          </div>
           <Show when={activeFilterCount(filters()) > 0 || savableSearch()}>
             <div class={styles.applied}>
               <FilterSummary
@@ -142,12 +156,17 @@ const styles = {
   }),
   filter: css({ gridArea: "filter", "& > button": { minHeight: "11" } }),
   select: css({ gridArea: "select", justifySelf: "end" }),
+  shuffle: css({ minWidth: "11", minHeight: "11", flexShrink: "0" }),
   sort: css({
     gridArea: "sort",
+    display: "flex",
+    alignItems: "center",
+    gap: "1",
     justifySelf: "end",
     width: { base: "100%", md: "auto" },
     minWidth: "0",
     maxWidth: "100%",
+    "& > div": { minWidth: "0", flex: "1" },
     "& [data-part=trigger]": { minHeight: "11", height: "auto", paddingBlock: "2" },
     "& [data-part=value-text]": { whiteSpace: "normal" },
   }),

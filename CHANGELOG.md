@@ -8,6 +8,7 @@ Notable changes to Savorum Core. Each release publishes
 
 ### Added
 
+- Add library sorting by date added, longest since cooked, active time, and cooking count, plus shuffle with stable browsing and a reshuffle action.
 - Add a web import offer when a URL is pasted into the text importer.
 - Add choices to continue unfinished cooking sessions or start fresh when cooking recipes together.
 - Add SREF 0.5.0 with unit registry 0.3.0 for import and export, supporting decagrams, hectograms, Japanese rice measures, Greek cups, and more count and container units.

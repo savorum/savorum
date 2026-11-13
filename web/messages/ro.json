@@ -3487,5 +3487,11 @@
   "import_review_replace": "Înlocuiește",
   "import_review_save_copy": "Salvează o copie",
   "text_import_url_detected": "Aceasta este o adresă web. Preiei rețeta de pe acea pagină?",
-  "text_import_fetch_page": "Preia pagina"
+  "text_import_fetch_page": "Preia pagina",
+  "library_sort_added": "Adăugate recent",
+  "library_sort_longest_since_cooked": "Gătite cu cel mai mult timp în urmă",
+  "library_sort_active_time": "Cel mai scurt timp activ",
+  "library_sort_most_cooked": "Cele mai gătite",
+  "library_sort_shuffle": "Ordine aleatorie",
+  "library_shuffle_again": "Amestecă din nou"
 }

@@ -3299,5 +3299,11 @@
   "import_review_replace": "Korvaa",
   "import_review_save_copy": "Tallenna kopio",
   "text_import_url_detected": "Tämä on verkko-osoite. Haetaanko resepti sen sivulta?",
-  "text_import_fetch_page": "Hae sivu"
+  "text_import_fetch_page": "Hae sivu",
+  "library_sort_added": "Äskettäin lisätyt",
+  "library_sort_longest_since_cooked": "Kauimmin valmistamatta",
+  "library_sort_active_time": "Lyhin aktiivinen aika",
+  "library_sort_most_cooked": "Useimmin valmistetut",
+  "library_sort_shuffle": "Satunnainen järjestys",
+  "library_shuffle_again": "Sekoita uudelleen"
 }

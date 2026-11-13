@@ -3308,5 +3308,11 @@
   "import_review_replace": "החלפה",
   "import_review_save_copy": "שמירת עותק",
   "text_import_url_detected": "זוהי כתובת אינטרנט. לייבא את המתכון מהדף הזה במקום?",
-  "text_import_fetch_page": "ייבוא הדף"
+  "text_import_fetch_page": "ייבוא הדף",
+  "library_sort_added": "נוספו לאחרונה",
+  "library_sort_longest_since_cooked": "הכי הרבה זמן מאז הבישול",
+  "library_sort_active_time": "זמן עבודה פעיל הקצר ביותר",
+  "library_sort_most_cooked": "בושלו הכי הרבה",
+  "library_sort_shuffle": "סדר אקראי",
+  "library_shuffle_again": "ערבוב מחדש"
 }

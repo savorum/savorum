@@ -2,6 +2,7 @@ import {
   type Accessor,
   batch,
   createComputed,
+  createEffect,
   createMemo,
   createResource,
   createSignal,
@@ -34,6 +35,7 @@ import {
   type UpdateLibrarySearch,
   effectiveSort,
   filterSearch,
+  newShuffleSeed,
   searchFilters,
 } from "./library-search"
 
@@ -64,6 +66,13 @@ export function createLibraryQuery(search: Accessor<LibrarySearch>, update: Upda
   const text = () => opened()?.text ?? search().q ?? ""
   const sort = () =>
     effectiveSort((activeView()?.sort as RecipeSort | undefined) ?? search().sort, text())
+  const initialSeed = newShuffleSeed()
+  const seed = () => (viewID() || sort() === "random" ? (search().seed ?? initialSeed) : undefined)
+  createEffect(() => {
+    if (sort() === "random" && search().seed === undefined) update({ seed: seed() }, true)
+  })
+  const reshuffle = () =>
+    update({ seed: newShuffleSeed(seed()), offset: undefined, shown: undefined })
   const filters = (): LibraryFilters => {
     const shown = opened()
     if (shown) return shown.filters
@@ -72,6 +81,8 @@ export function createLibraryQuery(search: Accessor<LibrarySearch>, update: Upda
 
   /** Editing a saved view's filters returns to a regular library search. */
   const editSearch = (next: Partial<LibrarySearch>, replace = false) => {
+    if ("sort" in next)
+      next = { ...next, seed: next.sort === "random" ? newShuffleSeed(seed()) : undefined }
     const shown = opened()
     if (!shown) return update(next, replace)
     update(
@@ -128,6 +139,7 @@ export function createLibraryQuery(search: Accessor<LibrarySearch>, update: Upda
       shown: requestedLimit(),
       query: viewID() ? "" : filterQuery(text(), filters()),
       sort: viewID() ? ("relevance" as RecipeSort) : sort(),
+      seed: seed(),
       id: viewID(),
       groupTranslations: contentLanguages(),
     }),
@@ -140,6 +152,7 @@ export function createLibraryQuery(search: Accessor<LibrarySearch>, update: Upda
           id: request.id,
           limit: request.limit,
           offset: request.offset,
+          seed: request.seed,
           groupTranslations: request.groupTranslations,
           signal,
         })
@@ -306,6 +319,8 @@ export function createLibraryQuery(search: Accessor<LibrarySearch>, update: Upda
     opened,
     text,
     sort,
+    seed,
+    reshuffle,
     filters,
     editSearch,
     applyFilters,

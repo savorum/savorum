@@ -3158,5 +3158,11 @@
   "import_review_replace": "替换",
   "import_review_save_copy": "另存副本",
   "text_import_url_detected": "这是一个网址。改为从该网页获取食谱吗？",
-  "text_import_fetch_page": "获取网页"
+  "text_import_fetch_page": "获取网页",
+  "library_sort_added": "最近添加",
+  "library_sort_longest_since_cooked": "最久未做",
+  "library_sort_active_time": "动手时间最短",
+  "library_sort_most_cooked": "制作次数最多",
+  "library_sort_shuffle": "随机排序",
+  "library_shuffle_again": "重新随机排序"
 }

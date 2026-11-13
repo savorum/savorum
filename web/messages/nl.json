@@ -3305,5 +3305,11 @@
   "import_review_replace": "Vervangen",
   "import_review_save_copy": "Kopie opslaan",
   "text_import_url_detected": "Dit is een webadres. Het recept liever van die pagina ophalen?",
-  "text_import_fetch_page": "Pagina ophalen"
+  "text_import_fetch_page": "Pagina ophalen",
+  "library_sort_added": "Onlangs toegevoegd",
+  "library_sort_longest_since_cooked": "Langst niet bereid",
+  "library_sort_active_time": "Kortste actieve tijd",
+  "library_sort_most_cooked": "Vaakst bereid",
+  "library_sort_shuffle": "Willekeurige volgorde",
+  "library_shuffle_again": "Opnieuw mengen"
 }

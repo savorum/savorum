@@ -90,6 +90,25 @@ func TestTranslationsAreSeparateRecipesGroupedBySearch(t *testing.T) {
 		t.Fatalf("grouped results = %d, want the set once and the unrelated recipe", len(grouped))
 	}
 
+	for _, sort := range []library.ListSort{library.ListSortCreatedDesc, library.ListSortCookedAsc, library.ListSortActiveTimeAsc, library.ListSortTimesCookedDesc, library.ListSortRandom} {
+		seen := make(map[library.EntryID]bool)
+
+		for offset := range 2 {
+			page, total, err := service.ListPage(ctx, library.ListOptions{
+				Sort: sort, Seed: 432, Limit: 1, Offset: offset, GroupTranslations: true, PreferredLanguages: []string{"ar"},
+			})
+			if err != nil || total != 2 || len(page) != 1 {
+				t.Fatalf("grouped %s page = %v, total %d, %v", sort, page, total, err)
+			}
+
+			if seen[page[0].ID] || page[0].ID == english.ID {
+				t.Fatalf("grouped %s repeats a dish or loses the preferred language: %v", sort, page)
+			}
+
+			seen[page[0].ID] = true
+		}
+	}
+
 	for _, summary := range grouped {
 		if summary.ID == unrelated.ID {
 			continue

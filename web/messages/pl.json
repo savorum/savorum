@@ -3727,5 +3727,11 @@
   "import_review_replace": "Zastąp",
   "import_review_save_copy": "Zapisz kopię",
   "text_import_url_detected": "To jest adres strony. Pobrać przepis z tej strony?",
-  "text_import_fetch_page": "Pobierz stronę"
+  "text_import_fetch_page": "Pobierz stronę",
+  "library_sort_added": "Ostatnio dodane",
+  "library_sort_longest_since_cooked": "Najdawniej gotowane",
+  "library_sort_active_time": "Najkrótszy czas aktywny",
+  "library_sort_most_cooked": "Najczęściej gotowane",
+  "library_sort_shuffle": "Losowa kolejność",
+  "library_shuffle_again": "Wymieszaj ponownie"
 }

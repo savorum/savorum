@@ -3154,5 +3154,11 @@
   "import_review_replace": "Replace",
   "import_review_save_copy": "Save copy",
   "text_import_url_detected": "This is a web address. Fetch the recipe from that page instead?",
-  "text_import_fetch_page": "Fetch page"
+  "text_import_fetch_page": "Fetch page",
+  "library_sort_added": "Recently added",
+  "library_sort_longest_since_cooked": "Longest since cooked",
+  "library_sort_active_time": "Least active time",
+  "library_sort_most_cooked": "Most cooked",
+  "library_sort_shuffle": "Shuffle",
+  "library_shuffle_again": "Shuffle again"
 }

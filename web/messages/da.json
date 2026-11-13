@@ -3305,5 +3305,11 @@
   "import_review_replace": "Erstat",
   "import_review_save_copy": "Gem kopi",
   "text_import_url_detected": "Dette er en webadresse. Vil du hente opskriften fra den side i stedet?",
-  "text_import_fetch_page": "Hent side"
+  "text_import_fetch_page": "Hent side",
+  "library_sort_added": "Senest tilføjet",
+  "library_sort_longest_since_cooked": "Længst siden tilberedning",
+  "library_sort_active_time": "Mindst aktiv tid",
+  "library_sort_most_cooked": "Oftest tilberedt",
+  "library_sort_shuffle": "Bland",
+  "library_shuffle_again": "Bland igen"
 }

@@ -3161,5 +3161,11 @@
   "import_review_replace": "Ersetzen",
   "import_review_save_copy": "Kopie speichern",
   "text_import_url_detected": "Das ist eine Webadresse. Stattdessen das Rezept von dieser Seite abrufen?",
-  "text_import_fetch_page": "Seite abrufen"
+  "text_import_fetch_page": "Seite abrufen",
+  "library_sort_added": "Zuletzt hinzugefügt",
+  "library_sort_longest_since_cooked": "Am längsten nicht gekocht",
+  "library_sort_active_time": "Kürzeste aktive Zeit",
+  "library_sort_most_cooked": "Am häufigsten gekocht",
+  "library_sort_shuffle": "Zufällige Reihenfolge",
+  "library_shuffle_again": "Erneut mischen"
 }
