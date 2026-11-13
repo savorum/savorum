@@ -64,6 +64,11 @@ names, quantities, titles, prose, and notes stay as the author wrote them.
 - `internal/recipetext/vocabulary.json` holds the section headings, timing
   phrases, yield and time labels, and note and step references that recipe
   wording uses. It isn't interface translation and doesn't translate recipes.
+- `go run ./cmd/units` also generates
+  `internal/wording/fixed-numbers.generated.json` from that vocabulary and the
+  registry's length and temperature forms. Screen, print, and the native client
+  read it to tell an amount in an ingredient's wording, which a batch changes,
+  from a size or time, which it does not.
 
 ## Direction
 

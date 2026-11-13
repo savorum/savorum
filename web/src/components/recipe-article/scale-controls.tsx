@@ -17,6 +17,7 @@ import {
   ingredientsKeptAsWritten,
   ingredientsWithUnscaledAmounts,
   yieldAmount,
+  madeYieldLine,
   yieldLine,
   yieldNoun,
 } from "@/lib/recipe-format"
@@ -181,7 +182,7 @@ export function RecipeScaleControls(props: {
             yieldAmount(value) !== undefined
           ),
       )
-      .map((value) => yieldLine(value, { system: measurementSystem(), scale: scale() }))
+      .map((value) => madeYieldLine(value, { system: measurementSystem(), scale: scale() }))
       .filter(Boolean),
   )
   const wantedYield = createMemo(() => {
@@ -214,12 +215,14 @@ export function RecipeScaleControls(props: {
     ingredientsKeptAsWritten(props.recipe, {
       system: measurementSystem(),
       scale: scale(),
+      language: props.recipe.language,
     }),
   )
   const unscaledAmounts = createMemo(() =>
     ingredientsWithUnscaledAmounts(props.recipe, {
       system: measurementSystem(),
       scale: scale(),
+      language: props.recipe.language,
     }),
   )
 

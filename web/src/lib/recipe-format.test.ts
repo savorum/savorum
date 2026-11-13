@@ -13,6 +13,7 @@ import {
   ingredientLine,
   ingredientsKeptAsWritten,
   ingredientsWithUnscaledAmounts,
+  madeYieldLine,
   temperatureLine,
   visibleStepTitle,
   withNote,
@@ -695,6 +696,43 @@ test("a batch reports the amounts it could not recalculate", () => {
   )
 })
 
+test("a package size or a size in a note is not reported as kept wording", () => {
+  const doubled = { system: "original" as const, scale: rational(2n), language: "en" }
+  const ounces = (value: string) => ({
+    kind: "simple" as const,
+    amount: { value },
+    unit: "mass.ounce.avoirdupois",
+  })
+  const ginger = {
+    id: "ginger",
+    name: "ginger",
+    note: "cut into 1-inch pieces",
+    quantity: ounces("2"),
+  }
+  const tomatoes = {
+    id: "tomatoes",
+    name: "tomatoes",
+    quantity: ounces("1"),
+    package_size: ounces("14"),
+  }
+  const onion = { id: "onion", name: "onion", note: "about 1 cup", quantity: ounces("4") }
+  assert.equal(ingredientLine(ginger, doubled).keptWording, false)
+  assert.equal(ingredientLine(tomatoes, doubled).keptWording, false)
+  assert.equal(ingredientLine(onion, doubled).keptWording, true)
+})
+
+test("a line with no quantity reads as its name and note", () => {
+  const chives = {
+    id: "chives",
+    name: "Chopped chives",
+    note: "for garnish",
+    optional: true,
+    source_text: "Chopped chives , for garnish (optional)",
+  }
+  const asWritten = { system: "original" as const, scale: rational(1n) }
+  assert.equal(ingredientLine(chives, asWritten).text, "Chopped chives, for garnish")
+})
+
 test("an unread line written with any numerals is reported as kept", () => {
   const doubled = { system: "original" as const, scale: rational(2n) }
   for (const text of ["½ cup milk", "٢ كوب دقيق", "३ cups rice"]) {
@@ -815,4 +853,67 @@ test("global scaling reports unscaled amounts without repeating authored wording
     quantity: { kind: "opaque", text: "a generous pinch" },
   })
   assert.equal(ingredientsWithUnscaledAmounts(recipe, presentation), 1)
+})
+
+test("a name that is its count unit is written once, in the batch's number", () => {
+  const egg = {
+    id: "egg",
+    name: "egg",
+    note: "large",
+    quantity: { kind: "simple" as const, amount: { value: "1" }, unit: "count.egg" },
+  }
+  const one = ingredientLine(egg, asWritten)
+  assert.equal(one.amount, "1")
+  assert.equal(one.text, "egg, large")
+  const three = ingredientLine(egg, { system: "original", scale: rational(3n) })
+  assert.equal(three.amount, "3")
+  assert.equal(three.text, "eggs, large")
+})
+
+test("equivalent measures keep each option for a lighter second measure", () => {
+  const line = ingredientLine(
+    {
+      id: "sugar",
+      name: "granulated sugar",
+      quantity: {
+        kind: "alternatives",
+        options: [
+          { kind: "simple", amount: { value: "2" }, unit: "volume.tablespoon.us.customary" },
+          { kind: "simple", amount: { value: "25" }, unit: "mass.gram" },
+        ],
+      },
+    },
+    asWritten,
+  )
+  assert.deepEqual(line.amountOptions, ["2 tbsp", "25 g"])
+  assert.equal(line.amount, "2 tbsp or 25 g")
+})
+
+test("a stated weight in the reader's measures is shown as written", () => {
+  const line = ingredientLine(
+    {
+      id: "sugar",
+      name: "light brown sugar",
+      quantity: {
+        kind: "alternatives",
+        options: [
+          { kind: "simple", amount: { value: "2/3" }, unit: "volume.cup.us.customary" },
+          { kind: "simple", amount: { value: "142" }, unit: "mass.gram" },
+        ],
+      },
+    },
+    { system: "metric", scale: rational(1n) },
+  )
+  assert.equal(line.amount, "142 g")
+  assert.equal(line.approximate, false)
+})
+
+test("another yield worded with a verb reads as what the recipe makes", () => {
+  assert.equal(madeYieldLine({ text: "serves 8" }, asWritten), "8 servings")
+  assert.equal(madeYieldLine({ text: "Makes 2 loaves" }, asWritten), "2 loaves")
+  assert.equal(madeYieldLine({ text: "two loaves" }, asWritten), "two loaves")
+  assert.equal(
+    madeYieldLine({ text: "12 rolls" }, { system: "original", scale: rational(2n) }),
+    "24 rolls",
+  )
 })

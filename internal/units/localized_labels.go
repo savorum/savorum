@@ -141,3 +141,29 @@ func PluralCategory(amount *big.Rat, locale string) string {
 
 	return [...]string{"other", "zero", "one", "two", "few", "many"}[form]
 }
+
+// NamedByUnit reports whether an ingredient name matches its count-unit label in any locale.
+func NamedByUnit(id, name string) bool {
+	if !strings.HasPrefix(id, "count.") {
+		return false
+	}
+
+	name = strings.TrimSpace(name)
+	if name == "" {
+		return false
+	}
+
+	if label, found := labels[id]; found && (strings.EqualFold(name, label.One) || strings.EqualFold(name, label.Many)) {
+		return true
+	}
+
+	for _, catalog := range localizedLabels {
+		for _, form := range catalog[id].Forms {
+			if strings.EqualFold(name, form) {
+				return true
+			}
+		}
+	}
+
+	return false
+}

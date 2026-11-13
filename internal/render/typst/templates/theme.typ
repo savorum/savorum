@@ -124,13 +124,18 @@
 // A measure is set with the font's own fraction forms, with its plain text
 // beside it.
 #let number(segment) = {
-  if segment.at("denominator", default: "") != "" {
+  let body = if segment.at("denominator", default: "") != "" {
     if segment.at("whole", default: "") != "" {
       [#segment.whole#h(0.12em)]
     }
     text(features: ("frac",))[#segment.numerator/#segment.denominator]
   } else {
     [#segment.at("text", default: "")]
+  }
+  if segment.at("alternative", default: false) {
+    text(weight: "regular", fill: quiet, body)
+  } else {
+    body
   }
 }
 

@@ -65,3 +65,41 @@ func TestPrintedBatchReportsTheAmountsItCouldNotRecalculate(t *testing.T) {
 		}
 	}
 }
+
+func TestPrintedBatchMarksOnlyWordingThatStatesAnAmount(t *testing.T) {
+	t.Parallel()
+
+	ounce := func(value string) *recipe.Quantity {
+		return &recipe.Quantity{Kind: recipe.QuantitySimple, Amount: &recipe.Amount{Value: rational(value)}, Unit: "mass.ounce.avoirdupois"}
+	}
+	ingredients := []recipe.Ingredient{
+		{ID: "ginger", Name: "ginger", Quantity: ounce("2"), Note: "cut into 1-inch pieces"},
+		{ID: "tomatoes", Name: "tomatoes", Quantity: ounce("1"), PackageSize: &recipe.SimpleQuantity{Amount: recipe.Amount{Value: rational("14")}, Unit: "mass.ounce.avoirdupois"}},
+		{ID: "onion", Name: "onion", Quantity: ounce("4"), Note: "about 1 cup"},
+	}
+	doubled := newPresenter(units.DefaultCatalog(), units.MeasureAsWritten, big.NewRat(2, 1), "en").
+		present(RecipeSnapshot{Recipe: recipe.Document{Title: "Stew", IngredientSections: []recipe.IngredientSection{{Ingredients: ingredients}}}}, Content{})
+
+	for index, want := range []string{"", "", "wording as written"} {
+		if row := doubled.IngredientGroups[0].Ingredients[index]; row.AsWritten != want {
+			t.Errorf("%q marked %q, want %q", row.Text, row.AsWritten, want)
+		}
+	}
+}
+
+func TestPrintedOptionalIngredientsSayTheyAreOptional(t *testing.T) {
+	t.Parallel()
+
+	ingredients := []recipe.Ingredient{
+		{ID: "chives", Name: "chives", Note: "for garnish", Optional: true, SourceText: "Chives, for garnish (optional)"},
+		{ID: "nuts", Name: "pine nuts", Optional: true, Quantity: &recipe.Quantity{Kind: recipe.QuantitySimple, Amount: &recipe.Amount{Value: rational("30")}, Unit: "mass.gram"}},
+	}
+	printed := newPresenter(units.DefaultCatalog(), units.MeasureAsWritten, big.NewRat(1, 1), "en").
+		present(RecipeSnapshot{Recipe: recipe.Document{Title: "Salad", IngredientSections: []recipe.IngredientSection{{Ingredients: ingredients}}}}, Content{})
+
+	for index, want := range []string{"chives, for garnish (optional)", "pine nuts (optional)"} {
+		if got := printed.IngredientGroups[0].Ingredients[index].Text; got != want {
+			t.Errorf("row %d = %q, want %q", index, got, want)
+		}
+	}
+}

@@ -476,3 +476,11 @@ test("an explicit unit conversion stays in its physical dimension and marks roun
     "1/1000",
   )
 })
+
+test("another country's cup reads as a cup rather than a pile of spoons", () => {
+  const converted = convertAmount(rational(1n), "volume.cup.us.customary", "au")
+  assert.equal(converted?.unit, "volume.cup.au")
+  assert.equal(converted && formatRational(converted.amount), "1")
+  assert.equal(converted?.parts, undefined)
+  assert.equal(converted?.approximate, true)
+})

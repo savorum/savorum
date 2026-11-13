@@ -1,4 +1,4 @@
-import { localizedUnitLabel, localizedUnitTight } from "./localized-units.ts"
+import { localizedUnitForms, localizedUnitLabel, localizedUnitTight } from "./localized-units.ts"
 import {
   type Rational,
   add,
@@ -72,6 +72,15 @@ export function unitLabel(unit: string | undefined, amount?: Rational): string {
   if (!definition) return unit
   const singular = amount !== undefined && compare(amount, rational(1n)) <= 0
   return singular ? definition.one : definition.many
+}
+
+export function namedByUnit(unit: string | undefined, name: string | undefined): boolean {
+  const wanted = name?.trim().toLocaleLowerCase()
+  if (!unit?.startsWith("count.") || !wanted) return false
+  const definition = units[unit]
+  return [definition?.one, definition?.many, ...localizedUnitForms(unit)].some(
+    (form) => form?.toLocaleLowerCase() === wanted,
+  )
 }
 
 export function unitIsTight(unit: string | undefined): boolean {
@@ -371,7 +380,16 @@ function presentFriendlyVolume(
   const maxAbsolute = parseRational(volumePresentation.maxTeaspoonError)
   const errorWeight = parseRational(volumePresentation.relativeErrorWeight)
   const minimumGain = parseRational(volumePresentation.minimumSimplicityGain)
-  if (!base || !actual || !maxRelative || !maxAbsolute || !errorWeight || !minimumGain)
+  const maxRemainder = parseRational(volumePresentation.maxRemainder)
+  if (
+    !base ||
+    !actual ||
+    !maxRelative ||
+    !maxAbsolute ||
+    !errorWeight ||
+    !minimumGain ||
+    !maxRemainder
+  )
     return undefined
   const convention = system === "original" ? definition.convention : system
   if (convention === "metric" && compare(actual, rational(6n)) > 0) return undefined
@@ -434,6 +452,7 @@ function presentFriendlyVolume(
       for (const remainder of [nearest, lower, upper]) {
         if (
           remainder.numerator <= 0n ||
+          compare(remainder, maxRemainder) > 0 ||
           (remainder !== nearest && compare(remainder, nearest) === 0)
         )
           continue
@@ -471,6 +490,13 @@ function presentFriendlyVolume(
     (!bestExact || bestApproximate.score + toNumber(minimumGain) < bestExact.score)
       ? bestApproximate
       : bestExact
+  // Prefer rounded cups to large combinations of tablespoons and teaspoons.
+  const cup = candidates[2]
+  const usesCup = best && (best.unit === cup || best.parts?.some((part) => part.unit === cup))
+  const spoons = cup && fromBase(toBase(rational(4n), candidates[1])!, teaspoon)
+  if (cup && !usesCup && spoons && compare(actual, spoons) > 0 && ladders[system].volume) {
+    return undefined
+  }
   if (best) {
     return {
       amount: best.amount,
@@ -496,6 +522,8 @@ export function convertAmount(
   unit: string | undefined,
   system: MeasurementSystem,
   normalize = system !== "original",
+  /** Preserve authored precision when no unit conversion is needed. */
+  authored = false,
 ): ConvertedAmount | undefined {
   if (!unit) return undefined
   const definition = units[unit]
@@ -513,6 +541,7 @@ export function convertAmount(
   const base = toBase(amount, unit)
   if (!base) return { amount, unit, approximate: false }
   const step = ladderStep(ladder, base)
+  if (authored && step.unit === unit) return { amount, unit, approximate: false }
   const converted = fromBase(base, step.unit)
   if (!converted) return { amount, unit, approximate: false }
   const rounded = roundToStep(converted, step.step)

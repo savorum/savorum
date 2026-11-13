@@ -71,6 +71,11 @@ func TestPresentationRoundsToAMeasureAKitchenOwns(t *testing.T) {
 			wantAmount: "200", wantUnit: "mass.gram",
 		},
 		{
+			name:   "a stated weight between rungs is not rounded",
+			amount: "142", unit: "mass.gram", system: units.MeasureMetric,
+			wantAmount: "142", wantUnit: "mass.gram",
+		},
+		{
 			name:   "an exact metric weight stays exact in US measures",
 			amount: "4",
 			unit:   "mass.ounce.avoirdupois", system: units.MeasureUS,
@@ -359,5 +364,27 @@ func TestNormalizationRefusesAnUnknownUnit(t *testing.T) {
 
 	if shown.Unit != "future.length.international" || shown.Amount.Cmp(big.NewRat(2, 1)) != 0 {
 		t.Fatalf("unknown unit fallback = %#v", shown)
+	}
+}
+
+func TestAnotherCountrysCupReadsAsACup(t *testing.T) {
+	t.Parallel()
+
+	shown, err := units.DefaultCatalog().Present("1", "volume.cup.us.customary", units.MeasureAU)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if shown.Amount.RatString() != "1" || shown.Unit != "volume.cup.au" || len(shown.Parts) != 0 || !shown.Approximate {
+		t.Errorf("a US cup in Australian measures = %+v, want about 1 cup", shown)
+	}
+
+	shown, err = units.DefaultCatalog().Present("5/2", "volume.cup.us.customary", units.MeasureAU)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if shown.Unit != "volume.cup.au" || len(shown.Parts) != 0 {
+		t.Errorf("2 1/2 US cups in Australian measures = %+v, want cups rather than a cup and 17 tablespoons", shown)
 	}
 }

@@ -46,11 +46,17 @@ func (p presenter) presentAlternatives(options []recipe.AlternativeOption) Print
 			}
 
 			if index > 0 {
-				joined.Segments = append(joined.Segments, PrintSegment{Text: p.label("or")})
+				joined.Segments = append(joined.Segments, PrintSegment{Text: p.label("or"), Alternative: true})
 				joined.Text += p.label("or")
+
+				for _, segment := range shown.Segments {
+					segment.Alternative = true
+					joined.Segments = append(joined.Segments, segment)
+				}
+			} else {
+				joined.Segments = append(joined.Segments, shown.Segments...)
 			}
 
-			joined.Segments = append(joined.Segments, shown.Segments...)
 			joined.Text += shown.Text
 			joined.Approximate = joined.Approximate || shown.Approximate
 		}
