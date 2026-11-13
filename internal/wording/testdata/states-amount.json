@@ -1,0 +1,92 @@
+[
+  {
+    "locale": "en",
+    "text": "about 1 cup",
+    "states_amount": true
+  },
+  {
+    "locale": "en",
+    "text": "1 stick, melted",
+    "states_amount": true
+  },
+  {
+    "locale": "en",
+    "text": "(or 2 small onions)",
+    "states_amount": true
+  },
+  {
+    "locale": "en",
+    "text": "cut into 1-inch pieces",
+    "states_amount": false
+  },
+  {
+    "locale": "en",
+    "text": "cut into 1-2 inch pieces",
+    "states_amount": false
+  },
+  {
+    "locale": "en",
+    "text": "cut into 2\" chunks",
+    "states_amount": false
+  },
+  {
+    "locale": "en",
+    "text": "rested 10 minutes (Note 2)",
+    "states_amount": false
+  },
+  {
+    "locale": "en",
+    "text": "ground beef (80/20)",
+    "states_amount": false
+  },
+  {
+    "locale": "en",
+    "text": "85% lean",
+    "states_amount": false
+  },
+  {
+    "locale": "en",
+    "text": "for a 9 x 13-inch pan",
+    "states_amount": false
+  },
+  {
+    "locale": "en",
+    "text": "heated to 180 °C",
+    "states_amount": false
+  },
+  {
+    "locale": "en",
+    "text": "plus 2 mint leaves",
+    "states_amount": true
+  },
+  {
+    "locale": "de-DE",
+    "text": "in 2 cm große Würfel geschnitten",
+    "states_amount": false
+  },
+  {
+    "locale": "de-DE",
+    "text": "10 Minuten ziehen lassen (Hinweis 3)",
+    "states_amount": false
+  },
+  {
+    "locale": "de-DE",
+    "text": "etwa 2 EL",
+    "states_amount": true
+  },
+  {
+    "locale": "fr-FR",
+    "text": "coupé en dés de 1 cm, voir étape 4",
+    "states_amount": false
+  },
+  {
+    "locale": "es",
+    "text": "unas 3 cucharadas",
+    "states_amount": true
+  },
+  {
+    "locale": "ja",
+    "text": "5分おく",
+    "states_amount": false
+  }
+]

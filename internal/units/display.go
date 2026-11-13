@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math/big"
+	"slices"
 	"strings"
 
 	"github.com/savorum/savorum/internal/recipe"
@@ -361,7 +362,7 @@ var errNoProjection = errors.New("amount is shown as written")
 // back unchanged rather than through a conversion that would say the same
 // thing less exactly.
 func (c Catalog) Present(value recipe.Rational, unitID string, system MeasurementSystem) (Presented, error) {
-	return c.present(value, unitID, system, system != MeasureAsWritten)
+	return c.present(value, unitID, system, system != MeasureAsWritten, true)
 }
 
 // PresentNormalized also normalizes an as-written amount after scaling.
@@ -377,10 +378,10 @@ func (c Catalog) PresentNormalized(value recipe.Rational, unitID string, system 
 		}
 	}
 
-	return c.present(value, unitID, system, true)
+	return c.present(value, unitID, system, true, false)
 }
 
-func (c Catalog) present(value recipe.Rational, unitID string, system MeasurementSystem, normalize bool) (Presented, error) {
+func (c Catalog) present(value recipe.Rational, unitID string, system MeasurementSystem, normalize, authored bool) (Presented, error) {
 	amount, err := value.Rat()
 	if err != nil {
 		return Presented{}, fmt.Errorf("parse displayed amount: %w", err)
@@ -425,7 +426,7 @@ func (c Catalog) present(value recipe.Rational, unitID string, system Measuremen
 	}
 
 	rung, err := c.rungFor(rungs, value, unitID)
-	if err != nil {
+	if err != nil || authored && rung.Unit == unitID {
 		return unchanged, nil
 	}
 
@@ -542,6 +543,18 @@ func (c Catalog) presentFriendlyVolume(value recipe.Rational, unitID string, sys
 		}
 	}
 
+	// Prefer rounded cups to large combinations of tablespoons and teaspoons.
+	if len(units) == 3 && (best == nil || !best.uses(units[2])) {
+		spoons, err := c.Convert("4", units[1], units[0])
+		if err != nil {
+			return Presented{}, false, err
+		}
+
+		if actualTsp.Cmp(spoons.Rat()) > 0 && len(ladders[system][recipe.DimensionVolume]) > 0 {
+			return Presented{}, false, nil
+		}
+	}
+
 	if best != nil {
 		return Presented{
 			Amount:      best.amount,
@@ -552,6 +565,10 @@ func (c Catalog) presentFriendlyVolume(value recipe.Rational, unitID string, sys
 	}
 
 	return Presented{Amount: actualTsp, Unit: units[0], Approximate: !actual.Exact()}, true, nil
+}
+
+func (v volumeCandidate) uses(unit string) bool {
+	return v.unit == unit || slices.ContainsFunc(v.parts, func(part PresentedPart) bool { return part.Unit == unit })
 }
 
 func considerVolumeCandidate(exact, approximate **volumeCandidate, candidate volumeCandidate) {
@@ -639,6 +656,11 @@ func (c Catalog) considerCompoundPlans(units []string, larger int, actualTsp, ma
 		return err
 	}
 
+	maxRemainder, ok := new(big.Rat).SetString(volumePresentationPolicy.MaxRemainder)
+	if !ok {
+		return errors.New("invalid volume maximum remainder")
+	}
+
 	actualInLarger := new(big.Rat).Quo(actualTsp, largerInTsp.Rat())
 
 	for _, whole := range compoundLargerAmounts(actualInLarger, larger) {
@@ -647,7 +669,7 @@ func (c Catalog) considerCompoundPlans(units []string, larger int, actualTsp, ma
 		nearest := roundToStep(exact, step)
 
 		for _, remainder := range []*big.Rat{nearest, floorToStep(exact, step), ceilToStep(exact, step)} {
-			if remainder.Sign() <= 0 || (remainder != nearest && remainder.Cmp(nearest) == 0) {
+			if remainder.Sign() <= 0 || remainder.Cmp(maxRemainder) > 0 || (remainder != nearest && remainder.Cmp(nearest) == 0) {
 				continue
 			}
 

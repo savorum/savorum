@@ -6,6 +6,8 @@ import (
 	"strings"
 
 	"github.com/savorum/savorum/internal/recipe"
+	"github.com/savorum/savorum/internal/units"
+	"github.com/savorum/savorum/internal/wording"
 )
 
 func (p presenter) presentIngredients(document recipe.Document) []PrintIngredientGroup {
@@ -147,7 +149,7 @@ func (p presenter) presentIngredientAlternatives(ingredient recipe.Ingredient) P
 		switch {
 		case keptAmount:
 			row.AsWritten = p.label("amount_as_written")
-		case keptWording || statesNumber(ingredient.Note):
+		case keptWording || p.statesNumber(ingredient.Note):
 			row.AsWritten = p.label("wording_as_written")
 		}
 	}
@@ -164,12 +166,19 @@ func (p presenter) presentIngredient(ingredient recipe.Ingredient) PrintIngredie
 	if ingredient.Quantity != nil {
 		amount = p.presentQuantity(*ingredient.Quantity)
 	}
-	// Retain unparsed measures as original source text.
-	if amount.Empty() && strings.TrimSpace(ingredient.SourceText) != "" {
-		source := strings.TrimSpace(ingredient.SourceText)
 
-		row := PrintIngredient{Text: source}
-		if p.scaled() && statesNumber(source) {
+	if amount.Empty() && strings.TrimSpace(ingredient.SourceText) != "" {
+		text := strings.TrimSpace(ingredient.SourceText)
+		if name := strings.TrimSpace(ingredient.Name); name != "" {
+			text = withNote(name, strings.TrimSpace(ingredient.Note))
+		}
+
+		if ingredient.Optional {
+			text += p.label("optional")
+		}
+
+		row := PrintIngredient{Text: text}
+		if p.scaled() && p.statesNumber(text) {
 			row.AsWritten = p.label("amount_as_written")
 		}
 
@@ -177,6 +186,14 @@ func (p presenter) presentIngredient(ingredient recipe.Ingredient) PrintIngredie
 	}
 
 	name := strings.TrimSpace(ingredient.Name)
+	if ingredient.Quantity != nil && ingredient.Quantity.Kind == recipe.QuantitySimple &&
+		units.NamedByUnit(ingredient.Quantity.Unit, name) && len(amount.Segments) > 1 {
+		label := amount.Segments[len(amount.Segments)-1].Text
+		amount.Segments = amount.Segments[:len(amount.Segments)-1]
+		amount.Text = strings.TrimSuffix(amount.Text, label)
+		name = strings.TrimSpace(label)
+	}
+
 	if ingredient.PackageSize != nil {
 		// A package size describes the tin, not the batch, so it is never
 		// multiplied by the batch factor.
@@ -186,12 +203,18 @@ func (p presenter) presentIngredient(ingredient recipe.Ingredient) PrintIngredie
 		}
 	}
 
+	wording := withNote(strings.TrimSpace(ingredient.Name), strings.TrimSpace(ingredient.Note))
 	text := withNote(name, strings.TrimSpace(ingredient.Note))
+
 	if ingredient.Recipe != nil && strings.TrimSpace(ingredient.Recipe.Title) != "" {
 		text += " (" + p.label("see") + strings.TrimSpace(ingredient.Recipe.Title) + ")"
 	}
 
-	return PrintIngredient{Amount: amount, Text: text, AsWritten: p.retention(ingredient.Quantity, text)}
+	if ingredient.Optional {
+		text += p.label("optional")
+	}
+
+	return PrintIngredient{Amount: amount, Text: text, AsWritten: p.retention(ingredient.Quantity, wording)}
 }
 
 // withNote joins a note to its ingredient. A note that opens with a bracket
@@ -210,10 +233,8 @@ func withNote(name, note string) string {
 	}
 }
 
-// statesNumber reports whether wording contains digits that were not recalculated
-// during scaling, indicating the value should be presented as written.
-func statesNumber(text string) bool {
-	return strings.ContainsAny(text, "0123456789")
+func (p presenter) statesNumber(text string) bool {
+	return wording.StatesAmount(text, p.language)
 }
 
 // amountFollowsBatch reports whether a quantity reads differently at this batch
@@ -241,11 +262,11 @@ func (p presenter) retention(quantity *recipe.Quantity, text string) string {
 		return ""
 	}
 
-	if !p.amountFollowsBatch(quantity) && (quantity != nil || statesNumber(text)) {
+	if !p.amountFollowsBatch(quantity) && (quantity != nil || p.statesNumber(text)) {
 		return p.label("amount_as_written")
 	}
 
-	if statesNumber(text) {
+	if p.statesNumber(text) {
 		return p.label("wording_as_written")
 	}
 

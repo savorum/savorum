@@ -29,3 +29,7 @@ export function localizedUnitTight(unit: string): boolean | undefined {
   const label = catalogs.get(presentationContext().locale)?.[unit]
   return label ? Boolean(label.tight) : undefined
 }
+
+export function localizedUnitForms(unit: string): string[] {
+  return Object.values(catalogs.get(presentationContext().locale)?.[unit]?.forms ?? {})
+}

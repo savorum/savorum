@@ -147,13 +147,14 @@ type PrintAmount struct {
 	Approximate bool           `json:"approximate,omitempty"`
 }
 
-// PrintSegment is one piece of an amount. A segment carrying a denominator is
-// a number to be set as a fraction; every other segment is written as it is.
+// PrintSegment represents text or a fraction when Denominator is set.
+// Alternative marks equivalent measures displayed with secondary emphasis.
 type PrintSegment struct {
 	Text        string `json:"text,omitempty"`
 	Whole       string `json:"whole,omitempty"`
 	Numerator   string `json:"numerator,omitempty"`
 	Denominator string `json:"denominator,omitempty"`
+	Alternative bool   `json:"alternative,omitempty"`
 }
 
 // Empty treats an amount as absent only when both Segments and Text are empty.

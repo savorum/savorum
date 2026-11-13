@@ -16,6 +16,7 @@ type presenter struct {
 	system               units.MeasurementSystem
 	scale                *big.Rat
 	locale               string
+	language             string
 	microwaveOutputWatts int
 }
 
@@ -39,6 +40,7 @@ func (p presenter) scaled() bool {
 // present writes one recipe snapshot as the document a cook will read.
 func (p presenter) present(snapshot RecipeSnapshot, content Content) PrintRecipe {
 	document := snapshot.Recipe
+	p.language = document.Language
 
 	out := PrintRecipe{
 		EntryID:  string(snapshot.EntryID),

@@ -134,6 +134,7 @@ export function CookingMode(props: {
   const presentation = (): Presentation => ({
     system: props.session.display?.system ?? measurementSystem(),
     scale: parseRational(props.session.scale) ?? rational(1n),
+    language: props.recipe.language,
   })
   const stepIngredientUses = createMemo(() => current()?.step.ingredient_uses ?? [])
   const last = () => {

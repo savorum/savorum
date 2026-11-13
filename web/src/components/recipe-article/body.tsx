@@ -353,6 +353,9 @@ export function RecipeArticleBody(props: {
                               >
                                 <IngredientAmount
                                   amount={`${line().approximate ? "≈ " : ""}${line().amount}`}
+                                  options={line().amountOptions?.map((option, index) =>
+                                    index === 0 && line().approximate ? `≈ ${option}` : option,
+                                  )}
                                   name={ingredient.name || line().text}
                                   sourceUnit={ingredientUnit(ingredient)}
                                   selectedUnit={unit()}

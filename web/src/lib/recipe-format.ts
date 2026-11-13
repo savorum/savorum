@@ -10,10 +10,12 @@ import {
   convertAmount,
   convertToUnit,
   measurementConvention,
+  namedByUnit,
   unitIsTight,
   unitLabel,
   unitMatchesMeasurementSystem,
 } from "./units.ts"
+import { statesAmount } from "./wording.ts"
 
 type Amount = components["schemas"]["Amount"]
 type Ingredient = components["schemas"]["Ingredient"]
@@ -29,6 +31,7 @@ export interface Presentation {
   scale: Rational
   /** A reader's unit choice for one ingredient, applied after batch scaling. */
   unit?: string
+  language?: string
 }
 
 export const asWritten: Presentation = {
@@ -83,6 +86,7 @@ export function cookNumber(value: Rational): string {
 interface Shown {
   text: string
   approximate: boolean
+  options?: string[]
 }
 
 function joinAmountAndUnit(amount: string, unit: string | undefined, value?: Rational): string {
@@ -106,6 +110,7 @@ function showAmount(
           unit,
           presentation.system,
           compare(scale, one) !== 0 || presentation.system !== "original",
+          compare(scale, one) === 0,
         )
   const render = (
     raw: string,
@@ -145,6 +150,12 @@ function showAmount(
     }
   }
   return undefined
+}
+
+function scaledValue(amount: Amount | undefined, presentation: Presentation): Rational | undefined {
+  const raw = amount?.value ?? amount?.max
+  const parsed = raw ? parseRational(raw) : undefined
+  return parsed ? multiply(parsed, presentation.scale) : undefined
 }
 
 function showSimple(quantity: SimpleQuantity, presentation: Presentation): Shown | undefined {
@@ -202,6 +213,7 @@ export function showQuantity(
       return {
         text: shown.map((option) => option!.text).join(m.recipe_quantity_or()),
         approximate: shown.some((option) => option!.approximate),
+        options: shown.map((option) => option!.text),
       }
     }
     case "opaque":
@@ -226,6 +238,7 @@ export interface IngredientChoiceLine {
 
 export interface IngredientLine {
   amount: string
+  amountOptions?: string[]
   /** True when the amount was rounded to a practical measure. */
   approximate: boolean
   text: string
@@ -237,14 +250,6 @@ export interface IngredientLine {
   keptAmount: boolean
   /** Authored numeric wording remains unchanged even when the structured amount scales. */
   keptWording: boolean
-}
-
-/**
- * Wording carrying a number the batch did not recalculate, whether an
- * equivalent amount, a tin size, or an oven setting.
- */
-function statesNumber(text: string | undefined): boolean {
-  return /\p{N}/u.test(text ?? "")
 }
 
 /**
@@ -374,42 +379,58 @@ export function ingredientLine(ingredient: Ingredient, presentation: Presentatio
       keptWording:
         batched &&
         !keptAmount &&
-        (branchLines.some((line) => line.keptWording) || statesNumber(ingredient.note)),
+        (branchLines.some((line) => line.keptWording) ||
+          statesAmount(ingredient.note, presentation.language)),
     }
   }
   const quantity = showQuantity(ingredient.quantity, presentation)
   const unchanged = presentation.system === "original" && compare(presentation.scale, one) === 0
 
   if (!quantity && ingredient.source_text) {
-    // The whole line is the source's, because nothing in it could be read as a
-    // quantity. At a changed batch that is a retained amount, not a scaled one.
+    const text = ingredient.name
+      ? withNote(ingredient.name, ingredient.note)
+      : ingredient.source_text
     return {
       amount: "",
       approximate: false,
-      text: ingredient.source_text,
-      keptAmount: batched && statesNumber(ingredient.source_text),
+      text,
+      keptAmount: batched && statesAmount(text, presentation.language),
       keptWording: false,
     }
   }
 
+  let amount = quantity?.text ?? ""
+  let name = ingredient.name ?? ""
+  if (ingredient.quantity?.kind === "simple" && namedByUnit(ingredient.quantity.unit, name)) {
+    const label = unitLabel(
+      ingredient.quantity.unit,
+      scaledValue(ingredient.quantity.amount, presentation),
+    )
+    if (label && amount.endsWith(label)) {
+      amount = amount.slice(0, -label.length).trimEnd()
+      name = label
+    }
+  }
   const size = ingredient.package_size
     ? showSimple(ingredient.package_size, { ...presentation, scale: one, unit: undefined })
     : undefined
-  const named = size ? `${ingredient.name ?? ""} (${size.text})` : (ingredient.name ?? "")
+  const named = size ? `${name} (${size.text})` : name
   const text = withNote(named, ingredient.note)
+  const wording = withNote(ingredient.name ?? "", ingredient.note)
   // A row states an amount either through its quantity or by writing one into
   // the words the reader sees; "salt and pepper" states none and keeps nothing.
   const keptAmount =
     batched &&
     !amountFollowsBatch(ingredient.quantity, presentation) &&
-    (Boolean(ingredient.quantity) || statesNumber(text))
+    (Boolean(ingredient.quantity) || statesAmount(wording, presentation.language))
   return {
-    amount: quantity?.text ?? "",
+    amount,
+    amountOptions: quantity?.options,
     approximate: quantity?.approximate ?? false,
     text,
     original: !unchanged || !quantity ? ingredient.source_text : undefined,
     keptAmount,
-    keptWording: batched && !keptAmount && statesNumber(text),
+    keptWording: batched && !keptAmount && statesAmount(wording, presentation.language),
   }
 }
 
@@ -557,6 +578,13 @@ export function yieldLine(value: Yield | undefined, presentation: Presentation):
   // Wording that cannot be recalculated keeps the batch size beside it rather
   // than being silently left looking wrong.
   return scaledYieldText(text, presentation.scale) ?? `${text} × ${cookNumber(presentation.scale)}`
+}
+
+export function madeYieldLine(value: Yield, presentation: Presentation): string {
+  const written = value.quantity ? undefined : writtenYieldAmount(value.text)
+  if (!written || !/^\s*\p{L}/u.test(value.text ?? "")) return yieldLine(value, presentation)
+  const amount = multiply(written.value, presentation.scale)
+  return `${cookNumber(amount)} ${yieldNoun(value, amount)}`
 }
 
 export function temperatureLine(temperature: Temperature, system: MeasurementSystem): string {

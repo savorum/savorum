@@ -16,6 +16,7 @@ import (
 	"github.com/savorum/savorum/internal/codegen"
 	"github.com/savorum/savorum/internal/recipe"
 	"github.com/savorum/savorum/internal/units"
+	"github.com/savorum/savorum/internal/wording"
 )
 
 const command = "go run ./cmd/units"
@@ -62,7 +63,23 @@ func run(arguments []string) error {
 		return err
 	}
 
-	return nil
+	return writeFixedNumberWords(*check)
+}
+
+const fixedNumberWordsPath = "internal/wording/fixed-numbers.generated.json"
+
+func writeFixedNumberWords(check bool) error {
+	data, err := json.MarshalIndent(wording.BuildFixedNumberWords(units.DefaultCatalog()), "", "  ")
+	if err != nil {
+		return fmt.Errorf("encode fixed number words: %w", err)
+	}
+
+	data = append(data, '\n')
+	if check {
+		return codegen.CheckArtifact(fixedNumberWordsPath, data, command)
+	}
+
+	return codegen.WriteArtifact(fixedNumberWordsPath, data)
 }
 
 func writeLocalizedLabels(directory string, check bool) error {

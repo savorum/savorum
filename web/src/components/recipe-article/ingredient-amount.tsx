@@ -11,6 +11,7 @@ import { convertToUnit, type MeasurementSystem } from "@/lib/units"
 /** Unit changes affect this reading only; the recipe's authored quantities stay intact. */
 export function IngredientAmount(props: {
   amount: string
+  options?: string[]
   name: string
   sourceUnit?: string
   selectedUnit?: string
@@ -34,8 +35,19 @@ export function IngredientAmount(props: {
             : choice.label,
       }))
   }
+  const shown = () => (
+    <Show when={props.options && props.options.length > 1} fallback={props.amount}>
+      {props.options![0]}
+      <span class={styles.equivalent}>
+        {props
+          .options!.slice(1)
+          .map((option) => m.recipe_quantity_or() + option)
+          .join("")}
+      </span>
+    </Show>
+  )
   return (
-    <Show when={props.amount && choices().length > 1} fallback={props.amount}>
+    <Show when={props.amount && choices().length > 1} fallback={shown()}>
       <Menu
         positioning={{ placement: "bottom-start", gutter: 4 }}
         onSelect={() => {
@@ -63,7 +75,7 @@ export function IngredientAmount(props: {
             class={styles.trigger}
             aria-label={`${props.name}: ${props.amount} · ${m.ingredient_unit()}`}
           >
-            {props.amount}
+            {shown()}
             <ChevronDown aria-hidden="true" size={12} />
           </button>
         )}
@@ -92,6 +104,7 @@ export function IngredientAmount(props: {
 }
 
 const styles = {
+  equivalent: css({ color: "fg.muted", fontWeight: "normal" }),
   trigger: css({
     alignItems: "baseline",
     background: "transparent",

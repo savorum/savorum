@@ -25,7 +25,7 @@ test.each([
     ingredients.push({
       id: "bread",
       name: "bread",
-      note: "cut into 2 cm cubes",
+      note: "about 4 slices",
       quantity: { kind: "simple", amount: { value: "150" }, unit: "mass.gram" },
     })
   const recipe: Recipe = {

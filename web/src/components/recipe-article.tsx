@@ -16,6 +16,7 @@ import {
   type Presentation,
   recipeMeasurementRegion,
   yieldAmount,
+  madeYieldLine,
   yieldLine,
 } from "@/lib/recipe-format"
 import { safeSourceURL, sourceHost } from "@/lib/source-url"
@@ -151,6 +152,7 @@ export const RecipeArticle = (props: RecipeArticleProps) => {
   const presentation = (): Presentation => ({
     system: measurementSystem(),
     scale: scale(),
+    language: recipe().language,
   })
   const assetByID = (id: string) => recipe().assets?.find((asset) => asset.id === id)
   const primaryImage = () =>
@@ -170,7 +172,7 @@ export const RecipeArticle = (props: RecipeArticleProps) => {
   const writtenYield = createMemo(() => yieldAmount(shownYield().value))
   const alsoMakes = createMemo(() =>
     otherYields(recipe(), shownYield().index)
-      .map((value) => yieldLine(value, presentation()))
+      .map((value) => madeYieldLine(value, presentation()))
       .filter(Boolean),
   )
   /**
