@@ -439,6 +439,7 @@ func buildDefaultCatalog() Catalog {
 		physical("volume.tablespoon.au", recipe.DimensionVolume, ConventionAU, DefinitionLinear, "volume.milliliter", "20", "", true),
 		physical("volume.teaspoon.au", recipe.DimensionVolume, ConventionAU, DefinitionLinear, "volume.milliliter", "5", "", true),
 		physical("volume.cup.jp", recipe.DimensionVolume, ConventionMetric, DefinitionLinear, "volume.milliliter", "200", "", true),
+		physical("volume.cup.gr", recipe.DimensionVolume, ConventionMetric, DefinitionLinear, "volume.milliliter", "200", "", true),
 		physical("volume.go.jp", recipe.DimensionVolume, ConventionMetric, DefinitionLinear, "volume.milliliter", "240100/1331", "", true),
 		physical("volume.cup.kr", recipe.DimensionVolume, ConventionMetric, DefinitionLinear, "volume.milliliter", "200", "", true),
 		physical("volume.fluidounce.imperial", recipe.DimensionVolume, ConventionImperial, DefinitionLinear, "volume.milliliter", "454609/16000", "", true),
