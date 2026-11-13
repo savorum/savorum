@@ -174,7 +174,7 @@ export function describeImportPhase(phase: ImportPhase): ImportProgressReport | 
         get label() {
           return m.import_progress_fetching_the_recipe_page()
         },
-        detail: phase.url,
+        detail: hostOf(phase.url),
       }
     case "importing": {
       const report: ImportProgressReport = {
@@ -186,5 +186,13 @@ export function describeImportPhase(phase: ImportPhase): ImportProgressReport | 
       if (phase.total > 0) report.fraction = Math.max(0, Math.min(1, phase.finished / phase.total))
       return report
     }
+  }
+}
+
+function hostOf(address: string): string {
+  try {
+    return new URL(address).hostname.replace(/^www\./, "")
+  } catch {
+    return address
   }
 }
