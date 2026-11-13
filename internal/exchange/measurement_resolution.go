@@ -149,7 +149,15 @@ type MeasurementResolutionPlanRequest struct {
 	ExcludedOccurrenceIDs []string
 	ExcludedItemIDs       []string
 	ExpectedRevision      uint64
+	// Basis records an automatic resolution source; user decisions leave it empty.
+	Basis string
 }
+
+// Automatic resolution sources.
+const (
+	BasisSourceAddress = "source-address"
+	BasisSoleReading   = "sole-reading"
+)
 
 // MeasurementResolutionPlan previews the exact occurrences, changes, and validation impact of a resolution.
 type MeasurementResolutionPlan struct {
@@ -190,6 +198,7 @@ type MeasurementResolutionRecord struct {
 	// this is what that action means to a resolver, and the two are recorded
 	// separately so a later reader does not have to infer one from the other.
 	DecisionKind string `json:"decision_kind"`
+	Basis        string `json:"basis,omitempty"`
 	UnitID       string `json:"unit_id,omitempty"`
 	Convention   string `json:"convention,omitempty"`
 	// ConventionUnitIDs is the mapping the convention expanded to, so what a
@@ -413,6 +422,11 @@ func (s *Service) RevertMeasurementResolutionPlan(ctx context.Context, previewID
 
 	stored.applied = false
 	stored.snapshots, stored.retainedBefore = nil, nil
+
+	if session.assumed != nil && session.assumed.PlanID == planID {
+		session.assumed = nil
+	}
+
 	session.revision++
 	previousBytes := session.retainedBytes
 	session.retainedBytes = retainedSessionBytes(session)

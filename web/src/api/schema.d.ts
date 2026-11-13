@@ -3896,6 +3896,16 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        AssumedMeasurementConvention: {
+            /** @enum {string} */
+            convention: "us" | "au" | "imperial" | "metric";
+            host: string;
+            label: string;
+            plan_id: string;
+            revertible: boolean;
+        } & {
+            [key: string]: unknown;
+        };
         Attempt: {
             /** Format: date-time */
             at: string;
@@ -4952,6 +4962,7 @@ export interface components {
             target_entry_id?: string;
         };
         ImportPreviewResponse: {
+            assumed_convention?: components["schemas"]["AssumedMeasurementConvention"];
             /** Format: date-time */
             expires_at: string;
             id: string;

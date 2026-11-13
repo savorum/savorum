@@ -1225,7 +1225,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Ingredient_Details_RemoveInputs */
 /** @typedef {{}} Ingredient_Details_Remove_AlternativeInputs */
 /** @typedef {{}} Ingredient_Details_Revert_This_InterpretationInputs */
-/** @typedef {{}} Ingredient_Details_The_Recipe_S_Own_Line_The_Reader_Shows_It_When_There_Is_No_AmInputs */
+/** @typedef {{}} Ingredient_Details_The_Recipe_S_Own_LineInputs */
 /** @typedef {{}} Ingredient_Details_The_Recipe_Says_This_Can_Be_Left_OutInputs */
 /** @typedef {{}} Ingredient_Details_This_Ingredient_Now_ReadsInputs */
 /** @typedef {{}} Ingredient_Details_Two_Amounts_Added_TogetherInputs */
@@ -1462,6 +1462,8 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} List_Fields_Written_ByInputs */
 /** @typedef {{}} Measurement_Decisions_All_AnsweredInputs */
 /** @typedef {{}} Measurement_Decisions_ApplyInputs */
+/** @typedef {{ convention: NonNullable<unknown>, host: NonNullable<unknown> }} Measurement_Decisions_AssumedInputs */
+/** @typedef {{}} Measurement_Decisions_ChangeInputs */
 /** @typedef {{}} Measurement_Decisions_Clear_ChoiceInputs */
 /** @typedef {{}} Measurement_Decisions_Convention_LegendInputs */
 /** @typedef {{}} Measurement_Decisions_ExamplesInputs */
@@ -52775,43 +52777,43 @@ export const ingredient_details_revert_this_interpretation = /** @type {((inputs
 /**
 * | output |
 * | --- |
-* | "The recipe's own line. The reader shows it when there is no amount to work from." |
+* | "The recipe's own line." |
 *
-* @param {Ingredient_Details_The_Recipe_S_Own_Line_The_Reader_Shows_It_When_There_Is_No_AmInputs} inputs
+* @param {Ingredient_Details_The_Recipe_S_Own_LineInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
 * @returns {LocalizedString}
 */
-export const ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am = /** @type {((inputs?: Ingredient_Details_The_Recipe_S_Own_Line_The_Reader_Shows_It_When_There_Is_No_AmInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Ingredient_Details_The_Recipe_S_Own_Line_The_Reader_Shows_It_When_There_Is_No_AmInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+export const ingredient_details_the_recipe_s_own_line = /** @type {((inputs?: Ingredient_Details_The_Recipe_S_Own_LineInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Ingredient_Details_The_Recipe_S_Own_LineInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
 	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "cs") return __cs.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "da") return __da.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "de") return __de.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "el") return __el.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "es") return __es.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "fi") return __fi.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "fr") return __fr.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "he") return __he.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "hu") return __hu.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "id") return __id.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "it") return __it.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "ja") return __ja.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "ko") return __ko.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "nb") return __nb.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "nl") return __nl.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "pl") return __pl.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "pt-BR") return __pt_br2.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "pt-PT") return __pt_pt2.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "ro") return __ro.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "ru") return __ru.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "sv") return __sv.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "th") return __th.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "tr") return __tr.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "uk") return __uk.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "vi") return __vi.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
-	return __en.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am(inputs)
+	if (locale === "ar") return __ar.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "cs") return __cs.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "da") return __da.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "de") return __de.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "el") return __el.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "es") return __es.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "fi") return __fi.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "fr") return __fr.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "he") return __he.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "hu") return __hu.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "id") return __id.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "it") return __it.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "ja") return __ja.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "ko") return __ko.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "nb") return __nb.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "nl") return __nl.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "pl") return __pl.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "pt-BR") return __pt_br2.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "pt-PT") return __pt_pt2.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "ro") return __ro.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "ru") return __ru.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "sv") return __sv.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "th") return __th.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "tr") return __tr.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "uk") return __uk.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "vi") return __vi.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.ingredient_details_the_recipe_s_own_line(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.ingredient_details_the_recipe_s_own_line(inputs)
+	return __en.ingredient_details_the_recipe_s_own_line(inputs)
 });
 /**
 * | output |
@@ -62488,6 +62490,88 @@ export const measurement_decisions_apply = /** @type {((inputs?: Measurement_Dec
 	if (locale === "zh-Hans") return __zh_hans1.measurement_decisions_apply(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.measurement_decisions_apply(inputs)
 	return __en.measurement_decisions_apply(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Cup and spoon sizes weren't stated, so they're read as {convention}, the usual for {host}." |
+*
+* @param {Measurement_Decisions_AssumedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const measurement_decisions_assumed = /** @type {((inputs: Measurement_Decisions_AssumedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Measurement_Decisions_AssumedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.measurement_decisions_assumed(inputs)
+	if (locale === "cs") return __cs.measurement_decisions_assumed(inputs)
+	if (locale === "da") return __da.measurement_decisions_assumed(inputs)
+	if (locale === "de") return __de.measurement_decisions_assumed(inputs)
+	if (locale === "el") return __el.measurement_decisions_assumed(inputs)
+	if (locale === "es") return __es.measurement_decisions_assumed(inputs)
+	if (locale === "fi") return __fi.measurement_decisions_assumed(inputs)
+	if (locale === "fr") return __fr.measurement_decisions_assumed(inputs)
+	if (locale === "he") return __he.measurement_decisions_assumed(inputs)
+	if (locale === "hu") return __hu.measurement_decisions_assumed(inputs)
+	if (locale === "id") return __id.measurement_decisions_assumed(inputs)
+	if (locale === "it") return __it.measurement_decisions_assumed(inputs)
+	if (locale === "ja") return __ja.measurement_decisions_assumed(inputs)
+	if (locale === "ko") return __ko.measurement_decisions_assumed(inputs)
+	if (locale === "nb") return __nb.measurement_decisions_assumed(inputs)
+	if (locale === "nl") return __nl.measurement_decisions_assumed(inputs)
+	if (locale === "pl") return __pl.measurement_decisions_assumed(inputs)
+	if (locale === "pt-BR") return __pt_br2.measurement_decisions_assumed(inputs)
+	if (locale === "pt-PT") return __pt_pt2.measurement_decisions_assumed(inputs)
+	if (locale === "ro") return __ro.measurement_decisions_assumed(inputs)
+	if (locale === "ru") return __ru.measurement_decisions_assumed(inputs)
+	if (locale === "sv") return __sv.measurement_decisions_assumed(inputs)
+	if (locale === "th") return __th.measurement_decisions_assumed(inputs)
+	if (locale === "tr") return __tr.measurement_decisions_assumed(inputs)
+	if (locale === "uk") return __uk.measurement_decisions_assumed(inputs)
+	if (locale === "vi") return __vi.measurement_decisions_assumed(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.measurement_decisions_assumed(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.measurement_decisions_assumed(inputs)
+	return __en.measurement_decisions_assumed(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Change" |
+*
+* @param {Measurement_Decisions_ChangeInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const measurement_decisions_change = /** @type {((inputs?: Measurement_Decisions_ChangeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Measurement_Decisions_ChangeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.measurement_decisions_change(inputs)
+	if (locale === "cs") return __cs.measurement_decisions_change(inputs)
+	if (locale === "da") return __da.measurement_decisions_change(inputs)
+	if (locale === "de") return __de.measurement_decisions_change(inputs)
+	if (locale === "el") return __el.measurement_decisions_change(inputs)
+	if (locale === "es") return __es.measurement_decisions_change(inputs)
+	if (locale === "fi") return __fi.measurement_decisions_change(inputs)
+	if (locale === "fr") return __fr.measurement_decisions_change(inputs)
+	if (locale === "he") return __he.measurement_decisions_change(inputs)
+	if (locale === "hu") return __hu.measurement_decisions_change(inputs)
+	if (locale === "id") return __id.measurement_decisions_change(inputs)
+	if (locale === "it") return __it.measurement_decisions_change(inputs)
+	if (locale === "ja") return __ja.measurement_decisions_change(inputs)
+	if (locale === "ko") return __ko.measurement_decisions_change(inputs)
+	if (locale === "nb") return __nb.measurement_decisions_change(inputs)
+	if (locale === "nl") return __nl.measurement_decisions_change(inputs)
+	if (locale === "pl") return __pl.measurement_decisions_change(inputs)
+	if (locale === "pt-BR") return __pt_br2.measurement_decisions_change(inputs)
+	if (locale === "pt-PT") return __pt_pt2.measurement_decisions_change(inputs)
+	if (locale === "ro") return __ro.measurement_decisions_change(inputs)
+	if (locale === "ru") return __ru.measurement_decisions_change(inputs)
+	if (locale === "sv") return __sv.measurement_decisions_change(inputs)
+	if (locale === "th") return __th.measurement_decisions_change(inputs)
+	if (locale === "tr") return __tr.measurement_decisions_change(inputs)
+	if (locale === "uk") return __uk.measurement_decisions_change(inputs)
+	if (locale === "vi") return __vi.measurement_decisions_change(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.measurement_decisions_change(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.measurement_decisions_change(inputs)
+	return __en.measurement_decisions_change(inputs)
 });
 /**
 * | output |

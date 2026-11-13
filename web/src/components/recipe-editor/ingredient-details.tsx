@@ -156,7 +156,7 @@ export function IngredientDetails(props: {
         <WhenSet value={draft().source_text}>
           <FormField
             label={m.ingredient_details_as_the_source_wrote_it()}
-            hint={m.ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am()}
+            hint={m.ingredient_details_the_recipe_s_own_line()}
           >
             <Input
               size="sm"

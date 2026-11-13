@@ -60,24 +60,25 @@ test("regional measurement ambiguities are previewed, excluded, applied, and rem
     "2 measures differ in size by country. Unanswered ones import as written.",
   )
 
-  // The whole-library answer is the first thing offered, because most people
-  // have one answer for every measure they own.
   const decisions = page.getByRole("region", { name: "Measurements to check" })
-  await decisions.getByRole("radio", { name: "Australian", exact: true }).check()
+  const convention = decisions.getByRole("group", { name: "Read every measure as", exact: true })
+  await convention.getByRole("button", { name: /^Australian\b/ }).click()
   await expect(decisions).toContainText("Reads 3 measurements in 1 recipe.")
   await decisions.getByRole("button", { name: "Clear" }).click()
 
   // Answering one measure at a time is the same decision at a narrower scope,
   // and it keeps its own exceptions.
   await decisions.getByText("Answer the 2 measures separately").click()
-  const tablespoon = page.getByRole("listitem").filter({ hasText: /^“tbsp”/ })
+  const tablespoon = decisions.getByRole("listitem").filter({
+    has: page.getByRole("heading", { name: /^tbsp$/i }),
+  })
   await expect(tablespoon).toContainText("2 measurements · 1 recipe")
   await expect(tablespoon).toContainText("1 Tbsp olive oil")
   await expect(tablespoon).toContainText("1 ½ Tbsp lemon juice")
-  await tablespoon.getByRole("radio", { name: /Australian/ }).check()
+  await tablespoon.getByRole("button", { name: /^Australian/ }).click()
   await expect(tablespoon).toContainText("Reads 2 measurements in 1 recipe.")
 
-  await tablespoon.getByText("Exceptions").click()
+  await tablespoon.getByRole("button", { name: "Exceptions", exact: true }).click()
   const exceptions = page.getByRole("dialog", { name: "Exceptions" })
   const oliveOil = exceptions.getByRole("checkbox", { name: /Include 1 Tbsp olive oil/ })
   await oliveOil.evaluate((node) => node.setAttribute("data-identity-check", "stable-occurrence"))
@@ -95,7 +96,7 @@ test("regional measurement ambiguities are previewed, excluded, applied, and rem
   await expect(undo).toHaveCount(0)
   await expect(review).toContainText("2 measures differ in size by country.")
 
-  await decisions.getByRole("radio", { name: "Australian", exact: true }).check()
+  await convention.getByRole("button", { name: /^Australian\b/ }).click()
   await expect(decisions).toContainText("Reads 3 measurements in 1 recipe.")
   await decisions.getByRole("button", { name: "Apply" }).click()
   await expect(review).toContainText("Every measurement is settled.")

@@ -224,7 +224,7 @@
   "ingredient_details_remove_alternative": "Elimină alternativa",
   "ingredient_details_add_term": "Adaugă un termen",
   "ingredient_details_the_recipe_says_this_can_be_left_out": "Rețeta spune că acest ingredient poate fi omis",
-  "ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am": "Rândul original din rețetă. Este afișat în vizualizarea rețetei când nu există o cantitate pentru calcule.",
+  "ingredient_details_the_recipe_s_own_line": "Rândul original din rețetă.",
   "ingredient_details_amount_is_approximate": "Cantitatea este aproximativă",
   "ingredients_ingredients": "Ingrediente",
   "ingredients_no_ingredient_list_you_can_save_this_record_without_one": "Nu există o listă de ingrediente. Poți salva înregistrarea și fără ea.",
@@ -2548,6 +2548,8 @@
     }
   ],
   "measurement_decisions_all_answered": "Toate unitățile de măsură sunt clarificate.",
+  "measurement_decisions_assumed": "Mărimea cănilor și a lingurilor nu era precizată, așa că sunt citite ca {convention}, uzual pentru {host}.",
+  "measurement_decisions_change": "Schimbă",
   "measurement_decisions_undo_last": "Anulează ultimul răspuns",
   "measurement_decisions_convention_legend": "Interpretează toate unitățile ca",
   "measurement_decisions_separately": [

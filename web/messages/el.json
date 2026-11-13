@@ -224,7 +224,7 @@
   "ingredient_details_remove_alternative": "Αφαίρεση εναλλακτικής",
   "ingredient_details_add_term": "Προσθήκη όρου",
   "ingredient_details_the_recipe_says_this_can_be_left_out": "Η συνταγή αναφέρει ότι αυτό μπορεί να παραλειφθεί",
-  "ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am": "Η αρχική γραμμή της συνταγής. Η προβολή ανάγνωσης την εμφανίζει όταν δεν υπάρχει ποσότητα για υπολογισμό.",
+  "ingredient_details_the_recipe_s_own_line": "Η αρχική γραμμή της συνταγής.",
   "ingredient_details_amount_is_approximate": "Η ποσότητα είναι κατά προσέγγιση",
   "ingredients_ingredients": "Υλικά",
   "ingredients_no_ingredient_list_you_can_save_this_record_without_one": "Δεν υπάρχει λίστα υλικών. Μπορείτε να αποθηκεύσετε την εγγραφή χωρίς αυτήν.",
@@ -2391,6 +2391,8 @@
     }
   ],
   "measurement_decisions_all_answered": "Όλες οι μονάδες μέτρησης έχουν διευκρινιστεί.",
+  "measurement_decisions_assumed": "Τα μεγέθη φλιτζανιού και κουταλιού δεν αναφέρονταν, οπότε διαβάζονται ως {convention}, όπως συνηθίζεται για το {host}.",
+  "measurement_decisions_change": "Αλλαγή",
   "measurement_decisions_undo_last": "Αναίρεση τελευταίας απάντησης",
   "measurement_decisions_convention_legend": "Ερμηνεία όλων των μονάδων ως",
   "measurement_decisions_separately": [

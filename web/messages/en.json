@@ -224,7 +224,7 @@
   "ingredient_details_remove_alternative": "Remove alternative",
   "ingredient_details_add_term": "Add term",
   "ingredient_details_the_recipe_says_this_can_be_left_out": "The recipe says this can be left out",
-  "ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am": "The recipe's own line. The reader shows it when there is no amount to work from.",
+  "ingredient_details_the_recipe_s_own_line": "The recipe's own line.",
   "ingredient_details_amount_is_approximate": "Amount is approximate",
   "ingredients_ingredients": "Ingredients",
   "ingredients_no_ingredient_list_you_can_save_this_record_without_one": "No ingredient list. You can save this record without one.",
@@ -2275,6 +2275,8 @@
     }
   ],
   "measurement_decisions_all_answered": "Every measurement is settled.",
+  "measurement_decisions_assumed": "Cup and spoon sizes weren't stated, so they're read as {convention}, the usual for {host}.",
+  "measurement_decisions_change": "Change",
   "measurement_decisions_undo_last": "Undo last answer",
   "measurement_decisions_convention_legend": "Read every measure as",
   "measurement_decisions_separately": [

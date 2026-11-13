@@ -88,6 +88,15 @@ export interface ImportPreview {
   resolution_decisions: MeasurementResolutionDecision[]
   resolution_groups: MeasurementResolutionGroup[]
   resolution_profiles: { id: string; label: string }[]
+  assumed_convention?: AssumedConvention
+}
+
+export interface AssumedConvention {
+  convention: "us" | "au" | "imperial" | "metric"
+  label: string
+  host: string
+  plan_id: string
+  revertible: boolean
 }
 
 export interface MeasurementResolutionChoice {
@@ -218,6 +227,7 @@ export function normalizeImportPreview(preview: Nullable<ImportPreview>): Import
     resolution_decisions: list(preview.resolution_decisions).map(normalizeResolutionDecision),
     resolution_groups: list(preview.resolution_groups).map(normalizeResolutionGroup),
     resolution_profiles: list(preview.resolution_profiles),
+    assumed_convention: preview.assumed_convention ?? undefined,
   }
 }
 

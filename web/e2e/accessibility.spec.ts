@@ -126,9 +126,12 @@ test("the import progress page passes axe", async ({ page }) => {
   const decisions = page.getByRole("region", { name: "Measurements to check" })
   await expect(decisions).toBeVisible()
   await decisions.getByText("Answer the 2 measures separately").click()
-  await decisions.getByRole("radio", { name: "Australian", exact: true }).check()
-  await expect(decisions.getByRole("button", { name: "Apply" })).toBeVisible()
-  await decisions.getByText("Exceptions").first().click()
+  const tablespoon = decisions.getByRole("listitem").filter({
+    has: page.getByRole("heading", { name: /^tbsp$/i }),
+  })
+  await tablespoon.getByRole("button", { name: /^Australian/ }).click()
+  await expect(tablespoon.getByRole("button", { name: "Apply", exact: true })).toBeEnabled()
+  await tablespoon.getByRole("button", { name: "Exceptions", exact: true }).click()
   const exceptionsDialog = page.getByRole("dialog", { name: "Exceptions" })
   await expect(exceptionsDialog).toBeVisible()
   await expectAccessible(page)

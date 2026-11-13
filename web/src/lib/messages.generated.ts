@@ -3842,8 +3842,8 @@ export const ingredient_details_remove_alternative: Messages["ingredient_details
 export const ingredient_details_revert_this_interpretation: Messages["ingredient_details_revert_this_interpretation"] = /* @__PURE__ */ localized("ingredient_details_revert_this_interpretation", () => {
 	return /** @type {LocalizedString} */ (`Revert this interpretation`)
 })
-export const ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am: Messages["ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am"] = /* @__PURE__ */ localized("ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am", () => {
-	return /** @type {LocalizedString} */ (`The recipe's own line. The reader shows it when there is no amount to work from.`)
+export const ingredient_details_the_recipe_s_own_line: Messages["ingredient_details_the_recipe_s_own_line"] = /* @__PURE__ */ localized("ingredient_details_the_recipe_s_own_line", () => {
+	return /** @type {LocalizedString} */ (`The recipe's own line.`)
 })
 export const ingredient_details_the_recipe_says_this_can_be_left_out: Messages["ingredient_details_the_recipe_says_this_can_be_left_out"] = /* @__PURE__ */ localized("ingredient_details_the_recipe_says_this_can_be_left_out", () => {
 	return /** @type {LocalizedString} */ (`The recipe says this can be left out`)
@@ -4552,6 +4552,12 @@ export const measurement_decisions_all_answered: Messages["measurement_decisions
 })
 export const measurement_decisions_apply: Messages["measurement_decisions_apply"] = /* @__PURE__ */ localized("measurement_decisions_apply", () => {
 	return /** @type {LocalizedString} */ (`Apply`)
+})
+export const measurement_decisions_assumed: Messages["measurement_decisions_assumed"] = /* @__PURE__ */ localized("measurement_decisions_assumed", (i) => {
+	return /** @type {LocalizedString} */ (`Cup and spoon sizes weren't stated, so they're read as ${i?.convention}, the usual for ${i?.host}.`)
+})
+export const measurement_decisions_change: Messages["measurement_decisions_change"] = /* @__PURE__ */ localized("measurement_decisions_change", () => {
+	return /** @type {LocalizedString} */ (`Change`)
 })
 export const measurement_decisions_clear_choice: Messages["measurement_decisions_clear_choice"] = /* @__PURE__ */ localized("measurement_decisions_clear_choice", () => {
 	return /** @type {LocalizedString} */ (`Clear`)

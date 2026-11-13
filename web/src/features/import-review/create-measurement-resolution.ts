@@ -279,6 +279,34 @@ export function createMeasurementResolution(
     }
   }
 
+  const assumedConvention = () => importPreview().assumed_convention
+
+  const withdrawAssumedConvention = async () => {
+    const assumed = assumedConvention()
+    const preview = importPreview()
+    if (!assumed?.revertible || !mutations.begin()) return
+    abortReads()
+    const isCurrent = review.captureSession()
+    amend(everyMeasurement, { busy: true, error: undefined })
+    try {
+      const reverted = await revertMeasurementResolutionPlan(
+        preview.id,
+        assumed.plan_id,
+        preview.preview_revision,
+      )
+      if (!isCurrent()) return
+      batch(() => {
+        review.refreshSession(reverted)
+        setAnswers({})
+        setLastAppliedResolution(undefined)
+      })
+    } catch (error) {
+      if (isCurrent()) amend(everyMeasurement, { error, busy: false })
+    } finally {
+      mutations.end()
+    }
+  }
+
   const undoLastResolution = async () => {
     const applied = lastAppliedResolution()
     const preview = importPreview()
@@ -324,6 +352,8 @@ export function createMeasurementResolution(
     applyAnswer,
     lastAppliedResolution,
     undoLastResolution,
+    assumedConvention,
+    withdrawAssumedConvention,
   }
 }
 export type MeasurementResolution = ReturnType<typeof createMeasurementResolution>

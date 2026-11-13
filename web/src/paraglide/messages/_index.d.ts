@@ -8673,10 +8673,10 @@ export const ingredient_details_revert_this_interpretation: ((inputs?: Ingredien
 /**
 * | output |
 * | --- |
-* | "The recipe's own line. The reader shows it when there is no amount to work from." |
+* | "The recipe's own line." |
 *
 */
-export const ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am: ((inputs?: Ingredient_Details_The_Recipe_S_Own_Line_The_Reader_Shows_It_When_There_Is_No_AmInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Ingredient_Details_The_Recipe_S_Own_Line_The_Reader_Shows_It_When_There_Is_No_AmInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+export const ingredient_details_the_recipe_s_own_line: ((inputs?: Ingredient_Details_The_Recipe_S_Own_LineInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Ingredient_Details_The_Recipe_S_Own_LineInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -10329,6 +10329,20 @@ export const measurement_decisions_all_answered: ((inputs?: Measurement_Decision
 *
 */
 export const measurement_decisions_apply: ((inputs?: Measurement_Decisions_ApplyInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Measurement_Decisions_ApplyInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Cup and spoon sizes weren't stated, so they're read as {convention}, the usual for {host}." |
+*
+*/
+export const measurement_decisions_assumed: ((inputs: Measurement_Decisions_AssumedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Measurement_Decisions_AssumedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Change" |
+*
+*/
+export const measurement_decisions_change: ((inputs?: Measurement_Decisions_ChangeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Measurement_Decisions_ChangeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -18781,7 +18795,7 @@ export type Ingredient_Details_Package_SizeInputs = {};
 export type Ingredient_Details_RemoveInputs = {};
 export type Ingredient_Details_Remove_AlternativeInputs = {};
 export type Ingredient_Details_Revert_This_InterpretationInputs = {};
-export type Ingredient_Details_The_Recipe_S_Own_Line_The_Reader_Shows_It_When_There_Is_No_AmInputs = {};
+export type Ingredient_Details_The_Recipe_S_Own_LineInputs = {};
 export type Ingredient_Details_The_Recipe_Says_This_Can_Be_Left_OutInputs = {};
 export type Ingredient_Details_This_Ingredient_Now_ReadsInputs = {};
 export type Ingredient_Details_Two_Amounts_Added_TogetherInputs = {};
@@ -19018,6 +19032,8 @@ export type List_Fields_VariationsInputs = {};
 export type List_Fields_Written_ByInputs = {};
 export type Measurement_Decisions_All_AnsweredInputs = {};
 export type Measurement_Decisions_ApplyInputs = {};
+export type Measurement_Decisions_AssumedInputs = { convention: NonNullable<unknown>, host: NonNullable<unknown> };
+export type Measurement_Decisions_ChangeInputs = {};
 export type Measurement_Decisions_Clear_ChoiceInputs = {};
 export type Measurement_Decisions_Convention_LegendInputs = {};
 export type Measurement_Decisions_ExamplesInputs = {};

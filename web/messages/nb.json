@@ -224,7 +224,7 @@
   "ingredient_details_remove_alternative": "Fjern alternativ",
   "ingredient_details_add_term": "Legg til ledd",
   "ingredient_details_the_recipe_says_this_can_be_left_out": "Oppskriften sier at dette kan utelates",
-  "ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am": "Oppskriftens egen linje. Den vises i lesevisningen når det ikke finnes en mengde å ta utgangspunkt i.",
+  "ingredient_details_the_recipe_s_own_line": "Oppskriftens egen linje.",
   "ingredient_details_amount_is_approximate": "Mengden er omtrentlig",
   "ingredients_ingredients": "Ingredienser",
   "ingredients_no_ingredient_list_you_can_save_this_record_without_one": "Ingen ingrediensliste. Du kan lagre denne oppføringen uten en.",
@@ -2397,6 +2397,8 @@
     }
   ],
   "measurement_decisions_all_answered": "Alle måleenheter er avklart.",
+  "measurement_decisions_assumed": "Størrelsen på kopper og skjeer var ikke oppgitt, så de leses som {convention}, som er vanlig for {host}.",
+  "measurement_decisions_change": "Endre",
   "measurement_decisions_undo_last": "Angre siste svar",
   "measurement_decisions_convention_legend": "Tolk alle måleenheter som",
   "measurement_decisions_separately": [

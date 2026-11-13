@@ -224,7 +224,7 @@
   "ingredient_details_remove_alternative": "대안 삭제",
   "ingredient_details_add_term": "합산 항목 추가",
   "ingredient_details_the_recipe_says_this_can_be_left_out": "레시피에 생략 가능하다고 되어 있음",
-  "ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am": "레시피의 원래 문장입니다. 계산할 양이 없으면 읽기 화면에 이 문장이 표시됩니다.",
+  "ingredient_details_the_recipe_s_own_line": "레시피의 원래 문장입니다.",
   "ingredient_details_amount_is_approximate": "대략적인 양",
   "ingredients_ingredients": "재료",
   "ingredients_no_ingredient_list_you_can_save_this_record_without_one": "재료 목록이 없습니다. 목록 없이도 이 기록을 저장할 수 있습니다.",
@@ -2275,6 +2275,8 @@
     }
   ],
   "measurement_decisions_all_answered": "모든 계량 단위가 확정되었습니다.",
+  "measurement_decisions_assumed": "컵과 스푼 크기가 명시되지 않아 {host}에서 일반적인 {convention} 기준으로 읽었습니다.",
+  "measurement_decisions_change": "변경",
   "measurement_decisions_undo_last": "마지막 답변 실행 취소",
   "measurement_decisions_convention_legend": "모든 계량 단위를 다음으로 해석",
   "measurement_decisions_separately": [

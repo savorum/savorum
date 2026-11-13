@@ -224,7 +224,7 @@
   "ingredient_details_remove_alternative": "Alternatifi kaldır",
   "ingredient_details_add_term": "Terim ekle",
   "ingredient_details_the_recipe_says_this_can_be_left_out": "Tarifte bunun çıkarılabileceği belirtiliyor",
-  "ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am": "Tarifin özgün satırı. Hesaplamada kullanılacak miktar olmadığında okuma görünümünde gösterilir.",
+  "ingredient_details_the_recipe_s_own_line": "Tarifin özgün satırı.",
   "ingredient_details_amount_is_approximate": "Yaklaşık miktar",
   "ingredients_ingredients": "Malzemeler",
   "ingredients_no_ingredient_list_you_can_save_this_record_without_one": "Malzeme listesi yok. Bu kaydı liste olmadan da kaydedebilirsiniz.",
@@ -2396,6 +2396,8 @@
     }
   ],
   "measurement_decisions_all_answered": "Tüm ölçüler kesinleştirildi.",
+  "measurement_decisions_assumed": "Fincan ve kaşık ölçüleri belirtilmemiş; bu yüzden {host} için olağan olan {convention} olarak okunuyor.",
+  "measurement_decisions_change": "Değiştir",
   "measurement_decisions_undo_last": "Son yanıtı geri al",
   "measurement_decisions_convention_legend": "Tüm ölçü birimlerini şu şekilde yorumla",
   "measurement_decisions_separately": [
