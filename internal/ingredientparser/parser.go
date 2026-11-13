@@ -1,10 +1,8 @@
-// Package ingredientparser conservatively extracts the common structured
-// amount at the start of an ingredient line. Import adapters share it so each
-// source application does not invent a different interpretation of cups,
-// fractions, and ranges.
+// Package ingredientparser extracts structured quantities while preserving authored ingredient text.
 package ingredientparser
 
 import (
+	"cmp"
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
@@ -17,6 +15,7 @@ import (
 	"unicode"
 	"unicode/utf8"
 
+	"golang.org/x/text/language"
 	"golang.org/x/text/unicode/norm"
 
 	"github.com/savorum/savorum/internal/recipe"
@@ -28,10 +27,7 @@ import (
 const amountPattern = `(?:\d+\s+)?(?:\d+/\d+)|\d+(?:\.\d+|,\d{1,2})?`
 
 var (
-	attachedUnit = regexp.MustCompile(`^(` + amountPattern + `)(\p{L})`)
-	// A hyphen joining an amount to a word is the compound-adjective spelling
-	// of the same measure: "8-oz" is "8 oz". Only a letter after the hyphen is
-	// treated this way, so a range keeps its separator and "2-3" stays a range.
+	attachedUnit   = regexp.MustCompile(`^(` + amountPattern + `)(\p{L})`)
 	hyphenatedUnit = regexp.MustCompile(`^(` + amountPattern + `)-(\p{L})`)
 )
 
@@ -39,19 +35,12 @@ const unresolvedWarning = "Savorum could not safely identify every amount and un
 
 // Ambiguity kinds explain which ingredient interpretation requires review.
 const (
-	// ParserVersion participates in resolution fingerprints. Bump it whenever
-	// parsing changes, so a dry-run plan previewed under the old behavior is
-	// stale rather than applied under a scope nobody reviewed.
-	ParserVersion      = "6"
+	// ParserVersion invalidates resolution plans; bump it when parsing behavior changes.
+	ParserVersion      = "9"
 	AmbiguityUnitAlias = "unit_alias"
 )
 
-// Ambiguity is a parser-issued, controlled resolution descriptor. Only
-// descriptors returned here are eligible for import-wide review actions.
-//
-// ResolutionKey groups like measures across an import; OccurrenceKey addresses
-// one measure in one ingredient, because an ingredient can say `cup` twice and
-// SREF section 9.5 requires an answer to reach only the occurrence it names.
+// Ambiguity identifies an unresolved measurement eligible for import review.
 type Ambiguity struct {
 	ID               string   `json:"id"`
 	Kind             string   `json:"kind"`
@@ -76,72 +65,45 @@ var unicodeFractions = strings.NewReplacer(
 
 var catalog = units.DefaultCatalog()
 
-// Parse returns an ingredient with a structured quantity when the line begins
-// with an unambiguous amount. Uncertain prose remains untouched in SourceText.
-//
-// Authored optionality (`60 g bell pepper, diced, optional`) is lifted into the
-// typed member first; the whole line is still kept as SourceText.
+// Parse extracts unambiguous quantities and optionality, preserving the original line in SourceText.
 func Parse(line, id, sourceLocale string) recipe.Ingredient {
 	return ParseDetailed(line, id, sourceLocale).Ingredient
 }
 
-// AliasLanguage is the language the registry's unit aliases are written in,
-// and so the reading language for a source that states no locale.
+// AliasLanguage is the fallback language for sources without a declared locale.
 const AliasLanguage = "en"
 
 func readingLocale(sourceLocale string) string {
-	if strings.TrimSpace(sourceLocale) == "" {
+	if tag, err := language.Parse(strings.TrimSpace(sourceLocale)); err != nil || tag.IsRoot() {
 		return AliasLanguage
 	}
 
 	return sourceLocale
 }
 
-// ParseDetailed preserves Parse's conservative result while additionally
-// publishing every ambiguity the parser knows how to resolve safely.
+// ParseDetailed returns the parsed ingredient and its resolvable ambiguities.
 func ParseDetailed(line, id, sourceLocale string) ParseResult {
 	return ParseWithContext(line, id, sourceLocale, ResolutionContext{})
 }
 
-// ResolutionContext carries the decisions a person made about this ingredient.
-// It is a normalization input, not a property of the recipe: nothing here is
-// written to the document, and reading a stored recipe never reconstructs one.
-//
-// The two kinds are kept apart because SREF section 9.5 keeps them apart.
-// Interpretations settle the occurrences they address and nothing else.
-// Convention settles the unqualified, convention-dependent measures of this
-// whole ingredient, including every term of a sum and every branch of an
-// alternative. Neither is inferred from the other: choosing a US customary cup
-// for one measure is not a statement about the rest of the ingredient.
+// ResolutionContext holds occurrence-specific decisions and an ingredient-wide convention.
 type ResolutionContext struct {
-	// Interpretations maps an ambiguity's OccurrenceKey to the identity a
-	// person selected for that occurrence.
 	Interpretations map[string]string
-	// Convention, when set, is the measuring convention a person chose for this
-	// ingredient, already expanded to the identities it selects.
-	Convention *units.ConventionProfile
-	// DeclaredLocale is the locale the source document stated, empty when it
-	// stated none. It is not the reading locale, so provenance never attributes
-	// the AliasLanguage fallback to the source.
-	DeclaredLocale string
+	Convention      *units.ConventionProfile
+	DeclaredLocale  string
 }
 
 func (c ResolutionContext) empty() bool {
 	return len(c.Interpretations) == 0 && c.Convention == nil
 }
 
-// ParseWithContext reparses the unchanged source under explicit decisions.
-//
-// An interpretation naming a unit the authored form does not permit is refused
-// rather than applied, and a convention that covers none of the ingredient's
-// measures simply resolves nothing: an unanswerable decision leaves the line
-// exactly as it was, with its ambiguities still available for review.
+// ParseWithContext reparses the source using explicit measurement decisions.
+// Unsupported decisions leave the ingredient unresolved and available for review.
 func ParseWithContext(line, id, sourceLocale string, context ResolutionContext) ParseResult {
-	// The line is read in canonical composition; the ingredient keeps the text as
-	// it was written.
+	sourceLocale = readingLocale(sourceLocale)
 	written := strings.TrimSpace(line)
 	source := norm.NFC.String(written)
-	stated, optional := splitAuthoredOptional(listMarker.ReplaceAllString(source, ""), sourceLocale)
+	stated, optional := splitAuthoredOptional(tidyLine(source), sourceLocale)
 
 	discovered := aliasAmbiguities(stated, id, source, sourceLocale)
 
@@ -173,9 +135,6 @@ func ParseWithContext(line, id, sourceLocale string, context ResolutionContext) 
 		return result
 	}
 
-	// The decision resolved what the source alone could not. That is an
-	// inference a person reviewed and corrected, and saying so is the only
-	// thing the exported document records about it.
 	parsed.Normalization = &recipe.Normalization{
 		Method: recipe.NormalizationInferred, Review: recipe.ReviewCorrected,
 		Warnings: []string{interpretationProvenance(line, id, sourceLocale, context)},
@@ -184,8 +143,6 @@ func ParseWithContext(line, id, sourceLocale string, context ResolutionContext) 
 	return ParseResult{Ingredient: parsed}
 }
 
-// outstanding is the measures still to be answered under a supplied context,
-// so a review workflow sees an answered measure drop out rather than reappear.
 func outstanding(discovered []Ambiguity, read reading) []Ambiguity {
 	if read.interpretations == nil && read.convention == nil {
 		return discovered
@@ -205,9 +162,7 @@ func outstanding(discovered []Ambiguity, read reading) []Ambiguity {
 			Convention:     read.convention,
 		}
 
-		// The locale is withheld: a measure the locale alone would settle is
-		// not one this context answered, and it is not outstanding either —
-		// the discovery pass would not have reported it.
+		// Resolve with the supplied decisions alone; locale-resolved measures are absent from discovery.
 		if _, resolution := catalog.ResolveOccurrence(
 			units.Occurrence{Form: descriptor.AuthoredForm}, "", decisions,
 		); resolution == units.AliasResolved {
@@ -220,12 +175,6 @@ func outstanding(discovered []Ambiguity, read reading) []Ambiguity {
 	return remaining
 }
 
-// interpretationProvenance says what the source supplied and what the
-// interpretation was chosen for.
-//
-// SREF section 9.5 forbids stating that a source omitted regional evidence
-// when it supplied a locale, and requires a decision that departs from a stated
-// locale to be exposed as a difference rather than as agreement.
 func interpretationProvenance(line, id, sourceLocale string, context ResolutionContext) string {
 	scope := "It was chosen for this measurement."
 	if context.Convention != nil {
@@ -235,9 +184,6 @@ func interpretationProvenance(line, id, sourceLocale string, context ResolutionC
 	detail := "The source did not identify a regional measurement convention."
 
 	if declared := strings.TrimSpace(context.DeclaredLocale); declared != "" {
-		// What the locale alone would have made of the line, so a decision
-		// that departs from it is reported as departing from it rather than as
-		// agreement with the source.
 		alone := ParseWithContext(line, id, sourceLocale, ResolutionContext{DeclaredLocale: declared})
 		if alone.Ingredient.Quantity != nil {
 			detail = fmt.Sprintf("The source states the locale %s, which reads it differently.", declared)
@@ -249,33 +195,134 @@ func interpretationProvenance(line, id, sourceLocale string, context ResolutionC
 	return recipe.ImportReviewUnitPrefix + " " + detail + " " + scope
 }
 
-// splitAuthoredOptional takes an explicit statement that the ingredient may be
-// left out, and nothing else, from the line.
-//
-// `to taste`, `for serving`, and `preferably fresh` are not optionality, and
-// the word boundary keeps `optionally` (an adverb about method) out. The words
-// that state it are the reading language's.
+// WithoutOptional removes an optional-ingredient marker from text.
+func WithoutOptional(text, locale string) string {
+	stated := dialectFor(locale).optional.ReplaceAllString(text, "")
+
+	return strings.TrimSpace(strings.Trim(strings.TrimSpace(stated), ",;，、；-–—"))
+}
+
+// Extract explicit optionality markers, preserving qualifiers such as "to taste" and "for serving".
 func splitAuthoredOptional(line, locale string) (string, bool) {
-	authoredOptional := dialectFor(locale).optional
-	if !authoredOptional.MatchString(line) {
+	if !dialectFor(locale).optional.MatchString(line) {
 		return line, false
 	}
 
-	stated := authoredOptional.ReplaceAllString(line, "")
-
-	stated = strings.TrimSpace(strings.Trim(strings.TrimSpace(stated), ",;，、；-–—"))
+	stated := WithoutOptional(line, locale)
 	if stated == "" {
-		// The line said nothing else, so there is no ingredient to attach
-		// optionality to.
 		return line, false
 	}
 
 	return stated, true
 }
 
-// listMarker is a bullet in front of an ingredient line. Whitespace must follow
-// it, so a leading minus or dash joined to a number is left alone.
-var listMarker = regexp.MustCompile(`^[-*•·–—]\s+`)
+// Require whitespace after list dashes to preserve negative quantities.
+var listMarker = regexp.MustCompile(`^(?:[-*•·–—]\s+|[・●▪◦■◆►▶✓✔]\s*)`)
+
+var bidiMarks = strings.NewReplacer("\u200e", "", "\u200f", "", "\u202a", "", "\u202b", "", "\u202c", "",
+	"\u202d", "", "\u202e", "", "\u2066", "", "\u2067", "", "\u2068", "", "\u2069", "")
+
+var dashedNumber = regexp.MustCompile(`^[-–—](\pN)`)
+
+func tidyLine(line string) string {
+	line = dashedNumber.ReplaceAllString(strings.TrimSpace(bidiMarks.Replace(line)), "$1")
+	line = strings.TrimSpace(strings.TrimRight(strings.TrimSpace(listMarker.ReplaceAllString(line, "")), ";,；，"))
+
+	if trimmed, found := strings.CutSuffix(line, "."); found {
+		word := trimmed[strings.LastIndexAny(trimmed, " ,")+1:]
+		if utf8.RuneCountInString(word) >= 4 && !strings.Contains(word, ".") && unicode.IsLetter([]rune(word)[len([]rune(word))-1]) {
+			return trimmed
+		}
+	}
+
+	return line
+}
+
+type lineReading int
+
+const (
+	lineMeasured lineReading = iota
+	lineUnmeasured
+	lineUnresolved
+	lineAsWritten
+)
+
+func readLeadingAmount(original string, grammar *dialect, read reading) (recipe.Amount, string, string, lineReading) {
+	working, isApproximate := grammar.takeApproximate(original)
+
+	working, partNote, limited := grammar.rewriteLine(working)
+	if limited {
+		return recipe.Amount{}, "", "", lineUnresolved
+	}
+
+	working = normalizeAmounts(working)
+	if grammar.mixedNumber != nil {
+		working = grammar.mixedNumber.ReplaceAllString(working, "$1 $2")
+	}
+
+	working, approximatedBefore := grammar.reorder(working, read)
+	isApproximate = isApproximate || approximatedBefore
+
+	if !grammar.amount.MatchString(working) {
+		working = grammar.spellNumber(working, read)
+	}
+
+	match := grammar.amount.FindStringSubmatch(working)
+	if len(match) != 4 {
+		if _, share := splitNote(original); beginsAmount(working) || percentageOnly.MatchString(share) {
+			return recipe.Amount{}, "", "", lineUnresolved
+		}
+
+		return recipe.Amount{}, "", "", lineUnmeasured
+	}
+
+	minimum, ok := rational(match[1])
+	remainder := strings.TrimSpace(match[3])
+
+	if !ok || remainder == "" {
+		return recipe.Amount{}, "", "", lineAsWritten
+	}
+
+	amount := recipe.Amount{Approximate: isApproximate, Value: &minimum}
+
+	if match[2] != "" {
+		maximum, valid := rational(match[2])
+		if !valid {
+			return recipe.Amount{}, "", "", lineAsWritten
+		}
+
+		amount.Value, amount.Min, amount.Max = nil, &minimum, &maximum
+	}
+
+	amount, remainder = grammar.multiply(amount, cutMultiplier(remainder))
+
+	remainder = grammar.cutConnectiveBeforeUnit(remainder, read)
+	if !isWholeCount(amount) {
+		remainder = grammar.cutFractionOf(remainder)
+	}
+
+	return amount, remainder, partNote, lineMeasured
+}
+
+func (d *dialect) cutConnectiveBeforeUnit(remainder string, read reading) string {
+	if d.connective == nil {
+		return remainder
+	}
+
+	after := strings.TrimSpace(d.connective.ReplaceAllString(remainder, ""))
+	if after == remainder || after == "" {
+		return remainder
+	}
+
+	probe := read
+	probe.walk, probe.discovering = nil, false
+
+	if _, _, resolution := leadingUnitAs(after, probe); resolution != units.AliasUnknown {
+		return after
+	}
+
+	return remainder
+}
 
 func parseStatedAs(line, id, source string, read reading) recipe.Ingredient {
 	if read.walk == nil {
@@ -290,61 +337,41 @@ func parseStatedAs(line, id, source string, read reading) recipe.Ingredient {
 		return fallback
 	}
 
-	working := original
+	if line, vague := readVague(original, fallback, grammar, read); vague {
+		return line
+	}
 
-	working, isApproximate := grammar.takeApproximate(working)
+	amount, remainder, partNote, outcome := readLeadingAmount(original, grammar, read)
+	switch outcome {
+	case lineMeasured:
+	case lineUnresolved:
+		return unresolved(fallback)
+	case lineUnmeasured:
+		fallback.Name, fallback.Note = grammar.splitUnmeasured(original)
 
-	working, approximatedBefore := grammar.reorder(normalizeAmounts(working), read)
-	isApproximate = isApproximate || approximatedBefore
-
-	match := grammar.amount.FindStringSubmatch(working)
-	if len(match) != 4 {
-		if beginsAmount(working) {
-			return unresolved(fallback)
-		}
-
+		return fallback
+	case lineAsWritten:
 		return fallback
 	}
 
-	minimum, ok := rational(match[1])
-	if !ok {
-		return fallback
-	}
-
-	remainder := strings.TrimSpace(match[3])
-	if remainder == "" {
-		return fallback
-	}
-
-	amount := recipe.Amount{Approximate: isApproximate}
-	if match[2] == "" {
-		amount.Value = &minimum
-	} else {
-		maximum, valid := rational(match[2])
-		if !valid {
-			return fallback
-		}
-
-		amount.Min, amount.Max = &minimum, &maximum
-	}
-
-	unitID, name, recognizedUnit, ambiguous := readLeadingUnit(remainder, grammar, read)
-	if ambiguous {
+	modifier, unitID, name, recognizedUnit, ambiguous := readMeasure(remainder, grammar, read)
+	// Preserve separate ingredients joined by a plus sign.
+	if ambiguous || recognizedUnit && grammar.subtracts(name) || secondMeasure.MatchString(name) {
 		return unresolved(fallback)
 	}
 
-	// A measure whose size differs between countries, such as a cup, has no
-	// alias. It is not a count of an ingredient called "cup of milk" either.
-	if !recognizedUnit && grammar.isOpaqueMeasure(remainder) {
-		return unresolved(fallback)
-	}
-
-	// A number with no unit, followed by a measurement, is one of two things,
-	// and reading it as a count of an ingredient called "170-180 g light brown
-	// sugar" is neither of them.
 	if !recognizedUnit {
-		if line, decided := readUnitless(id, source, fallback, amount, remainder, read); decided {
+		if line, decided := readWithoutUnit(fallback, amount, remainder, partNote, grammar, read); decided {
 			return line
+		}
+	}
+
+	var packageSize *recipe.SimpleQuantity
+	if recognizedUnit {
+		amount, unitID, name, packageSize = sizedMeasure(amount, unitID, name, read)
+
+		if word, rest, found := cutAnyWord(name, grammar.distributive); found && word != "" {
+			name, modifier = rest, joinNotes([]string{modifier, word})
 		}
 	}
 
@@ -371,27 +398,37 @@ func parseStatedAs(line, id, source string, read reading) recipe.Ingredient {
 		}
 	}
 
+	var aside []string
+	if recognizedUnit {
+		if quantity, name, aside = withAside(quantity, primary, name, read); statesAnotherMeasure(quantity, read) {
+			return unresolved(fallback)
+		}
+	}
+
 	name, note := nameAfterMeasure(name, read)
 	if name == "" {
 		return fallback
 	}
 
-	// A registry cup is the cup of that country's kitchens. A line that says it
-	// means a paper cup or a rice-cooker cup does not state that cup.
+	note = joinNotes(append(append([]string{partNote, modifier}, aside...), note))
+
+	// Ounces are ambiguous between mass and volume for liquids.
+	if unitID == "mass.ounce.avoirdupois" && grammar.liquid(name) {
+		return unresolved(fallback)
+	}
+
 	if describesAnotherCup(unitID, original, grammar) {
 		return unresolved(fallback)
 	}
 
-	return recipe.Ingredient{
+	return finishCount(recipe.Ingredient{
 		ID: id, Name: name, Note: note, SourceText: source,
 		Quantity:      quantity,
+		PackageSize:   packageSize,
 		Normalization: &recipe.Normalization{Method: recipe.NormalizationExtracted},
-	}
+	}, nil, read)
 }
 
-// withAlternative adds the source's own equivalent for a measure, when it states
-// one. It reports false when the line names an alternative it cannot read, or
-// one that contradicts the size of the measure.
 func withAlternative(
 	quantity *recipe.Quantity, primary recipe.AlternativeOption, name string, read reading,
 ) (*recipe.Quantity, string, bool) {
@@ -413,24 +450,142 @@ func withAlternative(
 	return stated, remainder, !statesAnotherMeasure(stated, read)
 }
 
-// readLeadingUnit reads the measure that starts value: a word the ingredient
-// after it gives a sense to, or a registry alias. Without one the line counts
-// items.
+func readMeasure(value string, grammar *dialect, read reading) (modifier, unitID, rest string, recognized, ambiguous bool) {
+	if word, measured := grammar.takeModifier(value); word != "" {
+		if unitID, rest, recognized, ambiguous = readLeadingUnit(measured, grammar, read); recognized || ambiguous {
+			return word, unitID, rest, recognized, ambiguous
+		}
+	}
+
+	if word, measured, sized := grammar.cutSize(value); sized {
+		unit, after, found, _ := readLeadingUnit(measured, grammar, read)
+		if found && (containers(unit) || !strings.Contains(word, "-")) {
+			return word, unit, after, true, false
+		}
+	}
+
+	unitID, rest, recognized, ambiguous = readLeadingUnit(value, grammar, read)
+	if recognized {
+		modifier, rest = grammar.takeModifierAfter(rest)
+	}
+
+	return modifier, unitID, rest, recognized, ambiguous
+}
+
+func joinNotes(parts []string) string {
+	return strings.Join(slices.DeleteFunc(parts, func(part string) bool { return part == "" }), "; ")
+}
+
+func withAside(
+	quantity *recipe.Quantity, primary recipe.AlternativeOption, name string, read reading,
+) (*recipe.Quantity, string, []string) {
+	if quantity.Kind == recipe.QuantityAlternatives {
+		return quantity, name, nil
+	}
+
+	// Leave trailing count sizes for finishCount: "1 wheel Brie (8 oz)".
+	trailingIsSize := primary.Kind == recipe.QuantitySimple && counts(primary.Unit)
+
+	inner, rest, leading := strings.Cut(strings.TrimPrefix(name, "("), ")")
+	if !strings.HasPrefix(name, "(") || !leading || !beginsAmount(inner) {
+		if trailingIsSize {
+			return quantity, name, nil
+		}
+
+		body, note := splitNote(name)
+
+		open := strings.LastIndex(body, "(")
+		if open <= 0 || !strings.HasSuffix(body, ")") {
+			return quantity, name, nil
+		}
+
+		measures, words := readAside(body[open+1:len(body)-1], read)
+		if len(measures) == 0 || len(words) > 0 {
+			return quantity, name, nil
+		}
+
+		rest := strings.TrimSpace(body[:open])
+		if note != "" {
+			rest += ", " + note
+		}
+
+		return withOptions(primary, measures), rest, nil
+	}
+
+	measures, words := readAside(inner, read)
+	if len(measures) == 0 {
+		return quantity, strings.TrimSpace(rest), []string{strings.TrimSpace(inner)}
+	}
+
+	return withOptions(primary, measures), strings.TrimSpace(rest), words
+}
+
+func withOptions(primary recipe.AlternativeOption, measures []recipe.SimpleQuantity) *recipe.Quantity {
+	options := []recipe.AlternativeOption{primary}
+	for _, measure := range measures {
+		options = append(options, optionFromTerms([]recipe.SimpleQuantity{measure}))
+	}
+
+	return &recipe.Quantity{Kind: recipe.QuantityAlternatives, Options: options}
+}
+
+func readAside(inner string, read reading) ([]recipe.SimpleQuantity, []string) {
+	var measures []recipe.SimpleQuantity
+
+	var words []string
+
+	for _, part := range asideParts(inner) {
+		part = strings.TrimSpace(part)
+		if part == "" {
+			continue
+		}
+
+		if term, rest, found := followingMeasure(part+" "+placeholder, read); found && rest == placeholder {
+			measures = append(measures, term)
+		} else {
+			words = append(words, part)
+		}
+	}
+
+	return measures, words
+}
+
+// Split equivalent measures at slashes, preserving fractional amounts.
+func asideParts(inner string) []string {
+	var parts []string
+
+	start := 0
+
+	for index, character := range inner {
+		if character != '/' {
+			continue
+		}
+
+		before, _ := utf8.DecodeLastRuneInString(inner[:index])
+		after, _ := utf8.DecodeRuneInString(inner[index+1:])
+
+		if !unicode.IsDigit(before) || !unicode.IsDigit(after) {
+			parts = append(parts, inner[start:index])
+			start = index + 1
+		}
+	}
+
+	return append(parts, inner[start:])
+}
+
 func readLeadingUnit(value string, grammar *dialect, read reading) (string, string, bool, bool) {
 	if unit, rest, found := grammar.senseOf(value); found {
 		return unit, rest, true, false
 	}
 
 	unit, rest, resolution := leadingUnitAs(value, read)
-	if resolution == units.AliasResolved {
+	if resolution == units.AliasResolved && !namesIngredient[unit] {
 		return unit, rest, true, false
 	}
 
 	return itemUnit, value, false, resolution == units.AliasAmbiguous
 }
 
-// describesAnotherCup reports a registry cup that the line itself describes as
-// a different measure.
 func describesAnotherCup(unitID, line string, grammar *dialect) bool {
 	return strings.HasPrefix(unitID, "volume.cup.") && grammar.describesOpaqueMeasure(line)
 }
@@ -438,6 +593,10 @@ func describesAnotherCup(unitID, line string, grammar *dialect) bool {
 func appendAdditiveTerms(terms []recipe.SimpleQuantity, name string, read reading) ([]recipe.SimpleQuantity, string, bool) {
 	for {
 		term, remainder, found := additive(name, read)
+		if !found {
+			term, remainder, found = adjacentTerm(terms[len(terms)-1], name, read)
+		}
+
 		if !found {
 			return terms, name, !beginsAdditive(name, read)
 		}
@@ -447,15 +606,28 @@ func appendAdditiveTerms(terms []recipe.SimpleQuantity, name string, read readin
 	}
 }
 
+var bareDecimal = regexp.MustCompile(`(^|\s)\.(\d)`)
+
 func normalizeAmounts(value string) string {
 	working := strings.Join(strings.Fields(unicodeFractions.Replace(asciiDigits(value))), " ")
+	working = bareDecimal.ReplaceAllString(working, "${1}0.$2")
 	working = hyphenatedUnit.ReplaceAllString(working, "$1 $2")
 
 	return attachedUnit.ReplaceAllString(working, "$1 $2")
 }
 
-// beginsAmount reports whether value starts with a digit in any script, so an
-// amount the grammar cannot read is flagged rather than taken for prose.
+func cutMultiplier(value string) string {
+	for _, sign := range []string{"x", "X", "×"} {
+		if after, found := strings.CutPrefix(value, sign); found {
+			if after = strings.TrimSpace(after); beginsAmount(after) {
+				return after
+			}
+		}
+	}
+
+	return value
+}
+
 func beginsAmount(value string) bool {
 	first, _ := utf8.DecodeRuneInString(value)
 
@@ -471,8 +643,6 @@ func unresolved(ingredient recipe.Ingredient) recipe.Ingredient {
 	return ingredient
 }
 
-// readUnitless decides a line whose leading number has no unit, unless it is a
-// plain count of items.
 func readUnitless(
 	id, source string, fallback recipe.Ingredient, amount recipe.Amount, remainder string, read reading,
 ) (recipe.Ingredient, bool) {
@@ -484,45 +654,24 @@ func readUnitless(
 		return line, true
 	}
 
-	// Without unit aliases in the reading language, the words after a bare
-	// number may be a measure the registry cannot name, as in "2 cucharadas de
-	// aceite", so the line is not taken for a count of items.
-	if !catalog.HasAliasesFor(readingLocale(read.locale)) {
+	// Without language-specific aliases, a bare number may precede an unrecognized unit.
+	if !catalog.HasAliasesFor(readingLocale(read.locale)) && !catalog.HasAliasesFor(cmp.Or(grammarLanguage(read.locale), read.locale)) {
 		return unresolved(fallback), true
 	}
 
 	return recipe.Ingredient{}, false
 }
 
-// containers name a thing a shop sells rather than a way of measuring, which
-// is what makes "2 400 g cans" a count of packages and not two of anything.
-var containers = map[string]bool{
-	"container.can": true, "container.tin": true, "container.packet": true,
+func containers(unitID string) bool {
+	unit, found := catalog.Lookup(unitID)
+
+	return found && unit.Kind == recipe.UnitContainer
 }
 
-// itemUnit is the quantity unit for a count with no container named. A source
-// that says how many and how big each one is has stated a count of items.
 const itemUnit = "count.item"
 
-// readCountedMeasure interprets a bare leading number that is followed by a
-// real measurement. There are three readings:
-//
-//   - "2 400 g cans chopped tomatoes" counts packages. The count and the
-//     container are the ingredient's quantity, and the measurement is the size
-//     of the package, which is what `package_size` is for.
-//   - "1 170-180 g light brown sugar" counts nothing. Exporters emit a leading
-//     1 from a quantity column that has no value, and one of a 170-180 g
-//     measure is that measure, so the stray number is dropped and the
-//     measurement read instead. Nothing is lost, because 1 × x is x.
-//   - "2 8 oz chicken breasts" counts items of a stated size. No container is
-//     named, so the count is of items and the measurement is the size of each,
-//     exactly as for a named container.
-//
-// A leading number other than one is never absorbed into the measurement it
-// precedes; see isOne.
-//
-// The returned flag says the line is a counted measure and has been decided,
-// whichever of the three it turned out to be.
+// Absorb a leading one only when no container or item-size qualifier is stated.
+// The flag reports a handled line, including unresolved input.
 func readCountedMeasure(
 	id, source string, fallback recipe.Ingredient, count recipe.Amount, remainder string, read reading,
 ) (recipe.Ingredient, bool) {
@@ -535,8 +684,32 @@ func readCountedMeasure(
 		return recipe.Ingredient{}, false
 	}
 
+	if second, after, stated := alternative(rest, read); stated && !beginsAmount(strings.TrimSpace(rest)) {
+		if isOne(count) {
+			name, note := nameAfterMeasure(after, read)
+			if name == "" {
+				return fallback, true
+			}
+
+			return recipe.Ingredient{
+				ID: id, Name: name, Note: note, SourceText: source,
+				Quantity: &recipe.Quantity{Kind: recipe.QuantityAlternatives, Options: []recipe.AlternativeOption{
+					{Kind: recipe.QuantitySimple, Amount: &inner.Amount, Unit: inner.Unit},
+					{Kind: recipe.QuantitySimple, Amount: &second.Amount, Unit: second.Unit},
+				}},
+				Normalization: &recipe.Normalization{Method: recipe.NormalizationExtracted},
+			}, true
+		}
+
+		if !sameSize(inner, second) {
+			return fallback, true
+		}
+
+		rest = after
+	}
+
 	if container, tail, resolution := leadingUnitAs(rest, read); resolution == units.AliasResolved && strings.TrimSpace(tail) != "" {
-		if containers[container] {
+		if counts(container) && container != itemUnit {
 			name, note := nameAfterMeasure(strings.TrimSpace(tail), read)
 			if name == "" {
 				return fallback, true
@@ -556,10 +729,12 @@ func readCountedMeasure(
 		return fallback, true
 	}
 
-	if !isOne(count) {
-		// Only a whole number counts items. "1/2 3/4 cup hot sauce" is a
-		// mangled line, and half of an item is not what it is trying to say.
-		if !isWholeCount(count) {
+	// Lengths and explicit count words indicate item size, even when the count is one.
+	sized := isLength(inner.Unit) || dialectFor(read.locale).beginsCountWord(rest, read)
+
+	if !isOne(count) || sized {
+		// Fractional item counts require an explicit size qualifier.
+		if !isWholeCount(count) && !sized {
 			return fallback, true
 		}
 
@@ -578,11 +753,6 @@ func readCountedMeasure(
 	}, true
 }
 
-// readParenthesizedPackage recognizes the common exported form
-// "2 (14.5 oz) cans tomatoes". The count remains the ingredient quantity and
-// the parenthesized measure becomes the package size instead of being stranded
-// in the ingredient name. A source can omit a named container, as in
-// "1 (4 pound) pork shoulder roast"; the item count is still explicit.
 func readParenthesizedPackage(
 	id, source string, fallback recipe.Ingredient, count recipe.Amount, remainder string, read reading,
 ) (recipe.Ingredient, bool) {
@@ -609,7 +779,7 @@ func readParenthesizedPackage(
 	}
 
 	unitID, name := itemUnit, tail
-	if container, rest, resolution := leadingUnitAs(tail, read); resolution == units.AliasResolved && containers[container] {
+	if container, rest, resolution := leadingUnitAs(tail, read); resolution == units.AliasResolved && containers(container) {
 		unitID, name = container, rest
 	}
 
@@ -626,14 +796,31 @@ func readParenthesizedPackage(
 	}, true
 }
 
-// isOne reports whether an amount is exactly one, which is the only count a
-// measurement can absorb without losing anything.
+func sameSize(first, second recipe.SimpleQuantity) bool {
+	if first.Amount.Value == nil || second.Amount.Value == nil {
+		return false
+	}
+
+	converted, err := catalog.Convert(*second.Amount.Value, second.Unit, first.Unit)
+	if err != nil {
+		return false
+	}
+
+	size, ok := new(big.Rat).SetString(string(*first.Amount.Value))
+	if !ok || size.Sign() <= 0 {
+		return false
+	}
+
+	difference := new(big.Rat).Sub(size, converted.Rat())
+	difference.Abs(difference).Mul(difference, big.NewRat(10, 1))
+
+	return difference.Cmp(size) <= 0
+}
+
 func isOne(amount recipe.Amount) bool {
 	return amount.Value != nil && *amount.Value == "1" && amount.Min == nil && amount.Max == nil
 }
 
-// isWholeCount reports whether an amount can be a number of items. Amounts are
-// canonical rationals, so a whole number carries no denominator.
 func isWholeCount(amount recipe.Amount) bool {
 	if amount.Value == nil || amount.Min != nil || amount.Max != nil {
 		return false
@@ -642,10 +829,7 @@ func isWholeCount(amount recipe.Amount) bool {
 	return !strings.ContainsAny(string(*amount.Value), "/.")
 }
 
-// alternative recognizes a second fully specified amount at the start of the
-// remaining line, with a slash, an "or", or no separator at all. It does not
-// interpret slashes inside ingredient names because a following amount and
-// known unit are both required.
+// Require a complete amount and registered unit to avoid splitting slashes in ingredient names.
 func alternative(value string, read reading) (recipe.SimpleQuantity, string, bool) {
 	working := strings.TrimSpace(value)
 	if strings.HasPrefix(working, "(") {
@@ -663,16 +847,14 @@ func alternative(value string, read reading) (recipe.SimpleQuantity, string, boo
 	return followingMeasure(working, read)
 }
 
-// parenthesizedEquivalent reads "(240 ml)" after a measure as the source's own
-// equivalent for it. Any other parenthesis is left to the ingredient.
+// Sentinel ingredient name used to require a complete parenthesized measure.
+const placeholder = "\x00"
+
 func parenthesizedEquivalent(value string, read reading) (recipe.SimpleQuantity, string, bool) {
 	end := strings.Index(value, ")")
 	if end < 0 {
 		return recipe.SimpleQuantity{}, "", false
 	}
-
-	// A measure is followed by what it measures; a placeholder stands in for it.
-	const placeholder = "\x00"
 
 	term, rest, found := followingMeasure(strings.TrimSpace(value[1:end])+" "+placeholder, read)
 	if !found || rest != placeholder {
@@ -682,9 +864,7 @@ func parenthesizedEquivalent(value string, read reading) (recipe.SimpleQuantity,
 	return term, strings.TrimSpace(value[end+1:]), true
 }
 
-// statesAnotherMeasure reports a spoon or cup whose own stated equivalent in
-// the same dimension differs from the registry's size by more than a tenth.
-// The source then uses a measure of its own, and the registry's is not it.
+// An equivalent differing by more than 10% indicates a source-specific measure.
 func statesAnotherMeasure(quantity *recipe.Quantity, read reading) bool {
 	if quantity.Kind != recipe.QuantityAlternatives || len(quantity.Options) != 2 ||
 		read.convention != nil || len(read.interpretations) != 0 {
@@ -722,12 +902,11 @@ func beginsAlternative(value string, read reading) bool {
 	working := strings.TrimSpace(value)
 	_, orWord := dialectFor(read.locale).cutOr(working)
 
-	return strings.HasPrefix(working, "/") || orWord || beginsAmount(working)
+	return strings.HasPrefix(working, "/") || orWord || beginsAmount(working) && !percentage.MatchString(working)
 }
 
-// additive recognizes one explicit term following "+" or "plus". Requiring
-// the connector prevents a number at the start of an ingredient name from
-// becoming an invented sum.
+var percentage = regexp.MustCompile(`^\d+(?:[.,]\d+)?\s*%`)
+
 func additive(value string, read reading) (recipe.SimpleQuantity, string, bool) {
 	working := strings.TrimSpace(value)
 	switch {
@@ -743,6 +922,103 @@ func additive(value string, read reading) (recipe.SimpleQuantity, string, bool) 
 	}
 
 	return followingMeasure(working, read)
+}
+
+func adjacentTerm(last recipe.SimpleQuantity, value string, read reading) (recipe.SimpleQuantity, string, bool) {
+	if !beginsAmount(strings.TrimSpace(value)) {
+		return recipe.SimpleQuantity{}, "", false
+	}
+
+	term, rest, found := followingMeasure(value, read)
+	if !found {
+		return recipe.SimpleQuantity{}, "", false
+	}
+
+	converted, err := catalog.Convert("1", term.Unit, last.Unit)
+	if err != nil || converted.Rat().Cmp(big.NewRat(1, 1)) >= 0 {
+		return recipe.SimpleQuantity{}, "", false
+	}
+
+	return term, rest, true
+}
+
+func readWithoutUnit(
+	fallback recipe.Ingredient, amount recipe.Amount, remainder, partNote string, grammar *dialect, read reading,
+) (recipe.Ingredient, bool) {
+	if _, _, vague := cutAnyWord(remainder, grammar.vague); vague {
+		return unresolved(fallback), true
+	}
+
+	if beginsAdditive(remainder, read) || namesUnitAlone(remainder, read) || grammar.isOpaqueMeasure(grammar.skipQualifiers(remainder)) ||
+		grammar.qualifiedPortion(remainder, read) {
+		return unresolved(fallback), true
+	}
+
+	line, decided := readUnitless(fallback.ID, fallback.SourceText, fallback, amount, remainder, read)
+	if !decided {
+		return recipe.Ingredient{}, false
+	}
+
+	return finishCount(line, []string{partNote}, read), true
+}
+
+func readVague(original string, fallback recipe.Ingredient, grammar *dialect, read reading) (recipe.Ingredient, bool) {
+	amount, rest, vague := grammar.vagueAmount(original, read)
+	if !vague {
+		return recipe.Ingredient{}, false
+	}
+
+	name, note := nameAfterMeasure(rest, read)
+	if name == "" {
+		return fallback, true
+	}
+
+	fallback.Name, fallback.Note = name, note
+	fallback.Quantity = &recipe.Quantity{Kind: recipe.QuantityOpaque, Text: amount}
+	fallback.Normalization = &recipe.Normalization{Method: recipe.NormalizationExtracted}
+
+	return fallback, true
+}
+
+func sizedMeasure(
+	amount recipe.Amount, unitID, name string, read reading,
+) (recipe.Amount, string, string, *recipe.SimpleQuantity) {
+	if counts(unitID) {
+		size, rest := leadingSize(name, read)
+
+		return amount, unitID, rest, size
+	}
+
+	container, rest, resolution := leadingUnitAs(name, read)
+	if resolution != units.AliasResolved || !containers(container) {
+		return amount, unitID, name, nil
+	}
+
+	size := recipe.SimpleQuantity{Kind: recipe.QuantitySimple, Amount: amount, Unit: unitID}
+	one := recipe.Rational("1")
+
+	return recipe.Amount{Value: &one}, container, rest, &size
+}
+
+// MeasureOnly reports a standalone measure that may continue on the next text line.
+func MeasureOnly(line, locale string) bool {
+	match := dialectFor(locale).amount.FindStringSubmatch(normalizeAmounts(strings.TrimSpace(line)))
+
+	return len(match) == 4 && namesUnitAlone(match[3], reading{locale: locale, walk: &aliasWalk{}})
+}
+
+func namesUnitAlone(value string, read reading) bool {
+	unit, rest, resolution := leadingUnitAs(strings.TrimSpace(value)+" "+placeholder, read)
+
+	return resolution == units.AliasResolved && rest == placeholder && !namesIngredient[unit]
+}
+
+var secondMeasure = regexp.MustCompile(`\S\s*\+\s*\pN`)
+
+func isLength(unitID string) bool {
+	unit, found := catalog.Lookup(unitID)
+
+	return found && unit.Dimension == recipe.DimensionLength
 }
 
 func beginsAdditive(value string, read reading) bool {
@@ -801,31 +1077,15 @@ func quantityFromOption(option recipe.AlternativeOption) *recipe.Quantity {
 	return &recipe.Quantity{Kind: recipe.QuantitySum, Terms: option.Terms}
 }
 
-// reading is how one ingredient's measures are to be interpreted: the locale
-// the source declared, the interpretations a person supplied for individual
-// occurrences, and the measuring convention they chose for the ingredient.
-//
-// trace, when set, records every alias occurrence the walk examines. Discovery
-// needs the whole quantity expression, and an ordinary parse stops at the first
-// measure it cannot resolve, so the two are the same walk under different
-// instructions rather than two grammars that have to agree.
 type reading struct {
 	locale          string
 	interpretations map[string]string
 	convention      *units.ConventionProfile
-	// walk records the alias occurrences examined so far. It is what makes an
-	// occurrence addressable: the ordinal of a measure among the like measures
-	// of its own ingredient.
-	walk *aliasWalk
-	// discovering tolerates an ambiguous measure so the walk reaches the rest
-	// of a compound amount. Ordinary parsing stops at the first measure it
-	// cannot resolve, which is what preserves the authored line for review,
-	// and would otherwise only ever report the leading ambiguity.
+	walk            *aliasWalk
+	// Continue past ambiguous measures during discovery to find every occurrence.
 	discovering bool
 }
 
-// aliasWalk collects the alias occurrences of one quantity expression, in the
-// order the source states them.
 type aliasWalk struct {
 	occurrences []aliasOccurrence
 }
@@ -837,16 +1097,12 @@ type aliasOccurrence struct {
 
 type unitSplit struct{ form, rest string }
 
-// maxUnspacedUnit is the longest unit, in characters, read from the front of
-// a word in a language that does not space words.
 const maxUnspacedUnit = 6
 
 func unitSplits(value string, read reading) []unitSplit {
 	var splits []unitSplit
 
-	// A language written without spaces puts a unit against the word after it,
-	// so a unit may end at any character. These are listed first, and the
-	// caller tries the last entry first, so a reading a space marks wins.
+	// Try character boundaries for unspaced scripts, preserving preference for whitespace boundaries.
 	if dialectFor(read.locale).unspaced {
 		count := 0
 
@@ -873,12 +1129,8 @@ func unitSplits(value string, read reading) []unitSplit {
 	return splits
 }
 
-// leadingUnitAs applies SREF section 9.5 precedence to the leading measure of
-// value: explicit source meaning, then an interpretation addressing this
-// occurrence, then the ingredient's convention, then the locale lookup of
-// section 9.2. A decision never overrides a qualifier the source wrote, and a
-// convention that does not cover the measure's family leaves it to the locale
-// rather than borrowing a neighbouring convention.
+// Resolve by source qualifier, occurrence decision, ingredient convention, then locale.
+// A convention applies only to the unit families it defines.
 func leadingUnitAs(value string, read reading) (string, string, units.AliasResolution) {
 	if dialectFor(read.locale).namesCompound(value) {
 		return "", "", units.AliasUnknown
@@ -911,9 +1163,6 @@ func leadingUnitAs(value string, read reading) (string, string, units.AliasResol
 
 		read.observe(descriptor, true)
 
-		// Discovery keeps walking so the rest of a compound amount is seen.
-		// Ordinary parsing stops here, which is what preserves the whole
-		// authored line for review.
 		if read.discovering {
 			return descriptor.CandidateUnitIDs[0], v.rest, units.AliasResolved
 		}
@@ -924,10 +1173,7 @@ func leadingUnitAs(value string, read reading) (string, string, units.AliasResol
 	return "", "", units.AliasUnknown
 }
 
-// decisions are the resolution inputs that apply to this occurrence.
-//
-// Discovery supplies none: it reports what the source alone says, so a decision
-// already made does not hide the occurrence it settled.
+// Discovery ignores review decisions to retain all source ambiguities.
 func (r reading) decisions(descriptor units.AliasDescriptor) units.Decisions {
 	if r.discovering {
 		return units.Decisions{}
@@ -939,9 +1185,6 @@ func (r reading) decisions(descriptor units.AliasDescriptor) units.Decisions {
 	}
 }
 
-// occurrenceIndex counts how many occurrences of this same measure the walk has
-// already passed, so the second `cup` of one ingredient is addressed separately
-// from the first.
 func (r reading) occurrenceIndex(descriptor units.AliasDescriptor) int {
 	if r.walk == nil {
 		return 0
@@ -965,10 +1208,6 @@ func (r reading) observe(descriptor units.AliasDescriptor, ambiguous bool) {
 	}
 }
 
-// aliasAmbiguities reports every measure of one ingredient that the source
-// evidence alone cannot identify, including the later terms of a compound
-// amount. It is the ordinary parse walked in discovery mode, so there is no
-// second grammar to keep in step.
 func aliasAmbiguities(line, ingredientID, source, sourceLocale string) []Ambiguity {
 	walk := &aliasWalk{}
 	parseStatedAs(line, ingredientID, source, reading{
@@ -986,9 +1225,7 @@ func aliasAmbiguities(line, ingredientID, source, sourceLocale string) []Ambigui
 		index := counts[descriptor.NormalizedForm]
 		counts[descriptor.NormalizedForm]++
 
-		// The cursor advances past every alias the walk consumed, ambiguous or
-		// not, so a repeated form is located where it actually occurs rather
-		// than at the first spelling of it in the line.
+		// Advance past consumed aliases to locate repeated forms independently.
 		start := aliasOffset(source, descriptor, cursor)
 		if start >= 0 {
 			cursor = start + len(descriptor.AuthoredForm)
@@ -1013,8 +1250,6 @@ func aliasAmbiguities(line, ingredientID, source, sourceLocale string) []Ambigui
 	return found
 }
 
-// aliasOffset locates an authored form at or after cursor, honoring the alias
-// set's own case policy.
 func aliasOffset(source string, descriptor units.AliasDescriptor, cursor int) int {
 	if cursor > len(source) {
 		return -1
@@ -1033,9 +1268,6 @@ func aliasOffset(source string, descriptor units.AliasDescriptor, cursor int) in
 	return cursor + offset
 }
 
-// occurrenceKey addresses one measure inside one ingredient. The group key
-// alone cannot: an ingredient may say `cup` twice, and an answer given for one
-// of them must not settle the other.
 func occurrenceKey(descriptor units.AliasDescriptor, index int) string {
 	return ambiguityResolutionKey(descriptor) + "|occurrence=" + strconv.Itoa(index)
 }
@@ -1090,10 +1322,11 @@ func rational(value string) (recipe.Rational, bool) {
 	return parsed, err == nil
 }
 
-// nameAfterMeasure takes the text following a measure as the ingredient name,
-// dropping a connective that only joined the two: "8 oz of chicken" is chicken.
 func nameAfterMeasure(value string, read reading) (string, string) {
 	name, note := splitNote(value)
+	if note == "" {
+		name, note = dialectFor(read.locale).splitUnmeasured(name)
+	}
 
 	trimmed := name
 	if connective := dialectFor(read.locale).connective; connective != nil {
@@ -1107,12 +1340,14 @@ func nameAfterMeasure(value string, read reading) (string, string) {
 	return trimmed, note
 }
 
-// splitNote separates an ingredient from its note at the first comma outside
-// brackets, so "kosher salt (half for table salt, 50% extra)" stays whole.
 func splitNote(value string) (string, string) {
 	depth := 0
 
 	for index, character := range value {
+		if character == ',' && index > 0 && index+1 < len(value) && isASCIIDigit(value[index-1]) && isASCIIDigit(value[index+1]) {
+			continue
+		}
+
 		switch character {
 		case '(', '[', '{':
 			depth++
@@ -1128,4 +1363,8 @@ func splitNote(value string) (string, string) {
 	}
 
 	return strings.TrimSpace(value), ""
+}
+
+func isASCIIDigit(character byte) bool {
+	return character >= '0' && character <= '9'
 }

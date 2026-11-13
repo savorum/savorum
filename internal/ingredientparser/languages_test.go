@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"testing"
 
@@ -151,9 +152,6 @@ func TestLinesInEveryLanguageReadWithTheirOwnUnits(t *testing.T) {
 	}
 }
 
-// A measure whose size differs between countries has no alias, so a line that
-// uses one stays as written rather than becoming a count of something called
-// "cup of milk".
 func TestAMeasureWithNoSingleSizeStaysOpaque(t *testing.T) {
 	t.Parallel()
 
@@ -165,7 +163,6 @@ func TestAMeasureWithNoSingleSizeStaysOpaque(t *testing.T) {
 		{"es", "1 taza de leche"},
 		{"es", "1 libra de harina"},
 		{"it", "1 tazza di latte"},
-		{"pt", "1 xícara de leite"},
 		{"pt-PT", "1 chávena de leite"},
 		{"nl", "1 kop melk"},
 		{"nl", "1 ons kaas"},
@@ -188,7 +185,6 @@ func TestAMeasureWithNoSingleSizeStaysOpaque(t *testing.T) {
 		{"id", "1 cangkir susu"},
 		{"zh", "牛奶 1杯"},
 		{"ja", "牛乳 1杯"},
-		{"ja", "米 1合"},
 		{"ko", "우유 1되"},
 		// A cup the source describes as another kind of cup is not the registry's.
 		{"ko", "물 종이컵 1컵"},
@@ -199,6 +195,37 @@ func TestAMeasureWithNoSingleSizeStaysOpaque(t *testing.T) {
 		parsed := ingredientparser.Parse(test.line, "i1", test.locale)
 		if parsed.Quantity != nil || parsed.Normalization == nil || parsed.Normalization.Method != recipe.NormalizationUnresolved {
 			t.Errorf("%s %q read as %s, want it left as written", test.locale, test.line, reading(parsed))
+		}
+	}
+}
+
+func TestCupWordsOfferBothCulinaryReadings(t *testing.T) {
+	t.Parallel()
+
+	want := []string{"volume.cup.metric.culinary", "volume.cup.us.culinary"}
+
+	for _, test := range []struct{ locale, line, name string }{
+		{"he-IL", "1 כוס גבינת מוצרלה", "גבינת מוצרלה"},
+		{"he-IL", "2 כוסות קישואים", "קישואים"},
+		{"ar-SA", "1 كوب ماء دافئ", "ماء دافئ"},
+		{"ar-EG", "3 أكواب طحين", "طحين"},
+	} {
+		parsed := ingredientparser.ParseDetailed(test.line, "i1", test.locale)
+		if parsed.Ingredient.Quantity != nil || len(parsed.Ambiguities) != 1 {
+			t.Fatalf("%s: result = %#v", test.line, parsed)
+		}
+
+		ambiguity := parsed.Ambiguities[0]
+		if !slices.Equal(ambiguity.CandidateUnitIDs, want) {
+			t.Fatalf("%s: candidates = %v", test.line, ambiguity.CandidateUnitIDs)
+		}
+
+		for _, unitID := range want {
+			resolved := ingredientparser.ParseWithContext(test.line, "i1", test.locale, interpreting(ambiguity, unitID))
+			if resolved.Ingredient.Quantity == nil || resolved.Ingredient.Quantity.Unit != unitID ||
+				resolved.Ingredient.Name != test.name || resolved.Ingredient.SourceText != test.line || len(resolved.Ambiguities) != 0 {
+				t.Errorf("%s as %s: result = %#v", test.line, unitID, resolved)
+			}
 		}
 	}
 }
@@ -354,16 +381,13 @@ func TestAStatedEquivalentThatDisagreesWithTheRegistryLeavesTheLineAsWritten(t *
 	}
 }
 
-// Spoon words whose capacity differs between kitchens have no alias, so the
-// line stays as written whatever the spelling of the word, including a
-// publisher's case distinction.
 func TestASpoonWordWithCompetingConventionsStaysAsWritten(t *testing.T) {
 	t.Parallel()
 
 	for locale, lines := range map[string][]string{
 		"pt":    {"1 cc de fermento", "1 Cc de sal"},
 		"pt-BR": {"2 cc de açúcar"},
-		"tr":    {"1 çay kaşığı tuz", "2 ç.k. karabiber", "1 çk kimyon", "2 yemek kaşığı yağ", "3 y.k. su"},
+		"tr":    {"1 tatlı kaşığı salça", "1 tk salça"},
 	} {
 		for _, line := range lines {
 			parsed := ingredientparser.Parse(line, "i1", locale)
@@ -377,10 +401,16 @@ func TestASpoonWordWithCompetingConventionsStaysAsWritten(t *testing.T) {
 		}
 	}
 
-	// The words that do have one convention keep it.
 	for _, test := range []struct{ locale, line, want string }{
 		{"pt-BR", "2 colheres de sopa de azeite", "2 volume.tablespoon.metric.culinary"},
 		{"pt-BR", "1 colher de chá de sal", "1 volume.teaspoon.metric.culinary"},
+		{"pt", "1 xícara de leite", "1 volume.cup.us.culinary"},
+		{"tr", "1 çay kaşığı tuz", "1 volume.teaspoon.metric.culinary"},
+		{"tr", "1 çk kimyon", "1 volume.teaspoon.metric.culinary"},
+		{"tr", "2 yemek kaşığı yağ", "2 volume.tablespoon.metric.culinary"},
+		{"tr", "1 YK Sirke", "1 volume.tablespoon.metric.culinary"},
+		{"tr", "2 ç.k. karabiber", "2 volume.teaspoon.metric.culinary"},
+		{"tr", "3 y.k. su", "3 volume.tablespoon.metric.culinary"},
 	} {
 		if got := reading(ingredientparser.Parse(test.line, "i1", test.locale)); got != test.want {
 			t.Errorf("%s %q read as %s, want %s", test.locale, test.line, got, test.want)
@@ -412,5 +442,196 @@ func TestAliasMatchingComparesCanonicalCompositionOnly(t *testing.T) {
 		if parsed := ingredientparser.Parse(test.line, "i1", test.locale); parsed.Quantity != nil && parsed.Quantity.Unit != "count.item" {
 			t.Errorf("%s %q read as %s, want no unit", test.locale, test.line, reading(parsed))
 		}
+	}
+}
+
+func TestNameFirstLinesWithLeadersAndRanges(t *testing.T) {
+	t.Parallel()
+
+	for _, test := range []struct{ locale, line, want, name string }{
+		{"ja", "片栗粉 … 小さじ1～2", "1-2 volume.teaspoon.metric.culinary", "片栗粉"},
+		{"ja", "みそ … 大さじ２", "2 volume.tablespoon.metric.culinary", "みそ"},
+		{"ja", "米 2合", "2 volume.go.jp", "米"},
+		{"ko", "식용유1T", "1 volume.tablespoon.metric.culinary", "식용유"},
+		{"zh", "青蔥 2支", "2 count.item", "青蔥"},
+		{"th", "หอมแดง 3 หัว", "3 count.head", "หอมแดง"},
+		{"ja", "揚げ油 … 適量", "no quantity", "揚げ油"},
+	} {
+		parsed := ingredientparser.Parse(test.line, "i1", test.locale)
+		if got := reading(parsed); got != test.want || parsed.Name != test.name || parsed.SourceText != test.line {
+			t.Errorf("%s %q: %s, name %q", test.locale, test.line, got, parsed.Name)
+		}
+	}
+}
+
+func TestAQuantityAfterTheNameThatReadsNoUnitStaysAsWritten(t *testing.T) {
+	t.Parallel()
+
+	for _, test := range []struct{ locale, line string }{
+		{"ja", "牛乳 100ｍｌ"},
+		{"th", "เนื้อหมูสับ 1 จาน"},
+	} {
+		parsed := ingredientparser.Parse(test.line, "i1", test.locale)
+		if parsed.Quantity != nil || parsed.Name != test.line {
+			t.Errorf("%s %q read as %s, name %q", test.locale, test.line, reading(parsed), parsed.Name)
+		}
+	}
+}
+
+func TestAnAmountAndUnitAfterTheNameRead(t *testing.T) {
+	t.Parallel()
+
+	for _, test := range []struct{ locale, line, want, name string }{
+		{"en", "Beer 250 ml", "250 volume.milliliter", "Beer"},
+		{"en-US", "Baking Powder 2½ tsp", "5/2 volume.teaspoon.us.customary", "Baking Powder"},
+		{"de", "Mehl 500 g", "500 mass.gram", "Mehl"},
+		{"ru", "Картофель — 1 кг", "1 mass.kilogram", "Картофель"},
+		{"en", "Vitamin B 12", "no quantity", "Vitamin B 12"},
+		{"en", "Burger Buns 4", "no quantity", "Burger Buns 4"},
+	} {
+		parsed := ingredientparser.Parse(test.line, "i1", test.locale)
+		if got := reading(parsed); got != test.want || parsed.Name != test.name {
+			t.Errorf("%s %q: %s, name %q", test.locale, test.line, got, parsed.Name)
+		}
+	}
+}
+
+func TestAnAmountAfterASeparatorReadsAsTheIngredientsQuantity(t *testing.T) {
+	t.Parallel()
+
+	for _, test := range []struct{ locale, line, want, name string }{
+		{"ru", "картофель — 3-4 шт.;", "3-4 count.item", "картофель"},
+		{"ru", "соленые огурцы — около 200 г;", "~200 mass.gram", "соленые огурцы"},
+		{"ro", "Bibilică: 1,7 kg", "17/10 mass.kilogram", "Bibilică"},
+		{"ja", "豚バラ肉 (スライス)・・・200g", "200 mass.gram", "豚バラ肉 (スライス)"},
+		{"en", "Eggs - 2", "2 count.egg", "Eggs"},
+		{"ru", "Чеснок - 2 зубч.", "2 count.clove", "Чеснок"},
+		{"ru", "Мука - 2 стак.", "no quantity", "Мука - 2 стак"},
+		{"en", "Note: 2 eggs work too", "no quantity", "Note: 2 eggs work too"},
+	} {
+		parsed := ingredientparser.Parse(test.line, "i1", test.locale)
+		if got := reading(parsed); got != test.want || parsed.Name != test.name {
+			t.Errorf("%s %q: %s, name %q", test.locale, test.line, got, parsed.Name)
+		}
+	}
+}
+
+func TestAMeasureWithoutANumberStatesOne(t *testing.T) {
+	t.Parallel()
+
+	for _, test := range []struct{ locale, line, want, name string }{
+		{"en", "Pinch white pepper", "1 count.pinch", "white pepper"},
+		{"pl", "łyżka mąki pszennej", "1 volume.tablespoon.metric.culinary", "mąki pszennej"},
+		{"he", "כפית מלח", "1 volume.teaspoon.metric.culinary", "מלח"},
+		{"ar", "رشة من الملح.", "1 count.pinch", "الملح"},
+		{"en", "Gram flour", "no quantity", "Gram flour"},
+		{"en", "Pot roast", "no quantity", "Pot roast"},
+		{"ja", "大さじ2 醤油", "2 volume.tablespoon.metric.culinary", "醤油"},
+	} {
+		parsed := ingredientparser.Parse(test.line, "i1", test.locale)
+		if got := reading(parsed); got != test.want || parsed.Name != test.name {
+			t.Errorf("%s %q: %s, name %q", test.locale, test.line, got, parsed.Name)
+		}
+	}
+}
+
+func TestAFractionWordIsTheAmount(t *testing.T) {
+	t.Parallel()
+
+	for _, test := range []struct{ locale, line, want, name string }{
+		{"he", "חצי כפית מלח", "1/2 volume.teaspoon.metric.culinary", "מלח"},
+		{"ar", "نصف ملعقة صغيرة ملح", "1/2 volume.teaspoon.metric.culinary", "ملح"},
+		{"tr", "Yarım limon", "1/2 count.item", "limon"},
+		{"de", "eine halbe Zitrone", "1/2 count.item", "Zitrone"},
+		{"cs", "půl lžičky soli", "1/2 volume.teaspoon.metric.culinary", "soli"},
+		{"fi", "puoli litraa maitoa", "1/2 volume.liter", "maitoa"},
+		{"id", "setengah sdt garam", "1/2 volume.teaspoon.metric.culinary", "garam"},
+	} {
+		parsed := ingredientparser.Parse(test.line, "i1", test.locale)
+		if got := reading(parsed); got != test.want || parsed.Name != test.name {
+			t.Errorf("%s %q: %s, name %q", test.locale, test.line, got, parsed.Name)
+		}
+	}
+}
+
+func TestAnAmountAfterACommaReadsAsTheIngredientsQuantity(t *testing.T) {
+	t.Parallel()
+
+	for _, test := range []struct{ locale, line, want, name string }{
+		{"uk", "Цукор, 500 г", "500 mass.gram", "Цукор"},
+		{"ru", "Оливковое масло, 1 столовая ложка", "1 volume.tablespoon.metric.culinary", "Оливковое масло"},
+		{"en", "Sugar , 450 g", "450 mass.gram", "Sugar"},
+		{"en", "Candied ginger, chopped 40 g", "40 mass.gram", "Candied ginger"},
+		{"en", "Tomatoes, chopped", "no quantity", "Tomatoes"},
+	} {
+		parsed := ingredientparser.Parse(test.line, "i1", test.locale)
+		if got := reading(parsed); got != test.want || parsed.Name != test.name {
+			t.Errorf("%s %q: %s, name %q", test.locale, test.line, got, parsed.Name)
+		}
+	}
+}
+
+func TestLinePunctuationAndOrderVariantsRead(t *testing.T) {
+	t.Parallel()
+
+	for _, test := range []struct{ locale, line, want, name string }{
+		{"pl", "500 ml mleka 3,2%", "500 volume.milliliter", "mleka 3,2%"},
+		{"ja", "合い挽き肉 100g", "100 mass.gram", "合い挽き肉"},
+		{"he", "כפית כמון טחון 1/4", "1/4 volume.teaspoon.metric.culinary", "כמון טחון"},
+		{"ro", "-6 galbenusuri", "6 count.item", "galbenusuri"},
+	} {
+		parsed := ingredientparser.Parse(test.line, "i1", test.locale)
+		if got := reading(parsed); got != test.want || parsed.Name != test.name {
+			t.Errorf("%s %q: %s, name %q", test.locale, test.line, got, parsed.Name)
+		}
+	}
+}
+
+func TestAConnectiveBetweenNumberAndUnitIsNotTheName(t *testing.T) {
+	t.Parallel()
+
+	for _, test := range []struct{ locale, line, want, name string }{
+		{"ro", "300 de grame de nucă măcinată", "300 mass.gram", "nucă măcinată"},
+		{"pt-BR", "1/4 de xícara de parmesão", "1/4 volume.cup.us.culinary", "parmesão"},
+		{"ar", "400 غرام من المكرونة", "400 mass.gram", "المكرونة"},
+	} {
+		parsed := ingredientparser.Parse(test.line, "i1", test.locale)
+		if got := reading(parsed); got != test.want || parsed.Name != test.name {
+			t.Errorf("%s %q: %s, name %q", test.locale, test.line, got, parsed.Name)
+		}
+	}
+}
+
+func TestLineDecorationIsNotPartOfTheIngredient(t *testing.T) {
+	t.Parallel()
+
+	for _, test := range []struct{ locale, line, name, note string }{
+		{"en", "1 onion finely chopped", "onion", "finely chopped"},
+		{"ja", "・オリーブ油 大さじ1", "オリーブ油", ""},
+		{"he", "\u200eכפית סוכר\u200e", "סוכר", ""},
+		{"it", "Sale, q.b.", "Sale", "q.b."},
+	} {
+		parsed := ingredientparser.Parse(test.line, "i1", test.locale)
+		if parsed.Name != test.name || parsed.Note != test.note || parsed.SourceText != test.line {
+			t.Errorf("%s %q: name %q, note %q, source %q", test.locale, test.line, parsed.Name, parsed.Note, parsed.SourceText)
+		}
+	}
+}
+
+func TestAStatedEnglishIsCheckedAgainstTheIngredients(t *testing.T) {
+	t.Parallel()
+
+	turkish := []string{"1 su bardağı yoğurt", "2 yemek kaşığı şeker", "1 çay kaşığı tuz", "1 yemek kaşığı tereyağı", "3 adet yumurta"}
+	if got := ingredientparser.ReadingLanguage(turkish, "en"); got != "tr" {
+		t.Errorf("Turkish lines stated as English read as %q", got)
+	}
+
+	english := []string{"2 cups flour", "1 tablespoon sugar", "200 g butter", "3 eggs"}
+	if got := ingredientparser.ReadingLanguage(english, "en-US"); got != "en-US" {
+		t.Errorf("English lines read as %q", got)
+	}
+
+	if got := ingredientparser.ReadingLanguage(turkish, "de"); got != "de" {
+		t.Errorf("another stated language is kept, got %q", got)
 	}
 }

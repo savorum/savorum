@@ -1,6 +1,10 @@
 package ingredientparser
 
 import (
+	"cmp"
+	_ "embed"
+	"encoding/json"
+	"maps"
 	"regexp"
 	"slices"
 	"sort"
@@ -12,78 +16,100 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/savorum/savorum/internal/recipe"
+	"github.com/savorum/savorum/internal/units"
 )
 
-// dialect is what a reading language changes about the grammar of an
-// ingredient line: the words that mark an approximate or optional amount, join
-// a measure to what it measures, or separate a range or an alternative, and the
-// order in which the language writes a quantity.
-//
-// The units themselves are not here. They come from the registry's alias sets
-// for the same language.
 type dialect struct {
-	approximate *regexp.Regexp
-	connective  *regexp.Regexp
-	optional    *regexp.Regexp
-	amount      *regexp.Regexp
-	orWords     []string
-	plusWords   []string
+	approximate   *regexp.Regexp
+	connective    *regexp.Regexp
+	optional      *regexp.Regexp
+	amount        *regexp.Regexp
+	modifier      *regexp.Regexp
+	modifierAfter *regexp.Regexp
+	modifiers     []string
+	orWords       []string
+	plusWords     []string
 
-	// nameFirst languages list the ingredient before its quantity: 小麦粉 200g.
-	nameFirst bool
-	// unspaced languages write a unit against the word after it: 2個卵.
-	unspaced bool
-	// prefixUnit matches a unit written before its number: 大さじ2.
-	prefixUnit *regexp.Regexp
-	// prefixUnitTail matches that at the end of a line: サラダ油 大さじ2.
-	prefixUnitTail *regexp.Regexp
-	// approximateTail matches an approximation word against the end of what
-	// precedes a quantity: じゃがいも 約3個.
+	nameFirst       bool
+	unspaced        bool
+	prefixUnit      *regexp.Regexp
+	prefixUnitTail  *regexp.Regexp
 	approximateTail *regexp.Regexp
-	// opaque lists measures the registry cannot name because their size
-	// differs between countries. A line that uses one stays as written.
-	opaque []string
-	// impliedOne lists measure words that contain the number one: ひとつまみ is
-	// "one pinch". A line that leads or, for a nameFirst language, ends with one
-	// and states no other amount is read as an amount of one.
-	impliedOne []string
-	// compounds lists fixed names that begin with a word that is also a unit: in
-	// "bouquet garni" the first word is part of the ingredient's name.
+	opaque          []string
+	impliedOne      []string
+	numberWords     map[string]string
+	mixedNumber     *regexp.Regexp
+	articles        []string
+	multipliers     map[string]string
+	vague           []string
+	vagueAfter      []string
+	distributive    []string
+	bounds          []string
+	between         []string
+	minusWords      []string
+	fractionOf      []string
+	// Ingredient-part phrases mapped to preparation notes.
+	parts       map[string]string
+	sizes       []string
+	descriptors []string
+	// Unregistered count descriptors retained as notes.
+	portionWords   []string
+	liquids        []string
+	unmeasuredNote *regexp.Regexp
+	unmeasuredRun  *regexp.Regexp
+	// Ingredient names whose first word also names a unit.
 	compounds []string
-	// senses read a broad word as a unit only when the ingredient after it
-	// selects that sense: "gousse d'ail" is a clove, "gousse de vanille" is not.
+	// Unit interpretations selected by ingredient context.
 	senses []sense
 }
 
-// sense is one contextual reading of a word the registry gives no alias.
 type sense struct {
 	words []string
 	unit  string
-	// name matches the start of the ingredient, after any connective.
-	name *regexp.Regexp
+	name  *regexp.Regexp
 }
 
 type senseSpec struct {
-	words []string
-	unit  string
-	name  string
+	Words []string `json:"words"`
+	Unit  string   `json:"unit"`
+	Name  string   `json:"name"`
 }
 
 type dialectSpec struct {
-	approximate []string
-	// approximateAttached are approximation words written against the number.
-	approximateAttached []string
-	connective          string
-	rangeWords          []string
-	orWords             []string
-	optional            []string
-	nameFirst           bool
-	unspaced            bool
-	prefixUnits         []string
-	opaque              []string
-	impliedOne          []string
-	compounds           []string
-	senses              []senseSpec
+	Locale              string            `json:"locale"`
+	Approximate         []string          `json:"approximate,omitempty"`
+	ApproximateAttached []string          `json:"approximate_attached,omitempty"`
+	Connective          string            `json:"connective,omitempty"`
+	RangeWords          []string          `json:"range_words,omitempty"`
+	OrWords             []string          `json:"or_words,omitempty"`
+	PlusWords           []string          `json:"plus_words,omitempty"`
+	Optional            []string          `json:"optional,omitempty"`
+	Modifiers           []string          `json:"modifiers,omitempty"`
+	ModifiersAfter      []string          `json:"modifiers_after,omitempty"`
+	NumberWords         map[string]string `json:"number_words,omitempty"`
+	MixedJoiner         string            `json:"mixed_joiner,omitempty"`
+	Articles            []string          `json:"articles,omitempty"`
+	Multipliers         map[string]string `json:"multipliers,omitempty"`
+	Vague               []string          `json:"vague,omitempty"`
+	VagueAfter          []string          `json:"vague_after,omitempty"`
+	Distributive        []string          `json:"distributive,omitempty"`
+	Bounds              []string          `json:"bounds,omitempty"`
+	Between             []string          `json:"between,omitempty"`
+	MinusWords          []string          `json:"minus_words,omitempty"`
+	FractionOf          []string          `json:"fraction_of,omitempty"`
+	Parts               map[string]string `json:"parts,omitempty"`
+	Sizes               []string          `json:"sizes,omitempty"`
+	Descriptors         []string          `json:"descriptors,omitempty"`
+	PortionWords        []string          `json:"portion_words,omitempty"`
+	Liquids             []string          `json:"liquids,omitempty"`
+	UnmeasuredNotes     []string          `json:"unmeasured_notes,omitempty"`
+	NameFirst           bool              `json:"name_first,omitempty"`
+	Unspaced            bool              `json:"unspaced,omitempty"`
+	PrefixUnits         []string          `json:"prefix_units,omitempty"`
+	Opaque              []string          `json:"opaque,omitempty"`
+	ImpliedOne          []string          `json:"implied_one,omitempty"`
+	Compounds           []string          `json:"compounds,omitempty"`
+	Senses              []senseSpec       `json:"senses,omitempty"`
 }
 
 var (
@@ -91,18 +117,8 @@ var (
 	dialectsMu sync.Mutex
 )
 
-// dialectFor returns the grammar for the primary language of a locale. A
-// locale that names no language, or one without a table, reads as English.
 func dialectFor(locale string) *dialect {
-	base := "en"
-
-	if strings.TrimSpace(locale) != "" {
-		if tag, err := language.Parse(locale); err == nil {
-			if primary, _ := tag.Base(); primary.String() != "und" {
-				base = primary.String()
-			}
-		}
-	}
+	base := cmp.Or(grammarLanguage(locale), "en")
 
 	dialectsMu.Lock()
 	defer dialectsMu.Unlock()
@@ -136,42 +152,75 @@ func alternation(words []string) string {
 
 func compileDialect(spec dialectSpec) *dialect {
 	built := &dialect{
-		orWords:   lowerAll(spec.orWords),
-		plusWords: []string{"plus"},
-		nameFirst: spec.nameFirst,
-		unspaced:  spec.unspaced,
-		opaque:    lowerAll(spec.opaque),
+		orWords:   lowerAll(spec.OrWords),
+		plusWords: append([]string{"plus"}, lowerAll(spec.PlusWords)...),
+		nameFirst: spec.NameFirst,
+		unspaced:  spec.Unspaced,
+		opaque:    lowerAll(spec.Opaque),
 
-		impliedOne: lowerAll(spec.impliedOne),
-		compounds:  lowerAll(spec.compounds),
+		impliedOne:   lowerAll(spec.ImpliedOne),
+		compounds:    lowerAll(spec.Compounds),
+		numberWords:  spec.NumberWords,
+		articles:     lowerAll(spec.Articles),
+		modifiers:    lowerAll(spec.Modifiers),
+		multipliers:  spec.Multipliers,
+		vague:        lowerAll(spec.Vague),
+		vagueAfter:   lowerAll(spec.VagueAfter),
+		distributive: lowerAll(spec.Distributive),
+		bounds:       lowerAll(spec.Bounds),
+		between:      lowerAll(spec.Between),
+		minusWords:   lowerAll(spec.MinusWords),
+		fractionOf:   lowerAll(spec.FractionOf),
+		parts:        spec.Parts,
+		sizes:        lowerAll(spec.Sizes),
+		descriptors:  lowerAll(spec.Descriptors),
+		portionWords: lowerAll(spec.PortionWords),
+		liquids:      lowerAll(spec.Liquids),
 	}
 
-	for _, contextual := range spec.senses {
+	if len(spec.UnmeasuredNotes) > 0 {
+		built.unmeasuredNote = regexp.MustCompile(`(?i)^(?:` + alternation(spec.UnmeasuredNotes) + `)` + wordEnd)
+		built.unmeasuredRun = regexp.MustCompile(`(?i)^(?:` + alternation(spec.UnmeasuredNotes) + `)(?:\s+(?:` + alternation(spec.UnmeasuredNotes) + `))*$`)
+	}
+
+	for _, contextual := range spec.Senses {
 		built.senses = append(built.senses, sense{
-			words: lowerAll(contextual.words), unit: contextual.unit,
-			name: regexp.MustCompile(`(?i)^(?:` + contextual.name + `)`),
+			words: lowerAll(contextual.Words), unit: contextual.Unit,
+			name: regexp.MustCompile(`(?i)^(?:` + contextual.Name + `)`),
 		})
 	}
 
 	approximate := `~\s+`
-	if len(spec.approximate) > 0 {
-		approximate = `(?:` + alternation(spec.approximate) + `|~)\s+`
+	if len(spec.Approximate) > 0 {
+		approximate = `(?:` + alternation(spec.Approximate) + `|~)\s+`
 	}
 
-	if len(spec.approximateAttached) > 0 {
-		approximate = `(?:` + alternation(spec.approximateAttached) + `)\s*|` + approximate
-		built.approximateTail = regexp.MustCompile(`(?i)\s*(?:` + alternation(spec.approximateAttached) + `)\s*$`)
+	if len(spec.ApproximateAttached) > 0 {
+		approximate = `(?:` + alternation(spec.ApproximateAttached) + `)\s*|` + approximate
+		built.approximateTail = regexp.MustCompile(`(?i)\s*(?:` + alternation(spec.ApproximateAttached) + `)\s*$`)
 	}
 
 	built.approximate = regexp.MustCompile(`(?i)^(?:` + approximate + `)`)
 
-	if spec.connective != "" {
-		built.connective = regexp.MustCompile(`(?i)^(?:` + spec.connective + `)`)
+	if spec.MixedJoiner != "" {
+		built.mixedNumber = regexp.MustCompile(`(?i)(\pN)\s*` + regexp.QuoteMeta(spec.MixedJoiner) + `\s*(\pN+/\pN+)`)
+	}
+
+	if len(spec.Modifiers) > 0 {
+		built.modifier = regexp.MustCompile(`(?i)^(` + alternation(spec.Modifiers) + `)\s+`)
+	}
+
+	if len(spec.ModifiersAfter) > 0 {
+		built.modifierAfter = regexp.MustCompile(`(?i)^(` + alternation(spec.ModifiersAfter) + `)` + wordEnd)
+	}
+
+	if spec.Connective != "" {
+		built.connective = regexp.MustCompile(`(?i)^(?:` + spec.Connective + `)`)
 	}
 
 	optional := "optional"
-	if len(spec.optional) > 0 {
-		optional = alternation(append([]string{"optional"}, spec.optional...))
+	if len(spec.Optional) > 0 {
+		optional = alternation(append([]string{"optional"}, spec.Optional...))
 	}
 
 	built.optional = regexp.MustCompile(`(?i)^\s*(?:` + optional + `)\s*[:\-–—]\s*` +
@@ -180,16 +229,17 @@ func compileDialect(spec dialectSpec) *dialect {
 		`|\s+(?:` + optional + `)\s*$`)
 
 	separators := `\s*(?:-|–|—|〜|～|~|to)\s*`
-	if len(spec.rangeWords) > 0 {
-		separators += `|\s+(?:` + alternation(spec.rangeWords) + `)\s+`
+	if len(spec.RangeWords) > 0 {
+		separators += `|\s+(?:` + alternation(spec.RangeWords) + `)\s+`
 	}
 
 	built.amount = regexp.MustCompile(`^(` + amountPattern + `)(?:(?:` + separators + `)(` + amountPattern + `))?(?:\s+|$)(.*)$`)
 
-	if len(spec.prefixUnits) > 0 {
-		units := alternation(spec.prefixUnits)
-		built.prefixUnit = regexp.MustCompile(`^(` + units + `)\s*(` + amountPattern + `)(?:\s+(.*))?$`)
-		built.prefixUnitTail = regexp.MustCompile(`^(.*?)\s*(` + units + `)\s*(` + amountPattern + `)$`)
+	if len(spec.PrefixUnits) > 0 {
+		units := alternation(spec.PrefixUnits)
+		amounts := `(?:` + amountPattern + `)(?:(?:` + separators + `)(?:` + amountPattern + `))?`
+		built.prefixUnit = regexp.MustCompile(`^(` + units + `)\s*(` + amounts + `)(?:\s+(.*))?$`)
+		built.prefixUnitTail = regexp.MustCompile(`^(.*?)\s*(` + units + `)\s*(` + amounts + `)$`)
 	}
 
 	return built
@@ -233,8 +283,6 @@ func (d *dialect) cutPlus(value string) (string, bool) {
 	return "", false
 }
 
-// isOpaqueMeasure reports whether value begins with a measure word whose size
-// differs between countries, such as a cup.
 func (d *dialect) isOpaqueMeasure(value string) bool {
 	lowered := strings.ToLower(strings.TrimSpace(value))
 
@@ -253,9 +301,6 @@ func (d *dialect) isOpaqueMeasure(value string) bool {
 	return false
 }
 
-// describesOpaqueMeasure reports whether a line names, in words of more than one
-// character, a measure whose size differs between countries. A line that reads
-// "1컵" beside "종이컵" is describing a paper cup, not the registry's cup.
 func (d *dialect) describesOpaqueMeasure(line string) bool {
 	lowered := strings.ToLower(line)
 
@@ -284,8 +329,6 @@ var asciiForms = strings.NewReplacer(
 	"、", ",", "（", "(", "）", ")",
 )
 
-// asciiDigits writes the decimal digits of any script, and the punctuation
-// that sits beside them, in ASCII so one grammar reads them all.
 func asciiDigits(value string) string {
 	var out strings.Builder
 
@@ -317,16 +360,24 @@ var (
 	letterThenDigit = regexp.MustCompile(`(\p{L})(\d)`)
 )
 
-// reorder writes a line in the order the grammar reads: the amount, its unit,
-// then the ingredient. Japanese writes a unit before its number (大さじ2), and
-// Japanese, Korean, Chinese and Thai list the ingredient before its quantity
-// (小麦粉 200g). Everything else is returned as it came.
-//
-// The second result reports an approximation word that stood before the number
-// and was taken out of the ingredient.
+// Reorder quantities as amount, unit, then ingredient; report any removed approximation marker.
 func (d *dialect) reorder(line string, read reading) (string, bool) {
 	if !d.nameFirst && len(d.impliedOne) != 0 && !d.amount.MatchString(line) {
 		if first, rest, found := strings.Cut(line, " "); found && strings.TrimSpace(rest) != "" && d.impliesOne(first) {
+			return "1 " + line, false
+		}
+	}
+
+	if !d.amount.MatchString(line) {
+		if rewritten, approximate, found := d.reorderSeparated(line, read); found {
+			return rewritten, approximate
+		}
+
+		if leadingMeasure(line, read) {
+			if match := trailingBareAmount.FindStringSubmatch(line); match != nil {
+				return match[2] + " " + match[1], false
+			}
+
 			return "1 " + line, false
 		}
 	}
@@ -337,16 +388,19 @@ func (d *dialect) reorder(line string, read reading) (string, bool) {
 		}
 	}
 
-	if !d.nameFirst || d.amount.MatchString(line) {
+	if d.amount.MatchString(line) {
 		return line, false
 	}
 
-	// A note follows the quantity: 小麦粉 200g(ふるう). It keeps its place after
-	// the ingredient once the amount has moved to the front.
 	body, note := splitTrailingNote(line)
 
 	rewritten, approximate, found := d.reorderBody(body, read)
 	if !found {
+		// Retry the full line when the comma separates the ingredient from its quantity.
+		if rewritten, approximate, found = d.reorderBody(line, read); found && note != "" {
+			return rewritten, approximate
+		}
+
 		return line, false
 	}
 
@@ -359,8 +413,6 @@ func (d *dialect) reorder(line string, read reading) (string, bool) {
 
 var trailingParenthesis = regexp.MustCompile(`^(.*?)\s*\(([^()]*)\)$`)
 
-// splitTrailingNote separates a note in parentheses, or after a comma, from
-// the end of a line whose ingredient comes first.
 func splitTrailingNote(line string) (string, string) {
 	body, note := splitNote(line)
 
@@ -377,7 +429,7 @@ func splitTrailingNote(line string) (string, string) {
 func (d *dialect) reorderBody(line string, read reading) (string, bool, bool) {
 	if d.prefixUnitTail != nil {
 		if match := d.prefixUnitTail.FindStringSubmatch(line); match != nil {
-			if head, approximate := d.splitApproximate(match[1]); head != "" {
+			if head, approximate := d.splitApproximate(trimLeader(match[1])); head != "" {
 				return match[3] + " " + match[2] + " " + head, approximate, true
 			}
 		}
@@ -393,8 +445,9 @@ func (d *dialect) reorderBody(line string, read reading) (string, bool, bool) {
 	for take := 1; take <= 3 && take < len(tokens); take++ {
 		tail := strings.Join(tokens[len(tokens)-take:], " ")
 
-		head, approximate := d.splitApproximate(strings.Join(tokens[:len(tokens)-take], " "))
-		if head == "" {
+		// Keep mixed-number components together when splitting the quantity.
+		head, approximate := d.splitApproximate(trimLeader(strings.Join(tokens[:len(tokens)-take], " ")))
+		if head == "" || beginsAmount(tokens[len(tokens)-take-1]) {
 			continue
 		}
 
@@ -407,10 +460,18 @@ func (d *dialect) reorderBody(line string, read reading) (string, bool, bool) {
 			continue
 		}
 
-		// A line that names a measure the registry cannot is still a
-		// quantity; it is read as one and left unresolved.
+		// Reject splits that leave quantity text in the ingredient name.
 		parsed := parseStatedAs(rewritten, "probe", rewritten, probe)
-		if parsed.Quantity != nil || (parsed.Normalization != nil && parsed.Normalization.Method == recipe.NormalizationUnresolved) {
+		if parsed.Quantity != nil && parsed.Name != head && strings.HasSuffix(parsed.Name, head) {
+			continue
+		}
+
+		// Require a unit to avoid reordering names such as "Vitamin B 12".
+		if !d.nameFirst && !d.endsInUnit(tail, read) {
+			continue
+		}
+
+		if parsed.Quantity != nil || parsed.Normalization != nil && parsed.Normalization.Method == recipe.NormalizationUnresolved {
 			return rewritten, approximate, true
 		}
 	}
@@ -418,8 +479,95 @@ func (d *dialect) reorderBody(line string, read reading) (string, bool, bool) {
 	return line, false, false
 }
 
-// namesCompound reports a value that begins with a fixed name, so its first
-// word is not read as a unit.
+var trailingBareAmount = regexp.MustCompile(`^(.*\S)\s+(\pN+(?:[.,/]\pN+)?)$`)
+
+var separator = regexp.MustCompile(`\s+[-–—]+\s*|\s*[-–—]+\s+|\s*[:：]\s*|\s*(?:[・‥…]{2,}|…|\.{3,})\s*`)
+
+func (d *dialect) reorderSeparated(line string, read reading) (string, bool, bool) {
+	at := separator.FindStringIndex(line)
+	if at == nil {
+		return "", false, false
+	}
+
+	head := strings.TrimSpace(line[:at[0]])
+
+	tail, approximate := d.takeApproximate(strings.TrimSpace(line[at[1]:]))
+	if head == "" || strings.ContainsAny(head, "0123456789") || !beginsAmount(tail) {
+		return "", false, false
+	}
+
+	probe := read
+	probe.walk, probe.discovering = nil, false
+
+	rewritten := normalizeAmounts(tail) + " " + head
+	parsed := parseStatedAs(rewritten, "probe", rewritten, probe)
+
+	if parsed.Quantity == nil || parsed.Name == "" || !strings.Contains(head, parsed.Name) {
+		return "", false, false
+	}
+
+	return rewritten, approximate, true
+}
+
+func leadingMeasure(line string, read reading) bool {
+	for _, split := range unitSplits(line, read) {
+		// Require a word boundary to avoid interpreting prefixes of ingredient names as units.
+		if next, _ := utf8.DecodeRuneInString(line[len(split.form):]); !unicode.IsSpace(next) {
+			continue
+		}
+
+		descriptor, found := catalog.DescribeAlias(split.form)
+		if !found || beginsAmount(split.rest) {
+			continue
+		}
+
+		if _, resolution := catalog.ResolveOccurrence(units.Occurrence{Form: descriptor.AuthoredForm}, read.locale, units.Decisions{}); resolution == units.AliasUnknown {
+			continue
+		}
+
+		for _, id := range descriptor.CandidateUnitIDs {
+			if !impliesOneMeasure(id) {
+				return false
+			}
+		}
+
+		return true
+	}
+
+	return false
+}
+
+func impliesOneMeasure(id string) bool {
+	switch id {
+	case "count.pinch", "count.handful", "count.dash", "count.drop", "count.splash", "count.bunch", "count.sprig":
+		return true
+	}
+
+	return strings.HasPrefix(id, "volume.")
+}
+
+func (d *dialect) endsInUnit(tail string, read reading) bool {
+	match := d.amount.FindStringSubmatch(tail)
+	if match == nil {
+		return false
+	}
+
+	descriptor, found := catalog.DescribeAlias(strings.TrimSpace(match[len(match)-1]))
+	if !found {
+		return false
+	}
+
+	_, resolution := catalog.ResolveOccurrence(units.Occurrence{Form: descriptor.AuthoredForm}, read.locale, units.Decisions{})
+
+	return resolution != units.AliasUnknown
+}
+
+func trimLeader(name string) string {
+	return strings.TrimRightFunc(name, func(character rune) bool {
+		return unicode.IsSpace(character) || strings.ContainsRune("…‥・.．:：-–—,，、", character)
+	})
+}
+
 func (d *dialect) namesCompound(value string) bool {
 	lowered := strings.ToLower(strings.TrimSpace(value))
 
@@ -432,8 +580,6 @@ func (d *dialect) namesCompound(value string) bool {
 	return false
 }
 
-// senseOf reads a leading word as a unit when the ingredient after it selects
-// that sense. It returns the unit and the text after the word.
 func (d *dialect) senseOf(value string) (string, string, bool) {
 	for _, contextual := range d.senses {
 		for _, word := range contextual.words {
@@ -462,8 +608,6 @@ func (d *dialect) senseOf(value string) (string, string, bool) {
 	return "", "", false
 }
 
-// takeApproximate removes a leading approximation word and reports whether there
-// was one.
 func (d *dialect) takeApproximate(value string) (string, bool) {
 	prefix := d.approximate.FindString(value)
 	if prefix == "" {
@@ -473,13 +617,115 @@ func (d *dialect) takeApproximate(value string) (string, bool) {
 	return strings.TrimSpace(strings.TrimPrefix(value, prefix)), true
 }
 
-// impliesOne reports a measure word that states the number one itself.
+// RE2's \b is ASCII-only; use Unicode word boundaries.
+const wordEnd = `(?:$|[^\pL\pN])`
+
+func (d *dialect) takeModifierAfter(value string) (string, string) {
+	if d.modifierAfter == nil {
+		return "", value
+	}
+
+	match := d.modifierAfter.FindStringSubmatch(value)
+	if match == nil {
+		return "", value
+	}
+
+	return match[1], strings.TrimLeft(strings.TrimSpace(value[len(match[1]):]), ", ")
+}
+
+func (d *dialect) takeModifier(value string) (string, string) {
+	if d.modifier == nil {
+		return "", value
+	}
+
+	match := d.modifier.FindStringSubmatch(value)
+	if match == nil {
+		return "", value
+	}
+
+	return match[1], strings.TrimSpace(value[len(match[0]):])
+}
+
+func (d *dialect) spellNumber(line string, read reading) string {
+	first, rest, found := strings.Cut(line, " ")
+	if !found {
+		return line
+	}
+
+	lowered := strings.ToLower(first)
+
+	if word, after, cut := strings.Cut(rest, " "); cut && slices.Contains(d.articles, lowered) {
+		if value, known := d.numberWords[strings.ToLower(word)]; known {
+			return value + " " + after
+		}
+	}
+
+	if value, known := d.numberWords[lowered]; known {
+		if article, after, cut := strings.Cut(rest, " "); cut && slices.Contains(d.articles, strings.ToLower(article)) {
+			rest = after
+		}
+
+		return value + " " + rest
+	}
+
+	if slices.Contains(d.articles, lowered) && d.measureFollows(rest, read) {
+		if moved, found := d.moveModifier(rest); found {
+			return moved
+		}
+
+		return "1 " + rest
+	}
+
+	if moved, found := d.moveModifier(line); found {
+		return moved
+	}
+
+	return line
+}
+
+func (d *dialect) moveModifier(line string) (string, bool) {
+	word, rest, found := cutAnyWord(line, d.modifiers)
+	if !found || !beginsAmount(rest) {
+		return line, false
+	}
+
+	match := d.amount.FindStringSubmatch(rest)
+	if len(match) != 4 || match[3] == "" {
+		return line, false
+	}
+
+	amount := strings.TrimSpace(rest[:len(rest)-len(match[3])])
+
+	return amount + " " + word + " " + strings.TrimSpace(match[3]), true
+}
+
+func (d *dialect) splitUnmeasured(line string) (string, string) {
+	if d.unmeasuredNote == nil {
+		return line, ""
+	}
+
+	if name, note := splitNote(line); name != "" && note != "" && d.unmeasuredNote.MatchString(note) {
+		return name, note
+	}
+
+	for index, character := range line {
+		if index == 0 || !unicode.IsSpace(character) {
+			continue
+		}
+
+		if note := strings.TrimSpace(line[index:]); d.unmeasuredNote.MatchString(note) &&
+			(d.unmeasuredNote.FindString(note) == note || d.unmeasuredRun.MatchString(note)) {
+			return strings.TrimSpace(line[:index]), note
+		}
+	}
+
+	return line, ""
+}
+
 func (d *dialect) impliesOne(word string) bool {
 	return slices.Contains(d.impliedOne, strings.ToLower(word))
 }
 
-// splitApproximate takes an approximation word off the end of the text that
-// precedes a quantity.
 func (d *dialect) splitApproximate(head string) (string, bool) {
 	if d.approximateTail != nil && d.approximateTail.MatchString(head) {
 		return strings.TrimSpace(d.approximateTail.ReplaceAllString(head, "")), true
@@ -488,218 +734,90 @@ func (d *dialect) splitApproximate(head string) (string, bool) {
 	return strings.TrimSpace(head), false
 }
 
-// dialectSpecs is written in the words a recipe uses. The keys are primary
-// language subtags, so `pt` serves pt-BR and pt-PT.
-var dialectSpecs = map[string]dialectSpec{
-	"en": {
-		approximate: []string{"about", "around", "approximately", "approx.", "approx"},
-		connective:  `of\s+`,
-		orWords:     []string{"or"},
-	},
-	"de": {
-		approximate: []string{"ca.", "circa", "etwa", "ungefähr", "ungefaehr"},
-		rangeWords:  []string{"bis"},
-		orWords:     []string{"oder"},
-		optional:    []string{"fakultativ"},
-		opaque:      []string{"tasse", "tassen", "becher", "glas", "gläser", "pfund", "pfd.", "msp.", "messerspitze", "messerspitzen", "schuss", "spritzer", "schluck", "kaffeelöffel", "dessertlöffel"},
-	},
-	"fr": {
-		approximate: []string{"environ", "env.", "à peu près"},
-		connective:  `(?:de la|de l['’]|de|du|des)\s+|d['’]|de l['’]`,
-		rangeWords:  []string{"à"},
-		orWords:     []string{"ou"},
-		compounds:   []string{"bouquet garni"},
-		senses:      []senseSpec{{[]string{"gousse", "gousses"}, "count.clove", `ails?\b`}},
-		optional:    []string{"facultatif", "facultative", "optionnel", "optionnelle", "en option"},
-		opaque:      []string{"tasse", "tasses", "verre", "verres", "bol", "bols", "livre", "livres", "noix", "pointe", "cuillère à dessert", "cuillères à dessert", "trait", "filet"},
-	},
-	"es": {
-		approximate: []string{"aprox.", "aprox", "aproximadamente", "unos", "unas"},
-		connective:  `(?:de la|de los|de las|del|de)\s+`,
-		rangeWords:  []string{"a"},
-		orWords:     []string{"o"},
-		optional:    []string{"opcional", "opcionales"},
-		opaque:      []string{"taza", "tazas", "vaso", "vasos", "libra", "libras", "chorrito", "chorro", "cucharada de postre", "cucharadas de postre"},
-	},
-	"it": {
-		approximate: []string{"circa", "ca."},
-		connective:  `(?:del|della|dei|delle|di)\s+|d['’]`,
-		rangeWords:  []string{"a"},
-		orWords:     []string{"o"},
-		optional:    []string{"facoltativo", "facoltativa", "opzionale"},
-		senses: []senseSpec{
-			{[]string{"spicchio", "spicchi"}, "count.clove", `aglio\b`},
-			{
-				[]string{"scatola", "scatole"},
-				"container.can",
-				`(?:pomodor|pelat|passata|polpa|tonno|fagiol|cec[ei]\b|mais\b|pisell|lentic|sgombr|sardin|acciug|oliv|funghi|ananas|pesche)`,
-			},
-		},
-		opaque: []string{"tazza", "tazze", "tazzina", "tazzine", "bicchiere", "bicchieri", "libbra", "libbre", "noce", "noci"},
-	},
-	"pt": {
-		approximate: []string{"cerca de", "aprox.", "aprox"},
-		connective:  `(?:de|do|da|dos|das)\s+`,
-		rangeWords:  []string{"a", "até"},
-		orWords:     []string{"ou"},
-		optional:    []string{"opcional", "facultativo"},
-		opaque:      []string{"xícara", "xícaras", "chávena", "chávenas", "copo", "copos", "libra", "libras", "colher de sobremesa", "colheres de sobremesa", "colher de café", "colheres de café", "cc"},
-	},
-	"nl": {
-		approximate: []string{"ongeveer", "circa", "ca."},
-		rangeWords:  []string{"tot"},
-		orWords:     []string{"of"},
-		optional:    []string{"optioneel", "facultatief"},
-		opaque:      []string{"kop", "kopje", "kopjes", "glas", "glazen", "ons", "pond", "koffielepel", "dessertlepel"},
-	},
-	"sv": {
-		approximate: []string{"ca", "ca.", "cirka"},
-		rangeWords:  []string{"till"},
-		orWords:     []string{"eller"},
-		senses:      []senseSpec{{[]string{"klyfta", "klyftor"}, "count.clove", `vitlök`}},
-		optional:    []string{"valfri", "valfritt", "valfria", "eventuellt"},
-		opaque:      []string{"kopp", "koppar", "mugg", "muggar", "glas", "kryddmått", "krm", "skålpund", "kaffesked"},
-	},
-	"da": {
-		approximate: []string{"ca.", "ca", "cirka"},
-		rangeWords:  []string{"til"},
-		orWords:     []string{"eller"},
-		optional:    []string{"valgfri", "valgfrit", "evt.", "evt"},
-		opaque:      []string{"kop", "kopper", "krus", "glas", "pund", "dessertske", "kaffeske"},
-	},
-	"nb": {
-		approximate: []string{"ca.", "ca", "cirka"},
-		rangeWords:  []string{"til"},
-		orWords:     []string{"eller"},
-		optional:    []string{"valgfritt", "valgfri", "eventuelt"},
-		opaque:      []string{"kopp", "kopper", "krus", "glass", "pund", "dessertskje", "kaffeskje"},
-	},
-	"fi": {
-		approximate: []string{"noin", "n."},
-		orWords:     []string{"tai"},
-		optional:    []string{"valinnainen", "halutessasi"},
-		opaque:      []string{"kuppi", "kupillinen", "kuppia", "lasi", "lasillinen", "lasia", "mitta", "naula"},
-	},
-	"pl": {
-		approximate: []string{"ok.", "około"},
-		rangeWords:  []string{"do"},
-		orWords:     []string{"lub"},
-		optional:    []string{"opcjonalnie", "opcjonalny", "opcjonalne"},
-		opaque:      []string{"szklanka", "szklanki", "szklanek", "filiżanka", "filiżanki", "kubek", "kubki", "funt", "funty", "łyżka deserowa"},
-	},
-	"cs": {
-		approximate: []string{"cca", "cca.", "asi", "přibližně"},
-		rangeWords:  []string{"až", "do"},
-		orWords:     []string{"nebo"},
-		optional:    []string{"volitelně", "volitelné"},
-		opaque:      []string{"hrnek", "hrnky", "hrnků", "sklenice", "sklenička", "libra", "dezertní lžíce"},
-	},
-	"hu": {
-		approximate: []string{"kb.", "kb", "körülbelül"},
-		orWords:     []string{"vagy"},
-		optional:    []string{"opcionális", "elhagyható"},
-		opaque:      []string{"bögre", "bögrényi", "csésze", "pohár", "font", "desszertkanál", "kávéskanál"},
-	},
-	"ro": {
-		approximate: []string{"aprox.", "aprox", "aproximativ", "circa"},
-		connective:  `de\s+`,
-		rangeWords:  []string{"până la"},
-		orWords:     []string{"sau"},
-		optional:    []string{"opțional", "opțională"},
-		opaque:      []string{"ceașcă", "ceşcuță", "cană", "căni", "pahar", "pahare", "livră"},
-	},
-	"tr": {
-		approximate: []string{"yaklaşık"},
-		orWords:     []string{"veya", "ya da"},
-		optional:    []string{"isteğe bağlı", "opsiyonel"},
-		opaque:      []string{"su bardağı", "çay bardağı", "fincan", "bardak", "tatlı kaşığı", "çay kaşığı", "ç.k.", "çk", "yemek kaşığı", "y.k.", "yk", "kahve fincanı"},
-	},
-	"ru": {
-		approximate: []string{"около", "примерно"},
-		rangeWords:  []string{"до"},
-		orWords:     []string{"или"},
-		optional:    []string{"по желанию", "необязательно"},
-		opaque:      []string{"стакан", "стакана", "стаканов", "чашка", "чашки", "чашек", "кружка", "кружки", "фунт", "фунта", "десертная ложка", "десертные ложки"},
-	},
-	"uk": {
-		approximate: []string{"близько", "приблизно"},
-		rangeWords:  []string{"до"},
-		orWords:     []string{"або"},
-		optional:    []string{"за бажанням", "необов'язково"},
-		opaque:      []string{"склянка", "склянки", "склянок", "чашка", "чашки", "чашок", "кухоль", "фунт", "десертна ложка"},
-	},
-	"el": {
-		approximate: []string{"περίπου"},
-		rangeWords:  []string{"έως"},
-		orWords:     []string{"ή"},
-		optional:    []string{"προαιρετικά", "προαιρετικό"},
-		opaque:      []string{"φλιτζάνι", "φλιτζάνια", "ποτήρι", "ποτήρια", "κουταλιά του γλυκού"},
-	},
-	"ar": {
-		approximate: []string{"حوالي", "تقريباً", "تقريبا"},
-		rangeWords:  []string{"إلى", "الى"},
-		orWords:     []string{"أو", "او"},
-		optional:    []string{"اختياري", "اختيارية"},
-		opaque:      []string{"كوب", "أكواب", "فنجان", "فناجين", "كأس", "كاس"},
-	},
-	"he": {
-		approximate: []string{"בערך", "כ-"},
-		rangeWords:  []string{"עד"},
-		orWords:     []string{"או"},
-		optional:    []string{"אופציונלי", "לא חובה"},
-		opaque:      []string{"כוס", "כוסות", "ספל", "ספלים"},
-	},
-	"th": {
-		approximateAttached: []string{"ประมาณ"},
-		rangeWords:          []string{"ถึง"},
-		orWords:             []string{"หรือ"},
-		optional:            []string{"ไม่บังคับ", "เป็นทางเลือก"},
-		nameFirst:           true,
-		unspaced:            true,
-		opaque:              []string{"ถ้วย", "แก้ว", "ถ้วยตวง"},
-	},
-	"vi": {
-		approximate: []string{"khoảng"},
-		rangeWords:  []string{"đến"},
-		orWords:     []string{"hoặc"},
-		optional:    []string{"tùy chọn", "tuỳ chọn"},
-		opaque:      []string{"chén", "ly", "cốc", "bát", "tách"},
-	},
-	"id": {
-		approximate: []string{"sekitar", "kira-kira"},
-		rangeWords:  []string{"sampai"},
-		orWords:     []string{"atau"},
-		optional:    []string{"opsional"},
-		opaque:      []string{"cangkir", "gelas", "mangkuk"},
-		impliedOne:  []string{"sejumput", "secubit", "segenggam"},
-	},
-	"ja": {
-		approximateAttached: []string{"約", "およそ"},
-		orWords:             []string{"または", "又は"},
-		optional:            []string{"お好みで", "お好み", "任意"},
-		nameFirst:           true,
-		unspaced:            true,
-		prefixUnits:         []string{"大さじ", "小さじ", "大匙", "小匙", "計量カップ", "カップ"},
-		opaque:              []string{"合", "杯", "升", "紙コップ", "炊飯器のカップ", "炊飯器付属のカップ"},
-		impliedOne:          []string{"ひとつまみ", "ひとつかみ"},
-	},
-	"ko": {
-		approximateAttached: []string{"약"},
-		orWords:             []string{"또는"},
-		optional:            []string{"선택"},
-		senses:              []senseSpec{{[]string{"쪽"}, "count.clove", `마늘`}},
-		nameFirst:           true,
-		unspaced:            true,
-		opaque:              []string{"되", "국자", "종이컵", "밥숟가락"},
-	},
-	"zh": {
-		approximateAttached: []string{"大约", "大約", "约", "約"},
-		rangeWords:          []string{"至", "到"},
-		orWords:             []string{"或"},
-		optional:            []string{"可选", "可選", "任选"},
-		senses:              []senseSpec{{[]string{"瓣"}, "count.clove", `大?蒜`}},
-		nameFirst:           true,
-		unspaced:            true,
-		opaque:              []string{"杯", "碗", "勺"},
-	},
+//go:embed dialects.json
+var dialectsJSON []byte
+
+var (
+	dialectSpecs                     = readDialects()
+	dialectLanguages, dialectMatcher = dialectTags()
+)
+
+func grammarLanguage(locale string) string {
+	tag := language.Make(strings.TrimSpace(locale))
+	if base, _ := tag.Base(); base.String() != "und" {
+		if _, known := dialectSpecs[base.String()]; known {
+			return base.String()
+		}
+	}
+
+	// An English fallback match does not establish the source language.
+	if _, index, confidence := dialectMatcher.Match(tag); index > 0 && confidence >= language.High {
+		return dialectLanguages[index]
+	}
+
+	return ""
+}
+
+func dialectTags() ([]string, language.Matcher) {
+	languages := slices.Sorted(maps.Keys(dialectSpecs))
+	languages = append([]string{"en"}, slices.DeleteFunc(languages, func(code string) bool { return code == "en" })...)
+
+	tags := make([]language.Tag, len(languages))
+	for index, code := range languages {
+		tags[index] = language.Make(code)
+	}
+
+	return languages, language.NewMatcher(tags)
+}
+
+func readDialects() map[string]dialectSpec {
+	var specs []dialectSpec
+	if err := json.Unmarshal(dialectsJSON, &specs); err != nil {
+		panic(err)
+	}
+
+	byLocale := make(map[string]dialectSpec, len(specs))
+	for _, spec := range specs {
+		byLocale[spec.Locale] = spec
+	}
+
+	return byLocale
+}
+
+// ReadingLanguage infers the ingredient language when the declaration is English or absent.
+func ReadingLanguage(lines []string, stated string) string {
+	if base, _ := language.Make(stated).Base(); stated != "" && base.String() != AliasLanguage {
+		return stated
+	}
+
+	statedScore := measuredLines(lines, cmp.Or(stated, AliasLanguage))
+	best, bestScore := stated, statedScore
+
+	for _, candidate := range dialectLanguages {
+		if score := measuredLines(lines, candidate); score > bestScore {
+			best, bestScore = candidate, score
+		}
+	}
+
+	if bestScore >= 3 && bestScore >= 2*statedScore && best != stated {
+		return best
+	}
+
+	return stated
+}
+
+func measuredLines(lines []string, locale string) int {
+	count := 0
+
+	for _, line := range lines {
+		parsed := ParseDetailed(line, "probe", locale)
+		quantity := parsed.Ingredient.Quantity
+
+		known := slices.ContainsFunc(parsed.Ambiguities, func(ambiguity Ambiguity) bool { return len(ambiguity.CandidateUnitIDs) > 1 })
+		if known || quantity != nil && quantity.Kind == recipe.QuantitySimple && quantity.Unit != "" && quantity.Unit != "count.item" {
+			count++
+		}
+	}
+
+	return count
 }

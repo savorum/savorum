@@ -1,0 +1,1976 @@
+[
+  {
+    "locale": "en",
+    "approximate": [
+      "about",
+      "around",
+      "approximately",
+      "approx.",
+      "approx"
+    ],
+    "connective": "of\\s+",
+    "or_words": [
+      "or"
+    ],
+    "modifiers": [
+      "heaped",
+      "heaping",
+      "rounded",
+      "level",
+      "scant",
+      "generous",
+      "firmly packed",
+      "lightly packed",
+      "loosely packed",
+      "packed"
+    ],
+    "modifiers_after": [
+      "firmly packed",
+      "lightly packed",
+      "loosely packed",
+      "packed"
+    ],
+    "number_words": {
+      "eight": "8",
+      "eleven": "11",
+      "five": "5",
+      "four": "4",
+      "half": "1/2",
+      "nine": "9",
+      "one": "1",
+      "seven": "7",
+      "six": "6",
+      "ten": "10",
+      "three": "3",
+      "twelve": "12",
+      "two": "2"
+    },
+    "articles": [
+      "a",
+      "an"
+    ],
+    "multipliers": {
+      "dozen": "12",
+      "baker's dozen": "13",
+      "pair": "2"
+    },
+    "vague": [
+      "a few",
+      "a couple of",
+      "several",
+      "some",
+      "a little",
+      "a bit of"
+    ],
+    "distributive": [
+      "each"
+    ],
+    "bounds": [
+      "up to",
+      "at least",
+      "at most",
+      "more than",
+      "less than",
+      "no more than",
+      "no less than"
+    ],
+    "between": [
+      "between",
+      "and"
+    ],
+    "minus_words": [
+      "minus",
+      "less"
+    ],
+    "fraction_of": [
+      "of an",
+      "of a",
+      "of",
+      "an",
+      "a"
+    ],
+    "parts": {
+      "juice": "juiced",
+      "zest": "zest"
+    },
+    "sizes": [
+      "extra-large",
+      "extra large",
+      "large",
+      "medium",
+      "small",
+      "jumbo",
+      "big"
+    ],
+    "descriptors": [
+      "whole",
+      "skin-on",
+      "skinless",
+      "boneless",
+      "bone-in"
+    ],
+    "portion_words": [
+      "rib",
+      "ribs",
+      "wedge",
+      "wedges",
+      "chunk",
+      "chunks"
+    ],
+    "liquids": [
+      "water",
+      "milk",
+      "buttermilk",
+      "cream",
+      "juice",
+      "stock",
+      "broth",
+      "wine",
+      "vinegar",
+      "oil",
+      "extract",
+      "syrup",
+      "sauce",
+      "liqueur",
+      "rum",
+      "brandy",
+      "vodka",
+      "whiskey",
+      "whisky",
+      "gin",
+      "beer",
+      "cider",
+      "coffee",
+      "tea"
+    ],
+    "unmeasured_notes": [
+      "to taste",
+      "as needed",
+      "as required",
+      "to serve",
+      "for",
+      "if desired",
+      "if needed",
+      "plus more",
+      "optional",
+      "divided",
+      "chopped",
+      "minced",
+      "sliced",
+      "diced",
+      "grated",
+      "finely",
+      "roughly",
+      "thinly",
+      "freshly",
+      "halved",
+      "quartered",
+      "peeled",
+      "crushed",
+      "shredded",
+      "torn",
+      "beaten",
+      "melted",
+      "softened",
+      "cubed",
+      "trimmed",
+      "drained",
+      "rinsed",
+      "toasted",
+      "coarsely",
+      "lightly",
+      "at room temperature"
+    ],
+    "opaque": [
+      "fistful",
+      "fistfuls",
+      "glug",
+      "glugs",
+      "gill",
+      "gills",
+      "ladleful",
+      "ladlefuls",
+      "capful",
+      "capfuls",
+      "wineglass",
+      "wineglasses",
+      "coffee cup",
+      "coffee cups",
+      "teacup",
+      "teacups",
+      "mug",
+      "mugs",
+      "scoop",
+      "scoops",
+      "dessertspoon",
+      "dessertspoons"
+    ],
+    "compounds": [
+      "egg white",
+      "egg whites",
+      "egg yolk",
+      "egg yolks",
+      "egg wash",
+      "egg noodles",
+      "whole chicken",
+      "whole wheat",
+      "whole milk",
+      "whole grain",
+      "whole grains"
+    ]
+  },
+  {
+    "locale": "de",
+    "approximate": [
+      "ca.",
+      "circa",
+      "etwa",
+      "ungefähr",
+      "ungefaehr"
+    ],
+    "range_words": [
+      "bis"
+    ],
+    "or_words": [
+      "oder"
+    ],
+    "optional": [
+      "fakultativ"
+    ],
+    "modifiers": [
+      "gehäufter",
+      "gehäufte",
+      "gehäuft",
+      "gestrichener",
+      "gestrichene",
+      "gestrichen",
+      "knapper",
+      "knappe",
+      "knapp",
+      "guter",
+      "gute"
+    ],
+    "number_words": {
+      "zwei": "2",
+      "drei": "3",
+      "vier": "4",
+      "fünf": "5",
+      "sechs": "6",
+      "sieben": "7",
+      "acht": "8",
+      "neun": "9",
+      "zehn": "10",
+      "halb": "1/2",
+      "halbe": "1/2",
+      "halben": "1/2",
+      "halber": "1/2",
+      "halbes": "1/2"
+    },
+    "articles": [
+      "ein",
+      "eine",
+      "einen",
+      "einem",
+      "einer"
+    ],
+    "vague": [
+      "einige",
+      "etwas",
+      "ein paar",
+      "ein wenig"
+    ],
+    "sizes": [
+      "große",
+      "großer",
+      "großes",
+      "mittelgroße",
+      "mittelgroßer",
+      "mittelgroßes",
+      "kleine",
+      "kleiner",
+      "kleines"
+    ],
+    "unmeasured_notes": [
+      "nach Geschmack",
+      "nach Belieben",
+      "zum Servieren",
+      "zum Bestreuen",
+      "zum Garnieren",
+      "zum Braten",
+      "für",
+      "gehackt",
+      "fein gehackt",
+      "gerieben"
+    ],
+    "opaque": [
+      "tasse",
+      "tassen",
+      "becher",
+      "glas",
+      "gläser",
+      "pfund",
+      "pfd.",
+      "msp.",
+      "messerspitze",
+      "messerspitzen",
+      "schluck",
+      "kaffeelöffel",
+      "dessertlöffel"
+    ],
+    "senses": [
+      {
+        "words": [
+          "becher"
+        ],
+        "unit": "container.tub",
+        "name": "(?:sahne|schlagsahne|schmand|saure sahne|crème fraîche|creme fraiche|joghurt|jogurt|quark|frischkäse|skyr)"
+      }
+    ]
+  },
+  {
+    "locale": "fr",
+    "approximate": [
+      "environ",
+      "env.",
+      "à peu près"
+    ],
+    "connective": "(?:de la|de l['’]|de|du|des)\\s+|d['’]|de l['’]",
+    "range_words": [
+      "à"
+    ],
+    "or_words": [
+      "ou"
+    ],
+    "optional": [
+      "facultatif",
+      "facultative",
+      "optionnel",
+      "optionnelle",
+      "en option"
+    ],
+    "modifiers_after": [
+      "bombée",
+      "bombées",
+      "rase",
+      "rases"
+    ],
+    "number_words": {
+      "deux": "2",
+      "trois": "3",
+      "quatre": "4",
+      "cinq": "5",
+      "six": "6",
+      "sept": "7",
+      "huit": "8",
+      "neuf": "9",
+      "dix": "10",
+      "demi": "1/2",
+      "demie": "1/2"
+    },
+    "articles": [
+      "un",
+      "une"
+    ],
+    "vague": [
+      "quelques",
+      "un peu de",
+      "un peu d'"
+    ],
+    "sizes": [
+      "gros",
+      "grosse",
+      "grosses",
+      "moyen",
+      "moyenne",
+      "moyens",
+      "moyennes",
+      "petit",
+      "petite",
+      "petits",
+      "petites"
+    ],
+    "unmeasured_notes": [
+      "au goût",
+      "selon le goût",
+      "pour servir",
+      "pour",
+      "haché",
+      "hachée",
+      "hachés",
+      "émincé",
+      "émincée",
+      "râpé"
+    ],
+    "opaque": [
+      "tasse",
+      "tasses",
+      "verre",
+      "verres",
+      "bol",
+      "bols",
+      "livre",
+      "livres",
+      "noix",
+      "pointe",
+      "cuillère à dessert",
+      "cuillères à dessert",
+      "filet"
+    ],
+    "compounds": [
+      "bouquet garni"
+    ],
+    "senses": [
+      {
+        "words": [
+          "gousse",
+          "gousses"
+        ],
+        "unit": "count.clove",
+        "name": "ails?\\b"
+      },
+      {
+        "words": [
+          "boîte",
+          "boîtes"
+        ],
+        "unit": "container.can",
+        "name": "(?:tomate|pois|haricot|thon|maïs|sardine|lait concentré|ananas|pêche|lentille|champignon)"
+      },
+      {
+        "words": [
+          "noix"
+        ],
+        "unit": "count.knob",
+        "name": "(?:de\\s+)?beurre"
+      }
+    ]
+  },
+  {
+    "locale": "es",
+    "approximate": [
+      "aprox.",
+      "aprox",
+      "aproximadamente",
+      "unos",
+      "unas"
+    ],
+    "connective": "(?:de la|de los|de las|del|de)\\s+",
+    "range_words": [
+      "a"
+    ],
+    "or_words": [
+      "o"
+    ],
+    "optional": [
+      "opcional",
+      "opcionales"
+    ],
+    "modifiers_after": [
+      "colmada",
+      "colmadas",
+      "rasa",
+      "rasas"
+    ],
+    "number_words": {
+      "dos": "2",
+      "tres": "3",
+      "cuatro": "4",
+      "cinco": "5",
+      "seis": "6",
+      "siete": "7",
+      "ocho": "8",
+      "nueve": "9",
+      "diez": "10",
+      "medio": "1/2",
+      "media": "1/2"
+    },
+    "articles": [
+      "un",
+      "una"
+    ],
+    "vague": [
+      "unas",
+      "unos",
+      "algunas",
+      "algunos",
+      "un poco de"
+    ],
+    "sizes": [
+      "grande",
+      "grandes",
+      "mediana",
+      "mediano",
+      "medianas",
+      "medianos",
+      "pequeña",
+      "pequeño",
+      "pequeñas",
+      "pequeños"
+    ],
+    "unmeasured_notes": [
+      "al gusto",
+      "a gusto",
+      "para servir",
+      "para decorar",
+      "para",
+      "picado",
+      "picada",
+      "picados",
+      "rallado"
+    ],
+    "opaque": [
+      "taza",
+      "tazas",
+      "vaso",
+      "vasos",
+      "libra",
+      "libras",
+      "cucharada de postre",
+      "cucharadas de postre"
+    ]
+  },
+  {
+    "locale": "it",
+    "approximate": [
+      "circa",
+      "ca."
+    ],
+    "connective": "(?:del|della|dei|delle|di)\\s+|d['’]",
+    "range_words": [
+      "a"
+    ],
+    "or_words": [
+      "o"
+    ],
+    "optional": [
+      "facoltativo",
+      "facoltativa",
+      "opzionale"
+    ],
+    "modifiers_after": [
+      "colmo",
+      "colma",
+      "colmi",
+      "colme",
+      "raso",
+      "rasa",
+      "rasi",
+      "rase"
+    ],
+    "number_words": {
+      "due": "2",
+      "tre": "3",
+      "quattro": "4",
+      "cinque": "5",
+      "sei": "6",
+      "sette": "7",
+      "otto": "8",
+      "nove": "9",
+      "dieci": "10",
+      "mezzo": "1/2",
+      "mezza": "1/2"
+    },
+    "articles": [
+      "un",
+      "uno",
+      "una",
+      "un'"
+    ],
+    "vague": [
+      "qualche",
+      "alcune",
+      "alcuni",
+      "un po' di",
+      "un po' d'",
+      "q.b."
+    ],
+    "sizes": [
+      "grande",
+      "grandi",
+      "media",
+      "medio",
+      "medie",
+      "medi",
+      "piccola",
+      "piccolo",
+      "piccole",
+      "piccoli"
+    ],
+    "unmeasured_notes": [
+      "q.b.",
+      "quanto basta",
+      "a piacere",
+      "per servire",
+      "per guarnire",
+      "per",
+      "tritato",
+      "tritata",
+      "grattugiato"
+    ],
+    "opaque": [
+      "tazza",
+      "tazze",
+      "tazzina",
+      "tazzine",
+      "bicchiere",
+      "bicchieri",
+      "libbra",
+      "libbre",
+      "noce",
+      "noci"
+    ],
+    "senses": [
+      {
+        "words": [
+          "spicchio",
+          "spicchi"
+        ],
+        "unit": "count.clove",
+        "name": "aglio\\b"
+      },
+      {
+        "words": [
+          "scatola",
+          "scatole"
+        ],
+        "unit": "container.can",
+        "name": "(?:pomodor|pelat|passata|polpa|tonno|fagiol|cec[ei]\\b|mais\\b|pisell|lentic|sgombr|sardin|acciug|oliv|funghi|ananas|pesche)"
+      },
+      {
+        "words": [
+          "noce",
+          "noci"
+        ],
+        "unit": "count.knob",
+        "name": "(?:di\\s+)?burro"
+      }
+    ]
+  },
+  {
+    "locale": "pt",
+    "approximate": [
+      "cerca de",
+      "aprox.",
+      "aprox",
+      "+ou-",
+      "+/-"
+    ],
+    "connective": "(?:de|do|da|dos|das)\\s+",
+    "range_words": [
+      "a",
+      "até"
+    ],
+    "or_words": [
+      "ou"
+    ],
+    "optional": [
+      "opcional",
+      "facultativo"
+    ],
+    "modifiers_after": [
+      "cheia",
+      "cheias",
+      "rasa",
+      "rasas"
+    ],
+    "number_words": {
+      "dois": "2",
+      "duas": "2",
+      "três": "3",
+      "quatro": "4",
+      "cinco": "5",
+      "seis": "6",
+      "sete": "7",
+      "oito": "8",
+      "nove": "9",
+      "dez": "10",
+      "meia": "1/2",
+      "meio": "1/2"
+    },
+    "articles": [
+      "um",
+      "uma"
+    ],
+    "vague": [
+      "algumas",
+      "alguns",
+      "um pouco de"
+    ],
+    "sizes": [
+      "grande",
+      "grandes",
+      "média",
+      "médio",
+      "médias",
+      "médios",
+      "pequena",
+      "pequeno",
+      "pequenas",
+      "pequenos"
+    ],
+    "unmeasured_notes": [
+      "a gosto",
+      "q.b.",
+      "para servir",
+      "para decorar",
+      "para",
+      "picado",
+      "picada",
+      "ralado"
+    ],
+    "opaque": [
+      "xícara de café",
+      "xícaras de café",
+      "xícara café",
+      "xícaras café",
+      "xícara (café)",
+      "xícaras (café)",
+      "chávena",
+      "chávenas",
+      "copo",
+      "copos",
+      "libra",
+      "libras",
+      "colher de sobremesa",
+      "colheres de sobremesa",
+      "colher de café",
+      "colheres de café",
+      "cc"
+    ],
+    "mixed_joiner": "e",
+    "plus_words": [
+      "e"
+    ]
+  },
+  {
+    "locale": "nl",
+    "approximate": [
+      "ongeveer",
+      "circa",
+      "ca."
+    ],
+    "range_words": [
+      "tot"
+    ],
+    "or_words": [
+      "of"
+    ],
+    "optional": [
+      "optioneel",
+      "facultatief"
+    ],
+    "modifiers": [
+      "afgestreken",
+      "volle",
+      "ruime",
+      "royale"
+    ],
+    "number_words": {
+      "twee": "2",
+      "drie": "3",
+      "vier": "4",
+      "vijf": "5",
+      "zes": "6",
+      "zeven": "7",
+      "acht": "8",
+      "negen": "9",
+      "tien": "10",
+      "half": "1/2",
+      "halve": "1/2"
+    },
+    "articles": [
+      "een"
+    ],
+    "vague": [
+      "enkele",
+      "wat",
+      "een paar",
+      "een beetje"
+    ],
+    "sizes": [
+      "grote",
+      "middelgrote",
+      "kleine"
+    ],
+    "unmeasured_notes": [
+      "naar smaak",
+      "om te serveren",
+      "voor",
+      "gehakt",
+      "fijngehakt",
+      "geraspt"
+    ],
+    "opaque": [
+      "kop",
+      "kopje",
+      "kopjes",
+      "glas",
+      "glazen",
+      "ons",
+      "pond",
+      "koffielepel",
+      "dessertlepel"
+    ]
+  },
+  {
+    "locale": "sv",
+    "approximate": [
+      "ca",
+      "ca.",
+      "cirka"
+    ],
+    "range_words": [
+      "till"
+    ],
+    "or_words": [
+      "eller"
+    ],
+    "optional": [
+      "valfri",
+      "valfritt",
+      "valfria",
+      "eventuellt"
+    ],
+    "modifiers": [
+      "rågad",
+      "rågade",
+      "struken",
+      "strukna"
+    ],
+    "number_words": {
+      "två": "2",
+      "tre": "3",
+      "fyra": "4",
+      "fem": "5",
+      "sex": "6",
+      "sju": "7",
+      "åtta": "8",
+      "nio": "9",
+      "tio": "10",
+      "halv": "1/2",
+      "halvt": "1/2",
+      "halva": "1/2"
+    },
+    "articles": [
+      "en",
+      "ett"
+    ],
+    "vague": [
+      "några",
+      "lite"
+    ],
+    "sizes": [
+      "stor",
+      "stora",
+      "medelstor",
+      "medelstora",
+      "liten",
+      "litet",
+      "små"
+    ],
+    "unmeasured_notes": [
+      "efter smak",
+      "till servering",
+      "till",
+      "hackad",
+      "hackade",
+      "riven"
+    ],
+    "opaque": [
+      "kopp",
+      "koppar",
+      "mugg",
+      "muggar",
+      "glas",
+      "kryddmått",
+      "krm",
+      "skålpund",
+      "kaffesked"
+    ],
+    "senses": [
+      {
+        "words": [
+          "klyfta",
+          "klyftor"
+        ],
+        "unit": "count.clove",
+        "name": "vitlök"
+      }
+    ]
+  },
+  {
+    "locale": "da",
+    "approximate": [
+      "ca.",
+      "ca",
+      "cirka"
+    ],
+    "range_words": [
+      "til"
+    ],
+    "or_words": [
+      "eller"
+    ],
+    "optional": [
+      "valgfri",
+      "valgfrit",
+      "evt.",
+      "evt"
+    ],
+    "modifiers": [
+      "gestrøget",
+      "gestrøgne",
+      "topfyldt",
+      "topfyldte",
+      "knap"
+    ],
+    "number_words": {
+      "to": "2",
+      "tre": "3",
+      "fire": "4",
+      "fem": "5",
+      "seks": "6",
+      "syv": "7",
+      "otte": "8",
+      "ni": "9",
+      "ti": "10",
+      "halv": "1/2",
+      "halvt": "1/2",
+      "halve": "1/2"
+    },
+    "articles": [
+      "en",
+      "et"
+    ],
+    "vague": [
+      "nogle",
+      "lidt",
+      "et par"
+    ],
+    "sizes": [
+      "stor",
+      "store",
+      "mellemstor",
+      "mellemstore",
+      "lille",
+      "små"
+    ],
+    "unmeasured_notes": [
+      "efter smag",
+      "til servering",
+      "til",
+      "hakket",
+      "revet"
+    ],
+    "opaque": [
+      "kop",
+      "kopper",
+      "krus",
+      "glas",
+      "pund",
+      "dessertske",
+      "kaffeske"
+    ]
+  },
+  {
+    "locale": "nb",
+    "approximate": [
+      "ca.",
+      "ca",
+      "cirka"
+    ],
+    "range_words": [
+      "til"
+    ],
+    "or_words": [
+      "eller"
+    ],
+    "optional": [
+      "valgfritt",
+      "valgfri",
+      "eventuelt"
+    ],
+    "modifiers": [
+      "strøket",
+      "strøkne",
+      "toppet",
+      "toppede"
+    ],
+    "number_words": {
+      "to": "2",
+      "tre": "3",
+      "fire": "4",
+      "fem": "5",
+      "seks": "6",
+      "sju": "7",
+      "åtte": "8",
+      "ni": "9",
+      "ti": "10",
+      "halv": "1/2",
+      "halvt": "1/2",
+      "halve": "1/2"
+    },
+    "articles": [
+      "en",
+      "et",
+      "ei"
+    ],
+    "vague": [
+      "noen",
+      "litt",
+      "et par"
+    ],
+    "sizes": [
+      "stor",
+      "store",
+      "middels",
+      "liten",
+      "lite",
+      "små"
+    ],
+    "unmeasured_notes": [
+      "etter smak",
+      "til servering",
+      "til",
+      "hakket",
+      "revet"
+    ],
+    "opaque": [
+      "kopp",
+      "kopper",
+      "krus",
+      "glass",
+      "pund",
+      "dessertskje",
+      "kaffeskje",
+      "krm"
+    ]
+  },
+  {
+    "locale": "fi",
+    "approximate": [
+      "noin",
+      "n."
+    ],
+    "or_words": [
+      "tai"
+    ],
+    "optional": [
+      "valinnainen",
+      "halutessasi"
+    ],
+    "modifiers": [
+      "kukkurallinen",
+      "kukkuralliset",
+      "tasainen",
+      "tasaiset"
+    ],
+    "number_words": {
+      "yksi": "1",
+      "kaksi": "2",
+      "kolme": "3",
+      "neljä": "4",
+      "viisi": "5",
+      "kuusi": "6",
+      "seitsemän": "7",
+      "kahdeksan": "8",
+      "yhdeksän": "9",
+      "kymmenen": "10",
+      "puoli": "1/2"
+    },
+    "vague": [
+      "muutama",
+      "hieman",
+      "vähän"
+    ],
+    "unmeasured_notes": [
+      "maun mukaan",
+      "tarjoiluun",
+      "hienonnettuna",
+      "raastettuna"
+    ],
+    "opaque": [
+      "kuppi",
+      "kupillinen",
+      "kuppia",
+      "lasi",
+      "lasillinen",
+      "lasia",
+      "mitta",
+      "naula",
+      "prk",
+      "ps"
+    ]
+  },
+  {
+    "locale": "pl",
+    "approximate": [
+      "ok.",
+      "około"
+    ],
+    "range_words": [
+      "do"
+    ],
+    "or_words": [
+      "lub"
+    ],
+    "optional": [
+      "opcjonalnie",
+      "opcjonalny",
+      "opcjonalne"
+    ],
+    "modifiers": [
+      "płaska",
+      "płaskie",
+      "czubata",
+      "czubate",
+      "kopiasta",
+      "kopiaste",
+      "płaskich",
+      "czubatych",
+      "kopiastych"
+    ],
+    "number_words": {
+      "jeden": "1",
+      "jedna": "1",
+      "jedno": "1",
+      "dwa": "2",
+      "dwie": "2",
+      "trzy": "3",
+      "cztery": "4",
+      "pięć": "5",
+      "sześć": "6",
+      "siedem": "7",
+      "osiem": "8",
+      "dziewięć": "9",
+      "dziesięć": "10",
+      "pół": "1/2"
+    },
+    "vague": [
+      "kilka",
+      "trochę",
+      "odrobina"
+    ],
+    "sizes": [
+      "duża",
+      "duże",
+      "duży",
+      "średnia",
+      "średnie",
+      "średni",
+      "mała",
+      "małe",
+      "mały"
+    ],
+    "unmeasured_notes": [
+      "do smaku",
+      "do podania",
+      "do dekoracji",
+      "do smażenia",
+      "posiekany",
+      "posiekana",
+      "starty"
+    ],
+    "opaque": [
+      "szklanka",
+      "szklanki",
+      "szklanek",
+      "filiżanka",
+      "filiżanki",
+      "kubek",
+      "kubki",
+      "funt",
+      "funty",
+      "łyżka deserowa"
+    ]
+  },
+  {
+    "locale": "cs",
+    "approximate": [
+      "cca",
+      "cca.",
+      "asi",
+      "přibližně"
+    ],
+    "range_words": [
+      "až",
+      "do"
+    ],
+    "or_words": [
+      "nebo"
+    ],
+    "optional": [
+      "volitelně",
+      "volitelné"
+    ],
+    "modifiers": [
+      "vrchovatá",
+      "vrchovaté",
+      "zarovnaná",
+      "zarovnané"
+    ],
+    "number_words": {
+      "jeden": "1",
+      "jedna": "1",
+      "jedno": "1",
+      "dva": "2",
+      "dvě": "2",
+      "tři": "3",
+      "čtyři": "4",
+      "pět": "5",
+      "šest": "6",
+      "sedm": "7",
+      "osm": "8",
+      "devět": "9",
+      "deset": "10",
+      "půl": "1/2"
+    },
+    "vague": [
+      "několik",
+      "trochu",
+      "pár"
+    ],
+    "unmeasured_notes": [
+      "podle chuti",
+      "k podávání",
+      "na ozdobu",
+      "nasekaný",
+      "nasekaná",
+      "nastrouhaný"
+    ],
+    "opaque": [
+      "hrnek",
+      "hrnky",
+      "hrnků",
+      "sklenice",
+      "sklenička",
+      "libra",
+      "dezertní lžíce"
+    ]
+  },
+  {
+    "locale": "hu",
+    "approximate": [
+      "kb.",
+      "kb",
+      "körülbelül"
+    ],
+    "or_words": [
+      "vagy"
+    ],
+    "optional": [
+      "opcionális",
+      "elhagyható"
+    ],
+    "modifiers": [
+      "púpozott",
+      "csapott"
+    ],
+    "number_words": {
+      "két": "2",
+      "kettő": "2",
+      "három": "3",
+      "négy": "4",
+      "öt": "5",
+      "hat": "6",
+      "hét": "7",
+      "nyolc": "8",
+      "kilenc": "9",
+      "tíz": "10",
+      "fél": "1/2"
+    },
+    "articles": [
+      "egy"
+    ],
+    "vague": [
+      "néhány",
+      "kevés",
+      "egy kevés"
+    ],
+    "unmeasured_notes": [
+      "ízlés szerint",
+      "tálaláshoz",
+      "díszítéshez",
+      "sütéshez",
+      "apróra vágva",
+      "reszelve"
+    ],
+    "opaque": [
+      "bögre",
+      "bögrényi",
+      "csésze",
+      "pohár",
+      "font",
+      "desszertkanál",
+      "kávéskanál"
+    ]
+  },
+  {
+    "locale": "ro",
+    "approximate": [
+      "aprox.",
+      "aprox",
+      "aproximativ",
+      "circa"
+    ],
+    "connective": "de\\s+",
+    "range_words": [
+      "până la"
+    ],
+    "or_words": [
+      "sau"
+    ],
+    "optional": [
+      "opțional",
+      "opțională"
+    ],
+    "modifiers_after": [
+      "vârfuită",
+      "vârfuite",
+      "rasă",
+      "rase"
+    ],
+    "number_words": {
+      "doi": "2",
+      "două": "2",
+      "trei": "3",
+      "patru": "4",
+      "cinci": "5",
+      "șase": "6",
+      "șapte": "7",
+      "opt": "8",
+      "nouă": "9",
+      "zece": "10",
+      "jumătate": "1/2"
+    },
+    "articles": [
+      "un",
+      "o"
+    ],
+    "vague": [
+      "câteva",
+      "câțiva",
+      "puțin",
+      "puțină"
+    ],
+    "unmeasured_notes": [
+      "după gust",
+      "pentru servire",
+      "pentru",
+      "tocat",
+      "tocată",
+      "ras"
+    ],
+    "opaque": [
+      "ceașcă",
+      "ceşcuță",
+      "cană",
+      "căni",
+      "pahar",
+      "pahare",
+      "livră",
+      "cana"
+    ]
+  },
+  {
+    "locale": "tr",
+    "approximate": [
+      "yaklaşık"
+    ],
+    "or_words": [
+      "veya",
+      "ya da"
+    ],
+    "optional": [
+      "isteğe bağlı",
+      "opsiyonel"
+    ],
+    "modifiers": [
+      "tepeleme",
+      "silme"
+    ],
+    "number_words": {
+      "iki": "2",
+      "üç": "3",
+      "dört": "4",
+      "beş": "5",
+      "altı": "6",
+      "yedi": "7",
+      "sekiz": "8",
+      "dokuz": "9",
+      "on": "10",
+      "yarım": "1/2"
+    },
+    "articles": [
+      "bir"
+    ],
+    "vague": [
+      "birkaç",
+      "biraz"
+    ],
+    "unmeasured_notes": [
+      "isteğe göre",
+      "damak tadına göre",
+      "servis için",
+      "süslemek için",
+      "kızartmak için",
+      "doğranmış",
+      "kıyılmış",
+      "rendelenmiş"
+    ],
+    "opaque": [
+      "su bardağı",
+      "çay bardağı",
+      "fincan",
+      "bardak",
+      "tatlı kaşığı",
+      "kahve fincanı"
+    ]
+  },
+  {
+    "locale": "ru",
+    "approximate": [
+      "около",
+      "примерно"
+    ],
+    "range_words": [
+      "до"
+    ],
+    "or_words": [
+      "или"
+    ],
+    "optional": [
+      "по желанию",
+      "необязательно"
+    ],
+    "modifiers_after": [
+      "с горкой",
+      "без горки"
+    ],
+    "number_words": {
+      "один": "1",
+      "одна": "1",
+      "одно": "1",
+      "два": "2",
+      "две": "2",
+      "три": "3",
+      "четыре": "4",
+      "пять": "5",
+      "шесть": "6",
+      "семь": "7",
+      "восемь": "8",
+      "девять": "9",
+      "десять": "10",
+      "пол": "1/2",
+      "половина": "1/2"
+    },
+    "vague": [
+      "несколько",
+      "немного"
+    ],
+    "sizes": [
+      "крупная",
+      "крупный",
+      "крупные",
+      "средняя",
+      "средний",
+      "средние",
+      "небольшая",
+      "небольшой",
+      "небольшие",
+      "большая",
+      "большой",
+      "большие",
+      "маленькая",
+      "маленький",
+      "маленькие"
+    ],
+    "unmeasured_notes": [
+      "по вкусу",
+      "для подачи",
+      "для украшения",
+      "для жарки",
+      "измельчённый",
+      "измельченный",
+      "нарезанный",
+      "тёртый"
+    ],
+    "opaque": [
+      "стакан",
+      "стакана",
+      "стаканов",
+      "чашка",
+      "чашки",
+      "чашек",
+      "кружка",
+      "кружки",
+      "фунт",
+      "фунта",
+      "десертная ложка",
+      "десертные ложки"
+    ]
+  },
+  {
+    "locale": "uk",
+    "approximate": [
+      "близько",
+      "приблизно"
+    ],
+    "range_words": [
+      "до"
+    ],
+    "or_words": [
+      "або"
+    ],
+    "optional": [
+      "за бажанням",
+      "необов'язково"
+    ],
+    "modifiers_after": [
+      "з гіркою",
+      "без гірки"
+    ],
+    "number_words": {
+      "один": "1",
+      "одна": "1",
+      "одне": "1",
+      "два": "2",
+      "дві": "2",
+      "три": "3",
+      "чотири": "4",
+      "пʼять": "5",
+      "шість": "6",
+      "сім": "7",
+      "вісім": "8",
+      "дев'ять": "9",
+      "десять": "10",
+      "пів": "1/2",
+      "половина": "1/2"
+    },
+    "vague": [
+      "кілька",
+      "трохи"
+    ],
+    "sizes": [
+      "велика",
+      "великий",
+      "великі",
+      "середня",
+      "середній",
+      "середні",
+      "невелика",
+      "невеликий",
+      "невеликі",
+      "маленька",
+      "маленький",
+      "маленькі"
+    ],
+    "unmeasured_notes": [
+      "за смаком",
+      "для подачі",
+      "для прикраси",
+      "для смаження",
+      "подрібнений",
+      "нарізаний",
+      "тертий"
+    ],
+    "opaque": [
+      "склянка",
+      "склянки",
+      "склянок",
+      "чашка",
+      "чашки",
+      "чашок",
+      "кухоль",
+      "фунт",
+      "десертна ложка"
+    ]
+  },
+  {
+    "locale": "el",
+    "approximate": [
+      "περίπου"
+    ],
+    "range_words": [
+      "έως"
+    ],
+    "or_words": [
+      "ή"
+    ],
+    "optional": [
+      "προαιρετικά",
+      "προαιρετικό"
+    ],
+    "modifiers_after": [
+      "γεμάτη",
+      "γεμάτες",
+      "κοφτή",
+      "κοφτές"
+    ],
+    "number_words": {
+      "δύο": "2",
+      "τρία": "3",
+      "τρεις": "3",
+      "τέσσερα": "4",
+      "τέσσερις": "4",
+      "πέντε": "5",
+      "έξι": "6",
+      "επτά": "7",
+      "εφτά": "7",
+      "οκτώ": "8",
+      "οχτώ": "8",
+      "εννέα": "9",
+      "εννιά": "9",
+      "δέκα": "10",
+      "μισό": "1/2",
+      "μισή": "1/2",
+      "μισός": "1/2"
+    },
+    "articles": [
+      "ένα",
+      "μία",
+      "μια",
+      "ένας"
+    ],
+    "vague": [
+      "μερικά",
+      "μερικές",
+      "λίγο",
+      "λίγη"
+    ],
+    "unmeasured_notes": [
+      "κατά βούληση",
+      "για το σερβίρισμα",
+      "για",
+      "ψιλοκομμένο",
+      "τριμμένο"
+    ],
+    "opaque": [
+      "φλιτζάνι",
+      "φλιτζάνια",
+      "ποτήρι",
+      "ποτήρια",
+      "κουταλιά του γλυκού"
+    ]
+  },
+  {
+    "locale": "ar",
+    "approximate": [
+      "حوالي",
+      "تقريباً",
+      "تقريبا"
+    ],
+    "range_words": [
+      "إلى",
+      "الى"
+    ],
+    "or_words": [
+      "أو",
+      "او"
+    ],
+    "optional": [
+      "اختياري",
+      "اختيارية"
+    ],
+    "unmeasured_notes": [
+      "حسب الرغبة",
+      "حسب الذوق",
+      "للتقديم",
+      "للتزيين",
+      "مفروم",
+      "مبشور"
+    ],
+    "opaque": [
+      "فنجان",
+      "فناجين",
+      "كأس",
+      "كاس"
+    ],
+    "mixed_joiner": "و",
+    "plus_words": [
+      "و"
+    ],
+    "connective": "من\\s+",
+    "number_words": {
+      "نصف": "1/2",
+      "ثلث": "1/3",
+      "ربع": "1/4"
+    }
+  },
+  {
+    "locale": "he",
+    "approximate": [
+      "בערך",
+      "כ-"
+    ],
+    "range_words": [
+      "עד"
+    ],
+    "or_words": [
+      "או"
+    ],
+    "optional": [
+      "אופציונלי",
+      "לא חובה"
+    ],
+    "unmeasured_notes": [
+      "לפי הטעם",
+      "להגשה",
+      "לקישוט",
+      "קצוץ",
+      "מגורר"
+    ],
+    "opaque": [
+      "ספל",
+      "ספלים"
+    ],
+    "number_words": {
+      "חצי": "1/2",
+      "שליש": "1/3",
+      "רבע": "1/4"
+    }
+  },
+  {
+    "locale": "th",
+    "approximate_attached": [
+      "ประมาณ"
+    ],
+    "range_words": [
+      "ถึง"
+    ],
+    "or_words": [
+      "หรือ"
+    ],
+    "optional": [
+      "ไม่บังคับ",
+      "เป็นทางเลือก"
+    ],
+    "vague_after": [
+      "เล็กน้อย",
+      "พอประมาณ"
+    ],
+    "name_first": true,
+    "unspaced": true,
+    "opaque": [
+      "ถ้วย",
+      "แก้ว",
+      "ถ้วยตวง"
+    ]
+  },
+  {
+    "locale": "vi",
+    "approximate": [
+      "khoảng"
+    ],
+    "range_words": [
+      "đến"
+    ],
+    "or_words": [
+      "hoặc"
+    ],
+    "optional": [
+      "tùy chọn",
+      "tuỳ chọn"
+    ],
+    "vague": [
+      "vài",
+      "một ít",
+      "một chút"
+    ],
+    "unmeasured_notes": [
+      "vừa đủ",
+      "tùy khẩu vị",
+      "để trang trí",
+      "băm",
+      "bào"
+    ],
+    "opaque": [
+      "chén",
+      "ly",
+      "cốc",
+      "bát",
+      "tách"
+    ],
+    "number_words": {
+      "nửa": "1/2"
+    }
+  },
+  {
+    "locale": "id",
+    "approximate": [
+      "sekitar",
+      "kira-kira"
+    ],
+    "range_words": [
+      "sampai"
+    ],
+    "or_words": [
+      "atau"
+    ],
+    "optional": [
+      "opsional"
+    ],
+    "number_words": {
+      "dua": "2",
+      "tiga": "3",
+      "empat": "4",
+      "lima": "5",
+      "enam": "6",
+      "tujuh": "7",
+      "delapan": "8",
+      "sembilan": "9",
+      "sepuluh": "10",
+      "setengah": "1/2",
+      "separuh": "1/2"
+    },
+    "articles": [
+      "satu"
+    ],
+    "vague": [
+      "beberapa",
+      "sedikit"
+    ],
+    "unmeasured_notes": [
+      "secukupnya",
+      "sesuai selera",
+      "untuk taburan",
+      "untuk",
+      "cincang",
+      "iris",
+      "parut"
+    ],
+    "opaque": [
+      "cangkir",
+      "gelas",
+      "mangkuk"
+    ],
+    "implied_one": [
+      "sejumput",
+      "secubit",
+      "segenggam"
+    ]
+  },
+  {
+    "locale": "ja",
+    "approximate_attached": [
+      "約",
+      "およそ"
+    ],
+    "or_words": [
+      "または",
+      "又は"
+    ],
+    "optional": [
+      "お好みで",
+      "お好み",
+      "任意"
+    ],
+    "mixed_joiner": "と",
+    "vague_after": [
+      "少々",
+      "適量",
+      "少量",
+      "ひとかけ"
+    ],
+    "name_first": true,
+    "unspaced": true,
+    "prefix_units": [
+      "大さじ",
+      "小さじ",
+      "大匙",
+      "小匙",
+      "計量カップ",
+      "カップ"
+    ],
+    "opaque": [
+      "合",
+      "杯",
+      "升",
+      "紙コップ",
+      "炊飯器のカップ",
+      "炊飯器付属のカップ"
+    ],
+    "implied_one": [
+      "ひとつまみ",
+      "ひとつかみ"
+    ]
+  },
+  {
+    "locale": "ko",
+    "approximate_attached": [
+      "약"
+    ],
+    "or_words": [
+      "또는"
+    ],
+    "optional": [
+      "선택"
+    ],
+    "vague_after": [
+      "약간",
+      "적당량",
+      "조금"
+    ],
+    "name_first": true,
+    "unspaced": true,
+    "opaque": [
+      "되",
+      "국자",
+      "종이컵",
+      "밥숟가락"
+    ],
+    "senses": [
+      {
+        "words": [
+          "쪽"
+        ],
+        "unit": "count.clove",
+        "name": "마늘"
+      }
+    ]
+  },
+  {
+    "locale": "zh",
+    "approximate_attached": [
+      "大约",
+      "大約",
+      "约",
+      "約"
+    ],
+    "range_words": [
+      "至",
+      "到"
+    ],
+    "or_words": [
+      "或"
+    ],
+    "optional": [
+      "可选",
+      "可選",
+      "任选"
+    ],
+    "vague_after": [
+      "适量",
+      "少许",
+      "少量",
+      "適量",
+      "少許"
+    ],
+    "name_first": true,
+    "unspaced": true,
+    "opaque": [
+      "杯",
+      "碗",
+      "勺"
+    ],
+    "senses": [
+      {
+        "words": [
+          "瓣"
+        ],
+        "unit": "count.clove",
+        "name": "大?蒜"
+      }
+    ]
+  }
+]

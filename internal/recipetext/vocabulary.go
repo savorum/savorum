@@ -22,12 +22,43 @@ type vocabulary struct {
 	Actions      map[string][]string `json:"actions"`
 	Units        map[string][]string `json:"units"`
 	Facts        map[string][]string `json:"facts"`
+	References   []string            `json:"references"`
 	Cadence      []string            `json:"cadence"`
+	Exact        []string            `json:"exact"`
+	Other        []string            `json:"other"`
+	HeadingLast  bool                `json:"heading_last"`
 	Span         string              `json:"span"`
 	Compact      bool                `json:"compact"`
 }
 
 var vocabularies = readVocabulary()
+
+// NumberVocabulary contains language-specific time units, ranges, and reference words.
+type NumberVocabulary struct {
+	Locale     string
+	Span       string
+	Compact    bool
+	Times      []string
+	References []string
+}
+
+// NumberVocabularies returns the number-related vocabulary for each language.
+func NumberVocabularies() []NumberVocabulary {
+	result := make([]NumberVocabulary, 0, len(vocabularies))
+	for _, entry := range vocabularies {
+		var times []string
+		for _, forms := range entry.Units {
+			times = append(times, forms...)
+		}
+
+		result = append(result, NumberVocabulary{
+			Locale: entry.Locale, Span: entry.Span, Compact: entry.Compact,
+			Times: times, References: slices.Clone(entry.References),
+		})
+	}
+
+	return result
+}
 
 func readVocabulary() []vocabulary {
 	var result []vocabulary
@@ -40,19 +71,7 @@ func readVocabulary() []vocabulary {
 
 // Heading identifies a source section and its reading vocabulary, without assigning a recipe language.
 func Heading(text string) (section, locale string) {
-	trim := func(text string) string {
-		return strings.TrimFunc(text, func(character rune) bool {
-			return unicode.IsSpace(character) || strings.ContainsRune(":：-•", character) ||
-				unicode.In(character, unicode.So, unicode.Sk, unicode.Cf, unicode.Variation_Selector)
-		})
-	}
-
-	text = trim(text)
-	if note := strings.LastIndexAny(text, "(（"); note > 0 && (strings.HasSuffix(text, ")") || strings.HasSuffix(text, "）")) {
-		text = trim(text[:note])
-	}
-
-	text = strings.ToLower(text)
+	text = headingText(text)
 
 	var matches []string
 
@@ -75,6 +94,122 @@ func Heading(text string) (section, locale string) {
 	}
 
 	return section, locale
+}
+
+const (
+	maximumQualifiedHeadingRunes = 64
+	maximumQualifiedHeadingWords = 9
+)
+
+// QualifiedHeading recognizes section labels with qualifiers, such as "Ingredients for the dough".
+// Sentences and headings naming both ingredients and instructions are excluded.
+func QualifiedHeading(text string) string {
+	if section, _ := Heading(text); section != "" {
+		return section
+	}
+
+	text = headingText(text)
+	if text == "" || utf8.RuneCountInString(text) > maximumQualifiedHeadingRunes ||
+		len(strings.Fields(text)) > maximumQualifiedHeadingWords || strings.ContainsAny(text, ".!?。！？") {
+		return ""
+	}
+
+	if head, rest, found := strings.Cut(strings.ReplaceAll(text, "：", ":"), ":"); found && strings.TrimSpace(rest) != "" {
+		if strings.ContainsAny(rest, ",、") {
+			return ""
+		}
+
+		section, _ := Heading(head)
+
+		return section
+	}
+
+	found := ""
+
+	for _, entry := range vocabularies {
+		for section, forms := range map[string][]string{"ingredients": entry.Ingredients, "instructions": entry.Instructions} {
+			for _, form := range forms {
+				if slices.Contains(entry.Exact, form) || !qualifies(text, form, entry.HeadingLast) {
+					continue
+				}
+
+				if found != "" && found != section {
+					return ""
+				}
+
+				found = section
+			}
+		}
+	}
+
+	return found
+}
+
+func qualifies(text, form string, last bool) bool {
+	if rest, ok := strings.CutPrefix(text, form); ok && rest != "" {
+		next, _ := utf8.DecodeRuneInString(rest)
+		last, _ := utf8.DecodeLastRuneInString(form)
+
+		return unicode.IsSpace(next) || unspaced(last) && unspaced(next)
+	}
+
+	if rest, ok := strings.CutSuffix(text, form); last && ok && rest != "" {
+		previous, _ := utf8.DecodeLastRuneInString(rest)
+		first, _ := utf8.DecodeRuneInString(form)
+
+		return unicode.IsSpace(previous) || unspaced(first) && unspaced(previous)
+	}
+
+	return false
+}
+
+// OtherHeading recognizes sections outside ingredients and instructions.
+func OtherHeading(text string) bool {
+	text = headingText(text)
+	for _, entry := range vocabularies {
+		if slices.Contains(entry.Other, text) {
+			return true
+		}
+	}
+
+	return false
+}
+
+// Unspaced reports text written mostly in scripts without spaces between words.
+func Unspaced(text string) bool {
+	letters, unspacedLetters := 0, 0
+
+	for _, character := range text {
+		if unicode.IsLetter(character) {
+			letters++
+
+			if unspaced(character) {
+				unspacedLetters++
+			}
+		}
+	}
+
+	return unspacedLetters*2 > letters
+}
+
+func unspaced(character rune) bool {
+	return unicode.In(character, unicode.Han, unicode.Hiragana, unicode.Katakana, unicode.Thai, unicode.Lao, unicode.Khmer, unicode.Myanmar)
+}
+
+func headingText(text string) string {
+	trim := func(text string) string {
+		return strings.TrimFunc(text, func(character rune) bool {
+			return unicode.IsSpace(character) || strings.ContainsRune(":：-•【】", character) ||
+				unicode.In(character, unicode.So, unicode.Sk, unicode.Cf, unicode.Variation_Selector)
+		})
+	}
+
+	text = trim(text)
+	if note := strings.LastIndexAny(text, "(（"); note > 0 && (strings.HasSuffix(text, ")") || strings.HasSuffix(text, "）")) {
+		text = trim(text[:note])
+	}
+
+	return strings.ToLower(text)
 }
 
 // Timing keeps the original duration wording beside its recognized numeric fields.
