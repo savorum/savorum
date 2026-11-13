@@ -3298,5 +3298,11 @@
   "import_review_replace": "Csere",
   "import_review_save_copy": "Másolat mentése",
   "text_import_url_detected": "Ez egy webcím. Inkább arról az oldalról töltsük be a receptet?",
-  "text_import_fetch_page": "Oldal betöltése"
+  "text_import_fetch_page": "Oldal betöltése",
+  "library_sort_added": "Nemrég hozzáadott",
+  "library_sort_longest_since_cooked": "Legrégebben elkészített",
+  "library_sort_active_time": "Legrövidebb aktív idő",
+  "library_sort_most_cooked": "Leggyakrabban elkészített",
+  "library_sort_shuffle": "Véletlen sorrend",
+  "library_shuffle_again": "Újrakeverés"
 }

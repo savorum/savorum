@@ -10171,10 +10171,45 @@ export const library_selection_bar_sref_bundle: ((inputs?: Library_Selection_Bar
 /**
 * | output |
 * | --- |
+* | "Shuffle again" |
+*
+*/
+export const library_shuffle_again: ((inputs?: Library_Shuffle_AgainInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Library_Shuffle_AgainInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Least active time" |
+*
+*/
+export const library_sort_active_time: ((inputs?: Library_Sort_Active_TimeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Library_Sort_Active_TimeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Recently added" |
+*
+*/
+export const library_sort_added: ((inputs?: Library_Sort_AddedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Library_Sort_AddedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
 * | "Recently cooked" |
 *
 */
 export const library_sort_cooked: ((inputs?: Library_Sort_CookedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Library_Sort_CookedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Longest since cooked" |
+*
+*/
+export const library_sort_longest_since_cooked: ((inputs?: Library_Sort_Longest_Since_CookedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Library_Sort_Longest_Since_CookedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Most cooked" |
+*
+*/
+export const library_sort_most_cooked: ((inputs?: Library_Sort_Most_CookedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Library_Sort_Most_CookedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -10189,6 +10224,13 @@ export const library_sort_rating: ((inputs?: Library_Sort_RatingInputs, options?
 *
 */
 export const library_sort_relevance: ((inputs?: Library_Sort_RelevanceInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Library_Sort_RelevanceInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Shuffle" |
+*
+*/
+export const library_sort_shuffle: ((inputs?: Library_Sort_ShuffleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Library_Sort_ShuffleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -19009,9 +19051,15 @@ export type Library_Selection_Bar_Select_All_ShownInputs = {};
 export type Library_Selection_Bar_SelectedInputs = { value1: NonNullable<unknown> };
 export type Library_Selection_Bar_Selected_RecipesInputs = {};
 export type Library_Selection_Bar_Sref_BundleInputs = {};
+export type Library_Shuffle_AgainInputs = {};
+export type Library_Sort_Active_TimeInputs = {};
+export type Library_Sort_AddedInputs = {};
 export type Library_Sort_CookedInputs = {};
+export type Library_Sort_Longest_Since_CookedInputs = {};
+export type Library_Sort_Most_CookedInputs = {};
 export type Library_Sort_RatingInputs = {};
 export type Library_Sort_RelevanceInputs = {};
+export type Library_Sort_ShuffleInputs = {};
 export type Library_Sort_TitleInputs = {};
 export type Library_Sort_UpdatedInputs = {};
 export type Library_Toolbar_All_RecipesInputs = {};

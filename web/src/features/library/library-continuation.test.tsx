@@ -189,28 +189,35 @@ test("large libraries continue at the footer within a bounded rendered view", as
   expect(screen.search().shown).toBeUndefined()
 })
 
-test("search typing and composition retain the same focused field while query results refresh", async () => {
-  const screen = library()
-  await screen.findByText("Recipe 0")
-  const input = screen.getByRole("combobox", { name: "Search recipes" }) as HTMLInputElement
-  input.focus()
-  fireEvent.input(input, { target: { value: "soup stock" } })
-  input.setSelectionRange(4, 4)
-  await vi.waitFor(() => expect(screen.search().q).toBe("soup stock"))
-  expect(screen.getByRole("combobox", { name: "Search recipes" })).toBe(input)
-  expect(document.activeElement).toBe(input)
-  expect(input.value).toBe("soup stock")
-  expect(input.selectionStart).toBe(4)
-  fireEvent.compositionStart(input)
-  fireEvent.input(input, { target: { value: "味噌汁" }, isComposing: true })
-  input.setSelectionRange(3, 3)
-  fireEvent.compositionEnd(input, { data: "味噌汁" })
-  await vi.waitFor(() => expect(screen.search().q).toBe("味噌汁"))
-  expect(screen.getByRole("combobox", { name: "Search recipes" })).toBe(input)
-  expect(document.activeElement).toBe(input)
-  expect(input.value).toBe("味噌汁")
-  expect(input.selectionStart).toBe(3)
-})
+test.each(["title-asc", "random"] as const)(
+  "search typing and composition retain focus while %s results refresh",
+  async (sort) => {
+    const screen = library()
+    await screen.findByText("Recipe 0")
+    const seed = sort === "random" ? 432 : undefined
+    screen.setSearch({ ...screen.search(), sort, seed })
+    const input = screen.getByRole("combobox", { name: "Search recipes" }) as HTMLInputElement
+    input.focus()
+    fireEvent.input(input, { target: { value: "soup stock" } })
+    input.setSelectionRange(4, 4)
+    await vi.waitFor(() => expect(screen.search().q).toBe("soup stock"))
+    expect(screen.getByRole("combobox", { name: "Search recipes" })).toBe(input)
+    expect(document.activeElement).toBe(input)
+    expect(input.value).toBe("soup stock")
+    expect(input.selectionStart).toBe(4)
+    fireEvent.compositionStart(input)
+    fireEvent.input(input, { target: { value: "味噌汁" }, isComposing: true })
+    input.setSelectionRange(3, 3)
+    fireEvent.compositionEnd(input, { data: "味噌汁" })
+    await vi.waitFor(() => expect(screen.search().q).toBe("味噌汁"))
+    expect(screen.getByRole("combobox", { name: "Search recipes" })).toBe(input)
+    expect(document.activeElement).toBe(input)
+    expect(input.value).toBe("味噌汁")
+    expect(input.selectionStart).toBe(3)
+    expect(screen.search().sort).toBe(sort)
+    expect(screen.search().seed).toBe(seed)
+  },
+)
 
 test("an unavailable continuation keeps cards mounted and reports one retry at the footer", async () => {
   const screen = library()
@@ -264,4 +271,18 @@ test("viewport demand appends one batch and stops when the footer moves below th
   expect(screen.getByText("Recipe 0")).toBe(first)
   screen.unmount()
   expect(disconnect).toHaveBeenCalledTimes(2)
+})
+
+test("the shuffle action changes the order while retaining the search and filters", async () => {
+  const screen = library()
+  await screen.findByText("Recipe 0")
+  screen.setSearch({ ...screen.search(), sort: "random", seed: 432, shown: 72 })
+  await screen.findByText("Recipe 71")
+  const shuffle = screen.getByRole("button", { name: "Shuffle again" })
+  fireEvent.click(shuffle)
+  await vi.waitFor(() => expect(screen.search().seed).not.toBe(432))
+  expect(screen.search()).toMatchObject({ q: "soup", tags: ["weeknight"], sort: "random" })
+  expect(screen.search().shown).toBeUndefined()
+  expect(screen.search().offset).toBeUndefined()
+  expect(screen.getByRole("button", { name: "Shuffle again" })).toBe(shuffle)
 })

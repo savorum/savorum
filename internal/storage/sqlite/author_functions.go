@@ -57,5 +57,5 @@ var registerSearchFunctions = sync.OnceValue(func() error {
 		}
 	}
 
-	return nil
+	return registerShuffleFunction()
 })

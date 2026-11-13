@@ -196,6 +196,10 @@ func normalizeListOptions(options ListOptions) (ListOptions, error) {
 		return options, errors.New("offset cannot be negative")
 	}
 
+	if options.Seed < 0 || options.Seed > 2147483647 {
+		return options, fmt.Errorf("seed must be between 0 and 2147483647: %w", ErrInvalidSearch)
+	}
+
 	if options.State == "" {
 		options.State = StateActive
 	}
@@ -231,7 +235,8 @@ func normalizeListSort(value ListSort) (ListSort, error) {
 	}
 
 	switch value {
-	case ListSortRelevance, ListSortUpdatedDesc, ListSortTitleAsc, ListSortRatingDesc, ListSortTotalTimeAsc, ListSortCookedDesc:
+	case ListSortRelevance, ListSortUpdatedDesc, ListSortTitleAsc, ListSortRatingDesc, ListSortTotalTimeAsc, ListSortCookedDesc,
+		ListSortCreatedDesc, ListSortCookedAsc, ListSortActiveTimeAsc, ListSortTimesCookedDesc, ListSortRandom:
 		return value, nil
 	default:
 		return "", fmt.Errorf("unsupported recipe list sort %q: %w", value, ErrInvalidSearch)

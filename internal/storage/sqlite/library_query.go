@@ -48,12 +48,12 @@ func (s *Store) listRecipePage(ctx context.Context, options library.ListOptions,
 
 	where, args = restrictRecipeIDs(where, args, options.EntryIDs)
 
-	order, err := recipeListOrder(options.Sort)
+	order, orderArgs, err := recipeListOrder(options.Sort, options.Seed, currentUserID(ctx))
 	if err != nil {
 		return nil, 0, err
 	}
 
-	page := recipePageSQL{where: where, order: order, pagination: "LIMIT ? OFFSET ?", args: args}
+	page := recipePageSQL{where: where, order: order, orderArgs: orderArgs, pagination: "LIMIT ? OFFSET ?", args: args}
 
 	switch {
 	case fuzzyRanked:
@@ -135,6 +135,7 @@ func (s *Store) listRecipePage(ctx context.Context, options library.ListOptions,
 type recipePageSQL struct {
 	prefix, searchJoin, totalColumn, where, pagination, order string
 	args                                                      []any
+	orderArgs                                                 []any
 }
 
 func fuzzyRankedPage(ctx context.Context, q recipePageSQL, options library.ListOptions, withTotal bool) recipePageSQL {
@@ -245,11 +246,14 @@ func unrankedPage(ctx context.Context, q recipePageSQL, options library.ListOpti
 		totalColumn = ", matching_page.total"
 
 		args = append([]any{currentUserID(ctx)}, args...)
+		args = append(args, q.orderArgs...)
 		args = append(args, options.Limit, options.Offset, currentUserID(ctx))
+		args = append(args, q.orderArgs...)
 		searchJoin = `JOIN matching_page ON matching_page.rowid=recipes.rowid`
 		where, pagination = "1", ""
 	} else {
 		args = append([]any{currentUserID(ctx)}, args...)
+		args = append(args, q.orderArgs...)
 		args = append(args, options.Limit, options.Offset)
 	}
 
@@ -259,20 +263,35 @@ func unrankedPage(ctx context.Context, q recipePageSQL, options library.ListOpti
 	}
 }
 
-func recipeListOrder(value library.ListSort) (string, error) {
+func recipeListOrder(value library.ListSort, seed int64, userID string) (string, []any, error) {
 	switch value {
 	case library.ListSortRelevance, library.ListSortUpdatedDesc:
-		return "recipes.updated_at DESC, recipes.id", nil
+		return "recipes.updated_at DESC, recipes.id", nil, nil
 	case library.ListSortTitleAsc:
-		return "recipes.title COLLATE NOCASE ASC, recipes.id", nil
-	case library.ListSortTotalTimeAsc:
-		return "savorum_duration(COALESCE(recipes.total_time, '')) = '' ASC, CAST(savorum_duration(COALESCE(recipes.total_time, '')) AS INTEGER) ASC, recipes.title COLLATE NOCASE ASC, recipes.id", nil
+		return "recipes.title COLLATE NOCASE ASC, recipes.id", nil, nil
+	case library.ListSortCreatedDesc:
+		return "recipes.created_at DESC, recipes.id", nil, nil
+	case library.ListSortActiveTimeAsc, library.ListSortTotalTimeAsc:
+		column := "total_time"
+		if value == library.ListSortActiveTimeAsc {
+			column = "active_time"
+		}
+
+		return fmt.Sprintf("savorum_duration(COALESCE(recipes.%s, '')) = '' ASC, CAST(savorum_duration(COALESCE(recipes.%s, '')) AS INTEGER) ASC, recipes.title COLLATE NOCASE ASC, recipes.id", column, column), nil, nil
 	case library.ListSortCookedDesc:
-		return "user_state.last_cooked IS NULL ASC, user_state.last_cooked DESC, recipes.updated_at DESC, recipes.id", nil
+		return "user_state.last_cooked IS NULL ASC, user_state.last_cooked DESC, recipes.updated_at DESC, recipes.id", nil, nil
+	case library.ListSortCookedAsc:
+		return "user_state.last_cooked IS NULL ASC, user_state.last_cooked ASC, recipes.title COLLATE NOCASE ASC, recipes.id", nil, nil
+	case library.ListSortTimesCookedDesc:
+		return `(COALESCE(user_state.times_cooked, 0) + COALESCE((SELECT SUM(count)
+			FROM recipe_imported_cook_count_baselines WHERE entry_id = recipes.id AND user_id = ?), 0)) DESC,
+			recipes.title COLLATE NOCASE ASC, recipes.id`, []any{userID}, nil
+	case library.ListSortRandom:
+		return "savorum_shuffle(recipes.id, ?), recipes.id", []any{seed}, nil
 	case library.ListSortRatingDesc:
-		return "user_state.rating IS NULL ASC, user_state.rating DESC, recipes.updated_at DESC, recipes.id", nil
+		return "user_state.rating IS NULL ASC, user_state.rating DESC, recipes.updated_at DESC, recipes.id", nil, nil
 	default:
-		return "", fmt.Errorf("unsupported recipe list sort %q: %w", value, library.ErrInvalidSearch)
+		return "", nil, fmt.Errorf("unsupported recipe list sort %q: %w", value, library.ErrInvalidSearch)
 	}
 }
 
@@ -847,7 +866,7 @@ func (s *Store) matchingRecipeIDs(ctx context.Context, options library.ListOptio
 		return nil, nil
 	}
 
-	order, err := recipeListOrder(options.Sort)
+	order, orderArgs, err := recipeListOrder(options.Sort, options.Seed, currentUserID(ctx))
 	if err != nil {
 		return nil, err
 	}
@@ -858,6 +877,7 @@ func (s *Store) matchingRecipeIDs(ctx context.Context, options library.ListOptio
 		WHERE ` + where + ` ORDER BY ` + order
 
 	args = append([]any{currentUserID(ctx)}, args...)
+	args = append(args, orderArgs...)
 
 	if fuzzyRanked {
 		exactWhere, exactArgs := exactNameTextWhere(options.Search)

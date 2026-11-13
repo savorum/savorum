@@ -4484,14 +4484,32 @@ export const library_selection_bar_selected_recipes: Messages["library_selection
 export const library_selection_bar_sref_bundle: Messages["library_selection_bar_sref_bundle"] = /* @__PURE__ */ localized("library_selection_bar_sref_bundle", () => {
 	return /** @type {LocalizedString} */ (`SREF Bundle`)
 })
+export const library_shuffle_again: Messages["library_shuffle_again"] = /* @__PURE__ */ localized("library_shuffle_again", () => {
+	return /** @type {LocalizedString} */ (`Shuffle again`)
+})
+export const library_sort_active_time: Messages["library_sort_active_time"] = /* @__PURE__ */ localized("library_sort_active_time", () => {
+	return /** @type {LocalizedString} */ (`Least active time`)
+})
+export const library_sort_added: Messages["library_sort_added"] = /* @__PURE__ */ localized("library_sort_added", () => {
+	return /** @type {LocalizedString} */ (`Recently added`)
+})
 export const library_sort_cooked: Messages["library_sort_cooked"] = /* @__PURE__ */ localized("library_sort_cooked", () => {
 	return /** @type {LocalizedString} */ (`Recently cooked`)
+})
+export const library_sort_longest_since_cooked: Messages["library_sort_longest_since_cooked"] = /* @__PURE__ */ localized("library_sort_longest_since_cooked", () => {
+	return /** @type {LocalizedString} */ (`Longest since cooked`)
+})
+export const library_sort_most_cooked: Messages["library_sort_most_cooked"] = /* @__PURE__ */ localized("library_sort_most_cooked", () => {
+	return /** @type {LocalizedString} */ (`Most cooked`)
 })
 export const library_sort_rating: Messages["library_sort_rating"] = /* @__PURE__ */ localized("library_sort_rating", () => {
 	return /** @type {LocalizedString} */ (`Highest rated`)
 })
 export const library_sort_relevance: Messages["library_sort_relevance"] = /* @__PURE__ */ localized("library_sort_relevance", () => {
 	return /** @type {LocalizedString} */ (`Best match`)
+})
+export const library_sort_shuffle: Messages["library_sort_shuffle"] = /* @__PURE__ */ localized("library_sort_shuffle", () => {
+	return /** @type {LocalizedString} */ (`Shuffle`)
 })
 export const library_sort_title: Messages["library_sort_title"] = /* @__PURE__ */ localized("library_sort_title", () => {
 	return /** @type {LocalizedString} */ (`A to Z`)

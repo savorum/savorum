@@ -58,6 +58,7 @@ export interface ListRecipesOptions {
   offset?: number
   query?: string
   sort?: RecipeSort
+  seed?: number
   state?: RecipeState
   /** Content languages in order of preference; asks for each translation set once. */
   groupTranslations?: string[]
@@ -79,6 +80,7 @@ export async function listRecipes(options: ListRecipesOptions = {}): Promise<Rec
           offset,
           q: query || undefined,
           sort,
+          seed: options.seed,
           state,
           ...grouping(options.groupTranslations),
         },
@@ -104,6 +106,7 @@ export async function listRecipeReferences(
 
 export interface SavedViewRecipesOptions {
   id: string
+  seed?: number
   limit?: number
   offset?: number
   groupTranslations?: string[]
@@ -117,7 +120,7 @@ export async function listSavedViewRecipes(options: SavedViewRecipesOptions): Pr
       signal: options.signal,
       params: {
         path: { id },
-        query: { limit, offset, ...grouping(options.groupTranslations) },
+        query: { limit, offset, seed: options.seed, ...grouping(options.groupTranslations) },
       },
     }),
     m.recipes_the_saved_view_could_not_be_executed(),

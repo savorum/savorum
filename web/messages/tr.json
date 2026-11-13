@@ -3304,5 +3304,11 @@
   "import_review_replace": "Değiştir",
   "import_review_save_copy": "Kopya kaydet",
   "text_import_url_detected": "Bu bir web adresi. Tarif bunun yerine o sayfadan alınsın mı?",
-  "text_import_fetch_page": "Sayfayı al"
+  "text_import_fetch_page": "Sayfayı al",
+  "library_sort_added": "Son eklenenler",
+  "library_sort_longest_since_cooked": "En uzun süredir pişirilmeyenler",
+  "library_sort_active_time": "En az aktif süre",
+  "library_sort_most_cooked": "En çok pişirilenler",
+  "library_sort_shuffle": "Rastgele sıra",
+  "library_shuffle_again": "Yeniden karıştır"
 }

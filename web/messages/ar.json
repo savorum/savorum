@@ -4000,5 +4000,11 @@
   "import_review_replace": "استبدال",
   "import_review_save_copy": "حفظ نسخة",
   "text_import_url_detected": "هذا عنوان ويب. هل تريد جلب الوصفة من تلك الصفحة بدلاً من ذلك؟",
-  "text_import_fetch_page": "جلب الصفحة"
+  "text_import_fetch_page": "جلب الصفحة",
+  "library_sort_added": "المضافة حديثًا",
+  "library_sort_longest_since_cooked": "الأطول منذ الطهي",
+  "library_sort_active_time": "أقل وقت للعمل الفعلي",
+  "library_sort_most_cooked": "الأكثر طهيًا",
+  "library_sort_shuffle": "ترتيب عشوائي",
+  "library_shuffle_again": "إعادة الترتيب عشوائيًا"
 }

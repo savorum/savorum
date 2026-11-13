@@ -297,7 +297,7 @@ type SavedView struct {
 	ID        string    `json:"id"`
 	Title     string    `json:"title"`
 	Query     string    `json:"query"`
-	Sort      string    `json:"sort,omitempty" enum:"relevance,updated-desc,title-asc,rating-desc,total-time-asc,cooked-desc"`
+	Sort      string    `json:"sort,omitempty" enum:"relevance,updated-desc,title-asc,rating-desc,total-time-asc,cooked-desc,created-desc,cooked-asc,active-time-asc,times-cooked-desc,random"`
 	Revision  uint64    `json:"revision"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
@@ -307,7 +307,7 @@ type SavedView struct {
 type SavedViewInput struct {
 	Title string `json:"title" minLength:"1" maxLength:"1000"`
 	Query string `json:"query" maxLength:"200"`
-	Sort  string `json:"sort,omitempty" maxLength:"100" enum:"relevance,updated-desc,title-asc,rating-desc,total-time-asc,cooked-desc"`
+	Sort  string `json:"sort,omitempty" maxLength:"100" enum:"relevance,updated-desc,title-asc,rating-desc,total-time-asc,cooked-desc,created-desc,cooked-asc,active-time-asc,times-cooked-desc,random"`
 }
 
 type organizationPathInput struct {
@@ -443,6 +443,7 @@ type (
 )
 
 type savedViewRecipesInput struct {
+	Seed              int64  `query:"seed" default:"0" minimum:"0" maximum:"2147483647" doc:"Shuffle seed for a saved view with random ordering. Reuse it across pages; change it to reshuffle"`
 	ID                string `path:"id"`
 	Limit             int    `query:"limit" default:"50" minimum:"1" maximum:"200" doc:"Maximum number of entries to return"`
 	Offset            int    `query:"offset" default:"0" minimum:"0" doc:"Number of entries to skip"`
@@ -879,7 +880,7 @@ func registerSavedViews(api huma.API, service OrganizationService, recipes Recip
 
 		return readRecipePage(ctx, recipes, groupTranslations(library.ListOptions{
 			Limit: input.Limit, Offset: input.Offset, Query: view.Query,
-			State: library.StateActive, Sort: view.Sort,
+			State: library.StateActive, Sort: view.Sort, Seed: input.Seed,
 		}, input.GroupTranslations, input.Languages))
 	})
 	huma.Register(api, huma.Operation{OperationID: "replace-saved-view", Method: http.MethodPut, Path: "/api/v1/saved-views/{id}", Summary: "Replace a saved view", Tags: []string{"Saved views"}, Errors: []int{400, 404, 412, 422, 428}}, func(ctx context.Context, input *replaceSavedViewInput) (*savedViewOutput, error) {

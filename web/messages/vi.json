@@ -3155,5 +3155,11 @@
   "import_review_replace": "Thay thế",
   "import_review_save_copy": "Lưu bản sao",
   "text_import_url_detected": "Đây là địa chỉ web. Lấy công thức từ trang đó thay vào đó?",
-  "text_import_fetch_page": "Lấy trang"
+  "text_import_fetch_page": "Lấy trang",
+  "library_sort_added": "Mới thêm",
+  "library_sort_longest_since_cooked": "Lâu chưa nấu nhất",
+  "library_sort_active_time": "Ít thời gian thao tác nhất",
+  "library_sort_most_cooked": "Nấu nhiều nhất",
+  "library_sort_shuffle": "Thứ tự ngẫu nhiên",
+  "library_shuffle_again": "Xáo trộn lại"
 }

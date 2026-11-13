@@ -24,11 +24,13 @@ function setup() {
     const [text, setText] = createSignal("soup")
     const [viewID, setView] = createSignal("")
     const [sort, setSort] = createSignal<RecipeSort>("title-asc")
+    const [seed, setSeed] = createSignal<number>()
     return {
-      ...createLibrarySelection({ text, filters: () => emptyFilters, viewID, sort }),
+      ...createLibrarySelection({ text, filters: () => emptyFilters, viewID, sort, seed }),
       setText,
       setView,
       setSort,
+      setSeed,
     }
   })
   disposers.push(hook.cleanup)
@@ -127,4 +129,18 @@ test("printing keeps its default limit until the instance reports one", () => {
   expect(selection.exceedsPrintLimit()).toBe(true)
   expect(selection.exceedsBundleLimit()).toBe(true)
   expect(selection.selectionLimitNote()).toContain("Printing and SREF bundles hold up to 250")
+})
+
+test("all-matching shuffle selection retains its initial seed while pages load", async () => {
+  const selection = setup()
+  selection.setSort("random")
+  selection.setSeed(432)
+  const first = deferred<RecipePage>()
+  vi.mocked(listRecipes).mockReturnValueOnce(first.promise).mockResolvedValueOnce(page("second", 2))
+  const selecting = selection.selectAllMatching()
+  selection.setSeed(999)
+  first.resolve(page("first", 2))
+  await selecting
+  expect(selection.selected()).toEqual(["first", "second"])
+  expect(vi.mocked(listRecipes).mock.calls.every(([options]) => options?.seed === 432)).toBe(true)
 })

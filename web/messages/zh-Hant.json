@@ -3155,5 +3155,11 @@
   "import_review_replace": "取代",
   "import_review_save_copy": "另存副本",
   "text_import_url_detected": "這是一個網址。改為從該網頁擷取食譜嗎？",
-  "text_import_fetch_page": "擷取網頁"
+  "text_import_fetch_page": "擷取網頁",
+  "library_sort_added": "最近新增",
+  "library_sort_longest_since_cooked": "最久未做",
+  "library_sort_active_time": "動手時間最短",
+  "library_sort_most_cooked": "製作次數最多",
+  "library_sort_shuffle": "隨機排序",
+  "library_shuffle_again": "重新隨機排序"
 }

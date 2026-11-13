@@ -8475,7 +8475,12 @@
               "title-asc",
               "rating-desc",
               "total-time-asc",
-              "cooked-desc"
+              "cooked-desc",
+              "created-desc",
+              "cooked-asc",
+              "active-time-asc",
+              "times-cooked-desc",
+              "random"
             ],
             "type": "string"
           },
@@ -8511,7 +8516,12 @@
               "title-asc",
               "rating-desc",
               "total-time-asc",
-              "cooked-desc"
+              "cooked-desc",
+              "created-desc",
+              "cooked-asc",
+              "active-time-asc",
+              "times-cooked-desc",
+              "random"
             ],
             "maxLength": 100,
             "type": "string"
@@ -24481,9 +24491,28 @@
                 "title-asc",
                 "rating-desc",
                 "total-time-asc",
-                "cooked-desc"
+                "cooked-desc",
+                "created-desc",
+                "cooked-asc",
+                "active-time-asc",
+                "times-cooked-desc",
+                "random"
               ],
               "type": "string"
+            }
+          },
+          {
+            "description": "Shuffle seed for random ordering. Reuse it across pages; change it to reshuffle. Other sort modes ignore it",
+            "explode": false,
+            "in": "query",
+            "name": "seed",
+            "schema": {
+              "default": 0,
+              "description": "Shuffle seed for random ordering. Reuse it across pages; change it to reshuffle. Other sort modes ignore it",
+              "format": "int64",
+              "maximum": 2147483647,
+              "minimum": 0,
+              "type": "integer"
             }
           },
           {
@@ -31511,6 +31540,20 @@
       "get": {
         "operationId": "list-saved-view-recipes",
         "parameters": [
+          {
+            "description": "Shuffle seed for a saved view with random ordering. Reuse it across pages; change it to reshuffle",
+            "explode": false,
+            "in": "query",
+            "name": "seed",
+            "schema": {
+              "default": 0,
+              "description": "Shuffle seed for a saved view with random ordering. Reuse it across pages; change it to reshuffle",
+              "format": "int64",
+              "maximum": 2147483647,
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
           {
             "in": "path",
             "name": "id",

@@ -5,6 +5,7 @@ import { filterQuery, parseFilterQuery } from "@/lib/library-query"
 import {
   effectiveSort,
   filterSearch,
+  newShuffleSeed,
   searchFilters,
   sortChoices,
   validateLibrarySearch,
@@ -51,5 +52,19 @@ test("a rating filter is a whole number of stars", () => {
   expect(validateLibrarySearch({ rating: "4" }).rating).toBe(4)
   for (const rating of ["2.5", "0", "6", "x"]) {
     expect(validateLibrarySearch({ rating }).rating).toBeUndefined()
+  }
+})
+
+test("shuffle seeds survive URL validation and stay within the API range", () => {
+  for (const seed of [0, 432, 2147483647]) {
+    expect(validateLibrarySearch({ sort: "random", seed: String(seed) }).seed).toBe(seed)
+    const next = newShuffleSeed(seed)
+    expect(Number.isInteger(next)).toBe(true)
+    expect(next).toBeGreaterThanOrEqual(0)
+    expect(next).toBeLessThanOrEqual(2147483647)
+    expect(next).not.toBe(seed)
+  }
+  for (const seed of [-1, 2147483648, "no", 1.5, undefined]) {
+    expect(validateLibrarySearch({ seed }).seed).toBeUndefined()
   }
 })

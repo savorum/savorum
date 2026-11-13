@@ -7,12 +7,22 @@ import { libraryPageSize, libraryWindowSize } from "./library-pages"
 
 export const sorts: RecipeSort[] = [
   "relevance",
+  "created-desc",
   "updated-desc",
   "title-asc",
   "rating-desc",
-  "total-time-asc",
+  "times-cooked-desc",
   "cooked-desc",
+  "cooked-asc",
+  "active-time-asc",
+  "total-time-asc",
+  "random",
 ]
+
+export function newShuffleSeed(previous?: number): number {
+  const value = crypto.getRandomValues(new Uint32Array(1))[0]! & 0x7fffffff
+  return value === previous ? (value + 1) % 0x80000000 : value
+}
 
 export const sortChoices = (text: string): RecipeSort[] =>
   text.trim() === "" ? sorts.filter((sort) => sort !== "relevance") : sorts
@@ -24,6 +34,21 @@ export function effectiveSort(requested: RecipeSort | undefined, text: string): 
 }
 
 export const sortLabels: Record<RecipeSort, string> = {
+  get "created-desc"() {
+    return m.library_sort_added()
+  },
+  get "cooked-asc"() {
+    return m.library_sort_longest_since_cooked()
+  },
+  get "active-time-asc"() {
+    return m.library_sort_active_time()
+  },
+  get "times-cooked-desc"() {
+    return m.library_sort_most_cooked()
+  },
+  get random() {
+    return m.library_sort_shuffle()
+  },
   get "total-time-asc"() {
     return m.timing_total_time()
   },
@@ -50,6 +75,7 @@ export interface LibrarySearch extends Partial<LibraryFilters> {
   preview?: string
   q?: string
   sort?: RecipeSort
+  seed?: number
   view?: string
   offset?: number
   shown?: number
@@ -65,6 +91,7 @@ export const validateLibrarySearch = (search: Record<string, unknown>): LibraryS
   const offset = Number(search.offset)
   const shown = Number(search.shown)
   const rating = Number(search.rating)
+  const seed = search.seed === undefined ? NaN : Number(search.seed)
   return {
     q: typeof search.q === "string" && search.q !== "" ? search.q : undefined,
     capture:
@@ -74,6 +101,7 @@ export const validateLibrarySearch = (search: Record<string, unknown>): LibraryS
     preview:
       typeof search.preview === "string" && search.preview !== "" ? search.preview : undefined,
     sort: sorts.find((candidate) => candidate === search.sort),
+    seed: Number.isInteger(seed) && seed >= 0 && seed <= 0x7fffffff ? seed : undefined,
     view: typeof search.view === "string" && search.view !== "" ? search.view : undefined,
     offset:
       Number.isSafeInteger(offset) && offset > 0

@@ -3158,5 +3158,11 @@
   "import_review_replace": "바꾸기",
   "import_review_save_copy": "사본 저장",
   "text_import_url_detected": "웹 주소입니다. 대신 해당 페이지에서 레시피를 가져올까요?",
-  "text_import_fetch_page": "페이지 가져오기"
+  "text_import_fetch_page": "페이지 가져오기",
+  "library_sort_added": "최근 추가순",
+  "library_sort_longest_since_cooked": "만든 지 오래된순",
+  "library_sort_active_time": "직접 조리 시간이 짧은순",
+  "library_sort_most_cooked": "자주 만든순",
+  "library_sort_shuffle": "무작위 순서",
+  "library_shuffle_again": "다시 섞기"
 }

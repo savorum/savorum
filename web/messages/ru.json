@@ -3727,5 +3727,11 @@
   "import_review_replace": "Заменить",
   "import_review_save_copy": "Сохранить копию",
   "text_import_url_detected": "Это веб-адрес. Загрузить рецепт с этой страницы?",
-  "text_import_fetch_page": "Загрузить страницу"
+  "text_import_fetch_page": "Загрузить страницу",
+  "library_sort_added": "Недавно добавленные",
+  "library_sort_longest_since_cooked": "Давно не готовили",
+  "library_sort_active_time": "Меньше активного времени",
+  "library_sort_most_cooked": "Чаще всего готовили",
+  "library_sort_shuffle": "Случайный порядок",
+  "library_shuffle_again": "Перемешать снова"
 }

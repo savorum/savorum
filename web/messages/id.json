@@ -3155,5 +3155,11 @@
   "import_review_replace": "Ganti",
   "import_review_save_copy": "Simpan salinan",
   "text_import_url_detected": "Ini alamat web. Ambil resep dari halaman tersebut saja?",
-  "text_import_fetch_page": "Ambil halaman"
+  "text_import_fetch_page": "Ambil halaman",
+  "library_sort_added": "Baru ditambahkan",
+  "library_sort_longest_since_cooked": "Paling lama tidak dimasak",
+  "library_sort_active_time": "Waktu aktif tersingkat",
+  "library_sort_most_cooked": "Paling sering dimasak",
+  "library_sort_shuffle": "Urutan acak",
+  "library_shuffle_again": "Acak lagi"
 }

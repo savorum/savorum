@@ -1439,9 +1439,15 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{ value1: NonNullable<unknown> }} Library_Selection_Bar_SelectedInputs */
 /** @typedef {{}} Library_Selection_Bar_Selected_RecipesInputs */
 /** @typedef {{}} Library_Selection_Bar_Sref_BundleInputs */
+/** @typedef {{}} Library_Shuffle_AgainInputs */
+/** @typedef {{}} Library_Sort_Active_TimeInputs */
+/** @typedef {{}} Library_Sort_AddedInputs */
 /** @typedef {{}} Library_Sort_CookedInputs */
+/** @typedef {{}} Library_Sort_Longest_Since_CookedInputs */
+/** @typedef {{}} Library_Sort_Most_CookedInputs */
 /** @typedef {{}} Library_Sort_RatingInputs */
 /** @typedef {{}} Library_Sort_RelevanceInputs */
+/** @typedef {{}} Library_Sort_ShuffleInputs */
 /** @typedef {{}} Library_Sort_TitleInputs */
 /** @typedef {{}} Library_Sort_UpdatedInputs */
 /** @typedef {{}} Library_Toolbar_All_RecipesInputs */
@@ -61551,6 +61557,129 @@ export const library_selection_bar_sref_bundle = /** @type {((inputs?: Library_S
 /**
 * | output |
 * | --- |
+* | "Shuffle again" |
+*
+* @param {Library_Shuffle_AgainInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_shuffle_again = /** @type {((inputs?: Library_Shuffle_AgainInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_Shuffle_AgainInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.library_shuffle_again(inputs)
+	if (locale === "cs") return __cs.library_shuffle_again(inputs)
+	if (locale === "da") return __da.library_shuffle_again(inputs)
+	if (locale === "de") return __de.library_shuffle_again(inputs)
+	if (locale === "el") return __el.library_shuffle_again(inputs)
+	if (locale === "es") return __es.library_shuffle_again(inputs)
+	if (locale === "fi") return __fi.library_shuffle_again(inputs)
+	if (locale === "fr") return __fr.library_shuffle_again(inputs)
+	if (locale === "he") return __he.library_shuffle_again(inputs)
+	if (locale === "hu") return __hu.library_shuffle_again(inputs)
+	if (locale === "id") return __id.library_shuffle_again(inputs)
+	if (locale === "it") return __it.library_shuffle_again(inputs)
+	if (locale === "ja") return __ja.library_shuffle_again(inputs)
+	if (locale === "ko") return __ko.library_shuffle_again(inputs)
+	if (locale === "nb") return __nb.library_shuffle_again(inputs)
+	if (locale === "nl") return __nl.library_shuffle_again(inputs)
+	if (locale === "pl") return __pl.library_shuffle_again(inputs)
+	if (locale === "pt-BR") return __pt_br2.library_shuffle_again(inputs)
+	if (locale === "pt-PT") return __pt_pt2.library_shuffle_again(inputs)
+	if (locale === "ro") return __ro.library_shuffle_again(inputs)
+	if (locale === "ru") return __ru.library_shuffle_again(inputs)
+	if (locale === "sv") return __sv.library_shuffle_again(inputs)
+	if (locale === "th") return __th.library_shuffle_again(inputs)
+	if (locale === "tr") return __tr.library_shuffle_again(inputs)
+	if (locale === "uk") return __uk.library_shuffle_again(inputs)
+	if (locale === "vi") return __vi.library_shuffle_again(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.library_shuffle_again(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.library_shuffle_again(inputs)
+	return __en.library_shuffle_again(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Least active time" |
+*
+* @param {Library_Sort_Active_TimeInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_sort_active_time = /** @type {((inputs?: Library_Sort_Active_TimeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_Sort_Active_TimeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.library_sort_active_time(inputs)
+	if (locale === "cs") return __cs.library_sort_active_time(inputs)
+	if (locale === "da") return __da.library_sort_active_time(inputs)
+	if (locale === "de") return __de.library_sort_active_time(inputs)
+	if (locale === "el") return __el.library_sort_active_time(inputs)
+	if (locale === "es") return __es.library_sort_active_time(inputs)
+	if (locale === "fi") return __fi.library_sort_active_time(inputs)
+	if (locale === "fr") return __fr.library_sort_active_time(inputs)
+	if (locale === "he") return __he.library_sort_active_time(inputs)
+	if (locale === "hu") return __hu.library_sort_active_time(inputs)
+	if (locale === "id") return __id.library_sort_active_time(inputs)
+	if (locale === "it") return __it.library_sort_active_time(inputs)
+	if (locale === "ja") return __ja.library_sort_active_time(inputs)
+	if (locale === "ko") return __ko.library_sort_active_time(inputs)
+	if (locale === "nb") return __nb.library_sort_active_time(inputs)
+	if (locale === "nl") return __nl.library_sort_active_time(inputs)
+	if (locale === "pl") return __pl.library_sort_active_time(inputs)
+	if (locale === "pt-BR") return __pt_br2.library_sort_active_time(inputs)
+	if (locale === "pt-PT") return __pt_pt2.library_sort_active_time(inputs)
+	if (locale === "ro") return __ro.library_sort_active_time(inputs)
+	if (locale === "ru") return __ru.library_sort_active_time(inputs)
+	if (locale === "sv") return __sv.library_sort_active_time(inputs)
+	if (locale === "th") return __th.library_sort_active_time(inputs)
+	if (locale === "tr") return __tr.library_sort_active_time(inputs)
+	if (locale === "uk") return __uk.library_sort_active_time(inputs)
+	if (locale === "vi") return __vi.library_sort_active_time(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.library_sort_active_time(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.library_sort_active_time(inputs)
+	return __en.library_sort_active_time(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Recently added" |
+*
+* @param {Library_Sort_AddedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_sort_added = /** @type {((inputs?: Library_Sort_AddedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_Sort_AddedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.library_sort_added(inputs)
+	if (locale === "cs") return __cs.library_sort_added(inputs)
+	if (locale === "da") return __da.library_sort_added(inputs)
+	if (locale === "de") return __de.library_sort_added(inputs)
+	if (locale === "el") return __el.library_sort_added(inputs)
+	if (locale === "es") return __es.library_sort_added(inputs)
+	if (locale === "fi") return __fi.library_sort_added(inputs)
+	if (locale === "fr") return __fr.library_sort_added(inputs)
+	if (locale === "he") return __he.library_sort_added(inputs)
+	if (locale === "hu") return __hu.library_sort_added(inputs)
+	if (locale === "id") return __id.library_sort_added(inputs)
+	if (locale === "it") return __it.library_sort_added(inputs)
+	if (locale === "ja") return __ja.library_sort_added(inputs)
+	if (locale === "ko") return __ko.library_sort_added(inputs)
+	if (locale === "nb") return __nb.library_sort_added(inputs)
+	if (locale === "nl") return __nl.library_sort_added(inputs)
+	if (locale === "pl") return __pl.library_sort_added(inputs)
+	if (locale === "pt-BR") return __pt_br2.library_sort_added(inputs)
+	if (locale === "pt-PT") return __pt_pt2.library_sort_added(inputs)
+	if (locale === "ro") return __ro.library_sort_added(inputs)
+	if (locale === "ru") return __ru.library_sort_added(inputs)
+	if (locale === "sv") return __sv.library_sort_added(inputs)
+	if (locale === "th") return __th.library_sort_added(inputs)
+	if (locale === "tr") return __tr.library_sort_added(inputs)
+	if (locale === "uk") return __uk.library_sort_added(inputs)
+	if (locale === "vi") return __vi.library_sort_added(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.library_sort_added(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.library_sort_added(inputs)
+	return __en.library_sort_added(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Recently cooked" |
 *
 * @param {Library_Sort_CookedInputs} inputs
@@ -61588,6 +61717,88 @@ export const library_sort_cooked = /** @type {((inputs?: Library_Sort_CookedInpu
 	if (locale === "zh-Hans") return __zh_hans1.library_sort_cooked(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.library_sort_cooked(inputs)
 	return __en.library_sort_cooked(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Longest since cooked" |
+*
+* @param {Library_Sort_Longest_Since_CookedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_sort_longest_since_cooked = /** @type {((inputs?: Library_Sort_Longest_Since_CookedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_Sort_Longest_Since_CookedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.library_sort_longest_since_cooked(inputs)
+	if (locale === "cs") return __cs.library_sort_longest_since_cooked(inputs)
+	if (locale === "da") return __da.library_sort_longest_since_cooked(inputs)
+	if (locale === "de") return __de.library_sort_longest_since_cooked(inputs)
+	if (locale === "el") return __el.library_sort_longest_since_cooked(inputs)
+	if (locale === "es") return __es.library_sort_longest_since_cooked(inputs)
+	if (locale === "fi") return __fi.library_sort_longest_since_cooked(inputs)
+	if (locale === "fr") return __fr.library_sort_longest_since_cooked(inputs)
+	if (locale === "he") return __he.library_sort_longest_since_cooked(inputs)
+	if (locale === "hu") return __hu.library_sort_longest_since_cooked(inputs)
+	if (locale === "id") return __id.library_sort_longest_since_cooked(inputs)
+	if (locale === "it") return __it.library_sort_longest_since_cooked(inputs)
+	if (locale === "ja") return __ja.library_sort_longest_since_cooked(inputs)
+	if (locale === "ko") return __ko.library_sort_longest_since_cooked(inputs)
+	if (locale === "nb") return __nb.library_sort_longest_since_cooked(inputs)
+	if (locale === "nl") return __nl.library_sort_longest_since_cooked(inputs)
+	if (locale === "pl") return __pl.library_sort_longest_since_cooked(inputs)
+	if (locale === "pt-BR") return __pt_br2.library_sort_longest_since_cooked(inputs)
+	if (locale === "pt-PT") return __pt_pt2.library_sort_longest_since_cooked(inputs)
+	if (locale === "ro") return __ro.library_sort_longest_since_cooked(inputs)
+	if (locale === "ru") return __ru.library_sort_longest_since_cooked(inputs)
+	if (locale === "sv") return __sv.library_sort_longest_since_cooked(inputs)
+	if (locale === "th") return __th.library_sort_longest_since_cooked(inputs)
+	if (locale === "tr") return __tr.library_sort_longest_since_cooked(inputs)
+	if (locale === "uk") return __uk.library_sort_longest_since_cooked(inputs)
+	if (locale === "vi") return __vi.library_sort_longest_since_cooked(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.library_sort_longest_since_cooked(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.library_sort_longest_since_cooked(inputs)
+	return __en.library_sort_longest_since_cooked(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Most cooked" |
+*
+* @param {Library_Sort_Most_CookedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_sort_most_cooked = /** @type {((inputs?: Library_Sort_Most_CookedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_Sort_Most_CookedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.library_sort_most_cooked(inputs)
+	if (locale === "cs") return __cs.library_sort_most_cooked(inputs)
+	if (locale === "da") return __da.library_sort_most_cooked(inputs)
+	if (locale === "de") return __de.library_sort_most_cooked(inputs)
+	if (locale === "el") return __el.library_sort_most_cooked(inputs)
+	if (locale === "es") return __es.library_sort_most_cooked(inputs)
+	if (locale === "fi") return __fi.library_sort_most_cooked(inputs)
+	if (locale === "fr") return __fr.library_sort_most_cooked(inputs)
+	if (locale === "he") return __he.library_sort_most_cooked(inputs)
+	if (locale === "hu") return __hu.library_sort_most_cooked(inputs)
+	if (locale === "id") return __id.library_sort_most_cooked(inputs)
+	if (locale === "it") return __it.library_sort_most_cooked(inputs)
+	if (locale === "ja") return __ja.library_sort_most_cooked(inputs)
+	if (locale === "ko") return __ko.library_sort_most_cooked(inputs)
+	if (locale === "nb") return __nb.library_sort_most_cooked(inputs)
+	if (locale === "nl") return __nl.library_sort_most_cooked(inputs)
+	if (locale === "pl") return __pl.library_sort_most_cooked(inputs)
+	if (locale === "pt-BR") return __pt_br2.library_sort_most_cooked(inputs)
+	if (locale === "pt-PT") return __pt_pt2.library_sort_most_cooked(inputs)
+	if (locale === "ro") return __ro.library_sort_most_cooked(inputs)
+	if (locale === "ru") return __ru.library_sort_most_cooked(inputs)
+	if (locale === "sv") return __sv.library_sort_most_cooked(inputs)
+	if (locale === "th") return __th.library_sort_most_cooked(inputs)
+	if (locale === "tr") return __tr.library_sort_most_cooked(inputs)
+	if (locale === "uk") return __uk.library_sort_most_cooked(inputs)
+	if (locale === "vi") return __vi.library_sort_most_cooked(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.library_sort_most_cooked(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.library_sort_most_cooked(inputs)
+	return __en.library_sort_most_cooked(inputs)
 });
 /**
 * | output |
@@ -61670,6 +61881,47 @@ export const library_sort_relevance = /** @type {((inputs?: Library_Sort_Relevan
 	if (locale === "zh-Hans") return __zh_hans1.library_sort_relevance(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.library_sort_relevance(inputs)
 	return __en.library_sort_relevance(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Shuffle" |
+*
+* @param {Library_Sort_ShuffleInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_sort_shuffle = /** @type {((inputs?: Library_Sort_ShuffleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_Sort_ShuffleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.library_sort_shuffle(inputs)
+	if (locale === "cs") return __cs.library_sort_shuffle(inputs)
+	if (locale === "da") return __da.library_sort_shuffle(inputs)
+	if (locale === "de") return __de.library_sort_shuffle(inputs)
+	if (locale === "el") return __el.library_sort_shuffle(inputs)
+	if (locale === "es") return __es.library_sort_shuffle(inputs)
+	if (locale === "fi") return __fi.library_sort_shuffle(inputs)
+	if (locale === "fr") return __fr.library_sort_shuffle(inputs)
+	if (locale === "he") return __he.library_sort_shuffle(inputs)
+	if (locale === "hu") return __hu.library_sort_shuffle(inputs)
+	if (locale === "id") return __id.library_sort_shuffle(inputs)
+	if (locale === "it") return __it.library_sort_shuffle(inputs)
+	if (locale === "ja") return __ja.library_sort_shuffle(inputs)
+	if (locale === "ko") return __ko.library_sort_shuffle(inputs)
+	if (locale === "nb") return __nb.library_sort_shuffle(inputs)
+	if (locale === "nl") return __nl.library_sort_shuffle(inputs)
+	if (locale === "pl") return __pl.library_sort_shuffle(inputs)
+	if (locale === "pt-BR") return __pt_br2.library_sort_shuffle(inputs)
+	if (locale === "pt-PT") return __pt_pt2.library_sort_shuffle(inputs)
+	if (locale === "ro") return __ro.library_sort_shuffle(inputs)
+	if (locale === "ru") return __ru.library_sort_shuffle(inputs)
+	if (locale === "sv") return __sv.library_sort_shuffle(inputs)
+	if (locale === "th") return __th.library_sort_shuffle(inputs)
+	if (locale === "tr") return __tr.library_sort_shuffle(inputs)
+	if (locale === "uk") return __uk.library_sort_shuffle(inputs)
+	if (locale === "vi") return __vi.library_sort_shuffle(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.library_sort_shuffle(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.library_sort_shuffle(inputs)
+	return __en.library_sort_shuffle(inputs)
 });
 /**
 * | output |

@@ -3714,5 +3714,11 @@
   "import_review_replace": "Nahradit",
   "import_review_save_copy": "Uložit kopii",
   "text_import_url_detected": "Toto je webová adresa. Načíst recept raději z této stránky?",
-  "text_import_fetch_page": "Načíst stránku"
+  "text_import_fetch_page": "Načíst stránku",
+  "library_sort_added": "Nedávno přidané",
+  "library_sort_longest_since_cooked": "Nejdéle nevařené",
+  "library_sort_active_time": "Nejméně aktivního času",
+  "library_sort_most_cooked": "Nejčastěji vařené",
+  "library_sort_shuffle": "Náhodné pořadí",
+  "library_shuffle_again": "Znovu promíchat"
 }

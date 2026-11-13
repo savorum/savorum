@@ -1,13 +1,13 @@
 import { createRoot, createSignal } from "solid-js"
 import { beforeEach, expect, test, vi } from "vitest"
 
-import type { RecipePage } from "@/api/recipes"
+import type { ListRecipesOptions, RecipePage } from "@/api/recipes"
 
 import { createLibraryQuery } from "./create-library-query"
 import type { LibrarySearch } from "./library-search"
 
 const api = vi.hoisted(() => ({
-  recipes: vi.fn<(options: { offset?: number; signal?: AbortSignal }) => Promise<RecipePage>>(),
+  recipes: vi.fn<(options: ListRecipesOptions) => Promise<RecipePage>>(),
   savedPages: vi.fn(),
   views: vi.fn(),
 }))
@@ -277,6 +277,52 @@ test("a late continuation cannot expand a replacement search or move focus", asy
     expect(query.focusOffset()).toBeUndefined()
     expect(query.moreError()).toBeUndefined()
     expect(query.loading()).toBe(false)
+  } finally {
+    dispose()
+  }
+})
+
+test("shuffle keeps its seed across pages and reshuffling returns to the first batch", async () => {
+  api.recipes.mockImplementation(async ({ offset = 0 }) => result(offset, 500))
+  const { query, update, dispose } = library({ sort: "random", seed: 432 })
+  try {
+    await vi.waitFor(() => expect(query.page.state).toBe("ready"))
+    await query.loadMore()
+    await vi.waitFor(() => expect(query.shownLimit()).toBe(72))
+    expect(api.recipes.mock.calls.every(([options]) => options.seed === 432)).toBe(true)
+    query.reshuffle()
+    await vi.waitFor(() => expect(query.shownLimit()).toBe(36))
+    expect(query.seed()).not.toBe(432)
+    expect(api.recipes.mock.lastCall?.[0]).toMatchObject({ seed: query.seed(), offset: 0 })
+    expect(update).toHaveBeenLastCalledWith({
+      seed: query.seed(),
+      offset: undefined,
+      shown: undefined,
+    })
+  } finally {
+    dispose()
+  }
+})
+
+test("opening a shuffled saved search preserves its seed when metadata arrives", async () => {
+  let resolveViews!: (value: { id: string; title: string; query: string; sort: string }[]) => void
+  api.views.mockReturnValue(
+    new Promise((resolve) => {
+      resolveViews = resolve
+    }),
+  )
+  const { query, update, dispose } = library({ view: "saved" })
+  try {
+    await vi.waitFor(() => expect(api.savedPages).toHaveBeenCalledTimes(1))
+    const seed = api.savedPages.mock.calls[0]![0].seed
+    resolveViews([{ id: "saved", title: "Discovery", query: "soup", sort: "random" }])
+    await vi.waitFor(() => expect(query.sort()).toBe("random"))
+    expect(update).toHaveBeenCalledWith({ seed }, true)
+    expect(api.savedPages).toHaveBeenCalledTimes(1)
+    query.reshuffle()
+    await vi.waitFor(() => expect(api.savedPages).toHaveBeenCalledTimes(2))
+    expect(api.savedPages.mock.lastCall?.[0]).toMatchObject({ id: "saved", seed: query.seed() })
+    expect(query.viewID()).toBe("saved")
   } finally {
     dispose()
   }

@@ -1437,9 +1437,15 @@
 /** @typedef {{ value1: NonNullable<unknown> }} Library_Selection_Bar_SelectedInputs */
 /** @typedef {{}} Library_Selection_Bar_Selected_RecipesInputs */
 /** @typedef {{}} Library_Selection_Bar_Sref_BundleInputs */
+/** @typedef {{}} Library_Shuffle_AgainInputs */
+/** @typedef {{}} Library_Sort_Active_TimeInputs */
+/** @typedef {{}} Library_Sort_AddedInputs */
 /** @typedef {{}} Library_Sort_CookedInputs */
+/** @typedef {{}} Library_Sort_Longest_Since_CookedInputs */
+/** @typedef {{}} Library_Sort_Most_CookedInputs */
 /** @typedef {{}} Library_Sort_RatingInputs */
 /** @typedef {{}} Library_Sort_RelevanceInputs */
+/** @typedef {{}} Library_Sort_ShuffleInputs */
 /** @typedef {{}} Library_Sort_TitleInputs */
 /** @typedef {{}} Library_Sort_UpdatedInputs */
 /** @typedef {{}} Library_Toolbar_All_RecipesInputs */
@@ -8411,8 +8417,28 @@ export const library_selection_bar_sref_bundle = /** @type {(inputs: Library_Sel
 	return /** @type {LocalizedString} */ (`SREF Bundle`)
 };
 
+export const library_shuffle_again = /** @type {(inputs: Library_Shuffle_AgainInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Shuffle again`)
+};
+
+export const library_sort_active_time = /** @type {(inputs: Library_Sort_Active_TimeInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Least active time`)
+};
+
+export const library_sort_added = /** @type {(inputs: Library_Sort_AddedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Recently added`)
+};
+
 export const library_sort_cooked = /** @type {(inputs: Library_Sort_CookedInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Recently cooked`)
+};
+
+export const library_sort_longest_since_cooked = /** @type {(inputs: Library_Sort_Longest_Since_CookedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Longest since cooked`)
+};
+
+export const library_sort_most_cooked = /** @type {(inputs: Library_Sort_Most_CookedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Most cooked`)
 };
 
 export const library_sort_rating = /** @type {(inputs: Library_Sort_RatingInputs) => LocalizedString} */ () => {
@@ -8421,6 +8447,10 @@ export const library_sort_rating = /** @type {(inputs: Library_Sort_RatingInputs
 
 export const library_sort_relevance = /** @type {(inputs: Library_Sort_RelevanceInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Best match`)
+};
+
+export const library_sort_shuffle = /** @type {(inputs: Library_Sort_ShuffleInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Shuffle`)
 };
 
 export const library_sort_title = /** @type {(inputs: Library_Sort_TitleInputs) => LocalizedString} */ () => {

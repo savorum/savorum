@@ -3056,5 +3056,11 @@
   "import_review_replace": "置き換え",
   "import_review_save_copy": "コピーを保存",
   "text_import_url_detected": "これはウェブアドレスです。代わりにそのページからレシピを取得しますか？",
-  "text_import_fetch_page": "ページを取得"
+  "text_import_fetch_page": "ページを取得",
+  "library_sort_added": "追加が新しい順",
+  "library_sort_longest_since_cooked": "最後に作ってから長い順",
+  "library_sort_active_time": "作業時間が短い順",
+  "library_sort_most_cooked": "作った回数が多い順",
+  "library_sort_shuffle": "シャッフル",
+  "library_shuffle_again": "もう一度シャッフル"
 }
