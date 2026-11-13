@@ -1,3 +1,4 @@
+import { Ruler } from "lucide-solid"
 import { For, Show, untrack } from "solid-js"
 import { css } from "styled-system/css"
 
@@ -9,6 +10,7 @@ import { Callout, ChangeError } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogClose } from "@/components/ui/dialog"
 import { Disclosure } from "@/components/ui/disclosure"
+import { Segmented } from "@/components/ui/segmented"
 
 import { m } from "../../lib/messages.ts"
 import { type MeasurementResolution, everyMeasurement } from "./create-measurement-resolution"
@@ -110,14 +112,13 @@ function DecisionRow(props: {
     return interpretation?.kind === "canonical-unit" ? interpretation.unit_id : ""
   }
   const keepWritten = () => state().interpretation?.kind === "keep-written"
-  const inputName = () => `measurement-decision-${props.decision.id}`
+
+  const chosen = () => (keepWritten() ? "keep-written" : chosenUnit())
 
   return (
     <li class={styles.row}>
       <div class={styles.rowHead}>
-        <h4 class={styles.rowTitle}>
-          {props.decision.authored_forms.map((form) => `“${form}”`).join(", ")}
-        </h4>
+        <h4 class={styles.rowTitle}>{props.decision.authored_forms[0]}</h4>
         <p class={styles.rowMeta}>
           {m.measurement_decisions_reach({
             measurements: props.decision.occurrences,
@@ -127,6 +128,41 @@ function DecisionRow(props: {
             {(label) => <span class={styles.rowSource}>{label()}</span>}
           </Show>
         </p>
+        <Show when={props.decision.occurrences > 1}>
+          <Dialog
+            title={m.measurement_decisions_exceptions()}
+            onOpenChange={(details) => {
+              if (details.open) void measurement.inspectDecision(props.decision)
+            }}
+            trigger={(triggerProps) => (
+              <Button {...triggerProps()} size="xs" variant="plain">
+                {m.measurement_decisions_exceptions()}
+              </Button>
+            )}
+            footer={
+              <DialogClose>
+                {(closeProps) => <Button {...closeProps()}>{m.dialog_done()}</Button>}
+              </DialogClose>
+            }
+          >
+            <Show
+              when={state().occurrences}
+              fallback={<p class={styles.rowMeta}>{m.measurement_decisions_loading()}</p>}
+            >
+              {(occurrences) => (
+                <MeasurementOccurrenceList
+                  label={m.measurement_decisions_exceptions()}
+                  occurrences={occurrences()}
+                  isIncluded={(id) => !measurement.excludedOccurrence(props.decision.id, id)}
+                  onIncludedChange={(id, included) =>
+                    measurement.excludeOccurrence(props.decision, id, included)
+                  }
+                  onExcludeRecipe={(itemID) => measurement.excludeRecipe(props.decision, itemID)}
+                />
+              )}
+            </Show>
+          </Dialog>
+        </Show>
       </div>
 
       <ul class={styles.examples} aria-label={m.measurement_decisions_examples()}>
@@ -134,101 +170,62 @@ function DecisionRow(props: {
           {(example) => (
             <li>
               <span class={styles.exampleText}>{example.source_text}</span>
-              <span class={styles.exampleRecipe}>{example.recipe_title}</span>
+              <Show when={props.decision.recipes > 1}>
+                <span class={styles.exampleRecipe}>{example.recipe_title}</span>
+              </Show>
             </li>
           )}
         </For>
       </ul>
 
-      <div
-        class={styles.choices}
-        role="radiogroup"
-        aria-label={m.measurement_decisions_read_these_as({
-          measure: props.decision.measure_label,
-        })}
-      >
-        <For each={props.decision.choices}>
-          {(choice) => (
-            <label class={styles.choice}>
-              <input
-                type="radio"
-                name={inputName()}
-                value={choice.unit_id}
-                checked={chosenUnit() === choice.unit_id}
-                onChange={() =>
-                  void measurement.chooseDecision(props.decision, {
-                    kind: "canonical-unit",
-                    unit_id: choice.unit_id,
-                  })
-                }
-              />
-              <span>
-                {choice.convention_label || choice.label}
-                <Show when={choice.magnitude}>
-                  {(magnitude) => <span class={styles.choiceSize}>{magnitude()}</span>}
-                </Show>
-              </span>
-            </label>
-          )}
-        </For>
-        <label class={styles.choice}>
-          <input
-            type="radio"
-            name={inputName()}
-            value="keep-written"
-            checked={keepWritten()}
-            onChange={() =>
-              void measurement.chooseDecision(props.decision, { kind: "keep-written" })
-            }
-          />
-          <span>{m.measurement_decisions_keep_as_written()}</span>
-        </label>
-      </div>
+      <Segmented
+        label={m.measurement_decisions_read_these_as({ measure: props.decision.measure_label })}
+        value={chosen()}
+        options={[
+          ...props.decision.choices.map((choice) => ({
+            value: choice.unit_id,
+            label: [choice.convention_label || choice.label, choice.magnitude]
+              .filter(Boolean)
+              .join(" · "),
+          })),
+          { value: "keep-written", label: m.measurement_decisions_keep_as_written() },
+        ]}
+        onChange={(value) =>
+          void measurement.chooseDecision(
+            props.decision,
+            value === "keep-written"
+              ? { kind: "keep-written" }
+              : { kind: "canonical-unit", unit_id: value },
+          )
+        }
+      />
 
-      <Show when={state().plan}>
-        {(plan) => <PlanOutcome plan={plan()} keepWritten={keepWritten()} />}
-      </Show>
+      <div class={styles.decide}>
+        <Show when={state().plan}>
+          {(plan) => <PlanOutcome plan={plan()} keepWritten={keepWritten()} />}
+        </Show>
+        <AnswerActions measurement={props.measurement} scopeID={props.decision.id} />
+      </div>
       <Show when={state().error}>
         <ChangeError error={state().error} />
       </Show>
-
-      <AnswerActions measurement={props.measurement} scopeID={props.decision.id} />
-
-      <Dialog
-        title={m.measurement_decisions_exceptions()}
-        onOpenChange={(details) => {
-          if (details.open) void measurement.inspectDecision(props.decision)
-        }}
-        trigger={(triggerProps) => (
-          <Button {...triggerProps()} size="sm" variant="plain">
-            {m.measurement_decisions_exceptions()}
-          </Button>
-        )}
-        footer={
-          <DialogClose>
-            {(closeProps) => <Button {...closeProps()}>{m.dialog_done()}</Button>}
-          </DialogClose>
-        }
-      >
-        <Show
-          when={state().occurrences}
-          fallback={<p class={styles.rowMeta}>{m.measurement_decisions_loading()}</p>}
-        >
-          {(occurrences) => (
-            <MeasurementOccurrenceList
-              label={m.measurement_decisions_exceptions()}
-              occurrences={occurrences()}
-              isIncluded={(id) => !measurement.excludedOccurrence(props.decision.id, id)}
-              onIncludedChange={(id, included) =>
-                measurement.excludeOccurrence(props.decision, id, included)
-              }
-              onExcludeRecipe={(itemID) => measurement.excludeRecipe(props.decision, itemID)}
-            />
-          )}
-        </Show>
-      </Dialog>
     </li>
   )
+}
+
+function conventionLabel(id: string): string {
+  switch (id) {
+    case "us":
+      return m.editor_measurements_us()
+    case "au":
+      return m.editor_measurements_australian()
+    case "imperial":
+      return m.editor_measurements_imperial()
+    case "metric":
+      return m.editor_measurements_metric()
+    default:
+      return id
+  }
 }
 
 /** Convention choices apply to all measures, including those already resolved. */
@@ -242,6 +239,8 @@ export function MeasurementDecisions(props: { measurement: MeasurementResolution
     chooseConvention,
     lastAppliedResolution,
     undoLastResolution,
+    assumedConvention,
+    withdrawAssumedConvention,
   } = measurement
   const conventionState = () => answer(everyMeasurement)
   const chosenConvention = () => {
@@ -253,135 +252,174 @@ export function MeasurementDecisions(props: { measurement: MeasurementResolution
   const sources = () => new Set(decisions().map((decision) => decision.source_label)).size
 
   return (
-    <Show when={decisions().length > 0 || lastAppliedResolution()}>
-      <section class={styles.region} aria-labelledby="measurement-decisions-title">
-        <div class={styles.head}>
-          <h3 id="measurement-decisions-title" class={styles.title}>
-            {m.measurement_decisions_title()}
-          </h3>
-          <Show when={lastAppliedResolution()}>
-            <Button
-              size="sm"
-              variant="plain"
-              loading={answerBusy(everyMeasurement)}
-              onClick={() => void undoLastResolution()}
-            >
-              {m.measurement_decisions_undo_last()}
-            </Button>
-          </Show>
-        </div>
-        <p class={styles.lead}>
-          <Show when={decisions().length > 0} fallback={m.measurement_decisions_all_answered()}>
-            {m.measurement_decisions_intro({ measurements: decisions().length })}
-          </Show>
-        </p>
-
-        <Show when={decisions().length > 0}>
-          <fieldset class={styles.convention}>
-            <legend class={styles.legend}>{m.measurement_decisions_convention_legend()}</legend>
-            <div class={styles.choices}>
-              <For each={resolutionProfiles()}>
-                {(profile) => (
-                  <label class={styles.choice}>
-                    <input
-                      type="radio"
-                      name="measurement-convention"
-                      value={profile.id}
-                      checked={chosenConvention() === profile.id}
-                      onChange={() =>
-                        void chooseConvention(profile.id as "us" | "au" | "imperial" | "metric")
-                      }
-                    />
-                    <span>{profile.label}</span>
-                  </label>
-                )}
-              </For>
-            </div>
-            <Show when={conventionState().plan}>
-              {(plan) => <PlanOutcome plan={plan()} keepWritten={false} />}
+    <>
+      <Show when={assumedConvention()}>
+        {(assumed) => (
+          <div class={styles.assumed} role="status">
+            <Ruler aria-hidden="true" size={16} class={styles.assumedIcon} />
+            <p class={styles.assumedText}>
+              {m.measurement_decisions_assumed({
+                convention: conventionLabel(assumed().convention),
+                host: assumed().host,
+              })}
+            </p>
+            <Show when={assumed().revertible}>
+              <Button
+                size="sm"
+                variant="plain"
+                loading={answerBusy(everyMeasurement)}
+                onClick={() => void withdrawAssumedConvention()}
+              >
+                {m.measurement_decisions_change()}
+              </Button>
             </Show>
-            <Show when={conventionState().error}>
+            <Show when={conventionState().error && decisions().length === 0}>
               <ChangeError error={conventionState().error} />
             </Show>
-            <AnswerActions measurement={props.measurement} scopeID={everyMeasurement} />
-          </fieldset>
+          </div>
+        )}
+      </Show>
 
-          <Disclosure
-            class={styles.separately}
-            label={m.measurement_decisions_separately({ count: decisions().length })}
-          >
-            <ul class={styles.rows}>
-              <For each={decisions()}>
-                {(decision) => (
-                  <DecisionRow
-                    decision={decision}
-                    measurement={props.measurement}
-                    showSource={sources() > 1}
-                  />
-                )}
-              </For>
-            </ul>
-          </Disclosure>
-        </Show>
-      </section>
-    </Show>
+      <Show when={decisions().length > 0 || lastAppliedResolution()}>
+        <section class={styles.region} aria-labelledby="measurement-decisions-title">
+          <div class={styles.head}>
+            <div class={styles.heading}>
+              <h3 id="measurement-decisions-title" class={styles.title}>
+                {m.measurement_decisions_title()}
+              </h3>
+              <p class={styles.lead}>
+                <Show
+                  when={decisions().length > 0}
+                  fallback={m.measurement_decisions_all_answered()}
+                >
+                  {m.measurement_decisions_intro({ measurements: decisions().length })}
+                </Show>
+              </p>
+            </div>
+            <Show when={lastAppliedResolution()}>
+              <Button
+                size="sm"
+                variant="plain"
+                loading={answerBusy(everyMeasurement)}
+                onClick={() => void undoLastResolution()}
+              >
+                {m.measurement_decisions_undo_last()}
+              </Button>
+            </Show>
+          </div>
+
+          <Show when={decisions().length > 0}>
+            <div class={styles.convention}>
+              <p class={styles.legend} id="measurement-convention-legend">
+                {m.measurement_decisions_convention_legend()}
+              </p>
+              <Segmented
+                label={m.measurement_decisions_convention_legend()}
+                value={chosenConvention()}
+                options={resolutionProfiles().map((profile) => ({
+                  value: profile.id,
+                  label: conventionLabel(profile.id),
+                }))}
+                onChange={(value) =>
+                  void chooseConvention(value as "us" | "au" | "imperial" | "metric")
+                }
+              />
+              <div class={styles.decide}>
+                <Show when={conventionState().plan}>
+                  {(plan) => <PlanOutcome plan={plan()} keepWritten={false} />}
+                </Show>
+                <AnswerActions measurement={props.measurement} scopeID={everyMeasurement} />
+              </div>
+              <Show when={conventionState().error}>
+                <ChangeError error={conventionState().error} />
+              </Show>
+            </div>
+
+            <Disclosure
+              class={styles.separately}
+              label={m.measurement_decisions_separately({ count: decisions().length })}
+            >
+              <ul class={styles.rows}>
+                <For each={decisions()}>
+                  {(decision) => (
+                    <DecisionRow
+                      decision={decision}
+                      measurement={props.measurement}
+                      showSource={sources() > 1}
+                    />
+                  )}
+                </For>
+              </ul>
+            </Disclosure>
+          </Show>
+        </section>
+      </Show>
+    </>
   )
 }
 
 const styles = {
-  region: css({
-    borderTopColor: "border.default",
-    borderTopWidth: "1px",
-    display: "grid",
-    gap: "3",
-    paddingTop: "4",
-  }),
-  head: css({
-    alignItems: "baseline",
+  assumed: css({
+    alignItems: "center",
+    color: "fg.muted",
+    columnGap: "2",
     display: "flex",
     flexWrap: "wrap",
+    fontSize: "sm",
+    rowGap: "1",
+  }),
+  assumedIcon: css({ flexShrink: "0" }),
+  assumedText: css({ flex: "1 1 16rem", minWidth: "0" }),
+  region: css({
+    background: "bg.subtle",
+    borderColor: "border.subtle",
+    borderRadius: "l3",
+    borderWidth: "1px",
+    display: "grid",
+    gap: "4",
+    padding: { base: "4", md: "5" },
+  }),
+  head: css({
+    alignItems: "start",
+    display: "flex",
     gap: "3",
     justifyContent: "space-between",
   }),
+  heading: css({ display: "grid", gap: "1", minWidth: "0" }),
   title: css({ fontFamily: "editorial", fontSize: "lg" }),
   lead: css({ color: "fg.muted", fontSize: "sm", maxWidth: "44rem" }),
-  convention: css({ border: "0", display: "grid", gap: "2", margin: "0", padding: "0" }),
-  legend: css({ fontSize: "sm", fontWeight: "semibold", padding: "0" }),
-  choices: css({ display: "flex", flexWrap: "wrap", rowGap: "2", columnGap: "5" }),
-  choice: css({
-    alignItems: "baseline",
-    cursor: "pointer",
-    display: "flex",
-    fontSize: "sm",
-    gap: "2",
-  }),
-  choiceSize: css({ color: "fg.muted", _before: { content: '" · "' } }),
+  convention: css({ display: "grid", gap: "2", justifyItems: "start" }),
+  legend: css({ fontSize: "sm", fontWeight: "medium" }),
   separately: css({ display: "grid", gap: "3" }),
-  summary: css({
-    color: "accent.default",
-    cursor: "pointer",
-    fontSize: "sm",
-    width: "fit-content",
-  }),
-  rows: css({ display: "grid", gap: "4", listStyle: "none", margin: "0", padding: "0" }),
-  row: css({
-    borderTopColor: "border.default",
-    borderTopWidth: "1px",
+  rows: css({
     display: "grid",
-    gap: "2",
-    paddingTop: "4",
+    gap: "5",
+    listStyle: "none",
+    margin: "0",
+    paddingBlock: "1",
+    paddingInlineStart: "4",
+    borderInlineStartColor: "border.subtle",
+    borderInlineStartWidth: "2px",
   }),
+  row: css({ display: "grid", gap: "2", justifyItems: "start" }),
   rowHead: css({
     alignItems: "baseline",
     display: "flex",
     flexWrap: "wrap",
-    rowGap: "1",
-    columnGap: "3",
-    justifyContent: "space-between",
+    rowGap: "0.5",
+    columnGap: "2",
   }),
-  rowTitle: css({ fontSize: "md", fontWeight: "semibold" }),
-  rowMeta: css({ color: "fg.muted", fontSize: "sm" }),
+  rowTitle: css({ fontSize: "sm", fontWeight: "semibold" }),
+  rowMeta: css({ color: "fg.muted", fontSize: "xs" }),
   rowSource: css({ overflowWrap: "anywhere", _before: { content: '" · "' } }),
+  decide: css({
+    alignItems: "center",
+    columnGap: "4",
+    display: "flex",
+    flexWrap: "wrap",
+    rowGap: "2",
+    _empty: { display: "none" },
+  }),
   examples: css({
     color: "fg.muted",
     display: "grid",
@@ -391,12 +429,11 @@ const styles = {
     margin: "0",
     padding: "0",
   }),
-  exampleText: css({ color: "fg.default" }),
-  exampleRecipe: css({ _before: { content: '" · "' } }),
+  exampleText: css({ fontStyle: "italic" }),
+  exampleRecipe: css({ fontSize: "xs", _before: { content: '" · "' } }),
   outcome: css({ display: "grid", gap: "0.5" }),
   outcomeHeadline: css({ fontSize: "sm", fontWeight: "medium" }),
   outcomeNote: css({ color: "fg.muted", fontSize: "sm" }),
   outcomeProblem: css({ marginBlock: "0" }),
   actions: css({ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "2" }),
-  exceptions: css({ display: "grid", gap: "2" }),
 }

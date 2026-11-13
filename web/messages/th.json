@@ -224,7 +224,7 @@
   "ingredient_details_remove_alternative": "ลบตัวเลือกทดแทน",
   "ingredient_details_add_term": "เพิ่มพจน์",
   "ingredient_details_the_recipe_says_this_can_be_left_out": "สูตรระบุว่าสามารถละเว้นสิ่งนี้ได้",
-  "ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am": "บรรทัดต้นฉบับของสูตร จะแสดงบรรทัดนี้ในหน้าอ่านเมื่อไม่มีปริมาณให้คำนวณ",
+  "ingredient_details_the_recipe_s_own_line": "บรรทัดต้นฉบับของสูตร",
   "ingredient_details_amount_is_approximate": "ปริมาณเป็นค่าโดยประมาณ",
   "ingredients_ingredients": "วัตถุดิบ",
   "ingredients_no_ingredient_list_you_can_save_this_record_without_one": "ไม่มีรายการวัตถุดิบ คุณยังบันทึกรายการนี้ได้",
@@ -2272,6 +2272,8 @@
     }
   ],
   "measurement_decisions_all_answered": "ระบุหน่วยวัดทั้งหมดแล้ว",
+  "measurement_decisions_assumed": "ไม่ได้ระบุขนาดถ้วยและช้อน จึงอ่านเป็น{convention} ตามที่ใช้ทั่วไปสำหรับ {host}",
+  "measurement_decisions_change": "เปลี่ยน",
   "measurement_decisions_undo_last": "เลิกทำคำตอบล่าสุด",
   "measurement_decisions_convention_legend": "ตีความทุกหน่วยเป็น",
   "measurement_decisions_separately": [

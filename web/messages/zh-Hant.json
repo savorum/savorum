@@ -224,7 +224,7 @@
   "ingredient_details_remove_alternative": "移除替代選項",
   "ingredient_details_add_term": "新增加項",
   "ingredient_details_the_recipe_says_this_can_be_left_out": "食譜註明此項可省略",
-  "ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am": "食譜原文的食材列。沒有可用於計算的用量時，閱讀畫面會顯示此列。",
+  "ingredient_details_the_recipe_s_own_line": "食譜原文的食材列。",
   "ingredient_details_amount_is_approximate": "用量為約略值",
   "ingredients_ingredients": "食材",
   "ingredients_no_ingredient_list_you_can_save_this_record_without_one": "沒有食材清單。您仍可儲存這筆記錄。",
@@ -2272,6 +2272,8 @@
     }
   ],
   "measurement_decisions_all_answered": "所有度量單位皆已確認。",
+  "measurement_decisions_assumed": "未註明杯和匙的規格，因此按 {host} 常用的{convention}讀取。",
+  "measurement_decisions_change": "變更",
   "measurement_decisions_undo_last": "復原上一個選擇",
   "measurement_decisions_convention_legend": "將所有單位解讀為",
   "measurement_decisions_separately": [

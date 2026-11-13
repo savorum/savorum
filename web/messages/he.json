@@ -224,7 +224,7 @@
   "ingredient_details_remove_alternative": "הסרת חלופה",
   "ingredient_details_add_term": "הוספת איבר",
   "ingredient_details_the_recipe_says_this_can_be_left_out": "לפי המתכון אפשר לוותר על המרכיב",
-  "ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am": "השורה המקורית של המתכון. היא מוצגת כשאין כמות שאפשר לחשב לפיה.",
+  "ingredient_details_the_recipe_s_own_line": "השורה המקורית של המתכון.",
   "ingredient_details_amount_is_approximate": "הכמות משוערת",
   "ingredients_ingredients": "מרכיבים",
   "ingredients_no_ingredient_list_you_can_save_this_record_without_one": "אין רשימת מרכיבים. אפשר לשמור את הרשומה גם בלעדיה.",
@@ -2400,6 +2400,8 @@
     }
   ],
   "measurement_decisions_all_answered": "כל המידות הוסדרו.",
+  "measurement_decisions_assumed": "גודלי הכוסות והכפות לא צוינו, ולכן הם נקראים לפי {convention}, כמקובל ב־{host}.",
+  "measurement_decisions_change": "שינוי",
   "measurement_decisions_undo_last": "ביטול התשובה האחרונה",
   "measurement_decisions_convention_legend": "פירוש כל המידות לפי",
   "measurement_decisions_separately": [

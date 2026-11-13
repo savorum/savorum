@@ -591,6 +591,16 @@ type ImportPreviewResponse struct {
 	ResolutionDecisions []MeasurementResolutionDecision `json:"resolution_decisions"`
 	ResolutionGroups    []MeasurementResolutionGroup    `json:"resolution_groups"`
 	ResolutionProfiles  []MeasurementResolutionProfile  `json:"resolution_profiles"`
+	AssumedConvention   *AssumedMeasurementConvention   `json:"assumed_convention,omitempty"`
+}
+
+// AssumedMeasurementConvention records a convention inferred from the source domain.
+type AssumedMeasurementConvention struct {
+	Convention string `json:"convention" enum:"us,au,imperial,metric"`
+	Label      string `json:"label"`
+	Host       string `json:"host"`
+	PlanID     string `json:"plan_id"`
+	Revertible bool   `json:"revertible"`
 }
 
 // MeasurementResolutionProfile describes a measurement convention in an import.
@@ -853,6 +863,13 @@ func importPreviewResponse(preview exchange.ImportPreview) ImportPreviewResponse
 		ResolutionGroups:    make([]MeasurementResolutionGroup, 0, len(preview.ResolutionGroups)),
 		ResolutionDecisions: make([]MeasurementResolutionDecision, 0, len(preview.ResolutionDecisions)),
 	}
+	if assumed := preview.AssumedConvention; assumed != nil {
+		response.AssumedConvention = &AssumedMeasurementConvention{
+			Convention: assumed.Convention, Label: assumed.Label, Host: assumed.Host,
+			PlanID: assumed.PlanID, Revertible: assumed.Revertible,
+		}
+	}
+
 	for _, profile := range preview.ResolutionProfiles {
 		response.ResolutionProfiles = append(response.ResolutionProfiles, MeasurementResolutionProfile{
 			ID: profile.ID, Label: profile.Label, Selects: profile.Selects,

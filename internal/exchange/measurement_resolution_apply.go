@@ -110,7 +110,7 @@ func prepareResolutionApplication(session *previewSession, stored *storedResolut
 
 	metadata := make(map[string]map[string]any, len(working))
 	for itemID, document := range working {
-		if err := recipe.ValidateForWrite(document, catalog); err != nil {
+		if err := recipe.ValidateForWrite(withPendingAssets(document, session.candidates[itemID].item), catalog); err != nil {
 			return nil, nil, nil, nil, nil, fmt.Errorf("%w: %w", ErrResolutionPlanInvalid, err)
 		}
 
@@ -304,8 +304,8 @@ func appendResolutionSummary(metadata map[string]any, request MeasurementResolut
 
 	summary := MeasurementResolutionRecord{
 		ResolutionKind: ingredientparser.AmbiguityUnitAlias, InterpretationKind: request.Interpretation.Kind,
-		DecisionKind: decisionKind(request.Interpretation.Kind),
-		UnitID:       request.Interpretation.UnitID, Convention: request.Interpretation.Convention,
+		DecisionKind: decisionKind(request.Interpretation.Kind), Basis: request.Basis,
+		UnitID: request.Interpretation.UnitID, Convention: request.Interpretation.Convention,
 		ConventionUnitIDs:  conventionSelections(request.Interpretation),
 		ScopeIngredientIDs: ingredientIDs, ScopeOccurrenceKeys: occurrenceKeys,
 		ParserVersion: ingredientparser.ParserVersion, UnitRegistryVersion: units.RegistryVersion,

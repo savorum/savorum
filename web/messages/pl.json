@@ -224,7 +224,7 @@
   "ingredient_details_remove_alternative": "Usuń alternatywę",
   "ingredient_details_add_term": "Dodaj składnik sumy",
   "ingredient_details_the_recipe_says_this_can_be_left_out": "Według przepisu można to pominąć",
-  "ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am": "Oryginalny wiersz przepisu. Jest wyświetlany przy czytaniu, gdy brak ilości, na której można oprzeć obliczenia.",
+  "ingredient_details_the_recipe_s_own_line": "Oryginalny wiersz przepisu.",
   "ingredient_details_amount_is_approximate": "Ilość przybliżona",
   "ingredients_ingredients": "Składniki",
   "ingredients_no_ingredient_list_you_can_save_this_record_without_one": "Brak listy składników. Możesz zapisać ten wpis bez niej.",
@@ -2751,6 +2751,8 @@
     }
   ],
   "measurement_decisions_all_answered": "Wszystkie miary są już ustalone.",
+  "measurement_decisions_assumed": "Nie podano wielkości szklanek i łyżek, więc są odczytywane jako {convention}, zwyczajowo dla {host}.",
+  "measurement_decisions_change": "Zmień",
   "measurement_decisions_undo_last": "Cofnij ostatnią odpowiedź",
   "measurement_decisions_convention_legend": "Interpretuj każdą jednostkę miary jako",
   "measurement_decisions_separately": [

@@ -42,7 +42,8 @@ export function ImportReviewPanel(props: {
   const match = () => soleItem()?.analysis.matches[0]
   const [saving, setSaving] = createSignal<SoleSave>()
   const busy = () => props.workflow.busy()
-  const measurementQuestions = () => importPreview().resolution_decisions.length > 0
+  const measurementQuestions = () =>
+    importPreview().resolution_decisions.length > 0 || Boolean(importPreview().assumed_convention)
 
   const saveSole = async (save: SoleSave) => {
     const item = soleItem()

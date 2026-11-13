@@ -799,6 +799,40 @@
         ],
         "type": "object"
       },
+      "AssumedMeasurementConvention": {
+        "additionalProperties": true,
+        "properties": {
+          "convention": {
+            "enum": [
+              "us",
+              "au",
+              "imperial",
+              "metric"
+            ],
+            "type": "string"
+          },
+          "host": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "plan_id": {
+            "type": "string"
+          },
+          "revertible": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "convention",
+          "label",
+          "host",
+          "plan_id",
+          "revertible"
+        ],
+        "type": "object"
+      },
       "Attempt": {
         "additionalProperties": true,
         "properties": {
@@ -4112,6 +4146,9 @@
       "ImportPreviewResponse": {
         "additionalProperties": true,
         "properties": {
+          "assumed_convention": {
+            "$ref": "#/components/schemas/AssumedMeasurementConvention"
+          },
           "expires_at": {
             "format": "date-time",
             "type": "string"

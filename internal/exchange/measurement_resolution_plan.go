@@ -45,7 +45,7 @@ func buildMeasurementResolutionPlan(previewID string, session *previewSession, r
 
 	catalog := units.DefaultCatalog()
 	for itemID, document := range working {
-		if err := recipe.ValidateForWrite(document, catalog); err != nil {
+		if err := recipe.ValidateForWrite(withPendingAssets(document, session.candidates[itemID].item), catalog); err != nil {
 			plan.ValidationFailures = append(plan.ValidationFailures, session.candidates[itemID].view.Recipe.Title+": "+err.Error())
 		}
 	}

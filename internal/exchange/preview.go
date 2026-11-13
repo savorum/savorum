@@ -121,6 +121,7 @@ type ImportPreview struct {
 	ResolutionDecisions []MeasurementResolutionDecision `json:"resolution_decisions"`
 	ResolutionGroups    []MeasurementResolutionGroup    `json:"resolution_groups"`
 	ResolutionProfiles  []MeasurementConventionProfile  `json:"resolution_profiles"`
+	AssumedConvention   *AssumedConvention              `json:"assumed_convention,omitempty"`
 }
 
 // UploadedImport carries one named input payload and its optional media type.
@@ -181,6 +182,7 @@ type previewSession struct {
 	pendingDecisions map[string]*pendingIngredientDecisions
 	stagedRemote     map[string]stagedRemoteAsset
 	scope            string
+	assumed          *AssumedConvention
 }
 
 // pendingIngredientDecisions is what has been answered about one authored
@@ -277,7 +279,12 @@ func (s *Service) PreviewFiles(ctx context.Context, uploads []UploadedImport) (I
 		return ImportPreview{}, fmt.Errorf("%w: an import carries at most %d recipes", ErrPreviewState, library.MaximumImportRecipes)
 	}
 
-	return s.createPreview(ctx, decoded, reservation)
+	preview, err := s.createPreview(ctx, decoded, reservation)
+	if err != nil {
+		return ImportPreview{}, err
+	}
+
+	return s.settleSoleReadings(ctx, preview), nil
 }
 
 // PreviewURL uses the same staged result as uploaded JSON-LD and SREF. Fetch
@@ -294,7 +301,12 @@ func (s *Service) PreviewURL(ctx context.Context, rawURL string) (ImportPreview,
 		return ImportPreview{}, err
 	}
 
-	return s.createPreview(ctx, candidatesFromBatch(batch, ""), reservation)
+	preview, err := s.createPreview(ctx, candidatesFromBatch(batch, ""), reservation)
+	if err != nil {
+		return ImportPreview{}, err
+	}
+
+	return s.assumeAddressConvention(ctx, s.settleSoleReadings(ctx, preview), rawURL), nil
 }
 
 // EditPreviewText reparses corrected text through the same plain-text adapter
@@ -482,6 +494,13 @@ func previewFromSession(id string, session *previewSession) ImportPreview {
 	preview.ResolutionGroups = resolutionGroups(id, session)
 	preview.ResolutionDecisions = resolutionDecisions(id, session)
 	preview.ResolutionProfiles = measurementConventionProfiles()
+
+	if session.assumed != nil {
+		assumed := *session.assumed
+		stored := session.resolutionPlans[assumed.PlanID]
+		assumed.Revertible = stored != nil && stored.applied && stored.appliedRevision == session.revision
+		preview.AssumedConvention = &assumed
+	}
 
 	return preview
 }

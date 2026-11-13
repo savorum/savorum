@@ -224,7 +224,7 @@
   "ingredient_details_remove_alternative": "Удалить альтернативу",
   "ingredient_details_add_term": "Добавить слагаемое",
   "ingredient_details_the_recipe_says_this_can_be_left_out": "В рецепте указано, что это можно опустить",
-  "ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am": "Исходная строка рецепта. Она показывается при чтении, если нет количества для расчёта.",
+  "ingredient_details_the_recipe_s_own_line": "Исходная строка рецепта.",
   "ingredient_details_amount_is_approximate": "Приблизительное количество",
   "ingredients_ingredients": "Ингредиенты",
   "ingredients_no_ingredient_list_you_can_save_this_record_without_one": "Нет списка ингредиентов. Можно сохранить эту запись без него.",
@@ -2751,6 +2751,8 @@
     }
   ],
   "measurement_decisions_all_answered": "Все единицы измерения определены.",
+  "measurement_decisions_assumed": "Размер чашек и ложек не указан, поэтому они читаются как {convention}, что обычно для {host}.",
+  "measurement_decisions_change": "Изменить",
   "measurement_decisions_undo_last": "Отменить последний ответ",
   "measurement_decisions_convention_legend": "Трактовать все единицы измерения как",
   "measurement_decisions_separately": [

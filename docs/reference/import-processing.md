@@ -111,6 +111,32 @@ read JSON-LD without constructing the page tree. Page, token, JSON, cancellation
 and extraction work limits apply. The preview warns that page details may be
 missing.
 
+## Unlabeled measures
+
+A cup or spoon is a different size in different countries. A page whose
+language names no region, such as `lang="en"`, leaves those measures
+unidentified, and review asks which convention they follow.
+
+A web import answers that question from the page's address when the recipe is
+in English or states no language, and the last label of its host has a usual
+convention:
+
+| Host ends in                      | Convention      |
+| --------------------------------- | --------------- |
+| `.com`, `.us`, `.gov`, `.edu`     | US customary    |
+| `.au`                             | Australian      |
+| `.uk`, `.ie`, `.nz`, `.ca`, `.za` | Metric culinary |
+
+The answer is a resolution decision, not source evidence. The import job
+records it with the basis `source-address`, and review says which convention
+was used and offers to change it. A measure the convention does not cover, such
+as a pint under metric culinary, is still asked about.
+
+Every import also answers a measure whose written form has one meaning in the
+registry and no regional convention, such as `g` on a page whose language tag
+the registry does not list. That decision has the basis `sole-reading` and is
+not asked about.
+
 ## Limits people hit
 
 | Boundary                       |                                          Limit |

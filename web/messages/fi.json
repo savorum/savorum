@@ -224,7 +224,7 @@
   "ingredient_details_remove_alternative": "Poista vaihtoehto",
   "ingredient_details_add_term": "Lisää summan osa",
   "ingredient_details_the_recipe_says_this_can_be_left_out": "Reseptin mukaan tämän voi jättää pois",
-  "ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am": "Reseptin alkuperäinen rivi. Se näytetään lukunäkymässä, kun laskentaan sopivaa määrää ei ole.",
+  "ingredient_details_the_recipe_s_own_line": "Reseptin alkuperäinen rivi.",
   "ingredient_details_amount_is_approximate": "Määrä on likimääräinen",
   "ingredients_ingredients": "Raaka-aineet",
   "ingredients_no_ingredient_list_you_can_save_this_record_without_one": "Raaka-aineluettelo puuttuu. Voit tallentaa tietueen ilman sitä.",
@@ -2391,6 +2391,8 @@
     }
   ],
   "measurement_decisions_all_answered": "Kaikki mittayksiköt on ratkaistu.",
+  "measurement_decisions_assumed": "Kuppien ja lusikoiden kokoa ei kerrottu, joten ne luetaan muodossa {convention}, kuten {host}-sivustolla on tavallista.",
+  "measurement_decisions_change": "Vaihda",
   "measurement_decisions_undo_last": "Kumoa viimeisin vastaus",
   "measurement_decisions_convention_legend": "Tulkitse kaikki mittayksiköt näin",
   "measurement_decisions_separately": [

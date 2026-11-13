@@ -1223,7 +1223,7 @@
 /** @typedef {{}} Ingredient_Details_RemoveInputs */
 /** @typedef {{}} Ingredient_Details_Remove_AlternativeInputs */
 /** @typedef {{}} Ingredient_Details_Revert_This_InterpretationInputs */
-/** @typedef {{}} Ingredient_Details_The_Recipe_S_Own_Line_The_Reader_Shows_It_When_There_Is_No_AmInputs */
+/** @typedef {{}} Ingredient_Details_The_Recipe_S_Own_LineInputs */
 /** @typedef {{}} Ingredient_Details_The_Recipe_Says_This_Can_Be_Left_OutInputs */
 /** @typedef {{}} Ingredient_Details_This_Ingredient_Now_ReadsInputs */
 /** @typedef {{}} Ingredient_Details_Two_Amounts_Added_TogetherInputs */
@@ -1460,6 +1460,8 @@
 /** @typedef {{}} List_Fields_Written_ByInputs */
 /** @typedef {{}} Measurement_Decisions_All_AnsweredInputs */
 /** @typedef {{}} Measurement_Decisions_ApplyInputs */
+/** @typedef {{ convention: NonNullable<unknown>, host: NonNullable<unknown> }} Measurement_Decisions_AssumedInputs */
+/** @typedef {{}} Measurement_Decisions_ChangeInputs */
 /** @typedef {{}} Measurement_Decisions_Clear_ChoiceInputs */
 /** @typedef {{}} Measurement_Decisions_Convention_LegendInputs */
 /** @typedef {{}} Measurement_Decisions_ExamplesInputs */
@@ -7553,8 +7555,8 @@ export const ingredient_details_revert_this_interpretation = /** @type {(inputs:
 	return /** @type {LocalizedString} */ (`Revert this interpretation`)
 };
 
-export const ingredient_details_the_recipe_s_own_line_the_reader_shows_it_when_there_is_no_am = /** @type {(inputs: Ingredient_Details_The_Recipe_S_Own_Line_The_Reader_Shows_It_When_There_Is_No_AmInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`The recipe's own line. The reader shows it when there is no amount to work from.`)
+export const ingredient_details_the_recipe_s_own_line = /** @type {(inputs: Ingredient_Details_The_Recipe_S_Own_LineInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`The recipe's own line.`)
 };
 
 export const ingredient_details_the_recipe_says_this_can_be_left_out = /** @type {(inputs: Ingredient_Details_The_Recipe_Says_This_Can_Be_Left_OutInputs) => LocalizedString} */ () => {
@@ -8499,6 +8501,14 @@ export const measurement_decisions_all_answered = /** @type {(inputs: Measuremen
 
 export const measurement_decisions_apply = /** @type {(inputs: Measurement_Decisions_ApplyInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Apply`)
+};
+
+export const measurement_decisions_assumed = /** @type {(inputs: Measurement_Decisions_AssumedInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`Cup and spoon sizes weren't stated, so they're read as ${i?.convention}, the usual for ${i?.host}.`)
+};
+
+export const measurement_decisions_change = /** @type {(inputs: Measurement_Decisions_ChangeInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Change`)
 };
 
 export const measurement_decisions_clear_choice = /** @type {(inputs: Measurement_Decisions_Clear_ChoiceInputs) => LocalizedString} */ () => {
