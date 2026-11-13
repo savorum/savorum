@@ -21,6 +21,7 @@ const styles = {
     paddingBlock: "3",
     paddingInline: "4",
   }),
+  bar: css({ flex: "1", minWidth: "0" }),
   actions: css({ flexShrink: "0" }),
 }
 
@@ -41,13 +42,16 @@ export function ImportProgress(props: ImportProgressProps) {
     <Show when={report()}>
       {(current) => (
         <div class={styles.panel} role="status" aria-live="polite">
-          <Progress
-            label={current().label}
-            // Undefined means unmeasurable, which Ark renders as indeterminate.
-            value={current().fraction === undefined ? null : Math.round(current().fraction! * 100)}
-            valueText={current().detail}
-            running
-          />
+          <div class={styles.bar}>
+            <Progress
+              label={current().label}
+              value={
+                current().fraction === undefined ? null : Math.round(current().fraction! * 100)
+              }
+              valueText={current().detail}
+              running
+            />
+          </div>
           <Show when={props.onCancel}>
             {(cancel) => (
               <div class={styles.actions}>

@@ -77,10 +77,13 @@ test("idle says nothing at all", () => {
   assert.equal(describeImportPhase({ kind: "idle" }), undefined)
 })
 
-test("fetching a page names the page rather than a file count", () => {
-  const report = describeImportPhase({ kind: "fetching", url: "https://recipes.example/noodles" })
+test("fetching a page names its site rather than a file count", () => {
+  const report = describeImportPhase({
+    kind: "fetching",
+    url: "https://www.recipes.example/noodles",
+  })
   assert.equal(report?.label, "Fetching the recipe page")
-  assert.equal(report?.detail, "https://recipes.example/noodles")
+  assert.equal(report?.detail, "recipes.example")
 })
 
 test("a completion estimate waits for sustained observed progress", () => {
