@@ -48,6 +48,9 @@ var scopeMarker = Node{Type: scopeMarkerNode}
 // ErrLimit refuses further parsing before a resource reservation exceeds its budget.
 var ErrLimit = errors.New("HTML resource budget exceeded")
 
+// ErrAttributeLimit identifies an element whose attributes exceed their allowance.
+var ErrAttributeLimit = fmt.Errorf("HTML attribute budget exceeded: %w", ErrLimit)
+
 // Limits bounds cumulative node creation, allocation/copy work, token buffers,
 // and each element's attributes. It does not bound process RSS.
 type Limits struct{ Nodes, Work, TokenBytes, AttributeBytes int }
@@ -173,7 +176,7 @@ func (p *parser) readToken() Token {
 
 			size += cost
 			if size > p.guard.limits.AttributeBytes {
-				panic(stopped{ErrLimit})
+				panic(stopped{ErrAttributeLimit})
 			}
 
 			p.guard.spend(cost + 48)
@@ -202,7 +205,7 @@ func (p *parser) growAttributes(dst *Node, attr Attribute) {
 	}
 
 	if size > p.guard.limits.AttributeBytes {
-		panic(stopped{ErrLimit})
+		panic(stopped{ErrAttributeLimit})
 	}
 
 	p.guard.spend(96)

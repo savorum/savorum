@@ -149,7 +149,7 @@ func (e recipeCardEnricher) ingredientGroups(card *html.Node) []IngredientGroup 
 			ingredient := Ingredient{
 				Amount: textContent(firstElementWithClass(row, e.spec.amount)),
 				Unit:   textContent(firstElementWithClass(row, e.spec.unit)),
-				Name:   textContent(firstElementWithClass(row, e.spec.name)),
+				Name:   trimNameClosing(textContent(firstElementWithClass(row, e.spec.name))),
 				Note:   trimNoteOpening(textContent(firstElementWithClass(row, e.spec.note))),
 			}
 			// The whole row remains the source line. The parts are an
@@ -185,6 +185,12 @@ var noteOpening = regexp.MustCompile(`^[\p{Zs},;:.\-–—]+`)
 
 func trimNoteOpening(value string) string {
 	return strings.TrimSpace(noteOpening.ReplaceAllString(value, ""))
+}
+
+var nameClosing = regexp.MustCompile(`[\p{Zs},;:]+$`)
+
+func trimNameClosing(value string) string {
+	return strings.TrimSpace(nameClosing.ReplaceAllString(value, ""))
 }
 
 func (e recipeCardEnricher) instructionSections(card *html.Node) []InstructionSection {

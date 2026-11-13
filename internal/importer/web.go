@@ -47,6 +47,9 @@ func (adapter webRecipeAdapter) Probe(_ context.Context, input Input) ProbeResul
 	case (strings.Contains(lower, "<html") || strings.Contains(lower, "<script")) &&
 		(strings.Contains(lower, "ld+json") || strings.Contains(lower, "schema.org/recipe")):
 		return ProbeResult{Confidence: ConfidenceContent, Reason: "HTML recipe structured data"}
+	// Keep saved HTML out of the plain-text fallback.
+	case strings.HasPrefix(lower, "<!doctype html") || strings.Contains(lower, "<html"):
+		return ProbeResult{Confidence: ConfidenceContent, Reason: "HTML document"}
 	default:
 		return ProbeResult{Confidence: extensionConfidence(adapter.Format(), input.Name), Reason: "filename extension"}
 	}
@@ -141,8 +144,6 @@ func batchFor(source *webrecipe.Recipe) ImportBatch {
 	return ImportBatch{Recipes: []ImportedRecipe{mapWebRecipe(source, time.Now().UTC())}}
 }
 
-// webReadingNotes are the web reader's account of how it read a page, which
-// leave the reviewer nothing to decide.
 var webReadingNotes = map[string]bool{
 	"ingredients-enriched":          true,
 	"instructions-enriched":         true,
@@ -151,12 +152,8 @@ var webReadingNotes = map[string]bool{
 	"semantic-html":                 true,
 }
 
-// mapWebRecipe turns the extracted recipe into a Savorum document. Every
-// decision about what cannot be carried is made here and reported as a
-// warning, so a reviewer is told what the page had rather than left to notice
-// what the recipe lacks.
 func mapWebRecipe(source *webrecipe.Recipe, retrievedAt time.Time) ImportedRecipe {
-	sourceLanguage := source.Language
+	sourceLanguage := ingredientparser.ReadingLanguage(webIngredientLines(source.IngredientGroups), source.Language)
 	if sourceLanguage != "" {
 		if tag, err := language.Parse(sourceLanguage); err == nil {
 			sourceLanguage = tag.String()
@@ -250,8 +247,6 @@ func mapWebRecipe(source *webrecipe.Recipe, retrievedAt time.Time) ImportedRecip
 	}
 
 	item.Assets = webAssets(source, document.Title)
-	// Rewrites the addresses the steps are holding into the identifiers the
-	// stored assets will take, on the document the batch actually carries.
 	item.Assets = append(item.Assets, stepAssets(&item.Document)...)
 
 	return item
@@ -268,10 +263,6 @@ func webEquipment(values []string) []recipe.Equipment {
 	return result
 }
 
-// stepAssets registers the photographs individual steps carry. The step already
-// refers to them by the identifier named here, and the library prunes a
-// reference whose bytes never arrived, so a photograph that will not download
-// costs the step its picture and nothing else.
 func stepAssets(document *recipe.Document) []RemoteAsset {
 	var assets []RemoteAsset
 
@@ -354,11 +345,6 @@ func webTimes(value webrecipe.Times) (*recipe.Times, []Diagnostic) {
 	return times, diagnostics
 }
 
-// importedDuration lifts a JSON-LD scalar into a duration expression, and
-// reports whether the page gave an exact one.
-//
-// Schema.org says these are ISO 8601, but many pages say "about 3 hours";
-// such wording is kept as an opaque duration rather than guessed at.
 func importedDuration(value string) (*recipe.DurationExpression, bool) {
 	stated := strings.TrimSpace(value)
 	if stated == "" {
@@ -375,11 +361,7 @@ func importedDuration(value string) (*recipe.DurationExpression, bool) {
 // isoDuration is the same shape the recipe model validates against.
 var isoDuration = regexp.MustCompile(`^P(?:[0-9]+Y)?(?:[0-9]+M)?(?:[0-9]+W)?(?:[0-9]+D)?(?:T(?:[0-9]+H)?(?:[0-9]+M)?(?:[0-9]+S)?)?$`)
 
-// webChronology lifts a page's publication and modification dates into the
-// portable document. SREF forbids inventing a missing offset, so a local
-// date-time is reduced to its date and a non-date is dropped, each reported.
-// Both fields share one diagnostic per kind of loss, because diagnostics
-// sharing a code are later aggregated into one.
+// Preserve stated offsets; reduce offset-free timestamps to dates.
 func webChronology(statedPublished, statedModified string) (string, string, []Diagnostic) {
 	type reading struct {
 		label, stated, kept string
@@ -398,6 +380,8 @@ func webChronology(statedPublished, statedModified string) (string, string, []Di
 		case stated == "":
 		case portableDate.MatchString(stated) && parsableDate(stated):
 			readings[index].kept = stated
+		case portableOffset(stated) != "":
+			readings[index].kept = portableOffset(stated)
 		default:
 			match := localDateTime.FindStringSubmatch(stated)
 			if match != nil && parsableDate(match[1]) {
@@ -426,8 +410,6 @@ func webChronology(statedPublished, statedModified string) (string, string, []Di
 	return readings[0].kept, readings[1].kept, diagnostics
 }
 
-// chronologyLoss gathers the fields that lost something, so both are named by
-// one diagnostic rather than by two that later aggregate into one.
 type chronologyLoss struct {
 	targets []DiagnosticTarget
 	wording []string
@@ -446,8 +428,30 @@ func (loss *chronologyLoss) diagnostic(code, consequence string) Diagnostic {
 	}
 }
 
-// parsableDate reports whether a correctly shaped value also names a day that
-// happened. "2024-02-30" reaches the grammar and denotes nothing.
+func portableOffset(stated string) string {
+	match := offsetDateTime.FindStringSubmatch(stated)
+	if match == nil {
+		return ""
+	}
+
+	seconds := match[3]
+	if seconds == "" {
+		seconds = ":00"
+	}
+
+	offset := "Z"
+	if match[5] == "" {
+		offset = match[6] + ":" + match[7]
+	}
+
+	portable := match[1] + "T" + match[2] + seconds + match[4] + offset
+	if !parsableDate(portable) {
+		return ""
+	}
+
+	return portable
+}
+
 func parsableDate(value string) bool {
 	normalized := strings.ToUpper(value)
 	if len(normalized) == len(time.DateOnly) {
@@ -465,8 +469,9 @@ func parsableDate(value string) bool {
 // date-time carrying its offset. localDateTime is the same date-time with the
 // mandatory offset missing, and captures the date that can still be kept.
 var (
-	portableDate  = regexp.MustCompile(`^\d{4}-\d{2}-\d{2}([Tt]\d{2}:\d{2}:\d{2}(\.\d+)?([Zz]|[+-]\d{2}:\d{2}))?$`)
-	localDateTime = regexp.MustCompile(`^(\d{4}-\d{2}-\d{2})[Tt ]\d{2}:\d{2}(:\d{2})?(\.\d+)?$`)
+	portableDate   = regexp.MustCompile(`^\d{4}-\d{2}-\d{2}([Tt]\d{2}:\d{2}:\d{2}(\.\d+)?([Zz]|[+-]\d{2}:\d{2}))?$`)
+	offsetDateTime = regexp.MustCompile(`^(\d{4}-\d{2}-\d{2})[Tt ](\d{2}:\d{2})(:\d{2})?(\.\d+)?(?:([Zz])|([+-]\d{2}):?(\d{2}))$`)
+	localDateTime  = regexp.MustCompile(`^(\d{4}-\d{2}-\d{2})[Tt ]\d{2}:\d{2}(:\d{2})?(\.\d+)?$`)
 )
 
 // webAssets preserves every distinct usable recipe image in source order.
@@ -494,6 +499,18 @@ type mappedIngredients struct {
 	byText   map[string]string
 }
 
+func webIngredientLines(groups []webrecipe.IngredientGroup) []string {
+	var lines []string
+
+	for _, group := range groups {
+		for _, ingredient := range group.Ingredients {
+			lines = append(lines, ingredient.Text)
+		}
+	}
+
+	return lines
+}
+
 func mapIngredients(groups []webrecipe.IngredientGroup, sourceLocale string) mappedIngredients {
 	result := mappedIngredients{byText: map[string]string{}}
 	counter := 0
@@ -511,10 +528,15 @@ func mapIngredients(groups []webrecipe.IngredientGroup, sourceLocale string) map
 			// The page's own name/note split beats one recovered from the
 			// rendered line; take both from the card or neither.
 			if ingredient.Name != "" && (parsed.Quantity == nil || ingredient.Note != "") {
-				parsed.Name = ingredient.Name
-			}
+				parsed.Name, parsed.Note = ingredient.Name, ingredient.Note
+				if parsed.Optional {
+					if name := ingredientparser.WithoutOptional(parsed.Name, sourceLocale); name != "" {
+						parsed.Name = name
+					}
 
-			if parsed.Note == "" && ingredient.Note != "" {
+					parsed.Note = ingredientparser.WithoutOptional(parsed.Note, sourceLocale)
+				}
+			} else if parsed.Note == "" {
 				parsed.Note = ingredient.Note
 			}
 

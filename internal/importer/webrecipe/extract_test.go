@@ -456,18 +456,29 @@ func TestImageInEveryShape(t *testing.T) {
 	}
 }
 
+func TestAProtocolRelativeImageTakesThePagesScheme(t *testing.T) {
+	body := `{"@type":"Recipe","name":"Pictured","recipeIngredient":["flour"],
+		"recipeInstructions":["Bake."],"image":["//images.example/a.jpg"]}`
+
+	images := mustExtract(t, body, "https://recipes.example/flammkuchen").Images
+	if len(images) != 1 || images[0] != "https://images.example/a.jpg" {
+		t.Fatalf("images = %#v", images)
+	}
+}
+
 func TestYieldInEveryShape(t *testing.T) {
 	for name, fixture := range map[string]struct{ json, want string }{
 		"string":            {`"6 servings"`, "6 servings"},
 		"number":            {`12`, "12"},
 		"list":              {`["12","12 rolls"]`, "12 rolls"},
+		"list with a verb":  {`["8","serves 8"]`, "serves 8"},
 		"quantitativeValue": {`{"@type":"QuantitativeValue","value":6,"unitText":"servings"}`, "6 servings"},
 	} {
 		t.Run(name, func(t *testing.T) {
 			body := `{"@type":"Recipe","name":"Yielded","recipeIngredient":["flour"],
 				"recipeInstructions":["Bake."],"recipeYield":` + fixture.json + `}`
-			if got := mustExtract(t, body, "").Yields[0].Text; got != fixture.want {
-				t.Fatalf("yield = %q, want %q", got, fixture.want)
+			if got := mustExtract(t, body, "").Yields; len(got) != 1 || got[0].Text != fixture.want {
+				t.Fatalf("yields = %#v, want %q", got, fixture.want)
 			}
 		})
 	}
@@ -510,6 +521,25 @@ func TestMicrodataIsReadWhenThereIsNoJSONLD(t *testing.T) {
 
 	if result.Yields[0].Text != "1 loaf" {
 		t.Fatalf("yield = %#v", result.Yields[0])
+	}
+}
+
+func TestHRecipeIsReadWhenThereIsNoJSONLD(t *testing.T) {
+	body := `<!doctype html><html><body><article class="h-recipe">
+		<h1>Page heading</h1><span class="hidden p-name">Lemon cake</span>
+		<span class="hidden u-photo">https://example.test/cake.jpg</span>
+		<div class="row p-ingredient">4 eggs</div>
+		<div class="row p-ingredient">135 g oil</div>
+		<div class="e-instructions"><ol><li>Whisk the eggs.</li><li>Fold in the oil and bake.</li></ol></div>
+		</article></body></html>`
+
+	result := mustExtract(t, body, "https://example.test/x")
+	if result.Name != "Lemon cake" || len(allIngredients(result.IngredientGroups)) != 2 {
+		t.Fatalf("recipe = %#v", result)
+	}
+
+	if len(result.Sections) == 0 || len(result.Sections[0].Steps) != 2 {
+		t.Fatalf("sections = %#v", result.Sections)
 	}
 }
 
@@ -981,5 +1011,88 @@ func TestStepNamesThatOnlyNumberTheStepAreDropped(t *testing.T) {
 	got := allSteps(mustExtract(t, body, "").Sections)
 	if len(got) != 4 || got[0].Name != "" || got[1].Name != "" || got[2].Name != "Glaze" || got[3].Name != "Step 4" {
 		t.Fatalf("steps = %#v", got)
+	}
+}
+
+func TestARatingStubDoesNotHideTheRecipeItDescribes(t *testing.T) {
+	for _, stub := range []string{
+		`{"@type":"Recipe","name":"Honey cake","aggregateRating":{"ratingValue":"5"}}`,
+		`{"@type":"Recipe","@id":"https://example.test/honey-cake","review":[]}`,
+	} {
+		full := `{"@type":"Recipe","@id":"https://example.test/honey-cake","name":"Honey cake",` +
+			`"recipeIngredient":["1 cup honey","3 cups flour"],"recipeInstructions":["Mix.","Bake."]}`
+		body := `<script type="application/ld+json">{"@graph":[` + stub + `,` + full + `]}</script>`
+
+		result := mustExtract(t, body, "https://example.test/honey-cake")
+		if result.Name != "Honey cake" || len(allIngredients(result.IngredientGroups)) != 2 {
+			t.Fatalf("%s: %+v", stub, result)
+		}
+	}
+}
+
+func TestSameTitleAcceptsASharedStem(t *testing.T) {
+	cases := []struct {
+		first, second string
+		want          bool
+	}{
+		{"Plum crumble", "Plum crumble with oats", true},
+		{"節瓜粉絲蝦米食譜", "節瓜粉絲蝦米【簡易家常菜】", true},
+		{"Plum crumble", "Plum jam", false},
+		{"Chicken curry - easy", "Chicken curry recipe", true},
+	}
+
+	for _, test := range cases {
+		if got := sameTitle(test.first, test.second); got != test.want {
+			t.Errorf("sameTitle(%q, %q) = %v", test.first, test.second, got)
+		}
+	}
+}
+
+func TestJSONLDPropertyNamesMayBeCapitalized(t *testing.T) {
+	body := `<script type="application/ld+json">{"@type":"Recipe","Name":"Mushroom risotto",
+		"recipeIngredient":["320 g rice","300 g mushrooms"],"recipeInstructions":["Toast the rice.","Add the mushrooms."]}</script>`
+	if got := mustExtract(t, body, "https://example.test/x").Name; got != "Mushroom risotto" {
+		t.Fatalf("name = %q", got)
+	}
+}
+
+func TestMicrodataKeepsAnIngredientLaidOutInColumns(t *testing.T) {
+	body := `<!doctype html><html><body><div itemscope itemtype="https://schema.org/Recipe">
+		<h1 itemprop="name">Doughnuts</h1>
+		<div itemprop="recipeIngredient"><div>Eggs</div><div>8 pcs</div></div>
+		<div itemprop="recipeIngredient"><div>Sugar</div><div>250 g</div></div>
+		<div itemprop="recipeInstructions">Mix and fry.</div></div></body></html>`
+
+	if got := allIngredients(mustExtract(t, body, "https://example.test/x").IngredientGroups); len(got) != 2 || got[0] != "Eggs 8 pcs" {
+		t.Fatalf("ingredients = %+v", got)
+	}
+}
+
+func TestMicrodataReadsAnIngredientListHeldInOneElement(t *testing.T) {
+	body := `<!doctype html><html><body><div itemscope itemtype="https://schema.org/Recipe">
+		<h1 itemprop="name">Lemon cheesecake</h1>
+		<div itemprop="recipeIngredient"><p><strong>Base</strong><br>2 egg whites<br>50 g sugar</p>
+		<p><strong>Filling</strong><br>200 g cream cheese<br>2 tbsp lemon juice</p></div>
+		<div itemprop="recipeInstructions"><p>Bake the base.</p><p>Spread the filling over it.</p></div></div></body></html>`
+
+	result := mustExtract(t, body, "https://example.test/x")
+	if len(result.IngredientGroups) != 2 || result.IngredientGroups[1].Title != "Filling" || len(allIngredients(result.IngredientGroups)) != 4 {
+		t.Fatalf("groups = %+v", result.IngredientGroups)
+	}
+
+	if len(allSteps(result.Sections)) != 2 {
+		t.Fatalf("sections = %+v", result.Sections)
+	}
+}
+
+func TestMicrodataReadsIngredientLinesWrittenAsDivisions(t *testing.T) {
+	body := `<!doctype html><html><body><div itemscope itemtype="https://schema.org/Recipe">
+		<h1 itemprop="name">Banana rolls</h1>
+		<div itemprop="recipeIngredient"><div>2 bananas</div><div>4 sheets filo</div><div>30 g butter</div></div>
+		<div itemprop="recipeInstructions"><div>Wrap the bananas in filo.</div><div>Brush with butter and bake.</div></div></div></body></html>`
+
+	result := mustExtract(t, body, "https://example.test/x")
+	if len(allIngredients(result.IngredientGroups)) != 3 || len(allSteps(result.Sections)) != 2 {
+		t.Fatalf("recipe = %+v", result)
 	}
 }

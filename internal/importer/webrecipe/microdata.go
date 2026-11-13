@@ -1,6 +1,7 @@
 package webrecipe
 
 import (
+	"slices"
 	"strings"
 
 	"golang.org/x/net/html"
@@ -85,6 +86,13 @@ func (d *document) microdataObject(scope *html.Node, scopeDepth int) (map[string
 	}
 
 	collector := microdataCollector{document: d, result: result, scopeDepth: scopeDepth}
+
+	forEachElement(scope, func(node *html.Node) {
+		if slices.Contains(strings.Fields(attribute(node, "itemprop")), "recipeIngredient") {
+			collector.ingredientElements++
+		}
+	})
+
 	if err := collector.walk(scope); err != nil {
 		return nil, err
 	}
@@ -93,10 +101,11 @@ func (d *document) microdataObject(scope *html.Node, scopeDepth int) (map[string
 }
 
 type microdataCollector struct {
-	document   *document
-	result     map[string]any
-	scopeDepth int
-	text       strings.Builder
+	document           *document
+	result             map[string]any
+	scopeDepth         int
+	text               strings.Builder
+	ingredientElements int
 }
 
 func (c *microdataCollector) walk(node *html.Node) error {
@@ -145,6 +154,23 @@ func (c *microdataCollector) readElement(node *html.Node) error {
 
 	if property == "" {
 		return nil
+	}
+
+	if property == "recipeIngredient" || property == "ingredients" {
+		if lines := microdataLines(node, true, c.ingredientElements == 1); len(lines) > 1 {
+			for _, line := range lines {
+				addMicrodataProperty(c.result, property, line)
+			}
+
+			return nil
+		}
+	}
+
+	if property == "recipeInstructions" {
+		if lines := microdataLines(node, false, true); len(lines) > 1 {
+			addMicrodataProperty(c.result, property, strings.Join(lines, "\n"))
+			return nil
+		}
 	}
 
 	value, found := microdataMachineValue(node)
@@ -241,4 +267,61 @@ func lastPathSegment(value string) string {
 	}
 
 	return value
+}
+
+// Preserve group headings and line boundaries; divisions within one ingredient separate columns.
+func microdataLines(root *html.Node, ingredients, divisions bool) []string {
+	var (
+		lines       []string
+		line        strings.Builder
+		bold, plain bool
+		walk        func(*html.Node, bool)
+	)
+
+	flush := func() {
+		text := collapseSpace(line.String())
+		if text != "" {
+			if ingredients && bold && !plain && !strings.HasSuffix(text, ":") {
+				text += ":"
+			}
+
+			lines = append(lines, text)
+		}
+
+		line.Reset()
+
+		bold, plain = false, false
+	}
+
+	walk = func(node *html.Node, inBold bool) {
+		for child := node.FirstChild; child != nil; child = child.NextSibling {
+			switch {
+			case child.Type == html.TextNode:
+				if strings.TrimSpace(child.Data) != "" {
+					bold, plain = bold || inBold, plain || !inBold
+				}
+
+				line.WriteString(child.Data)
+			case child.Type != html.ElementNode || child.Data == "script" || child.Data == "style":
+			case child.Data == "br":
+				flush()
+			default:
+				block := child.Data == "p" || child.Data == "li" || divisions && child.Data == "div"
+				if block {
+					flush()
+				}
+
+				walk(child, inBold || child.Data == "strong" || child.Data == "b")
+
+				if block {
+					flush()
+				}
+			}
+		}
+	}
+
+	walk(root, false)
+	flush()
+
+	return lines
 }

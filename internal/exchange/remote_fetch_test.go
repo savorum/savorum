@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"strings"
 	"testing"
+
+	"github.com/savorum/savorum/internal/importer/webrecipe"
 )
 
 type roundTripFunc func(*http.Request) (*http.Response, error)
@@ -40,6 +42,10 @@ func TestHTTPRemoteAssetFetcherReturnsVerifiedBoundedBytes(t *testing.T) {
 			if value := request.Header.Get(name); value != "" {
 				t.Errorf("outbound %s = %q", name, value)
 			}
+		}
+
+		if agent := request.Header.Get("User-Agent"); agent != webrecipe.UserAgent {
+			t.Errorf("outbound User-Agent = %q", agent)
 		}
 
 		return &http.Response{

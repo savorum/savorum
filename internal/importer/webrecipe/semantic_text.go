@@ -3,6 +3,8 @@ package webrecipe
 import (
 	"strconv"
 	"strings"
+	"unicode"
+	"unicode/utf8"
 
 	"golang.org/x/net/html"
 )
@@ -20,9 +22,13 @@ func (d *document) semanticText(root *html.Node, omitLists bool) (string, error)
 		return "", err
 	}
 
+	return writer.value(), nil
+}
+
+func (w *semanticTextWriter) value() string {
 	var lines []string
 
-	for line := range strings.SplitSeq(writer.text.String(), "\n") {
+	for line := range strings.SplitSeq(w.text.String(), "\n") {
 		line = collapseSpace(line)
 		if line == "" && (len(lines) == 0 || lines[len(lines)-1] == "") {
 			continue
@@ -31,7 +37,7 @@ func (d *document) semanticText(root *html.Node, omitLists bool) (string, error)
 		lines = append(lines, line)
 	}
 
-	return strings.TrimSpace(strings.Join(lines, "\n")), nil
+	return strings.TrimSpace(strings.Join(lines, "\n"))
 }
 
 func (w *semanticTextWriter) walk(node *html.Node, marker string) error {
@@ -67,6 +73,10 @@ func (w *semanticTextWriter) open(node *html.Node, marker string) {
 		return
 	}
 
+	if w.separatesTrailingPart(node) {
+		w.text.WriteByte(' ')
+	}
+
 	switch node.Data {
 	case "p":
 		if node.Parent == nil || node.Parent.Data != "li" || node.PrevSibling != nil {
@@ -84,6 +94,27 @@ func (w *semanticTextWriter) open(node *html.Node, marker string) {
 	}
 }
 
+// Preserve layout-separated amounts and names, such as "Beer<span>250 ml</span>".
+func (w *semanticTextWriter) separatesTrailingPart(node *html.Node) bool {
+	if !semanticInlineNode(node) || node.Data == "br" || node.Data == "wbr" || node.PrevSibling == nil {
+		return false
+	}
+
+	if node.PrevSibling.Type != html.ElementNode || !semanticInlineNode(node.PrevSibling) {
+		for next := node.NextSibling; next != nil; next = next.NextSibling {
+			if next.Type != html.TextNode || strings.TrimSpace(next.Data) != "" {
+				return false
+			}
+		}
+	}
+
+	written := w.text.String()
+	last, _ := utf8.DecodeLastRuneInString(written)
+	first, _ := utf8.DecodeRuneInString(strings.TrimLeftFunc(textContent(node), unicode.IsSpace))
+
+	return written != "" && !unicode.IsSpace(last) && (unicode.IsLetter(first) || unicode.IsDigit(first))
+}
+
 func (w *semanticTextWriter) close(node *html.Node) {
 	if node.Type != html.ElementNode {
 		return
@@ -91,10 +122,10 @@ func (w *semanticTextWriter) close(node *html.Node) {
 
 	switch node.Data {
 	case "a":
-		if address := safeProvenanceURL(attribute(node, "href"), w.document.page.URL); address != "" {
+		if address := safeProvenanceURL(attribute(node, "href"), w.document.page.URL); address != "" && collapseSpace(textContent(node)) != "" {
 			w.text.WriteString(" (" + address + ")")
 		}
-	case "p", "div", "section", "ul", "ol":
+	case "p", "div", "section", "ul", "ol", "tr", "dt", "dd":
 		w.text.WriteString("\n\n")
 	case "li":
 		w.text.WriteByte('\n')

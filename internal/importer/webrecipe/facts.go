@@ -1,6 +1,8 @@
 package webrecipe
 
 import (
+	"regexp"
+	"slices"
 	"strings"
 )
 
@@ -127,8 +129,6 @@ func personName(value any) string {
 	return firstString(value)
 }
 
-// normalizeYields drops a member another member already states, as the "12"
-// in ["12", "12 rolls"].
 func normalizeYields(value any) []Yield {
 	list, ok := value.([]any)
 	if !ok {
@@ -158,7 +158,8 @@ func normalizeYields(value any) []Yield {
 			}
 
 			longer := len(kept.Text) > len(candidate.Text) || (len(kept.Text) == len(candidate.Text) && other < index)
-			if longer && (kept.Text == candidate.Text || strings.HasPrefix(kept.Text, candidate.Text+" ")) {
+			if longer && (kept.Text == candidate.Text || strings.HasPrefix(kept.Text, candidate.Text+" ") ||
+				bareNumber.MatchString(candidate.Text) && slices.Equal(yieldNumbers(kept.Text), yieldNumbers(candidate.Text))) {
 				redundant = true
 				break
 			}
@@ -171,3 +172,10 @@ func normalizeYields(value any) []Yield {
 
 	return result
 }
+
+var (
+	bareNumber  = regexp.MustCompile(`^\d+(?:[.,/]\d+)?$`)
+	yieldNumber = regexp.MustCompile(`\d+(?:[.,/]\d+)?`)
+)
+
+func yieldNumbers(text string) []string { return yieldNumber.FindAllString(text, -1) }

@@ -15,7 +15,6 @@ import (
 	"github.com/savorum/savorum/internal/ingredientparser"
 	"github.com/savorum/savorum/internal/recipe"
 	"github.com/savorum/savorum/internal/recipetext"
-	"github.com/savorum/savorum/internal/units"
 )
 
 // plainTextAdapter is deliberately conservative: it extracts obvious recipe
@@ -42,7 +41,7 @@ func (plainTextAdapter) Probe(_ context.Context, input Input) ProbeResult {
 	}
 
 	text := normalizePlainText(plainTextBytes(input.Data))
-	if len(input.Data) > 8<<20 || !isLikelyPlainText(text) {
+	if len(input.Data) > 8<<20 || !isLikelyPlainText(text) || isMarkup(text) {
 		return ProbeResult{Confidence: ConfidenceNone}
 	}
 
@@ -357,11 +356,7 @@ func (p *plainTextParser) joinIngredient(line string) bool {
 		locale = ingredientparser.AliasLanguage
 	}
 
-	catalog := units.DefaultCatalog()
-	unitID, _ := catalog.ResolveAlias(previous.Name, locale)
-	unit, _ := catalog.Lookup(unitID)
-
-	amountOnly := previous.Quantity != nil && (previous.Name == "" || unit.Kind == recipe.UnitPhysical)
+	amountOnly := previous.Quantity != nil && previous.Name == "" || ingredientparser.MeasureOnly(previous.SourceText, locale)
 	if amountOnly || strings.HasSuffix(previous.SourceText, ",") || strings.HasSuffix(previous.SourceText, "，") || strings.HasSuffix(previous.SourceText, "،") {
 		*previous = ingredientparser.Parse(previous.SourceText+" "+line, previous.ID, p.readingLocale)
 		return true
@@ -552,6 +547,12 @@ func looksIngredientLine(s string) bool {
 func isPlainNote(s string) bool {
 	l := strings.ToLower(strings.TrimSpace(s))
 	return strings.HasPrefix(l, "#") || strings.HasPrefix(l, "note:") || strings.HasPrefix(l, "note ") || strings.HasPrefix(l, "tip:") || strings.HasPrefix(l, "source:")
+}
+
+func isMarkup(s string) bool {
+	lower := strings.ToLower(strings.TrimSpace(s))
+
+	return strings.HasPrefix(lower, "<!doctype html") || strings.HasPrefix(lower, "<html") || strings.Contains(lower, "<body")
 }
 
 func isLikelyPlainText(s string) bool { return utf8.ValidString(s) && !strings.ContainsRune(s, '\x00') }

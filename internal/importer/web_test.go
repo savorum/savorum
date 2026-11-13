@@ -614,7 +614,7 @@ func TestRecipeCardRowKeepsOnlyWhatTheRecipeSays(t *testing.T) {
 	// read at all, and the note reads ", finely diced".
 	body := `<!doctype html><html lang="en-US"><head><script type="application/ld+json">
 		{"@type":"Recipe","name":"Ragu","inLanguage":"en-US",
-		"recipeIngredient":["1 brown onion","2 tbsp olive oil"],
+		"recipeIngredient":["1 brown onion","2 tbsp olive oil","4 chicken thighs, bone-in (Note 1)","30 g ghee, OR 1 tbsp oil","Coriander (optional)","Chives (optional)"],
 		"recipeInstructions":["Cook."]}</script></head><body>
 		<div class="wprm-recipe"><div class="wprm-recipe-ingredient-group">
 		  <li class="wprm-recipe-ingredient"><span class="wprm-checkbox">▢</span>
@@ -625,10 +625,24 @@ func TestRecipeCardRowKeepsOnlyWhatTheRecipeSays(t *testing.T) {
 		    <span class="wprm-recipe-ingredient-amount">2</span>
 		    <span class="wprm-recipe-ingredient-unit">tbsp</span>
 		    <span class="wprm-recipe-ingredient-name">olive oil</span></li>
+		  <li class="wprm-recipe-ingredient">
+		    <span class="wprm-recipe-ingredient-amount">4</span>
+		    <span class="wprm-recipe-ingredient-name">chicken thighs, bone-in</span>
+		    <span class="wprm-recipe-ingredient-notes">(Note 1)</span></li>
+		  <li class="wprm-recipe-ingredient">
+		    <span class="wprm-recipe-ingredient-amount">30</span>
+		    <span class="wprm-recipe-ingredient-unit">g</span>
+		    <span class="wprm-recipe-ingredient-name">ghee,</span>
+		    <span class="wprm-recipe-ingredient-notes">OR 1 tbsp oil</span></li>
+		  <li class="wprm-recipe-ingredient">
+		    <span class="wprm-recipe-ingredient-name">Coriander (optional)</span></li>
+		  <li class="wprm-recipe-ingredient">
+		    <span class="wprm-recipe-ingredient-name">Chives</span>
+		    <span class="wprm-recipe-ingredient-notes">(optional)</span></li>
 		</div></div></body></html>`
 
 	ingredients := decode(t, body).IngredientSections[0].Ingredients
-	if len(ingredients) != 2 {
+	if len(ingredients) != 6 {
 		t.Fatalf("ingredients = %#v", ingredients)
 	}
 
@@ -638,6 +652,20 @@ func TestRecipeCardRowKeepsOnlyWhatTheRecipeSays(t *testing.T) {
 
 	if ingredients[1].Quantity == nil || ingredients[1].Quantity.Unit != "volume.tablespoon.us.customary" {
 		t.Fatalf("the checkbox swallowed the amount: %#v", ingredients[1])
+	}
+
+	if ingredients[2].Name != "chicken thighs, bone-in" || ingredients[2].Note != "(Note 1)" {
+		t.Fatalf("the card's name and the line's note were mixed: %#v", ingredients[2])
+	}
+
+	if ingredients[3].Name != "ghee" || ingredients[3].Note != "OR 1 tbsp oil" {
+		t.Fatalf("fourth ingredient = %#v", ingredients[3])
+	}
+
+	for _, optional := range ingredients[4:] {
+		if strings.Contains(optional.Name+optional.Note, "optional") || !optional.Optional {
+			t.Fatalf("optional ingredient = %#v", optional)
+		}
 	}
 }
 
@@ -725,6 +753,26 @@ func TestAuthoredDatesCarryingTheirOffsetSurviveExactly(t *testing.T) {
 	}
 }
 
+func TestAuthoredDatesInAnotherOffsetFormKeepTheirInstant(t *testing.T) {
+	for stated, want := range map[string]string{
+		"2024-07-08T14:48:38-0400":  "2024-07-08T14:48:38-04:00",
+		"2024-07-08 14:48+0530":     "2024-07-08T14:48:00+05:30",
+		"2026-11-10T21:43:17-05:00": "2026-11-10T21:43:17-05:00",
+	} {
+		item := decodeBatch(t, fmt.Sprintf(`{"@type":"Recipe","name":"Offset","datePublished":%q,
+			"recipeIngredient":["salt"],"recipeInstructions":["Rest."]}`, stated))
+		if item.Document.Published != want {
+			t.Fatalf("%q: published = %q, want %q", stated, item.Document.Published, want)
+		}
+
+		for _, diagnostic := range item.Diagnostics {
+			if strings.HasPrefix(diagnostic.Code, "chronology-") {
+				t.Fatalf("%q was reported as a loss: %#v", stated, diagnostic)
+			}
+		}
+	}
+}
+
 // A byline that is not a date at all costs the recipe its date and nothing
 // else. It is not a reason to refuse the ingredients and the steps.
 func TestADateThatIsNotADateIsLeftOutAndReported(t *testing.T) {
@@ -754,5 +802,38 @@ func TestADateThatIsNotADateIsLeftOutAndReported(t *testing.T) {
 	// does not quote back to them.
 	if !strings.Contains(told.Message, "March 10, 2024") || !strings.Contains(told.Message, "2024-02-30") {
 		t.Fatalf("diagnostic did not name the values: %q", told.Message)
+	}
+}
+
+func TestInvalidRecipeLanguageFallsBackToValidPageEvidence(t *testing.T) {
+	t.Parallel()
+
+	for _, test := range []struct{ name, html, want string }{
+		{"HTML declaration", `<html lang="uk"><script type="application/ld+json">{"@type":"Recipe","name":"Invented soup","inLanguage":"ua","recipeIngredient":["2 г солі"],"recipeInstructions":["Mix."]}</script></html>`, "uk"},
+		{"graph declaration", `<html lang="fr"><script type="application/ld+json">{"@graph":[{"@type":"Recipe","name":"Invented soup","inLanguage":"ua","recipeIngredient":["2 г солі"],"recipeInstructions":["Mix."]},{"@type":"WebPage","inLanguage":"uk"}]}</script></html>`, "uk"},
+		{"no valid declaration", `<html lang="ua"><script type="application/ld+json">{"@type":"Recipe","name":"Invented soup","inLanguage":"ua","recipeIngredient":["2 г солі"],"recipeInstructions":["Mix."]}</script></html>`, ""},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			imported := decodeBatch(t, test.html)
+			if imported.Document.Language != test.want || imported.Document.SourceLocale != test.want {
+				t.Fatalf("language = %q, source locale = %q", imported.Document.Language, imported.Document.SourceLocale)
+			}
+
+			warnings := 0
+
+			for _, d := range imported.Diagnostics {
+				if d.Code == "invalid-language-tag" && strings.Contains(d.Message, `"ua"`) {
+					warnings++
+				}
+			}
+
+			if warnings != 1 {
+				t.Fatalf("language warnings = %d, diagnostics = %#v", warnings, imported.Diagnostics)
+			}
+
+			if err := recipe.ValidateForWrite(imported.Document, units.DefaultCatalog()); err != nil {
+				t.Fatal(err)
+			}
+		})
 	}
 }

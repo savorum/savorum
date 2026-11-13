@@ -1433,6 +1433,7 @@ func (fetcher httpRemoteAssetFetcher) Fetch(ctx context.Context, rawURL string) 
 	}
 
 	request.Header.Set("Accept", "image/avif,image/webp,image/png,image/jpeg,image/gif")
+	request.Header.Set("User-Agent", webrecipe.UserAgent)
 
 	response, err := fetcher.client.Do(request)
 	if err != nil {
