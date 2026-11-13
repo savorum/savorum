@@ -16,7 +16,7 @@ Notable changes to Savorum Core. Each release publishes
 
 - Improve social recipe imports, including post and caption extraction, recipes split across author comments, discovery of full recipes on creator websites, and partial-recipe recovery.
 - Improve multilingual web extraction across article layouts, ingredient tables and groups, h-recipe pages, and incomplete structured recipe data.
-- Improve multilingual ingredient parsing, including written numbers and fractions, approximate amounts, package sizes, and quantities after ingredient names.
+- Improve multilingual ingredient parsing, including written numbers and fractions, dozens and half-dozens, approximate amounts, package sizes, and quantities after ingredient names.
 - Improve text imports with serving and timing recognition, UTF-16 support, and more flexible section and step parsing.
 - Improve import review with full recipe previews, clearer source information and warnings, and options to open or edit after saving.
 - Improve recipe comparison and merging, including photo previews, highlighted differences, duplicate guidance, and clearer choices about which recipe and contents to keep.
