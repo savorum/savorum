@@ -374,10 +374,35 @@ export const measurementLadders: Readonly<
   },
 }
 
+export interface UnitChoices {
+  volume: readonly UnitId[]
+  mass: readonly UnitId[]
+  counts: readonly UnitId[]
+}
+
+export const unitChoices: Readonly<Record<'metric' | 'us' | 'au', UnitChoices>> = {
+  metric: {
+    volume: ['volume.teaspoon.metric.culinary', 'volume.tablespoon.metric.culinary', 'volume.cup.metric.culinary', 'volume.milliliter', 'volume.liter'],
+    mass: ['mass.gram', 'mass.kilogram', 'mass.ounce.avoirdupois', 'mass.pound.avoirdupois'],
+    counts: ['count.item', 'count.egg', 'count.clove', 'count.sprig', 'count.bunch', 'count.pinch', 'count.handful', 'count.piece', 'count.slice', 'count.stick', 'count.stalk', 'count.head', 'count.sheet', 'count.leaf', 'count.strip', 'count.fillet', 'count.cube', 'count.knob', 'count.ear', 'count.loaf', 'count.dash', 'count.drop', 'count.splash', 'count.square', 'count.wheel', 'count.rack', 'container.can', 'container.tin', 'container.packet', 'container.jar', 'container.bottle', 'container.bag', 'container.box', 'container.carton', 'container.tub', 'container.envelope', 'container.pot', 'container.punnet'],
+  },
+  us: {
+    volume: ['volume.teaspoon.us.customary', 'volume.tablespoon.us.customary', 'volume.cup.us.customary', 'volume.milliliter', 'volume.liter'],
+    mass: ['mass.ounce.avoirdupois', 'mass.pound.avoirdupois', 'mass.gram', 'mass.kilogram'],
+    counts: ['count.item', 'count.egg', 'count.clove', 'count.sprig', 'count.bunch', 'count.pinch', 'count.handful', 'count.piece', 'count.slice', 'count.stick', 'count.stalk', 'count.head', 'count.sheet', 'count.leaf', 'count.strip', 'count.fillet', 'count.cube', 'count.knob', 'count.ear', 'count.loaf', 'count.dash', 'count.drop', 'count.splash', 'count.square', 'count.wheel', 'count.rack', 'container.can', 'container.tin', 'container.packet', 'container.jar', 'container.bottle', 'container.bag', 'container.box', 'container.carton', 'container.tub', 'container.envelope', 'container.pot', 'container.punnet'],
+  },
+  au: {
+    volume: ['volume.teaspoon.au', 'volume.tablespoon.au', 'volume.cup.au', 'volume.milliliter', 'volume.liter'],
+    mass: ['mass.gram', 'mass.kilogram', 'mass.ounce.avoirdupois', 'mass.pound.avoirdupois'],
+    counts: ['count.item', 'count.egg', 'count.clove', 'count.sprig', 'count.bunch', 'count.pinch', 'count.handful', 'count.piece', 'count.slice', 'count.stick', 'count.stalk', 'count.head', 'count.sheet', 'count.leaf', 'count.strip', 'count.fillet', 'count.cube', 'count.knob', 'count.ear', 'count.loaf', 'count.dash', 'count.drop', 'count.splash', 'count.square', 'count.wheel', 'count.rack', 'container.can', 'container.tin', 'container.packet', 'container.jar', 'container.bottle', 'container.bag', 'container.box', 'container.carton', 'container.tub', 'container.envelope', 'container.pot', 'container.punnet'],
+  },
+}
+
 export interface VolumePresentationPolicy {
   fractions: readonly (readonly string[])[]
   compoundFractions: readonly (readonly string[])[]
   remainderSteps: readonly string[]
+  maxRemainder: string
   maxRelativeError: string
   maxTeaspoonError: string
   relativeErrorWeight: string
@@ -396,6 +421,7 @@ export const volumePresentation: VolumePresentationPolicy = {
     ['1', '1/2', '1/3', '1/4'],
   ],
   remainderSteps: ['1/4', '1'],
+  maxRemainder: '4',
   maxRelativeError: '1/12',
   maxTeaspoonError: '1/2',
   relativeErrorWeight: '30',

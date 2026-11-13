@@ -178,6 +178,7 @@ type VolumePresentationPolicy struct {
 	// rounded to, given per rung of that smaller measure. A remainder counted
 	// out in tablespoons is a whole number of them.
 	RemainderSteps        []string
+	MaxRemainder          string
 	MaxRelativeError      string
 	MaxTeaspoonError      string
 	RelativeErrorWeight   string
@@ -196,6 +197,7 @@ var volumePresentationPolicy = VolumePresentationPolicy{
 		{"1", "1/2", "1/3", "1/4"},
 	},
 	RemainderSteps:        []string{"1/4", "1"},
+	MaxRemainder:          "4",
 	MaxRelativeError:      "1/12",
 	MaxTeaspoonError:      "1/2",
 	RelativeErrorWeight:   "30",
@@ -218,6 +220,7 @@ func VolumePresentation() VolumePresentationPolicy {
 		Fractions:             fractions,
 		CompoundFractions:     compound,
 		RemainderSteps:        append([]string(nil), volumePresentationPolicy.RemainderSteps...),
+		MaxRemainder:          volumePresentationPolicy.MaxRemainder,
 		MaxRelativeError:      volumePresentationPolicy.MaxRelativeError,
 		MaxTeaspoonError:      volumePresentationPolicy.MaxTeaspoonError,
 		RelativeErrorWeight:   volumePresentationPolicy.RelativeErrorWeight,

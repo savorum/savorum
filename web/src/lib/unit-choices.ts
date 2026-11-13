@@ -1,5 +1,6 @@
 import { m } from "./messages.ts"
-import { type UnitId, knownUnits, unitLabel } from "./units.ts"
+import { unitChoices } from "./unit-registry.generated.ts"
+import { knownUnits, unitLabel } from "./units.ts"
 
 export type MeasurementStyle = "metric" | "us" | "au"
 
@@ -13,53 +14,6 @@ export interface UnitGroup {
   choices: UnitChoice[]
 }
 
-/**
- * Typing the offered measures as registry identities means an editor can only
- * offer something the server would accept.
- */
-const volumeByStyle: Record<MeasurementStyle, UnitId[]> = {
-  metric: [
-    "volume.teaspoon.metric.culinary",
-    "volume.tablespoon.metric.culinary",
-    "volume.cup.metric.culinary",
-    "volume.milliliter",
-    "volume.liter",
-  ],
-  us: [
-    "volume.teaspoon.us.customary",
-    "volume.tablespoon.us.customary",
-    "volume.cup.us.customary",
-    "volume.milliliter",
-    "volume.liter",
-  ],
-  au: [
-    "volume.teaspoon.au",
-    "volume.tablespoon.au",
-    "volume.cup.au",
-    "volume.milliliter",
-    "volume.liter",
-  ],
-}
-
-const weightByStyle: Record<MeasurementStyle, UnitId[]> = {
-  metric: ["mass.gram", "mass.kilogram", "mass.ounce.avoirdupois", "mass.pound.avoirdupois"],
-  us: ["mass.ounce.avoirdupois", "mass.pound.avoirdupois", "mass.gram", "mass.kilogram"],
-  au: ["mass.gram", "mass.kilogram", "mass.ounce.avoirdupois", "mass.pound.avoirdupois"],
-}
-
-const counts: UnitId[] = [
-  "count.item",
-  "count.clove",
-  "count.egg",
-  "count.pinch",
-  "count.handful",
-  "count.sprig",
-  "count.bunch",
-  "container.can",
-  "container.tin",
-  "container.packet",
-]
-
 const label = (unit: string) => unitLabel(unit) || unit.split(".").at(-1) || unit
 
 /** The measurements offered first, chosen once for the whole recipe. */
@@ -69,19 +23,19 @@ export function unitGroups(style: MeasurementStyle, current?: string): UnitGroup
       get label() {
         return m.unit_choices_volume()
       },
-      choices: volumeByStyle[style].map((unit) => ({ value: unit, label: label(unit) })),
+      choices: unitChoices[style].volume.map((unit) => ({ value: unit, label: label(unit) })),
     },
     {
       get label() {
         return m.unit_choices_weight()
       },
-      choices: weightByStyle[style].map((unit) => ({ value: unit, label: label(unit) })),
+      choices: unitChoices[style].mass.map((unit) => ({ value: unit, label: label(unit) })),
     },
     {
       get label() {
         return m.unit_choices_count()
       },
-      choices: counts.map((unit) => ({
+      choices: unitChoices[style].counts.map((unit) => ({
         value: unit,
         label: unit === "count.item" ? "each" : label(unit),
       })),
