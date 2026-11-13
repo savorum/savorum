@@ -39,7 +39,12 @@ wording depends on state.
 Unit words belong to the SREF unit registry, not a message catalog.
 `go run ./cmd/unitaliases` publishes them to
 `internal/units/aliases_generated.go`. The ingredient grammar for each language
-is in `internal/ingredientparser/dialect.go`.
+is in `internal/ingredientparser/dialects.json`: approximation, range, and "or"
+words, number words including fractions such as "half", articles, multipliers
+such as "dozen", measure modifiers, sizes and count words that become a note,
+notes of a line with no amount, and measures with no single size. SREF's
+ingredient-line corpus states the expected readings;
+`TestSREFIngredientLineCorpus` checks every case.
 
 ## Presentation, not stored data
 

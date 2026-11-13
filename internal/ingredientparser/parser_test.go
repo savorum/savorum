@@ -2,6 +2,7 @@ package ingredientparser_test
 
 import (
 	"reflect"
+	"slices"
 	"testing"
 
 	"github.com/savorum/savorum/internal/ingredientparser"
@@ -58,12 +59,16 @@ func TestParseCommonImportedIngredientSpecifications(t *testing.T) {
 		{"¼ – 1/2 tsp red pepper flakes", "", "1/4", "1/2", "volume.teaspoon.us.customary", "red pepper flakes", "", false},
 		{"about 50 g butter, softened", "50", "", "", "mass.gram", "butter", "softened", true},
 		{"2 cloves garlic, minced", "2", "", "", "count.clove", "garlic", "minced", false},
-		{"3 large eggs", "3", "", "", "count.item", "large eggs", "", false},
+		{"3 large eggs", "3", "", "", "count.egg", "eggs", "large", false},
 		{"2 cans tomatoes", "2", "", "", "container.can", "tomatoes", "", false},
 		// CookBook Manager writes a leading 1 from an empty quantity column.
 		{"1 170-180 g light brown sugar", "", "170", "180", "mass.gram", "light brown sugar", "", false},
 		{"1 110-115 g white sugar", "", "110", "115", "mass.gram", "white sugar", "", false},
 		{"1 500 g strong white flour", "500", "", "", "mass.gram", "strong white flour", "", false},
+		{"2 x 400 g cans chickpeas", "2", "", "", "container.can", "chickpeas", "", false},
+		{"4 x 150g salmon fillets", "4", "", "", "count.item", "salmon fillets", "", false},
+		{"2 200g / 7oz salmon fillets", "2", "", "", "count.item", "salmon fillets", "", false},
+		{"A pinch of saffron threads", "1", "", "", "count.pinch", "saffron threads", "", false},
 	}
 	for _, test := range tests {
 		t.Run(test.line, func(t *testing.T) {
@@ -94,9 +99,9 @@ func TestParseCommonImportedIngredientSpecifications(t *testing.T) {
 	}
 }
 
-func TestParseLeavesUncertainProseAlone(t *testing.T) {
+func TestParseInventsNoAmountForProse(t *testing.T) {
 	got := ingredientparser.Parse("Salt to taste", "i1", "en-US")
-	if got.Quantity != nil || got.Name != "Salt to taste" || got.SourceText != "Salt to taste" {
+	if got.Quantity != nil || got.Name != "Salt" || got.Note != "to taste" || got.SourceText != "Salt to taste" {
 		t.Fatalf("parsed = %#v", got)
 	}
 }
@@ -340,7 +345,7 @@ func TestParseDoesNotLeaveAConnectiveInTheIngredientName(t *testing.T) {
 		// A word that merely starts with those letters is not the connective,
 		// and a line with no measure in front of it is not touched at all.
 		{"1 cup offal", "offal"},
-		{"a pinch of salt", "a pinch of salt"},
+		{"salt of the sea", "salt of the sea"},
 	} {
 		if got := ingredientparser.Parse(test.line, "i1", "en-US"); got.Name != test.name {
 			t.Errorf("%q name = %q, want %q", test.line, got.Name, test.name)
@@ -703,5 +708,77 @@ func TestQualifiedEnglishSpoonAndCupNamesSurviveLocaleAndConvention(t *testing.T
 				}
 			}
 		}
+	}
+}
+
+func TestParseReadsBothSizesOfOneItem(t *testing.T) {
+	t.Parallel()
+
+	got := ingredientparser.Parse("1 x 2kg / 4lb chicken", "i1", "en-US")
+	if got.Name != "chicken" || got.Quantity == nil || got.Quantity.Kind != recipe.QuantityAlternatives ||
+		len(got.Quantity.Options) != 2 || got.Quantity.Options[0].Unit != "mass.kilogram" ||
+		got.Quantity.Options[1].Unit != "mass.pound.avoirdupois" {
+		t.Fatalf("parsed = %#v", got)
+	}
+}
+
+func TestParseLeavesContradictoryPackageSizesForReview(t *testing.T) {
+	t.Parallel()
+
+	got := ingredientparser.Parse("2 x 400 g / 2 lb cans tomatoes", "i1", "en-US")
+	if got.Quantity != nil || got.Normalization == nil || got.Normalization.Method != recipe.NormalizationUnresolved {
+		t.Fatalf("parsed = %#v", got)
+	}
+}
+
+func TestParseReadsEveryEquivalentWrittenInParentheses(t *testing.T) {
+	t.Parallel()
+
+	got := ingredientparser.Parse("1/2 cup (1 stick / 113g) unsalted butter, melted", "i1", "en-US")
+	if got.Quantity == nil || got.Quantity.Kind != recipe.QuantityAlternatives {
+		t.Fatalf("quantity = %#v", got.Quantity)
+	}
+
+	var units []string
+	for _, option := range got.Quantity.Options {
+		units = append(units, option.Unit)
+	}
+
+	if !slices.Equal(units, []string{"volume.cup.us.customary", "count.stick", "mass.gram"}) || got.Name != "unsalted butter" || got.Note != "melted" {
+		t.Errorf("read %v, %q / %q", units, got.Name, got.Note)
+	}
+}
+
+func TestParseSeparatesTheNoteOfALineWithNoAmount(t *testing.T) {
+	t.Parallel()
+
+	for _, test := range []struct{ line, name, note string }{
+		{"Oil, for frying", "Oil", "for frying"},
+		{"Salt, pepper, and paprika", "Salt, pepper, and paprika", ""},
+	} {
+		got := ingredientparser.Parse(test.line, "i1", "en-US")
+		if got.Quantity != nil || got.Name != test.name || got.Note != test.note || got.SourceText != test.line {
+			t.Errorf("%q = %#v", test.line, got)
+		}
+	}
+}
+
+func TestParseReadsALineWithoutAUsableLocaleAsAliasLanguage(t *testing.T) {
+	t.Parallel()
+
+	for _, locale := range []string{"", "und"} {
+		ingredient := ingredientparser.Parse("300 gram flour", "i1", locale)
+		if ingredient.Quantity == nil || ingredient.Quantity.Unit != "mass.gram" || ingredient.Name != "flour" {
+			t.Fatalf("%q: ingredient = %#v", locale, ingredient)
+		}
+	}
+}
+
+func TestParseReadsNorwegianWithTheBokmalGrammar(t *testing.T) {
+	t.Parallel()
+
+	ingredient := ingredientparser.Parse("1 gul løk, finhakket", "i1", "no")
+	if ingredient.Quantity == nil || ingredient.Quantity.Unit != "count.item" || ingredient.Name != "gul løk" || ingredient.Note != "finhakket" {
+		t.Fatalf("ingredient = %#v", ingredient)
 	}
 }

@@ -15,6 +15,7 @@
       "method",
       "preparation",
       "steps",
+      "how to cook",
       "how to make it",
       "how to make",
       "how to"
@@ -86,7 +87,9 @@
         "serves",
         "yield",
         "yields",
-        "makes"
+        "makes",
+        "people",
+        "persons"
       ],
       "prep": [
         "preparation time",
@@ -104,7 +107,29 @@
         "ready in",
         "total"
       ]
-    }
+    },
+    "references": [
+      "note",
+      "notes",
+      "step",
+      "steps"
+    ],
+    "exact": [
+      "how to",
+      "how to make",
+      "how to make it"
+    ],
+    "heading_last": true,
+    "other": [
+      "equipment",
+      "tools",
+      "notes",
+      "note",
+      "tips",
+      "recipe notes",
+      "nutrition",
+      "storage"
+    ]
   },
   {
     "locale": "de",
@@ -187,7 +212,19 @@
         "gesamtzeit",
         "gesamt"
       ]
-    }
+    },
+    "references": [
+      "hinweis",
+      "anmerkung",
+      "schritt"
+    ],
+    "other": [
+      "utensilien",
+      "küchenutensilien",
+      "hinweise",
+      "tipps",
+      "notizen"
+    ]
   },
   {
     "locale": "fr",
@@ -197,7 +234,9 @@
     "instructions": [
       "préparation",
       "instructions",
-      "étapes"
+      "étapes",
+      "comment faire",
+      "comment préparer"
     ],
     "actions": {
       "cook": [
@@ -270,7 +309,18 @@
         "temps total",
         "total"
       ]
-    }
+    },
+    "references": [
+      "note",
+      "étape"
+    ],
+    "other": [
+      "matériel",
+      "ustensiles",
+      "notes",
+      "astuces",
+      "conseils"
+    ]
   },
   {
     "locale": "es",
@@ -280,7 +330,11 @@
     "instructions": [
       "preparación",
       "instrucciones",
-      "elaboración"
+      "elaboración",
+      "cómo hacer",
+      "como hacer",
+      "cómo preparar",
+      "paso a paso"
     ],
     "actions": {
       "cook": [
@@ -357,7 +411,18 @@
         "tiempo total",
         "total"
       ]
-    }
+    },
+    "references": [
+      "nota",
+      "paso"
+    ],
+    "other": [
+      "utensilios",
+      "utilidades",
+      "notas",
+      "consejos",
+      "trucos"
+    ]
   },
   {
     "locale": "it",
@@ -367,7 +432,9 @@
     "instructions": [
       "preparazione",
       "istruzioni",
-      "procedimento"
+      "procedimento",
+      "come fare",
+      "come preparare"
     ],
     "actions": {
       "cook": [
@@ -433,7 +500,18 @@
         "tempo totale",
         "totale"
       ]
-    }
+    },
+    "references": [
+      "nota",
+      "passaggio",
+      "passo"
+    ],
+    "other": [
+      "attrezzatura",
+      "utensili",
+      "note",
+      "consigli"
+    ]
   },
   {
     "locale": "pt",
@@ -444,7 +522,11 @@
       "preparação",
       "preparo",
       "instruções",
-      "modo de preparo"
+      "modo de preparo",
+      "como fazer",
+      "modo de fazer",
+      "como preparar",
+      "passo a passo"
     ],
     "actions": {
       "cook": [
@@ -518,12 +600,23 @@
         "tempo total",
         "total"
       ]
-    }
+    },
+    "references": [
+      "nota",
+      "passo",
+      "etapa"
+    ],
+    "other": [
+      "utensílios",
+      "notas",
+      "dicas"
+    ]
   },
   {
     "locale": "nl",
     "ingredients": [
-      "ingrediënten"
+      "ingrediënten",
+      "benodigdheden"
     ],
     "instructions": [
       "bereiding",
@@ -594,7 +687,16 @@
         "totale tijd",
         "totaal"
       ]
-    }
+    },
+    "references": [
+      "noot",
+      "opmerking",
+      "stap"
+    ],
+    "other": [
+      "tips",
+      "notities"
+    ]
   },
   {
     "locale": "da",
@@ -668,7 +770,16 @@
         "samlet tid",
         "i alt"
       ]
-    }
+    },
+    "references": [
+      "note",
+      "trin"
+    ],
+    "other": [
+      "udstyr",
+      "tips",
+      "noter"
+    ]
   },
   {
     "locale": "nb",
@@ -742,17 +853,28 @@
         "total tid",
         "totalt"
       ]
-    }
+    },
+    "references": [
+      "merknad",
+      "notat",
+      "trinn"
+    ],
+    "other": [
+      "utstyr",
+      "tips"
+    ]
   },
   {
     "locale": "sv",
     "ingredients": [
-      "ingredienser"
+      "ingredienser",
+      "du behöver"
     ],
     "instructions": [
       "gör så här",
       "tillagning",
-      "instruktioner"
+      "instruktioner",
+      "så gör du"
     ],
     "actions": {
       "cook": [
@@ -816,7 +938,15 @@
         "total tid",
         "totalt"
       ]
-    }
+    },
+    "references": [
+      "anmärkning",
+      "steg"
+    ],
+    "other": [
+      "redskap",
+      "tips"
+    ]
   },
   {
     "locale": "fi",
@@ -892,17 +1022,29 @@
         "kokonaisaika",
         "yhteensä"
       ]
-    }
+    },
+    "references": [
+      "huomautus",
+      "vaihe"
+    ],
+    "other": [
+      "välineet",
+      "vinkit"
+    ]
   },
   {
     "locale": "cs",
     "ingredients": [
       "ingredience",
-      "suroviny"
+      "suroviny",
+      "co budu potřebovat",
+      "co potřebujete"
     ],
     "instructions": [
       "postup",
-      "příprava"
+      "příprava",
+      "jak na to",
+      "postup přípravy"
     ],
     "actions": {
       "cook": [
@@ -970,7 +1112,16 @@
         "celková doba",
         "celkem"
       ]
-    }
+    },
+    "references": [
+      "poznámka",
+      "krok"
+    ],
+    "other": [
+      "pomůcky",
+      "poznámky",
+      "tipy"
+    ]
   },
   {
     "locale": "pl",
@@ -1047,7 +1198,19 @@
         "czas całkowity",
         "łącznie"
       ]
-    }
+    },
+    "references": [
+      "uwaga",
+      "notatka",
+      "krok"
+    ],
+    "heading_last": true,
+    "other": [
+      "sprzęt",
+      "uwagi",
+      "wskazówki",
+      "porady"
+    ]
   },
   {
     "locale": "hu",
@@ -1055,7 +1218,9 @@
       "hozzávalók"
     ],
     "instructions": [
-      "elkészítés"
+      "elkészítés",
+      "elkészítése",
+      "elkészítés módja"
     ],
     "actions": {
       "cook": [
@@ -1116,7 +1281,17 @@
         "teljes idő",
         "összesen"
       ]
-    }
+    },
+    "references": [
+      "megjegyzés",
+      "lépés"
+    ],
+    "heading_last": true,
+    "other": [
+      "eszközök",
+      "tippek",
+      "megjegyzés"
+    ]
   },
   {
     "locale": "ro",
@@ -1125,7 +1300,10 @@
     ],
     "instructions": [
       "preparare",
-      "instrucțiuni"
+      "instrucțiuni",
+      "mod de preparare",
+      "modul de preparare",
+      "metoda de preparare"
     ],
     "actions": {
       "cook": [
@@ -1188,7 +1366,17 @@
         "timp total",
         "total"
       ]
-    }
+    },
+    "references": [
+      "nota",
+      "notă",
+      "pasul"
+    ],
+    "other": [
+      "ustensile",
+      "note",
+      "sfaturi"
+    ]
   },
   {
     "locale": "el",
@@ -1256,7 +1444,16 @@
         "συνολικός χρόνος",
         "σύνολο"
       ]
-    }
+    },
+    "references": [
+      "σημείωση",
+      "βήμα"
+    ],
+    "other": [
+      "σκεύη",
+      "σημειώσεις",
+      "συμβουλές"
+    ]
   },
   {
     "locale": "ru",
@@ -1337,7 +1534,16 @@
         "общее время",
         "всего"
       ]
-    }
+    },
+    "references": [
+      "примечание",
+      "шаг"
+    ],
+    "other": [
+      "инвентарь",
+      "примечания",
+      "советы"
+    ]
   },
   {
     "locale": "uk",
@@ -1416,7 +1622,16 @@
         "загальний час",
         "всього"
       ]
-    }
+    },
+    "references": [
+      "примітка",
+      "крок"
+    ],
+    "other": [
+      "інвентар",
+      "примітки",
+      "поради"
+    ]
   },
   {
     "locale": "tr",
@@ -1485,18 +1700,33 @@
         "toplam süre",
         "toplam"
       ]
-    }
+    },
+    "references": [
+      "adım"
+    ],
+    "heading_last": true,
+    "other": [
+      "gereçler",
+      "notlar",
+      "püf noktaları"
+    ]
   },
   {
     "locale": "id",
     "ingredients": [
       "bahan",
-      "bahan-bahan"
+      "bahan-bahan",
+      "bumbu",
+      "bumbu halus",
+      "bahan utama"
     ],
     "instructions": [
       "cara membuat",
       "langkah-langkah",
-      "instruksi"
+      "instruksi",
+      "cara memasak",
+      "cara pembuatan",
+      "langkah"
     ],
     "actions": {
       "cook": [
@@ -1553,16 +1783,37 @@
         "total waktu",
         "waktu total"
       ]
-    }
+    },
+    "references": [
+      "catatan",
+      "langkah"
+    ],
+    "other": [
+      "peralatan",
+      "alat",
+      "catatan",
+      "tips"
+    ],
+    "exact": [
+      "bumbu"
+    ]
   },
   {
     "locale": "vi",
     "ingredients": [
-      "nguyên liệu"
+      "nguyên liệu",
+      "nguyên liệu cần chuẩn bị"
     ],
     "instructions": [
       "cách làm",
-      "hướng dẫn"
+      "hướng dẫn",
+      "các bước thực hiện",
+      "các bước tiến hành",
+      "các bước",
+      "cách thực hiện",
+      "cách nấu",
+      "cách chế biến",
+      "thực hiện"
     ],
     "actions": {
       "cook": [
@@ -1616,7 +1867,16 @@
       "total": [
         "tổng thời gian"
       ]
-    }
+    },
+    "references": [
+      "ghi chú",
+      "bước"
+    ],
+    "other": [
+      "dụng cụ",
+      "lưu ý",
+      "mẹo"
+    ]
   },
   {
     "locale": "ar",
@@ -1695,18 +1955,36 @@
         "الوقت الإجمالي",
         "المدة الإجمالية"
       ]
-    }
+    },
+    "references": [
+      "ملاحظة",
+      "خطوة"
+    ],
+    "other": [
+      "الأدوات",
+      "ملاحظات",
+      "نصائح"
+    ]
   },
   {
     "locale": "he",
     "ingredients": [
       "מרכיבים",
-      "מצרכים"
+      "מצרכים",
+      "רכיבים",
+      "המצרכים",
+      "החומרים"
     ],
     "instructions": [
       "הוראות",
       "אופן ההכנה",
-      "הכנה"
+      "הכנה",
+      "אופן הכנה",
+      "ההכנה",
+      "הכנות",
+      "דרך ההכנה",
+      "דרך הכנה",
+      "שלבי הכנה"
     ],
     "actions": {
       "cook": [
@@ -1768,17 +2046,30 @@
         "זמן כולל",
         "סך הכל"
       ]
-    }
+    },
+    "references": [
+      "הערה",
+      "שלב"
+    ],
+    "other": [
+      "ציוד",
+      "כלים",
+      "הערות",
+      "טיפים"
+    ]
   },
   {
     "locale": "ja",
     "ingredients": [
-      "材料"
+      "材料",
+      "調味料"
     ],
     "instructions": [
       "作り方",
       "手順",
-      "調理方法"
+      "調理方法",
+      "つくり方",
+      "作りかた"
     ],
     "actions": {
       "cook": [
@@ -1843,17 +2134,34 @@
         "合計時間",
         "所要時間"
       ]
-    }
+    },
+    "references": [
+      "注",
+      "手順",
+      "ステップ"
+    ],
+    "heading_last": true,
+    "other": [
+      "道具",
+      "補足",
+      "ポイント",
+      "コツ",
+      "メモ"
+    ]
   },
   {
     "locale": "ko",
     "ingredients": [
-      "재료"
+      "재료",
+      "양념"
     ],
     "instructions": [
       "만드는 법",
       "조리법",
-      "조리 방법"
+      "조리 방법",
+      "만드는 방법",
+      "조리 순서",
+      "요리 순서"
     ],
     "actions": {
       "cook": [
@@ -1911,16 +2219,30 @@
         "총 시간",
         "소요 시간"
       ]
-    }
+    },
+    "references": [
+      "참고",
+      "단계"
+    ],
+    "heading_last": true,
+    "other": [
+      "도구",
+      "팁",
+      "참고"
+    ]
   },
   {
     "locale": "th",
     "ingredients": [
-      "ส่วนผสม"
+      "ส่วนผสม",
+      "ส่วนประกอบ",
+      "วัตถุดิบ",
+      "เครื่องปรุง"
     ],
     "instructions": [
       "วิธีทำ",
-      "ขั้นตอน"
+      "ขั้นตอน",
+      "ขั้นตอนการทำ"
     ],
     "actions": {
       "cook": [
@@ -1975,21 +2297,42 @@
         "เวลาทั้งหมด",
         "เวลารวม"
       ]
-    }
+    },
+    "references": [
+      "หมายเหตุ",
+      "ขั้นตอน"
+    ],
+    "other": [
+      "อุปกรณ์",
+      "หมายเหตุ",
+      "เคล็ดลับ"
+    ]
   },
   {
     "locale": "zh",
     "ingredients": [
       "食材",
       "材料",
-      "配料"
+      "配料",
+      "调料",
+      "調料",
+      "调味料",
+      "調味料",
+      "用料"
     ],
     "instructions": [
       "做法",
       "步骤",
       "步驟",
       "制作方法",
-      "製作方法"
+      "製作方法",
+      "作法",
+      "烹饪步骤",
+      "烹飪步驟",
+      "制作步骤",
+      "製作步驟",
+      "做法步骤",
+      "做法步驟"
     ],
     "actions": {
       "cook": [
@@ -2060,6 +2403,20 @@
         "總時間",
         "所需时间"
       ]
-    }
+    },
+    "references": [
+      "注",
+      "步骤",
+      "步驟"
+    ],
+    "heading_last": true,
+    "other": [
+      "工具",
+      "器具",
+      "小贴士",
+      "小貼士",
+      "注意事项",
+      "注意事項"
+    ]
   }
 ]

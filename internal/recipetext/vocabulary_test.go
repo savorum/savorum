@@ -94,3 +94,44 @@ func TestDecoratedHeadings(t *testing.T) {
 		}
 	}
 }
+
+func TestQualifiedHeadings(t *testing.T) {
+	for text, want := range map[string]string{
+		"Ingredientes para pastel de carne:": "ingredients", //nolint:misspell // Spanish heading.
+		"Suroviny na 12 tartaletek":          "ingredients",
+		"INGREDIENTES: 4 personas":           "ingredients", //nolint:misspell // Spanish heading.
+		"Rosół z jabłkami składniki:":        "ingredients",
+		"なす田楽の材料 (２〜３人分)":                    "ingredients",
+		"なす田楽の作り方":                           "instructions",
+		"ส่วนผสมสำหรับทำลาบหมู":              "ingredients",
+		"Інгредієнти для сирників":           "ingredients",
+		"Ingredients":                       "ingredients",
+		"How to make perfect pancakes":      "",
+		"Sơ chế nguyên liệu":                "",
+		"Ingredients: flour, sugar":         "",
+		"Ingredients are what matter most.": "",
+		"Ingredients and method":            "",
+	} {
+		if got := QualifiedHeading(text); got != want {
+			t.Errorf("QualifiedHeading(%q) = %q, want %q", text, got, want)
+		}
+	}
+}
+
+func TestOtherHeadings(t *testing.T) {
+	for _, text := range []string{"Equipment", "Utilidades:", "อุปกรณ์", "【補足】"} {
+		if !OtherHeading(text) {
+			t.Errorf("OtherHeading(%q) = false", text)
+		}
+	}
+
+	if OtherHeading("Ingredients") || OtherHeading("Benodigdheden") {
+		t.Error("a recipe section read as another part")
+	}
+
+	for _, entry := range vocabularies {
+		if len(entry.Other) == 0 {
+			t.Errorf("%s has no other headings", entry.Locale)
+		}
+	}
+}

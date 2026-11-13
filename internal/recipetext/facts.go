@@ -46,6 +46,27 @@ func buildFactLabels() []factLabel {
 	return labels
 }
 
+var servingLine = buildServingLine()
+
+func buildServingLine() *regexp.Regexp {
+	var words []string
+
+	for _, entry := range vocabularies {
+		for _, word := range entry.Facts[FactYield] {
+			if !strings.Contains(word, " ") {
+				words = append(words, word)
+			}
+		}
+	}
+
+	return regexp.MustCompile(`(?i)^(?:\pL{1,5}\s+)?\pN+(?:\s*[-–]\s*\pN+)?\s*` + alternatives(words) + `$`)
+}
+
+// ServingLine recognizes a standalone serving count, such as "6 people".
+func ServingLine(line string) bool {
+	return servingLine.MatchString(strings.TrimSpace(line))
+}
+
 // Fact returns the kind and value of a labeled line such as "Prep time: 20 min".
 // Labels need a colon, except a yield label followed by a number ("Serves 4").
 func Fact(line string) (kind, value string) {

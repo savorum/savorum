@@ -62,3 +62,14 @@ func TestDurationReadsOnlyAmountsAndUnits(t *testing.T) {
 		}
 	}
 }
+
+func TestServingLine(t *testing.T) {
+	for line, want := range map[string]bool{
+		"6 people": true, "Pro 4 osoby": true, "4-6 porții": true, "2 人份": true,
+		"6 eggs": false, "Serves 4": false, "4 people, divided": false,
+	} {
+		if got := ServingLine(line); got != want {
+			t.Errorf("ServingLine(%q) = %v", line, got)
+		}
+	}
+}
