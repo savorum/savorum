@@ -1,0 +1,1152 @@
+{
+  "units": [
+    {
+      "id": "mass.gram",
+      "kind": "physical",
+      "dimension": "mass",
+      "convention": "metric",
+      "base": "mass.gram",
+      "factor": "1",
+      "offset": "0",
+      "exact": true,
+      "one": "g",
+      "many": "g",
+      "tight": true
+    },
+    {
+      "id": "mass.decagram",
+      "kind": "physical",
+      "dimension": "mass",
+      "convention": "metric",
+      "base": "mass.gram",
+      "factor": "10",
+      "offset": "0",
+      "exact": true,
+      "one": "dag",
+      "many": "dag",
+      "tight": true
+    },
+    {
+      "id": "mass.hectogram",
+      "kind": "physical",
+      "dimension": "mass",
+      "convention": "metric",
+      "base": "mass.gram",
+      "factor": "100",
+      "offset": "0",
+      "exact": true,
+      "one": "hg",
+      "many": "hg",
+      "tight": true
+    },
+    {
+      "id": "mass.kilogram",
+      "kind": "physical",
+      "dimension": "mass",
+      "convention": "metric",
+      "base": "mass.gram",
+      "factor": "1000",
+      "offset": "0",
+      "exact": true,
+      "one": "kg",
+      "many": "kg",
+      "tight": true
+    },
+    {
+      "id": "mass.ounce.avoirdupois",
+      "kind": "physical",
+      "dimension": "mass",
+      "convention": "us",
+      "base": "mass.gram",
+      "factor": "45359237/1600000",
+      "offset": "0",
+      "exact": true,
+      "one": "oz",
+      "many": "oz"
+    },
+    {
+      "id": "mass.pound.avoirdupois",
+      "kind": "physical",
+      "dimension": "mass",
+      "convention": "us",
+      "base": "mass.gram",
+      "factor": "45359237/100000",
+      "offset": "0",
+      "exact": true,
+      "one": "lb",
+      "many": "lb"
+    },
+    {
+      "id": "volume.milliliter",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "metric",
+      "base": "volume.milliliter",
+      "factor": "1",
+      "offset": "0",
+      "exact": true,
+      "one": "ml",
+      "many": "ml",
+      "tight": true
+    },
+    {
+      "id": "volume.liter",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "metric",
+      "base": "volume.milliliter",
+      "factor": "1000",
+      "offset": "0",
+      "exact": true,
+      "one": "l",
+      "many": "l",
+      "tight": true
+    },
+    {
+      "id": "volume.deciliter",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "metric",
+      "base": "volume.milliliter",
+      "factor": "100",
+      "offset": "0",
+      "exact": true,
+      "one": "dl",
+      "many": "dl",
+      "tight": true
+    },
+    {
+      "id": "volume.centiliter",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "metric",
+      "base": "volume.milliliter",
+      "factor": "10",
+      "offset": "0",
+      "exact": true,
+      "one": "cl",
+      "many": "cl",
+      "tight": true
+    },
+    {
+      "id": "volume.teaspoon.us.legal",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "us",
+      "base": "volume.milliliter",
+      "factor": "5",
+      "offset": "0",
+      "exact": true,
+      "one": "legal tsp",
+      "many": "legal tsp"
+    },
+    {
+      "id": "volume.teaspoon.metric.culinary",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "metric",
+      "base": "volume.milliliter",
+      "factor": "5",
+      "offset": "0",
+      "exact": true,
+      "one": "tsp",
+      "many": "tsp"
+    },
+    {
+      "id": "volume.tablespoon.us.legal",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "us",
+      "base": "volume.milliliter",
+      "factor": "15",
+      "offset": "0",
+      "exact": true,
+      "one": "legal tbsp",
+      "many": "legal tbsp"
+    },
+    {
+      "id": "volume.tablespoon.metric.culinary",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "metric",
+      "base": "volume.milliliter",
+      "factor": "15",
+      "offset": "0",
+      "exact": true,
+      "one": "tbsp",
+      "many": "tbsp"
+    },
+    {
+      "id": "volume.cup.metric.culinary",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "metric",
+      "base": "volume.milliliter",
+      "factor": "250",
+      "offset": "0",
+      "exact": true,
+      "one": "cup",
+      "many": "cups"
+    },
+    {
+      "id": "volume.cup.us.customary",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "us",
+      "base": "volume.milliliter",
+      "factor": "473176473/2000000",
+      "offset": "0",
+      "exact": true,
+      "one": "cup",
+      "many": "cups"
+    },
+    {
+      "id": "volume.tablespoon.us.customary",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "us",
+      "base": "volume.milliliter",
+      "factor": "473176473/32000000",
+      "offset": "0",
+      "exact": true,
+      "one": "tbsp",
+      "many": "tbsp"
+    },
+    {
+      "id": "volume.teaspoon.us.customary",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "us",
+      "base": "volume.milliliter",
+      "factor": "157725491/32000000",
+      "offset": "0",
+      "exact": true,
+      "one": "tsp",
+      "many": "tsp"
+    },
+    {
+      "id": "volume.cup.us.legal",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "us",
+      "base": "volume.milliliter",
+      "factor": "240",
+      "offset": "0",
+      "exact": true,
+      "one": "cup",
+      "many": "cups"
+    },
+    {
+      "id": "volume.fluidounce.us",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "us",
+      "base": "volume.milliliter",
+      "factor": "473176473/16000000",
+      "offset": "0",
+      "exact": true,
+      "one": "fl oz",
+      "many": "fl oz"
+    },
+    {
+      "id": "volume.pint.us.liquid",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "us",
+      "base": "volume.milliliter",
+      "factor": "473176473/1000000",
+      "offset": "0",
+      "exact": true,
+      "one": "pint",
+      "many": "pints"
+    },
+    {
+      "id": "volume.quart.us.liquid",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "us",
+      "base": "volume.milliliter",
+      "factor": "473176473/500000",
+      "offset": "0",
+      "exact": true,
+      "one": "quart",
+      "many": "quarts"
+    },
+    {
+      "id": "volume.gallon.us.liquid",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "us",
+      "base": "volume.milliliter",
+      "factor": "473176473/125000",
+      "offset": "0",
+      "exact": true,
+      "one": "gallon",
+      "many": "gallons"
+    },
+    {
+      "id": "volume.cup.us.culinary",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "us",
+      "base": "volume.milliliter",
+      "factor": "240",
+      "offset": "0",
+      "exact": false,
+      "one": "cup",
+      "many": "cups"
+    },
+    {
+      "id": "volume.tablespoon.us.culinary",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "us",
+      "base": "volume.milliliter",
+      "factor": "15",
+      "offset": "0",
+      "exact": false,
+      "one": "tbsp",
+      "many": "tbsp"
+    },
+    {
+      "id": "volume.teaspoon.us.culinary",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "us",
+      "base": "volume.milliliter",
+      "factor": "5",
+      "offset": "0",
+      "exact": false,
+      "one": "tsp",
+      "many": "tsp"
+    },
+    {
+      "id": "volume.cup.au",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "au",
+      "base": "volume.milliliter",
+      "factor": "250",
+      "offset": "0",
+      "exact": true,
+      "one": "cup",
+      "many": "cups"
+    },
+    {
+      "id": "volume.tablespoon.au",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "au",
+      "base": "volume.milliliter",
+      "factor": "20",
+      "offset": "0",
+      "exact": true,
+      "one": "tbsp",
+      "many": "tbsp"
+    },
+    {
+      "id": "volume.teaspoon.au",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "au",
+      "base": "volume.milliliter",
+      "factor": "5",
+      "offset": "0",
+      "exact": true,
+      "one": "tsp",
+      "many": "tsp"
+    },
+    {
+      "id": "volume.cup.jp",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "metric",
+      "base": "volume.milliliter",
+      "factor": "200",
+      "offset": "0",
+      "exact": true,
+      "one": "cup",
+      "many": "cups"
+    },
+    {
+      "id": "volume.go.jp",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "metric",
+      "base": "volume.milliliter",
+      "factor": "240100/1331",
+      "offset": "0",
+      "exact": true,
+      "one": "gō",
+      "many": "gō"
+    },
+    {
+      "id": "volume.cup.kr",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "metric",
+      "base": "volume.milliliter",
+      "factor": "200",
+      "offset": "0",
+      "exact": true,
+      "one": "cup",
+      "many": "cups"
+    },
+    {
+      "id": "volume.fluidounce.imperial",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "imperial",
+      "base": "volume.milliliter",
+      "factor": "454609/16000",
+      "offset": "0",
+      "exact": true,
+      "one": "fl oz",
+      "many": "fl oz"
+    },
+    {
+      "id": "volume.pint.imperial",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "imperial",
+      "base": "volume.milliliter",
+      "factor": "454609/800",
+      "offset": "0",
+      "exact": true,
+      "one": "pint",
+      "many": "pints"
+    },
+    {
+      "id": "volume.quart.imperial",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "imperial",
+      "base": "volume.milliliter",
+      "factor": "454609/400",
+      "offset": "0",
+      "exact": true,
+      "one": "quart",
+      "many": "quarts"
+    },
+    {
+      "id": "volume.gallon.imperial",
+      "kind": "physical",
+      "dimension": "volume",
+      "convention": "imperial",
+      "base": "volume.milliliter",
+      "factor": "454609/100",
+      "offset": "0",
+      "exact": true,
+      "one": "gallon",
+      "many": "gallons"
+    },
+    {
+      "id": "length.millimeter",
+      "kind": "physical",
+      "dimension": "length",
+      "convention": "metric",
+      "base": "length.millimeter",
+      "factor": "1",
+      "offset": "0",
+      "exact": true,
+      "one": "mm",
+      "many": "mm",
+      "tight": true
+    },
+    {
+      "id": "length.centimeter",
+      "kind": "physical",
+      "dimension": "length",
+      "convention": "metric",
+      "base": "length.millimeter",
+      "factor": "10",
+      "offset": "0",
+      "exact": true,
+      "one": "cm",
+      "many": "cm",
+      "tight": true
+    },
+    {
+      "id": "length.inch.international",
+      "kind": "physical",
+      "dimension": "length",
+      "convention": "us",
+      "base": "length.millimeter",
+      "factor": "127/5",
+      "offset": "0",
+      "exact": true,
+      "one": "in",
+      "many": "in"
+    },
+    {
+      "id": "temperature.celsius",
+      "kind": "physical",
+      "dimension": "temperature",
+      "convention": "metric",
+      "base": "temperature.celsius",
+      "factor": "1",
+      "offset": "0",
+      "exact": true,
+      "one": "°C",
+      "many": "°C",
+      "tight": true
+    },
+    {
+      "id": "temperature.fahrenheit",
+      "kind": "physical",
+      "dimension": "temperature",
+      "convention": "us",
+      "base": "temperature.celsius",
+      "factor": "5/9",
+      "offset": "-160/9",
+      "exact": true,
+      "one": "°F",
+      "many": "°F",
+      "tight": true
+    },
+    {
+      "id": "count.item",
+      "kind": "count",
+      "exact": false,
+      "one": "",
+      "many": ""
+    },
+    {
+      "id": "count.serving",
+      "kind": "count",
+      "exact": false,
+      "one": "serving",
+      "many": "servings"
+    },
+    {
+      "id": "count.egg",
+      "kind": "count",
+      "exact": false,
+      "one": "egg",
+      "many": "eggs"
+    },
+    {
+      "id": "count.clove",
+      "kind": "count",
+      "exact": false,
+      "one": "clove",
+      "many": "cloves"
+    },
+    {
+      "id": "count.sprig",
+      "kind": "count",
+      "exact": false,
+      "one": "sprig",
+      "many": "sprigs"
+    },
+    {
+      "id": "count.bunch",
+      "kind": "count",
+      "exact": false,
+      "one": "bunch",
+      "many": "bunches"
+    },
+    {
+      "id": "count.pinch",
+      "kind": "count",
+      "exact": false,
+      "one": "pinch",
+      "many": "pinches"
+    },
+    {
+      "id": "count.handful",
+      "kind": "count",
+      "exact": false,
+      "one": "handful",
+      "many": "handfuls"
+    },
+    {
+      "id": "count.piece",
+      "kind": "count",
+      "exact": false,
+      "one": "piece",
+      "many": "pieces"
+    },
+    {
+      "id": "count.slice",
+      "kind": "count",
+      "exact": false,
+      "one": "slice",
+      "many": "slices"
+    },
+    {
+      "id": "count.stick",
+      "kind": "count",
+      "exact": false,
+      "one": "stick",
+      "many": "sticks"
+    },
+    {
+      "id": "count.stalk",
+      "kind": "count",
+      "exact": false,
+      "one": "stalk",
+      "many": "stalks"
+    },
+    {
+      "id": "count.head",
+      "kind": "count",
+      "exact": false,
+      "one": "head",
+      "many": "heads"
+    },
+    {
+      "id": "count.sheet",
+      "kind": "count",
+      "exact": false,
+      "one": "sheet",
+      "many": "sheets"
+    },
+    {
+      "id": "count.leaf",
+      "kind": "count",
+      "exact": false,
+      "one": "leaf",
+      "many": "leaves"
+    },
+    {
+      "id": "count.strip",
+      "kind": "count",
+      "exact": false,
+      "one": "strip",
+      "many": "strips"
+    },
+    {
+      "id": "count.fillet",
+      "kind": "count",
+      "exact": false,
+      "one": "fillet",
+      "many": "fillets"
+    },
+    {
+      "id": "count.cube",
+      "kind": "count",
+      "exact": false,
+      "one": "cube",
+      "many": "cubes"
+    },
+    {
+      "id": "count.knob",
+      "kind": "count",
+      "exact": false,
+      "one": "knob",
+      "many": "knobs"
+    },
+    {
+      "id": "count.ear",
+      "kind": "count",
+      "exact": false,
+      "one": "ear",
+      "many": "ears"
+    },
+    {
+      "id": "count.loaf",
+      "kind": "count",
+      "exact": false,
+      "one": "loaf",
+      "many": "loaves"
+    },
+    {
+      "id": "count.dash",
+      "kind": "count",
+      "exact": false,
+      "one": "dash",
+      "many": "dashes"
+    },
+    {
+      "id": "count.drop",
+      "kind": "count",
+      "exact": false,
+      "one": "drop",
+      "many": "drops"
+    },
+    {
+      "id": "count.splash",
+      "kind": "count",
+      "exact": false,
+      "one": "splash",
+      "many": "splashes"
+    },
+    {
+      "id": "count.square",
+      "kind": "count",
+      "exact": false,
+      "one": "square",
+      "many": "squares"
+    },
+    {
+      "id": "count.wheel",
+      "kind": "count",
+      "exact": false,
+      "one": "wheel",
+      "many": "wheels"
+    },
+    {
+      "id": "count.rack",
+      "kind": "count",
+      "exact": false,
+      "one": "rack",
+      "many": "racks"
+    },
+    {
+      "id": "container.can",
+      "kind": "container",
+      "exact": false,
+      "one": "can",
+      "many": "cans"
+    },
+    {
+      "id": "container.tin",
+      "kind": "container",
+      "exact": false,
+      "one": "tin",
+      "many": "tins"
+    },
+    {
+      "id": "container.packet",
+      "kind": "container",
+      "exact": false,
+      "one": "packet",
+      "many": "packets"
+    },
+    {
+      "id": "container.jar",
+      "kind": "container",
+      "exact": false,
+      "one": "jar",
+      "many": "jars"
+    },
+    {
+      "id": "container.bottle",
+      "kind": "container",
+      "exact": false,
+      "one": "bottle",
+      "many": "bottles"
+    },
+    {
+      "id": "container.bag",
+      "kind": "container",
+      "exact": false,
+      "one": "bag",
+      "many": "bags"
+    },
+    {
+      "id": "container.box",
+      "kind": "container",
+      "exact": false,
+      "one": "box",
+      "many": "boxes"
+    },
+    {
+      "id": "container.carton",
+      "kind": "container",
+      "exact": false,
+      "one": "carton",
+      "many": "cartons"
+    },
+    {
+      "id": "container.tub",
+      "kind": "container",
+      "exact": false,
+      "one": "tub",
+      "many": "tubs"
+    },
+    {
+      "id": "container.envelope",
+      "kind": "container",
+      "exact": false,
+      "one": "envelope",
+      "many": "envelopes"
+    },
+    {
+      "id": "container.pot",
+      "kind": "container",
+      "exact": false,
+      "one": "pot",
+      "many": "pots"
+    },
+    {
+      "id": "container.punnet",
+      "kind": "container",
+      "exact": false,
+      "one": "punnet",
+      "many": "punnets"
+    }
+  ],
+  "ladders": {
+    "au": {
+      "length": [
+        {
+          "unit": "length.millimeter",
+          "ceiling": "10",
+          "step": "1"
+        },
+        {
+          "unit": "length.centimeter",
+          "step": "1/2"
+        }
+      ],
+      "mass": [
+        {
+          "unit": "mass.gram",
+          "ceiling": "20",
+          "step": "1"
+        },
+        {
+          "unit": "mass.gram",
+          "ceiling": "100",
+          "step": "5"
+        },
+        {
+          "unit": "mass.gram",
+          "ceiling": "1000",
+          "step": "10"
+        },
+        {
+          "unit": "mass.kilogram",
+          "step": "1/10"
+        }
+      ],
+      "temperature": [
+        {
+          "unit": "temperature.celsius",
+          "step": "5"
+        }
+      ],
+      "volume": [
+        {
+          "unit": "volume.teaspoon.au",
+          "ceiling": "4",
+          "step": "1/4"
+        },
+        {
+          "unit": "volume.tablespoon.au",
+          "ceiling": "4",
+          "step": "1/2"
+        },
+        {
+          "unit": "volume.cup.au",
+          "step": "1/8"
+        }
+      ]
+    },
+    "metric": {
+      "length": [
+        {
+          "unit": "length.millimeter",
+          "ceiling": "10",
+          "step": "1"
+        },
+        {
+          "unit": "length.centimeter",
+          "step": "1/2"
+        }
+      ],
+      "mass": [
+        {
+          "unit": "mass.gram",
+          "ceiling": "20",
+          "step": "1"
+        },
+        {
+          "unit": "mass.gram",
+          "ceiling": "100",
+          "step": "5"
+        },
+        {
+          "unit": "mass.gram",
+          "ceiling": "1000",
+          "step": "10"
+        },
+        {
+          "unit": "mass.kilogram",
+          "step": "1/10"
+        }
+      ],
+      "temperature": [
+        {
+          "unit": "temperature.celsius",
+          "step": "5"
+        }
+      ],
+      "volume": [
+        {
+          "unit": "volume.milliliter",
+          "ceiling": "20",
+          "step": "1"
+        },
+        {
+          "unit": "volume.milliliter",
+          "ceiling": "100",
+          "step": "5"
+        },
+        {
+          "unit": "volume.milliliter",
+          "ceiling": "1000",
+          "step": "10"
+        },
+        {
+          "unit": "volume.liter",
+          "step": "1/10"
+        }
+      ]
+    },
+    "us": {
+      "length": [
+        {
+          "unit": "length.inch.international",
+          "step": "1/4"
+        }
+      ],
+      "mass": [
+        {
+          "unit": "mass.ounce.avoirdupois",
+          "ceiling": "32",
+          "step": "1/4"
+        },
+        {
+          "unit": "mass.pound.avoirdupois",
+          "step": "1/8"
+        }
+      ],
+      "temperature": [
+        {
+          "unit": "temperature.fahrenheit",
+          "step": "5"
+        }
+      ],
+      "volume": [
+        {
+          "unit": "volume.teaspoon.us.customary",
+          "ceiling": "4",
+          "step": "1/4"
+        },
+        {
+          "unit": "volume.tablespoon.us.customary",
+          "ceiling": "4",
+          "step": "1/2"
+        },
+        {
+          "unit": "volume.cup.us.customary",
+          "step": "1/8"
+        }
+      ]
+    }
+  },
+  "volume_presentation": {
+    "fractions": [
+      [
+        "1",
+        "1/2",
+        "1/3",
+        "1/4",
+        "1/8"
+      ],
+      [
+        "1",
+        "1/2"
+      ],
+      [
+        "1",
+        "1/2",
+        "1/3",
+        "1/4"
+      ]
+    ],
+    "compound_fractions": [
+      [
+        "1"
+      ],
+      [
+        "1"
+      ],
+      [
+        "1",
+        "1/2",
+        "1/3",
+        "1/4"
+      ]
+    ],
+    "remainder_steps": [
+      "1/4",
+      "1"
+    ],
+    "max_remainder": "4",
+    "max_relative_error": "1/12",
+    "max_teaspoon_error": "1/2",
+    "relative_error_weight": "30",
+    "minimum_simplicity_gain": "1/4"
+  },
+  "choices": {
+    "au": {
+      "volume": [
+        "volume.teaspoon.au",
+        "volume.tablespoon.au",
+        "volume.cup.au",
+        "volume.milliliter",
+        "volume.liter"
+      ],
+      "mass": [
+        "mass.gram",
+        "mass.kilogram",
+        "mass.ounce.avoirdupois",
+        "mass.pound.avoirdupois"
+      ],
+      "counts": [
+        "count.item",
+        "count.egg",
+        "count.clove",
+        "count.sprig",
+        "count.bunch",
+        "count.pinch",
+        "count.handful",
+        "count.piece",
+        "count.slice",
+        "count.stick",
+        "count.stalk",
+        "count.head",
+        "count.sheet",
+        "count.leaf",
+        "count.strip",
+        "count.fillet",
+        "count.cube",
+        "count.knob",
+        "count.ear",
+        "count.loaf",
+        "count.dash",
+        "count.drop",
+        "count.splash",
+        "count.square",
+        "count.wheel",
+        "count.rack",
+        "container.can",
+        "container.tin",
+        "container.packet",
+        "container.jar",
+        "container.bottle",
+        "container.bag",
+        "container.box",
+        "container.carton",
+        "container.tub",
+        "container.envelope",
+        "container.pot",
+        "container.punnet"
+      ]
+    },
+    "metric": {
+      "volume": [
+        "volume.teaspoon.metric.culinary",
+        "volume.tablespoon.metric.culinary",
+        "volume.cup.metric.culinary",
+        "volume.milliliter",
+        "volume.liter"
+      ],
+      "mass": [
+        "mass.gram",
+        "mass.kilogram",
+        "mass.ounce.avoirdupois",
+        "mass.pound.avoirdupois"
+      ],
+      "counts": [
+        "count.item",
+        "count.egg",
+        "count.clove",
+        "count.sprig",
+        "count.bunch",
+        "count.pinch",
+        "count.handful",
+        "count.piece",
+        "count.slice",
+        "count.stick",
+        "count.stalk",
+        "count.head",
+        "count.sheet",
+        "count.leaf",
+        "count.strip",
+        "count.fillet",
+        "count.cube",
+        "count.knob",
+        "count.ear",
+        "count.loaf",
+        "count.dash",
+        "count.drop",
+        "count.splash",
+        "count.square",
+        "count.wheel",
+        "count.rack",
+        "container.can",
+        "container.tin",
+        "container.packet",
+        "container.jar",
+        "container.bottle",
+        "container.bag",
+        "container.box",
+        "container.carton",
+        "container.tub",
+        "container.envelope",
+        "container.pot",
+        "container.punnet"
+      ]
+    },
+    "us": {
+      "volume": [
+        "volume.teaspoon.us.customary",
+        "volume.tablespoon.us.customary",
+        "volume.cup.us.customary",
+        "volume.milliliter",
+        "volume.liter"
+      ],
+      "mass": [
+        "mass.ounce.avoirdupois",
+        "mass.pound.avoirdupois",
+        "mass.gram",
+        "mass.kilogram"
+      ],
+      "counts": [
+        "count.item",
+        "count.egg",
+        "count.clove",
+        "count.sprig",
+        "count.bunch",
+        "count.pinch",
+        "count.handful",
+        "count.piece",
+        "count.slice",
+        "count.stick",
+        "count.stalk",
+        "count.head",
+        "count.sheet",
+        "count.leaf",
+        "count.strip",
+        "count.fillet",
+        "count.cube",
+        "count.knob",
+        "count.ear",
+        "count.loaf",
+        "count.dash",
+        "count.drop",
+        "count.splash",
+        "count.square",
+        "count.wheel",
+        "count.rack",
+        "container.can",
+        "container.tin",
+        "container.packet",
+        "container.jar",
+        "container.bottle",
+        "container.bag",
+        "container.box",
+        "container.carton",
+        "container.tub",
+        "container.envelope",
+        "container.pot",
+        "container.punnet"
+      ]
+    }
+  }
+}

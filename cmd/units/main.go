@@ -50,7 +50,19 @@ func run(arguments []string) error {
 		return err
 	}
 
-	return writeLocalizedLabels(filepath.Dir(*output), *check)
+	if err := writeLocalizedLabels(filepath.Dir(*output), *check); err != nil {
+		return err
+	}
+
+	if err := writeNativeCatalog(units.DefaultCatalog().Entries(), *check); err != nil {
+		return err
+	}
+
+	if err := writeLabelCatalog(units.DefaultCatalog().Entries(), *check); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func writeLocalizedLabels(directory string, check bool) error {
@@ -176,6 +188,7 @@ func render(entries []units.Entry) []byte {
 	out.WriteString("]\n\n")
 	renderLabels(&out, entries)
 	renderLadders(&out)
+	renderChoices(&out)
 	renderVolumePresentation(&out)
 
 	return []byte(out.String())
@@ -277,6 +290,7 @@ func renderVolumePresentation(out *strings.Builder) {
 	out.WriteString("  fractions: readonly (readonly string[])[]\n")
 	out.WriteString("  compoundFractions: readonly (readonly string[])[]\n")
 	out.WriteString("  remainderSteps: readonly string[]\n")
+	out.WriteString("  maxRemainder: string\n")
 	out.WriteString("  maxRelativeError: string\n")
 	out.WriteString("  maxTeaspoonError: string\n")
 	out.WriteString("  relativeErrorWeight: string\n")
@@ -296,6 +310,7 @@ func renderVolumePresentation(out *strings.Builder) {
 	}
 
 	out.WriteString("],\n")
+	out.WriteString("  maxRemainder: " + quote(policy.MaxRemainder) + ",\n")
 	out.WriteString("  maxRelativeError: " + quote(policy.MaxRelativeError) + ",\n")
 	out.WriteString("  maxTeaspoonError: " + quote(policy.MaxTeaspoonError) + ",\n")
 	out.WriteString("  relativeErrorWeight: " + quote(policy.RelativeErrorWeight) + ",\n")
@@ -344,4 +359,32 @@ func quote(value string) string {
 	}
 
 	return "'" + value + "'"
+}
+
+func renderChoices(out *strings.Builder) {
+	catalog := units.DefaultCatalog()
+
+	out.WriteString("\nexport interface UnitChoices {\n  volume: readonly UnitId[]\n  mass: readonly UnitId[]\n  counts: readonly UnitId[]\n}\n\n")
+	out.WriteString("export const unitChoices: Readonly<Record<'metric' | 'us' | 'au', UnitChoices>> = {\n")
+
+	for _, system := range []units.MeasurementSystem{units.MeasureMetric, units.MeasureUS, units.MeasureAU} {
+		choices, _ := catalog.ChoicesFor(system)
+		out.WriteString("  " + string(system) + ": {\n")
+
+		for _, group := range []struct {
+			name string
+			ids  []string
+		}{{"volume", choices.Volume}, {"mass", choices.Mass}, {"counts", choices.Counts}} {
+			quoted := make([]string, len(group.ids))
+			for index, id := range group.ids {
+				quoted[index] = quote(id)
+			}
+
+			out.WriteString("    " + group.name + ": [" + strings.Join(quoted, ", ") + "],\n")
+		}
+
+		out.WriteString("  },\n")
+	}
+
+	out.WriteString("}\n")
 }

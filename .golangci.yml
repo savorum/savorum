@@ -117,13 +117,15 @@ linters:
 
     tagliatelle:
       case:
-        # ETag is spelled by RFC 9110 and SHA256 by the digest algorithm, not by
-        # the linter's header-case rule; ExportedBy is CookbookManager's own
-        # export key, which this importer reads rather than defines.
+        # External formats require these field spellings.
         ignored-fields:
           - ETag
           - SHA256
           - ExportedBy
+          - StringUnit
+          - ArgNum
+          - FormatSpecifier
+          - ExtractionState
         rules:
           json: snake
           yaml: snake

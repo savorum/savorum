@@ -55,12 +55,15 @@ names, quantities, titles, prose, and notes stay as the author wrote them.
   as defaults. The browser's locale or time zone never overrides an account
   choice. Date-only values keep their calendar day in every time zone.
 - `internal/units` is the only unit catalog: unit identity, conversion factors,
-  rounding, and labels. Don't add a second one in print messages or frontend
-  code. Run `go run ./cmd/units` to generate unit forms and spacing, and check
-  that screen and print use the same data.
+  rounding, labels, and the units an editor offers for each measuring style.
+  Don't add a second one in print messages or frontend code. Run
+  `go run ./cmd/units` to generate the web registry, the native client's
+  `catalog.generated.json`, and `UnitLabels.xcstrings`, a String Catalog of the
+  localized labels that lets the native client pick each language's plural
+  form.
 - `internal/recipetext/vocabulary.json` holds the section headings, timing
-  phrases, and yield and time labels plain-text import recognizes. It isn't
-  interface translation and doesn't translate recipes.
+  phrases, yield and time labels, and note and step references that recipe
+  wording uses. It isn't interface translation and doesn't translate recipes.
 
 ## Direction
 
