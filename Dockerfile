@@ -15,6 +15,7 @@ COPY scripts/bootstrap-pnpm.sh /opt/bootstrap-pnpm.sh
 RUN sh /opt/bootstrap-pnpm.sh
 COPY api/openapi.json api/
 COPY internal/recipetext/vocabulary.json internal/recipetext/vocabulary.json
+COPY internal/wording/ internal/wording/
 COPY web/ web/
 RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
     pnpm --dir web install --frozen-lockfile && pnpm --dir web run build
