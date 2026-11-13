@@ -1,6 +1,7 @@
 package webrecipe
 
 import (
+	"cmp"
 	"maps"
 	"strings"
 	"time"
@@ -16,18 +17,13 @@ func (d *document) semanticMetadata(title string) *Recipe {
 
 	result, _ := d.normalize(candidate{node: metadata})
 
-	result.Language = firstString(metadata["inLanguage"])
-	if result.Language == "" {
-		result.Language = d.pageLanguage()
-	}
-
 	result.MetadataSource = "page"
 	if len(metadata) > 1 {
 		result.MetadataSource = "article-json-ld"
 	}
 
 	if result.Name == "" {
-		result.Name = "Untitled recipe"
+		result.Name = cmp.Or(collapseSpace(d.pageHeading()), "Untitled recipe")
 	}
 
 	if result.Description == "" {

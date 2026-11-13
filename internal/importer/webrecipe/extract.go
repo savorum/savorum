@@ -1,6 +1,10 @@
 package webrecipe
 
-import "context"
+import (
+	"context"
+	"errors"
+	"strings"
+)
 
 const maximumConcurrentExtractions = 2
 
@@ -43,11 +47,11 @@ func ExtractContext(ctx context.Context, page *Page) (*Recipe, error) {
 	usedMicrodata := false
 
 	if len(found) == 0 {
-		if node, ok, err := parsed.microdataRecipe(); err != nil {
+		var err error
+
+		found, usedMicrodata, err = parsed.markupRecipe()
+		if err != nil {
 			return nil, err
-		} else if ok {
-			found = []candidate{{node: node}}
-			usedMicrodata = true
 		}
 	}
 
@@ -93,6 +97,10 @@ func ExtractContext(ctx context.Context, page *Page) (*Recipe, error) {
 
 	enrich(parsed, result)
 
+	if err := parsed.completeFromArticle(result); err != nil {
+		return nil, err
+	}
+
 	if len(result.Images) == 0 {
 		result.Images = parsed.pageImages()
 	}
@@ -107,6 +115,89 @@ func ExtractContext(ctx context.Context, page *Page) (*Recipe, error) {
 	}
 
 	return result, nil
+}
+
+func (d *document) completeFromArticle(result *Recipe) error {
+	if result.ReviewText != "" || result.ExtractionMethod == "semantic-html" || result.ingredientCount() > 0 && result.stepCount() > 0 {
+		return nil
+	}
+
+	article, err := d.semanticRecipe()
+	if errors.Is(err, context.Canceled) || errors.Is(err, context.DeadlineExceeded) {
+		return err
+	}
+
+	if err == nil && article != nil && article.ReviewText == "" && sameTitle(result.Name, article.Name) {
+		result.withArticle(article)
+	} else if result.ingredientCount() > 0 && result.stepCount() == 0 {
+		if sections := d.semanticMethod(); len(sections) > 0 {
+			result.Sections = sections
+			result.warn("instructions-enriched", "Instructions were read from the page's article.")
+		}
+	}
+
+	return nil
+}
+
+func (r *Recipe) withArticle(article *Recipe) {
+	switch {
+	case r.ingredientCount() == 0 && r.stepCount() == 0:
+		r.IngredientGroups, r.Sections, r.ExtractionMethod = article.IngredientGroups, article.Sections, article.ExtractionMethod
+		r.Warnings = append(r.Warnings, article.Warnings...)
+	case r.stepCount() == 0:
+		r.Sections = article.Sections
+		r.warn("instructions-enriched", "Instructions were read from the page's article.")
+	default:
+		r.IngredientGroups = article.IngredientGroups
+		r.warn("ingredients-enriched", "Ingredients were read from the page's article.")
+	}
+
+	if len(r.Images) == 0 {
+		r.Images, r.ImageProvenance = article.Images, article.ImageProvenance
+	}
+}
+
+func (d *document) markupRecipe() ([]candidate, bool, error) {
+	node, ok, err := d.microdataRecipe()
+
+	switch {
+	case err != nil:
+		return nil, false, err
+	case ok:
+		return []candidate{{node: node}}, true, nil
+	}
+
+	if node, ok := d.hRecipe(); ok {
+		return []candidate{{node: node}}, false, nil
+	}
+
+	return nil, false, nil
+}
+
+func sameTitle(first, second string) bool {
+	first, second = strings.ToLower(collapseSpace(first)), strings.ToLower(collapseSpace(second))
+	if first == "" || second == "" {
+		return false
+	}
+
+	if strings.Contains(first, second) || strings.Contains(second, first) {
+		return true
+	}
+
+	if strings.Contains(first, " ") && strings.Contains(second, " ") {
+		return sharedStem(strings.Fields(first), strings.Fields(second), 2)
+	}
+
+	return sharedStem([]rune(first), []rune(second), 4)
+}
+
+func sharedStem[T comparable](a, b []T, minimum int) bool {
+	shared := 0
+	for shared < len(a) && shared < len(b) && a[shared] == b[shared] {
+		shared++
+	}
+
+	return shared >= minimum && shared*5 >= min(len(a), len(b))*3
 }
 
 // FetchAndExtract is the URL entry point: the safe fetch and the extraction,
@@ -124,5 +215,8 @@ func FetchAndExtract(ctx context.Context, rawURL string) (*Recipe, error) {
 // Load prepares a page that did not come from a fetch, so an uploaded file
 // goes through exactly the same pipeline as a URL.
 func Load(data []byte, contentType, documentURL string) *Page {
-	return &Page{URL: documentURL, ContentType: contentType, Body: data}
+	return &Page{
+		URL: documentURL, Body: data, declaredContentType: contentType,
+		ContentType: strings.ToLower(strings.TrimSpace(strings.Split(contentType, ";")[0])),
+	}
 }

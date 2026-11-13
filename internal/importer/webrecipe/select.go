@@ -22,7 +22,7 @@ type candidate struct {
 func (d *document) candidates() []candidate {
 	var found []candidate
 
-	seen := map[string]bool{}
+	seen := map[string]int{}
 
 	for _, item := range d.blocks {
 		if item.broken {
@@ -33,19 +33,27 @@ func (d *document) candidates() []candidate {
 			if !hasType(object["@type"], "Recipe") {
 				return
 			}
-			// The same node reached twice, through @graph and again through a
-			// reference, is one candidate rather than two.
+			// Deduplicate references and rating stubs, keeping the record with the most content.
+			mainEntity := isMainEntity(parentKey, parentTypes)
+
 			key := identityKey(object)
-			if key != "" && seen[key] {
+			if index, known := seen[key]; key != "" && known {
+				kept := &found[index]
+				if recipeContent(object) > recipeContent(kept.node) {
+					kept.node = object
+				}
+
+				kept.mainEntity = kept.mainEntity || mainEntity
+
 				return
 			}
 
-			seen[key] = true
+			seen[key] = len(found)
 
 			found = append(found, candidate{
 				node:       object,
 				position:   len(found),
-				mainEntity: isMainEntity(parentKey, parentTypes),
+				mainEntity: mainEntity,
 			})
 		})
 	}
@@ -149,7 +157,7 @@ func scoreCandidate(item *candidate, pageURL, canonical, heading string) {
 
 	// Content is worth less than provenance. A complete related recipe is
 	// still the wrong recipe when the page says which one it is about.
-	if countMembers(item.node["recipeIngredient"]) > 0 {
+	if countMembers(recipeIngredients(item.node)) > 0 {
 		item.score += 20
 	}
 
@@ -188,9 +196,21 @@ func (d *document) warnAboutRunnerUp(winner, runnerUp candidate) {
 	d.warn("multiple-recipes", "This page carries more than one recipe. Savorum imported “"+name+"” because "+winner.reason+".")
 }
 
+func recipeIngredients(node map[string]any) any {
+	if value := node["recipeIngredient"]; countMembers(value) > 0 {
+		return value
+	}
+
+	return node["ingredients"]
+}
+
+func recipeContent(node map[string]any) int {
+	return countMembers(recipeIngredients(node)) + countMembers(node["recipeInstructions"])
+}
+
 func usableNode(node map[string]any) bool {
 	return firstString(node["name"]) != "" &&
-		(countMembers(node["recipeIngredient"]) > 0 || countMembers(node["recipeInstructions"]) > 0)
+		(countMembers(recipeIngredients(node)) > 0 || countMembers(node["recipeInstructions"]) > 0)
 }
 
 func countMembers(value any) int {

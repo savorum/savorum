@@ -1,11 +1,14 @@
 package webrecipe
 
 import (
+	"fmt"
 	"net/url"
 	"regexp"
 	"sort"
 	"strconv"
 	"strings"
+
+	"golang.org/x/text/language"
 )
 
 // normalize turns one selected Recipe node into the intermediate model,
@@ -62,8 +65,8 @@ func (d *document) normalize(chosen candidate) (*Recipe, error) {
 		Cook:  firstString(node["cookTime"]),
 		Total: firstString(node["totalTime"]),
 	}
-	result.Images = normalizeImages(d.resolveAll(node["image"]))
-	result.IngredientGroups = normalizeIngredients(node["recipeIngredient"], result)
+	result.Images = normalizeImages(d.resolveAll(node["image"]), d.page.URL)
+	result.IngredientGroups = normalizeIngredients(recipeIngredients(node), result)
 	result.Sections = d.normalizeInstructions(node["recipeInstructions"], result)
 	result.Equipment = mergeEquipment(result.Equipment, toolsInSections(result.Sections))
 
@@ -76,37 +79,58 @@ func (d *document) normalize(chosen candidate) (*Recipe, error) {
 	return result, nil
 }
 
-// recipeLanguage reports what language the recipe is written in, falling back
-// to what the page declares about itself when the recipe node says nothing.
 func (d *document) recipeLanguage(node map[string]any) string {
-	if language := strings.TrimSpace(firstString(node["inLanguage"])); language != "" {
-		return language
+	invalid := map[string]bool{}
+	valid := func(value string) bool {
+		if value == "" {
+			return false
+		}
+
+		if _, err := language.Parse(value); err != nil {
+			if invalid[value] {
+				return false
+			}
+
+			invalid[value] = true
+			d.warnings = append(d.warnings, Warning{
+				Code:    "invalid-language-tag",
+				Message: fmt.Sprintf("The page states an invalid language tag %q; review the recipe language.", value),
+			})
+
+			return false
+		}
+
+		return true
+	}
+
+	if stated := strings.TrimSpace(firstString(node["inLanguage"])); valid(stated) {
+		return stated
 	}
 
 	for _, block := range d.blocks {
-		if language := languageInGraph(block.value); language != "" {
-			return language
+		if stated := languageInGraph(block.value, valid); stated != "" {
+			return stated
 		}
 	}
 
-	return strings.TrimSpace(d.pageLanguage())
+	if stated := strings.TrimSpace(d.pageLanguage()); valid(stated) {
+		return stated
+	}
+
+	return ""
 }
 
-// languageInGraph finds the first inLanguage a structured-data block states.
-// A page whose Recipe omits it almost always states it on the WebPage or
-// Article node beside it. Only the graph itself is walked, in the order the
-// page wrote it, so which node answers never depends on map iteration.
-func languageInGraph(value any) string {
+func languageInGraph(value any, valid func(string) bool) string {
 	switch typed := value.(type) {
 	case map[string]any:
-		if language := strings.TrimSpace(firstString(typed["inLanguage"])); language != "" {
+		if language := strings.TrimSpace(firstString(typed["inLanguage"])); valid(language) {
 			return language
 		}
 
-		return languageInGraph(typed["@graph"])
+		return languageInGraph(typed["@graph"], valid)
 	case []any:
 		for _, member := range typed {
-			if language := languageInGraph(member); language != "" {
+			if language := languageInGraph(member, valid); language != "" {
 				return language
 			}
 		}
@@ -297,15 +321,17 @@ func normalizeYield(value any) Yield {
 	return Yield{Text: collapseSpace(firstString(value))}
 }
 
-// normalizeImages accepts a string, an ImageObject, or an array of either, and
-// keeps every usable address in the order given.
-func normalizeImages(value any) []string {
+func normalizeImages(value any, base string) []string {
 	var result []string
 
 	seen := map[string]bool{}
 	add := func(address string) {
-		address = strings.TrimSpace(address)
-		if looksLikeAddress(address) && !seen[address] {
+		if !looksLikeAddress(address) {
+			return
+		}
+
+		address = pageImageURL(address, base)
+		if address != "" && !seen[address] {
 			seen[address] = true
 			result = append(result, address)
 		}
@@ -558,7 +584,7 @@ func (d *document) normalizeStep(node map[string]any, into *Recipe) (Step, bool)
 
 	step.Supply = trimmedList(flatStrings(d.resolveAll(node["supply"])))
 	step.Tools = trimmedList(flatStrings(d.resolveAll(node["tool"])))
-	step.Images = normalizeImages(d.resolveAll(node["image"]))
+	step.Images = normalizeImages(d.resolveAll(node["image"]), d.page.URL)
 
 	if step.Text != "" && numberingOnly.MatchString(step.Name) {
 		step.Name = ""

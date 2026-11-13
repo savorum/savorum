@@ -258,8 +258,8 @@ func (p *Post) readObject(object map[string]any, address string, pageAuthors []s
 	}
 
 	for _, key := range []string{"image", "thumbnailUrl"} {
-		for _, address := range normalizeImages(object[key]) {
-			p.addImage(address)
+		for _, image := range normalizeImages(object[key], address) {
+			p.addImage(image)
 		}
 	}
 

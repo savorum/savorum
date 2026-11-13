@@ -286,3 +286,16 @@ func TestPlainTextReadsUTF16WithByteOrderMark(t *testing.T) {
 		}
 	}
 }
+
+func TestASavedPageIsNotReadAsPlainText(t *testing.T) {
+	page := []byte("<!DOCTYPE html><html><body><nav><p>Ingredients</p></nav><p>News about vegetables.</p></body></html>")
+
+	format, _, err := importer.DefaultRegistry().Probe(context.Background(), importer.Input{Name: "page.html", Data: page})
+	if err != nil || format.ID != "web-recipe" {
+		t.Fatalf("detected %q, %v", format.ID, err)
+	}
+
+	if batch, err := importer.DefaultRegistry().Import(context.Background(), importer.Input{Name: "page.html", Data: page}, importer.Options{}); err == nil {
+		t.Fatalf("imported %d recipes from a page without one", len(batch.Recipes))
+	}
+}

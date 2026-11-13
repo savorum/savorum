@@ -7,8 +7,11 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"maps"
 	"strconv"
 	"strings"
+	"unicode"
+	"unicode/utf8"
 
 	"github.com/savorum/savorum/internal/importer/webrecipe/boundedhtml"
 	"golang.org/x/net/html"
@@ -115,17 +118,18 @@ func parse(ctx context.Context, page *Page) (*document, error) {
 		return result, nil
 	}
 
-	root, err := parseHTML(ctx, page.Body, boundedhtml.ObserveRawText(result.retainScript))
+	body, err := htmlBody(ctx, page)
 	if err != nil {
-		if ctx.Err() != nil {
-			return nil, ctx.Err()
-		}
+		return nil, controlledExtractionError(err)
+	}
 
-		if errors.Is(err, boundedhtml.ErrLimit) || errors.Is(err, errExtractionLimited) {
-			return nil, controlledExtractionError(err)
-		}
+	root, err := result.htmlTree(ctx, body)
+	if err != nil {
+		return nil, err
+	}
 
-		return nil, failuref(MalformedStructuredData, err, "that page could not be read as HTML")
+	if root == nil {
+		return result, nil
 	}
 
 	if err := validateDOM(ctx, budget, root); err != nil {
@@ -138,30 +142,60 @@ func parse(ctx context.Context, page *Page) (*document, error) {
 			continue
 		}
 
-		index := len(result.blocks)
-
-		values, broken, err := parseJSONValues(ctx, budget, scriptData(script))
-		if err != nil {
+		if err := result.readStructuredBlock(scriptData(script)); err != nil {
 			return nil, controlledExtractionError(err)
-		}
-
-		if len(values) == 0 {
-			if broken {
-				result.blocks = append(result.blocks, block{index: index, broken: true})
-				result.warn("structured-data-unreadable", "Part of this page's recipe information was damaged and could not be read. The rest came through.")
-			}
-
-			continue
-		}
-
-		for _, value := range values {
-			result.blocks = append(result.blocks, block{index: index, value: value})
 		}
 	}
 
 	result.index()
 
 	return result, nil
+}
+
+func (d *document) readStructuredBlock(text string) error {
+	index := len(d.blocks)
+
+	values, broken, err := parseJSONValues(d.budget.ctx, d.budget, text)
+	if err != nil {
+		return err
+	}
+
+	if len(values) == 0 && broken {
+		d.blocks = append(d.blocks, block{index: index, broken: true})
+		d.warn("structured-data-unreadable", "Part of this page's recipe information was damaged and could not be read. The rest came through.")
+	}
+
+	for _, value := range values {
+		d.blocks = append(d.blocks, block{index: index, value: value})
+	}
+
+	return nil
+}
+
+func (d *document) htmlTree(ctx context.Context, body []byte) (*html.Node, error) {
+	root, err := parseHTML(ctx, body, boundedhtml.ObserveRawText(d.retainScript))
+	if err != nil {
+		if errors.Is(err, boundedhtml.ErrAttributeLimit) {
+			d.scripts = nil
+			if recovered, recoveryErr := d.structuredHTML(body); recoveryErr != nil {
+				return nil, controlledExtractionError(recoveryErr)
+			} else if recovered {
+				return nil, nil
+			}
+		}
+
+		if ctx.Err() != nil {
+			return nil, ctx.Err()
+		}
+
+		if errors.Is(err, boundedhtml.ErrLimit) || errors.Is(err, errExtractionLimited) {
+			return nil, controlledExtractionError(err)
+		}
+
+		return nil, failuref(MalformedStructuredData, err, "that page could not be read as HTML")
+	}
+
+	return root, nil
 }
 
 func (d *document) check() error {
@@ -316,7 +350,21 @@ func parseJSONValues(ctx context.Context, budget *workBudget, text string) (valu
 		return []any{single}, false, nil
 	}
 
+	trimmed, err = escapeJSONWhitespace(ctx, budget, trimmed)
+	if err != nil {
+		return nil, true, err
+	}
+
+	if err := decodeJSON(ctx, trimmed, &single); err == nil {
+		return []any{single}, false, nil
+	}
+
 	for _, candidate := range spans {
+		candidate, err = escapeJSONWhitespace(ctx, budget, candidate)
+		if err != nil {
+			return nil, true, err
+		}
+
 		var value any
 		if err := decodeJSON(ctx, candidate, &value); err == nil {
 			values = append(values, value)
@@ -324,6 +372,45 @@ func parseJSONValues(ctx context.Context, budget *workBudget, text string) (valu
 	}
 
 	return values, len(values) == 0, nil
+}
+
+// JSON-LD sometimes writes literal line breaks inside string values.
+func escapeJSONWhitespace(ctx context.Context, budget *workBudget, text string) (string, error) {
+	var escapedText strings.Builder
+
+	inString, escaped := false, false
+
+	for index := range len(text) {
+		if err := budget.spend(1); err != nil {
+			return "", err
+		}
+
+		if err := checkJSONScanContext(ctx, index); err != nil {
+			return "", err
+		}
+
+		current := text[index]
+		switch {
+		case escaped:
+			escaped = false
+		case inString && current == '\\':
+			escaped = true
+		case current == '"':
+			inString = !inString
+		case inString && (current == '\n' || current == '\r' || current == '\t'):
+			escapedText.WriteByte('\\')
+
+			current = map[byte]byte{'\n': 'n', '\r': 'r', '\t': 't'}[current]
+		}
+
+		escapedText.WriteByte(current)
+
+		if escapedText.Len() > maximumStructuredBytes {
+			return "", errExtractionLimited
+		}
+	}
+
+	return escapedText.String(), nil
 }
 
 func decodeJSON(ctx context.Context, text string, target any) error {
@@ -463,6 +550,7 @@ func walkObjects(value any, visit func(object map[string]any, parentKey string, 
 				descend(item, parentKey, parentTypes)
 			}
 		case map[string]any:
+			lowerPropertyNames(typed)
 			visit(typed, parentKey, parentTypes)
 
 			types := typeNames(typed["@type"])
@@ -476,6 +564,29 @@ func walkObjects(value any, visit func(object map[string]any, parentKey string, 
 		}
 	}
 	descend(value, "", nil)
+}
+
+// Accept capitalized Schema.org property names without replacing canonical spellings.
+func lowerPropertyNames(object map[string]any) {
+	var renamed map[string]any
+
+	for key, value := range object {
+		first, size := utf8.DecodeRuneInString(key)
+		if !unicode.IsUpper(first) {
+			continue
+		}
+
+		lowered := string(unicode.ToLower(first)) + key[size:]
+		if _, exists := object[lowered]; !exists {
+			if renamed == nil {
+				renamed = map[string]any{}
+			}
+
+			renamed[lowered] = value
+		}
+	}
+
+	maps.Copy(object, renamed)
 }
 
 // typeNames reads @type in every shape it appears in: a string, an array of

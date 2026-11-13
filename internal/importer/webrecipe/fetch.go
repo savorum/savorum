@@ -1,6 +1,7 @@
 package webrecipe
 
 import (
+	"compress/gzip"
 	"context"
 	"errors"
 	"fmt"
@@ -15,7 +16,7 @@ import (
 	"github.com/savorum/savorum/internal/httpsecurity"
 )
 
-// MaximumPageBytes bounds a recipe page. Real pages are large; this is not.
+// MaximumPageBytes limits decoded recipe page data.
 const MaximumPageBytes = 8 << 20
 
 // MaximumImageBytes bounds one fetched photograph.
@@ -29,7 +30,8 @@ const MaximumRedirects = 5
 // otherwise bounded response into an unbounded header block.
 const MaximumResponseHeaderBytes = 64 << 10
 
-const userAgent = "Savorum/1.0 (recipe import)"
+// UserAgent identifies recipe and image requests.
+const UserAgent = "Savorum/1.0 (recipe import)"
 
 // Page is a fetched or supplied document together with where it came from.
 // The URL matters beyond provenance: candidate selection uses it to recognize
@@ -37,9 +39,10 @@ const userAgent = "Savorum/1.0 (recipe import)"
 type Page struct {
 	// URL is the address after redirects, which is the page that was actually
 	// read and therefore the one worth recording.
-	URL         string
-	ContentType string
-	Body        []byte
+	URL                 string
+	ContentType         string
+	Body                []byte
+	declaredContentType string
 }
 
 // Fetch retrieves a recipe page under Savorum's outbound policy: HTTP and
@@ -73,10 +76,11 @@ func Fetch(ctx context.Context, rawURL string) (*Page, error) {
 		return nil, failuref(FetchRejected, nil, "that address could not be requested")
 	}
 
+	// Set Accept-Encoding explicitly for servers sensitive to HTTP/1.1 header order.
 	request.Header.Set("Accept", "text/html,application/xhtml+xml,application/ld+json;q=0.9,application/json;q=0.8,application/atom+xml;q=0.7,application/xml;q=0.6,text/xml;q=0.6")
-
+	request.Header.Set("Accept-Encoding", "gzip")
 	request.Header.Set("Accept-Language", "en;q=0.9,*;q=0.5")
-	request.Header.Set("User-Agent", userAgent)
+	request.Header.Set("User-Agent", UserAgent)
 
 	response, err := client.Do(request)
 	if err != nil {
@@ -101,10 +105,18 @@ func Fetch(ctx context.Context, rawURL string) (*Page, error) {
 	if response.ContentLength > MaximumPageBytes {
 		return nil, failuref(FetchTooLarge, nil, "that page is larger than Savorum will download")
 	}
-	// One byte past the ceiling distinguishes a page that exactly fills the
-	// budget from a truncated one.
-	body, err := io.ReadAll(io.LimitReader(response.Body, MaximumPageBytes+1))
+
+	content, err := decodedBody(response)
 	if err != nil {
+		return nil, err
+	}
+
+	body, err := io.ReadAll(io.LimitReader(content, MaximumPageBytes+1))
+	if err != nil {
+		if errors.Is(err, gzip.ErrHeader) || errors.Is(err, gzip.ErrChecksum) || errors.Is(err, io.ErrUnexpectedEOF) {
+			return nil, failuref(FetchBlocked, nil, "the site sent a damaged page")
+		}
+
 		return nil, classifyTransportError(err)
 	}
 
@@ -121,7 +133,23 @@ func Fetch(ctx context.Context, rawURL string) (*Page, error) {
 		resolved = response.Request.URL.String()
 	}
 
-	return &Page{URL: resolved, ContentType: mediaType, Body: body}, nil
+	return Load(body, response.Header.Get("Content-Type"), resolved), nil
+}
+
+func decodedBody(response *http.Response) (io.Reader, error) {
+	switch strings.ToLower(strings.TrimSpace(response.Header.Get("Content-Encoding"))) {
+	case "", "identity":
+		return response.Body, nil
+	case "gzip", "x-gzip":
+		reader, err := gzip.NewReader(response.Body)
+		if err != nil {
+			return nil, failuref(FetchBlocked, nil, "the site sent a damaged page")
+		}
+
+		return reader, nil
+	default:
+		return nil, failuref(UnsupportedContentType, nil, "that page is compressed in a way Savorum cannot read")
+	}
 }
 
 // SafeTransport is the outbound transport for every fetch of remote content
@@ -169,6 +197,8 @@ func guardedTransport() *http.Transport {
 		DialContext: func(ctx context.Context, network, address string) (net.Conn, error) {
 			return guardedDial(ctx, network, address, net.DefaultResolver.LookupIPAddr, dialer.DialContext)
 		},
+		// Keep HTTP/2 enabled with the custom dialer.
+		ForceAttemptHTTP2:      true,
 		TLSHandshakeTimeout:    10 * time.Second,
 		ResponseHeaderTimeout:  20 * time.Second,
 		MaxResponseHeaderBytes: MaximumResponseHeaderBytes,

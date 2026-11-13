@@ -1,6 +1,8 @@
 package webrecipe
 
 import (
+	"bytes"
+	"compress/gzip"
 	"context"
 	"errors"
 	"net"
@@ -96,5 +98,48 @@ func TestFetchStopsStalledResponseOnCancellation(t *testing.T) {
 
 	if _, err := Fetch(ctx, server.URL); CodeOf(err) != FetchTimeout {
 		t.Fatalf("stalled response: %v", err)
+	}
+}
+
+func TestFetchReadsAGzippedPageWithinTheBudget(t *testing.T) {
+	allowLoopback(t)
+
+	compressed := func(data []byte) []byte {
+		var buffer bytes.Buffer
+
+		writer := gzip.NewWriter(&buffer)
+		_, _ = writer.Write(data)
+		_ = writer.Close()
+
+		return buffer.Bytes()
+	}
+
+	page := []byte(`<html><script type="application/ld+json">{"@type":"Recipe","name":"Soup"}</script></html>`)
+
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Header.Get("Accept-Encoding") != "gzip" || r.Header.Get("Accept-Language") == "" {
+			w.WriteHeader(http.StatusForbidden)
+			return
+		}
+
+		w.Header().Set("Content-Type", "text/html")
+		w.Header().Set("Content-Encoding", "gzip")
+
+		if r.URL.Path == "/bomb" {
+			_, _ = w.Write(compressed(make([]byte, MaximumPageBytes+1)))
+			return
+		}
+
+		_, _ = w.Write(compressed(page))
+	}))
+	defer server.Close()
+
+	fetched, err := Fetch(t.Context(), server.URL)
+	if err != nil || !bytes.Equal(fetched.Body, page) {
+		t.Fatalf("gzipped page = %q, %v", fetched.Body, err)
+	}
+
+	if _, err := Fetch(t.Context(), server.URL+"/bomb"); CodeOf(err) != FetchTooLarge {
+		t.Fatalf("expanding page: %v", err)
 	}
 }
