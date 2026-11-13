@@ -65,6 +65,12 @@
     "many": "szklanek",
     "other": "szklanki"
   },
+  "go": {
+    "one": "gō",
+    "few": "gō",
+    "many": "gō",
+    "other": "gō"
+  },
   "tablespoon": {
     "one": "łyżka",
     "few": "łyżki",
@@ -100,5 +106,173 @@
     "few": "uncje płynu",
     "many": "uncji płynu",
     "other": "uncji płynu"
+  },
+  "piece": {
+    "one": "kawałek",
+    "few": "kawałki",
+    "many": "kawałków",
+    "other": "kawałka"
+  },
+  "slice": {
+    "one": "plaster",
+    "few": "plastry",
+    "many": "plastrów",
+    "other": "plastra"
+  },
+  "stick": {
+    "one": "kostka",
+    "few": "kostki",
+    "many": "kostek",
+    "other": "kostki"
+  },
+  "stalk": {
+    "one": "łodyga",
+    "few": "łodygi",
+    "many": "łodyg",
+    "other": "łodygi"
+  },
+  "head": {
+    "one": "główka",
+    "few": "główki",
+    "many": "główek",
+    "other": "główki"
+  },
+  "sheet": {
+    "one": "płat",
+    "few": "płaty",
+    "many": "płatów",
+    "other": "płata"
+  },
+  "leaf": {
+    "one": "liść",
+    "few": "liście",
+    "many": "liści",
+    "other": "liścia"
+  },
+  "strip": {
+    "one": "pasek",
+    "few": "paski",
+    "many": "pasków",
+    "other": "paska"
+  },
+  "fillet": {
+    "one": "filet",
+    "few": "filety",
+    "many": "filetów",
+    "other": "fileta"
+  },
+  "cube": {
+    "one": "kostka",
+    "few": "kostki",
+    "many": "kostek",
+    "other": "kostki"
+  },
+  "knob": {
+    "one": "gałka",
+    "few": "gałki",
+    "many": "gałek",
+    "other": "gałki"
+  },
+  "ear": {
+    "one": "kolba",
+    "few": "kolby",
+    "many": "kolb",
+    "other": "kolby"
+  },
+  "loaf": {
+    "one": "bochenek",
+    "few": "bochenki",
+    "many": "bochenków",
+    "other": "bochenka"
+  },
+  "dash": {
+    "one": "odrobina",
+    "few": "odrobiny",
+    "many": "odrobin",
+    "other": "odrobiny"
+  },
+  "drop": {
+    "one": "kropla",
+    "few": "krople",
+    "many": "kropli",
+    "other": "kropli"
+  },
+  "splash": {
+    "one": "chlust",
+    "few": "chlusty",
+    "many": "chlustów",
+    "other": "chlustu"
+  },
+  "square": {
+    "one": "kostka",
+    "few": "kostki",
+    "many": "kostek",
+    "other": "kostki"
+  },
+  "wheel": {
+    "one": "krąg",
+    "few": "kręgi",
+    "many": "kręgów",
+    "other": "kręgu"
+  },
+  "rack": {
+    "one": "płat",
+    "few": "płaty",
+    "many": "płatów",
+    "other": "płata"
+  },
+  "jar": {
+    "one": "słoik",
+    "few": "słoiki",
+    "many": "słoików",
+    "other": "słoika"
+  },
+  "bottle": {
+    "one": "butelka",
+    "few": "butelki",
+    "many": "butelek",
+    "other": "butelki"
+  },
+  "bag": {
+    "one": "torebka",
+    "few": "torebki",
+    "many": "torebek",
+    "other": "torebki"
+  },
+  "box": {
+    "one": "pudełko",
+    "few": "pudełka",
+    "many": "pudełek",
+    "other": "pudełka"
+  },
+  "carton": {
+    "one": "karton",
+    "few": "kartony",
+    "many": "kartonów",
+    "other": "kartonu"
+  },
+  "tub": {
+    "one": "kubek",
+    "few": "kubki",
+    "many": "kubków",
+    "other": "kubka"
+  },
+  "envelope": {
+    "one": "saszetka",
+    "few": "saszetki",
+    "many": "saszetek",
+    "other": "saszetki"
+  },
+  "pot": {
+    "one": "kubeczek",
+    "few": "kubeczki",
+    "many": "kubeczków",
+    "other": "kubeczka"
+  },
+  "punnet": {
+    "one": "łubianka",
+    "few": "łubianki",
+    "many": "łubianek",
+    "other": "łubianki"
   }
 }

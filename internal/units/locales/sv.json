@@ -43,6 +43,10 @@
     "one": "kopp",
     "other": "koppar"
   },
+  "go": {
+    "one": "gō",
+    "other": "gō"
+  },
   "tablespoon": {
     "one": "msk",
     "other": "msk"
@@ -66,5 +70,117 @@
   "fluidounce": {
     "one": "fl oz",
     "other": "fl oz"
+  },
+  "piece": {
+    "one": "bit",
+    "other": "bitar"
+  },
+  "slice": {
+    "one": "skiva",
+    "other": "skivor"
+  },
+  "stick": {
+    "one": "stång",
+    "other": "stänger"
+  },
+  "stalk": {
+    "one": "stjälk",
+    "other": "stjälkar"
+  },
+  "head": {
+    "one": "huvud",
+    "other": "huvuden"
+  },
+  "sheet": {
+    "one": "ark",
+    "other": "ark"
+  },
+  "leaf": {
+    "one": "blad",
+    "other": "blad"
+  },
+  "strip": {
+    "one": "remsa",
+    "other": "remsor"
+  },
+  "fillet": {
+    "one": "filé",
+    "other": "filéer"
+  },
+  "cube": {
+    "one": "tärning",
+    "other": "tärningar"
+  },
+  "knob": {
+    "one": "klick",
+    "other": "klickar"
+  },
+  "ear": {
+    "one": "kolv",
+    "other": "kolvar"
+  },
+  "loaf": {
+    "one": "limpa",
+    "other": "limpor"
+  },
+  "dash": {
+    "one": "skvätt",
+    "other": "skvättar"
+  },
+  "drop": {
+    "one": "droppe",
+    "other": "droppar"
+  },
+  "splash": {
+    "one": "stänk",
+    "other": "stänk"
+  },
+  "square": {
+    "one": "ruta",
+    "other": "rutor"
+  },
+  "wheel": {
+    "one": "hjul",
+    "other": "hjul"
+  },
+  "rack": {
+    "one": "rad",
+    "other": "rader"
+  },
+  "jar": {
+    "one": "burk",
+    "other": "burkar"
+  },
+  "bottle": {
+    "one": "flaska",
+    "other": "flaskor"
+  },
+  "bag": {
+    "one": "påse",
+    "other": "påsar"
+  },
+  "box": {
+    "one": "ask",
+    "other": "askar"
+  },
+  "carton": {
+    "one": "förpackning",
+    "other": "förpackningar"
+  },
+  "tub": {
+    "one": "bytta",
+    "other": "byttor"
+  },
+  "envelope": {
+    "one": "påse",
+    "other": "påsar"
+  },
+  "pot": {
+    "one": "burk",
+    "other": "burkar"
+  },
+  "punnet": {
+    "one": "ask",
+    "other": "askar"
   }
 }

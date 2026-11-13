@@ -43,6 +43,10 @@
     "one": "kuppi",
     "other": "kuppia"
   },
+  "go": {
+    "one": "gō",
+    "other": "gō"
+  },
   "tablespoon": {
     "one": "rkl",
     "other": "rkl"
@@ -66,5 +70,117 @@
   "fluidounce": {
     "one": "nesteunssi",
     "other": "nesteunssia"
+  },
+  "piece": {
+    "one": "pala",
+    "other": "palaa"
+  },
+  "slice": {
+    "one": "viipale",
+    "other": "viipaletta"
+  },
+  "stick": {
+    "one": "tanko",
+    "other": "tankoa"
+  },
+  "stalk": {
+    "one": "varsi",
+    "other": "vartta"
+  },
+  "head": {
+    "one": "kerä",
+    "other": "kerää"
+  },
+  "sheet": {
+    "one": "levy",
+    "other": "levyä"
+  },
+  "leaf": {
+    "one": "lehti",
+    "other": "lehteä"
+  },
+  "strip": {
+    "one": "suikale",
+    "other": "suikaletta"
+  },
+  "fillet": {
+    "one": "filee",
+    "other": "fileetä"
+  },
+  "cube": {
+    "one": "kuutio",
+    "other": "kuutiota"
+  },
+  "knob": {
+    "one": "nokare",
+    "other": "nokaretta"
+  },
+  "ear": {
+    "one": "tähkä",
+    "other": "tähkää"
+  },
+  "loaf": {
+    "one": "limppu",
+    "other": "limppua"
+  },
+  "dash": {
+    "one": "tilkka",
+    "other": "tilkkaa"
+  },
+  "drop": {
+    "one": "tippa",
+    "other": "tippaa"
+  },
+  "splash": {
+    "one": "loraus",
+    "other": "lorausta"
+  },
+  "square": {
+    "one": "pala",
+    "other": "palaa"
+  },
+  "wheel": {
+    "one": "kiekko",
+    "other": "kiekkoa"
+  },
+  "rack": {
+    "one": "harjanne",
+    "other": "harjannetta"
+  },
+  "jar": {
+    "one": "purkki",
+    "other": "purkkia"
+  },
+  "bottle": {
+    "one": "pullo",
+    "other": "pulloa"
+  },
+  "bag": {
+    "one": "pussi",
+    "other": "pussia"
+  },
+  "box": {
+    "one": "rasia",
+    "other": "rasiaa"
+  },
+  "carton": {
+    "one": "tölkki",
+    "other": "tölkkiä"
+  },
+  "tub": {
+    "one": "rasia",
+    "other": "rasiaa"
+  },
+  "envelope": {
+    "one": "pussi",
+    "other": "pussia"
+  },
+  "pot": {
+    "one": "purkki",
+    "other": "purkkia"
+  },
+  "punnet": {
+    "one": "rasia",
+    "other": "rasiaa"
   }
 }

@@ -43,6 +43,10 @@
     "one": "杯",
     "other": "杯"
   },
+  "go": {
+    "one": "合",
+    "other": "合"
+  },
   "tablespoon": {
     "one": "汤匙",
     "other": "汤匙"
@@ -66,5 +70,117 @@
   "fluidounce": {
     "one": "液量盎司",
     "other": "液量盎司"
+  },
+  "piece": {
+    "one": "块",
+    "other": "块"
+  },
+  "slice": {
+    "one": "片",
+    "other": "片"
+  },
+  "stick": {
+    "one": "条",
+    "other": "条"
+  },
+  "stalk": {
+    "one": "根",
+    "other": "根"
+  },
+  "head": {
+    "one": "头",
+    "other": "头"
+  },
+  "sheet": {
+    "one": "张",
+    "other": "张"
+  },
+  "leaf": {
+    "one": "片",
+    "other": "片"
+  },
+  "strip": {
+    "one": "条",
+    "other": "条"
+  },
+  "fillet": {
+    "one": "块",
+    "other": "块"
+  },
+  "cube": {
+    "one": "块",
+    "other": "块"
+  },
+  "knob": {
+    "one": "小块",
+    "other": "小块"
+  },
+  "ear": {
+    "one": "根",
+    "other": "根"
+  },
+  "loaf": {
+    "one": "条",
+    "other": "条"
+  },
+  "dash": {
+    "one": "点",
+    "other": "点"
+  },
+  "drop": {
+    "one": "滴",
+    "other": "滴"
+  },
+  "splash": {
+    "one": "点",
+    "other": "点"
+  },
+  "square": {
+    "one": "块",
+    "other": "块"
+  },
+  "wheel": {
+    "one": "轮",
+    "other": "轮"
+  },
+  "rack": {
+    "one": "扇",
+    "other": "扇"
+  },
+  "jar": {
+    "one": "罐",
+    "other": "罐"
+  },
+  "bottle": {
+    "one": "瓶",
+    "other": "瓶"
+  },
+  "bag": {
+    "one": "袋",
+    "other": "袋"
+  },
+  "box": {
+    "one": "盒",
+    "other": "盒"
+  },
+  "carton": {
+    "one": "盒",
+    "other": "盒"
+  },
+  "tub": {
+    "one": "盒",
+    "other": "盒"
+  },
+  "envelope": {
+    "one": "包",
+    "other": "包"
+  },
+  "pot": {
+    "one": "杯",
+    "other": "杯"
+  },
+  "punnet": {
+    "one": "盒",
+    "other": "盒"
   }
 }

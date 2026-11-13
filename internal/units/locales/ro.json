@@ -43,6 +43,10 @@
     "one": "cană",
     "other": "căni"
   },
+  "go": {
+    "one": "gō",
+    "other": "gō"
+  },
   "tablespoon": {
     "one": "lingură",
     "other": "linguri"
@@ -66,5 +70,117 @@
   "fluidounce": {
     "one": "uncie lichidă",
     "other": "uncii lichide"
+  },
+  "piece": {
+    "one": "bucată",
+    "other": "bucăți"
+  },
+  "slice": {
+    "one": "felie",
+    "other": "felii"
+  },
+  "stick": {
+    "one": "baton",
+    "other": "batoane"
+  },
+  "stalk": {
+    "one": "tulpină",
+    "other": "tulpini"
+  },
+  "head": {
+    "one": "căpățână",
+    "other": "căpățâni"
+  },
+  "sheet": {
+    "one": "foaie",
+    "other": "foi"
+  },
+  "leaf": {
+    "one": "frunză",
+    "other": "frunze"
+  },
+  "strip": {
+    "one": "fâșie",
+    "other": "fâșii"
+  },
+  "fillet": {
+    "one": "file",
+    "other": "file"
+  },
+  "cube": {
+    "one": "cub",
+    "other": "cuburi"
+  },
+  "knob": {
+    "one": "bucățică",
+    "other": "bucățele"
+  },
+  "ear": {
+    "one": "știulete",
+    "other": "știuleți"
+  },
+  "loaf": {
+    "one": "pâine",
+    "other": "pâini"
+  },
+  "dash": {
+    "one": "strop",
+    "other": "stropi"
+  },
+  "drop": {
+    "one": "picătură",
+    "other": "picături"
+  },
+  "splash": {
+    "one": "jet",
+    "other": "jeturi"
+  },
+  "square": {
+    "one": "pătrățel",
+    "other": "pătrățele"
+  },
+  "wheel": {
+    "one": "roată",
+    "other": "roți"
+  },
+  "rack": {
+    "one": "cotlet",
+    "other": "cotlete"
+  },
+  "jar": {
+    "one": "borcan",
+    "other": "borcane"
+  },
+  "bottle": {
+    "one": "sticlă",
+    "other": "sticle"
+  },
+  "bag": {
+    "one": "pungă",
+    "other": "pungi"
+  },
+  "box": {
+    "one": "cutie",
+    "other": "cutii"
+  },
+  "carton": {
+    "one": "cutie",
+    "other": "cutii"
+  },
+  "tub": {
+    "one": "caserolă",
+    "other": "caserole"
+  },
+  "envelope": {
+    "one": "plic",
+    "other": "plicuri"
+  },
+  "pot": {
+    "one": "pahar",
+    "other": "pahare"
+  },
+  "punnet": {
+    "one": "caserolă",
+    "other": "caserole"
   }
 }

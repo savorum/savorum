@@ -21,6 +21,9 @@ Notable changes to Savorum Core. Each release publishes
 ### Fixed
 
 - Fix SREF import accepting member names that differ only in letter case.
+- Preserve the SREF and unit registry versions an imported document declares when exporting it, unless the recipe now needs a newer version.
+- Fix SREF import reporting an unsupported format version, rather than an unsupported registry version, for an earlier document that names an incompatible registry.
+- Fix SREF imports accepting units absent from the declared registry.
 - Fix meal plans and saved meals keeping a recipe's old name after a rename, while preserving custom dish names.
 - Fix shopping lists keeping an ingredient separate across compatible US and metric units, or repeating entries without quantities.
 - Fix saving a recipe after removing ingredients or ingredient groups that steps use.

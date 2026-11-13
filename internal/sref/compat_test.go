@@ -59,13 +59,7 @@ func TestAReleasedEarlierDocumentIsStillReadable(t *testing.T) {
 	}
 }
 
-// TestRewritingAnEarlierDocumentEmitsThisBuildsVersion pins the half of the
-// version rule that points the other way.
-//
-// A newer document keeps the version it declared; an earlier one is written as
-// this build's version, which SREF's versioning rules require. The content,
-// including authored text and resolved units, must survive unchanged.
-func TestRewritingAnEarlierDocumentEmitsThisBuildsVersion(t *testing.T) {
+func TestEarlierDocumentUpgradesForPluralYields(t *testing.T) {
 	t.Parallel()
 
 	document, err := sref.Decode(releasedDocument(t))
@@ -316,4 +310,14 @@ func ingredientByID(t *testing.T, document recipe.Document, id string) recipe.In
 	t.Fatalf("no ingredient %q", id)
 
 	return recipe.Ingredient{}
+}
+
+func TestAnEarlierFormatWithAnIncompatibleRegistryNamesTheRegistry(t *testing.T) {
+	t.Parallel()
+
+	_, err := sref.Decode([]byte(`{"sref":{"version":"0.4.0","unit_registry":"1.0.0"},"id":"r","title":"R",` +
+		`"instruction_sections":[{"id":"m","steps":[{"id":"s","text":"Mix."}]}]}`))
+	if got := sref.FailureCategoryOf(err); got != sref.UnsupportedRegistryVersion {
+		t.Fatalf("category = %q, want %q", got, sref.UnsupportedRegistryVersion)
+	}
 }

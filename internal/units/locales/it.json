@@ -43,6 +43,10 @@
     "one": "tazza",
     "other": "tazze"
   },
+  "go": {
+    "one": "gō",
+    "other": "gō"
+  },
   "tablespoon": {
     "one": "cucchiaio",
     "other": "cucchiai"
@@ -66,5 +70,117 @@
   "fluidounce": {
     "one": "oncia liquida",
     "other": "once liquide"
+  },
+  "piece": {
+    "one": "pezzo",
+    "other": "pezzi"
+  },
+  "slice": {
+    "one": "fetta",
+    "other": "fette"
+  },
+  "stick": {
+    "one": "panetto",
+    "other": "panetti"
+  },
+  "stalk": {
+    "one": "gambo",
+    "other": "gambi"
+  },
+  "head": {
+    "one": "testa",
+    "other": "teste"
+  },
+  "sheet": {
+    "one": "foglio",
+    "other": "fogli"
+  },
+  "leaf": {
+    "one": "foglia",
+    "other": "foglie"
+  },
+  "strip": {
+    "one": "striscia",
+    "other": "strisce"
+  },
+  "fillet": {
+    "one": "filetto",
+    "other": "filetti"
+  },
+  "cube": {
+    "one": "cubetto",
+    "other": "cubetti"
+  },
+  "knob": {
+    "one": "noce",
+    "other": "noci"
+  },
+  "ear": {
+    "one": "pannocchia",
+    "other": "pannocchie"
+  },
+  "loaf": {
+    "one": "pagnotta",
+    "other": "pagnotte"
+  },
+  "dash": {
+    "one": "spruzzo",
+    "other": "spruzzi"
+  },
+  "drop": {
+    "one": "goccia",
+    "other": "gocce"
+  },
+  "splash": {
+    "one": "goccio",
+    "other": "gocci"
+  },
+  "square": {
+    "one": "quadratino",
+    "other": "quadratini"
+  },
+  "wheel": {
+    "one": "forma",
+    "other": "forme"
+  },
+  "rack": {
+    "one": "carré",
+    "other": "carré"
+  },
+  "jar": {
+    "one": "barattolo",
+    "other": "barattoli"
+  },
+  "bottle": {
+    "one": "bottiglia",
+    "other": "bottiglie"
+  },
+  "bag": {
+    "one": "sacchetto",
+    "other": "sacchetti"
+  },
+  "box": {
+    "one": "scatola",
+    "other": "scatole"
+  },
+  "carton": {
+    "one": "cartone",
+    "other": "cartoni"
+  },
+  "tub": {
+    "one": "vaschetta",
+    "other": "vaschette"
+  },
+  "envelope": {
+    "one": "bustina",
+    "other": "bustine"
+  },
+  "pot": {
+    "one": "vasetto",
+    "other": "vasetti"
+  },
+  "punnet": {
+    "one": "vaschetta",
+    "other": "vaschette"
   }
 }

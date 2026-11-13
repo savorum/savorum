@@ -43,6 +43,10 @@
     "one": "ถ้วย",
     "other": "ถ้วย"
   },
+  "go": {
+    "one": "โกะ",
+    "other": "โกะ"
+  },
   "tablespoon": {
     "one": "ช้อนโต๊ะ",
     "other": "ช้อนโต๊ะ"
@@ -66,5 +70,117 @@
   "fluidounce": {
     "one": "ฟลูอิดออนซ์",
     "other": "ฟลูอิดออนซ์"
+  },
+  "piece": {
+    "one": "ชิ้น",
+    "other": "ชิ้น"
+  },
+  "slice": {
+    "one": "แผ่น",
+    "other": "แผ่น"
+  },
+  "stick": {
+    "one": "แท่ง",
+    "other": "แท่ง"
+  },
+  "stalk": {
+    "one": "ก้าน",
+    "other": "ก้าน"
+  },
+  "head": {
+    "one": "หัว",
+    "other": "หัว"
+  },
+  "sheet": {
+    "one": "แผ่น",
+    "other": "แผ่น"
+  },
+  "leaf": {
+    "one": "ใบ",
+    "other": "ใบ"
+  },
+  "strip": {
+    "one": "เส้น",
+    "other": "เส้น"
+  },
+  "fillet": {
+    "one": "ชิ้น",
+    "other": "ชิ้น"
+  },
+  "cube": {
+    "one": "ก้อน",
+    "other": "ก้อน"
+  },
+  "knob": {
+    "one": "ก้อน",
+    "other": "ก้อน"
+  },
+  "ear": {
+    "one": "ฝัก",
+    "other": "ฝัก"
+  },
+  "loaf": {
+    "one": "ก้อน",
+    "other": "ก้อน"
+  },
+  "dash": {
+    "one": "หยด",
+    "other": "หยด"
+  },
+  "drop": {
+    "one": "หยด",
+    "other": "หยด"
+  },
+  "splash": {
+    "one": "นิด",
+    "other": "นิด"
+  },
+  "square": {
+    "one": "ชิ้น",
+    "other": "ชิ้น"
+  },
+  "wheel": {
+    "one": "ก้อน",
+    "other": "ก้อน"
+  },
+  "rack": {
+    "one": "แผง",
+    "other": "แผง"
+  },
+  "jar": {
+    "one": "โหล",
+    "other": "โหล"
+  },
+  "bottle": {
+    "one": "ขวด",
+    "other": "ขวด"
+  },
+  "bag": {
+    "one": "ถุง",
+    "other": "ถุง"
+  },
+  "box": {
+    "one": "กล่อง",
+    "other": "กล่อง"
+  },
+  "carton": {
+    "one": "กล่อง",
+    "other": "กล่อง"
+  },
+  "tub": {
+    "one": "ถ้วย",
+    "other": "ถ้วย"
+  },
+  "envelope": {
+    "one": "ซอง",
+    "other": "ซอง"
+  },
+  "pot": {
+    "one": "ถ้วย",
+    "other": "ถ้วย"
+  },
+  "punnet": {
+    "one": "กล่อง",
+    "other": "กล่อง"
   }
 }

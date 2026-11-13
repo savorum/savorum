@@ -43,6 +43,10 @@
     "one": "Tasse",
     "other": "Tassen"
   },
+  "go": {
+    "one": "gō",
+    "other": "gō"
+  },
   "tablespoon": {
     "one": "EL",
     "other": "EL"
@@ -66,5 +70,117 @@
   "fluidounce": {
     "one": "fl oz",
     "other": "fl oz"
+  },
+  "piece": {
+    "one": "Stück",
+    "other": "Stück"
+  },
+  "slice": {
+    "one": "Scheibe",
+    "other": "Scheiben"
+  },
+  "stick": {
+    "one": "Stange",
+    "other": "Stangen"
+  },
+  "stalk": {
+    "one": "Stange",
+    "other": "Stangen"
+  },
+  "head": {
+    "one": "Kopf",
+    "other": "Köpfe"
+  },
+  "sheet": {
+    "one": "Blatt",
+    "other": "Blätter"
+  },
+  "leaf": {
+    "one": "Blatt",
+    "other": "Blätter"
+  },
+  "strip": {
+    "one": "Streifen",
+    "other": "Streifen"
+  },
+  "fillet": {
+    "one": "Filet",
+    "other": "Filets"
+  },
+  "cube": {
+    "one": "Würfel",
+    "other": "Würfel"
+  },
+  "knob": {
+    "one": "Flöckchen",
+    "other": "Flöckchen"
+  },
+  "ear": {
+    "one": "Kolben",
+    "other": "Kolben"
+  },
+  "loaf": {
+    "one": "Laib",
+    "other": "Laibe"
+  },
+  "dash": {
+    "one": "Spritzer",
+    "other": "Spritzer"
+  },
+  "drop": {
+    "one": "Tropfen",
+    "other": "Tropfen"
+  },
+  "splash": {
+    "one": "Schuss",
+    "other": "Schüsse"
+  },
+  "square": {
+    "one": "Stück",
+    "other": "Stück"
+  },
+  "wheel": {
+    "one": "Laib",
+    "other": "Laibe"
+  },
+  "rack": {
+    "one": "Rippenstück",
+    "other": "Rippenstücke"
+  },
+  "jar": {
+    "one": "Glas",
+    "other": "Gläser"
+  },
+  "bottle": {
+    "one": "Flasche",
+    "other": "Flaschen"
+  },
+  "bag": {
+    "one": "Beutel",
+    "other": "Beutel"
+  },
+  "box": {
+    "one": "Schachtel",
+    "other": "Schachteln"
+  },
+  "carton": {
+    "one": "Packung",
+    "other": "Packungen"
+  },
+  "tub": {
+    "one": "Becher",
+    "other": "Becher"
+  },
+  "envelope": {
+    "one": "Päckchen",
+    "other": "Päckchen"
+  },
+  "pot": {
+    "one": "Becher",
+    "other": "Becher"
+  },
+  "punnet": {
+    "one": "Schale",
+    "other": "Schalen"
   }
 }

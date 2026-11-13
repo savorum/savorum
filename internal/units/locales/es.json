@@ -43,6 +43,10 @@
     "one": "taza",
     "other": "tazas"
   },
+  "go": {
+    "one": "gō",
+    "other": "gō"
+  },
   "tablespoon": {
     "one": "cda.",
     "other": "cda."
@@ -66,5 +70,117 @@
   "fluidounce": {
     "one": "oz líquidas",
     "other": "oz líquidas"
+  },
+  "piece": {
+    "one": "trozo",
+    "other": "trozos"
+  },
+  "slice": {
+    "one": "rebanada",
+    "other": "rebanadas"
+  },
+  "stick": {
+    "one": "barra",
+    "other": "barras"
+  },
+  "stalk": {
+    "one": "tallo",
+    "other": "tallos"
+  },
+  "head": {
+    "one": "cabeza",
+    "other": "cabezas"
+  },
+  "sheet": {
+    "one": "lámina",
+    "other": "láminas"
+  },
+  "leaf": {
+    "one": "hoja",
+    "other": "hojas"
+  },
+  "strip": {
+    "one": "tira",
+    "other": "tiras"
+  },
+  "fillet": {
+    "one": "filete",
+    "other": "filetes"
+  },
+  "cube": {
+    "one": "cubo",
+    "other": "cubos"
+  },
+  "knob": {
+    "one": "nuez",
+    "other": "nueces"
+  },
+  "ear": {
+    "one": "mazorca",
+    "other": "mazorcas"
+  },
+  "loaf": {
+    "one": "hogaza",
+    "other": "hogazas"
+  },
+  "dash": {
+    "one": "chorrito",
+    "other": "chorritos"
+  },
+  "drop": {
+    "one": "gota",
+    "other": "gotas"
+  },
+  "splash": {
+    "one": "chorro",
+    "other": "chorros"
+  },
+  "square": {
+    "one": "onza",
+    "other": "onzas"
+  },
+  "wheel": {
+    "one": "rueda",
+    "other": "ruedas"
+  },
+  "rack": {
+    "one": "costillar",
+    "other": "costillares"
+  },
+  "jar": {
+    "one": "frasco",
+    "other": "frascos"
+  },
+  "bottle": {
+    "one": "botella",
+    "other": "botellas"
+  },
+  "bag": {
+    "one": "bolsa",
+    "other": "bolsas"
+  },
+  "box": {
+    "one": "caja",
+    "other": "cajas"
+  },
+  "carton": {
+    "one": "cartón",
+    "other": "cartones"
+  },
+  "tub": {
+    "one": "tarrina",
+    "other": "tarrinas"
+  },
+  "envelope": {
+    "one": "sobre",
+    "other": "sobres"
+  },
+  "pot": {
+    "one": "bote",
+    "other": "botes"
+  },
+  "punnet": {
+    "one": "tarrina",
+    "other": "tarrinas"
   }
 }

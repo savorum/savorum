@@ -24,6 +24,8 @@ export type UnitConvention = 'metric' | 'us' | 'au' | 'imperial'
  */
 export type UnitId =
   | 'mass.gram'
+  | 'mass.decagram'
+  | 'mass.hectogram'
   | 'mass.kilogram'
   | 'mass.ounce.avoirdupois'
   | 'mass.pound.avoirdupois'
@@ -51,6 +53,7 @@ export type UnitId =
   | 'volume.tablespoon.au'
   | 'volume.teaspoon.au'
   | 'volume.cup.jp'
+  | 'volume.go.jp'
   | 'volume.cup.kr'
   | 'volume.fluidounce.imperial'
   | 'volume.pint.imperial'
@@ -69,9 +72,37 @@ export type UnitId =
   | 'count.bunch'
   | 'count.pinch'
   | 'count.handful'
+  | 'count.piece'
+  | 'count.slice'
+  | 'count.stick'
+  | 'count.stalk'
+  | 'count.head'
+  | 'count.sheet'
+  | 'count.leaf'
+  | 'count.strip'
+  | 'count.fillet'
+  | 'count.cube'
+  | 'count.knob'
+  | 'count.ear'
+  | 'count.loaf'
+  | 'count.dash'
+  | 'count.drop'
+  | 'count.splash'
+  | 'count.square'
+  | 'count.wheel'
+  | 'count.rack'
   | 'container.can'
   | 'container.tin'
   | 'container.packet'
+  | 'container.jar'
+  | 'container.bottle'
+  | 'container.bag'
+  | 'container.box'
+  | 'container.carton'
+  | 'container.tub'
+  | 'container.envelope'
+  | 'container.pot'
+  | 'container.punnet'
 
 export interface RegistryUnit {
   id: UnitId
@@ -92,6 +123,8 @@ export interface RegistryUnit {
 
 export const unitRegistry: readonly RegistryUnit[] = [
   { id: 'mass.gram', kind: 'physical', dimension: 'mass', convention: 'metric', base: 'mass.gram', factor: '1', exact: true },
+  { id: 'mass.decagram', kind: 'physical', dimension: 'mass', convention: 'metric', base: 'mass.gram', factor: '10', exact: true },
+  { id: 'mass.hectogram', kind: 'physical', dimension: 'mass', convention: 'metric', base: 'mass.gram', factor: '100', exact: true },
   { id: 'mass.kilogram', kind: 'physical', dimension: 'mass', convention: 'metric', base: 'mass.gram', factor: '1000', exact: true },
   { id: 'mass.ounce.avoirdupois', kind: 'physical', dimension: 'mass', convention: 'us', base: 'mass.gram', factor: '45359237/1600000', exact: true },
   { id: 'mass.pound.avoirdupois', kind: 'physical', dimension: 'mass', convention: 'us', base: 'mass.gram', factor: '45359237/100000', exact: true },
@@ -119,6 +152,7 @@ export const unitRegistry: readonly RegistryUnit[] = [
   { id: 'volume.tablespoon.au', kind: 'physical', dimension: 'volume', convention: 'au', base: 'volume.milliliter', factor: '20', exact: true },
   { id: 'volume.teaspoon.au', kind: 'physical', dimension: 'volume', convention: 'au', base: 'volume.milliliter', factor: '5', exact: true },
   { id: 'volume.cup.jp', kind: 'physical', dimension: 'volume', convention: 'metric', base: 'volume.milliliter', factor: '200', exact: true },
+  { id: 'volume.go.jp', kind: 'physical', dimension: 'volume', convention: 'metric', base: 'volume.milliliter', factor: '240100/1331', exact: true },
   { id: 'volume.cup.kr', kind: 'physical', dimension: 'volume', convention: 'metric', base: 'volume.milliliter', factor: '200', exact: true },
   { id: 'volume.fluidounce.imperial', kind: 'physical', dimension: 'volume', convention: 'imperial', base: 'volume.milliliter', factor: '454609/16000', exact: true },
   { id: 'volume.pint.imperial', kind: 'physical', dimension: 'volume', convention: 'imperial', base: 'volume.milliliter', factor: '454609/800', exact: true },
@@ -137,9 +171,37 @@ export const unitRegistry: readonly RegistryUnit[] = [
   { id: 'count.bunch', kind: 'count' },
   { id: 'count.pinch', kind: 'count' },
   { id: 'count.handful', kind: 'count' },
+  { id: 'count.piece', kind: 'count' },
+  { id: 'count.slice', kind: 'count' },
+  { id: 'count.stick', kind: 'count' },
+  { id: 'count.stalk', kind: 'count' },
+  { id: 'count.head', kind: 'count' },
+  { id: 'count.sheet', kind: 'count' },
+  { id: 'count.leaf', kind: 'count' },
+  { id: 'count.strip', kind: 'count' },
+  { id: 'count.fillet', kind: 'count' },
+  { id: 'count.cube', kind: 'count' },
+  { id: 'count.knob', kind: 'count' },
+  { id: 'count.ear', kind: 'count' },
+  { id: 'count.loaf', kind: 'count' },
+  { id: 'count.dash', kind: 'count' },
+  { id: 'count.drop', kind: 'count' },
+  { id: 'count.splash', kind: 'count' },
+  { id: 'count.square', kind: 'count' },
+  { id: 'count.wheel', kind: 'count' },
+  { id: 'count.rack', kind: 'count' },
   { id: 'container.can', kind: 'container' },
   { id: 'container.tin', kind: 'container' },
   { id: 'container.packet', kind: 'container' },
+  { id: 'container.jar', kind: 'container' },
+  { id: 'container.bottle', kind: 'container' },
+  { id: 'container.bag', kind: 'container' },
+  { id: 'container.box', kind: 'container' },
+  { id: 'container.carton', kind: 'container' },
+  { id: 'container.tub', kind: 'container' },
+  { id: 'container.envelope', kind: 'container' },
+  { id: 'container.pot', kind: 'container' },
+  { id: 'container.punnet', kind: 'container' },
 ]
 
 /** How a unit is written beside an amount. */
@@ -153,6 +215,8 @@ export interface UnitLabel {
 
 export const unitLabels: Readonly<Record<UnitId, UnitLabel>> = {
   'mass.gram': { one: "g", many: "g", tight: true },
+  'mass.decagram': { one: "dag", many: "dag", tight: true },
+  'mass.hectogram': { one: "hg", many: "hg", tight: true },
   'mass.kilogram': { one: "kg", many: "kg", tight: true },
   'mass.ounce.avoirdupois': { one: "oz", many: "oz" },
   'mass.pound.avoirdupois': { one: "lb", many: "lb" },
@@ -180,6 +244,7 @@ export const unitLabels: Readonly<Record<UnitId, UnitLabel>> = {
   'volume.tablespoon.au': { one: "tbsp", many: "tbsp" },
   'volume.teaspoon.au': { one: "tsp", many: "tsp" },
   'volume.cup.jp': { one: "cup", many: "cups" },
+  'volume.go.jp': { one: "gō", many: "gō" },
   'volume.cup.kr': { one: "cup", many: "cups" },
   'volume.fluidounce.imperial': { one: "fl oz", many: "fl oz" },
   'volume.pint.imperial': { one: "pint", many: "pints" },
@@ -198,9 +263,37 @@ export const unitLabels: Readonly<Record<UnitId, UnitLabel>> = {
   'count.bunch': { one: "bunch", many: "bunches" },
   'count.pinch': { one: "pinch", many: "pinches" },
   'count.handful': { one: "handful", many: "handfuls" },
+  'count.piece': { one: "piece", many: "pieces" },
+  'count.slice': { one: "slice", many: "slices" },
+  'count.stick': { one: "stick", many: "sticks" },
+  'count.stalk': { one: "stalk", many: "stalks" },
+  'count.head': { one: "head", many: "heads" },
+  'count.sheet': { one: "sheet", many: "sheets" },
+  'count.leaf': { one: "leaf", many: "leaves" },
+  'count.strip': { one: "strip", many: "strips" },
+  'count.fillet': { one: "fillet", many: "fillets" },
+  'count.cube': { one: "cube", many: "cubes" },
+  'count.knob': { one: "knob", many: "knobs" },
+  'count.ear': { one: "ear", many: "ears" },
+  'count.loaf': { one: "loaf", many: "loaves" },
+  'count.dash': { one: "dash", many: "dashes" },
+  'count.drop': { one: "drop", many: "drops" },
+  'count.splash': { one: "splash", many: "splashes" },
+  'count.square': { one: "square", many: "squares" },
+  'count.wheel': { one: "wheel", many: "wheels" },
+  'count.rack': { one: "rack", many: "racks" },
   'container.can': { one: "can", many: "cans" },
   'container.tin': { one: "tin", many: "tins" },
   'container.packet': { one: "packet", many: "packets" },
+  'container.jar': { one: "jar", many: "jars" },
+  'container.bottle': { one: "bottle", many: "bottles" },
+  'container.bag': { one: "bag", many: "bags" },
+  'container.box': { one: "box", many: "boxes" },
+  'container.carton': { one: "carton", many: "cartons" },
+  'container.tub': { one: "tub", many: "tubs" },
+  'container.envelope': { one: "envelope", many: "envelopes" },
+  'container.pot': { one: "pot", many: "pots" },
+  'container.punnet': { one: "punnet", many: "punnets" },
 }
 
 export type MeasurementSystem = 'original' | 'metric' | 'us' | 'au'

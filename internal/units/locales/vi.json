@@ -43,6 +43,10 @@
     "one": "cốc",
     "other": "cốc"
   },
+  "go": {
+    "one": "gō",
+    "other": "gō"
+  },
   "tablespoon": {
     "one": "thìa canh",
     "other": "thìa canh"
@@ -66,5 +70,117 @@
   "fluidounce": {
     "one": "ounce chất lỏng",
     "other": "ounce chất lỏng"
+  },
+  "piece": {
+    "one": "miếng",
+    "other": "miếng"
+  },
+  "slice": {
+    "one": "lát",
+    "other": "lát"
+  },
+  "stick": {
+    "one": "thanh",
+    "other": "thanh"
+  },
+  "stalk": {
+    "one": "cọng",
+    "other": "cọng"
+  },
+  "head": {
+    "one": "củ",
+    "other": "củ"
+  },
+  "sheet": {
+    "one": "tấm",
+    "other": "tấm"
+  },
+  "leaf": {
+    "one": "lá",
+    "other": "lá"
+  },
+  "strip": {
+    "one": "dải",
+    "other": "dải"
+  },
+  "fillet": {
+    "one": "phi lê",
+    "other": "phi lê"
+  },
+  "cube": {
+    "one": "viên",
+    "other": "viên"
+  },
+  "knob": {
+    "one": "cục",
+    "other": "cục"
+  },
+  "ear": {
+    "one": "bắp",
+    "other": "bắp"
+  },
+  "loaf": {
+    "one": "ổ",
+    "other": "ổ"
+  },
+  "dash": {
+    "one": "chút",
+    "other": "chút"
+  },
+  "drop": {
+    "one": "giọt",
+    "other": "giọt"
+  },
+  "splash": {
+    "one": "chút",
+    "other": "chút"
+  },
+  "square": {
+    "one": "ô",
+    "other": "ô"
+  },
+  "wheel": {
+    "one": "bánh",
+    "other": "bánh"
+  },
+  "rack": {
+    "one": "tảng",
+    "other": "tảng"
+  },
+  "jar": {
+    "one": "hũ",
+    "other": "hũ"
+  },
+  "bottle": {
+    "one": "chai",
+    "other": "chai"
+  },
+  "bag": {
+    "one": "túi",
+    "other": "túi"
+  },
+  "box": {
+    "one": "hộp",
+    "other": "hộp"
+  },
+  "carton": {
+    "one": "hộp giấy",
+    "other": "hộp giấy"
+  },
+  "tub": {
+    "one": "hộp nhựa",
+    "other": "hộp nhựa"
+  },
+  "envelope": {
+    "one": "gói",
+    "other": "gói"
+  },
+  "pot": {
+    "one": "hũ",
+    "other": "hũ"
+  },
+  "punnet": {
+    "one": "hộp",
+    "other": "hộp"
   }
 }

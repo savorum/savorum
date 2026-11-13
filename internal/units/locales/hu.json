@@ -43,6 +43,10 @@
     "one": "csésze",
     "other": "csésze"
   },
+  "go": {
+    "one": "gō",
+    "other": "gō"
+  },
   "tablespoon": {
     "one": "ek.",
     "other": "ek."
@@ -66,5 +70,117 @@
   "fluidounce": {
     "one": "folyadékuncia",
     "other": "folyadékuncia"
+  },
+  "piece": {
+    "one": "darab",
+    "other": "darab"
+  },
+  "slice": {
+    "one": "szelet",
+    "other": "szelet"
+  },
+  "stick": {
+    "one": "rúd",
+    "other": "rúd"
+  },
+  "stalk": {
+    "one": "szár",
+    "other": "szár"
+  },
+  "head": {
+    "one": "fej",
+    "other": "fej"
+  },
+  "sheet": {
+    "one": "lap",
+    "other": "lap"
+  },
+  "leaf": {
+    "one": "levél",
+    "other": "levél"
+  },
+  "strip": {
+    "one": "csík",
+    "other": "csík"
+  },
+  "fillet": {
+    "one": "filé",
+    "other": "filé"
+  },
+  "cube": {
+    "one": "kocka",
+    "other": "kocka"
+  },
+  "knob": {
+    "one": "darabka",
+    "other": "darabka"
+  },
+  "ear": {
+    "one": "cső",
+    "other": "cső"
+  },
+  "loaf": {
+    "one": "cipó",
+    "other": "cipó"
+  },
+  "dash": {
+    "one": "löttyintés",
+    "other": "löttyintés"
+  },
+  "drop": {
+    "one": "csepp",
+    "other": "csepp"
+  },
+  "splash": {
+    "one": "löttyintés",
+    "other": "löttyintés"
+  },
+  "square": {
+    "one": "kocka",
+    "other": "kocka"
+  },
+  "wheel": {
+    "one": "korong",
+    "other": "korong"
+  },
+  "rack": {
+    "one": "oldalas",
+    "other": "oldalas"
+  },
+  "jar": {
+    "one": "üveg",
+    "other": "üveg"
+  },
+  "bottle": {
+    "one": "palack",
+    "other": "palack"
+  },
+  "bag": {
+    "one": "zacskó",
+    "other": "zacskó"
+  },
+  "box": {
+    "one": "doboz",
+    "other": "doboz"
+  },
+  "carton": {
+    "one": "doboz",
+    "other": "doboz"
+  },
+  "tub": {
+    "one": "pohár",
+    "other": "pohár"
+  },
+  "envelope": {
+    "one": "tasak",
+    "other": "tasak"
+  },
+  "pot": {
+    "one": "pohár",
+    "other": "pohár"
+  },
+  "punnet": {
+    "one": "doboz",
+    "other": "doboz"
   }
 }

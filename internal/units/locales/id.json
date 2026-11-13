@@ -43,6 +43,10 @@
     "one": "cangkir",
     "other": "cangkir"
   },
+  "go": {
+    "one": "gō",
+    "other": "gō"
+  },
   "tablespoon": {
     "one": "sdm",
     "other": "sdm"
@@ -66,5 +70,117 @@
   "fluidounce": {
     "one": "ons cair",
     "other": "ons cair"
+  },
+  "piece": {
+    "one": "potong",
+    "other": "potong"
+  },
+  "slice": {
+    "one": "iris",
+    "other": "iris"
+  },
+  "stick": {
+    "one": "batang",
+    "other": "batang"
+  },
+  "stalk": {
+    "one": "tangkai",
+    "other": "tangkai"
+  },
+  "head": {
+    "one": "bonggol",
+    "other": "bonggol"
+  },
+  "sheet": {
+    "one": "lembar",
+    "other": "lembar"
+  },
+  "leaf": {
+    "one": "helai",
+    "other": "helai"
+  },
+  "strip": {
+    "one": "potong",
+    "other": "potong"
+  },
+  "fillet": {
+    "one": "fillet",
+    "other": "fillet"
+  },
+  "cube": {
+    "one": "dadu",
+    "other": "dadu"
+  },
+  "knob": {
+    "one": "gumpal",
+    "other": "gumpal"
+  },
+  "ear": {
+    "one": "tongkol",
+    "other": "tongkol"
+  },
+  "loaf": {
+    "one": "bongkah",
+    "other": "bongkah"
+  },
+  "dash": {
+    "one": "percik",
+    "other": "percik"
+  },
+  "drop": {
+    "one": "tetes",
+    "other": "tetes"
+  },
+  "splash": {
+    "one": "cipratan",
+    "other": "cipratan"
+  },
+  "square": {
+    "one": "keping",
+    "other": "keping"
+  },
+  "wheel": {
+    "one": "bulatan",
+    "other": "bulatan"
+  },
+  "rack": {
+    "one": "rak",
+    "other": "rak"
+  },
+  "jar": {
+    "one": "toples",
+    "other": "toples"
+  },
+  "bottle": {
+    "one": "botol",
+    "other": "botol"
+  },
+  "bag": {
+    "one": "kantong",
+    "other": "kantong"
+  },
+  "box": {
+    "one": "kotak",
+    "other": "kotak"
+  },
+  "carton": {
+    "one": "karton",
+    "other": "karton"
+  },
+  "tub": {
+    "one": "wadah",
+    "other": "wadah"
+  },
+  "envelope": {
+    "one": "sachet",
+    "other": "sachet"
+  },
+  "pot": {
+    "one": "cup",
+    "other": "cup"
+  },
+  "punnet": {
+    "one": "kotak",
+    "other": "kotak"
   }
 }

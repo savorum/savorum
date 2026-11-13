@@ -43,6 +43,10 @@
     "one": "컵",
     "other": "컵"
   },
+  "go": {
+    "one": "홉",
+    "other": "홉"
+  },
   "tablespoon": {
     "one": "큰술",
     "other": "큰술"
@@ -66,5 +70,117 @@
   "fluidounce": {
     "one": "액량 온스",
     "other": "액량 온스"
+  },
+  "piece": {
+    "one": "조각",
+    "other": "조각"
+  },
+  "slice": {
+    "one": "장",
+    "other": "장"
+  },
+  "stick": {
+    "one": "개",
+    "other": "개"
+  },
+  "stalk": {
+    "one": "대",
+    "other": "대"
+  },
+  "head": {
+    "one": "통",
+    "other": "통"
+  },
+  "sheet": {
+    "one": "장",
+    "other": "장"
+  },
+  "leaf": {
+    "one": "장",
+    "other": "장"
+  },
+  "strip": {
+    "one": "줄",
+    "other": "줄"
+  },
+  "fillet": {
+    "one": "토막",
+    "other": "토막"
+  },
+  "cube": {
+    "one": "개",
+    "other": "개"
+  },
+  "knob": {
+    "one": "조각",
+    "other": "조각"
+  },
+  "ear": {
+    "one": "개",
+    "other": "개"
+  },
+  "loaf": {
+    "one": "덩어리",
+    "other": "덩어리"
+  },
+  "dash": {
+    "one": "번",
+    "other": "번"
+  },
+  "drop": {
+    "one": "방울",
+    "other": "방울"
+  },
+  "splash": {
+    "one": "번",
+    "other": "번"
+  },
+  "square": {
+    "one": "조각",
+    "other": "조각"
+  },
+  "wheel": {
+    "one": "덩어리",
+    "other": "덩어리"
+  },
+  "rack": {
+    "one": "랙",
+    "other": "랙"
+  },
+  "jar": {
+    "one": "병",
+    "other": "병"
+  },
+  "bottle": {
+    "one": "병",
+    "other": "병"
+  },
+  "bag": {
+    "one": "봉지",
+    "other": "봉지"
+  },
+  "box": {
+    "one": "상자",
+    "other": "상자"
+  },
+  "carton": {
+    "one": "팩",
+    "other": "팩"
+  },
+  "tub": {
+    "one": "통",
+    "other": "통"
+  },
+  "envelope": {
+    "one": "봉지",
+    "other": "봉지"
+  },
+  "pot": {
+    "one": "컵",
+    "other": "컵"
+  },
+  "punnet": {
+    "one": "팩",
+    "other": "팩"
   }
 }
