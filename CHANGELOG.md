@@ -10,16 +10,25 @@ Notable changes to Savorum Core. Each release publishes
 
 - Add a web import offer when a URL is pasted into the text importer.
 - Add choices to continue unfinished cooking sessions or start fresh when cooking recipes together.
+- Add SREF 0.5.0 with unit registry 0.3.0 for import and export, supporting decagrams, hectograms, Japanese rice measures, and more count and container units.
 
 ### Changed
 
 - Improve social recipe imports, including post and caption extraction, recipes split across author comments, discovery of full recipes on creator websites, and partial-recipe recovery.
+- Improve multilingual web extraction across article layouts, ingredient tables and groups, h-recipe pages, and incomplete structured recipe data.
+- Improve multilingual ingredient parsing, including written numbers and fractions, approximate amounts, package sizes, and quantities after ingredient names.
 - Improve text imports with serving and timing recognition, UTF-16 support, and more flexible section and step parsing.
 - Improve import review with full recipe previews, clearer source information and warnings, and options to open or edit after saving.
 - Improve recipe comparison and merging, including photo previews, highlighted differences, duplicate guidance, and clearer choices about which recipe and contents to keep.
+- Improve measurement prompts by resolving unambiguous units and applying site-based cup and spoon conventions where appropriate, with assumptions available to review before saving.
+- Improve ingredient presentation on screen and in print, including counted ingredients and equivalent measures.
 
 ### Fixed
 
+- Fix web imports affected by damaged recipe data, legacy encodings, incorrect language declarations, and request compatibility.
+- Preserve more imported photos and publication dates, and exclude serving controls, duplicate yield text, and repeated ingredient notes from recipe content.
+- Fix saved web pages without recipes importing their markup as recipe text.
+- Fix import review refusing measurement choices for recipes with step photos.
 - Fix SREF import accepting member names that differ only in letter case.
 - Preserve the SREF and unit registry versions an imported document declares when exporting it, unless the recipe now needs a newer version.
 - Fix SREF import reporting an unsupported format version, rather than an unsupported registry version, for an earlier document that names an incompatible registry.
@@ -28,7 +37,8 @@ Notable changes to Savorum Core. Each release publishes
 - Fix shopping lists keeping an ingredient separate across compatible US and metric units, or repeating entries without quantities.
 - Fix saving a recipe after removing ingredients or ingredient groups that steps use.
 - Preserve successful photo attachments when another upload fails, and identify the files that could not be added.
-- Fix scaling warnings for unscaled amounts, including written fractions.
+- Fix scaling warnings for unscaled amounts, including written fractions, without flagging package sizes or numbered notes.
+- Preserve stated measurement precision and avoid unwieldy cup and spoon conversions.
 - Fix cooking-log times ignoring the account time zone.
 
 ## 0.4.3
