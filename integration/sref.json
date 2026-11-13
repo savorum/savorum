@@ -2,16 +2,16 @@
   "schema_version": 1,
   "sref": {
     "repository": "https://github.com/savorum/sref.git",
-    "commit": "81651191eb533e064aed046bfaa3e5b72f9ec65f",
+    "commit": "d179e04734574d864c80252bb8d6ec02f2ca1b2d",
     "version": "0.5.0",
     "unit_registry_version": "0.3.0"
   },
   "sref_reader": {
     "repository": "https://github.com/savorum/sref-reader.git",
-    "commit": "ae4ba0d1b039ab5297e4e61278454f8f83807ae8"
+    "commit": "b679a0c7f901555933246943a6e9b44ec043d764"
   },
   "sref_writer": {
     "repository": "https://github.com/savorum/sref-writer.git",
-    "commit": "2dd41d6a6f00706f2527fcbdc25771825cf80e98"
+    "commit": "3f232f9dcef182d69c1d71acba5f5af2bcc7f0a4"
   }
 }

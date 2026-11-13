@@ -4,7 +4,7 @@ Notable changes to Savorum Core. Each release publishes
 `ghcr.io/savorum/savorum` and, with PDF and photo import,
 `ghcr.io/savorum/savorum` with a `-documents` tag.
 
-## Unreleased
+## 0.5.0
 
 ### Added
 
