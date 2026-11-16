@@ -3,7 +3,7 @@ import fs from "node:fs"
 import path from "node:path"
 import test from "node:test"
 
-import ts from "typescript"
+import { type ESTree, lineAt, parseProgram, sourceOf, walk } from "../../scripts/syntax.ts"
 
 interface Violation {
   file: string
@@ -17,81 +17,66 @@ function findHardcodedStrings(dir: string): Violation[] {
 
   function checkFile(filePath: string) {
     const content = fs.readFileSync(filePath, "utf8")
-    const sourceFile = ts.createSourceFile(filePath, content, ts.ScriptTarget.Latest, true)
+    const report = (node: ESTree.Span, text: string, type: string) =>
+      violations.push({
+        file: path.relative(dir, filePath),
+        line: lineAt(content, node.start),
+        text,
+        type,
+      })
 
-    function visit(node: ts.Node) {
-      if (ts.isJsxText(node)) {
-        const text = node.text.trim()
-        if (text && /[a-zA-Z]{2,}/.test(text)) {
-          let parent: ts.Node | undefined = node.parent
-          let isIgnoredTag = false
-          while (parent && (ts.isJsxElement(parent) || ts.isJsxFragment(parent))) {
-            if (ts.isJsxElement(parent)) {
-              const tag = parent.openingElement.tagName.getText(sourceFile).toLowerCase()
-              if (tag === "kbd" || tag === "style" || tag === "script" || tag === "svg") {
-                isIgnoredTag = true
-                break
-              }
-            }
-            parent = parent.parent
-          }
-          if (!isIgnoredTag) {
-            const { line } = sourceFile.getLineAndCharacterOfPosition(node.getStart())
-            violations.push({
-              file: path.relative(dir, filePath),
-              line: line + 1,
-              text,
-              type: "JsxText",
-            })
-          }
-        }
-      } else if (
-        ts.isJsxExpression(node) &&
-        node.parent &&
-        (ts.isJsxElement(node.parent) || ts.isJsxFragment(node.parent))
-      ) {
-        function checkExpr(expr?: ts.Expression) {
-          if (!expr) return
-          if (ts.isStringLiteral(expr) || ts.isNoSubstitutionTemplateLiteral(expr)) {
-            const text = expr.text.trim()
-            // Flag string literals with words that are not URLs, css units, or technical IDs
-            if (
-              text &&
-              /[a-zA-Z]{3,}/.test(text) &&
-              !text.startsWith("/") &&
-              !text.startsWith("#") &&
-              !text.includes("px") &&
-              !text.includes("rem") &&
-              !text.includes("(") &&
-              !text.includes(")")
-            ) {
-              const { line } = sourceFile.getLineAndCharacterOfPosition(expr.getStart())
-              violations.push({
-                file: path.relative(dir, filePath),
-                line: line + 1,
-                text,
-                type: "JsxExpressionStringLiteral",
-              })
-            }
-          } else if (ts.isConditionalExpression(expr)) {
-            checkExpr(expr.whenTrue)
-            checkExpr(expr.whenFalse)
-          }
-        }
-        checkExpr(node.expression)
+    function checkExpr(expr: ESTree.Node) {
+      const text =
+        expr.type === "Literal" && typeof expr.value === "string"
+          ? expr.value.trim()
+          : expr.type === "TemplateLiteral" && expr.expressions.length === 0
+            ? (expr.quasis[0]?.value.cooked ?? "").trim()
+            : undefined
+      if (text !== undefined) {
+        // Flag string literals with words that are not URLs, css units, or technical IDs
+        if (
+          text &&
+          /[a-zA-Z]{3,}/.test(text) &&
+          !text.startsWith("/") &&
+          !text.startsWith("#") &&
+          !text.includes("px") &&
+          !text.includes("rem") &&
+          !text.includes("(") &&
+          !text.includes(")")
+        )
+          report(expr, text, "JsxExpressionStringLiteral")
+      } else if (expr.type === "ConditionalExpression") {
+        checkExpr(expr.consequent)
+        checkExpr(expr.alternate)
       }
-      ts.forEachChild(node, visit)
     }
 
-    visit(sourceFile)
+    walk(parseProgram(filePath, content), (node, ancestors) => {
+      const parent = ancestors.at(-1)
+      const inChildren = parent?.type === "JSXElement" || parent?.type === "JSXFragment"
+      if (node.type === "JSXText") {
+        const text = node.value.trim()
+        if (!text || !/[a-zA-Z]{2,}/.test(text)) return
+        for (let index = ancestors.length - 1; index >= 0; index--) {
+          const ancestor = ancestors[index]
+          if (ancestor?.type === "JSXFragment") continue
+          if (ancestor?.type !== "JSXElement") break
+          const tag = sourceOf(content, ancestor.openingElement.name).toLowerCase()
+          if (tag === "kbd" || tag === "style" || tag === "script" || tag === "svg") return
+        }
+        report(node, text, "JsxText")
+      } else if (node.type === "JSXExpressionContainer" && inChildren) {
+        checkExpr(node.expression)
+      }
+    })
   }
 
-  function walk(currentDir: string) {
+  function visitDirectory(currentDir: string) {
     for (const entry of fs.readdirSync(currentDir, { withFileTypes: true })) {
       const full = path.join(currentDir, entry.name)
       if (entry.isDirectory()) {
         if (entry.name !== "node_modules" && entry.name !== "dist" && entry.name !== "paraglide") {
-          walk(full)
+          visitDirectory(full)
         }
       } else if (entry.name.endsWith(".tsx") && !entry.name.endsWith(".test.tsx")) {
         checkFile(full)
@@ -99,7 +84,7 @@ function findHardcodedStrings(dir: string): Violation[] {
     }
   }
 
-  walk(dir)
+  visitDirectory(dir)
   return violations
 }
 

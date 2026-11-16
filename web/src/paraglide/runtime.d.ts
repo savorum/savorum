@@ -567,7 +567,7 @@ export const trailingSlash: "always" | "never" | undefined;
  */
 export let serverAsyncLocalStorage: ParaglideAsyncLocalStorage | undefined;
 export const disableAsyncLocalStorage: false;
-export const isServer: any;
+export const isServer: boolean;
 /** Controls development-only runtime diagnostics. */
 export const isDevelopment: true;
 /** @type {Locale | undefined} */
