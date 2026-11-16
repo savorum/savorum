@@ -4,6 +4,12 @@ Notable changes to Savorum Core. Each release publishes
 `ghcr.io/savorum/savorum` and, with PDF and photo import,
 `ghcr.io/savorum/savorum` with a `-documents` tag.
 
+## Unreleased
+
+### Changed
+
+- Require Go 1.27.4 or later for source builds.
+
 ## 0.5.0
 
 ### Added
