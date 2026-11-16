@@ -2,7 +2,7 @@
 import fs from "node:fs"
 import path from "node:path"
 
-import ts from "typescript"
+import { parseProgram, sourceOf, walk } from "./syntax.ts"
 
 export const settings = JSON.parse(fs.readFileSync("project.inlang/settings.json", "utf8"))
 export const registry = JSON.parse(fs.readFileSync("locales.json", "utf8"))
@@ -84,50 +84,45 @@ export function shape(value) {
 /** Duplicate members anywhere in a JSON file, which JSON.parse would silently merge. */
 export function duplicateMembers(file, text) {
   const errors = []
-  const ast = ts.parseJsonText(file, text)
-  const visit = (node) => {
-    if (ts.isObjectLiteralExpression(node)) {
-      const keys = new Set()
-      for (const property of node.properties) {
-        const key = property.name?.text
-        if (keys.has(key)) errors.push(`${file}: duplicate member ${key}`)
-        keys.add(key)
-      }
+  walk(parseProgram(`${file}.js`, `(${text})`), (node) => {
+    if (node.type !== "ObjectExpression") return
+    const keys = new Set()
+    for (const property of node.properties) {
+      if (property.type !== "Property" || property.key.type !== "Literal") continue
+      const key = property.key.value
+      if (keys.has(key)) errors.push(`${file}: duplicate member ${key}`)
+      keys.add(key)
     }
-    ts.forEachChild(node, visit)
-  }
-  visit(ast)
+  })
   return errors
 }
 
 /** Message identifiers the source code reads as `m.<identifier>`. */
 export function referencedMessages(directory = "src") {
   const references = new Map()
-  const walk = (dir) => {
+  const visitDirectory = (dir) => {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
       const file = path.join(dir, entry.name)
       if (entry.isDirectory()) {
-        if (entry.name !== "paraglide") walk(file)
+        if (entry.name !== "paraglide") visitDirectory(file)
         continue
       }
       if (!/\.tsx?$/.test(file) || /\.test\.|\.d\.ts$/.test(file)) continue
-      const ast = ts.createSourceFile(
-        file,
-        fs.readFileSync(file, "utf8"),
-        ts.ScriptTarget.Latest,
-        true,
-      )
-      const visit = (node) => {
-        if (ts.isPropertyAccessExpression(node) && node.expression.getText(ast) === "m") {
-          const list = references.get(node.name.text) ?? []
+      const text = fs.readFileSync(file, "utf8")
+      walk(parseProgram(file, text), (node) => {
+        if (
+          node.type === "MemberExpression" &&
+          !node.computed &&
+          sourceOf(text, node.object) === "m" &&
+          node.property.type === "Identifier"
+        ) {
+          const list = references.get(node.property.name) ?? []
           list.push(file)
-          references.set(node.name.text, list)
+          references.set(node.property.name, list)
         }
-        ts.forEachChild(node, visit)
-      }
-      visit(ast)
+      })
     }
   }
-  walk(directory)
+  visitDirectory(directory)
   return references
 }

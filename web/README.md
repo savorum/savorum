@@ -31,6 +31,9 @@ contract as third-party clients.
 - **API calls.** Unwrap results with `unwrap`, `unwrapVersioned`,
   `unwrapItems`, or `expectOk` from `src/api/client`, not by checking
   `result.data` or `result.error` directly.
+- **API contract.** `scripts/generate-api.ts` writes `src/api/schema.d.ts`
+  from `../api/openapi.json`, an OpenAPI 3.1 document, and
+  `src/api/http.ts` types each call from it.
 - **Page layout.** Use the `pageShell` recipe with a named width instead of
   declaring page, title, or back-link styles.
 - **Pending changes.** Hold a running change with `createAsyncAction` in

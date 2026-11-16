@@ -1,5 +1,4 @@
-import createClient from "openapi-fetch"
-
+import { createClient } from "./http.ts"
 import { problemMessage, violationMessage } from "./problem-messages.ts"
 import type { components, paths } from "./schema"
 import { sessionFetch } from "./session.ts"
@@ -153,7 +152,7 @@ export function failure({ error, response }: Failure, fallback: string): ApiErro
   )
 }
 
-/** The shape every openapi-fetch call returns, narrowed to what unwrapping needs. */
+/** The shape every client call returns, narrowed to what unwrapping needs. */
 interface Result<T> {
   data?: T
   error?: unknown

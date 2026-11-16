@@ -2,56 +2,55 @@ import { readFileSync, writeFileSync } from "node:fs"
 import { dirname, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 
-import ts from "typescript"
 import type { Plugin } from "vite"
+
+import { type ESTree, parseProgram, sourceOf } from "./syntax.ts"
 
 const webRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..")
 export const compiledMessagesPath = resolve(webRoot, "src/paraglide/messages/_index.js")
 const generatedPath = resolve(webRoot, "src/lib/messages.generated.ts")
 
+function exportName(name: ESTree.ModuleExportName): string {
+  return name.type === "Identifier" ? name.name : String(name.value)
+}
+
+/** A top-level variable declaration, exported or not. */
+function variableDeclaration(
+  statement: ESTree.Directive | ESTree.Statement,
+): ESTree.VariableDeclaration | undefined {
+  if (statement.type === "VariableDeclaration") return statement
+  if (
+    statement.type === "ExportNamedDeclaration" &&
+    statement.declaration?.type === "VariableDeclaration"
+  )
+    return statement.declaration
+  return undefined
+}
+
 /** Preserve compiler aliases while exposing statically analyzable message exports. */
 export function generateMessages(): void {
-  const source = ts.createSourceFile(
-    compiledMessagesPath,
-    readFileSync(compiledMessagesPath, "utf8"),
-    ts.ScriptTarget.Latest,
-    false,
-    ts.ScriptKind.JS,
-  )
+  const compiled = parseProgram(compiledMessagesPath, readFileSync(compiledMessagesPath, "utf8"))
   const names = new Map<string, string>()
-  for (const statement of source.statements) {
-    if (
-      ts.isVariableStatement(statement) &&
-      statement.modifiers?.some((modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword)
-    ) {
-      for (const declaration of statement.declarationList.declarations) {
-        if (ts.isIdentifier(declaration.name))
-          names.set(declaration.name.text, declaration.name.text)
+  for (const statement of compiled.body) {
+    if (statement.type !== "ExportNamedDeclaration") continue
+    if (statement.declaration?.type === "VariableDeclaration") {
+      for (const declaration of statement.declaration.declarations) {
+        if (declaration.id.type === "Identifier")
+          names.set(declaration.id.name, declaration.id.name)
       }
     }
-    if (
-      ts.isExportDeclaration(statement) &&
-      statement.exportClause &&
-      ts.isNamedExports(statement.exportClause)
-    ) {
-      for (const entry of statement.exportClause.elements)
-        names.set(entry.name.text, (entry.propertyName ?? entry.name).text)
-    }
+    for (const entry of statement.specifiers)
+      names.set(exportName(entry.exported), exportName(entry.local))
   }
   if (names.size === 0) throw new Error("Paraglide did not export any messages")
-  const english = ts.createSourceFile(
-    "en.js",
-    readFileSync(resolve(webRoot, "src/paraglide/messages/en.js"), "utf8"),
-    ts.ScriptTarget.Latest,
-    false,
-    ts.ScriptKind.JS,
-  )
+  const englishPath = resolve(webRoot, "src/paraglide/messages/en.js")
+  const englishText = readFileSync(englishPath, "utf8")
   const fallbacks = new Map<string, string>()
-  for (const statement of english.statements) {
-    if (!ts.isVariableStatement(statement)) continue
-    for (const declaration of statement.declarationList.declarations) {
-      if (ts.isIdentifier(declaration.name) && declaration.initializer)
-        fallbacks.set(declaration.name.text, declaration.initializer.getText(english))
+  for (const statement of parseProgram(englishPath, englishText).body) {
+    const declaration = variableDeclaration(statement)
+    for (const declarator of declaration?.declarations ?? []) {
+      if (declarator.id.type === "Identifier" && declarator.init)
+        fallbacks.set(declarator.id.name, sourceOf(englishText, declarator.init))
     }
   }
   const output = [
@@ -105,27 +104,22 @@ export function messageExportsPlugin(): Plugin {
     },
     transform(code, id) {
       if (!building || id !== generatedPath) return
-      const source = ts.createSourceFile(id, code, ts.ScriptTarget.Latest, false, ts.ScriptKind.TS)
       const shared: string[] = []
       const messages: { name: string; code: string }[] = []
-      for (const statement of source.statements) {
-        if (ts.isVariableStatement(statement)) {
-          const name = statement.declarationList.declarations[0]?.name
-          if (name && ts.isIdentifier(name))
-            messages.push({ name: name.text, code: statement.getText(source) })
-        } else if (
-          ts.isImportDeclaration(statement) &&
-          ts.isStringLiteral(statement.moduleSpecifier)
-        ) {
+      for (const statement of parseProgram(id, code).body) {
+        const declaration = variableDeclaration(statement)?.declarations[0]
+        if (declaration) {
+          if (declaration.id.type === "Identifier")
+            messages.push({ name: declaration.id.name, code: sourceOf(code, statement) })
+        } else if (statement.type === "ImportDeclaration") {
+          const specifier = String(statement.source.value)
           shared.push(
-            statement
-              .getText(source)
-              .replace(
-                statement.moduleSpecifier.getText(source),
-                JSON.stringify(resolve(dirname(generatedPath), statement.moduleSpecifier.text)),
-              ),
+            sourceOf(code, statement).replace(
+              sourceOf(code, statement.source),
+              JSON.stringify(resolve(dirname(generatedPath), specifier)),
+            ),
           )
-        } else shared.push(statement.getText(source))
+        } else shared.push(sourceOf(code, statement))
       }
       for (const message of messages)
         modules.set(`${prefix}${message.name}.ts`, [...shared, message.code].join("\n"))
