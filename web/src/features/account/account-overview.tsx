@@ -76,18 +76,10 @@ export function AccountOverview() {
                     <Show when={authEnabled() && library.role === "owner"}>
                       <Link
                         class={styles.back}
-                        to="/libraries/$libraryId/access"
-                        params={{ libraryId: library.id }}
-                        hash="invitations"
-                      >
-                        {m.account_overview_invite_people()}
-                      </Link>
-                      <Link
-                        class={styles.back}
-                        to="/libraries/$libraryId/access"
+                        to="/libraries/$libraryId/settings"
                         params={{ libraryId: library.id }}
                       >
-                        {m.account_overview_manage_access()}
+                        {m.library_settings()}
                       </Link>
                     </Show>
                   </li>

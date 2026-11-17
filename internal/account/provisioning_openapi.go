@@ -10,13 +10,14 @@ import (
 )
 
 type invitationCreateRequest struct {
-	Role access.Role `json:"role" enum:"viewer,editor,owner"`
+	Role access.Role `json:"role" enum:"viewer,editor"`
 	Hint string      `json:"hint,omitempty"`
 	Days int         `json:"days,omitempty" minimum:"1" maximum:"30"`
 }
 type invitationCreateResponse struct {
 	Invitation identity.Invitation `json:"invitation"`
 	Token      string              `json:"token"`
+	URL        string              `json:"url,omitempty" doc:"Link to share, built from the configured public URL. Absent when none is configured."`
 }
 type invitationAcceptRequest struct {
 	Token string `json:"token" writeOnly:"true"`
@@ -59,6 +60,7 @@ func registerProvisioningOpenAPI(api huma.API) {
 		{"POST", "/api/v1/libraries/{id}/invitations", "create-library-invitation", "Invitations", "Create an invitation", "Returns the link secret once. Library ownership or instance administration required.", reflect.TypeFor[invitationCreateRequest](), reflect.TypeFor[invitationCreateResponse]()},
 		{"DELETE", "/api/v1/account/invitations/{id}", "revoke-library-invitation", "Invitations", "Revoke an invitation", "A revoked link cannot be reused.", nil, reflect.TypeFor[revokedResponse]()},
 		{"POST", "/api/v1/account/invitations/accept", "accept-library-invitation", "Invitations", "Accept an invitation", "Grants only the invited library role, never instance administration.", reflect.TypeFor[invitationAcceptRequest](), reflect.TypeFor[acceptedResponse]()},
+		{"POST", "/api/v1/account/invitations/preview", "preview-library-invitation", "Invitations", "Preview an invitation", "The bearer link exposes the library name and role. Accepted links require the accepting account and current library membership.", reflect.TypeFor[invitationAcceptRequest](), reflect.TypeFor[identity.InvitationPreview]()},
 		{"POST", "/api/v1/account/invitations/register", "register-invited-local-account", "Invitations", "Register from an invitation", "Creates the account and consumes the invitation in one transaction.", reflect.TypeFor[invitationRegisterRequest](), reflect.TypeFor[loginResponse]()},
 		{"GET", "/api/v1/account/methods", "list-sign-in-methods", "Sign-in methods", "List sign-in methods", "The methods attached to the current account.", nil, reflect.TypeFor[signInMethodsResponse]()},
 		{"DELETE", "/api/v1/account/methods/{id}", "unlink-sign-in-method", "Sign-in methods", "Unlink a sign-in method", "Refused when it would leave no usable sign-in or recovery method.", nil, reflect.TypeFor[removedResponse]()},
@@ -71,7 +73,7 @@ func registerProvisioningOpenAPI(api huma.API) {
 	} {
 		doc := api.OpenAPI()
 
-		op := &huma.Operation{Method: r.method, Path: r.path, OperationID: r.id, Tags: []string{r.tag}, Summary: r.summary, Description: r.detail + " Browser session and CSRF protection are required for mutations, except invited local registration. Invitation secrets are returned once and must never be logged."}
+		op := &huma.Operation{Method: r.method, Path: r.path, OperationID: r.id, Tags: []string{r.tag}, Summary: r.summary, Description: r.detail + " Browser session and CSRF protection are required for mutations, except invited local registration and bearer invitation previews. Invitation secrets are returned once and must never be logged."}
 		for part := range strings.SplitSeq(r.path, "/") {
 			if strings.HasPrefix(part, "{") {
 				op.Parameters = append(op.Parameters, &huma.Param{Name: strings.Trim(part, "{}"), In: "path", Required: true, Schema: &huma.Schema{Type: huma.TypeString}})

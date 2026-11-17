@@ -2,7 +2,9 @@ package sqlite
 
 import (
 	"context"
+	"crypto/rand"
 	"database/sql"
+	"encoding/base64"
 	"errors"
 	"fmt"
 	"strings"
@@ -20,7 +22,7 @@ func requireInvitationOwner(ctx context.Context, tx *sql.Tx, actor, libraryID st
 	return requireLibraryOwner(ctx, tx, actor, libraryID)
 }
 
-// CreateInvitation returns its bearer token once. Hints are never identity keys.
+// CreateInvitation returns its bearer token once. Links grant view or edit access; hints are never identity keys.
 func (s *Store) CreateInvitation(ctx context.Context, libraryID string, role access.Role, hint string, days int) (identity.Invitation, string, error) {
 	var v identity.Invitation
 
@@ -29,7 +31,7 @@ func (s *Store) CreateInvitation(ctx context.Context, libraryID string, role acc
 		return v, "", access.ErrForbidden
 	}
 
-	if !role.Allows(access.Viewer) || len(hint) > 320 {
+	if (role != access.Viewer && role != access.Editor) || len(hint) > 320 {
 		return v, "", identity.ErrConflict
 	}
 
@@ -46,7 +48,7 @@ func (s *Store) CreateInvitation(ctx context.Context, libraryID string, role acc
 		return v, "", err
 	}
 
-	token, err := opaqueToken()
+	token, err := invitationSecret()
 	if err != nil {
 		return v, "", err
 	}
@@ -295,4 +297,32 @@ func (s *Store) RegisterInvitedLocalUser(ctx context.Context, token, login, disp
 	}
 
 	return identity.Principal{UserID: id, DisplayName: display}, nil
+}
+
+// PreviewInvitation permits a live link or a same-account receipt with current library access.
+func (s *Store) PreviewInvitation(ctx context.Context, token string) (identity.InvitationPreview, error) {
+	var preview identity.InvitationPreview
+
+	p, _ := identity.FromContext(ctx)
+
+	err := s.db.QueryRowContext(ctx, `SELECT l.id,l.name,i.role,i.accepted_at IS NOT NULL FROM invitations i JOIN libraries l ON l.id=i.library_id WHERE i.token_hash=? AND l.deleted_at IS NULL AND ((`+usableInvitation+`) OR (i.accepted_by=? AND i.accepted_at IS NOT NULL AND EXISTS(SELECT 1 FROM library_memberships m JOIN users u ON u.id=m.user_id WHERE m.library_id=i.library_id AND m.user_id=? AND u.status='active')))`, tokenHash(token), p.UserID, p.UserID).Scan(&preview.LibraryID, &preview.LibraryName, &preview.Role, &preview.Accepted)
+	if errors.Is(err, sql.ErrNoRows) {
+		return preview, identity.ErrCredentials
+	}
+
+	if err != nil {
+		return preview, fmt.Errorf("preview invitation: %w", err)
+	}
+
+	return preview, nil
+}
+
+// invitationSecret is 128 random bits in URL-safe base64, short enough to share in a text message.
+func invitationSecret() (string, error) {
+	b := make([]byte, 16)
+	if _, err := rand.Read(b); err != nil {
+		return "", fmt.Errorf("generate invitation secret: %w", err)
+	}
+
+	return base64.RawURLEncoding.EncodeToString(b), nil
 }

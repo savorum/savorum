@@ -14,9 +14,9 @@ import { settled } from "@/lib/settled"
 
 import { m } from "../../lib/messages.ts"
 import { accountStyles as styles } from "./account-layout"
-import { account, accountRequest, libraries, type AccountUser } from "./account-state"
+import { account, accountRequest, libraries, roleItems, type AccountUser } from "./account-state"
 import { AdminPage } from "./admin-page"
-import { LibraryInvitations } from "./invitations"
+import { InvitationLinkDialog } from "./library-sharing"
 import { ManagedSignInMethods } from "./sign-in-methods"
 
 export function AdminPeoplePage() {
@@ -34,6 +34,7 @@ function People() {
   const people = createMemo<AccountUser[]>((previous) => settled(users) ?? previous, [])
   const [creating, setCreating] = createSignal(false)
   const [inviting, setInviting] = createSignal(false)
+  const owned = () => libraries().filter((entry) => entry.role === "owner")
   const [error, setError] = createSignal<unknown>()
   const [busy, setBusy] = createSignal(false)
   async function run(path: string, method: string, body: unknown) {
@@ -53,19 +54,10 @@ function People() {
   return (
     <>
       <section class={styles.section}>
-        <div
-          class={css({
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "3",
-          })}
-        >
-          <h2 class={css({ fontFamily: "editorial", fontSize: "xl" })}>
-            {m.account_admin_people_heading()}
-          </h2>
-          <div class={css({ display: "flex", gap: "2" })}>
-            <Show when={libraries().length > 0}>
+        <div class={styles.sectionHeader}>
+          <h2>{m.account_admin_people_heading()}</h2>
+          <div class={styles.actions}>
+            <Show when={owned().length > 0}>
               <Button size="sm" variant="outline" onClick={() => setInviting(true)}>
                 {m.account_admin_invite_heading()}
               </Button>
@@ -114,7 +106,11 @@ function People() {
         </ul>
       </section>
       <Show when={inviting()}>
-        <InvitePeople onClose={() => setInviting(false)} />
+        <InvitationLinkDialog
+          libraries={owned()}
+          linkToSettings
+          onClose={() => setInviting(false)}
+        />
       </Show>
       <Show when={creating()}>
         <CreatePerson
@@ -383,36 +379,6 @@ function ManagePerson(props: {
   )
 }
 
-function InvitePeople(props: { onClose: () => void }) {
-  const [library, setLibrary] = createSignal(libraries()[0]?.id ?? "")
-  const chosen = () => libraries().find((entry) => entry.id === library())
-  return (
-    <Dialog
-      open
-      title={m.account_admin_invite_heading()}
-      description={m.account_admin_invite_hint()}
-      onClose={props.onClose}
-      contentClass={css({ maxWidth: "34rem" })}
-      footer={
-        <Button variant="outline" onClick={props.onClose}>
-          {m.common_cancel()}
-        </Button>
-      }
-    >
-      <FormField label={m.account_admin_invite_library()}>
-        <Select
-          value={library()}
-          onValueChange={setLibrary}
-          items={libraries().map((entry) => ({ value: entry.id, label: entry.name }))}
-        />
-      </FormField>
-      <Show when={chosen()} keyed>
-        {(entry) => <LibraryInvitations libraryID={entry.id} libraryName={entry.name} />}
-      </Show>
-    </Dialog>
-  )
-}
-
 function CreatePerson(props: {
   busy: boolean
   error: unknown
@@ -511,11 +477,7 @@ function CreatePerson(props: {
                 disabled={props.busy}
                 value={role()}
                 onValueChange={setRole}
-                items={[
-                  { value: "viewer", label: m.account_role_viewer() },
-                  { value: "editor", label: m.account_role_editor() },
-                  { value: "owner", label: m.account_role_owner() },
-                ]}
+                items={roleItems("viewer", "editor", "owner")}
               />
             </FormField>
           </Show>

@@ -206,12 +206,22 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h.next.ServeHTTP(w, r.WithContext(access.WithLibrary(ctx, selected)))
 }
 
+// publicAccountPost names the sign-in and invitation writes that run before any session exists.
+func publicAccountPost(path string) bool {
+	switch path {
+	case "/api/v1/account/login", "/api/v1/account/invitations/register", "/api/v1/account/invitations/preview":
+		return true
+	}
+
+	return false
+}
+
 func publicAccountRoute(r *http.Request) bool {
 	switch {
 	case publicPasskeyRecoveryRoute(r):
 		return true
 	case r.Method == http.MethodPost:
-		return r.URL.Path == "/api/v1/account/invitations/register" || r.URL.Path == "/api/v1/account/login"
+		return publicAccountPost(r.URL.Path)
 	case r.Method == http.MethodGet:
 		return r.URL.Path == "/api/v1/account"
 	}
@@ -225,7 +235,7 @@ func (h *Handler) csrfRequired(r *http.Request, b browser) bool {
 		return false
 	}
 
-	if r.URL.Path == "/api/v1/account/login" || r.URL.Path == "/api/v1/account/invitations/register" || publicPasskeyRecoveryRoute(r) {
+	if publicAccountPost(r.URL.Path) || publicPasskeyRecoveryRoute(r) {
 		return false
 	}
 

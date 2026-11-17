@@ -195,9 +195,11 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) list(w http.ResponseWriter, r *http.Request) {
 	type summary struct {
-		ID          string `json:"id"`
-		Kind        string `json:"kind"`
-		DisplayName string `json:"display_name"`
+		ID            string `json:"id"`
+		Kind          string `json:"kind"`
+		DisplayName   string `json:"display_name"`
+		AccountOrigin string `json:"account_origin,omitempty"`
+		TenantID      string `json:"tenant_id,omitempty"`
 	}
 
 	out := []summary{}
@@ -207,7 +209,16 @@ func (h *Handler) list(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 
-		out = append(out, summary{ID: p.ID, Kind: p.Kind, DisplayName: p.DisplayName})
+		item := summary{ID: p.ID, Kind: p.Kind, DisplayName: p.DisplayName}
+		if p.Kind == "managed" && p.Managed != nil {
+			if issuer, err := url.Parse(p.Managed.Issuer); err == nil {
+				item.AccountOrigin = issuer.Scheme + "://" + issuer.Host
+			}
+
+			item.TenantID = p.Managed.Audience
+		}
+
+		out = append(out, item)
 	}
 
 	sort.Slice(out, func(i, j int) bool { return out[i].ID < out[j].ID })

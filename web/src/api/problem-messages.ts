@@ -37,6 +37,12 @@ export function problemMessage(
   switch (code) {
     case "recent-authentication-required":
       return m.api_problem_recent_authentication_required()
+    case "invitation-unavailable":
+      return m.account_invitation_unavailable()
+    case "invited-account-invalid":
+      return m.account_invited_invalid()
+    case "invited-account-name-taken":
+      return m.account_invited_name_taken()
     case "invalid-credentials":
       return m.api_problem_invalid_credentials()
     case "account-conflict":

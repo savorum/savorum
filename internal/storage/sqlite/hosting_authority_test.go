@@ -67,7 +67,7 @@ func TestDisabledProviderTokensRemainRevokedAfterReenabling(t *testing.T) {
 	}
 }
 
-func TestHostedMemberRevocationIsExactIdempotentAndPreservesOtherLibraries(t *testing.T) {
+func TestHostedMemberRevocationIsExactIdempotentAndRemovesAllLibraryAccess(t *testing.T) {
 	s, ownerCtx, _, m := hostedMember(t)
 
 	session, err := s.CreateSession(t.Context(), m.UserID, "cloud", 0, 0)
@@ -135,8 +135,13 @@ func TestHostedMemberRevocationIsExactIdempotentAndPreservesOtherLibraries(t *te
 		t.Fatalf("membership survived: %v", err)
 	}
 
-	if err := s.AuthorizeLibrary(memberCtx, other.ID, access.Viewer); err != nil {
-		t.Fatalf("unrelated library changed: %v", err)
+	if err := s.AuthorizeLibrary(memberCtx, other.ID, access.Viewer); !errors.Is(err, access.ErrForbidden) {
+		t.Fatalf("additional library access survived: %v", err)
+	}
+
+	user, err := s.User(t.Context(), m.UserID)
+	if err != nil || user.Status != "disabled" {
+		t.Fatal("revoked user can authenticate with other credentials", err)
 	}
 
 	if _, err := s.CreatePersonalToken(memberCtx, identity.TokenRequest{Name: "stale request", Scopes: []string{"recipes:read"}, Libraries: []string{other.ID}}, identity.TokenPolicy{}); !errors.Is(err, access.ErrForbidden) {
@@ -229,5 +234,59 @@ func TestHostingReleaseRevokesManagedTokensAndPreservesLocalTokens(t *testing.T)
 
 	if _, _, err := s.ResolvePersonalToken(t.Context(), local.Secret); err != nil {
 		t.Fatalf("local token revoked: %v", err)
+	}
+}
+
+func TestHostedRemovalPreservesSoleOwnerOfAdditionalLibrary(t *testing.T) {
+	s, ownerCtx, _, member := hostedMember(t)
+
+	other, err := s.CreateLibrary(ownerCtx, "Member library")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if err = s.SetLibraryMember(ownerCtx, other.ID, member.UserID, access.Owner, false); err != nil {
+		t.Fatal(err)
+	}
+
+	if _, err = s.db.ExecContext(t.Context(), `DELETE FROM library_memberships WHERE library_id=? AND user_id<>?`, other.ID, member.UserID); err != nil {
+		t.Fatal(err)
+	}
+
+	if err = s.RevokeHostedMember(t.Context(), member); !errors.Is(err, identity.ErrConflict) {
+		t.Fatal("sole owner removed", err)
+	}
+
+	user, err := s.User(t.Context(), member.UserID)
+	if err != nil || user.Status != "active" {
+		t.Fatal("failed removal disabled account", err)
+	}
+}
+
+func TestHostedScopedGrantUsesExistingIdentityAndAllowsSignInFallback(t *testing.T) {
+	s, ownerCtx, owner, member := hostedMember(t)
+
+	other, err := s.CreateLibrary(ownerCtx, "Additional")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	request := hosting.MemberRequest{OperationID: "scoped_member", TenantID: owner.TenantID, Subject: member.Subject, DisplayName: "Member", Issuer: testBootstrap().Issuer, BootstrapID: "boot_1", OwnerSubject: testBootstrap().Owner.Subject, OwnerUserID: owner.OwnerUserID, LibraryID: other.ID, Role: "editor"}
+
+	result, err := s.BootstrapHostingMember(t.Context(), request)
+	if err != nil || result.UserID != member.UserID || result.LibraryID != other.ID {
+		t.Fatal("scoped admission failed", err)
+	}
+
+	if _, err = s.db.ExecContext(t.Context(), `DELETE FROM library_memberships WHERE user_id=? AND library_id=?`, member.UserID, member.LibraryID); err != nil {
+		t.Fatal(err)
+	}
+
+	if _, err = s.ResolveManagedIdentity(t.Context(), "cloud", member.Subject, member.UserID, member.LibraryID); !errors.Is(err, identity.ErrCredentials) {
+		t.Fatal("missing library accepted", err)
+	}
+
+	if _, err = s.ResolveManagedIdentity(t.Context(), "cloud", member.Subject, member.UserID, ""); err != nil {
+		t.Fatal("remaining membership rejected", err)
 	}
 }

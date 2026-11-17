@@ -3,12 +3,6 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 
 /** @typedef {import('../runtime.js').LocalizedString} LocalizedString */
 /** @typedef {{}} _Root_Skip_To_Main_ContentInputs */
-/** @typedef {{}} Account_Access_BackInputs */
-/** @typedef {{}} Account_Access_ForbiddenInputs */
-/** @typedef {{}} Account_Access_LedeInputs */
-/** @typedef {{ library: NonNullable<unknown> }} Account_Access_Owner_OnlyInputs */
-/** @typedef {{}} Account_Access_Page_TitleInputs */
-/** @typedef {{ library: NonNullable<unknown> }} Account_Access_TitleInputs */
 /** @typedef {{}} Account_Activity_HeadingInputs */
 /** @typedef {{}} Account_Admin_ActiveInputs */
 /** @typedef {{}} Account_Admin_Audit_LedeInputs */
@@ -31,7 +25,6 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{ name: NonNullable<unknown> }} Account_Admin_Enable_NamedInputs */
 /** @typedef {{}} Account_Admin_Initial_PasswordInputs */
 /** @typedef {{}} Account_Admin_Invite_HeadingInputs */
-/** @typedef {{}} Account_Admin_Invite_HintInputs */
 /** @typedef {{}} Account_Admin_Invite_LibraryInputs */
 /** @typedef {{}} Account_Admin_Libraries_LedeInputs */
 /** @typedef {{}} Account_Admin_Libraries_Page_TitleInputs */
@@ -186,31 +179,37 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Account_Delete_ReauthenticateInputs */
 /** @typedef {{}} Account_Delete_SubmitInputs */
 /** @typedef {{}} Account_Display_NameInputs */
+/** @typedef {{}} Account_Hosted_AccountInputs */
+/** @typedef {{}} Account_Hosted_Invitations_HintInputs */
+/** @typedef {{}} Account_Hosted_Legacy_InvitationInputs */
+/** @typedef {{}} Account_Hosted_Replace_HintInputs */
 /** @typedef {{}} Account_Invitation_AcceptInputs */
+/** @typedef {{}} Account_Invitation_Create_HeadingInputs */
 /** @typedef {{}} Account_Invitation_HeadingInputs */
 /** @typedef {{ name: NonNullable<unknown> }} Account_Invitation_Join_AsInputs */
+/** @typedef {{}} Account_Invitation_Need_AccountInputs */
 /** @typedef {{}} Account_Invitation_Open_AppInputs */
+/** @typedef {{}} Account_Invitation_Open_LibraryInputs */
+/** @typedef {{}} Account_Invitation_Sign_In_HeadingInputs */
 /** @typedef {{}} Account_Invitation_State_AcceptedInputs */
-/** @typedef {{}} Account_Invitation_State_ExpiredInputs */
 /** @typedef {{ date: NonNullable<unknown> }} Account_Invitation_State_ExpiresInputs */
 /** @typedef {{}} Account_Invitation_State_RevokedInputs */
+/** @typedef {{}} Account_Invitation_UnavailableInputs */
+/** @typedef {{}} Account_Invitations_AnotherInputs */
 /** @typedef {{}} Account_Invitations_CreateInputs */
-/** @typedef {{}} Account_Invitations_DismissInputs */
 /** @typedef {{}} Account_Invitations_ExpiryInputs */
-/** @typedef {{}} Account_Invitations_HeadingInputs */
 /** @typedef {{ library: NonNullable<unknown> }} Account_Invitations_HintInputs */
 /** @typedef {{}} Account_Invitations_LabelInputs */
 /** @typedef {{}} Account_Invitations_Label_HintInputs */
 /** @typedef {{}} Account_Invitations_LinkInputs */
 /** @typedef {{}} Account_Invitations_Link_HintInputs */
-/** @typedef {{}} Account_Invitations_NoneInputs */
+/** @typedef {{}} Account_Invitations_ReadyInputs */
 /** @typedef {{}} Account_Invitations_RevokeInputs */
 /** @typedef {{ label: NonNullable<unknown> }} Account_Invitations_Revoke_NamedInputs */
-/** @typedef {{}} Account_Invitations_RoleInputs */
-/** @typedef {{}} Account_Invitations_Role_EditorInputs */
-/** @typedef {{}} Account_Invitations_Role_OwnerInputs */
-/** @typedef {{}} Account_Invitations_Role_ViewerInputs */
+/** @typedef {{}} Account_Invitations_ShareInputs */
 /** @typedef {{}} Account_Invitations_UnnamedInputs */
+/** @typedef {{}} Account_Invited_InvalidInputs */
+/** @typedef {{}} Account_Invited_Name_TakenInputs */
 /** @typedef {{}} Account_Load_ErrorInputs */
 /** @typedef {{}} Account_Local_Mode_UnavailableInputs */
 /** @typedef {{ provider: NonNullable<unknown> }} Account_Login_Continue_WithInputs */
@@ -267,11 +266,9 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Account_Nav_SecurityInputs */
 /** @typedef {{}} Account_Nav_TokensInputs */
 /** @typedef {{}} Account_Overview_DetailsInputs */
-/** @typedef {{}} Account_Overview_Invite_PeopleInputs */
 /** @typedef {{}} Account_Overview_LibrariesInputs */
 /** @typedef {{}} Account_Overview_Libraries_EmptyInputs */
 /** @typedef {{}} Account_Overview_Local_ModeInputs */
-/** @typedef {{}} Account_Overview_Manage_AccessInputs */
 /** @typedef {{}} Account_Overview_Page_TitleInputs */
 /** @typedef {{}} Account_Overview_PreferencesInputs */
 /** @typedef {{}} Account_Overview_Preferences_HintInputs */
@@ -326,6 +323,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Account_Recovery_Saved_HintInputs */
 /** @typedef {{}} Account_Register_ExistingInputs */
 /** @typedef {{}} Account_Register_HeadingInputs */
+/** @typedef {{}} Account_Register_Password_HintInputs */
 /** @typedef {{}} Account_Register_SubmitInputs */
 /** @typedef {{}} Account_Retire_BodyInputs */
 /** @typedef {{}} Account_Retire_ConfirmationInputs */
@@ -1397,6 +1395,9 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{ value1: NonNullable<unknown> }} Library_Filters_Stop_NarrowingInputs */
 /** @typedef {{}} Library_Filters_TagsInputs */
 /** @typedef {{}} Library_Filters_Taken_From_A_CookbookInputs */
+/** @typedef {{}} Library_Invitations_EmptyInputs */
+/** @typedef {{}} Library_Invitations_HeadingInputs */
+/** @typedef {{}} Library_Members_All_AddedInputs */
 /** @typedef {{}} Library_Page_Add_RecipesInputs */
 /** @typedef {{}} Library_Page_Drop_RecipesInputs */
 /** @typedef {{}} Library_Page_New_RecipeInputs */
@@ -1439,6 +1440,11 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{ value1: NonNullable<unknown> }} Library_Selection_Bar_SelectedInputs */
 /** @typedef {{}} Library_Selection_Bar_Selected_RecipesInputs */
 /** @typedef {{}} Library_Selection_Bar_Sref_BundleInputs */
+/** @typedef {{}} Library_SettingsInputs */
+/** @typedef {{}} Library_Settings_ForbiddenInputs */
+/** @typedef {{ library: NonNullable<unknown> }} Library_Settings_Owner_OnlyInputs */
+/** @typedef {{}} Library_Settings_Page_TitleInputs */
+/** @typedef {{ library: NonNullable<unknown> }} Library_Settings_TitleInputs */
 /** @typedef {{}} Library_Shuffle_AgainInputs */
 /** @typedef {{}} Library_Sort_Active_TimeInputs */
 /** @typedef {{}} Library_Sort_AddedInputs */
@@ -2571,252 +2577,6 @@ export const _root_skip_to_main_content = /** @type {((inputs?: _Root_Skip_To_Ma
 /**
 * | output |
 * | --- |
-* | "Back to your account" |
-*
-* @param {Account_Access_BackInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const account_access_back = /** @type {((inputs?: Account_Access_BackInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Access_BackInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.account_access_back(inputs)
-	if (locale === "cs") return __cs.account_access_back(inputs)
-	if (locale === "da") return __da.account_access_back(inputs)
-	if (locale === "de") return __de.account_access_back(inputs)
-	if (locale === "el") return __el.account_access_back(inputs)
-	if (locale === "es") return __es.account_access_back(inputs)
-	if (locale === "fi") return __fi.account_access_back(inputs)
-	if (locale === "fr") return __fr.account_access_back(inputs)
-	if (locale === "he") return __he.account_access_back(inputs)
-	if (locale === "hu") return __hu.account_access_back(inputs)
-	if (locale === "id") return __id.account_access_back(inputs)
-	if (locale === "it") return __it.account_access_back(inputs)
-	if (locale === "ja") return __ja.account_access_back(inputs)
-	if (locale === "ko") return __ko.account_access_back(inputs)
-	if (locale === "nb") return __nb.account_access_back(inputs)
-	if (locale === "nl") return __nl.account_access_back(inputs)
-	if (locale === "pl") return __pl.account_access_back(inputs)
-	if (locale === "pt-BR") return __pt_br2.account_access_back(inputs)
-	if (locale === "pt-PT") return __pt_pt2.account_access_back(inputs)
-	if (locale === "ro") return __ro.account_access_back(inputs)
-	if (locale === "ru") return __ru.account_access_back(inputs)
-	if (locale === "sv") return __sv.account_access_back(inputs)
-	if (locale === "th") return __th.account_access_back(inputs)
-	if (locale === "tr") return __tr.account_access_back(inputs)
-	if (locale === "uk") return __uk.account_access_back(inputs)
-	if (locale === "vi") return __vi.account_access_back(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.account_access_back(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.account_access_back(inputs)
-	return __en.account_access_back(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "You are not a member of this library." |
-*
-* @param {Account_Access_ForbiddenInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const account_access_forbidden = /** @type {((inputs?: Account_Access_ForbiddenInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Access_ForbiddenInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.account_access_forbidden(inputs)
-	if (locale === "cs") return __cs.account_access_forbidden(inputs)
-	if (locale === "da") return __da.account_access_forbidden(inputs)
-	if (locale === "de") return __de.account_access_forbidden(inputs)
-	if (locale === "el") return __el.account_access_forbidden(inputs)
-	if (locale === "es") return __es.account_access_forbidden(inputs)
-	if (locale === "fi") return __fi.account_access_forbidden(inputs)
-	if (locale === "fr") return __fr.account_access_forbidden(inputs)
-	if (locale === "he") return __he.account_access_forbidden(inputs)
-	if (locale === "hu") return __hu.account_access_forbidden(inputs)
-	if (locale === "id") return __id.account_access_forbidden(inputs)
-	if (locale === "it") return __it.account_access_forbidden(inputs)
-	if (locale === "ja") return __ja.account_access_forbidden(inputs)
-	if (locale === "ko") return __ko.account_access_forbidden(inputs)
-	if (locale === "nb") return __nb.account_access_forbidden(inputs)
-	if (locale === "nl") return __nl.account_access_forbidden(inputs)
-	if (locale === "pl") return __pl.account_access_forbidden(inputs)
-	if (locale === "pt-BR") return __pt_br2.account_access_forbidden(inputs)
-	if (locale === "pt-PT") return __pt_pt2.account_access_forbidden(inputs)
-	if (locale === "ro") return __ro.account_access_forbidden(inputs)
-	if (locale === "ru") return __ru.account_access_forbidden(inputs)
-	if (locale === "sv") return __sv.account_access_forbidden(inputs)
-	if (locale === "th") return __th.account_access_forbidden(inputs)
-	if (locale === "tr") return __tr.account_access_forbidden(inputs)
-	if (locale === "uk") return __uk.account_access_forbidden(inputs)
-	if (locale === "vi") return __vi.account_access_forbidden(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.account_access_forbidden(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.account_access_forbidden(inputs)
-	return __en.account_access_forbidden(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "Who can use this library and what they can do. Nothing here changes another library." |
-*
-* @param {Account_Access_LedeInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const account_access_lede = /** @type {((inputs?: Account_Access_LedeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Access_LedeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.account_access_lede(inputs)
-	if (locale === "cs") return __cs.account_access_lede(inputs)
-	if (locale === "da") return __da.account_access_lede(inputs)
-	if (locale === "de") return __de.account_access_lede(inputs)
-	if (locale === "el") return __el.account_access_lede(inputs)
-	if (locale === "es") return __es.account_access_lede(inputs)
-	if (locale === "fi") return __fi.account_access_lede(inputs)
-	if (locale === "fr") return __fr.account_access_lede(inputs)
-	if (locale === "he") return __he.account_access_lede(inputs)
-	if (locale === "hu") return __hu.account_access_lede(inputs)
-	if (locale === "id") return __id.account_access_lede(inputs)
-	if (locale === "it") return __it.account_access_lede(inputs)
-	if (locale === "ja") return __ja.account_access_lede(inputs)
-	if (locale === "ko") return __ko.account_access_lede(inputs)
-	if (locale === "nb") return __nb.account_access_lede(inputs)
-	if (locale === "nl") return __nl.account_access_lede(inputs)
-	if (locale === "pl") return __pl.account_access_lede(inputs)
-	if (locale === "pt-BR") return __pt_br2.account_access_lede(inputs)
-	if (locale === "pt-PT") return __pt_pt2.account_access_lede(inputs)
-	if (locale === "ro") return __ro.account_access_lede(inputs)
-	if (locale === "ru") return __ru.account_access_lede(inputs)
-	if (locale === "sv") return __sv.account_access_lede(inputs)
-	if (locale === "th") return __th.account_access_lede(inputs)
-	if (locale === "tr") return __tr.account_access_lede(inputs)
-	if (locale === "uk") return __uk.account_access_lede(inputs)
-	if (locale === "vi") return __vi.account_access_lede(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.account_access_lede(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.account_access_lede(inputs)
-	return __en.account_access_lede(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "Only an owner can manage access to {library}." |
-*
-* @param {Account_Access_Owner_OnlyInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const account_access_owner_only = /** @type {((inputs: Account_Access_Owner_OnlyInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Access_Owner_OnlyInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.account_access_owner_only(inputs)
-	if (locale === "cs") return __cs.account_access_owner_only(inputs)
-	if (locale === "da") return __da.account_access_owner_only(inputs)
-	if (locale === "de") return __de.account_access_owner_only(inputs)
-	if (locale === "el") return __el.account_access_owner_only(inputs)
-	if (locale === "es") return __es.account_access_owner_only(inputs)
-	if (locale === "fi") return __fi.account_access_owner_only(inputs)
-	if (locale === "fr") return __fr.account_access_owner_only(inputs)
-	if (locale === "he") return __he.account_access_owner_only(inputs)
-	if (locale === "hu") return __hu.account_access_owner_only(inputs)
-	if (locale === "id") return __id.account_access_owner_only(inputs)
-	if (locale === "it") return __it.account_access_owner_only(inputs)
-	if (locale === "ja") return __ja.account_access_owner_only(inputs)
-	if (locale === "ko") return __ko.account_access_owner_only(inputs)
-	if (locale === "nb") return __nb.account_access_owner_only(inputs)
-	if (locale === "nl") return __nl.account_access_owner_only(inputs)
-	if (locale === "pl") return __pl.account_access_owner_only(inputs)
-	if (locale === "pt-BR") return __pt_br2.account_access_owner_only(inputs)
-	if (locale === "pt-PT") return __pt_pt2.account_access_owner_only(inputs)
-	if (locale === "ro") return __ro.account_access_owner_only(inputs)
-	if (locale === "ru") return __ru.account_access_owner_only(inputs)
-	if (locale === "sv") return __sv.account_access_owner_only(inputs)
-	if (locale === "th") return __th.account_access_owner_only(inputs)
-	if (locale === "tr") return __tr.account_access_owner_only(inputs)
-	if (locale === "uk") return __uk.account_access_owner_only(inputs)
-	if (locale === "vi") return __vi.account_access_owner_only(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.account_access_owner_only(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.account_access_owner_only(inputs)
-	return __en.account_access_owner_only(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "Library access · Savorum" |
-*
-* @param {Account_Access_Page_TitleInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const account_access_page_title = /** @type {((inputs?: Account_Access_Page_TitleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Access_Page_TitleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.account_access_page_title(inputs)
-	if (locale === "cs") return __cs.account_access_page_title(inputs)
-	if (locale === "da") return __da.account_access_page_title(inputs)
-	if (locale === "de") return __de.account_access_page_title(inputs)
-	if (locale === "el") return __el.account_access_page_title(inputs)
-	if (locale === "es") return __es.account_access_page_title(inputs)
-	if (locale === "fi") return __fi.account_access_page_title(inputs)
-	if (locale === "fr") return __fr.account_access_page_title(inputs)
-	if (locale === "he") return __he.account_access_page_title(inputs)
-	if (locale === "hu") return __hu.account_access_page_title(inputs)
-	if (locale === "id") return __id.account_access_page_title(inputs)
-	if (locale === "it") return __it.account_access_page_title(inputs)
-	if (locale === "ja") return __ja.account_access_page_title(inputs)
-	if (locale === "ko") return __ko.account_access_page_title(inputs)
-	if (locale === "nb") return __nb.account_access_page_title(inputs)
-	if (locale === "nl") return __nl.account_access_page_title(inputs)
-	if (locale === "pl") return __pl.account_access_page_title(inputs)
-	if (locale === "pt-BR") return __pt_br2.account_access_page_title(inputs)
-	if (locale === "pt-PT") return __pt_pt2.account_access_page_title(inputs)
-	if (locale === "ro") return __ro.account_access_page_title(inputs)
-	if (locale === "ru") return __ru.account_access_page_title(inputs)
-	if (locale === "sv") return __sv.account_access_page_title(inputs)
-	if (locale === "th") return __th.account_access_page_title(inputs)
-	if (locale === "tr") return __tr.account_access_page_title(inputs)
-	if (locale === "uk") return __uk.account_access_page_title(inputs)
-	if (locale === "vi") return __vi.account_access_page_title(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.account_access_page_title(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.account_access_page_title(inputs)
-	return __en.account_access_page_title(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "Access to {library}" |
-*
-* @param {Account_Access_TitleInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const account_access_title = /** @type {((inputs: Account_Access_TitleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Access_TitleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.account_access_title(inputs)
-	if (locale === "cs") return __cs.account_access_title(inputs)
-	if (locale === "da") return __da.account_access_title(inputs)
-	if (locale === "de") return __de.account_access_title(inputs)
-	if (locale === "el") return __el.account_access_title(inputs)
-	if (locale === "es") return __es.account_access_title(inputs)
-	if (locale === "fi") return __fi.account_access_title(inputs)
-	if (locale === "fr") return __fr.account_access_title(inputs)
-	if (locale === "he") return __he.account_access_title(inputs)
-	if (locale === "hu") return __hu.account_access_title(inputs)
-	if (locale === "id") return __id.account_access_title(inputs)
-	if (locale === "it") return __it.account_access_title(inputs)
-	if (locale === "ja") return __ja.account_access_title(inputs)
-	if (locale === "ko") return __ko.account_access_title(inputs)
-	if (locale === "nb") return __nb.account_access_title(inputs)
-	if (locale === "nl") return __nl.account_access_title(inputs)
-	if (locale === "pl") return __pl.account_access_title(inputs)
-	if (locale === "pt-BR") return __pt_br2.account_access_title(inputs)
-	if (locale === "pt-PT") return __pt_pt2.account_access_title(inputs)
-	if (locale === "ro") return __ro.account_access_title(inputs)
-	if (locale === "ru") return __ru.account_access_title(inputs)
-	if (locale === "sv") return __sv.account_access_title(inputs)
-	if (locale === "th") return __th.account_access_title(inputs)
-	if (locale === "tr") return __tr.account_access_title(inputs)
-	if (locale === "uk") return __uk.account_access_title(inputs)
-	if (locale === "vi") return __vi.account_access_title(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.account_access_title(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.account_access_title(inputs)
-	return __en.account_access_title(inputs)
-});
-/**
-* | output |
-* | --- |
 * | "Library activity" |
 *
 * @param {Account_Activity_HeadingInputs} inputs
@@ -3715,47 +3475,6 @@ export const account_admin_invite_heading = /** @type {((inputs?: Account_Admin_
 	if (locale === "zh-Hans") return __zh_hans1.account_admin_invite_heading(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_admin_invite_heading(inputs)
 	return __en.account_admin_invite_heading(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "The person creates their own account or joins with the one they have. Use Add user to set their password yourself." |
-*
-* @param {Account_Admin_Invite_HintInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const account_admin_invite_hint = /** @type {((inputs?: Account_Admin_Invite_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Admin_Invite_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.account_admin_invite_hint(inputs)
-	if (locale === "cs") return __cs.account_admin_invite_hint(inputs)
-	if (locale === "da") return __da.account_admin_invite_hint(inputs)
-	if (locale === "de") return __de.account_admin_invite_hint(inputs)
-	if (locale === "el") return __el.account_admin_invite_hint(inputs)
-	if (locale === "es") return __es.account_admin_invite_hint(inputs)
-	if (locale === "fi") return __fi.account_admin_invite_hint(inputs)
-	if (locale === "fr") return __fr.account_admin_invite_hint(inputs)
-	if (locale === "he") return __he.account_admin_invite_hint(inputs)
-	if (locale === "hu") return __hu.account_admin_invite_hint(inputs)
-	if (locale === "id") return __id.account_admin_invite_hint(inputs)
-	if (locale === "it") return __it.account_admin_invite_hint(inputs)
-	if (locale === "ja") return __ja.account_admin_invite_hint(inputs)
-	if (locale === "ko") return __ko.account_admin_invite_hint(inputs)
-	if (locale === "nb") return __nb.account_admin_invite_hint(inputs)
-	if (locale === "nl") return __nl.account_admin_invite_hint(inputs)
-	if (locale === "pl") return __pl.account_admin_invite_hint(inputs)
-	if (locale === "pt-BR") return __pt_br2.account_admin_invite_hint(inputs)
-	if (locale === "pt-PT") return __pt_pt2.account_admin_invite_hint(inputs)
-	if (locale === "ro") return __ro.account_admin_invite_hint(inputs)
-	if (locale === "ru") return __ru.account_admin_invite_hint(inputs)
-	if (locale === "sv") return __sv.account_admin_invite_hint(inputs)
-	if (locale === "th") return __th.account_admin_invite_hint(inputs)
-	if (locale === "tr") return __tr.account_admin_invite_hint(inputs)
-	if (locale === "uk") return __uk.account_admin_invite_hint(inputs)
-	if (locale === "vi") return __vi.account_admin_invite_hint(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.account_admin_invite_hint(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.account_admin_invite_hint(inputs)
-	return __en.account_admin_invite_hint(inputs)
 });
 /**
 * | output |
@@ -10074,6 +9793,170 @@ export const account_display_name = /** @type {((inputs?: Account_Display_NameIn
 /**
 * | output |
 * | --- |
+* | "Cloud Account" |
+*
+* @param {Account_Hosted_AccountInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_hosted_account = /** @type {((inputs?: Account_Hosted_AccountInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Hosted_AccountInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_hosted_account(inputs)
+	if (locale === "cs") return __cs.account_hosted_account(inputs)
+	if (locale === "da") return __da.account_hosted_account(inputs)
+	if (locale === "de") return __de.account_hosted_account(inputs)
+	if (locale === "el") return __el.account_hosted_account(inputs)
+	if (locale === "es") return __es.account_hosted_account(inputs)
+	if (locale === "fi") return __fi.account_hosted_account(inputs)
+	if (locale === "fr") return __fr.account_hosted_account(inputs)
+	if (locale === "he") return __he.account_hosted_account(inputs)
+	if (locale === "hu") return __hu.account_hosted_account(inputs)
+	if (locale === "id") return __id.account_hosted_account(inputs)
+	if (locale === "it") return __it.account_hosted_account(inputs)
+	if (locale === "ja") return __ja.account_hosted_account(inputs)
+	if (locale === "ko") return __ko.account_hosted_account(inputs)
+	if (locale === "nb") return __nb.account_hosted_account(inputs)
+	if (locale === "nl") return __nl.account_hosted_account(inputs)
+	if (locale === "pl") return __pl.account_hosted_account(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_hosted_account(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_hosted_account(inputs)
+	if (locale === "ro") return __ro.account_hosted_account(inputs)
+	if (locale === "ru") return __ru.account_hosted_account(inputs)
+	if (locale === "sv") return __sv.account_hosted_account(inputs)
+	if (locale === "th") return __th.account_hosted_account(inputs)
+	if (locale === "tr") return __tr.account_hosted_account(inputs)
+	if (locale === "uk") return __uk.account_hosted_account(inputs)
+	if (locale === "vi") return __vi.account_hosted_account(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_hosted_account(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_hosted_account(inputs)
+	return __en.account_hosted_account(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Only the Cloud household owner can invite people." |
+*
+* @param {Account_Hosted_Invitations_HintInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_hosted_invitations_hint = /** @type {((inputs?: Account_Hosted_Invitations_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Hosted_Invitations_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_hosted_invitations_hint(inputs)
+	if (locale === "cs") return __cs.account_hosted_invitations_hint(inputs)
+	if (locale === "da") return __da.account_hosted_invitations_hint(inputs)
+	if (locale === "de") return __de.account_hosted_invitations_hint(inputs)
+	if (locale === "el") return __el.account_hosted_invitations_hint(inputs)
+	if (locale === "es") return __es.account_hosted_invitations_hint(inputs)
+	if (locale === "fi") return __fi.account_hosted_invitations_hint(inputs)
+	if (locale === "fr") return __fr.account_hosted_invitations_hint(inputs)
+	if (locale === "he") return __he.account_hosted_invitations_hint(inputs)
+	if (locale === "hu") return __hu.account_hosted_invitations_hint(inputs)
+	if (locale === "id") return __id.account_hosted_invitations_hint(inputs)
+	if (locale === "it") return __it.account_hosted_invitations_hint(inputs)
+	if (locale === "ja") return __ja.account_hosted_invitations_hint(inputs)
+	if (locale === "ko") return __ko.account_hosted_invitations_hint(inputs)
+	if (locale === "nb") return __nb.account_hosted_invitations_hint(inputs)
+	if (locale === "nl") return __nl.account_hosted_invitations_hint(inputs)
+	if (locale === "pl") return __pl.account_hosted_invitations_hint(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_hosted_invitations_hint(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_hosted_invitations_hint(inputs)
+	if (locale === "ro") return __ro.account_hosted_invitations_hint(inputs)
+	if (locale === "ru") return __ru.account_hosted_invitations_hint(inputs)
+	if (locale === "sv") return __sv.account_hosted_invitations_hint(inputs)
+	if (locale === "th") return __th.account_hosted_invitations_hint(inputs)
+	if (locale === "tr") return __tr.account_hosted_invitations_hint(inputs)
+	if (locale === "uk") return __uk.account_hosted_invitations_hint(inputs)
+	if (locale === "vi") return __vi.account_hosted_invitations_hint(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_hosted_invitations_hint(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_hosted_invitations_hint(inputs)
+	return __en.account_hosted_invitations_hint(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Ask the household owner for a Cloud invitation link." |
+*
+* @param {Account_Hosted_Legacy_InvitationInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_hosted_legacy_invitation = /** @type {((inputs?: Account_Hosted_Legacy_InvitationInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Hosted_Legacy_InvitationInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_hosted_legacy_invitation(inputs)
+	if (locale === "cs") return __cs.account_hosted_legacy_invitation(inputs)
+	if (locale === "da") return __da.account_hosted_legacy_invitation(inputs)
+	if (locale === "de") return __de.account_hosted_legacy_invitation(inputs)
+	if (locale === "el") return __el.account_hosted_legacy_invitation(inputs)
+	if (locale === "es") return __es.account_hosted_legacy_invitation(inputs)
+	if (locale === "fi") return __fi.account_hosted_legacy_invitation(inputs)
+	if (locale === "fr") return __fr.account_hosted_legacy_invitation(inputs)
+	if (locale === "he") return __he.account_hosted_legacy_invitation(inputs)
+	if (locale === "hu") return __hu.account_hosted_legacy_invitation(inputs)
+	if (locale === "id") return __id.account_hosted_legacy_invitation(inputs)
+	if (locale === "it") return __it.account_hosted_legacy_invitation(inputs)
+	if (locale === "ja") return __ja.account_hosted_legacy_invitation(inputs)
+	if (locale === "ko") return __ko.account_hosted_legacy_invitation(inputs)
+	if (locale === "nb") return __nb.account_hosted_legacy_invitation(inputs)
+	if (locale === "nl") return __nl.account_hosted_legacy_invitation(inputs)
+	if (locale === "pl") return __pl.account_hosted_legacy_invitation(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_hosted_legacy_invitation(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_hosted_legacy_invitation(inputs)
+	if (locale === "ro") return __ro.account_hosted_legacy_invitation(inputs)
+	if (locale === "ru") return __ru.account_hosted_legacy_invitation(inputs)
+	if (locale === "sv") return __sv.account_hosted_legacy_invitation(inputs)
+	if (locale === "th") return __th.account_hosted_legacy_invitation(inputs)
+	if (locale === "tr") return __tr.account_hosted_legacy_invitation(inputs)
+	if (locale === "uk") return __uk.account_hosted_legacy_invitation(inputs)
+	if (locale === "vi") return __vi.account_hosted_legacy_invitation(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_hosted_legacy_invitation(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_hosted_legacy_invitation(inputs)
+	return __en.account_hosted_legacy_invitation(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Replace a server invitation with a Cloud link before sharing it with a Cloud account." |
+*
+* @param {Account_Hosted_Replace_HintInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_hosted_replace_hint = /** @type {((inputs?: Account_Hosted_Replace_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Hosted_Replace_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_hosted_replace_hint(inputs)
+	if (locale === "cs") return __cs.account_hosted_replace_hint(inputs)
+	if (locale === "da") return __da.account_hosted_replace_hint(inputs)
+	if (locale === "de") return __de.account_hosted_replace_hint(inputs)
+	if (locale === "el") return __el.account_hosted_replace_hint(inputs)
+	if (locale === "es") return __es.account_hosted_replace_hint(inputs)
+	if (locale === "fi") return __fi.account_hosted_replace_hint(inputs)
+	if (locale === "fr") return __fr.account_hosted_replace_hint(inputs)
+	if (locale === "he") return __he.account_hosted_replace_hint(inputs)
+	if (locale === "hu") return __hu.account_hosted_replace_hint(inputs)
+	if (locale === "id") return __id.account_hosted_replace_hint(inputs)
+	if (locale === "it") return __it.account_hosted_replace_hint(inputs)
+	if (locale === "ja") return __ja.account_hosted_replace_hint(inputs)
+	if (locale === "ko") return __ko.account_hosted_replace_hint(inputs)
+	if (locale === "nb") return __nb.account_hosted_replace_hint(inputs)
+	if (locale === "nl") return __nl.account_hosted_replace_hint(inputs)
+	if (locale === "pl") return __pl.account_hosted_replace_hint(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_hosted_replace_hint(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_hosted_replace_hint(inputs)
+	if (locale === "ro") return __ro.account_hosted_replace_hint(inputs)
+	if (locale === "ru") return __ru.account_hosted_replace_hint(inputs)
+	if (locale === "sv") return __sv.account_hosted_replace_hint(inputs)
+	if (locale === "th") return __th.account_hosted_replace_hint(inputs)
+	if (locale === "tr") return __tr.account_hosted_replace_hint(inputs)
+	if (locale === "uk") return __uk.account_hosted_replace_hint(inputs)
+	if (locale === "vi") return __vi.account_hosted_replace_hint(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_hosted_replace_hint(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_hosted_replace_hint(inputs)
+	return __en.account_hosted_replace_hint(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Accept invitation" |
 *
 * @param {Account_Invitation_AcceptInputs} inputs
@@ -10111,6 +9994,47 @@ export const account_invitation_accept = /** @type {((inputs?: Account_Invitatio
 	if (locale === "zh-Hans") return __zh_hans1.account_invitation_accept(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_invitation_accept(inputs)
 	return __en.account_invitation_accept(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Create your account to join" |
+*
+* @param {Account_Invitation_Create_HeadingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_invitation_create_heading = /** @type {((inputs?: Account_Invitation_Create_HeadingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Invitation_Create_HeadingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_invitation_create_heading(inputs)
+	if (locale === "cs") return __cs.account_invitation_create_heading(inputs)
+	if (locale === "da") return __da.account_invitation_create_heading(inputs)
+	if (locale === "de") return __de.account_invitation_create_heading(inputs)
+	if (locale === "el") return __el.account_invitation_create_heading(inputs)
+	if (locale === "es") return __es.account_invitation_create_heading(inputs)
+	if (locale === "fi") return __fi.account_invitation_create_heading(inputs)
+	if (locale === "fr") return __fr.account_invitation_create_heading(inputs)
+	if (locale === "he") return __he.account_invitation_create_heading(inputs)
+	if (locale === "hu") return __hu.account_invitation_create_heading(inputs)
+	if (locale === "id") return __id.account_invitation_create_heading(inputs)
+	if (locale === "it") return __it.account_invitation_create_heading(inputs)
+	if (locale === "ja") return __ja.account_invitation_create_heading(inputs)
+	if (locale === "ko") return __ko.account_invitation_create_heading(inputs)
+	if (locale === "nb") return __nb.account_invitation_create_heading(inputs)
+	if (locale === "nl") return __nl.account_invitation_create_heading(inputs)
+	if (locale === "pl") return __pl.account_invitation_create_heading(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_invitation_create_heading(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_invitation_create_heading(inputs)
+	if (locale === "ro") return __ro.account_invitation_create_heading(inputs)
+	if (locale === "ru") return __ru.account_invitation_create_heading(inputs)
+	if (locale === "sv") return __sv.account_invitation_create_heading(inputs)
+	if (locale === "th") return __th.account_invitation_create_heading(inputs)
+	if (locale === "tr") return __tr.account_invitation_create_heading(inputs)
+	if (locale === "uk") return __uk.account_invitation_create_heading(inputs)
+	if (locale === "vi") return __vi.account_invitation_create_heading(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_invitation_create_heading(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_invitation_create_heading(inputs)
+	return __en.account_invitation_create_heading(inputs)
 });
 /**
 * | output |
@@ -10197,7 +10121,48 @@ export const account_invitation_join_as = /** @type {((inputs: Account_Invitatio
 /**
 * | output |
 * | --- |
-* | "Open in Savorum" |
+* | "Need an account?" |
+*
+* @param {Account_Invitation_Need_AccountInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_invitation_need_account = /** @type {((inputs?: Account_Invitation_Need_AccountInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Invitation_Need_AccountInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_invitation_need_account(inputs)
+	if (locale === "cs") return __cs.account_invitation_need_account(inputs)
+	if (locale === "da") return __da.account_invitation_need_account(inputs)
+	if (locale === "de") return __de.account_invitation_need_account(inputs)
+	if (locale === "el") return __el.account_invitation_need_account(inputs)
+	if (locale === "es") return __es.account_invitation_need_account(inputs)
+	if (locale === "fi") return __fi.account_invitation_need_account(inputs)
+	if (locale === "fr") return __fr.account_invitation_need_account(inputs)
+	if (locale === "he") return __he.account_invitation_need_account(inputs)
+	if (locale === "hu") return __hu.account_invitation_need_account(inputs)
+	if (locale === "id") return __id.account_invitation_need_account(inputs)
+	if (locale === "it") return __it.account_invitation_need_account(inputs)
+	if (locale === "ja") return __ja.account_invitation_need_account(inputs)
+	if (locale === "ko") return __ko.account_invitation_need_account(inputs)
+	if (locale === "nb") return __nb.account_invitation_need_account(inputs)
+	if (locale === "nl") return __nl.account_invitation_need_account(inputs)
+	if (locale === "pl") return __pl.account_invitation_need_account(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_invitation_need_account(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_invitation_need_account(inputs)
+	if (locale === "ro") return __ro.account_invitation_need_account(inputs)
+	if (locale === "ru") return __ru.account_invitation_need_account(inputs)
+	if (locale === "sv") return __sv.account_invitation_need_account(inputs)
+	if (locale === "th") return __th.account_invitation_need_account(inputs)
+	if (locale === "tr") return __tr.account_invitation_need_account(inputs)
+	if (locale === "uk") return __uk.account_invitation_need_account(inputs)
+	if (locale === "vi") return __vi.account_invitation_need_account(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_invitation_need_account(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_invitation_need_account(inputs)
+	return __en.account_invitation_need_account(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Open in the Savorum app" |
 *
 * @param {Account_Invitation_Open_AppInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -10234,6 +10199,88 @@ export const account_invitation_open_app = /** @type {((inputs?: Account_Invitat
 	if (locale === "zh-Hans") return __zh_hans1.account_invitation_open_app(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_invitation_open_app(inputs)
 	return __en.account_invitation_open_app(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Open Library" |
+*
+* @param {Account_Invitation_Open_LibraryInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_invitation_open_library = /** @type {((inputs?: Account_Invitation_Open_LibraryInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Invitation_Open_LibraryInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_invitation_open_library(inputs)
+	if (locale === "cs") return __cs.account_invitation_open_library(inputs)
+	if (locale === "da") return __da.account_invitation_open_library(inputs)
+	if (locale === "de") return __de.account_invitation_open_library(inputs)
+	if (locale === "el") return __el.account_invitation_open_library(inputs)
+	if (locale === "es") return __es.account_invitation_open_library(inputs)
+	if (locale === "fi") return __fi.account_invitation_open_library(inputs)
+	if (locale === "fr") return __fr.account_invitation_open_library(inputs)
+	if (locale === "he") return __he.account_invitation_open_library(inputs)
+	if (locale === "hu") return __hu.account_invitation_open_library(inputs)
+	if (locale === "id") return __id.account_invitation_open_library(inputs)
+	if (locale === "it") return __it.account_invitation_open_library(inputs)
+	if (locale === "ja") return __ja.account_invitation_open_library(inputs)
+	if (locale === "ko") return __ko.account_invitation_open_library(inputs)
+	if (locale === "nb") return __nb.account_invitation_open_library(inputs)
+	if (locale === "nl") return __nl.account_invitation_open_library(inputs)
+	if (locale === "pl") return __pl.account_invitation_open_library(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_invitation_open_library(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_invitation_open_library(inputs)
+	if (locale === "ro") return __ro.account_invitation_open_library(inputs)
+	if (locale === "ru") return __ru.account_invitation_open_library(inputs)
+	if (locale === "sv") return __sv.account_invitation_open_library(inputs)
+	if (locale === "th") return __th.account_invitation_open_library(inputs)
+	if (locale === "tr") return __tr.account_invitation_open_library(inputs)
+	if (locale === "uk") return __uk.account_invitation_open_library(inputs)
+	if (locale === "vi") return __vi.account_invitation_open_library(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_invitation_open_library(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_invitation_open_library(inputs)
+	return __en.account_invitation_open_library(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Sign in to join" |
+*
+* @param {Account_Invitation_Sign_In_HeadingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_invitation_sign_in_heading = /** @type {((inputs?: Account_Invitation_Sign_In_HeadingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Invitation_Sign_In_HeadingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_invitation_sign_in_heading(inputs)
+	if (locale === "cs") return __cs.account_invitation_sign_in_heading(inputs)
+	if (locale === "da") return __da.account_invitation_sign_in_heading(inputs)
+	if (locale === "de") return __de.account_invitation_sign_in_heading(inputs)
+	if (locale === "el") return __el.account_invitation_sign_in_heading(inputs)
+	if (locale === "es") return __es.account_invitation_sign_in_heading(inputs)
+	if (locale === "fi") return __fi.account_invitation_sign_in_heading(inputs)
+	if (locale === "fr") return __fr.account_invitation_sign_in_heading(inputs)
+	if (locale === "he") return __he.account_invitation_sign_in_heading(inputs)
+	if (locale === "hu") return __hu.account_invitation_sign_in_heading(inputs)
+	if (locale === "id") return __id.account_invitation_sign_in_heading(inputs)
+	if (locale === "it") return __it.account_invitation_sign_in_heading(inputs)
+	if (locale === "ja") return __ja.account_invitation_sign_in_heading(inputs)
+	if (locale === "ko") return __ko.account_invitation_sign_in_heading(inputs)
+	if (locale === "nb") return __nb.account_invitation_sign_in_heading(inputs)
+	if (locale === "nl") return __nl.account_invitation_sign_in_heading(inputs)
+	if (locale === "pl") return __pl.account_invitation_sign_in_heading(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_invitation_sign_in_heading(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_invitation_sign_in_heading(inputs)
+	if (locale === "ro") return __ro.account_invitation_sign_in_heading(inputs)
+	if (locale === "ru") return __ru.account_invitation_sign_in_heading(inputs)
+	if (locale === "sv") return __sv.account_invitation_sign_in_heading(inputs)
+	if (locale === "th") return __th.account_invitation_sign_in_heading(inputs)
+	if (locale === "tr") return __tr.account_invitation_sign_in_heading(inputs)
+	if (locale === "uk") return __uk.account_invitation_sign_in_heading(inputs)
+	if (locale === "vi") return __vi.account_invitation_sign_in_heading(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_invitation_sign_in_heading(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_invitation_sign_in_heading(inputs)
+	return __en.account_invitation_sign_in_heading(inputs)
 });
 /**
 * | output |
@@ -10275,47 +10322,6 @@ export const account_invitation_state_accepted = /** @type {((inputs?: Account_I
 	if (locale === "zh-Hans") return __zh_hans1.account_invitation_state_accepted(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_invitation_state_accepted(inputs)
 	return __en.account_invitation_state_accepted(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "Expired" |
-*
-* @param {Account_Invitation_State_ExpiredInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const account_invitation_state_expired = /** @type {((inputs?: Account_Invitation_State_ExpiredInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Invitation_State_ExpiredInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.account_invitation_state_expired(inputs)
-	if (locale === "cs") return __cs.account_invitation_state_expired(inputs)
-	if (locale === "da") return __da.account_invitation_state_expired(inputs)
-	if (locale === "de") return __de.account_invitation_state_expired(inputs)
-	if (locale === "el") return __el.account_invitation_state_expired(inputs)
-	if (locale === "es") return __es.account_invitation_state_expired(inputs)
-	if (locale === "fi") return __fi.account_invitation_state_expired(inputs)
-	if (locale === "fr") return __fr.account_invitation_state_expired(inputs)
-	if (locale === "he") return __he.account_invitation_state_expired(inputs)
-	if (locale === "hu") return __hu.account_invitation_state_expired(inputs)
-	if (locale === "id") return __id.account_invitation_state_expired(inputs)
-	if (locale === "it") return __it.account_invitation_state_expired(inputs)
-	if (locale === "ja") return __ja.account_invitation_state_expired(inputs)
-	if (locale === "ko") return __ko.account_invitation_state_expired(inputs)
-	if (locale === "nb") return __nb.account_invitation_state_expired(inputs)
-	if (locale === "nl") return __nl.account_invitation_state_expired(inputs)
-	if (locale === "pl") return __pl.account_invitation_state_expired(inputs)
-	if (locale === "pt-BR") return __pt_br2.account_invitation_state_expired(inputs)
-	if (locale === "pt-PT") return __pt_pt2.account_invitation_state_expired(inputs)
-	if (locale === "ro") return __ro.account_invitation_state_expired(inputs)
-	if (locale === "ru") return __ru.account_invitation_state_expired(inputs)
-	if (locale === "sv") return __sv.account_invitation_state_expired(inputs)
-	if (locale === "th") return __th.account_invitation_state_expired(inputs)
-	if (locale === "tr") return __tr.account_invitation_state_expired(inputs)
-	if (locale === "uk") return __uk.account_invitation_state_expired(inputs)
-	if (locale === "vi") return __vi.account_invitation_state_expired(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.account_invitation_state_expired(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.account_invitation_state_expired(inputs)
-	return __en.account_invitation_state_expired(inputs)
 });
 /**
 * | output |
@@ -10402,7 +10408,89 @@ export const account_invitation_state_revoked = /** @type {((inputs?: Account_In
 /**
 * | output |
 * | --- |
-* | "Create invitation" |
+* | "This invitation is unavailable. It may have expired, been revoked, or been used by another account. Ask the owner for a new link." |
+*
+* @param {Account_Invitation_UnavailableInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_invitation_unavailable = /** @type {((inputs?: Account_Invitation_UnavailableInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Invitation_UnavailableInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_invitation_unavailable(inputs)
+	if (locale === "cs") return __cs.account_invitation_unavailable(inputs)
+	if (locale === "da") return __da.account_invitation_unavailable(inputs)
+	if (locale === "de") return __de.account_invitation_unavailable(inputs)
+	if (locale === "el") return __el.account_invitation_unavailable(inputs)
+	if (locale === "es") return __es.account_invitation_unavailable(inputs)
+	if (locale === "fi") return __fi.account_invitation_unavailable(inputs)
+	if (locale === "fr") return __fr.account_invitation_unavailable(inputs)
+	if (locale === "he") return __he.account_invitation_unavailable(inputs)
+	if (locale === "hu") return __hu.account_invitation_unavailable(inputs)
+	if (locale === "id") return __id.account_invitation_unavailable(inputs)
+	if (locale === "it") return __it.account_invitation_unavailable(inputs)
+	if (locale === "ja") return __ja.account_invitation_unavailable(inputs)
+	if (locale === "ko") return __ko.account_invitation_unavailable(inputs)
+	if (locale === "nb") return __nb.account_invitation_unavailable(inputs)
+	if (locale === "nl") return __nl.account_invitation_unavailable(inputs)
+	if (locale === "pl") return __pl.account_invitation_unavailable(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_invitation_unavailable(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_invitation_unavailable(inputs)
+	if (locale === "ro") return __ro.account_invitation_unavailable(inputs)
+	if (locale === "ru") return __ru.account_invitation_unavailable(inputs)
+	if (locale === "sv") return __sv.account_invitation_unavailable(inputs)
+	if (locale === "th") return __th.account_invitation_unavailable(inputs)
+	if (locale === "tr") return __tr.account_invitation_unavailable(inputs)
+	if (locale === "uk") return __uk.account_invitation_unavailable(inputs)
+	if (locale === "vi") return __vi.account_invitation_unavailable(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_invitation_unavailable(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_invitation_unavailable(inputs)
+	return __en.account_invitation_unavailable(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Create another link" |
+*
+* @param {Account_Invitations_AnotherInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_invitations_another = /** @type {((inputs?: Account_Invitations_AnotherInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Invitations_AnotherInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_invitations_another(inputs)
+	if (locale === "cs") return __cs.account_invitations_another(inputs)
+	if (locale === "da") return __da.account_invitations_another(inputs)
+	if (locale === "de") return __de.account_invitations_another(inputs)
+	if (locale === "el") return __el.account_invitations_another(inputs)
+	if (locale === "es") return __es.account_invitations_another(inputs)
+	if (locale === "fi") return __fi.account_invitations_another(inputs)
+	if (locale === "fr") return __fr.account_invitations_another(inputs)
+	if (locale === "he") return __he.account_invitations_another(inputs)
+	if (locale === "hu") return __hu.account_invitations_another(inputs)
+	if (locale === "id") return __id.account_invitations_another(inputs)
+	if (locale === "it") return __it.account_invitations_another(inputs)
+	if (locale === "ja") return __ja.account_invitations_another(inputs)
+	if (locale === "ko") return __ko.account_invitations_another(inputs)
+	if (locale === "nb") return __nb.account_invitations_another(inputs)
+	if (locale === "nl") return __nl.account_invitations_another(inputs)
+	if (locale === "pl") return __pl.account_invitations_another(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_invitations_another(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_invitations_another(inputs)
+	if (locale === "ro") return __ro.account_invitations_another(inputs)
+	if (locale === "ru") return __ru.account_invitations_another(inputs)
+	if (locale === "sv") return __sv.account_invitations_another(inputs)
+	if (locale === "th") return __th.account_invitations_another(inputs)
+	if (locale === "tr") return __tr.account_invitations_another(inputs)
+	if (locale === "uk") return __uk.account_invitations_another(inputs)
+	if (locale === "vi") return __vi.account_invitations_another(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_invitations_another(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_invitations_another(inputs)
+	return __en.account_invitations_another(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Create link" |
 *
 * @param {Account_Invitations_CreateInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -10439,47 +10527,6 @@ export const account_invitations_create = /** @type {((inputs?: Account_Invitati
 	if (locale === "zh-Hans") return __zh_hans1.account_invitations_create(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_invitations_create(inputs)
 	return __en.account_invitations_create(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "I have shared the link" |
-*
-* @param {Account_Invitations_DismissInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const account_invitations_dismiss = /** @type {((inputs?: Account_Invitations_DismissInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Invitations_DismissInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.account_invitations_dismiss(inputs)
-	if (locale === "cs") return __cs.account_invitations_dismiss(inputs)
-	if (locale === "da") return __da.account_invitations_dismiss(inputs)
-	if (locale === "de") return __de.account_invitations_dismiss(inputs)
-	if (locale === "el") return __el.account_invitations_dismiss(inputs)
-	if (locale === "es") return __es.account_invitations_dismiss(inputs)
-	if (locale === "fi") return __fi.account_invitations_dismiss(inputs)
-	if (locale === "fr") return __fr.account_invitations_dismiss(inputs)
-	if (locale === "he") return __he.account_invitations_dismiss(inputs)
-	if (locale === "hu") return __hu.account_invitations_dismiss(inputs)
-	if (locale === "id") return __id.account_invitations_dismiss(inputs)
-	if (locale === "it") return __it.account_invitations_dismiss(inputs)
-	if (locale === "ja") return __ja.account_invitations_dismiss(inputs)
-	if (locale === "ko") return __ko.account_invitations_dismiss(inputs)
-	if (locale === "nb") return __nb.account_invitations_dismiss(inputs)
-	if (locale === "nl") return __nl.account_invitations_dismiss(inputs)
-	if (locale === "pl") return __pl.account_invitations_dismiss(inputs)
-	if (locale === "pt-BR") return __pt_br2.account_invitations_dismiss(inputs)
-	if (locale === "pt-PT") return __pt_pt2.account_invitations_dismiss(inputs)
-	if (locale === "ro") return __ro.account_invitations_dismiss(inputs)
-	if (locale === "ru") return __ru.account_invitations_dismiss(inputs)
-	if (locale === "sv") return __sv.account_invitations_dismiss(inputs)
-	if (locale === "th") return __th.account_invitations_dismiss(inputs)
-	if (locale === "tr") return __tr.account_invitations_dismiss(inputs)
-	if (locale === "uk") return __uk.account_invitations_dismiss(inputs)
-	if (locale === "vi") return __vi.account_invitations_dismiss(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.account_invitations_dismiss(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.account_invitations_dismiss(inputs)
-	return __en.account_invitations_dismiss(inputs)
 });
 /**
 * | output |
@@ -10525,48 +10572,7 @@ export const account_invitations_expiry = /** @type {((inputs?: Account_Invitati
 /**
 * | output |
 * | --- |
-* | "Invite someone" |
-*
-* @param {Account_Invitations_HeadingInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const account_invitations_heading = /** @type {((inputs?: Account_Invitations_HeadingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Invitations_HeadingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.account_invitations_heading(inputs)
-	if (locale === "cs") return __cs.account_invitations_heading(inputs)
-	if (locale === "da") return __da.account_invitations_heading(inputs)
-	if (locale === "de") return __de.account_invitations_heading(inputs)
-	if (locale === "el") return __el.account_invitations_heading(inputs)
-	if (locale === "es") return __es.account_invitations_heading(inputs)
-	if (locale === "fi") return __fi.account_invitations_heading(inputs)
-	if (locale === "fr") return __fr.account_invitations_heading(inputs)
-	if (locale === "he") return __he.account_invitations_heading(inputs)
-	if (locale === "hu") return __hu.account_invitations_heading(inputs)
-	if (locale === "id") return __id.account_invitations_heading(inputs)
-	if (locale === "it") return __it.account_invitations_heading(inputs)
-	if (locale === "ja") return __ja.account_invitations_heading(inputs)
-	if (locale === "ko") return __ko.account_invitations_heading(inputs)
-	if (locale === "nb") return __nb.account_invitations_heading(inputs)
-	if (locale === "nl") return __nl.account_invitations_heading(inputs)
-	if (locale === "pl") return __pl.account_invitations_heading(inputs)
-	if (locale === "pt-BR") return __pt_br2.account_invitations_heading(inputs)
-	if (locale === "pt-PT") return __pt_pt2.account_invitations_heading(inputs)
-	if (locale === "ro") return __ro.account_invitations_heading(inputs)
-	if (locale === "ru") return __ru.account_invitations_heading(inputs)
-	if (locale === "sv") return __sv.account_invitations_heading(inputs)
-	if (locale === "th") return __th.account_invitations_heading(inputs)
-	if (locale === "tr") return __tr.account_invitations_heading(inputs)
-	if (locale === "uk") return __uk.account_invitations_heading(inputs)
-	if (locale === "vi") return __vi.account_invitations_heading(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.account_invitations_heading(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.account_invitations_heading(inputs)
-	return __en.account_invitations_heading(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "Anyone with the link can join {library}. Share it privately; Savorum does not send email." |
+* | "Anyone with the link can join {library}." |
 *
 * @param {Account_Invitations_HintInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -10607,7 +10613,7 @@ export const account_invitations_hint = /** @type {((inputs: Account_Invitations
 /**
 * | output |
 * | --- |
-* | "Private label (optional)" |
+* | "Who is it for? (optional)" |
 *
 * @param {Account_Invitations_LabelInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -10648,7 +10654,7 @@ export const account_invitations_label = /** @type {((inputs?: Account_Invitatio
 /**
 * | output |
 * | --- |
-* | "Only you see this. Use it to remember who a link was for." |
+* | "Only you see this." |
 *
 * @param {Account_Invitations_Label_HintInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -10689,7 +10695,7 @@ export const account_invitations_label_hint = /** @type {((inputs?: Account_Invi
 /**
 * | output |
 * | --- |
-* | "Invitation link — shown once" |
+* | "Invitation link" |
 *
 * @param {Account_Invitations_LinkInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -10730,7 +10736,7 @@ export const account_invitations_link = /** @type {((inputs?: Account_Invitation
 /**
 * | output |
 * | --- |
-* | "Copy it now. Savorum cannot show it again." |
+* | "Copy it now. It won't be shown again." |
 *
 * @param {Account_Invitations_Link_HintInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -10771,43 +10777,43 @@ export const account_invitations_link_hint = /** @type {((inputs?: Account_Invit
 /**
 * | output |
 * | --- |
-* | "No invitations yet." |
+* | "Share this link" |
 *
-* @param {Account_Invitations_NoneInputs} inputs
+* @param {Account_Invitations_ReadyInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
 * @returns {LocalizedString}
 */
-export const account_invitations_none = /** @type {((inputs?: Account_Invitations_NoneInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Invitations_NoneInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+export const account_invitations_ready = /** @type {((inputs?: Account_Invitations_ReadyInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Invitations_ReadyInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
 	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.account_invitations_none(inputs)
-	if (locale === "cs") return __cs.account_invitations_none(inputs)
-	if (locale === "da") return __da.account_invitations_none(inputs)
-	if (locale === "de") return __de.account_invitations_none(inputs)
-	if (locale === "el") return __el.account_invitations_none(inputs)
-	if (locale === "es") return __es.account_invitations_none(inputs)
-	if (locale === "fi") return __fi.account_invitations_none(inputs)
-	if (locale === "fr") return __fr.account_invitations_none(inputs)
-	if (locale === "he") return __he.account_invitations_none(inputs)
-	if (locale === "hu") return __hu.account_invitations_none(inputs)
-	if (locale === "id") return __id.account_invitations_none(inputs)
-	if (locale === "it") return __it.account_invitations_none(inputs)
-	if (locale === "ja") return __ja.account_invitations_none(inputs)
-	if (locale === "ko") return __ko.account_invitations_none(inputs)
-	if (locale === "nb") return __nb.account_invitations_none(inputs)
-	if (locale === "nl") return __nl.account_invitations_none(inputs)
-	if (locale === "pl") return __pl.account_invitations_none(inputs)
-	if (locale === "pt-BR") return __pt_br2.account_invitations_none(inputs)
-	if (locale === "pt-PT") return __pt_pt2.account_invitations_none(inputs)
-	if (locale === "ro") return __ro.account_invitations_none(inputs)
-	if (locale === "ru") return __ru.account_invitations_none(inputs)
-	if (locale === "sv") return __sv.account_invitations_none(inputs)
-	if (locale === "th") return __th.account_invitations_none(inputs)
-	if (locale === "tr") return __tr.account_invitations_none(inputs)
-	if (locale === "uk") return __uk.account_invitations_none(inputs)
-	if (locale === "vi") return __vi.account_invitations_none(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.account_invitations_none(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.account_invitations_none(inputs)
-	return __en.account_invitations_none(inputs)
+	if (locale === "ar") return __ar.account_invitations_ready(inputs)
+	if (locale === "cs") return __cs.account_invitations_ready(inputs)
+	if (locale === "da") return __da.account_invitations_ready(inputs)
+	if (locale === "de") return __de.account_invitations_ready(inputs)
+	if (locale === "el") return __el.account_invitations_ready(inputs)
+	if (locale === "es") return __es.account_invitations_ready(inputs)
+	if (locale === "fi") return __fi.account_invitations_ready(inputs)
+	if (locale === "fr") return __fr.account_invitations_ready(inputs)
+	if (locale === "he") return __he.account_invitations_ready(inputs)
+	if (locale === "hu") return __hu.account_invitations_ready(inputs)
+	if (locale === "id") return __id.account_invitations_ready(inputs)
+	if (locale === "it") return __it.account_invitations_ready(inputs)
+	if (locale === "ja") return __ja.account_invitations_ready(inputs)
+	if (locale === "ko") return __ko.account_invitations_ready(inputs)
+	if (locale === "nb") return __nb.account_invitations_ready(inputs)
+	if (locale === "nl") return __nl.account_invitations_ready(inputs)
+	if (locale === "pl") return __pl.account_invitations_ready(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_invitations_ready(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_invitations_ready(inputs)
+	if (locale === "ro") return __ro.account_invitations_ready(inputs)
+	if (locale === "ru") return __ru.account_invitations_ready(inputs)
+	if (locale === "sv") return __sv.account_invitations_ready(inputs)
+	if (locale === "th") return __th.account_invitations_ready(inputs)
+	if (locale === "tr") return __tr.account_invitations_ready(inputs)
+	if (locale === "uk") return __uk.account_invitations_ready(inputs)
+	if (locale === "vi") return __vi.account_invitations_ready(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_invitations_ready(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_invitations_ready(inputs)
+	return __en.account_invitations_ready(inputs)
 });
 /**
 * | output |
@@ -10894,171 +10900,48 @@ export const account_invitations_revoke_named = /** @type {((inputs: Account_Inv
 /**
 * | output |
 * | --- |
-* | "Library role" |
+* | "Share" |
 *
-* @param {Account_Invitations_RoleInputs} inputs
+* @param {Account_Invitations_ShareInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
 * @returns {LocalizedString}
 */
-export const account_invitations_role = /** @type {((inputs?: Account_Invitations_RoleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Invitations_RoleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+export const account_invitations_share = /** @type {((inputs?: Account_Invitations_ShareInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Invitations_ShareInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
 	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.account_invitations_role(inputs)
-	if (locale === "cs") return __cs.account_invitations_role(inputs)
-	if (locale === "da") return __da.account_invitations_role(inputs)
-	if (locale === "de") return __de.account_invitations_role(inputs)
-	if (locale === "el") return __el.account_invitations_role(inputs)
-	if (locale === "es") return __es.account_invitations_role(inputs)
-	if (locale === "fi") return __fi.account_invitations_role(inputs)
-	if (locale === "fr") return __fr.account_invitations_role(inputs)
-	if (locale === "he") return __he.account_invitations_role(inputs)
-	if (locale === "hu") return __hu.account_invitations_role(inputs)
-	if (locale === "id") return __id.account_invitations_role(inputs)
-	if (locale === "it") return __it.account_invitations_role(inputs)
-	if (locale === "ja") return __ja.account_invitations_role(inputs)
-	if (locale === "ko") return __ko.account_invitations_role(inputs)
-	if (locale === "nb") return __nb.account_invitations_role(inputs)
-	if (locale === "nl") return __nl.account_invitations_role(inputs)
-	if (locale === "pl") return __pl.account_invitations_role(inputs)
-	if (locale === "pt-BR") return __pt_br2.account_invitations_role(inputs)
-	if (locale === "pt-PT") return __pt_pt2.account_invitations_role(inputs)
-	if (locale === "ro") return __ro.account_invitations_role(inputs)
-	if (locale === "ru") return __ru.account_invitations_role(inputs)
-	if (locale === "sv") return __sv.account_invitations_role(inputs)
-	if (locale === "th") return __th.account_invitations_role(inputs)
-	if (locale === "tr") return __tr.account_invitations_role(inputs)
-	if (locale === "uk") return __uk.account_invitations_role(inputs)
-	if (locale === "vi") return __vi.account_invitations_role(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.account_invitations_role(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.account_invitations_role(inputs)
-	return __en.account_invitations_role(inputs)
+	if (locale === "ar") return __ar.account_invitations_share(inputs)
+	if (locale === "cs") return __cs.account_invitations_share(inputs)
+	if (locale === "da") return __da.account_invitations_share(inputs)
+	if (locale === "de") return __de.account_invitations_share(inputs)
+	if (locale === "el") return __el.account_invitations_share(inputs)
+	if (locale === "es") return __es.account_invitations_share(inputs)
+	if (locale === "fi") return __fi.account_invitations_share(inputs)
+	if (locale === "fr") return __fr.account_invitations_share(inputs)
+	if (locale === "he") return __he.account_invitations_share(inputs)
+	if (locale === "hu") return __hu.account_invitations_share(inputs)
+	if (locale === "id") return __id.account_invitations_share(inputs)
+	if (locale === "it") return __it.account_invitations_share(inputs)
+	if (locale === "ja") return __ja.account_invitations_share(inputs)
+	if (locale === "ko") return __ko.account_invitations_share(inputs)
+	if (locale === "nb") return __nb.account_invitations_share(inputs)
+	if (locale === "nl") return __nl.account_invitations_share(inputs)
+	if (locale === "pl") return __pl.account_invitations_share(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_invitations_share(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_invitations_share(inputs)
+	if (locale === "ro") return __ro.account_invitations_share(inputs)
+	if (locale === "ru") return __ru.account_invitations_share(inputs)
+	if (locale === "sv") return __sv.account_invitations_share(inputs)
+	if (locale === "th") return __th.account_invitations_share(inputs)
+	if (locale === "tr") return __tr.account_invitations_share(inputs)
+	if (locale === "uk") return __uk.account_invitations_share(inputs)
+	if (locale === "vi") return __vi.account_invitations_share(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_invitations_share(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_invitations_share(inputs)
+	return __en.account_invitations_share(inputs)
 });
 /**
 * | output |
 * | --- |
-* | "Editor — add and edit recipes" |
-*
-* @param {Account_Invitations_Role_EditorInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const account_invitations_role_editor = /** @type {((inputs?: Account_Invitations_Role_EditorInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Invitations_Role_EditorInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.account_invitations_role_editor(inputs)
-	if (locale === "cs") return __cs.account_invitations_role_editor(inputs)
-	if (locale === "da") return __da.account_invitations_role_editor(inputs)
-	if (locale === "de") return __de.account_invitations_role_editor(inputs)
-	if (locale === "el") return __el.account_invitations_role_editor(inputs)
-	if (locale === "es") return __es.account_invitations_role_editor(inputs)
-	if (locale === "fi") return __fi.account_invitations_role_editor(inputs)
-	if (locale === "fr") return __fr.account_invitations_role_editor(inputs)
-	if (locale === "he") return __he.account_invitations_role_editor(inputs)
-	if (locale === "hu") return __hu.account_invitations_role_editor(inputs)
-	if (locale === "id") return __id.account_invitations_role_editor(inputs)
-	if (locale === "it") return __it.account_invitations_role_editor(inputs)
-	if (locale === "ja") return __ja.account_invitations_role_editor(inputs)
-	if (locale === "ko") return __ko.account_invitations_role_editor(inputs)
-	if (locale === "nb") return __nb.account_invitations_role_editor(inputs)
-	if (locale === "nl") return __nl.account_invitations_role_editor(inputs)
-	if (locale === "pl") return __pl.account_invitations_role_editor(inputs)
-	if (locale === "pt-BR") return __pt_br2.account_invitations_role_editor(inputs)
-	if (locale === "pt-PT") return __pt_pt2.account_invitations_role_editor(inputs)
-	if (locale === "ro") return __ro.account_invitations_role_editor(inputs)
-	if (locale === "ru") return __ru.account_invitations_role_editor(inputs)
-	if (locale === "sv") return __sv.account_invitations_role_editor(inputs)
-	if (locale === "th") return __th.account_invitations_role_editor(inputs)
-	if (locale === "tr") return __tr.account_invitations_role_editor(inputs)
-	if (locale === "uk") return __uk.account_invitations_role_editor(inputs)
-	if (locale === "vi") return __vi.account_invitations_role_editor(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.account_invitations_role_editor(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.account_invitations_role_editor(inputs)
-	return __en.account_invitations_role_editor(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "Owner — manage library access" |
-*
-* @param {Account_Invitations_Role_OwnerInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const account_invitations_role_owner = /** @type {((inputs?: Account_Invitations_Role_OwnerInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Invitations_Role_OwnerInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.account_invitations_role_owner(inputs)
-	if (locale === "cs") return __cs.account_invitations_role_owner(inputs)
-	if (locale === "da") return __da.account_invitations_role_owner(inputs)
-	if (locale === "de") return __de.account_invitations_role_owner(inputs)
-	if (locale === "el") return __el.account_invitations_role_owner(inputs)
-	if (locale === "es") return __es.account_invitations_role_owner(inputs)
-	if (locale === "fi") return __fi.account_invitations_role_owner(inputs)
-	if (locale === "fr") return __fr.account_invitations_role_owner(inputs)
-	if (locale === "he") return __he.account_invitations_role_owner(inputs)
-	if (locale === "hu") return __hu.account_invitations_role_owner(inputs)
-	if (locale === "id") return __id.account_invitations_role_owner(inputs)
-	if (locale === "it") return __it.account_invitations_role_owner(inputs)
-	if (locale === "ja") return __ja.account_invitations_role_owner(inputs)
-	if (locale === "ko") return __ko.account_invitations_role_owner(inputs)
-	if (locale === "nb") return __nb.account_invitations_role_owner(inputs)
-	if (locale === "nl") return __nl.account_invitations_role_owner(inputs)
-	if (locale === "pl") return __pl.account_invitations_role_owner(inputs)
-	if (locale === "pt-BR") return __pt_br2.account_invitations_role_owner(inputs)
-	if (locale === "pt-PT") return __pt_pt2.account_invitations_role_owner(inputs)
-	if (locale === "ro") return __ro.account_invitations_role_owner(inputs)
-	if (locale === "ru") return __ru.account_invitations_role_owner(inputs)
-	if (locale === "sv") return __sv.account_invitations_role_owner(inputs)
-	if (locale === "th") return __th.account_invitations_role_owner(inputs)
-	if (locale === "tr") return __tr.account_invitations_role_owner(inputs)
-	if (locale === "uk") return __uk.account_invitations_role_owner(inputs)
-	if (locale === "vi") return __vi.account_invitations_role_owner(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.account_invitations_role_owner(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.account_invitations_role_owner(inputs)
-	return __en.account_invitations_role_owner(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "Viewer — browse and cook" |
-*
-* @param {Account_Invitations_Role_ViewerInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const account_invitations_role_viewer = /** @type {((inputs?: Account_Invitations_Role_ViewerInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Invitations_Role_ViewerInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.account_invitations_role_viewer(inputs)
-	if (locale === "cs") return __cs.account_invitations_role_viewer(inputs)
-	if (locale === "da") return __da.account_invitations_role_viewer(inputs)
-	if (locale === "de") return __de.account_invitations_role_viewer(inputs)
-	if (locale === "el") return __el.account_invitations_role_viewer(inputs)
-	if (locale === "es") return __es.account_invitations_role_viewer(inputs)
-	if (locale === "fi") return __fi.account_invitations_role_viewer(inputs)
-	if (locale === "fr") return __fr.account_invitations_role_viewer(inputs)
-	if (locale === "he") return __he.account_invitations_role_viewer(inputs)
-	if (locale === "hu") return __hu.account_invitations_role_viewer(inputs)
-	if (locale === "id") return __id.account_invitations_role_viewer(inputs)
-	if (locale === "it") return __it.account_invitations_role_viewer(inputs)
-	if (locale === "ja") return __ja.account_invitations_role_viewer(inputs)
-	if (locale === "ko") return __ko.account_invitations_role_viewer(inputs)
-	if (locale === "nb") return __nb.account_invitations_role_viewer(inputs)
-	if (locale === "nl") return __nl.account_invitations_role_viewer(inputs)
-	if (locale === "pl") return __pl.account_invitations_role_viewer(inputs)
-	if (locale === "pt-BR") return __pt_br2.account_invitations_role_viewer(inputs)
-	if (locale === "pt-PT") return __pt_pt2.account_invitations_role_viewer(inputs)
-	if (locale === "ro") return __ro.account_invitations_role_viewer(inputs)
-	if (locale === "ru") return __ru.account_invitations_role_viewer(inputs)
-	if (locale === "sv") return __sv.account_invitations_role_viewer(inputs)
-	if (locale === "th") return __th.account_invitations_role_viewer(inputs)
-	if (locale === "tr") return __tr.account_invitations_role_viewer(inputs)
-	if (locale === "uk") return __uk.account_invitations_role_viewer(inputs)
-	if (locale === "vi") return __vi.account_invitations_role_viewer(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.account_invitations_role_viewer(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.account_invitations_role_viewer(inputs)
-	return __en.account_invitations_role_viewer(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "Invitation" |
+* | "Untitled link" |
 *
 * @param {Account_Invitations_UnnamedInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -11095,6 +10978,88 @@ export const account_invitations_unnamed = /** @type {((inputs?: Account_Invitat
 	if (locale === "zh-Hans") return __zh_hans1.account_invitations_unnamed(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_invitations_unnamed(inputs)
 	return __en.account_invitations_unnamed(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Use an account name without spaces and a password of at least 12 characters." |
+*
+* @param {Account_Invited_InvalidInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_invited_invalid = /** @type {((inputs?: Account_Invited_InvalidInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Invited_InvalidInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_invited_invalid(inputs)
+	if (locale === "cs") return __cs.account_invited_invalid(inputs)
+	if (locale === "da") return __da.account_invited_invalid(inputs)
+	if (locale === "de") return __de.account_invited_invalid(inputs)
+	if (locale === "el") return __el.account_invited_invalid(inputs)
+	if (locale === "es") return __es.account_invited_invalid(inputs)
+	if (locale === "fi") return __fi.account_invited_invalid(inputs)
+	if (locale === "fr") return __fr.account_invited_invalid(inputs)
+	if (locale === "he") return __he.account_invited_invalid(inputs)
+	if (locale === "hu") return __hu.account_invited_invalid(inputs)
+	if (locale === "id") return __id.account_invited_invalid(inputs)
+	if (locale === "it") return __it.account_invited_invalid(inputs)
+	if (locale === "ja") return __ja.account_invited_invalid(inputs)
+	if (locale === "ko") return __ko.account_invited_invalid(inputs)
+	if (locale === "nb") return __nb.account_invited_invalid(inputs)
+	if (locale === "nl") return __nl.account_invited_invalid(inputs)
+	if (locale === "pl") return __pl.account_invited_invalid(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_invited_invalid(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_invited_invalid(inputs)
+	if (locale === "ro") return __ro.account_invited_invalid(inputs)
+	if (locale === "ru") return __ru.account_invited_invalid(inputs)
+	if (locale === "sv") return __sv.account_invited_invalid(inputs)
+	if (locale === "th") return __th.account_invited_invalid(inputs)
+	if (locale === "tr") return __tr.account_invited_invalid(inputs)
+	if (locale === "uk") return __uk.account_invited_invalid(inputs)
+	if (locale === "vi") return __vi.account_invited_invalid(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_invited_invalid(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_invited_invalid(inputs)
+	return __en.account_invited_invalid(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "That account name is taken. Choose another name, or sign in with your existing account." |
+*
+* @param {Account_Invited_Name_TakenInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_invited_name_taken = /** @type {((inputs?: Account_Invited_Name_TakenInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Invited_Name_TakenInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_invited_name_taken(inputs)
+	if (locale === "cs") return __cs.account_invited_name_taken(inputs)
+	if (locale === "da") return __da.account_invited_name_taken(inputs)
+	if (locale === "de") return __de.account_invited_name_taken(inputs)
+	if (locale === "el") return __el.account_invited_name_taken(inputs)
+	if (locale === "es") return __es.account_invited_name_taken(inputs)
+	if (locale === "fi") return __fi.account_invited_name_taken(inputs)
+	if (locale === "fr") return __fr.account_invited_name_taken(inputs)
+	if (locale === "he") return __he.account_invited_name_taken(inputs)
+	if (locale === "hu") return __hu.account_invited_name_taken(inputs)
+	if (locale === "id") return __id.account_invited_name_taken(inputs)
+	if (locale === "it") return __it.account_invited_name_taken(inputs)
+	if (locale === "ja") return __ja.account_invited_name_taken(inputs)
+	if (locale === "ko") return __ko.account_invited_name_taken(inputs)
+	if (locale === "nb") return __nb.account_invited_name_taken(inputs)
+	if (locale === "nl") return __nl.account_invited_name_taken(inputs)
+	if (locale === "pl") return __pl.account_invited_name_taken(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_invited_name_taken(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_invited_name_taken(inputs)
+	if (locale === "ro") return __ro.account_invited_name_taken(inputs)
+	if (locale === "ru") return __ru.account_invited_name_taken(inputs)
+	if (locale === "sv") return __sv.account_invited_name_taken(inputs)
+	if (locale === "th") return __th.account_invited_name_taken(inputs)
+	if (locale === "tr") return __tr.account_invited_name_taken(inputs)
+	if (locale === "uk") return __uk.account_invited_name_taken(inputs)
+	if (locale === "vi") return __vi.account_invited_name_taken(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_invited_name_taken(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_invited_name_taken(inputs)
+	return __en.account_invited_name_taken(inputs)
 });
 /**
 * | output |
@@ -13395,47 +13360,6 @@ export const account_overview_details = /** @type {((inputs?: Account_Overview_D
 /**
 * | output |
 * | --- |
-* | "Invite people" |
-*
-* @param {Account_Overview_Invite_PeopleInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const account_overview_invite_people = /** @type {((inputs?: Account_Overview_Invite_PeopleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Overview_Invite_PeopleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.account_overview_invite_people(inputs)
-	if (locale === "cs") return __cs.account_overview_invite_people(inputs)
-	if (locale === "da") return __da.account_overview_invite_people(inputs)
-	if (locale === "de") return __de.account_overview_invite_people(inputs)
-	if (locale === "el") return __el.account_overview_invite_people(inputs)
-	if (locale === "es") return __es.account_overview_invite_people(inputs)
-	if (locale === "fi") return __fi.account_overview_invite_people(inputs)
-	if (locale === "fr") return __fr.account_overview_invite_people(inputs)
-	if (locale === "he") return __he.account_overview_invite_people(inputs)
-	if (locale === "hu") return __hu.account_overview_invite_people(inputs)
-	if (locale === "id") return __id.account_overview_invite_people(inputs)
-	if (locale === "it") return __it.account_overview_invite_people(inputs)
-	if (locale === "ja") return __ja.account_overview_invite_people(inputs)
-	if (locale === "ko") return __ko.account_overview_invite_people(inputs)
-	if (locale === "nb") return __nb.account_overview_invite_people(inputs)
-	if (locale === "nl") return __nl.account_overview_invite_people(inputs)
-	if (locale === "pl") return __pl.account_overview_invite_people(inputs)
-	if (locale === "pt-BR") return __pt_br2.account_overview_invite_people(inputs)
-	if (locale === "pt-PT") return __pt_pt2.account_overview_invite_people(inputs)
-	if (locale === "ro") return __ro.account_overview_invite_people(inputs)
-	if (locale === "ru") return __ru.account_overview_invite_people(inputs)
-	if (locale === "sv") return __sv.account_overview_invite_people(inputs)
-	if (locale === "th") return __th.account_overview_invite_people(inputs)
-	if (locale === "tr") return __tr.account_overview_invite_people(inputs)
-	if (locale === "uk") return __uk.account_overview_invite_people(inputs)
-	if (locale === "vi") return __vi.account_overview_invite_people(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.account_overview_invite_people(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.account_overview_invite_people(inputs)
-	return __en.account_overview_invite_people(inputs)
-});
-/**
-* | output |
-* | --- |
 * | "Your libraries" |
 *
 * @param {Account_Overview_LibrariesInputs} inputs
@@ -13555,47 +13479,6 @@ export const account_overview_local_mode = /** @type {((inputs?: Account_Overvie
 	if (locale === "zh-Hans") return __zh_hans1.account_overview_local_mode(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_overview_local_mode(inputs)
 	return __en.account_overview_local_mode(inputs)
-});
-/**
-* | output |
-* | --- |
-* | "Manage access" |
-*
-* @param {Account_Overview_Manage_AccessInputs} inputs
-* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
-* @returns {LocalizedString}
-*/
-export const account_overview_manage_access = /** @type {((inputs?: Account_Overview_Manage_AccessInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Overview_Manage_AccessInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
-	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
-	if (locale === "ar") return __ar.account_overview_manage_access(inputs)
-	if (locale === "cs") return __cs.account_overview_manage_access(inputs)
-	if (locale === "da") return __da.account_overview_manage_access(inputs)
-	if (locale === "de") return __de.account_overview_manage_access(inputs)
-	if (locale === "el") return __el.account_overview_manage_access(inputs)
-	if (locale === "es") return __es.account_overview_manage_access(inputs)
-	if (locale === "fi") return __fi.account_overview_manage_access(inputs)
-	if (locale === "fr") return __fr.account_overview_manage_access(inputs)
-	if (locale === "he") return __he.account_overview_manage_access(inputs)
-	if (locale === "hu") return __hu.account_overview_manage_access(inputs)
-	if (locale === "id") return __id.account_overview_manage_access(inputs)
-	if (locale === "it") return __it.account_overview_manage_access(inputs)
-	if (locale === "ja") return __ja.account_overview_manage_access(inputs)
-	if (locale === "ko") return __ko.account_overview_manage_access(inputs)
-	if (locale === "nb") return __nb.account_overview_manage_access(inputs)
-	if (locale === "nl") return __nl.account_overview_manage_access(inputs)
-	if (locale === "pl") return __pl.account_overview_manage_access(inputs)
-	if (locale === "pt-BR") return __pt_br2.account_overview_manage_access(inputs)
-	if (locale === "pt-PT") return __pt_pt2.account_overview_manage_access(inputs)
-	if (locale === "ro") return __ro.account_overview_manage_access(inputs)
-	if (locale === "ru") return __ru.account_overview_manage_access(inputs)
-	if (locale === "sv") return __sv.account_overview_manage_access(inputs)
-	if (locale === "th") return __th.account_overview_manage_access(inputs)
-	if (locale === "tr") return __tr.account_overview_manage_access(inputs)
-	if (locale === "uk") return __uk.account_overview_manage_access(inputs)
-	if (locale === "vi") return __vi.account_overview_manage_access(inputs)
-	if (locale === "zh-Hans") return __zh_hans1.account_overview_manage_access(inputs)
-	if (locale === "zh-Hant") return __zh_hant1.account_overview_manage_access(inputs)
-	return __en.account_overview_manage_access(inputs)
 });
 /**
 * | output |
@@ -15733,7 +15616,7 @@ export const account_recovery_saved_hint = /** @type {((inputs?: Account_Recover
 /**
 * | output |
 * | --- |
-* | "Already have an account? Sign in above." |
+* | "Already have an account?" |
 *
 * @param {Account_Register_ExistingInputs} inputs
 * @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
@@ -15811,6 +15694,47 @@ export const account_register_heading = /** @type {((inputs?: Account_Register_H
 	if (locale === "zh-Hans") return __zh_hans1.account_register_heading(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.account_register_heading(inputs)
 	return __en.account_register_heading(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "At least 12 characters." |
+*
+* @param {Account_Register_Password_HintInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const account_register_password_hint = /** @type {((inputs?: Account_Register_Password_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Account_Register_Password_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.account_register_password_hint(inputs)
+	if (locale === "cs") return __cs.account_register_password_hint(inputs)
+	if (locale === "da") return __da.account_register_password_hint(inputs)
+	if (locale === "de") return __de.account_register_password_hint(inputs)
+	if (locale === "el") return __el.account_register_password_hint(inputs)
+	if (locale === "es") return __es.account_register_password_hint(inputs)
+	if (locale === "fi") return __fi.account_register_password_hint(inputs)
+	if (locale === "fr") return __fr.account_register_password_hint(inputs)
+	if (locale === "he") return __he.account_register_password_hint(inputs)
+	if (locale === "hu") return __hu.account_register_password_hint(inputs)
+	if (locale === "id") return __id.account_register_password_hint(inputs)
+	if (locale === "it") return __it.account_register_password_hint(inputs)
+	if (locale === "ja") return __ja.account_register_password_hint(inputs)
+	if (locale === "ko") return __ko.account_register_password_hint(inputs)
+	if (locale === "nb") return __nb.account_register_password_hint(inputs)
+	if (locale === "nl") return __nl.account_register_password_hint(inputs)
+	if (locale === "pl") return __pl.account_register_password_hint(inputs)
+	if (locale === "pt-BR") return __pt_br2.account_register_password_hint(inputs)
+	if (locale === "pt-PT") return __pt_pt2.account_register_password_hint(inputs)
+	if (locale === "ro") return __ro.account_register_password_hint(inputs)
+	if (locale === "ru") return __ru.account_register_password_hint(inputs)
+	if (locale === "sv") return __sv.account_register_password_hint(inputs)
+	if (locale === "th") return __th.account_register_password_hint(inputs)
+	if (locale === "tr") return __tr.account_register_password_hint(inputs)
+	if (locale === "uk") return __uk.account_register_password_hint(inputs)
+	if (locale === "vi") return __vi.account_register_password_hint(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.account_register_password_hint(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.account_register_password_hint(inputs)
+	return __en.account_register_password_hint(inputs)
 });
 /**
 * | output |
@@ -59835,6 +59759,129 @@ export const library_filters_taken_from_a_cookbook = /** @type {((inputs?: Libra
 /**
 * | output |
 * | --- |
+* | "No unused links." |
+*
+* @param {Library_Invitations_EmptyInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_invitations_empty = /** @type {((inputs?: Library_Invitations_EmptyInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_Invitations_EmptyInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.library_invitations_empty(inputs)
+	if (locale === "cs") return __cs.library_invitations_empty(inputs)
+	if (locale === "da") return __da.library_invitations_empty(inputs)
+	if (locale === "de") return __de.library_invitations_empty(inputs)
+	if (locale === "el") return __el.library_invitations_empty(inputs)
+	if (locale === "es") return __es.library_invitations_empty(inputs)
+	if (locale === "fi") return __fi.library_invitations_empty(inputs)
+	if (locale === "fr") return __fr.library_invitations_empty(inputs)
+	if (locale === "he") return __he.library_invitations_empty(inputs)
+	if (locale === "hu") return __hu.library_invitations_empty(inputs)
+	if (locale === "id") return __id.library_invitations_empty(inputs)
+	if (locale === "it") return __it.library_invitations_empty(inputs)
+	if (locale === "ja") return __ja.library_invitations_empty(inputs)
+	if (locale === "ko") return __ko.library_invitations_empty(inputs)
+	if (locale === "nb") return __nb.library_invitations_empty(inputs)
+	if (locale === "nl") return __nl.library_invitations_empty(inputs)
+	if (locale === "pl") return __pl.library_invitations_empty(inputs)
+	if (locale === "pt-BR") return __pt_br2.library_invitations_empty(inputs)
+	if (locale === "pt-PT") return __pt_pt2.library_invitations_empty(inputs)
+	if (locale === "ro") return __ro.library_invitations_empty(inputs)
+	if (locale === "ru") return __ru.library_invitations_empty(inputs)
+	if (locale === "sv") return __sv.library_invitations_empty(inputs)
+	if (locale === "th") return __th.library_invitations_empty(inputs)
+	if (locale === "tr") return __tr.library_invitations_empty(inputs)
+	if (locale === "uk") return __uk.library_invitations_empty(inputs)
+	if (locale === "vi") return __vi.library_invitations_empty(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.library_invitations_empty(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.library_invitations_empty(inputs)
+	return __en.library_invitations_empty(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Invitation links" |
+*
+* @param {Library_Invitations_HeadingInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_invitations_heading = /** @type {((inputs?: Library_Invitations_HeadingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_Invitations_HeadingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.library_invitations_heading(inputs)
+	if (locale === "cs") return __cs.library_invitations_heading(inputs)
+	if (locale === "da") return __da.library_invitations_heading(inputs)
+	if (locale === "de") return __de.library_invitations_heading(inputs)
+	if (locale === "el") return __el.library_invitations_heading(inputs)
+	if (locale === "es") return __es.library_invitations_heading(inputs)
+	if (locale === "fi") return __fi.library_invitations_heading(inputs)
+	if (locale === "fr") return __fr.library_invitations_heading(inputs)
+	if (locale === "he") return __he.library_invitations_heading(inputs)
+	if (locale === "hu") return __hu.library_invitations_heading(inputs)
+	if (locale === "id") return __id.library_invitations_heading(inputs)
+	if (locale === "it") return __it.library_invitations_heading(inputs)
+	if (locale === "ja") return __ja.library_invitations_heading(inputs)
+	if (locale === "ko") return __ko.library_invitations_heading(inputs)
+	if (locale === "nb") return __nb.library_invitations_heading(inputs)
+	if (locale === "nl") return __nl.library_invitations_heading(inputs)
+	if (locale === "pl") return __pl.library_invitations_heading(inputs)
+	if (locale === "pt-BR") return __pt_br2.library_invitations_heading(inputs)
+	if (locale === "pt-PT") return __pt_pt2.library_invitations_heading(inputs)
+	if (locale === "ro") return __ro.library_invitations_heading(inputs)
+	if (locale === "ru") return __ru.library_invitations_heading(inputs)
+	if (locale === "sv") return __sv.library_invitations_heading(inputs)
+	if (locale === "th") return __th.library_invitations_heading(inputs)
+	if (locale === "tr") return __tr.library_invitations_heading(inputs)
+	if (locale === "uk") return __uk.library_invitations_heading(inputs)
+	if (locale === "vi") return __vi.library_invitations_heading(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.library_invitations_heading(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.library_invitations_heading(inputs)
+	return __en.library_invitations_heading(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Every account is already a member." |
+*
+* @param {Library_Members_All_AddedInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_members_all_added = /** @type {((inputs?: Library_Members_All_AddedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_Members_All_AddedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.library_members_all_added(inputs)
+	if (locale === "cs") return __cs.library_members_all_added(inputs)
+	if (locale === "da") return __da.library_members_all_added(inputs)
+	if (locale === "de") return __de.library_members_all_added(inputs)
+	if (locale === "el") return __el.library_members_all_added(inputs)
+	if (locale === "es") return __es.library_members_all_added(inputs)
+	if (locale === "fi") return __fi.library_members_all_added(inputs)
+	if (locale === "fr") return __fr.library_members_all_added(inputs)
+	if (locale === "he") return __he.library_members_all_added(inputs)
+	if (locale === "hu") return __hu.library_members_all_added(inputs)
+	if (locale === "id") return __id.library_members_all_added(inputs)
+	if (locale === "it") return __it.library_members_all_added(inputs)
+	if (locale === "ja") return __ja.library_members_all_added(inputs)
+	if (locale === "ko") return __ko.library_members_all_added(inputs)
+	if (locale === "nb") return __nb.library_members_all_added(inputs)
+	if (locale === "nl") return __nl.library_members_all_added(inputs)
+	if (locale === "pl") return __pl.library_members_all_added(inputs)
+	if (locale === "pt-BR") return __pt_br2.library_members_all_added(inputs)
+	if (locale === "pt-PT") return __pt_pt2.library_members_all_added(inputs)
+	if (locale === "ro") return __ro.library_members_all_added(inputs)
+	if (locale === "ru") return __ru.library_members_all_added(inputs)
+	if (locale === "sv") return __sv.library_members_all_added(inputs)
+	if (locale === "th") return __th.library_members_all_added(inputs)
+	if (locale === "tr") return __tr.library_members_all_added(inputs)
+	if (locale === "uk") return __uk.library_members_all_added(inputs)
+	if (locale === "vi") return __vi.library_members_all_added(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.library_members_all_added(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.library_members_all_added(inputs)
+	return __en.library_members_all_added(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Add recipes" |
 *
 * @param {Library_Page_Add_RecipesInputs} inputs
@@ -61553,6 +61600,211 @@ export const library_selection_bar_sref_bundle = /** @type {((inputs?: Library_S
 	if (locale === "zh-Hans") return __zh_hans1.library_selection_bar_sref_bundle(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.library_selection_bar_sref_bundle(inputs)
 	return __en.library_selection_bar_sref_bundle(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Library settings" |
+*
+* @param {Library_SettingsInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_settings = /** @type {((inputs?: Library_SettingsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_SettingsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.library_settings(inputs)
+	if (locale === "cs") return __cs.library_settings(inputs)
+	if (locale === "da") return __da.library_settings(inputs)
+	if (locale === "de") return __de.library_settings(inputs)
+	if (locale === "el") return __el.library_settings(inputs)
+	if (locale === "es") return __es.library_settings(inputs)
+	if (locale === "fi") return __fi.library_settings(inputs)
+	if (locale === "fr") return __fr.library_settings(inputs)
+	if (locale === "he") return __he.library_settings(inputs)
+	if (locale === "hu") return __hu.library_settings(inputs)
+	if (locale === "id") return __id.library_settings(inputs)
+	if (locale === "it") return __it.library_settings(inputs)
+	if (locale === "ja") return __ja.library_settings(inputs)
+	if (locale === "ko") return __ko.library_settings(inputs)
+	if (locale === "nb") return __nb.library_settings(inputs)
+	if (locale === "nl") return __nl.library_settings(inputs)
+	if (locale === "pl") return __pl.library_settings(inputs)
+	if (locale === "pt-BR") return __pt_br2.library_settings(inputs)
+	if (locale === "pt-PT") return __pt_pt2.library_settings(inputs)
+	if (locale === "ro") return __ro.library_settings(inputs)
+	if (locale === "ru") return __ru.library_settings(inputs)
+	if (locale === "sv") return __sv.library_settings(inputs)
+	if (locale === "th") return __th.library_settings(inputs)
+	if (locale === "tr") return __tr.library_settings(inputs)
+	if (locale === "uk") return __uk.library_settings(inputs)
+	if (locale === "vi") return __vi.library_settings(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.library_settings(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.library_settings(inputs)
+	return __en.library_settings(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "You are not a member of this library." |
+*
+* @param {Library_Settings_ForbiddenInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_settings_forbidden = /** @type {((inputs?: Library_Settings_ForbiddenInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_Settings_ForbiddenInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.library_settings_forbidden(inputs)
+	if (locale === "cs") return __cs.library_settings_forbidden(inputs)
+	if (locale === "da") return __da.library_settings_forbidden(inputs)
+	if (locale === "de") return __de.library_settings_forbidden(inputs)
+	if (locale === "el") return __el.library_settings_forbidden(inputs)
+	if (locale === "es") return __es.library_settings_forbidden(inputs)
+	if (locale === "fi") return __fi.library_settings_forbidden(inputs)
+	if (locale === "fr") return __fr.library_settings_forbidden(inputs)
+	if (locale === "he") return __he.library_settings_forbidden(inputs)
+	if (locale === "hu") return __hu.library_settings_forbidden(inputs)
+	if (locale === "id") return __id.library_settings_forbidden(inputs)
+	if (locale === "it") return __it.library_settings_forbidden(inputs)
+	if (locale === "ja") return __ja.library_settings_forbidden(inputs)
+	if (locale === "ko") return __ko.library_settings_forbidden(inputs)
+	if (locale === "nb") return __nb.library_settings_forbidden(inputs)
+	if (locale === "nl") return __nl.library_settings_forbidden(inputs)
+	if (locale === "pl") return __pl.library_settings_forbidden(inputs)
+	if (locale === "pt-BR") return __pt_br2.library_settings_forbidden(inputs)
+	if (locale === "pt-PT") return __pt_pt2.library_settings_forbidden(inputs)
+	if (locale === "ro") return __ro.library_settings_forbidden(inputs)
+	if (locale === "ru") return __ru.library_settings_forbidden(inputs)
+	if (locale === "sv") return __sv.library_settings_forbidden(inputs)
+	if (locale === "th") return __th.library_settings_forbidden(inputs)
+	if (locale === "tr") return __tr.library_settings_forbidden(inputs)
+	if (locale === "uk") return __uk.library_settings_forbidden(inputs)
+	if (locale === "vi") return __vi.library_settings_forbidden(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.library_settings_forbidden(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.library_settings_forbidden(inputs)
+	return __en.library_settings_forbidden(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Only an owner can manage access to {library}." |
+*
+* @param {Library_Settings_Owner_OnlyInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_settings_owner_only = /** @type {((inputs: Library_Settings_Owner_OnlyInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_Settings_Owner_OnlyInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.library_settings_owner_only(inputs)
+	if (locale === "cs") return __cs.library_settings_owner_only(inputs)
+	if (locale === "da") return __da.library_settings_owner_only(inputs)
+	if (locale === "de") return __de.library_settings_owner_only(inputs)
+	if (locale === "el") return __el.library_settings_owner_only(inputs)
+	if (locale === "es") return __es.library_settings_owner_only(inputs)
+	if (locale === "fi") return __fi.library_settings_owner_only(inputs)
+	if (locale === "fr") return __fr.library_settings_owner_only(inputs)
+	if (locale === "he") return __he.library_settings_owner_only(inputs)
+	if (locale === "hu") return __hu.library_settings_owner_only(inputs)
+	if (locale === "id") return __id.library_settings_owner_only(inputs)
+	if (locale === "it") return __it.library_settings_owner_only(inputs)
+	if (locale === "ja") return __ja.library_settings_owner_only(inputs)
+	if (locale === "ko") return __ko.library_settings_owner_only(inputs)
+	if (locale === "nb") return __nb.library_settings_owner_only(inputs)
+	if (locale === "nl") return __nl.library_settings_owner_only(inputs)
+	if (locale === "pl") return __pl.library_settings_owner_only(inputs)
+	if (locale === "pt-BR") return __pt_br2.library_settings_owner_only(inputs)
+	if (locale === "pt-PT") return __pt_pt2.library_settings_owner_only(inputs)
+	if (locale === "ro") return __ro.library_settings_owner_only(inputs)
+	if (locale === "ru") return __ru.library_settings_owner_only(inputs)
+	if (locale === "sv") return __sv.library_settings_owner_only(inputs)
+	if (locale === "th") return __th.library_settings_owner_only(inputs)
+	if (locale === "tr") return __tr.library_settings_owner_only(inputs)
+	if (locale === "uk") return __uk.library_settings_owner_only(inputs)
+	if (locale === "vi") return __vi.library_settings_owner_only(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.library_settings_owner_only(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.library_settings_owner_only(inputs)
+	return __en.library_settings_owner_only(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Library settings · Savorum" |
+*
+* @param {Library_Settings_Page_TitleInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_settings_page_title = /** @type {((inputs?: Library_Settings_Page_TitleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_Settings_Page_TitleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.library_settings_page_title(inputs)
+	if (locale === "cs") return __cs.library_settings_page_title(inputs)
+	if (locale === "da") return __da.library_settings_page_title(inputs)
+	if (locale === "de") return __de.library_settings_page_title(inputs)
+	if (locale === "el") return __el.library_settings_page_title(inputs)
+	if (locale === "es") return __es.library_settings_page_title(inputs)
+	if (locale === "fi") return __fi.library_settings_page_title(inputs)
+	if (locale === "fr") return __fr.library_settings_page_title(inputs)
+	if (locale === "he") return __he.library_settings_page_title(inputs)
+	if (locale === "hu") return __hu.library_settings_page_title(inputs)
+	if (locale === "id") return __id.library_settings_page_title(inputs)
+	if (locale === "it") return __it.library_settings_page_title(inputs)
+	if (locale === "ja") return __ja.library_settings_page_title(inputs)
+	if (locale === "ko") return __ko.library_settings_page_title(inputs)
+	if (locale === "nb") return __nb.library_settings_page_title(inputs)
+	if (locale === "nl") return __nl.library_settings_page_title(inputs)
+	if (locale === "pl") return __pl.library_settings_page_title(inputs)
+	if (locale === "pt-BR") return __pt_br2.library_settings_page_title(inputs)
+	if (locale === "pt-PT") return __pt_pt2.library_settings_page_title(inputs)
+	if (locale === "ro") return __ro.library_settings_page_title(inputs)
+	if (locale === "ru") return __ru.library_settings_page_title(inputs)
+	if (locale === "sv") return __sv.library_settings_page_title(inputs)
+	if (locale === "th") return __th.library_settings_page_title(inputs)
+	if (locale === "tr") return __tr.library_settings_page_title(inputs)
+	if (locale === "uk") return __uk.library_settings_page_title(inputs)
+	if (locale === "vi") return __vi.library_settings_page_title(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.library_settings_page_title(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.library_settings_page_title(inputs)
+	return __en.library_settings_page_title(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Settings for {library}" |
+*
+* @param {Library_Settings_TitleInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const library_settings_title = /** @type {((inputs: Library_Settings_TitleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Library_Settings_TitleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.library_settings_title(inputs)
+	if (locale === "cs") return __cs.library_settings_title(inputs)
+	if (locale === "da") return __da.library_settings_title(inputs)
+	if (locale === "de") return __de.library_settings_title(inputs)
+	if (locale === "el") return __el.library_settings_title(inputs)
+	if (locale === "es") return __es.library_settings_title(inputs)
+	if (locale === "fi") return __fi.library_settings_title(inputs)
+	if (locale === "fr") return __fr.library_settings_title(inputs)
+	if (locale === "he") return __he.library_settings_title(inputs)
+	if (locale === "hu") return __hu.library_settings_title(inputs)
+	if (locale === "id") return __id.library_settings_title(inputs)
+	if (locale === "it") return __it.library_settings_title(inputs)
+	if (locale === "ja") return __ja.library_settings_title(inputs)
+	if (locale === "ko") return __ko.library_settings_title(inputs)
+	if (locale === "nb") return __nb.library_settings_title(inputs)
+	if (locale === "nl") return __nl.library_settings_title(inputs)
+	if (locale === "pl") return __pl.library_settings_title(inputs)
+	if (locale === "pt-BR") return __pt_br2.library_settings_title(inputs)
+	if (locale === "pt-PT") return __pt_pt2.library_settings_title(inputs)
+	if (locale === "ro") return __ro.library_settings_title(inputs)
+	if (locale === "ru") return __ru.library_settings_title(inputs)
+	if (locale === "sv") return __sv.library_settings_title(inputs)
+	if (locale === "th") return __th.library_settings_title(inputs)
+	if (locale === "tr") return __tr.library_settings_title(inputs)
+	if (locale === "uk") return __uk.library_settings_title(inputs)
+	if (locale === "vi") return __vi.library_settings_title(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.library_settings_title(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.library_settings_title(inputs)
+	return __en.library_settings_title(inputs)
 });
 /**
 * | output |

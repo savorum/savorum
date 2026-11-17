@@ -140,6 +140,10 @@ export function SiteHeader() {
   const location = useLocation()
   const [switchFailed, setSwitchFailed] = createSignal<string>()
   const libraries = () => account()?.libraries ?? []
+  const activeOwnedLibrary = () => {
+    const library = libraries().find((entry) => entry.id === account()?.active_library_id)
+    return authEnabled() && library?.role === "owner" ? library : undefined
+  }
   return (
     <header class={styles.banner}>
       <SignOutDialog open={signingOut()} onClose={() => setSigningOut(false)} />
@@ -193,8 +197,14 @@ export function SiteHeader() {
           <TimerStatus />
           <Menu
             onSelect={(details) => {
+              const library = activeOwnedLibrary()
               if (details.value === "sign-out") setSigningOut(true)
               else if (details.value === "shortcuts") setShortcutsOpen(true)
+              else if (details.value === "library-settings" && library)
+                void navigate({
+                  to: "/libraries/$libraryId/settings",
+                  params: { libraryId: library.id },
+                })
               else if (details.value === "help")
                 window.open("https://docs.savorum.app/", "_blank", "noopener")
               else void navigate({ to: details.value })
@@ -216,6 +226,9 @@ export function SiteHeader() {
               <MenuItem value="/tags">{m.site_header_tags_and_categories()}</MenuItem>
               <MenuItem value="/saved-searches">{m.site_header_saved_searches()}</MenuItem>
               <MenuItem value="/trash">{m.site_header_trash()}</MenuItem>
+              <Show when={activeOwnedLibrary()}>
+                <MenuItem value="library-settings">{m.library_settings()}</MenuItem>
+              </Show>
             </MenuItemGroup>
             <MenuItemGroup>
               <MenuItemGroupLabel>{m.site_header_you()}</MenuItemGroupLabel>

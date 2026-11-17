@@ -10,7 +10,11 @@ import { forgetOfflineData } from "@/lib/offline-cache"
 
 import { accountRequest } from "./account-state"
 
-export function SignOutDialog(props: { open: boolean; onClose: () => void }) {
+export function SignOutDialog(props: {
+  open: boolean
+  onClose: () => void
+  returnTo?: "/account"
+}) {
   const [error, setError] = createSignal<unknown>()
   const [busy, setBusy] = createSignal(false)
   function signOut() {
@@ -27,7 +31,7 @@ export function SignOutDialog(props: { open: boolean; onClose: () => void }) {
         return forgetOfflineData()
       })
       .then(() => {
-        window.location.assign("/")
+        window.location.assign(props.returnTo ?? "/")
       })
       .catch((failure: unknown) => {
         setError(failure)

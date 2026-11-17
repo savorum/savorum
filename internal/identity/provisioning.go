@@ -31,3 +31,11 @@ type GroupMapping struct {
 	LibraryID  string      `json:"library_id"`
 	Role       access.Role `json:"role"`
 }
+
+// InvitationPreview exposes only the library and access granted by a bearer link.
+type InvitationPreview struct {
+	LibraryID   string      `json:"library_id"`
+	LibraryName string      `json:"library_name"`
+	Role        access.Role `json:"role"`
+	Accepted    bool        `json:"accepted"`
+}

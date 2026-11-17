@@ -92,6 +92,16 @@ refuses the write, the command fails; it never opens a second writer.
 `check-owner`, `revoke-member` and `erase-user` exist under both
 `savorum hosting` and `savorum admin`.
 
+## Hosting account metadata
+
+`GET /api/v1/auth/providers` includes `account_origin` and `tenant_id` for a
+managed provider. These values come from the configured issuer and audience.
+The bundled web client opens the hosting account origin with `tenant`,
+`library`, and `sharing=1` query parameters. The hosting service uses this
+context for its sharing controls. Other provider kinds omit these fields. Server
+invitations on a managed instance ask the recipient for a hosting invitation;
+local account sign-in remains available.
+
 ## Admit a member
 
 A member joins through a local invitation or an automatic Cloud invitation.
@@ -154,10 +164,10 @@ savorum admin revoke-member --socket /data/.savorum-control/maintenance.sock \
   --subject SUBJECT --user USER_ID --library LIBRARY_ID
 ```
 
-Savorum disables the managed identity, revokes its sessions and personal
-tokens, and removes the library membership and administrator role. Recipe data
-and other libraries stay. It refuses to remove the last administrator or
-library owner.
+Savorum disables the local account and managed identity, revokes sessions and
+personal tokens, and removes every library membership and the administrator
+role. Recipe data stays. It refuses to remove the last administrator or the
+last owner of any active library.
 
 `savorum admin check-owner` takes the same flags and confirms the managed user
 is an active administrator and owner of the first library. Ownership is
@@ -319,3 +329,13 @@ volume that the service user can write.
 `savorum admin disk-capacity --mount PATH` reports the filesystem size. Add
 `--database PATH` to include the recorded hosting identity, and `--geometry`
 (Linux, ext4 block devices only) for device and block details.
+
+A private member request with `role` set to `viewer` or `editor` grants that
+role in `library_id`. It requires the issuer, bootstrap, owner subject and owner
+user binding. The owner must be an active administrator and own that library.
+Omitting `role` retains initial-library viewer admission.
+
+Session grants may set `allow_library_fallback` for generic account sign-in.
+If the named library is unavailable, the tenant requires another current library
+membership for the same active, enabled managed identity. Explicit invitation
+handoffs require their selected library.

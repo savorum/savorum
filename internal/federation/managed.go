@@ -49,10 +49,11 @@ var managedAudience = regexp.MustCompile(`^[A-Za-z0-9._:-]{1,128}$`)
 type ManagedGrant struct {
 	jwt.Claims
 
-	Origin        string `json:"origin"`
-	CodeChallenge string `json:"code_challenge"`
-	LocalUserID   string `json:"local_user_id"`
-	LibraryID     string `json:"library_id"`
+	Origin               string `json:"origin"`
+	CodeChallenge        string `json:"code_challenge"`
+	LocalUserID          string `json:"local_user_id"`
+	LibraryID            string `json:"library_id"`
+	AllowLibraryFallback bool   `json:"allow_library_fallback,omitempty"`
 }
 
 func (p Provider) validateManaged() error {
@@ -281,6 +282,10 @@ func (h *Handler) managedCallback(w http.ResponseWriter, r *http.Request, p Prov
 	}
 
 	user, err := h.store.ResolveManagedIdentity(r.Context(), p.ID, grant.Subject, grant.LocalUserID, grant.LibraryID)
+	if err != nil && grant.AllowLibraryFallback {
+		user, err = h.store.ResolveManagedIdentity(r.Context(), p.ID, grant.Subject, grant.LocalUserID, "")
+	}
+
 	if err != nil {
 		h.failAfter(w, r, t, "authentication_failed")
 		return

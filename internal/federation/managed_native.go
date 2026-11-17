@@ -48,6 +48,10 @@ func (h *Handler) managedNativeSession(w http.ResponseWriter, r *http.Request) {
 	}
 
 	user, err := h.store.ResolveManagedIdentity(r.Context(), p.ID, grant.Subject, grant.LocalUserID, grant.LibraryID)
+	if err != nil && grant.AllowLibraryFallback {
+		user, err = h.store.ResolveManagedIdentity(r.Context(), p.ID, grant.Subject, grant.LocalUserID, "")
+	}
+
 	if err != nil {
 		h.fail(w, r)
 		return
