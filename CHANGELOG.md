@@ -6,9 +6,20 @@ Notable changes to Savorum Core. Each release publishes
 
 ## Unreleased
 
+### Added
+
+- Add library and role previews to invitation links.
+
 ### Changed
 
+- Combine account creation and sign-in on the invitation page.
+- Manage library members and invitation links in Library settings, opened from the library menu.
 - Require Go 1.27.4 or later for source builds.
+
+### Fixed
+
+- Fix accepting an invitation leaving another library selected.
+- Fix hosted member removal leaving access through other libraries or sign-in methods.
 
 ## 0.5.0
 

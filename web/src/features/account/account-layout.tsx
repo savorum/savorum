@@ -71,6 +71,15 @@ export const accountStyles = {
       paddingTop: "6",
     },
   }),
+  // A section title with its action, laid out as one row.
+  sectionHeader: css({
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: "3",
+    "& > h2": { fontFamily: "editorial", fontSize: "xl", lineHeight: "1.3" },
+  }),
   card: css({
     borderColor: "border.default",
     borderRadius: "l2",

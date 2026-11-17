@@ -1,12 +1,6 @@
 /* eslint-disable */
 /** @typedef {import('../runtime.js').LocalizedString} LocalizedString */
 /** @typedef {{}} _Root_Skip_To_Main_ContentInputs */
-/** @typedef {{}} Account_Access_BackInputs */
-/** @typedef {{}} Account_Access_ForbiddenInputs */
-/** @typedef {{}} Account_Access_LedeInputs */
-/** @typedef {{ library: NonNullable<unknown> }} Account_Access_Owner_OnlyInputs */
-/** @typedef {{}} Account_Access_Page_TitleInputs */
-/** @typedef {{ library: NonNullable<unknown> }} Account_Access_TitleInputs */
 /** @typedef {{}} Account_Activity_HeadingInputs */
 /** @typedef {{}} Account_Admin_ActiveInputs */
 /** @typedef {{}} Account_Admin_Audit_LedeInputs */
@@ -29,7 +23,6 @@
 /** @typedef {{ name: NonNullable<unknown> }} Account_Admin_Enable_NamedInputs */
 /** @typedef {{}} Account_Admin_Initial_PasswordInputs */
 /** @typedef {{}} Account_Admin_Invite_HeadingInputs */
-/** @typedef {{}} Account_Admin_Invite_HintInputs */
 /** @typedef {{}} Account_Admin_Invite_LibraryInputs */
 /** @typedef {{}} Account_Admin_Libraries_LedeInputs */
 /** @typedef {{}} Account_Admin_Libraries_Page_TitleInputs */
@@ -184,31 +177,37 @@
 /** @typedef {{}} Account_Delete_ReauthenticateInputs */
 /** @typedef {{}} Account_Delete_SubmitInputs */
 /** @typedef {{}} Account_Display_NameInputs */
+/** @typedef {{}} Account_Hosted_AccountInputs */
+/** @typedef {{}} Account_Hosted_Invitations_HintInputs */
+/** @typedef {{}} Account_Hosted_Legacy_InvitationInputs */
+/** @typedef {{}} Account_Hosted_Replace_HintInputs */
 /** @typedef {{}} Account_Invitation_AcceptInputs */
+/** @typedef {{}} Account_Invitation_Create_HeadingInputs */
 /** @typedef {{}} Account_Invitation_HeadingInputs */
 /** @typedef {{ name: NonNullable<unknown> }} Account_Invitation_Join_AsInputs */
+/** @typedef {{}} Account_Invitation_Need_AccountInputs */
 /** @typedef {{}} Account_Invitation_Open_AppInputs */
+/** @typedef {{}} Account_Invitation_Open_LibraryInputs */
+/** @typedef {{}} Account_Invitation_Sign_In_HeadingInputs */
 /** @typedef {{}} Account_Invitation_State_AcceptedInputs */
-/** @typedef {{}} Account_Invitation_State_ExpiredInputs */
 /** @typedef {{ date: NonNullable<unknown> }} Account_Invitation_State_ExpiresInputs */
 /** @typedef {{}} Account_Invitation_State_RevokedInputs */
+/** @typedef {{}} Account_Invitation_UnavailableInputs */
+/** @typedef {{}} Account_Invitations_AnotherInputs */
 /** @typedef {{}} Account_Invitations_CreateInputs */
-/** @typedef {{}} Account_Invitations_DismissInputs */
 /** @typedef {{}} Account_Invitations_ExpiryInputs */
-/** @typedef {{}} Account_Invitations_HeadingInputs */
 /** @typedef {{ library: NonNullable<unknown> }} Account_Invitations_HintInputs */
 /** @typedef {{}} Account_Invitations_LabelInputs */
 /** @typedef {{}} Account_Invitations_Label_HintInputs */
 /** @typedef {{}} Account_Invitations_LinkInputs */
 /** @typedef {{}} Account_Invitations_Link_HintInputs */
-/** @typedef {{}} Account_Invitations_NoneInputs */
+/** @typedef {{}} Account_Invitations_ReadyInputs */
 /** @typedef {{}} Account_Invitations_RevokeInputs */
 /** @typedef {{ label: NonNullable<unknown> }} Account_Invitations_Revoke_NamedInputs */
-/** @typedef {{}} Account_Invitations_RoleInputs */
-/** @typedef {{}} Account_Invitations_Role_EditorInputs */
-/** @typedef {{}} Account_Invitations_Role_OwnerInputs */
-/** @typedef {{}} Account_Invitations_Role_ViewerInputs */
+/** @typedef {{}} Account_Invitations_ShareInputs */
 /** @typedef {{}} Account_Invitations_UnnamedInputs */
+/** @typedef {{}} Account_Invited_InvalidInputs */
+/** @typedef {{}} Account_Invited_Name_TakenInputs */
 /** @typedef {{}} Account_Load_ErrorInputs */
 /** @typedef {{}} Account_Local_Mode_UnavailableInputs */
 /** @typedef {{ provider: NonNullable<unknown> }} Account_Login_Continue_WithInputs */
@@ -265,11 +264,9 @@
 /** @typedef {{}} Account_Nav_SecurityInputs */
 /** @typedef {{}} Account_Nav_TokensInputs */
 /** @typedef {{}} Account_Overview_DetailsInputs */
-/** @typedef {{}} Account_Overview_Invite_PeopleInputs */
 /** @typedef {{}} Account_Overview_LibrariesInputs */
 /** @typedef {{}} Account_Overview_Libraries_EmptyInputs */
 /** @typedef {{}} Account_Overview_Local_ModeInputs */
-/** @typedef {{}} Account_Overview_Manage_AccessInputs */
 /** @typedef {{}} Account_Overview_Page_TitleInputs */
 /** @typedef {{}} Account_Overview_PreferencesInputs */
 /** @typedef {{}} Account_Overview_Preferences_HintInputs */
@@ -324,6 +321,7 @@
 /** @typedef {{}} Account_Recovery_Saved_HintInputs */
 /** @typedef {{}} Account_Register_ExistingInputs */
 /** @typedef {{}} Account_Register_HeadingInputs */
+/** @typedef {{}} Account_Register_Password_HintInputs */
 /** @typedef {{}} Account_Register_SubmitInputs */
 /** @typedef {{}} Account_Retire_BodyInputs */
 /** @typedef {{}} Account_Retire_ConfirmationInputs */
@@ -1395,6 +1393,9 @@
 /** @typedef {{ value1: NonNullable<unknown> }} Library_Filters_Stop_NarrowingInputs */
 /** @typedef {{}} Library_Filters_TagsInputs */
 /** @typedef {{}} Library_Filters_Taken_From_A_CookbookInputs */
+/** @typedef {{}} Library_Invitations_EmptyInputs */
+/** @typedef {{}} Library_Invitations_HeadingInputs */
+/** @typedef {{}} Library_Members_All_AddedInputs */
 /** @typedef {{}} Library_Page_Add_RecipesInputs */
 /** @typedef {{}} Library_Page_Drop_RecipesInputs */
 /** @typedef {{}} Library_Page_New_RecipeInputs */
@@ -1437,6 +1438,11 @@
 /** @typedef {{ value1: NonNullable<unknown> }} Library_Selection_Bar_SelectedInputs */
 /** @typedef {{}} Library_Selection_Bar_Selected_RecipesInputs */
 /** @typedef {{}} Library_Selection_Bar_Sref_BundleInputs */
+/** @typedef {{}} Library_SettingsInputs */
+/** @typedef {{}} Library_Settings_ForbiddenInputs */
+/** @typedef {{ library: NonNullable<unknown> }} Library_Settings_Owner_OnlyInputs */
+/** @typedef {{}} Library_Settings_Page_TitleInputs */
+/** @typedef {{ library: NonNullable<unknown> }} Library_Settings_TitleInputs */
 /** @typedef {{}} Library_Shuffle_AgainInputs */
 /** @typedef {{}} Library_Sort_Active_TimeInputs */
 /** @typedef {{}} Library_Sort_AddedInputs */
@@ -2503,30 +2509,6 @@ export const _root_skip_to_main_content = /** @type {(inputs: _Root_Skip_To_Main
 	return /** @type {LocalizedString} */ (`Skip to main content`)
 };
 
-export const account_access_back = /** @type {(inputs: Account_Access_BackInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Back to your account`)
-};
-
-export const account_access_forbidden = /** @type {(inputs: Account_Access_ForbiddenInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`You are not a member of this library.`)
-};
-
-export const account_access_lede = /** @type {(inputs: Account_Access_LedeInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Who can use this library and what they can do. Nothing here changes another library.`)
-};
-
-export const account_access_owner_only = /** @type {(inputs: Account_Access_Owner_OnlyInputs) => LocalizedString} */ (i) => {
-	return /** @type {LocalizedString} */ (`Only an owner can manage access to ${i?.library}.`)
-};
-
-export const account_access_page_title = /** @type {(inputs: Account_Access_Page_TitleInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Library access · Savorum`)
-};
-
-export const account_access_title = /** @type {(inputs: Account_Access_TitleInputs) => LocalizedString} */ (i) => {
-	return /** @type {LocalizedString} */ (`Access to ${i?.library}`)
-};
-
 export const account_activity_heading = /** @type {(inputs: Account_Activity_HeadingInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Library activity`)
 };
@@ -2613,10 +2595,6 @@ export const account_admin_initial_password = /** @type {(inputs: Account_Admin_
 
 export const account_admin_invite_heading = /** @type {(inputs: Account_Admin_Invite_HeadingInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Invite by link`)
-};
-
-export const account_admin_invite_hint = /** @type {(inputs: Account_Admin_Invite_HintInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`The person creates their own account or joins with the one they have. Use Add user to set their password yourself.`)
 };
 
 export const account_admin_invite_library = /** @type {(inputs: Account_Admin_Invite_LibraryInputs) => LocalizedString} */ () => {
@@ -3235,8 +3213,28 @@ export const account_display_name = /** @type {(inputs: Account_Display_NameInpu
 	return /** @type {LocalizedString} */ (`Display name`)
 };
 
+export const account_hosted_account = /** @type {(inputs: Account_Hosted_AccountInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Cloud Account`)
+};
+
+export const account_hosted_invitations_hint = /** @type {(inputs: Account_Hosted_Invitations_HintInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Only the Cloud household owner can invite people.`)
+};
+
+export const account_hosted_legacy_invitation = /** @type {(inputs: Account_Hosted_Legacy_InvitationInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Ask the household owner for a Cloud invitation link.`)
+};
+
+export const account_hosted_replace_hint = /** @type {(inputs: Account_Hosted_Replace_HintInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Replace a server invitation with a Cloud link before sharing it with a Cloud account.`)
+};
+
 export const account_invitation_accept = /** @type {(inputs: Account_Invitation_AcceptInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Accept invitation`)
+};
+
+export const account_invitation_create_heading = /** @type {(inputs: Account_Invitation_Create_HeadingInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Create your account to join`)
 };
 
 export const account_invitation_heading = /** @type {(inputs: Account_Invitation_HeadingInputs) => LocalizedString} */ () => {
@@ -3247,16 +3245,24 @@ export const account_invitation_join_as = /** @type {(inputs: Account_Invitation
 	return /** @type {LocalizedString} */ (`Join as ${i?.name}.`)
 };
 
+export const account_invitation_need_account = /** @type {(inputs: Account_Invitation_Need_AccountInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Need an account?`)
+};
+
 export const account_invitation_open_app = /** @type {(inputs: Account_Invitation_Open_AppInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Open in Savorum`)
+	return /** @type {LocalizedString} */ (`Open in the Savorum app`)
+};
+
+export const account_invitation_open_library = /** @type {(inputs: Account_Invitation_Open_LibraryInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Open Library`)
+};
+
+export const account_invitation_sign_in_heading = /** @type {(inputs: Account_Invitation_Sign_In_HeadingInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Sign in to join`)
 };
 
 export const account_invitation_state_accepted = /** @type {(inputs: Account_Invitation_State_AcceptedInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Accepted`)
-};
-
-export const account_invitation_state_expired = /** @type {(inputs: Account_Invitation_State_ExpiredInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Expired`)
 };
 
 export const account_invitation_state_expires = /** @type {(inputs: Account_Invitation_State_ExpiresInputs) => LocalizedString} */ (i) => {
@@ -3267,44 +3273,44 @@ export const account_invitation_state_revoked = /** @type {(inputs: Account_Invi
 	return /** @type {LocalizedString} */ (`Revoked`)
 };
 
-export const account_invitations_create = /** @type {(inputs: Account_Invitations_CreateInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Create invitation`)
+export const account_invitation_unavailable = /** @type {(inputs: Account_Invitation_UnavailableInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`This invitation is unavailable. It may have expired, been revoked, or been used by another account. Ask the owner for a new link.`)
 };
 
-export const account_invitations_dismiss = /** @type {(inputs: Account_Invitations_DismissInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`I have shared the link`)
+export const account_invitations_another = /** @type {(inputs: Account_Invitations_AnotherInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Create another link`)
+};
+
+export const account_invitations_create = /** @type {(inputs: Account_Invitations_CreateInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Create link`)
 };
 
 export const account_invitations_expiry = /** @type {(inputs: Account_Invitations_ExpiryInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Expires after (days)`)
 };
 
-export const account_invitations_heading = /** @type {(inputs: Account_Invitations_HeadingInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Invite someone`)
-};
-
 export const account_invitations_hint = /** @type {(inputs: Account_Invitations_HintInputs) => LocalizedString} */ (i) => {
-	return /** @type {LocalizedString} */ (`Anyone with the link can join ${i?.library}. Share it privately; Savorum does not send email.`)
+	return /** @type {LocalizedString} */ (`Anyone with the link can join ${i?.library}.`)
 };
 
 export const account_invitations_label = /** @type {(inputs: Account_Invitations_LabelInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Private label (optional)`)
+	return /** @type {LocalizedString} */ (`Who is it for? (optional)`)
 };
 
 export const account_invitations_label_hint = /** @type {(inputs: Account_Invitations_Label_HintInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Only you see this. Use it to remember who a link was for.`)
+	return /** @type {LocalizedString} */ (`Only you see this.`)
 };
 
 export const account_invitations_link = /** @type {(inputs: Account_Invitations_LinkInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Invitation link — shown once`)
+	return /** @type {LocalizedString} */ (`Invitation link`)
 };
 
 export const account_invitations_link_hint = /** @type {(inputs: Account_Invitations_Link_HintInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Copy it now. Savorum cannot show it again.`)
+	return /** @type {LocalizedString} */ (`Copy it now. It won't be shown again.`)
 };
 
-export const account_invitations_none = /** @type {(inputs: Account_Invitations_NoneInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`No invitations yet.`)
+export const account_invitations_ready = /** @type {(inputs: Account_Invitations_ReadyInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Share this link`)
 };
 
 export const account_invitations_revoke = /** @type {(inputs: Account_Invitations_RevokeInputs) => LocalizedString} */ () => {
@@ -3315,24 +3321,20 @@ export const account_invitations_revoke_named = /** @type {(inputs: Account_Invi
 	return /** @type {LocalizedString} */ (`Revoke the invitation labelled ${i?.label}`)
 };
 
-export const account_invitations_role = /** @type {(inputs: Account_Invitations_RoleInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Library role`)
-};
-
-export const account_invitations_role_editor = /** @type {(inputs: Account_Invitations_Role_EditorInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Editor — add and edit recipes`)
-};
-
-export const account_invitations_role_owner = /** @type {(inputs: Account_Invitations_Role_OwnerInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Owner — manage library access`)
-};
-
-export const account_invitations_role_viewer = /** @type {(inputs: Account_Invitations_Role_ViewerInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Viewer — browse and cook`)
+export const account_invitations_share = /** @type {(inputs: Account_Invitations_ShareInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Share`)
 };
 
 export const account_invitations_unnamed = /** @type {(inputs: Account_Invitations_UnnamedInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Invitation`)
+	return /** @type {LocalizedString} */ (`Untitled link`)
+};
+
+export const account_invited_invalid = /** @type {(inputs: Account_Invited_InvalidInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Use an account name without spaces and a password of at least 12 characters.`)
+};
+
+export const account_invited_name_taken = /** @type {(inputs: Account_Invited_Name_TakenInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`That account name is taken. Choose another name, or sign in with your existing account.`)
 };
 
 export const account_load_error = /** @type {(inputs: Account_Load_ErrorInputs) => LocalizedString} */ () => {
@@ -3559,10 +3561,6 @@ export const account_overview_details = /** @type {(inputs: Account_Overview_Det
 	return /** @type {LocalizedString} */ (`Your details`)
 };
 
-export const account_overview_invite_people = /** @type {(inputs: Account_Overview_Invite_PeopleInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Invite people`)
-};
-
 export const account_overview_libraries = /** @type {(inputs: Account_Overview_LibrariesInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Your libraries`)
 };
@@ -3573,10 +3571,6 @@ export const account_overview_libraries_empty = /** @type {(inputs: Account_Over
 
 export const account_overview_local_mode = /** @type {(inputs: Account_Overview_Local_ModeInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Sign-in is off, so everyone who uses this Savorum shares one account and one library.`)
-};
-
-export const account_overview_manage_access = /** @type {(inputs: Account_Overview_Manage_AccessInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Manage access`)
 };
 
 export const account_overview_page_title = /** @type {(inputs: Account_Overview_Page_TitleInputs) => LocalizedString} */ () => {
@@ -3791,11 +3785,15 @@ export const account_recovery_saved_hint = /** @type {(inputs: Account_Recovery_
 };
 
 export const account_register_existing = /** @type {(inputs: Account_Register_ExistingInputs) => LocalizedString} */ () => {
-	return /** @type {LocalizedString} */ (`Already have an account? Sign in above.`)
+	return /** @type {LocalizedString} */ (`Already have an account?`)
 };
 
 export const account_register_heading = /** @type {(inputs: Account_Register_HeadingInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Create an account`)
+};
+
+export const account_register_password_hint = /** @type {(inputs: Account_Register_Password_HintInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`At least 12 characters.`)
 };
 
 export const account_register_submit = /** @type {(inputs: Account_Register_SubmitInputs) => LocalizedString} */ () => {
@@ -8249,6 +8247,18 @@ export const library_filters_taken_from_a_cookbook = /** @type {(inputs: Library
 	return /** @type {LocalizedString} */ (`Cookbook source`)
 };
 
+export const library_invitations_empty = /** @type {(inputs: Library_Invitations_EmptyInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`No unused links.`)
+};
+
+export const library_invitations_heading = /** @type {(inputs: Library_Invitations_HeadingInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Invitation links`)
+};
+
+export const library_members_all_added = /** @type {(inputs: Library_Members_All_AddedInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Every account is already a member.`)
+};
+
 export const library_page_add_recipes = /** @type {(inputs: Library_Page_Add_RecipesInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Add recipes`)
 };
@@ -8415,6 +8425,26 @@ export const library_selection_bar_selected_recipes = /** @type {(inputs: Librar
 
 export const library_selection_bar_sref_bundle = /** @type {(inputs: Library_Selection_Bar_Sref_BundleInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`SREF Bundle`)
+};
+
+export const library_settings = /** @type {(inputs: Library_SettingsInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Library settings`)
+};
+
+export const library_settings_forbidden = /** @type {(inputs: Library_Settings_ForbiddenInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`You are not a member of this library.`)
+};
+
+export const library_settings_owner_only = /** @type {(inputs: Library_Settings_Owner_OnlyInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`Only an owner can manage access to ${i?.library}.`)
+};
+
+export const library_settings_page_title = /** @type {(inputs: Library_Settings_Page_TitleInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Library settings · Savorum`)
+};
+
+export const library_settings_title = /** @type {(inputs: Library_Settings_TitleInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`Settings for ${i?.library}`)
 };
 
 export const library_shuffle_again = /** @type {(inputs: Library_Shuffle_AgainInputs) => LocalizedString} */ () => {

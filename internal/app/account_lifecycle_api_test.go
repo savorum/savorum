@@ -217,15 +217,26 @@ func TestInvitationsAreAcceptedRegisteredAndRevoked(t *testing.T) {
 				ID string `json:"id"`
 			} `json:"invitation"`
 			Token string `json:"token"`
+			URL   string `json:"url"`
 		}
 		if err := json.Unmarshal(body, &created); err != nil {
 			t.Fatal(err)
+		}
+
+		if len(created.Token) != 22 || created.URL != strings.TrimSuffix(publicURL, "/")+"/join#"+created.Token {
+			t.Fatal("invitation link does not use the public URL", created.URL)
 		}
 
 		return created.Invitation.ID, created.Token
 	}
 
 	_, registering := invite("editor")
+
+	preview := instance.anonymous().send(http.MethodPost, "/api/v1/account/invitations/preview", map[string]any{"token": registering}).Body.Bytes()
+	if field[string](t, preview, "library_name") != "Shared" || field[string](t, preview, "role") != "editor" || strings.Contains(string(preview), registering) || strings.Contains(string(preview), "creator") {
+		t.Fatal("invalid guest invitation preview", string(preview))
+	}
+
 	instance.anonymous().send(http.MethodPost, "/api/v1/account/invitations/register", map[string]any{"token": registering, "login": "carol", "display_name": "Carol", "password": "a long enough passphrase"})
 
 	admin.send(http.MethodPost, "/api/v1/users", map[string]any{"login": "bob", "display_name": "Bob", "password": bobPassword})
@@ -241,7 +252,7 @@ func TestInvitationsAreAcceptedRegisteredAndRevoked(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	instance.anonymous().raw(http.MethodPost, "/api/v1/account/invitations/register", registration, "application/json", http.StatusUnauthorized)
+	instance.anonymous().raw(http.MethodPost, "/api/v1/account/invitations/register", registration, "application/json", http.StatusNotFound)
 }
 
 func TestLibraryMembersAreAssignedRemovedRecoveredAndTheLibraryDeleted(t *testing.T) {

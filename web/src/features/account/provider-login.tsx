@@ -12,7 +12,7 @@ import { m } from "../../lib/messages.ts"
 import { accountStyles as styles } from "./account-layout"
 import { accountRequest } from "./account-state"
 import { rememberAssistantApproval } from "./assistant-return"
-import { invitationToken } from "./invitations"
+import { forgetInvitation, invitationToken } from "./invitations"
 import { rememberNativeBrowserReturn } from "./native-browser"
 import { readProviders, type Provider } from "./sign-in-methods"
 
@@ -46,7 +46,7 @@ function ProviderOption(props: { provider: Provider }) {
         invitation_token: invitationToken(),
       })
       setPassword("")
-      if (result.invitation_accepted) sessionStorage.removeItem("savorum.invitation")
+      if (result.invitation_accepted) forgetInvitation()
       if (result.authorization_url) {
         rememberNativeBrowserReturn()
         rememberAssistantApproval()

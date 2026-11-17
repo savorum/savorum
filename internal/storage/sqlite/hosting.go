@@ -274,11 +274,12 @@ func (s *Store) EstablishLocalPassword(ctx context.Context, userID, login, passw
 	return nil
 }
 
-// ResolveManagedIdentity verifies an explicit mapping and the local library's current access.
+// ResolveManagedIdentity verifies a mapping and current membership.
+// An empty library permits any active library for a signed account-sign-in fallback.
 func (s *Store) ResolveManagedIdentity(ctx context.Context, provider, subject, user, library string) (identity.Principal, error) {
 	var p identity.Principal
 
-	err := s.db.QueryRowContext(ctx, `SELECT u.id,u.display_name,u.instance_admin FROM users u JOIN identities i ON i.user_id=u.id JOIN auth_providers a ON a.id=i.provider JOIN hosting_tenant h ON h.provider_id=a.id WHERE a.id=? AND a.kind='managed' AND a.enabled=1 AND i.provider_subject=? AND i.enabled=1 AND u.id=? AND u.status='active' AND EXISTS(SELECT 1 FROM library_memberships m JOIN libraries l ON l.id=m.library_id WHERE m.user_id=u.id AND l.id=? AND l.deleted_at IS NULL AND m.role IN ('owner','editor','viewer'))`, provider, subject, user, library).Scan(&p.UserID, &p.DisplayName, &p.InstanceAdmin)
+	err := s.db.QueryRowContext(ctx, `SELECT u.id,u.display_name,u.instance_admin FROM users u JOIN identities i ON i.user_id=u.id JOIN auth_providers a ON a.id=i.provider JOIN hosting_tenant h ON h.provider_id=a.id WHERE a.id=? AND a.kind='managed' AND a.enabled=1 AND i.provider_subject=? AND i.enabled=1 AND u.id=? AND u.status='active' AND EXISTS(SELECT 1 FROM library_memberships m JOIN libraries l ON l.id=m.library_id WHERE m.user_id=u.id AND (l.id=? OR ?='') AND l.deleted_at IS NULL AND m.role IN ('owner','editor','viewer'))`, provider, subject, user, library, library).Scan(&p.UserID, &p.DisplayName, &p.InstanceAdmin)
 	if errors.Is(err, sql.ErrNoRows) {
 		return p, identity.ErrCredentials
 	}
@@ -360,8 +361,14 @@ func (s *Store) BootstrapHostingMember(ctx context.Context, m hosting.MemberRequ
 
 	if m.InvitationToken == "" {
 		result.LibraryID = m.LibraryID
-		if _, err = tx.ExecContext(ctx, `INSERT INTO library_memberships VALUES(?,?,'viewer','manual') ON CONFLICT DO NOTHING`, m.LibraryID, p.UserID); err != nil {
-			return result, fmt.Errorf("record hosted viewer membership: %w", err)
+
+		role := m.Role
+		if role == "" {
+			role = "viewer"
+		}
+
+		if _, err = tx.ExecContext(ctx, `INSERT INTO library_memberships VALUES(?,?,?,'manual') ON CONFLICT(library_id,user_id,source) DO UPDATE SET role=CASE WHEN library_memberships.role='owner' THEN 'owner' WHEN library_memberships.role='editor' OR excluded.role='editor' THEN 'editor' ELSE 'viewer' END`, m.LibraryID, p.UserID, role); err != nil {
+			return result, fmt.Errorf("record hosted membership: %w", err)
 		}
 	} else {
 		if err = tx.QueryRowContext(ctx, `SELECT library_id FROM invitations WHERE token_hash=?`, tokenHash(m.InvitationToken)).Scan(&result.LibraryID); err != nil {
@@ -449,7 +456,7 @@ func authorizeAutomaticMember(ctx context.Context, tx *sql.Tx, tenant hosting.Te
 		return nil
 	}
 
-	if tenant.Issuer != m.Issuer || tenant.OperationID != m.BootstrapID || tenant.LibraryID != m.LibraryID {
+	if tenant.Issuer != m.Issuer || tenant.OperationID != m.BootstrapID || (m.Role == "" && tenant.LibraryID != m.LibraryID) {
 		return identity.ErrConflict
 	}
 

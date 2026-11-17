@@ -106,8 +106,8 @@ func TestInvitationsSingleUseAndTransactionalRegistration(t *testing.T) {
 		t.Fatal("lesser invitation downgraded member")
 	}
 
-	if _, _, err = s.CreateInvitation(userCtx, "default", access.Owner, "", 7); err == nil {
-		t.Fatal("editor created owner invitation")
+	if _, _, err = s.CreateInvitation(ctx, "default", access.Owner, "", 7); !errors.Is(err, identity.ErrConflict) {
+		t.Fatal("owner invitation link created")
 	}
 }
 

@@ -31,7 +31,7 @@ func RegisterOpenAPI(api huma.API) {
 		{http.MethodGet, "/api/v1/auth/providers", "list-authentication-providers", "List sign-in providers", map[string]*huma.Response{
 			"200": {Description: "The configured providers, ordered by ID.", Content: jsonBody(&huma.Schema{Type: huma.TypeObject, Required: []string{"providers"}, Properties: map[string]*huma.Schema{
 				"providers": {Type: huma.TypeArray, Items: &huma.Schema{Type: huma.TypeObject, Required: []string{"id", "kind", "display_name"}, Properties: map[string]*huma.Schema{
-					"id": str, "kind": {Type: huma.TypeString, Enum: []any{"oidc", "saml", "ldap", "proxy", "managed"}}, "display_name": str,
+					"id": str, "kind": {Type: huma.TypeString, Enum: []any{"oidc", "saml", "ldap", "proxy", "managed"}}, "display_name": str, "account_origin": {Type: huma.TypeString, Format: "uri", Description: "Managed provider account origin from trusted deployment configuration."}, "tenant_id": str,
 				}}},
 			}})},
 		}},

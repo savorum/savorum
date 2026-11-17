@@ -4931,8 +4931,7 @@
           "role": {
             "enum": [
               "viewer",
-              "editor",
-              "owner"
+              "editor"
             ],
             "type": "string"
           }
@@ -4949,6 +4948,10 @@
             "$ref": "#/components/schemas/Invitation"
           },
           "token": {
+            "type": "string"
+          },
+          "url": {
+            "description": "Link to share, built from the configured public URL. Absent when none is configured.",
             "type": "string"
           }
         },
@@ -4973,6 +4976,30 @@
         },
         "required": [
           "invitations"
+        ],
+        "type": "object"
+      },
+      "InvitationPreview": {
+        "additionalProperties": true,
+        "properties": {
+          "accepted": {
+            "type": "boolean"
+          },
+          "library_id": {
+            "type": "string"
+          },
+          "library_name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "library_id",
+          "library_name",
+          "role",
+          "accepted"
         ],
         "type": "object"
       },
@@ -11111,7 +11138,7 @@
     },
     "/api/v1/account/group-mappings": {
       "get": {
-        "description": "Instance administration. Browser session and CSRF protection are required for mutations, except invited local registration. Invitation secrets are returned once and must never be logged.",
+        "description": "Instance administration. Browser session and CSRF protection are required for mutations, except invited local registration and bearer invitation previews. Invitation secrets are returned once and must never be logged.",
         "operationId": "list-provider-group-mappings",
         "responses": {
           "200": {
@@ -11151,7 +11178,7 @@
         ]
       },
       "post": {
-        "description": "Maps one provider group value to a library role. Instance administration. Browser session and CSRF protection are required for mutations, except invited local registration. Invitation secrets are returned once and must never be logged.",
+        "description": "Maps one provider group value to a library role. Instance administration. Browser session and CSRF protection are required for mutations, except invited local registration and bearer invitation previews. Invitation secrets are returned once and must never be logged.",
         "operationId": "set-provider-group-mapping",
         "requestBody": {
           "content": {
@@ -11203,7 +11230,7 @@
     },
     "/api/v1/account/group-mappings/{id}": {
       "delete": {
-        "description": "Immediately removes the grants that rule produced. Browser session and CSRF protection are required for mutations, except invited local registration. Invitation secrets are returned once and must never be logged.",
+        "description": "Immediately removes the grants that rule produced. Browser session and CSRF protection are required for mutations, except invited local registration and bearer invitation previews. Invitation secrets are returned once and must never be logged.",
         "operationId": "remove-provider-group-mapping",
         "parameters": [
           {
@@ -11255,7 +11282,7 @@
     },
     "/api/v1/account/invitations/accept": {
       "post": {
-        "description": "Grants only the invited library role, never instance administration. Browser session and CSRF protection are required for mutations, except invited local registration. Invitation secrets are returned once and must never be logged.",
+        "description": "Grants only the invited library role, never instance administration. Browser session and CSRF protection are required for mutations, except invited local registration and bearer invitation previews. Invitation secrets are returned once and must never be logged.",
         "operationId": "accept-library-invitation",
         "requestBody": {
           "content": {
@@ -11305,9 +11332,61 @@
         ]
       }
     },
+    "/api/v1/account/invitations/preview": {
+      "post": {
+        "description": "The bearer link exposes the library name and role. Accepted links require the accepting account and current library membership. Browser session and CSRF protection are required for mutations, except invited local registration and bearer invitation previews. Invitation secrets are returned once and must never be logged.",
+        "operationId": "preview-library-invitation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvitationAcceptRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitationPreview"
+                }
+              }
+            },
+            "description": "Completed"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountProblem"
+                }
+              }
+            },
+            "description": "No valid session or API token (`authentication-required`), or the credential sent is invalid (`invalid-credentials`)."
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountProblem"
+                }
+              }
+            },
+            "description": "Stable account problem code; authentication, authority, validation or lifecycle conflict."
+          }
+        },
+        "summary": "Preview an invitation",
+        "tags": [
+          "Invitations"
+        ]
+      }
+    },
     "/api/v1/account/invitations/register": {
       "post": {
-        "description": "Creates the account and consumes the invitation in one transaction. Browser session and CSRF protection are required for mutations, except invited local registration. Invitation secrets are returned once and must never be logged.",
+        "description": "Creates the account and consumes the invitation in one transaction. Browser session and CSRF protection are required for mutations, except invited local registration and bearer invitation previews. Invitation secrets are returned once and must never be logged.",
         "operationId": "register-invited-local-account",
         "parameters": [
           {
@@ -11371,7 +11450,7 @@
     },
     "/api/v1/account/invitations/{id}": {
       "delete": {
-        "description": "A revoked link cannot be reused. Browser session and CSRF protection are required for mutations, except invited local registration. Invitation secrets are returned once and must never be logged.",
+        "description": "A revoked link cannot be reused. Browser session and CSRF protection are required for mutations, except invited local registration and bearer invitation previews. Invitation secrets are returned once and must never be logged.",
         "operationId": "revoke-library-invitation",
         "parameters": [
           {
@@ -11592,7 +11671,7 @@
     },
     "/api/v1/account/methods": {
       "get": {
-        "description": "The methods attached to the current account. Browser session and CSRF protection are required for mutations, except invited local registration. Invitation secrets are returned once and must never be logged.",
+        "description": "The methods attached to the current account. Browser session and CSRF protection are required for mutations, except invited local registration and bearer invitation previews. Invitation secrets are returned once and must never be logged.",
         "operationId": "list-sign-in-methods",
         "responses": {
           "200": {
@@ -11634,7 +11713,7 @@
     },
     "/api/v1/account/methods/{id}": {
       "delete": {
-        "description": "Refused when it would leave no usable sign-in or recovery method. Browser session and CSRF protection are required for mutations, except invited local registration. Invitation secrets are returned once and must never be logged.",
+        "description": "Refused when it would leave no usable sign-in or recovery method. Browser session and CSRF protection are required for mutations, except invited local registration and bearer invitation previews. Invitation secrets are returned once and must never be logged.",
         "operationId": "unlink-sign-in-method",
         "parameters": [
           {
@@ -12193,7 +12272,7 @@
     },
     "/api/v1/account/providers/{id}/dependencies": {
       "get": {
-        "description": "The users whose sign-in depends on a provider. Check before disabling one. Browser session and CSRF protection are required for mutations, except invited local registration. Invitation secrets are returned once and must never be logged.",
+        "description": "The users whose sign-in depends on a provider. Check before disabling one. Browser session and CSRF protection are required for mutations, except invited local registration and bearer invitation previews. Invitation secrets are returned once and must never be logged.",
         "operationId": "list-provider-dependent-users",
         "parameters": [
           {
@@ -14037,6 +14116,11 @@
                     "providers": {
                       "items": {
                         "properties": {
+                          "account_origin": {
+                            "description": "Managed provider account origin from trusted deployment configuration.",
+                            "format": "uri",
+                            "type": "string"
+                          },
                           "display_name": {
                             "type": "string"
                           },
@@ -14051,6 +14135,9 @@
                               "proxy",
                               "managed"
                             ],
+                            "type": "string"
+                          },
+                          "tenant_id": {
                             "type": "string"
                           }
                         },
@@ -22417,7 +22504,7 @@
     },
     "/api/v1/libraries/{id}/invitations": {
       "get": {
-        "description": "Metadata and accepted or revoked state, never the secret. Browser session and CSRF protection are required for mutations, except invited local registration. Invitation secrets are returned once and must never be logged.",
+        "description": "Metadata and accepted or revoked state, never the secret. Browser session and CSRF protection are required for mutations, except invited local registration and bearer invitation previews. Invitation secrets are returned once and must never be logged.",
         "operationId": "list-library-invitations",
         "parameters": [
           {
@@ -22467,7 +22554,7 @@
         ]
       },
       "post": {
-        "description": "Returns the link secret once. Library ownership or instance administration required. Browser session and CSRF protection are required for mutations, except invited local registration. Invitation secrets are returned once and must never be logged.",
+        "description": "Returns the link secret once. Library ownership or instance administration required. Browser session and CSRF protection are required for mutations, except invited local registration and bearer invitation previews. Invitation secrets are returned once and must never be logged.",
         "operationId": "create-library-invitation",
         "parameters": [
           {
@@ -33845,7 +33932,7 @@
     },
     "/api/v1/users/{id}/methods": {
       "get": {
-        "description": "Instance administration. Browser session and CSRF protection are required for mutations, except invited local registration. Invitation secrets are returned once and must never be logged.",
+        "description": "Instance administration. Browser session and CSRF protection are required for mutations, except invited local registration and bearer invitation previews. Invitation secrets are returned once and must never be logged.",
         "operationId": "list-managed-user-sign-in-methods",
         "parameters": [
           {
@@ -33897,7 +33984,7 @@
     },
     "/api/v1/users/{id}/methods/{method}": {
       "delete": {
-        "description": "Audited administrator action for a compromised identity. Browser session and CSRF protection are required for mutations, except invited local registration. Invitation secrets are returned once and must never be logged.",
+        "description": "Audited administrator action for a compromised identity. Browser session and CSRF protection are required for mutations, except invited local registration and bearer invitation previews. Invitation secrets are returned once and must never be logged.",
         "operationId": "force-unlink-sign-in-method",
         "parameters": [
           {

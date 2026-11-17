@@ -1148,15 +1148,24 @@ export interface components {
     InvitationCreateRequest: {
       days?: number
       hint?: string
-      role: "viewer" | "editor" | "owner"
+      role: "viewer" | "editor"
     }
     InvitationCreateResponse: {
       invitation: components["schemas"]["Invitation"]
       token: string
+      /** Link to share, built from the configured public URL. Absent when none is configured. */
+      url?: string
       [key: string]: unknown
     }
     InvitationListResponse: {
       invitations: components["schemas"]["Invitation"][] | null
+      [key: string]: unknown
+    }
+    InvitationPreview: {
+      accepted: boolean
+      library_id: string
+      library_name: string
+      role: string
       [key: string]: unknown
     }
     InvitationRegisterRequest: {
@@ -2574,6 +2583,14 @@ export interface paths {
       error: components["schemas"]["AccountProblem"]
     }
   }
+  "/api/v1/account/invitations/preview": {
+    /** Preview an invitation */
+    post: {
+      body: components["schemas"]["InvitationAcceptRequest"]
+      data: components["schemas"]["InvitationPreview"]
+      error: components["schemas"]["AccountProblem"]
+    }
+  }
   "/api/v1/account/invitations/register": {
     /** Register from an invitation */
     post: {
@@ -3021,9 +3038,12 @@ export interface paths {
     get: {
       data: {
         providers: {
+          /** Managed provider account origin from trusted deployment configuration. */
+          account_origin?: string
           display_name: string
           id: string
           kind: "oidc" | "saml" | "ldap" | "proxy" | "managed"
+          tenant_id?: string
         }[]
       }
       error: {

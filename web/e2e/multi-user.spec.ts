@@ -412,7 +412,7 @@ test("account management creates users, revokes sessions, changes passwords and 
         { exact: true },
       ),
     ).toBeVisible()
-    await member.goto(`${origin}/libraries/${home}/access`)
+    await member.goto(`${origin}/libraries/${home}/settings`)
     await expect(
       member.getByText("Only an owner can manage access to My library.", { exact: true }),
     ).toBeVisible()
@@ -529,7 +529,7 @@ test("account management creates users, revokes sessions, changes passwords and 
   }
 })
 
-test("a library's access page keeps acting on its own library after another tab switches", async ({
+test("library settings keep acting on their own library after another tab switches", async ({
   browser,
 }) => {
   const context = await browser.newContext({ baseURL: origin })
@@ -543,9 +543,9 @@ test("a library's access page keeps acting on its own library after another tab 
     expect(created.ok(), await created.text()).toBe(true)
     const second = await created.json()
 
-    await page.goto(`${origin}/libraries/default/access`)
+    await page.goto(`${origin}/libraries/default/settings`)
     await expect(
-      page.getByRole("heading", { name: "Access to My library", exact: true, level: 1 }),
+      page.getByRole("heading", { name: "Settings for My library", exact: true, level: 1 }),
     ).toBeVisible()
 
     const switcher = await context.newPage()
@@ -558,11 +558,16 @@ test("a library's access page keeps acting on its own library after another tab 
       )
       .toBe(second.id)
 
-    await page.getByLabel("Private label (optional)", { exact: true }).fill("Cross-tab invitation")
-    await page.getByRole("button", { name: "Create invitation", exact: true }).click()
-    await expect(page.getByLabel("Invitation link — shown once")).toBeVisible()
+    await page.getByRole("button", { name: "Create link", exact: true }).click()
+    const invite = page.getByRole("dialog", { name: "Invite by link" })
+    await invite
+      .getByLabel("Who is it for? (optional)", { exact: true })
+      .fill("Cross-tab invitation")
+    await invite.getByRole("button", { name: "Create link", exact: true }).click()
+    await expect(invite.getByLabel("Invitation link", { exact: true })).toBeVisible()
+    await invite.getByRole("button", { name: "Done", exact: true }).click()
     await expect(
-      page.getByRole("heading", { name: "Access to My library", exact: true, level: 1 }),
+      page.getByRole("heading", { name: "Settings for My library", exact: true, level: 1 }),
     ).toBeVisible()
 
     const home = await (
@@ -646,7 +651,7 @@ test("signing out removes the recipes the worker kept for offline reading", asyn
   }
 })
 
-test("populated account, library access and administration surfaces pass axe", async ({
+test("populated account, library settings and administration surfaces pass axe", async ({
   browser,
 }) => {
   const context = await browser.newContext({ baseURL: origin })
@@ -657,7 +662,7 @@ test("populated account, library access and administration surfaces pass axe", a
       "/account",
       "/account/security",
       "/account/tokens",
-      "/libraries/default/access",
+      "/libraries/default/settings",
       "/admin",
       "/admin/libraries",
       "/admin/providers",
@@ -685,7 +690,7 @@ test("populated account, library access and administration surfaces pass axe", a
   }
 })
 
-test("account, library access and administration views reflow at 320 CSS pixels", async ({
+test("account, library settings and administration views reflow at 320 CSS pixels", async ({
   browser,
 }) => {
   const context = await browser.newContext({
@@ -699,7 +704,7 @@ test("account, library access and administration views reflow at 320 CSS pixels"
       "/account",
       "/account/security",
       "/account/tokens",
-      "/libraries/default/access",
+      "/libraries/default/settings",
       "/admin",
       "/admin/libraries",
       "/admin/providers",

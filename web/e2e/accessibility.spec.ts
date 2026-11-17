@@ -739,7 +739,7 @@ test("account, preferences, organization, history, and cooking surfaces pass axe
     "/account/security",
     "/account/tokens",
     "/admin",
-    "/libraries/default/access",
+    "/libraries/default/settings",
     "/preferences",
     "/tags",
     "/saved-searches",

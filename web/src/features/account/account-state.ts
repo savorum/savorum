@@ -56,8 +56,39 @@ export async function accountRequest<T = unknown>(
   }
   return (response.status === 204 ? undefined : await response.json()) as T
 }
+let redirectingManagedSignIn = false
+
+function retainInvitedLibrary(): boolean {
+  if (redirectingManagedSignIn) return true
+  if (typeof window === "undefined") return false
+  const target = new URL(window.location.href)
+  const library = target.searchParams.get("joined_library")
+  if (!library || library.length > 128) return false
+  sessionStorage.setItem("savorum.joined-library", library)
+  const provider = target.searchParams.get("managed_sign_in")
+  target.searchParams.delete("joined_library")
+  target.searchParams.delete("managed_sign_in")
+  history.replaceState(null, "", target.pathname + target.search + target.hash)
+  if (provider && /^[a-z][a-z0-9_-]{0,63}$/.test(provider)) {
+    redirectingManagedSignIn = true
+    window.location.replace(`/api/v1/auth/${encodeURIComponent(provider)}/start`)
+    return true
+  }
+  return false
+}
+
 export async function refreshAccount(): Promise<void> {
-  const value = await accountRequest<Account>("/account")
+  if (retainInvitedLibrary()) return
+  let value = await accountRequest<Account>("/account")
+  if (typeof window !== "undefined" && value.user) {
+    const library = sessionStorage.getItem("savorum.joined-library")
+    if (library && value.libraries.some((item) => item.id === library)) {
+      setCSRFToken(value.csrf_token ?? "")
+      await accountRequest("/account/library", "POST", { library_id: library })
+      sessionStorage.removeItem("savorum.joined-library")
+      value = await accountRequest<Account>("/account")
+    }
+  }
   if (value.auth_enabled && !value.user) void takeStartupResponse("/api/v1/me/preferences")
   setCreationPrincipal(value.user?.id ?? (!value.auth_enabled ? "local" : ""))
   setCSRFToken(value.csrf_token ?? "")
@@ -127,6 +158,11 @@ export const libraryByID = (id: string): AccountLibrary | undefined =>
 
 /** Instance administration, which local mode does not have. */
 export const administers = (): boolean => authEnabled() && Boolean(account()?.user?.instance_admin)
+
+/** Choices for a role select, in the order given. */
+export function roleItems(...roles: AccountLibrary["role"][]) {
+  return roles.map((role) => ({ value: role, label: roleName(role) }))
+}
 
 export function roleName(role: AccountLibrary["role"]): string {
   if (role === "owner") return m.account_role_owner()

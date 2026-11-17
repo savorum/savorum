@@ -2,8 +2,10 @@ package account
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 
 	"github.com/savorum/savorum/internal/access"
@@ -31,6 +33,7 @@ func (h *Handler) registerProvisioningRoutes() {
 	}
 
 	h.routes.HandleFunc("POST /api/v1/account/invitations/register", h.registerInvitedAccount)
+	h.routes.HandleFunc("POST /api/v1/account/invitations/preview", h.previewInvitation)
 	h.routes.HandleFunc("GET /api/v1/libraries/{id}/invitations", func(w http.ResponseWriter, r *http.Request) {
 		items, err := repo.Invitations(r.Context(), r.PathValue("id"))
 		if err != nil {
@@ -56,7 +59,7 @@ func (h *Handler) registerProvisioningRoutes() {
 			return
 		}
 
-		respond(w, map[string]any{"invitation": v, "token": token})
+		respond(w, invitationCreateResponse{Invitation: v, Token: token, URL: h.invitationURL(r.Context(), token)})
 	})
 	h.routes.HandleFunc("DELETE /api/v1/account/invitations/{id}", func(w http.ResponseWriter, r *http.Request) {
 		if err := repo.RevokeInvitation(r.Context(), r.PathValue("id")); err != nil {
@@ -75,7 +78,7 @@ func (h *Handler) registerProvisioningRoutes() {
 		}
 
 		if err := repo.AcceptInvitation(r.Context(), body.Token); err != nil {
-			operationError(w, err)
+			invitationOperationError(w, err)
 			return
 		}
 
@@ -229,9 +232,25 @@ func (h *Handler) registerInvitedAccount(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
+	body.Login = strings.TrimSpace(body.Login)
+	if body.Display == "" {
+		body.Display = body.Login
+	}
+
+	_, displayError := identity.NormalizeDisplayName(body.Display)
+	if len(body.Password) < 12 || len(body.Password) > 1024 || len(body.Login) == 0 || len(body.Login) > 128 || strings.ContainsAny(body.Login, " \t\r\n") || displayError != nil {
+		problem(w, 400, problemInvitedAccountInvalid)
+		return
+	}
+
 	p, err := repo.RegisterInvitedLocalUser(r.Context(), body.Token, body.Login, body.Display, body.Password)
 	if err != nil {
-		operationError(w, err)
+		if errors.Is(err, identity.ErrConflict) {
+			problem(w, 409, problemInvitedAccountNameTaken)
+		} else {
+			invitationOperationError(w, err)
+		}
+
 		return
 	}
 
@@ -243,4 +262,56 @@ func (h *Handler) registerInvitedAccount(w http.ResponseWriter, r *http.Request)
 
 	h.cookie(w, r, sessionCookie, creds.Token, int(time.Until(creds.AbsoluteExpires).Seconds()))
 	respond(w, map[string]any{"user": userJSON(p), "csrf_token": creds.CSRF})
+}
+
+func (h *Handler) previewInvitation(w http.ResponseWriter, r *http.Request) {
+	repo, ok := h.store.(interface {
+		PreviewInvitation(context.Context, string) (identity.InvitationPreview, error)
+	})
+	if !ok {
+		problem(w, 404, problemNotFound)
+		return
+	}
+
+	var body invitationAcceptRequest
+	if !decode(w, r, &body) {
+		return
+	}
+
+	if len(body.Token) < 16 || len(body.Token) > 256 {
+		problem(w, 404, problemInvitationUnavailable)
+		return
+	}
+
+	preview, err := repo.PreviewInvitation(r.Context(), body.Token)
+	if err != nil {
+		invitationOperationError(w, err)
+		return
+	}
+
+	respond(w, preview)
+}
+
+func invitationOperationError(w http.ResponseWriter, err error) {
+	if errors.Is(err, identity.ErrCredentials) {
+		problem(w, 404, problemInvitationUnavailable)
+		return
+	}
+
+	operationError(w, err)
+}
+
+// invitationURL is the link to share, built from the public URL when one is configured.
+func (h *Handler) invitationURL(ctx context.Context, token string) string {
+	origin, err := h.authenticationOrigin(ctx)
+	if err != nil || origin == "" {
+		return ""
+	}
+
+	u, err := url.Parse(origin)
+	if err != nil || u.Host == "" || (u.Scheme != "https" && u.Scheme != "http") {
+		return ""
+	}
+
+	return u.Scheme + "://" + u.Host + strings.TrimSuffix(u.Path, "/") + "/join#" + url.PathEscape(token)
 }

@@ -6,24 +6,6 @@ type Messages = typeof import("../paraglide/messages.js").m
 export const _root_skip_to_main_content: Messages["_root_skip_to_main_content"] = /* @__PURE__ */ localized("_root_skip_to_main_content", () => {
 	return /** @type {LocalizedString} */ (`Skip to main content`)
 })
-export const account_access_back: Messages["account_access_back"] = /* @__PURE__ */ localized("account_access_back", () => {
-	return /** @type {LocalizedString} */ (`Back to your account`)
-})
-export const account_access_forbidden: Messages["account_access_forbidden"] = /* @__PURE__ */ localized("account_access_forbidden", () => {
-	return /** @type {LocalizedString} */ (`You are not a member of this library.`)
-})
-export const account_access_lede: Messages["account_access_lede"] = /* @__PURE__ */ localized("account_access_lede", () => {
-	return /** @type {LocalizedString} */ (`Who can use this library and what they can do. Nothing here changes another library.`)
-})
-export const account_access_owner_only: Messages["account_access_owner_only"] = /* @__PURE__ */ localized("account_access_owner_only", (i) => {
-	return /** @type {LocalizedString} */ (`Only an owner can manage access to ${i?.library}.`)
-})
-export const account_access_page_title: Messages["account_access_page_title"] = /* @__PURE__ */ localized("account_access_page_title", () => {
-	return /** @type {LocalizedString} */ (`Library access · Savorum`)
-})
-export const account_access_title: Messages["account_access_title"] = /* @__PURE__ */ localized("account_access_title", (i) => {
-	return /** @type {LocalizedString} */ (`Access to ${i?.library}`)
-})
 export const account_activity_heading: Messages["account_activity_heading"] = /* @__PURE__ */ localized("account_activity_heading", () => {
 	return /** @type {LocalizedString} */ (`Library activity`)
 })
@@ -89,9 +71,6 @@ export const account_admin_initial_password: Messages["account_admin_initial_pas
 })
 export const account_admin_invite_heading: Messages["account_admin_invite_heading"] = /* @__PURE__ */ localized("account_admin_invite_heading", () => {
 	return /** @type {LocalizedString} */ (`Invite by link`)
-})
-export const account_admin_invite_hint: Messages["account_admin_invite_hint"] = /* @__PURE__ */ localized("account_admin_invite_hint", () => {
-	return /** @type {LocalizedString} */ (`The person creates their own account or joins with the one they have. Use Add user to set their password yourself.`)
 })
 export const account_admin_invite_library: Messages["account_admin_invite_library"] = /* @__PURE__ */ localized("account_admin_invite_library", () => {
 	return /** @type {LocalizedString} */ (`Library to invite to`)
@@ -555,8 +534,23 @@ export const account_delete_submit: Messages["account_delete_submit"] = /* @__PU
 export const account_display_name: Messages["account_display_name"] = /* @__PURE__ */ localized("account_display_name", () => {
 	return /** @type {LocalizedString} */ (`Display name`)
 })
+export const account_hosted_account: Messages["account_hosted_account"] = /* @__PURE__ */ localized("account_hosted_account", () => {
+	return /** @type {LocalizedString} */ (`Cloud Account`)
+})
+export const account_hosted_invitations_hint: Messages["account_hosted_invitations_hint"] = /* @__PURE__ */ localized("account_hosted_invitations_hint", () => {
+	return /** @type {LocalizedString} */ (`Only the Cloud household owner can invite people.`)
+})
+export const account_hosted_legacy_invitation: Messages["account_hosted_legacy_invitation"] = /* @__PURE__ */ localized("account_hosted_legacy_invitation", () => {
+	return /** @type {LocalizedString} */ (`Ask the household owner for a Cloud invitation link.`)
+})
+export const account_hosted_replace_hint: Messages["account_hosted_replace_hint"] = /* @__PURE__ */ localized("account_hosted_replace_hint", () => {
+	return /** @type {LocalizedString} */ (`Replace a server invitation with a Cloud link before sharing it with a Cloud account.`)
+})
 export const account_invitation_accept: Messages["account_invitation_accept"] = /* @__PURE__ */ localized("account_invitation_accept", () => {
 	return /** @type {LocalizedString} */ (`Accept invitation`)
+})
+export const account_invitation_create_heading: Messages["account_invitation_create_heading"] = /* @__PURE__ */ localized("account_invitation_create_heading", () => {
+	return /** @type {LocalizedString} */ (`Create your account to join`)
 })
 export const account_invitation_heading: Messages["account_invitation_heading"] = /* @__PURE__ */ localized("account_invitation_heading", () => {
 	return /** @type {LocalizedString} */ (`Library invitation`)
@@ -564,14 +558,20 @@ export const account_invitation_heading: Messages["account_invitation_heading"] 
 export const account_invitation_join_as: Messages["account_invitation_join_as"] = /* @__PURE__ */ localized("account_invitation_join_as", (i) => {
 	return /** @type {LocalizedString} */ (`Join as ${i?.name}.`)
 })
+export const account_invitation_need_account: Messages["account_invitation_need_account"] = /* @__PURE__ */ localized("account_invitation_need_account", () => {
+	return /** @type {LocalizedString} */ (`Need an account?`)
+})
 export const account_invitation_open_app: Messages["account_invitation_open_app"] = /* @__PURE__ */ localized("account_invitation_open_app", () => {
-	return /** @type {LocalizedString} */ (`Open in Savorum`)
+	return /** @type {LocalizedString} */ (`Open in the Savorum app`)
+})
+export const account_invitation_open_library: Messages["account_invitation_open_library"] = /* @__PURE__ */ localized("account_invitation_open_library", () => {
+	return /** @type {LocalizedString} */ (`Open Library`)
+})
+export const account_invitation_sign_in_heading: Messages["account_invitation_sign_in_heading"] = /* @__PURE__ */ localized("account_invitation_sign_in_heading", () => {
+	return /** @type {LocalizedString} */ (`Sign in to join`)
 })
 export const account_invitation_state_accepted: Messages["account_invitation_state_accepted"] = /* @__PURE__ */ localized("account_invitation_state_accepted", () => {
 	return /** @type {LocalizedString} */ (`Accepted`)
-})
-export const account_invitation_state_expired: Messages["account_invitation_state_expired"] = /* @__PURE__ */ localized("account_invitation_state_expired", () => {
-	return /** @type {LocalizedString} */ (`Expired`)
 })
 export const account_invitation_state_expires: Messages["account_invitation_state_expires"] = /* @__PURE__ */ localized("account_invitation_state_expires", (i) => {
 	return /** @type {LocalizedString} */ (`Expires ${i?.date}`)
@@ -579,35 +579,35 @@ export const account_invitation_state_expires: Messages["account_invitation_stat
 export const account_invitation_state_revoked: Messages["account_invitation_state_revoked"] = /* @__PURE__ */ localized("account_invitation_state_revoked", () => {
 	return /** @type {LocalizedString} */ (`Revoked`)
 })
-export const account_invitations_create: Messages["account_invitations_create"] = /* @__PURE__ */ localized("account_invitations_create", () => {
-	return /** @type {LocalizedString} */ (`Create invitation`)
+export const account_invitation_unavailable: Messages["account_invitation_unavailable"] = /* @__PURE__ */ localized("account_invitation_unavailable", () => {
+	return /** @type {LocalizedString} */ (`This invitation is unavailable. It may have expired, been revoked, or been used by another account. Ask the owner for a new link.`)
 })
-export const account_invitations_dismiss: Messages["account_invitations_dismiss"] = /* @__PURE__ */ localized("account_invitations_dismiss", () => {
-	return /** @type {LocalizedString} */ (`I have shared the link`)
+export const account_invitations_another: Messages["account_invitations_another"] = /* @__PURE__ */ localized("account_invitations_another", () => {
+	return /** @type {LocalizedString} */ (`Create another link`)
+})
+export const account_invitations_create: Messages["account_invitations_create"] = /* @__PURE__ */ localized("account_invitations_create", () => {
+	return /** @type {LocalizedString} */ (`Create link`)
 })
 export const account_invitations_expiry: Messages["account_invitations_expiry"] = /* @__PURE__ */ localized("account_invitations_expiry", () => {
 	return /** @type {LocalizedString} */ (`Expires after (days)`)
 })
-export const account_invitations_heading: Messages["account_invitations_heading"] = /* @__PURE__ */ localized("account_invitations_heading", () => {
-	return /** @type {LocalizedString} */ (`Invite someone`)
-})
 export const account_invitations_hint: Messages["account_invitations_hint"] = /* @__PURE__ */ localized("account_invitations_hint", (i) => {
-	return /** @type {LocalizedString} */ (`Anyone with the link can join ${i?.library}. Share it privately; Savorum does not send email.`)
+	return /** @type {LocalizedString} */ (`Anyone with the link can join ${i?.library}.`)
 })
 export const account_invitations_label: Messages["account_invitations_label"] = /* @__PURE__ */ localized("account_invitations_label", () => {
-	return /** @type {LocalizedString} */ (`Private label (optional)`)
+	return /** @type {LocalizedString} */ (`Who is it for? (optional)`)
 })
 export const account_invitations_label_hint: Messages["account_invitations_label_hint"] = /* @__PURE__ */ localized("account_invitations_label_hint", () => {
-	return /** @type {LocalizedString} */ (`Only you see this. Use it to remember who a link was for.`)
+	return /** @type {LocalizedString} */ (`Only you see this.`)
 })
 export const account_invitations_link: Messages["account_invitations_link"] = /* @__PURE__ */ localized("account_invitations_link", () => {
-	return /** @type {LocalizedString} */ (`Invitation link — shown once`)
+	return /** @type {LocalizedString} */ (`Invitation link`)
 })
 export const account_invitations_link_hint: Messages["account_invitations_link_hint"] = /* @__PURE__ */ localized("account_invitations_link_hint", () => {
-	return /** @type {LocalizedString} */ (`Copy it now. Savorum cannot show it again.`)
+	return /** @type {LocalizedString} */ (`Copy it now. It won't be shown again.`)
 })
-export const account_invitations_none: Messages["account_invitations_none"] = /* @__PURE__ */ localized("account_invitations_none", () => {
-	return /** @type {LocalizedString} */ (`No invitations yet.`)
+export const account_invitations_ready: Messages["account_invitations_ready"] = /* @__PURE__ */ localized("account_invitations_ready", () => {
+	return /** @type {LocalizedString} */ (`Share this link`)
 })
 export const account_invitations_revoke: Messages["account_invitations_revoke"] = /* @__PURE__ */ localized("account_invitations_revoke", () => {
 	return /** @type {LocalizedString} */ (`Revoke`)
@@ -615,20 +615,17 @@ export const account_invitations_revoke: Messages["account_invitations_revoke"] 
 export const account_invitations_revoke_named: Messages["account_invitations_revoke_named"] = /* @__PURE__ */ localized("account_invitations_revoke_named", (i) => {
 	return /** @type {LocalizedString} */ (`Revoke the invitation labelled ${i?.label}`)
 })
-export const account_invitations_role: Messages["account_invitations_role"] = /* @__PURE__ */ localized("account_invitations_role", () => {
-	return /** @type {LocalizedString} */ (`Library role`)
-})
-export const account_invitations_role_editor: Messages["account_invitations_role_editor"] = /* @__PURE__ */ localized("account_invitations_role_editor", () => {
-	return /** @type {LocalizedString} */ (`Editor — add and edit recipes`)
-})
-export const account_invitations_role_owner: Messages["account_invitations_role_owner"] = /* @__PURE__ */ localized("account_invitations_role_owner", () => {
-	return /** @type {LocalizedString} */ (`Owner — manage library access`)
-})
-export const account_invitations_role_viewer: Messages["account_invitations_role_viewer"] = /* @__PURE__ */ localized("account_invitations_role_viewer", () => {
-	return /** @type {LocalizedString} */ (`Viewer — browse and cook`)
+export const account_invitations_share: Messages["account_invitations_share"] = /* @__PURE__ */ localized("account_invitations_share", () => {
+	return /** @type {LocalizedString} */ (`Share`)
 })
 export const account_invitations_unnamed: Messages["account_invitations_unnamed"] = /* @__PURE__ */ localized("account_invitations_unnamed", () => {
-	return /** @type {LocalizedString} */ (`Invitation`)
+	return /** @type {LocalizedString} */ (`Untitled link`)
+})
+export const account_invited_invalid: Messages["account_invited_invalid"] = /* @__PURE__ */ localized("account_invited_invalid", () => {
+	return /** @type {LocalizedString} */ (`Use an account name without spaces and a password of at least 12 characters.`)
+})
+export const account_invited_name_taken: Messages["account_invited_name_taken"] = /* @__PURE__ */ localized("account_invited_name_taken", () => {
+	return /** @type {LocalizedString} */ (`That account name is taken. Choose another name, or sign in with your existing account.`)
 })
 export const account_load_error: Messages["account_load_error"] = /* @__PURE__ */ localized("account_load_error", () => {
 	return /** @type {LocalizedString} */ (`Could not load your sign-in methods. Reload the page to try again.`)
@@ -798,9 +795,6 @@ export const account_nav_tokens: Messages["account_nav_tokens"] = /* @__PURE__ *
 export const account_overview_details: Messages["account_overview_details"] = /* @__PURE__ */ localized("account_overview_details", () => {
 	return /** @type {LocalizedString} */ (`Your details`)
 })
-export const account_overview_invite_people: Messages["account_overview_invite_people"] = /* @__PURE__ */ localized("account_overview_invite_people", () => {
-	return /** @type {LocalizedString} */ (`Invite people`)
-})
 export const account_overview_libraries: Messages["account_overview_libraries"] = /* @__PURE__ */ localized("account_overview_libraries", () => {
 	return /** @type {LocalizedString} */ (`Your libraries`)
 })
@@ -809,9 +803,6 @@ export const account_overview_libraries_empty: Messages["account_overview_librar
 })
 export const account_overview_local_mode: Messages["account_overview_local_mode"] = /* @__PURE__ */ localized("account_overview_local_mode", () => {
 	return /** @type {LocalizedString} */ (`Sign-in is off, so everyone who uses this Savorum shares one account and one library.`)
-})
-export const account_overview_manage_access: Messages["account_overview_manage_access"] = /* @__PURE__ */ localized("account_overview_manage_access", () => {
-	return /** @type {LocalizedString} */ (`Manage access`)
 })
 export const account_overview_page_title: Messages["account_overview_page_title"] = /* @__PURE__ */ localized("account_overview_page_title", () => {
 	return /** @type {LocalizedString} */ (`Your account · Savorum`)
@@ -973,10 +964,13 @@ export const account_recovery_saved_hint: Messages["account_recovery_saved_hint"
 	return /** @type {LocalizedString} */ (`Shown only once. Keep them somewhere safe.`)
 })
 export const account_register_existing: Messages["account_register_existing"] = /* @__PURE__ */ localized("account_register_existing", () => {
-	return /** @type {LocalizedString} */ (`Already have an account? Sign in above.`)
+	return /** @type {LocalizedString} */ (`Already have an account?`)
 })
 export const account_register_heading: Messages["account_register_heading"] = /* @__PURE__ */ localized("account_register_heading", () => {
 	return /** @type {LocalizedString} */ (`Create an account`)
+})
+export const account_register_password_hint: Messages["account_register_password_hint"] = /* @__PURE__ */ localized("account_register_password_hint", () => {
+	return /** @type {LocalizedString} */ (`At least 12 characters.`)
 })
 export const account_register_submit: Messages["account_register_submit"] = /* @__PURE__ */ localized("account_register_submit", () => {
 	return /** @type {LocalizedString} */ (`Create account and join`)
@@ -4358,6 +4352,15 @@ export const library_filters_tags: Messages["library_filters_tags"] = /* @__PURE
 export const library_filters_taken_from_a_cookbook: Messages["library_filters_taken_from_a_cookbook"] = /* @__PURE__ */ localized("library_filters_taken_from_a_cookbook", () => {
 	return /** @type {LocalizedString} */ (`Cookbook source`)
 })
+export const library_invitations_empty: Messages["library_invitations_empty"] = /* @__PURE__ */ localized("library_invitations_empty", () => {
+	return /** @type {LocalizedString} */ (`No unused links.`)
+})
+export const library_invitations_heading: Messages["library_invitations_heading"] = /* @__PURE__ */ localized("library_invitations_heading", () => {
+	return /** @type {LocalizedString} */ (`Invitation links`)
+})
+export const library_members_all_added: Messages["library_members_all_added"] = /* @__PURE__ */ localized("library_members_all_added", () => {
+	return /** @type {LocalizedString} */ (`Every account is already a member.`)
+})
 export const library_page_add_recipes: Messages["library_page_add_recipes"] = /* @__PURE__ */ localized("library_page_add_recipes", () => {
 	return /** @type {LocalizedString} */ (`Add recipes`)
 })
@@ -4483,6 +4486,21 @@ export const library_selection_bar_selected_recipes: Messages["library_selection
 })
 export const library_selection_bar_sref_bundle: Messages["library_selection_bar_sref_bundle"] = /* @__PURE__ */ localized("library_selection_bar_sref_bundle", () => {
 	return /** @type {LocalizedString} */ (`SREF Bundle`)
+})
+export const library_settings: Messages["library_settings"] = /* @__PURE__ */ localized("library_settings", () => {
+	return /** @type {LocalizedString} */ (`Library settings`)
+})
+export const library_settings_forbidden: Messages["library_settings_forbidden"] = /* @__PURE__ */ localized("library_settings_forbidden", () => {
+	return /** @type {LocalizedString} */ (`You are not a member of this library.`)
+})
+export const library_settings_owner_only: Messages["library_settings_owner_only"] = /* @__PURE__ */ localized("library_settings_owner_only", (i) => {
+	return /** @type {LocalizedString} */ (`Only an owner can manage access to ${i?.library}.`)
+})
+export const library_settings_page_title: Messages["library_settings_page_title"] = /* @__PURE__ */ localized("library_settings_page_title", () => {
+	return /** @type {LocalizedString} */ (`Library settings · Savorum`)
+})
+export const library_settings_title: Messages["library_settings_title"] = /* @__PURE__ */ localized("library_settings_title", (i) => {
+	return /** @type {LocalizedString} */ (`Settings for ${i?.library}`)
 })
 export const library_shuffle_again: Messages["library_shuffle_again"] = /* @__PURE__ */ localized("library_shuffle_again", () => {
 	return /** @type {LocalizedString} */ (`Shuffle again`)

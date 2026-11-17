@@ -12,6 +12,9 @@ const (
 	problemAuthenticationRequired
 	problemCSRFRequired
 	problemDeletionConfirmationRequired
+	problemInvitationUnavailable
+	problemInvitedAccountInvalid
+	problemInvitedAccountNameTaken
 	problemInvalidAuditFilter
 	problemInvalidCredentials
 	problemInvalidOrigin
@@ -53,6 +56,12 @@ func (kind problemKind) String() string {
 		return "csrf-required"
 	case problemDeletionConfirmationRequired:
 		return "deletion-confirmation-required"
+	case problemInvitationUnavailable:
+		return "invitation-unavailable"
+	case problemInvitedAccountInvalid:
+		return "invited-account-invalid"
+	case problemInvitedAccountNameTaken:
+		return "invited-account-name-taken"
 	case problemInvalidAuditFilter:
 		return "invalid-audit-filter"
 	case problemInvalidCredentials:

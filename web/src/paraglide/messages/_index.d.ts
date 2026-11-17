@@ -9,48 +9,6 @@ export const _root_skip_to_main_content: ((inputs?: _Root_Skip_To_Main_ContentIn
 /**
 * | output |
 * | --- |
-* | "Back to your account" |
-*
-*/
-export const account_access_back: ((inputs?: Account_Access_BackInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Access_BackInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
-* | "You are not a member of this library." |
-*
-*/
-export const account_access_forbidden: ((inputs?: Account_Access_ForbiddenInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Access_ForbiddenInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
-* | "Who can use this library and what they can do. Nothing here changes another library." |
-*
-*/
-export const account_access_lede: ((inputs?: Account_Access_LedeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Access_LedeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
-* | "Only an owner can manage access to {library}." |
-*
-*/
-export const account_access_owner_only: ((inputs: Account_Access_Owner_OnlyInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Access_Owner_OnlyInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
-* | "Library access · Savorum" |
-*
-*/
-export const account_access_page_title: ((inputs?: Account_Access_Page_TitleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Access_Page_TitleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
-* | "Access to {library}" |
-*
-*/
-export const account_access_title: ((inputs: Account_Access_TitleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Access_TitleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
 * | "Library activity" |
 *
 */
@@ -202,13 +160,6 @@ export const account_admin_initial_password: ((inputs?: Account_Admin_Initial_Pa
 *
 */
 export const account_admin_invite_heading: ((inputs?: Account_Admin_Invite_HeadingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Admin_Invite_HeadingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
-* | "The person creates their own account or joins with the one they have. Use Add user to set their password yourself." |
-*
-*/
-export const account_admin_invite_hint: ((inputs?: Account_Admin_Invite_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Admin_Invite_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -1290,10 +1241,45 @@ export const account_display_name: ((inputs?: Account_Display_NameInputs, option
 /**
 * | output |
 * | --- |
+* | "Cloud Account" |
+*
+*/
+export const account_hosted_account: ((inputs?: Account_Hosted_AccountInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Hosted_AccountInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Only the Cloud household owner can invite people." |
+*
+*/
+export const account_hosted_invitations_hint: ((inputs?: Account_Hosted_Invitations_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Hosted_Invitations_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Ask the household owner for a Cloud invitation link." |
+*
+*/
+export const account_hosted_legacy_invitation: ((inputs?: Account_Hosted_Legacy_InvitationInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Hosted_Legacy_InvitationInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Replace a server invitation with a Cloud link before sharing it with a Cloud account." |
+*
+*/
+export const account_hosted_replace_hint: ((inputs?: Account_Hosted_Replace_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Hosted_Replace_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
 * | "Accept invitation" |
 *
 */
 export const account_invitation_accept: ((inputs?: Account_Invitation_AcceptInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitation_AcceptInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Create your account to join" |
+*
+*/
+export const account_invitation_create_heading: ((inputs?: Account_Invitation_Create_HeadingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitation_Create_HeadingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -1311,10 +1297,31 @@ export const account_invitation_join_as: ((inputs: Account_Invitation_Join_AsInp
 /**
 * | output |
 * | --- |
-* | "Open in Savorum" |
+* | "Need an account?" |
+*
+*/
+export const account_invitation_need_account: ((inputs?: Account_Invitation_Need_AccountInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitation_Need_AccountInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Open in the Savorum app" |
 *
 */
 export const account_invitation_open_app: ((inputs?: Account_Invitation_Open_AppInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitation_Open_AppInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Open Library" |
+*
+*/
+export const account_invitation_open_library: ((inputs?: Account_Invitation_Open_LibraryInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitation_Open_LibraryInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Sign in to join" |
+*
+*/
+export const account_invitation_sign_in_heading: ((inputs?: Account_Invitation_Sign_In_HeadingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitation_Sign_In_HeadingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -1322,13 +1329,6 @@ export const account_invitation_open_app: ((inputs?: Account_Invitation_Open_App
 *
 */
 export const account_invitation_state_accepted: ((inputs?: Account_Invitation_State_AcceptedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitation_State_AcceptedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
-* | "Expired" |
-*
-*/
-export const account_invitation_state_expired: ((inputs?: Account_Invitation_State_ExpiredInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitation_State_ExpiredInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -1346,17 +1346,24 @@ export const account_invitation_state_revoked: ((inputs?: Account_Invitation_Sta
 /**
 * | output |
 * | --- |
-* | "Create invitation" |
+* | "This invitation is unavailable. It may have expired, been revoked, or been used by another account. Ask the owner for a new link." |
 *
 */
-export const account_invitations_create: ((inputs?: Account_Invitations_CreateInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitations_CreateInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+export const account_invitation_unavailable: ((inputs?: Account_Invitation_UnavailableInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitation_UnavailableInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
-* | "I have shared the link" |
+* | "Create another link" |
 *
 */
-export const account_invitations_dismiss: ((inputs?: Account_Invitations_DismissInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitations_DismissInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+export const account_invitations_another: ((inputs?: Account_Invitations_AnotherInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitations_AnotherInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Create link" |
+*
+*/
+export const account_invitations_create: ((inputs?: Account_Invitations_CreateInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitations_CreateInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -1367,52 +1374,45 @@ export const account_invitations_expiry: ((inputs?: Account_Invitations_ExpiryIn
 /**
 * | output |
 * | --- |
-* | "Invite someone" |
-*
-*/
-export const account_invitations_heading: ((inputs?: Account_Invitations_HeadingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitations_HeadingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
-* | "Anyone with the link can join {library}. Share it privately; Savorum does not send email." |
+* | "Anyone with the link can join {library}." |
 *
 */
 export const account_invitations_hint: ((inputs: Account_Invitations_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitations_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
-* | "Private label (optional)" |
+* | "Who is it for? (optional)" |
 *
 */
 export const account_invitations_label: ((inputs?: Account_Invitations_LabelInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitations_LabelInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
-* | "Only you see this. Use it to remember who a link was for." |
+* | "Only you see this." |
 *
 */
 export const account_invitations_label_hint: ((inputs?: Account_Invitations_Label_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitations_Label_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
-* | "Invitation link — shown once" |
+* | "Invitation link" |
 *
 */
 export const account_invitations_link: ((inputs?: Account_Invitations_LinkInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitations_LinkInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
-* | "Copy it now. Savorum cannot show it again." |
+* | "Copy it now. It won't be shown again." |
 *
 */
 export const account_invitations_link_hint: ((inputs?: Account_Invitations_Link_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitations_Link_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
-* | "No invitations yet." |
+* | "Share this link" |
 *
 */
-export const account_invitations_none: ((inputs?: Account_Invitations_NoneInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitations_NoneInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+export const account_invitations_ready: ((inputs?: Account_Invitations_ReadyInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitations_ReadyInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -1430,38 +1430,31 @@ export const account_invitations_revoke_named: ((inputs: Account_Invitations_Rev
 /**
 * | output |
 * | --- |
-* | "Library role" |
+* | "Share" |
 *
 */
-export const account_invitations_role: ((inputs?: Account_Invitations_RoleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitations_RoleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+export const account_invitations_share: ((inputs?: Account_Invitations_ShareInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitations_ShareInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
-* | "Editor — add and edit recipes" |
-*
-*/
-export const account_invitations_role_editor: ((inputs?: Account_Invitations_Role_EditorInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitations_Role_EditorInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
-* | "Owner — manage library access" |
-*
-*/
-export const account_invitations_role_owner: ((inputs?: Account_Invitations_Role_OwnerInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitations_Role_OwnerInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
-* | "Viewer — browse and cook" |
-*
-*/
-export const account_invitations_role_viewer: ((inputs?: Account_Invitations_Role_ViewerInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitations_Role_ViewerInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
-* | "Invitation" |
+* | "Untitled link" |
 *
 */
 export const account_invitations_unnamed: ((inputs?: Account_Invitations_UnnamedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invitations_UnnamedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Use an account name without spaces and a password of at least 12 characters." |
+*
+*/
+export const account_invited_invalid: ((inputs?: Account_Invited_InvalidInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invited_InvalidInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "That account name is taken. Choose another name, or sign in with your existing account." |
+*
+*/
+export const account_invited_name_taken: ((inputs?: Account_Invited_Name_TakenInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Invited_Name_TakenInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -1857,13 +1850,6 @@ export const account_overview_details: ((inputs?: Account_Overview_DetailsInputs
 /**
 * | output |
 * | --- |
-* | "Invite people" |
-*
-*/
-export const account_overview_invite_people: ((inputs?: Account_Overview_Invite_PeopleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Overview_Invite_PeopleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
 * | "Your libraries" |
 *
 */
@@ -1882,13 +1868,6 @@ export const account_overview_libraries_empty: ((inputs?: Account_Overview_Libra
 *
 */
 export const account_overview_local_mode: ((inputs?: Account_Overview_Local_ModeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Overview_Local_ModeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
-/**
-* | output |
-* | --- |
-* | "Manage access" |
-*
-*/
-export const account_overview_manage_access: ((inputs?: Account_Overview_Manage_AccessInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Overview_Manage_AccessInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -2257,7 +2236,7 @@ export const account_recovery_saved_hint: ((inputs?: Account_Recovery_Saved_Hint
 /**
 * | output |
 * | --- |
-* | "Already have an account? Sign in above." |
+* | "Already have an account?" |
 *
 */
 export const account_register_existing: ((inputs?: Account_Register_ExistingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Register_ExistingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
@@ -2268,6 +2247,13 @@ export const account_register_existing: ((inputs?: Account_Register_ExistingInpu
 *
 */
 export const account_register_heading: ((inputs?: Account_Register_HeadingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Register_HeadingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "At least 12 characters." |
+*
+*/
+export const account_register_password_hint: ((inputs?: Account_Register_Password_HintInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Account_Register_Password_HintInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -9877,6 +9863,27 @@ export const library_filters_taken_from_a_cookbook: ((inputs?: Library_Filters_T
 /**
 * | output |
 * | --- |
+* | "No unused links." |
+*
+*/
+export const library_invitations_empty: ((inputs?: Library_Invitations_EmptyInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Library_Invitations_EmptyInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Invitation links" |
+*
+*/
+export const library_invitations_heading: ((inputs?: Library_Invitations_HeadingInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Library_Invitations_HeadingInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Every account is already a member." |
+*
+*/
+export const library_members_all_added: ((inputs?: Library_Members_All_AddedInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Library_Members_All_AddedInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
 * | "Add recipes" |
 *
 */
@@ -10168,6 +10175,41 @@ export const library_selection_bar_selected_recipes: ((inputs?: Library_Selectio
 *
 */
 export const library_selection_bar_sref_bundle: ((inputs?: Library_Selection_Bar_Sref_BundleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Library_Selection_Bar_Sref_BundleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Library settings" |
+*
+*/
+export const library_settings: ((inputs?: Library_SettingsInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Library_SettingsInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "You are not a member of this library." |
+*
+*/
+export const library_settings_forbidden: ((inputs?: Library_Settings_ForbiddenInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Library_Settings_ForbiddenInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Only an owner can manage access to {library}." |
+*
+*/
+export const library_settings_owner_only: ((inputs: Library_Settings_Owner_OnlyInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Library_Settings_Owner_OnlyInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Library settings · Savorum" |
+*
+*/
+export const library_settings_page_title: ((inputs?: Library_Settings_Page_TitleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Library_Settings_Page_TitleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Settings for {library}" |
+*
+*/
+export const library_settings_title: ((inputs: Library_Settings_TitleInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Library_Settings_TitleInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -17615,12 +17657,6 @@ export const yield_timing_time_entry_hint: ((inputs: Yield_Timing_Time_Entry_Hin
 export const yield_timing_what_it_makes: ((inputs?: Yield_Timing_What_It_MakesInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Yield_Timing_What_It_MakesInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 export type LocalizedString = import("../runtime.js").LocalizedString;
 export type _Root_Skip_To_Main_ContentInputs = {};
-export type Account_Access_BackInputs = {};
-export type Account_Access_ForbiddenInputs = {};
-export type Account_Access_LedeInputs = {};
-export type Account_Access_Owner_OnlyInputs = { library: NonNullable<unknown> };
-export type Account_Access_Page_TitleInputs = {};
-export type Account_Access_TitleInputs = { library: NonNullable<unknown> };
 export type Account_Activity_HeadingInputs = {};
 export type Account_Admin_ActiveInputs = {};
 export type Account_Admin_Audit_LedeInputs = {};
@@ -17643,7 +17679,6 @@ export type Account_Admin_EnableInputs = {};
 export type Account_Admin_Enable_NamedInputs = { name: NonNullable<unknown> };
 export type Account_Admin_Initial_PasswordInputs = {};
 export type Account_Admin_Invite_HeadingInputs = {};
-export type Account_Admin_Invite_HintInputs = {};
 export type Account_Admin_Invite_LibraryInputs = {};
 export type Account_Admin_Libraries_LedeInputs = {};
 export type Account_Admin_Libraries_Page_TitleInputs = {};
@@ -17798,31 +17833,37 @@ export type Account_Delete_PasswordInputs = {};
 export type Account_Delete_ReauthenticateInputs = {};
 export type Account_Delete_SubmitInputs = {};
 export type Account_Display_NameInputs = {};
+export type Account_Hosted_AccountInputs = {};
+export type Account_Hosted_Invitations_HintInputs = {};
+export type Account_Hosted_Legacy_InvitationInputs = {};
+export type Account_Hosted_Replace_HintInputs = {};
 export type Account_Invitation_AcceptInputs = {};
+export type Account_Invitation_Create_HeadingInputs = {};
 export type Account_Invitation_HeadingInputs = {};
 export type Account_Invitation_Join_AsInputs = { name: NonNullable<unknown> };
+export type Account_Invitation_Need_AccountInputs = {};
 export type Account_Invitation_Open_AppInputs = {};
+export type Account_Invitation_Open_LibraryInputs = {};
+export type Account_Invitation_Sign_In_HeadingInputs = {};
 export type Account_Invitation_State_AcceptedInputs = {};
-export type Account_Invitation_State_ExpiredInputs = {};
 export type Account_Invitation_State_ExpiresInputs = { date: NonNullable<unknown> };
 export type Account_Invitation_State_RevokedInputs = {};
+export type Account_Invitation_UnavailableInputs = {};
+export type Account_Invitations_AnotherInputs = {};
 export type Account_Invitations_CreateInputs = {};
-export type Account_Invitations_DismissInputs = {};
 export type Account_Invitations_ExpiryInputs = {};
-export type Account_Invitations_HeadingInputs = {};
 export type Account_Invitations_HintInputs = { library: NonNullable<unknown> };
 export type Account_Invitations_LabelInputs = {};
 export type Account_Invitations_Label_HintInputs = {};
 export type Account_Invitations_LinkInputs = {};
 export type Account_Invitations_Link_HintInputs = {};
-export type Account_Invitations_NoneInputs = {};
+export type Account_Invitations_ReadyInputs = {};
 export type Account_Invitations_RevokeInputs = {};
 export type Account_Invitations_Revoke_NamedInputs = { label: NonNullable<unknown> };
-export type Account_Invitations_RoleInputs = {};
-export type Account_Invitations_Role_EditorInputs = {};
-export type Account_Invitations_Role_OwnerInputs = {};
-export type Account_Invitations_Role_ViewerInputs = {};
+export type Account_Invitations_ShareInputs = {};
 export type Account_Invitations_UnnamedInputs = {};
+export type Account_Invited_InvalidInputs = {};
+export type Account_Invited_Name_TakenInputs = {};
 export type Account_Load_ErrorInputs = {};
 export type Account_Local_Mode_UnavailableInputs = {};
 export type Account_Login_Continue_WithInputs = { provider: NonNullable<unknown> };
@@ -17879,11 +17920,9 @@ export type Account_Nav_LabelInputs = {};
 export type Account_Nav_SecurityInputs = {};
 export type Account_Nav_TokensInputs = {};
 export type Account_Overview_DetailsInputs = {};
-export type Account_Overview_Invite_PeopleInputs = {};
 export type Account_Overview_LibrariesInputs = {};
 export type Account_Overview_Libraries_EmptyInputs = {};
 export type Account_Overview_Local_ModeInputs = {};
-export type Account_Overview_Manage_AccessInputs = {};
 export type Account_Overview_Page_TitleInputs = {};
 export type Account_Overview_PreferencesInputs = {};
 export type Account_Overview_Preferences_HintInputs = {};
@@ -17938,6 +17977,7 @@ export type Account_Recovery_Saved_HeadingInputs = {};
 export type Account_Recovery_Saved_HintInputs = {};
 export type Account_Register_ExistingInputs = {};
 export type Account_Register_HeadingInputs = {};
+export type Account_Register_Password_HintInputs = {};
 export type Account_Register_SubmitInputs = {};
 export type Account_Retire_BodyInputs = {};
 export type Account_Retire_ConfirmationInputs = {};
@@ -19009,6 +19049,9 @@ export type Library_Filters_Stated_By_The_RecipeInputs = {};
 export type Library_Filters_Stop_NarrowingInputs = { value1: NonNullable<unknown> };
 export type Library_Filters_TagsInputs = {};
 export type Library_Filters_Taken_From_A_CookbookInputs = {};
+export type Library_Invitations_EmptyInputs = {};
+export type Library_Invitations_HeadingInputs = {};
+export type Library_Members_All_AddedInputs = {};
 export type Library_Page_Add_RecipesInputs = {};
 export type Library_Page_Drop_RecipesInputs = {};
 export type Library_Page_New_RecipeInputs = {};
@@ -19051,6 +19094,11 @@ export type Library_Selection_Bar_Select_All_ShownInputs = {};
 export type Library_Selection_Bar_SelectedInputs = { value1: NonNullable<unknown> };
 export type Library_Selection_Bar_Selected_RecipesInputs = {};
 export type Library_Selection_Bar_Sref_BundleInputs = {};
+export type Library_SettingsInputs = {};
+export type Library_Settings_ForbiddenInputs = {};
+export type Library_Settings_Owner_OnlyInputs = { library: NonNullable<unknown> };
+export type Library_Settings_Page_TitleInputs = {};
+export type Library_Settings_TitleInputs = { library: NonNullable<unknown> };
 export type Library_Shuffle_AgainInputs = {};
 export type Library_Sort_Active_TimeInputs = {};
 export type Library_Sort_AddedInputs = {};

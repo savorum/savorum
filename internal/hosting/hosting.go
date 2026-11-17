@@ -170,6 +170,7 @@ type MemberRequest struct {
 	Subject         string `json:"subject"`
 	DisplayName     string `json:"display_name"`
 	InvitationToken string `json:"invitation_token,omitempty"`
+	Role            string `json:"role,omitempty"`
 	Issuer          string `json:"issuer,omitempty"`
 	BootstrapID     string `json:"bootstrap_id,omitempty"`
 	OwnerSubject    string `json:"owner_subject,omitempty"`
@@ -191,6 +192,14 @@ type MemberResult struct {
 
 // Validate rejects incomplete member operations.
 func (m MemberRequest) Validate() error {
+	if m.Role != "" && m.Role != "viewer" && m.Role != "editor" {
+		return errors.New("invalid hosted library role")
+	}
+
+	if m.InvitationToken != "" && m.Role != "" {
+		return errors.New("member authorization modes cannot be combined")
+	}
+
 	if m.InvitationToken == "" {
 		if !operationPattern.MatchString(m.BootstrapID) || !boundedText(m.Issuer, 512) || !boundedText(m.OwnerSubject, 256) || !operationPattern.MatchString(m.OwnerUserID) || !operationPattern.MatchString(m.LibraryID) {
 			return errors.New("automatic mapping requires issuer, bootstrap and local owner authority")

@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CaptureRouteImport } from './routes/capture'
+import { Route as JoinRouteImport } from './routes/join'
 import { Route as PlanRouteImport } from './routes/plan'
 import { Route as PreferencesRouteImport } from './routes/preferences'
 import { Route as PrintRouteImport } from './routes/print'
@@ -36,7 +37,7 @@ import { Route as RecipesNewRouteImport } from './routes/recipes.new'
 import { Route as BooksBookIdIndexRouteImport } from './routes/books.$bookId.index'
 import { Route as BooksBookIdHistoryRouteImport } from './routes/books.$bookId.history'
 import { Route as BooksBookIdPrintRouteImport } from './routes/books.$bookId.print'
-import { Route as LibrariesLibraryIdAccessRouteImport } from './routes/libraries.$libraryId.access'
+import { Route as LibrariesLibraryIdSettingsRouteImport } from './routes/libraries.$libraryId.settings'
 import { Route as RecipesRecipeIdIndexRouteImport } from './routes/recipes.$recipeId.index'
 import { Route as RecipesRecipeIdCookRouteImport } from './routes/recipes.$recipeId.cook'
 import { Route as RecipesRecipeIdEditRouteImport } from './routes/recipes.$recipeId.edit'
@@ -53,6 +54,11 @@ const IndexRoute = IndexRouteImport.update({
 const CaptureRoute = CaptureRouteImport.update({
   id: '/capture',
   path: '/capture',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoinRoute = JoinRouteImport.update({
+  id: '/join',
+  path: '/join',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlanRoute = PlanRouteImport.update({
@@ -180,10 +186,10 @@ const BooksBookIdPrintRoute = BooksBookIdPrintRouteImport.update({
   path: '/books/$bookId/print',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LibrariesLibraryIdAccessRoute =
-  LibrariesLibraryIdAccessRouteImport.update({
-    id: '/libraries/$libraryId/access',
-    path: '/libraries/$libraryId/access',
+const LibrariesLibraryIdSettingsRoute =
+  LibrariesLibraryIdSettingsRouteImport.update({
+    id: '/libraries/$libraryId/settings',
+    path: '/libraries/$libraryId/settings',
     getParentRoute: () => rootRouteImport,
   } as any)
 const RecipesRecipeIdIndexRoute = RecipesRecipeIdIndexRouteImport.update({
@@ -226,6 +232,7 @@ const RecipesRecipeIdTranslateRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/capture': typeof CaptureRoute
+  '/join': typeof JoinRoute
   '/plan': typeof PlanRoute
   '/preferences': typeof PreferencesRoute
   '/print': typeof PrintRoute
@@ -250,7 +257,7 @@ export interface FileRoutesByFullPath {
   '/imports/': typeof ImportsIndexRoute
   '/books/$bookId/history': typeof BooksBookIdHistoryRoute
   '/books/$bookId/print': typeof BooksBookIdPrintRoute
-  '/libraries/$libraryId/access': typeof LibrariesLibraryIdAccessRoute
+  '/libraries/$libraryId/settings': typeof LibrariesLibraryIdSettingsRoute
   '/recipes/$recipeId/cook': typeof RecipesRecipeIdCookRoute
   '/recipes/$recipeId/edit': typeof RecipesRecipeIdEditRoute
   '/recipes/$recipeId/history': typeof RecipesRecipeIdHistoryRoute
@@ -263,6 +270,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/capture': typeof CaptureRoute
+  '/join': typeof JoinRoute
   '/plan': typeof PlanRoute
   '/preferences': typeof PreferencesRoute
   '/print': typeof PrintRoute
@@ -287,7 +295,7 @@ export interface FileRoutesByTo {
   '/imports': typeof ImportsIndexRoute
   '/books/$bookId/history': typeof BooksBookIdHistoryRoute
   '/books/$bookId/print': typeof BooksBookIdPrintRoute
-  '/libraries/$libraryId/access': typeof LibrariesLibraryIdAccessRoute
+  '/libraries/$libraryId/settings': typeof LibrariesLibraryIdSettingsRoute
   '/recipes/$recipeId/cook': typeof RecipesRecipeIdCookRoute
   '/recipes/$recipeId/edit': typeof RecipesRecipeIdEditRoute
   '/recipes/$recipeId/history': typeof RecipesRecipeIdHistoryRoute
@@ -301,6 +309,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/capture': typeof CaptureRoute
+  '/join': typeof JoinRoute
   '/plan': typeof PlanRoute
   '/preferences': typeof PreferencesRoute
   '/print': typeof PrintRoute
@@ -325,7 +334,7 @@ export interface FileRoutesById {
   '/imports/': typeof ImportsIndexRoute
   '/books/$bookId/history': typeof BooksBookIdHistoryRoute
   '/books/$bookId/print': typeof BooksBookIdPrintRoute
-  '/libraries/$libraryId/access': typeof LibrariesLibraryIdAccessRoute
+  '/libraries/$libraryId/settings': typeof LibrariesLibraryIdSettingsRoute
   '/recipes/$recipeId/cook': typeof RecipesRecipeIdCookRoute
   '/recipes/$recipeId/edit': typeof RecipesRecipeIdEditRoute
   '/recipes/$recipeId/history': typeof RecipesRecipeIdHistoryRoute
@@ -340,6 +349,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/capture'
+    | '/join'
     | '/plan'
     | '/preferences'
     | '/print'
@@ -364,7 +374,7 @@ export interface FileRouteTypes {
     | '/imports/'
     | '/books/$bookId/history'
     | '/books/$bookId/print'
-    | '/libraries/$libraryId/access'
+    | '/libraries/$libraryId/settings'
     | '/recipes/$recipeId/cook'
     | '/recipes/$recipeId/edit'
     | '/recipes/$recipeId/history'
@@ -377,6 +387,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/capture'
+    | '/join'
     | '/plan'
     | '/preferences'
     | '/print'
@@ -401,7 +412,7 @@ export interface FileRouteTypes {
     | '/imports'
     | '/books/$bookId/history'
     | '/books/$bookId/print'
-    | '/libraries/$libraryId/access'
+    | '/libraries/$libraryId/settings'
     | '/recipes/$recipeId/cook'
     | '/recipes/$recipeId/edit'
     | '/recipes/$recipeId/history'
@@ -414,6 +425,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/capture'
+    | '/join'
     | '/plan'
     | '/preferences'
     | '/print'
@@ -438,7 +450,7 @@ export interface FileRouteTypes {
     | '/imports/'
     | '/books/$bookId/history'
     | '/books/$bookId/print'
-    | '/libraries/$libraryId/access'
+    | '/libraries/$libraryId/settings'
     | '/recipes/$recipeId/cook'
     | '/recipes/$recipeId/edit'
     | '/recipes/$recipeId/history'
@@ -452,6 +464,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CaptureRoute: typeof CaptureRoute
+  JoinRoute: typeof JoinRoute
   PlanRoute: typeof PlanRoute
   PreferencesRoute: typeof PreferencesRoute
   PrintRoute: typeof PrintRoute
@@ -476,7 +489,7 @@ export interface RootRouteChildren {
   ImportsIndexRoute: typeof ImportsIndexRoute
   BooksBookIdHistoryRoute: typeof BooksBookIdHistoryRoute
   BooksBookIdPrintRoute: typeof BooksBookIdPrintRoute
-  LibrariesLibraryIdAccessRoute: typeof LibrariesLibraryIdAccessRoute
+  LibrariesLibraryIdSettingsRoute: typeof LibrariesLibraryIdSettingsRoute
   RecipesRecipeIdCookRoute: typeof RecipesRecipeIdCookRoute
   RecipesRecipeIdEditRoute: typeof RecipesRecipeIdEditRoute
   RecipesRecipeIdHistoryRoute: typeof RecipesRecipeIdHistoryRoute
@@ -501,6 +514,13 @@ declare module '@tanstack/solid-router' {
       path: '/capture'
       fullPath: '/capture'
       preLoaderRoute: typeof CaptureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/join': {
+      id: '/join'
+      path: '/join'
+      fullPath: '/join'
+      preLoaderRoute: typeof JoinRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/plan': {
@@ -678,11 +698,11 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof BooksBookIdPrintRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/libraries/$libraryId/access': {
-      id: '/libraries/$libraryId/access'
-      path: '/libraries/$libraryId/access'
-      fullPath: '/libraries/$libraryId/access'
-      preLoaderRoute: typeof LibrariesLibraryIdAccessRouteImport
+    '/libraries/$libraryId/settings': {
+      id: '/libraries/$libraryId/settings'
+      path: '/libraries/$libraryId/settings'
+      fullPath: '/libraries/$libraryId/settings'
+      preLoaderRoute: typeof LibrariesLibraryIdSettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recipes/$recipeId/': {
@@ -740,6 +760,7 @@ declare module '@tanstack/solid-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CaptureRoute: CaptureRoute,
+  JoinRoute: JoinRoute,
   PlanRoute: PlanRoute,
   PreferencesRoute: PreferencesRoute,
   PrintRoute: PrintRoute,
@@ -764,7 +785,7 @@ const rootRouteChildren: RootRouteChildren = {
   ImportsIndexRoute: ImportsIndexRoute,
   BooksBookIdHistoryRoute: BooksBookIdHistoryRoute,
   BooksBookIdPrintRoute: BooksBookIdPrintRoute,
-  LibrariesLibraryIdAccessRoute: LibrariesLibraryIdAccessRoute,
+  LibrariesLibraryIdSettingsRoute: LibrariesLibraryIdSettingsRoute,
   RecipesRecipeIdCookRoute: RecipesRecipeIdCookRoute,
   RecipesRecipeIdEditRoute: RecipesRecipeIdEditRoute,
   RecipesRecipeIdHistoryRoute: RecipesRecipeIdHistoryRoute,

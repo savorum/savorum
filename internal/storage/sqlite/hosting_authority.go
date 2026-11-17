@@ -128,7 +128,7 @@ func (s *Store) RevokeHostedMember(ctx context.Context, m hosting.MemberAuthorit
 	}
 
 	var soleOwner bool
-	if err := tx.QueryRowContext(ctx, `SELECT EXISTS(SELECT 1 FROM library_memberships WHERE user_id=? AND library_id=? AND role='owner') AND NOT EXISTS(SELECT 1 FROM library_memberships lm JOIN users u ON u.id=lm.user_id WHERE lm.library_id=? AND lm.user_id<>? AND lm.role='owner' AND u.status='active')`, m.UserID, m.LibraryID, m.LibraryID, m.UserID).Scan(&soleOwner); err != nil {
+	if err := tx.QueryRowContext(ctx, `SELECT EXISTS(SELECT 1 FROM library_memberships owned JOIN libraries l ON l.id=owned.library_id WHERE owned.user_id=? AND owned.role='owner' AND l.deleted_at IS NULL AND NOT EXISTS(SELECT 1 FROM library_memberships lm JOIN users u ON u.id=lm.user_id WHERE lm.library_id=owned.library_id AND lm.user_id<>? AND lm.role='owner' AND u.status='active'))`, m.UserID, m.UserID).Scan(&soleOwner); err != nil {
 		return fmt.Errorf("check remaining hosting owner: %w", err)
 	}
 
@@ -141,10 +141,10 @@ func (s *Store) RevokeHostedMember(ctx context.Context, m hosting.MemberAuthorit
 		args []any
 	}{
 		{`UPDATE identities SET enabled=0 WHERE provider=? AND provider_subject=? AND user_id=?`, []any{t.ProviderID, m.Subject, m.UserID}},
-		{`UPDATE users SET instance_admin=0 WHERE id=?`, []any{m.UserID}},
+		{`UPDATE users SET status='disabled',instance_admin=0 WHERE id=?`, []any{m.UserID}},
 		{`UPDATE browser_sessions SET revoked_at=unixepoch(),revocation_reason='hosting-member-removed' WHERE user_id=? AND revoked_at IS NULL`, []any{m.UserID}},
 		{`UPDATE personal_tokens SET revoked_at=unixepoch() WHERE user_id=? AND revoked_at=0`, []any{m.UserID}},
-		{`DELETE FROM library_memberships WHERE library_id=? AND user_id=?`, []any{m.LibraryID, m.UserID}},
+		{`DELETE FROM library_memberships WHERE user_id=?`, []any{m.UserID}},
 		{`DELETE FROM native_sign_in_grants WHERE user_id=?`, []any{m.UserID}},
 		{`DELETE FROM native_link_grants WHERE user_id=?`, []any{m.UserID}},
 		{`DELETE FROM native_link_tickets WHERE user_id=?`, []any{m.UserID}},

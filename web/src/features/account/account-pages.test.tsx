@@ -17,7 +17,7 @@ import { AdminProvidersPage } from "./admin-providers-page"
 import { AssistantApproval } from "./assistant-approval"
 import { AssistantPanel } from "./assistant-panel"
 import { AuditView } from "./audit-view"
-import { LibraryAccess } from "./library-access-page"
+import { LibrarySettings } from "./library-settings-page"
 import { Login } from "./login-page"
 import { PasskeysPanel, RecoveryCodesPanel } from "./passkeys-and-recovery"
 import { SecurityPage } from "./security-page"
@@ -53,6 +53,7 @@ vi.mock("./account-state", async () => {
     libraryByID: (id: string) => state.libraries.find((library) => library.id === id),
     administers: () => state.auth_enabled && state.user.instance_admin,
     roleName: () => messages.m.account_role_owner(),
+    roleItems: (...roles: string[]) => roles.map((role) => ({ value: role, label: role })),
     refreshAccount: vi.fn(),
     setAccount: vi.fn(),
     accountRequest: vi.fn(async (path: string, method?: string) => {
@@ -227,10 +228,12 @@ test("a failed passkey refresh keeps the row available for retry", async () => {
   await waitFor(() => expect(screen.queryByRole("button", { name: "Retry" })).toBeNull())
 })
 
-test("library access inputs retain identity, focus, caret, and composed text", async () => {
-  const screen = render(() => <LibraryAccess libraryID="l1" />)
-  await screen.findByLabelText("Private label (optional)")
-  fireEvent.click(screen.getByRole("button", { name: "More filters" }))
+test("library settings inputs retain identity, focus, caret, and composed text", async () => {
+  const screen = render(() => <LibrarySettings libraryID="l1" />)
+  fireEvent.click(await screen.findByRole("button", { name: "Create link" }))
+  await verifyInputs(await portal.findByRole("dialog", { name: "Invite by link" }))
+  fireEvent.click(portal.getByRole("button", { name: "Done" }))
+  fireEvent.click(await screen.findByRole("button", { name: "More filters" }))
   await verifyInputs(screen.container)
 })
 
@@ -509,8 +512,9 @@ test("approval code retains identity, focus, caret and composed text", async () 
 })
 
 test("a library owner chooses a person by name rather than typing an identifier", async () => {
-  const screen = render(() => <LibraryAccess libraryID="l1" />)
-  fireEvent.click(await screen.findByRole("combobox", { name: "Person" }))
+  const screen = render(() => <LibrarySettings libraryID="l1" />)
+  fireEvent.click(await screen.findByRole("button", { name: "Add member" }))
+  fireEvent.click(await portal.findByRole("combobox", { name: "Person" }))
   // The list is drawn in a portal, so it is looked for in the document.
   const listbox = await portal.findByRole("listbox")
   await within(listbox).findByRole("option", { name: "Robin" })
@@ -518,14 +522,15 @@ test("a library owner chooses a person by name rather than typing an identifier"
     .getAllByRole("option")
     .map((option) => option.textContent)
   expect(offered).not.toContain("Sam")
-  expect(screen.queryByLabelText("Savorum user ID")).toBeNull()
+  expect(portal.queryByLabelText("Savorum user ID")).toBeNull()
 })
 
 test("an owner without administration adds a member by identifier", async () => {
   state.user.instance_admin = false
-  const screen = render(() => <LibraryAccess libraryID="l1" />)
-  await screen.findByLabelText("Savorum user ID")
-  expect(screen.queryByLabelText("Person")).toBeNull()
+  const screen = render(() => <LibrarySettings libraryID="l1" />)
+  fireEvent.click(await screen.findByRole("button", { name: "Add member" }))
+  await portal.findByLabelText("Savorum user ID")
+  expect(portal.queryByLabelText("Person")).toBeNull()
 })
 
 test("changing the display name patches the account and keeps the new name", async () => {
@@ -588,8 +593,8 @@ test("local mode hides sign-in, token, access and administration controls", asyn
   expect(security.queryByLabelText("Current password")).toBeNull()
   const tokens = render(() => <TokensPage />)
   expect(tokens.queryByLabelText("Token name")).toBeNull()
-  const access = render(() => <LibraryAccess libraryID="l1" />)
-  expect(access.queryByLabelText("Private label (optional)")).toBeNull()
+  const settings = render(() => <LibrarySettings libraryID="l1" />)
+  expect(settings.queryByRole("button", { name: "Add member" })).toBeNull()
   const people = render(() => <AdminPeoplePage />)
   expect(people.queryByLabelText("Login name")).toBeNull()
   expect(

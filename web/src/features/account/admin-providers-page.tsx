@@ -10,7 +10,13 @@ import { settled } from "@/lib/settled"
 
 import { m } from "../../lib/messages.ts"
 import { accountStyles as styles } from "./account-layout"
-import { accountRequest, libraries, roleName, type AccountLibrary } from "./account-state"
+import {
+  accountRequest,
+  libraries,
+  roleItems,
+  roleName,
+  type AccountLibrary,
+} from "./account-state"
 import { AdminPage } from "./admin-page"
 import { readProviders, type Provider } from "./sign-in-methods"
 
@@ -151,11 +157,7 @@ function GroupMappings(props: { providers: Provider[] }) {
           <Select
             value={role()}
             onValueChange={setRole}
-            items={[
-              { value: "viewer", label: m.account_role_viewer() },
-              { value: "editor", label: m.account_role_editor() },
-              { value: "owner", label: m.account_role_owner() },
-            ]}
+            items={roleItems("viewer", "editor", "owner")}
           />
         </FormField>
         <Button type="submit" disabled={busy()}>
