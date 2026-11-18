@@ -635,6 +635,7 @@ export interface components {
     }
     Entry: {
       amount?: string
+      best_before?: string
       id: string
       location?: string
       name: string
@@ -1558,6 +1559,7 @@ export interface components {
     }
     PantryEntryInput: {
       amount?: string
+      best_before?: string
       location?: string
       name: string
       note?: string

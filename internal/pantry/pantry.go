@@ -22,6 +22,7 @@ type Entry struct {
 	Unit       string    `json:"unit,omitempty" maxLength:"100"`
 	Note       string    `json:"note,omitempty" maxLength:"2000"`
 	Location   string    `json:"location,omitempty" maxLength:"100"`
+	BestBefore string    `json:"best_before,omitempty" format:"date"`
 	Revision   uint64    `json:"revision"`
 	UpdatedAt  time.Time `json:"updated_at"`
 	UpdatedBy  string    `json:"updated_by"`
@@ -38,6 +39,12 @@ type Repository interface {
 func Validate(e Entry) error {
 	if strings.TrimSpace(e.Name) == "" || len(e.Name) > 200 || len(e.ID) > 100 || e.ID == "" || len(e.SemanticID) > 200 || len(e.Amount) > 100 || len(e.Unit) > 100 || len(e.Note) > 2000 || len(e.Location) > 100 {
 		return ErrInvalid
+	}
+
+	if e.BestBefore != "" {
+		if _, err := time.Parse(time.DateOnly, e.BestBefore); err != nil {
+			return ErrInvalid
+		}
 	}
 
 	return nil

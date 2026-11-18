@@ -25,6 +25,24 @@ func TestPantryEntriesAreSavedChangedAndRemoved(t *testing.T) {
 	}
 }
 
+func TestPantryBestBeforeIsOptionalAndValidated(t *testing.T) {
+	t.Parallel()
+
+	h := newHarness(t)
+
+	created := h.send(http.MethodPut, "/api/v1/pantry/yeast", map[string]any{"name": "Yeast", "best_before": "2027-02-28"}, http.StatusOK, "If-None-Match", "*")
+	if body := created.Body.String(); !strings.Contains(body, `"best_before":"2027-02-28"`) {
+		t.Fatalf("best-before date not kept: %s", body)
+	}
+
+	cleared := h.send(http.MethodPut, "/api/v1/pantry/yeast", map[string]any{"name": "Yeast"}, http.StatusOK, "If-Match", created.Header().Get("ETag"))
+	if body := cleared.Body.String(); strings.Contains(body, "best_before") {
+		t.Fatalf("best-before date not cleared: %s", body)
+	}
+
+	h.send(http.MethodPut, "/api/v1/pantry/salt", map[string]any{"name": "Salt", "best_before": "2027-02-30"}, http.StatusUnprocessableEntity, "If-None-Match", "*")
+}
+
 func TestPreferencesAreReplaced(t *testing.T) {
 	t.Parallel()
 

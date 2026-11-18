@@ -53,3 +53,17 @@ func TestPantryBoundsRejectOversizedAndMissingFields(t *testing.T) {
 		})
 	}
 }
+
+func TestBestBeforeIsAnOptionalCalendarDate(t *testing.T) {
+	e := pantry.Entry{ID: "yeast", Name: "Yeast", BestBefore: "2027-02-28"}
+	if err := pantry.Validate(e); err != nil {
+		t.Fatal(err)
+	}
+
+	for _, date := range []string{"2027-02-30", "28/02/2027", "2027-02-28T00:00:00Z", "soon"} {
+		e.BestBefore = date
+		if !errors.Is(pantry.Validate(e), pantry.ErrInvalid) {
+			t.Fatalf("accepted best-before %q", date)
+		}
+	}
+}

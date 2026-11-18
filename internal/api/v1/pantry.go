@@ -18,6 +18,7 @@ type PantryEntryInput struct {
 	Unit       string `json:"unit,omitempty" maxLength:"100"`
 	Note       string `json:"note,omitempty" maxLength:"2000"`
 	Location   string `json:"location,omitempty" maxLength:"100"`
+	BestBefore string `json:"best_before,omitempty" format:"date"`
 }
 
 type pantryOutput struct {
@@ -58,9 +59,9 @@ func registerPantry(api huma.API, repository pantry.Repository) {
 
 		body := input.Body
 
-		entry, err := repository.SavePantryEntry(ctx, pantry.Entry{ID: input.ID, Name: body.Name, SemanticID: body.SemanticID, Amount: body.Amount, Unit: body.Unit, Note: body.Note, Location: body.Location}, expected)
+		entry, err := repository.SavePantryEntry(ctx, pantry.Entry{ID: input.ID, Name: body.Name, SemanticID: body.SemanticID, Amount: body.Amount, Unit: body.Unit, Note: body.Note, Location: body.Location, BestBefore: body.BestBefore}, expected)
 		if errors.Is(err, pantry.ErrInvalid) {
-			return nil, problem(422, "pantry-invalid", "Check the name and the size of this pantry entry")
+			return nil, problem(422, "pantry-invalid", "Check the name, best-before date, and size of this pantry entry")
 		}
 
 		if err != nil {

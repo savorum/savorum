@@ -102,5 +102,6 @@
   "recipe_compare_ingredients_in_common": "{shared} and {total} are formatted numbers of distinct ingredient names.",
   "recipe_compare_parts_differ": "{count} and {total} are formatted numbers of recipe parts, such as ingredients or photos.",
   "recipe_compare_only_in_this_recipe": "Read by screen readers after a line that the other recipe does not have.",
-  "measurement_decisions_assumed": "Shown after importing a web page that did not say which country's cups and spoons it uses. {convention} is a measuring convention such as US customary; {host} is the site's address, such as kingarthurbaking.com."
+  "measurement_decisions_assumed": "Shown after importing a web page that did not say which country's cups and spoons it uses. {convention} is a measuring convention such as US customary; {host} is the site's address, such as kingarthurbaking.com.",
+  "pantry_best_before": "The date printed on food packaging after which quality may decline, as distinct from a safety use-by date. Use the wording on packaging in the language's region."
 }
