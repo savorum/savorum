@@ -8,6 +8,7 @@ import { Popover, PopoverClose } from "@/components/ui/popover"
 import { formatLocalDay } from "@/lib/date-format"
 
 import { m } from "../../lib/messages.ts"
+import { DishLabel } from "./meal-card"
 import { mealType, scaled } from "./meal-labels"
 import { dishImages } from "./meal-tiles"
 import { iso } from "./plan-calendar"
@@ -153,6 +154,7 @@ export function MonthCalendar(props: {
                             const meal = () => props.plannedOn(date).find((meal) => meal.id === id)!
                             const [previewOpen, setPreviewOpen] = createSignal(false)
                             let previewTrigger: HTMLButtonElement | undefined
+                            let previewEdit: HTMLButtonElement | undefined
                             const image = () => dishImages(meal().dishes ?? [])[0]
                             const slot = () =>
                               [meal().skipped ? m.plan_skipped() : "", mealType(meal().meal_type)]
@@ -163,6 +165,7 @@ export function MonthCalendar(props: {
                             return (
                               <Popover
                                 open={previewOpen()}
+                                initialFocusEl={() => previewEdit ?? null}
                                 finalFocusEl={() => previewTrigger ?? null}
                                 onOpenChange={(details) => setPreviewOpen(details.open)}
                                 title={
@@ -226,11 +229,16 @@ export function MonthCalendar(props: {
                                     })}
                                   >
                                     <For each={meal().dishes ?? []}>
-                                      {(dish) => <li>{scaled(dish)}</li>}
+                                      {(dish) => (
+                                        <li>
+                                          <DishLabel dish={dish} />
+                                        </li>
+                                      )}
                                     </For>
                                   </ul>
                                   <div class={css({ display: "flex", gap: "2", flexWrap: "wrap" })}>
                                     <Button
+                                      ref={(element) => (previewEdit = element)}
                                       variant="outline"
                                       onClick={() => {
                                         setPreviewOpen(false)

@@ -37,6 +37,7 @@ type RecipeService interface {
 	Create(ctx context.Context, document recipe.Document) (library.Entry, error)
 	Get(ctx context.Context, id library.EntryID) (library.Entry, error)
 	GetTrashed(ctx context.Context, id library.EntryID) (library.Entry, error)
+	FindActiveByDocumentID(ctx context.Context, documentID recipe.RecipeID) (library.EntryID, error)
 	ListPage(ctx context.Context, options library.ListOptions) ([]library.Summary, int, error)
 	ListReferences(ctx context.Context, state library.State) ([]library.RecipeReference, error)
 	Update(ctx context.Context, id library.EntryID, expectedRevision uint64, document recipe.Document) (library.Entry, error)

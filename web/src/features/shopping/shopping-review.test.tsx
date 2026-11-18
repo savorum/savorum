@@ -1,4 +1,5 @@
 import { cleanup, fireEvent, render, screen, waitFor } from "@solidjs/testing-library"
+import type { JSX } from "solid-js"
 import { afterEach, beforeEach, expect, test, vi } from "vitest"
 
 import { setAccount } from "@/features/account/account-state"
@@ -6,10 +7,17 @@ import { setAccount } from "@/features/account/account-state"
 import { ShoppingReview } from "./shopping-review"
 
 let fail = false
-let source: { label: string; meal_date?: string } = { label: "Sunday breakfast · Pancakes" }
+let source: { label: string; meal_date?: string; recipe_id?: string } = {
+  label: "Sunday breakfast · Pancakes",
+}
 const navigate = vi.fn()
 const applied = vi.fn()
-vi.mock("@tanstack/solid-router", () => ({ useNavigate: () => navigate }))
+vi.mock("@tanstack/solid-router", () => ({
+  useNavigate: () => navigate,
+  Link: (props: { params: { recipeId: string }; children?: JSX.Element }) => (
+    <a href={`/recipes/${props.params.recipeId}`}>{props.children}</a>
+  ),
+}))
 vi.mock("@/api/client", async (original) => {
   const actual = await original<typeof import("@/api/client")>()
   return {
@@ -112,4 +120,11 @@ test("a planned meal's ingredients are headed by its day in the reader's languag
   await screen.findByRole("checkbox", { name: "Milk 2" }, { interval: 10 })
   expect(screen.getByRole("heading", { name: /^Thu, Sep 24 · .*Pancakes/ })).toBeTruthy()
   expect(screen.queryByText(/2026-09-24/)).toBeNull()
+})
+
+test("a recipe source heading links to its recipe", async () => {
+  source = { label: "Pancakes", recipe_id: "pancakes" }
+  render(() => <ShoppingReview input={{ meal_ids: ["breakfast"] }} close={() => {}} />)
+  const link = await screen.findByRole("link", { name: "Pancakes" }, { interval: 10 })
+  expect(link.getAttribute("href")).toBe("/recipes/pancakes")
 })

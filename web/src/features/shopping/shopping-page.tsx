@@ -42,7 +42,7 @@ import { ShoppingActivity } from "./shopping-activity"
 import { ShoppingConflict } from "./shopping-conflict"
 import { displayName, neededText, rowNote, shoppingSections } from "./shopping-display"
 import { ShoppingListHeading } from "./shopping-list-picker"
-import { sourceHeading } from "./shopping-review"
+import { SourceHeading } from "./shopping-review"
 import {
   createShoppingStore,
   shoppingScope,
@@ -817,9 +817,9 @@ function ItemEditor(props: {
               <For each={props.item.sources ?? []}>
                 {(source) => (
                   <li class={styles.muted}>
-                    {[shoppingQuantity(source.quantity), sourceHeading(source), source.note]
-                      .filter(Boolean)
-                      .join(" · ")}
+                    {shoppingQuantity(source.quantity) && `${shoppingQuantity(source.quantity)} · `}
+                    <SourceHeading source={source} />
+                    {source.note && ` · ${source.note}`}
                   </li>
                 )}
               </For>

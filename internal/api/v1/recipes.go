@@ -11,6 +11,7 @@ import (
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/savorum/savorum/internal/library"
+	"github.com/savorum/savorum/internal/recipe"
 )
 
 type createRecipeInput struct {
@@ -105,7 +106,12 @@ func registerRecipes(api huma.API, service RecipeService) {
 			return nil, mapError(err)
 		}
 
-		return &getRecipeOutput{ETag: revisionETag(entry.Revision), Body: fromLibrary(entry)}, nil
+		body := fromLibrary(entry)
+		if err := linkRecipeDependencies(ctx, service, &body.Recipe); err != nil {
+			return nil, mapError(err)
+		}
+
+		return &getRecipeOutput{ETag: revisionETag(entry.Revision), Body: body}, nil
 	})
 
 	huma.Register(api, huma.Operation{
@@ -391,7 +397,12 @@ func registerRecipeHistory(api huma.API, service RecipeService) {
 			return nil, mapError(err)
 		}
 
-		return &revisionOutput{Body: fromRevision(revision)}, nil
+		body := fromRevision(revision)
+		if err := linkRecipeDependencies(ctx, service, &body.Recipe); err != nil {
+			return nil, mapError(err)
+		}
+
+		return &revisionOutput{Body: body}, nil
 	})
 
 	huma.Register(api, huma.Operation{
@@ -521,4 +532,45 @@ func mapTrashError(err error) error {
 	default:
 		return problem(http.StatusInternalServerError, "internal-error", "The request could not be completed")
 	}
+}
+
+func linkRecipeDependencies(ctx context.Context, service RecipeService, document *RecipeDocument) error {
+	entries := map[string]string{}
+	link := func(dependency *RecipeDependency) error {
+		if dependency == nil || dependency.RecipeID == "" {
+			return nil
+		}
+
+		entryID, seen := entries[dependency.RecipeID]
+		if !seen {
+			id, err := service.FindActiveByDocumentID(ctx, recipe.RecipeID(dependency.RecipeID))
+			if err != nil && !errors.Is(err, library.ErrNotFound) {
+				return err
+			}
+
+			entryID = string(id)
+			entries[dependency.RecipeID] = entryID
+		}
+
+		dependency.EntryID = entryID
+
+		return nil
+	}
+
+	for _, section := range document.IngredientSections {
+		for index := range section.Ingredients {
+			ingredient := &section.Ingredients[index]
+			if err := link(ingredient.Recipe); err != nil {
+				return err
+			}
+
+			for branch := range ingredient.Alternatives {
+				if err := link(ingredient.Alternatives[branch].Recipe); err != nil {
+					return err
+				}
+			}
+		}
+	}
+
+	return nil
 }

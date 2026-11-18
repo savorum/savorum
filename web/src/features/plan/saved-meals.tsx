@@ -20,8 +20,8 @@ import { createAsyncAction } from "@/lib/create-async-action"
 import { settled } from "@/lib/settled"
 
 import { m } from "../../lib/messages.ts"
+import { DishLabel } from "./meal-card"
 import { MealEditor } from "./meal-editor"
-import { scaled } from "./meal-labels"
 import { TileImages } from "./meal-tile-images"
 import { tiles } from "./meal-tiles"
 
@@ -113,7 +113,13 @@ export function SavedMeals(props: {
               </div>
               <div class={css({ alignContent: "start", display: "grid", gap: "2" })}>
                 <ul class={tiles.dishes}>
-                  <For each={meal.dishes ?? []}>{(dish) => <li>{scaled(dish)}</li>}</For>
+                  <For each={meal.dishes ?? []}>
+                    {(dish) => (
+                      <li>
+                        <DishLabel dish={dish} />
+                      </li>
+                    )}
+                  </For>
                 </ul>
                 <Show when={meal.notes}>
                   <p class={tiles.note}>{meal.notes}</p>

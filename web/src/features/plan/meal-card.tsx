@@ -87,7 +87,7 @@ export interface MealControls {
   menu: (meal: Meal, action: string) => void
 }
 
-const DishLabel = (props: { dish: MealDish }) => (
+export const DishLabel = (props: { dish: MealDish }) => (
   <Show
     when={props.dish.entry_id && props.dish.recipe_status === "available"}
     fallback={scaled(props.dish)}

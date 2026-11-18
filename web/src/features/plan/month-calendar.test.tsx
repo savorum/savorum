@@ -1,10 +1,17 @@
-import { cleanup, fireEvent, render, screen } from "@solidjs/testing-library"
+import { cleanup, fireEvent, render, screen, within } from "@solidjs/testing-library"
 import { createSignal } from "solid-js"
-import { afterEach, expect, test } from "vitest"
+import type { JSX } from "solid-js"
+import { afterEach, expect, test, vi } from "vitest"
 
 import type { Meal } from "@/api/client"
 
 import { MonthCalendar } from "./month-calendar"
+
+vi.mock("@tanstack/solid-router", () => ({
+  Link: (props: { to: string; params: Record<string, string>; children?: JSX.Element }) => (
+    <a href={props.to.replace("$recipeId", props.params.recipeId)}>{props.children}</a>
+  ),
+}))
 
 afterEach(cleanup)
 
@@ -45,4 +52,37 @@ test("month meals retain their preview through image fallback and refresh", asyn
   expect(screen.getByRole("button", { name: "Soup night" })).toBe(trigger)
   expect(screen.getByRole("dialog")).toBe(preview)
   expect(screen.getByRole("button", { name: "Edit" })).toBe(document.activeElement)
+})
+
+test("the month preview links each available dish to its recipe", async () => {
+  const day = new Date(2026, 10, 13)
+  const meals: Meal[] = [
+    {
+      id: "dinner",
+      display_title: "Penne",
+      meal_type: "dinner",
+      date: "2026-11-13",
+      skipped: false,
+      dishes: [
+        { display_name: "Penne", entry_id: "penne", recipe_status: "available" },
+        { display_name: "Salad", entry_id: "salad", recipe_status: "trashed" },
+      ],
+      revision: 1,
+      created_at: "2026-11-13T00:00:00Z",
+      updated_at: "2026-11-13T00:00:00Z",
+    },
+  ]
+  render(() => (
+    <MonthCalendar
+      days={[day]}
+      anchor={day}
+      plannedOn={() => meals}
+      onOpenWeek={() => {}}
+      onEdit={() => {}}
+    />
+  ))
+  fireEvent.click(screen.getByRole("button", { name: /Penne/ }))
+  const dialog = await screen.findByRole("dialog")
+  expect(within(dialog).getByRole("link").getAttribute("href")).toBe("/recipes/penne")
+  expect(within(dialog).queryByRole("link", { name: /Salad/ })).toBeNull()
 })

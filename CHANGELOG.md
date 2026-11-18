@@ -9,6 +9,7 @@ Notable changes to Savorum Core. Each release publishes
 ### Added
 
 - Add library and role previews to invitation links.
+- Link dish names in meal plans and shopping lists to their recipes.
 
 ### Changed
 
