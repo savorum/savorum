@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/solid-router"
+import { Link, useNavigate } from "@tanstack/solid-router"
 import { createResource, createSignal, For, Show } from "solid-js"
 import { css } from "styled-system/css"
 
@@ -99,6 +99,18 @@ export function sourceHeading(source: Source): string {
         label: isolate(source.label),
       })
     : source.label
+}
+
+export function SourceHeading(props: { source: Source }) {
+  return (
+    <Show when={props.source.recipe_id} fallback={sourceHeading(props.source)}>
+      {(recipeId) => (
+        <Link to="/recipes/$recipeId" params={{ recipeId: recipeId() }}>
+          {sourceHeading(props.source)}
+        </Link>
+      )}
+    </Show>
+  )
 }
 
 const groupKey = (source: Source) => `${source.meal_date ?? ""}\u0000${source.label}`
@@ -327,7 +339,9 @@ export function ShoppingReview(props: { input: ReviewInput; close(): void }) {
           <For each={groups()}>
             {([key, source]) => (
               <section>
-                <h2 class={styles.groupTitle}>{sourceHeading(source)}</h2>
+                <h2 class={styles.groupTitle}>
+                  <SourceHeading source={source} />
+                </h2>
                 <For each={requirements().filter((row) => groupKey(row.source) === key)}>
                   {(row) => {
                     const selected = () => selections()[row.id]
@@ -422,7 +436,8 @@ export function ShoppingReview(props: { input: ReviewInput; close(): void }) {
                 <For each={current()?.removed ?? []}>
                   {(source) => (
                     <li class={styles.muted}>
-                      {shoppingQuantity(source.quantity)} {source.name} · {sourceHeading(source)}
+                      {shoppingQuantity(source.quantity)} {source.name} ·{" "}
+                      <SourceHeading source={source} />
                     </li>
                   )}
                 </For>

@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/solid-router"
 import { Info } from "lucide-solid"
 import { For, Show } from "solid-js"
 import { css } from "styled-system/css"
@@ -189,11 +190,22 @@ export function DependencyNote(props: { dependency: RecipeDependency }) {
   return (
     <span class={styles.scope}>
       {" "}
-      <Show when={url()} fallback={m.dependency_see({ recipe: name() })}>
-        {(href) => (
-          <a class={styles.link} href={href()} target="_blank" rel="noreferrer">
+      <Show
+        when={props.dependency.entry_id}
+        fallback={
+          <Show when={url()} fallback={m.dependency_see({ recipe: name() })}>
+            {(href) => (
+              <a class={styles.link} href={href()} target="_blank" rel="noreferrer">
+                {m.dependency_see({ recipe: name() })}
+              </a>
+            )}
+          </Show>
+        }
+      >
+        {(recipeId) => (
+          <Link class={styles.link} to="/recipes/$recipeId" params={{ recipeId: recipeId() }}>
             {m.dependency_see({ recipe: name() })}
-          </a>
+          </Link>
         )}
       </Show>
     </span>

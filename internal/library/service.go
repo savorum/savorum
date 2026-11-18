@@ -133,6 +133,20 @@ func (s *Service) Get(ctx context.Context, id EntryID) (Entry, error) {
 	return entry, nil
 }
 
+// FindActiveByDocumentID returns the active entry carrying a portable recipe document.
+func (s *Service) FindActiveByDocumentID(ctx context.Context, documentID recipe.RecipeID) (EntryID, error) {
+	id, _, state, err := s.repository.FindByDocumentID(ctx, documentID)
+	if err != nil {
+		return "", err
+	}
+
+	if state != StateActive {
+		return "", ErrNotFound
+	}
+
+	return id, nil
+}
+
 // List returns a bounded page of matching summaries.
 func (s *Service) List(ctx context.Context, options ListOptions) ([]Summary, error) {
 	options, err := normalizeListOptions(options)

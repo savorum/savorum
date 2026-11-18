@@ -1726,6 +1726,8 @@ export interface components {
       [key: string]: unknown
     }
     RecipeDependency: {
+      /** The active library entry carrying recipe_id, when one exists */
+      readonly entry_id?: string
       /** The other recipe's portable document ID, not a library entry ID */
       recipe_id?: string
       /** The other recipe's title as authored */

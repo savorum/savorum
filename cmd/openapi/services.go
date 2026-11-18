@@ -55,6 +55,10 @@ func (schemaService) GetTrashed(context.Context, library.EntryID) (library.Entry
 	return library.Entry{}, errors.New("schema-only service")
 }
 
+func (schemaService) FindActiveByDocumentID(context.Context, recipe.RecipeID) (library.EntryID, error) {
+	return "", errors.New("schema-only service")
+}
+
 func (schemaService) ListPage(context.Context, library.ListOptions) ([]library.Summary, int, error) {
 	return nil, 0, errors.New("schema-only service")
 }

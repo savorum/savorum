@@ -52,6 +52,7 @@ type RecipeDependency struct {
 	Title    string `json:"title,omitempty" maxLength:"1000" doc:"The other recipe's title as authored"`
 	RecipeID string `json:"recipe_id,omitempty" pattern:"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" doc:"The other recipe's portable document ID, not a library entry ID"`
 	URL      string `json:"url,omitempty" format:"uri" maxLength:"10000" doc:"Where the other recipe is published"`
+	EntryID  string `json:"entry_id,omitempty" readOnly:"true" doc:"The active library entry carrying recipe_id, when one exists"`
 }
 
 // AssetLicense is the license a source applies to one asset.
