@@ -5207,6 +5207,12 @@ export const pantry_add: Messages["pantry_add"] = /* @__PURE__ */ localized("pan
 export const pantry_amount: Messages["pantry_amount"] = /* @__PURE__ */ localized("pantry_amount", () => {
 	return /** @type {LocalizedString} */ (`Approximate amount (optional)`)
 })
+export const pantry_best_before: Messages["pantry_best_before"] = /* @__PURE__ */ localized("pantry_best_before", () => {
+	return /** @type {LocalizedString} */ (`Best before (optional)`)
+})
+export const pantry_best_before_value: Messages["pantry_best_before_value"] = /* @__PURE__ */ localized("pantry_best_before_value", (i) => {
+	return /** @type {LocalizedString} */ (`Best before ${i?.date}`)
+})
 export const pantry_cancel: Messages["pantry_cancel"] = /* @__PURE__ */ localized("pantry_cancel", () => {
 	return /** @type {LocalizedString} */ (`Cancel`)
 })
@@ -5231,6 +5237,9 @@ export const pantry_name: Messages["pantry_name"] = /* @__PURE__ */ localized("p
 export const pantry_note: Messages["pantry_note"] = /* @__PURE__ */ localized("pantry_note", () => {
 	return /** @type {LocalizedString} */ (`Note (optional)`)
 })
+export const pantry_past_best_before: Messages["pantry_past_best_before"] = /* @__PURE__ */ localized("pantry_past_best_before", (i) => {
+	return /** @type {LocalizedString} */ (`Past best before: ${i?.date}`)
+})
 export const pantry_remove: Messages["pantry_remove"] = /* @__PURE__ */ localized("pantry_remove", () => {
 	return /** @type {LocalizedString} */ (`Remove`)
 })
@@ -5251,6 +5260,9 @@ export const pantry_title: Messages["pantry_title"] = /* @__PURE__ */ localized(
 })
 export const pantry_unit: Messages["pantry_unit"] = /* @__PURE__ */ localized("pantry_unit", () => {
 	return /** @type {LocalizedString} */ (`Unit (optional)`)
+})
+export const pantry_use_soon: Messages["pantry_use_soon"] = /* @__PURE__ */ localized("pantry_use_soon", (i) => {
+	return /** @type {LocalizedString} */ (`Use soon: best before ${i?.date}`)
 })
 export const passkeys_registration_cancelled: Messages["passkeys_registration_cancelled"] = /* @__PURE__ */ localized("passkeys_registration_cancelled", () => {
 	return /** @type {LocalizedString} */ (`Passkey registration was cancelled.`)

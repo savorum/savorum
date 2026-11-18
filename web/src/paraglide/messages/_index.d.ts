@@ -11788,6 +11788,20 @@ export const pantry_amount: ((inputs?: Pantry_AmountInputs, options?: { locale?:
 /**
 * | output |
 * | --- |
+* | "Best before (optional)" |
+*
+*/
+export const pantry_best_before: ((inputs?: Pantry_Best_BeforeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Pantry_Best_BeforeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Best before {date}" |
+*
+*/
+export const pantry_best_before_value: ((inputs: Pantry_Best_Before_ValueInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Pantry_Best_Before_ValueInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
 * | "Cancel" |
 *
 */
@@ -11844,6 +11858,13 @@ export const pantry_note: ((inputs?: Pantry_NoteInputs, options?: { locale?: "en
 /**
 * | output |
 * | --- |
+* | "Past best before: {date}" |
+*
+*/
+export const pantry_past_best_before: ((inputs: Pantry_Past_Best_BeforeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Pantry_Past_Best_BeforeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
 * | "Remove" |
 *
 */
@@ -11890,6 +11911,13 @@ export const pantry_title: ((inputs?: Pantry_TitleInputs, options?: { locale?: "
 *
 */
 export const pantry_unit: ((inputs?: Pantry_UnitInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Pantry_UnitInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
+/**
+* | output |
+* | --- |
+* | "Use soon: best before {date}" |
+*
+*/
+export const pantry_use_soon: ((inputs: Pantry_Use_SoonInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & __ParaglideMessageMetadata<Pantry_Use_SoonInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>;
 /**
 * | output |
 * | --- |
@@ -19322,6 +19350,8 @@ export type Page_Title_EditingInputs = { name: NonNullable<unknown> };
 export type Page_Title_NamedInputs = { name: NonNullable<unknown> };
 export type Pantry_AddInputs = {};
 export type Pantry_AmountInputs = {};
+export type Pantry_Best_BeforeInputs = {};
+export type Pantry_Best_Before_ValueInputs = { date: NonNullable<unknown> };
 export type Pantry_CancelInputs = {};
 export type Pantry_EditInputs = {};
 export type Pantry_FailedInputs = {};
@@ -19330,6 +19360,7 @@ export type Pantry_LocationInputs = {};
 export type Pantry_May_HaveInputs = { value: NonNullable<unknown> };
 export type Pantry_NameInputs = {};
 export type Pantry_NoteInputs = {};
+export type Pantry_Past_Best_BeforeInputs = { date: NonNullable<unknown> };
 export type Pantry_RemoveInputs = {};
 export type Pantry_RetryInputs = {};
 export type Pantry_ReviewInputs = {};
@@ -19337,6 +19368,7 @@ export type Pantry_Review_HintInputs = {};
 export type Pantry_SaveInputs = {};
 export type Pantry_TitleInputs = {};
 export type Pantry_UnitInputs = {};
+export type Pantry_Use_SoonInputs = { date: NonNullable<unknown> };
 export type Passkeys_Registration_CancelledInputs = {};
 export type Passkeys_Sign_In_CancelledInputs = {};
 export type Pdf_Preview_KbInputs = {};

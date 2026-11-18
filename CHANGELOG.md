@@ -8,6 +8,7 @@ Notable changes to Savorum Core. Each release publishes
 
 ### Added
 
+- Add best-before dates to pantry entries.
 - Add library and role previews to invitation links.
 - Link dish names in meal plans and shopping lists to their recipes.
 

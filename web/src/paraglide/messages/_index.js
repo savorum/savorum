@@ -1668,6 +1668,8 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{ name: NonNullable<unknown> }} Page_Title_NamedInputs */
 /** @typedef {{}} Pantry_AddInputs */
 /** @typedef {{}} Pantry_AmountInputs */
+/** @typedef {{}} Pantry_Best_BeforeInputs */
+/** @typedef {{ date: NonNullable<unknown> }} Pantry_Best_Before_ValueInputs */
 /** @typedef {{}} Pantry_CancelInputs */
 /** @typedef {{}} Pantry_EditInputs */
 /** @typedef {{}} Pantry_FailedInputs */
@@ -1676,6 +1678,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{ value: NonNullable<unknown> }} Pantry_May_HaveInputs */
 /** @typedef {{}} Pantry_NameInputs */
 /** @typedef {{}} Pantry_NoteInputs */
+/** @typedef {{ date: NonNullable<unknown> }} Pantry_Past_Best_BeforeInputs */
 /** @typedef {{}} Pantry_RemoveInputs */
 /** @typedef {{}} Pantry_RetryInputs */
 /** @typedef {{}} Pantry_ReviewInputs */
@@ -1683,6 +1686,7 @@ import { getLocale, experimentalStaticLocale } from "../runtime.js"
 /** @typedef {{}} Pantry_SaveInputs */
 /** @typedef {{}} Pantry_TitleInputs */
 /** @typedef {{}} Pantry_UnitInputs */
+/** @typedef {{ date: NonNullable<unknown> }} Pantry_Use_SoonInputs */
 /** @typedef {{}} Passkeys_Registration_CancelledInputs */
 /** @typedef {{}} Passkeys_Sign_In_CancelledInputs */
 /** @typedef {{}} Pdf_Preview_KbInputs */
@@ -70966,6 +70970,88 @@ export const pantry_amount = /** @type {((inputs?: Pantry_AmountInputs, options?
 /**
 * | output |
 * | --- |
+* | "Best before (optional)" |
+*
+* @param {Pantry_Best_BeforeInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const pantry_best_before = /** @type {((inputs?: Pantry_Best_BeforeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Pantry_Best_BeforeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs = {}, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.pantry_best_before(inputs)
+	if (locale === "cs") return __cs.pantry_best_before(inputs)
+	if (locale === "da") return __da.pantry_best_before(inputs)
+	if (locale === "de") return __de.pantry_best_before(inputs)
+	if (locale === "el") return __el.pantry_best_before(inputs)
+	if (locale === "es") return __es.pantry_best_before(inputs)
+	if (locale === "fi") return __fi.pantry_best_before(inputs)
+	if (locale === "fr") return __fr.pantry_best_before(inputs)
+	if (locale === "he") return __he.pantry_best_before(inputs)
+	if (locale === "hu") return __hu.pantry_best_before(inputs)
+	if (locale === "id") return __id.pantry_best_before(inputs)
+	if (locale === "it") return __it.pantry_best_before(inputs)
+	if (locale === "ja") return __ja.pantry_best_before(inputs)
+	if (locale === "ko") return __ko.pantry_best_before(inputs)
+	if (locale === "nb") return __nb.pantry_best_before(inputs)
+	if (locale === "nl") return __nl.pantry_best_before(inputs)
+	if (locale === "pl") return __pl.pantry_best_before(inputs)
+	if (locale === "pt-BR") return __pt_br2.pantry_best_before(inputs)
+	if (locale === "pt-PT") return __pt_pt2.pantry_best_before(inputs)
+	if (locale === "ro") return __ro.pantry_best_before(inputs)
+	if (locale === "ru") return __ru.pantry_best_before(inputs)
+	if (locale === "sv") return __sv.pantry_best_before(inputs)
+	if (locale === "th") return __th.pantry_best_before(inputs)
+	if (locale === "tr") return __tr.pantry_best_before(inputs)
+	if (locale === "uk") return __uk.pantry_best_before(inputs)
+	if (locale === "vi") return __vi.pantry_best_before(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.pantry_best_before(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.pantry_best_before(inputs)
+	return __en.pantry_best_before(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Best before {date}" |
+*
+* @param {Pantry_Best_Before_ValueInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const pantry_best_before_value = /** @type {((inputs: Pantry_Best_Before_ValueInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Pantry_Best_Before_ValueInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.pantry_best_before_value(inputs)
+	if (locale === "cs") return __cs.pantry_best_before_value(inputs)
+	if (locale === "da") return __da.pantry_best_before_value(inputs)
+	if (locale === "de") return __de.pantry_best_before_value(inputs)
+	if (locale === "el") return __el.pantry_best_before_value(inputs)
+	if (locale === "es") return __es.pantry_best_before_value(inputs)
+	if (locale === "fi") return __fi.pantry_best_before_value(inputs)
+	if (locale === "fr") return __fr.pantry_best_before_value(inputs)
+	if (locale === "he") return __he.pantry_best_before_value(inputs)
+	if (locale === "hu") return __hu.pantry_best_before_value(inputs)
+	if (locale === "id") return __id.pantry_best_before_value(inputs)
+	if (locale === "it") return __it.pantry_best_before_value(inputs)
+	if (locale === "ja") return __ja.pantry_best_before_value(inputs)
+	if (locale === "ko") return __ko.pantry_best_before_value(inputs)
+	if (locale === "nb") return __nb.pantry_best_before_value(inputs)
+	if (locale === "nl") return __nl.pantry_best_before_value(inputs)
+	if (locale === "pl") return __pl.pantry_best_before_value(inputs)
+	if (locale === "pt-BR") return __pt_br2.pantry_best_before_value(inputs)
+	if (locale === "pt-PT") return __pt_pt2.pantry_best_before_value(inputs)
+	if (locale === "ro") return __ro.pantry_best_before_value(inputs)
+	if (locale === "ru") return __ru.pantry_best_before_value(inputs)
+	if (locale === "sv") return __sv.pantry_best_before_value(inputs)
+	if (locale === "th") return __th.pantry_best_before_value(inputs)
+	if (locale === "tr") return __tr.pantry_best_before_value(inputs)
+	if (locale === "uk") return __uk.pantry_best_before_value(inputs)
+	if (locale === "vi") return __vi.pantry_best_before_value(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.pantry_best_before_value(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.pantry_best_before_value(inputs)
+	return __en.pantry_best_before_value(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Cancel" |
 *
 * @param {Pantry_CancelInputs} inputs
@@ -71294,6 +71380,47 @@ export const pantry_note = /** @type {((inputs?: Pantry_NoteInputs, options?: { 
 /**
 * | output |
 * | --- |
+* | "Past best before: {date}" |
+*
+* @param {Pantry_Past_Best_BeforeInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const pantry_past_best_before = /** @type {((inputs: Pantry_Past_Best_BeforeInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Pantry_Past_Best_BeforeInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.pantry_past_best_before(inputs)
+	if (locale === "cs") return __cs.pantry_past_best_before(inputs)
+	if (locale === "da") return __da.pantry_past_best_before(inputs)
+	if (locale === "de") return __de.pantry_past_best_before(inputs)
+	if (locale === "el") return __el.pantry_past_best_before(inputs)
+	if (locale === "es") return __es.pantry_past_best_before(inputs)
+	if (locale === "fi") return __fi.pantry_past_best_before(inputs)
+	if (locale === "fr") return __fr.pantry_past_best_before(inputs)
+	if (locale === "he") return __he.pantry_past_best_before(inputs)
+	if (locale === "hu") return __hu.pantry_past_best_before(inputs)
+	if (locale === "id") return __id.pantry_past_best_before(inputs)
+	if (locale === "it") return __it.pantry_past_best_before(inputs)
+	if (locale === "ja") return __ja.pantry_past_best_before(inputs)
+	if (locale === "ko") return __ko.pantry_past_best_before(inputs)
+	if (locale === "nb") return __nb.pantry_past_best_before(inputs)
+	if (locale === "nl") return __nl.pantry_past_best_before(inputs)
+	if (locale === "pl") return __pl.pantry_past_best_before(inputs)
+	if (locale === "pt-BR") return __pt_br2.pantry_past_best_before(inputs)
+	if (locale === "pt-PT") return __pt_pt2.pantry_past_best_before(inputs)
+	if (locale === "ro") return __ro.pantry_past_best_before(inputs)
+	if (locale === "ru") return __ru.pantry_past_best_before(inputs)
+	if (locale === "sv") return __sv.pantry_past_best_before(inputs)
+	if (locale === "th") return __th.pantry_past_best_before(inputs)
+	if (locale === "tr") return __tr.pantry_past_best_before(inputs)
+	if (locale === "uk") return __uk.pantry_past_best_before(inputs)
+	if (locale === "vi") return __vi.pantry_past_best_before(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.pantry_past_best_before(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.pantry_past_best_before(inputs)
+	return __en.pantry_past_best_before(inputs)
+});
+/**
+* | output |
+* | --- |
 * | "Remove" |
 *
 * @param {Pantry_RemoveInputs} inputs
@@ -71577,6 +71704,47 @@ export const pantry_unit = /** @type {((inputs?: Pantry_UnitInputs, options?: { 
 	if (locale === "zh-Hans") return __zh_hans1.pantry_unit(inputs)
 	if (locale === "zh-Hant") return __zh_hant1.pantry_unit(inputs)
 	return __en.pantry_unit(inputs)
+});
+/**
+* | output |
+* | --- |
+* | "Use soon: best before {date}" |
+*
+* @param {Pantry_Use_SoonInputs} inputs
+* @param {{ locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }} options
+* @returns {LocalizedString}
+*/
+export const pantry_use_soon = /** @type {((inputs: Pantry_Use_SoonInputs, options?: { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }) => LocalizedString) & import('../runtime.js').MessageMetadata<Pantry_Use_SoonInputs, { locale?: "en" | "ar" | "cs" | "da" | "de" | "el" | "es" | "fi" | "fr" | "he" | "hu" | "id" | "it" | "ja" | "ko" | "nb" | "nl" | "pl" | "pt-BR" | "pt-PT" | "ro" | "ru" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant" }, {}>} */ ((inputs, options = {}) => {
+	const locale = experimentalStaticLocale ?? options.locale ?? getLocale()
+	if (locale === "ar") return __ar.pantry_use_soon(inputs)
+	if (locale === "cs") return __cs.pantry_use_soon(inputs)
+	if (locale === "da") return __da.pantry_use_soon(inputs)
+	if (locale === "de") return __de.pantry_use_soon(inputs)
+	if (locale === "el") return __el.pantry_use_soon(inputs)
+	if (locale === "es") return __es.pantry_use_soon(inputs)
+	if (locale === "fi") return __fi.pantry_use_soon(inputs)
+	if (locale === "fr") return __fr.pantry_use_soon(inputs)
+	if (locale === "he") return __he.pantry_use_soon(inputs)
+	if (locale === "hu") return __hu.pantry_use_soon(inputs)
+	if (locale === "id") return __id.pantry_use_soon(inputs)
+	if (locale === "it") return __it.pantry_use_soon(inputs)
+	if (locale === "ja") return __ja.pantry_use_soon(inputs)
+	if (locale === "ko") return __ko.pantry_use_soon(inputs)
+	if (locale === "nb") return __nb.pantry_use_soon(inputs)
+	if (locale === "nl") return __nl.pantry_use_soon(inputs)
+	if (locale === "pl") return __pl.pantry_use_soon(inputs)
+	if (locale === "pt-BR") return __pt_br2.pantry_use_soon(inputs)
+	if (locale === "pt-PT") return __pt_pt2.pantry_use_soon(inputs)
+	if (locale === "ro") return __ro.pantry_use_soon(inputs)
+	if (locale === "ru") return __ru.pantry_use_soon(inputs)
+	if (locale === "sv") return __sv.pantry_use_soon(inputs)
+	if (locale === "th") return __th.pantry_use_soon(inputs)
+	if (locale === "tr") return __tr.pantry_use_soon(inputs)
+	if (locale === "uk") return __uk.pantry_use_soon(inputs)
+	if (locale === "vi") return __vi.pantry_use_soon(inputs)
+	if (locale === "zh-Hans") return __zh_hans1.pantry_use_soon(inputs)
+	if (locale === "zh-Hant") return __zh_hant1.pantry_use_soon(inputs)
+	return __en.pantry_use_soon(inputs)
 });
 /**
 * | output |

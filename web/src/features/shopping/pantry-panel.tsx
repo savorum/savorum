@@ -9,10 +9,12 @@ import { Button } from "@/components/ui/button"
 import { Disclosure } from "@/components/ui/disclosure"
 import { Input } from "@/components/ui/input"
 import { createAsyncAction } from "@/lib/create-async-action"
+import { calendarDate, formatDate } from "@/lib/date-format"
 import { settled } from "@/lib/settled"
 import { uniqueID } from "@/lib/unique-id"
 
 import { m } from "../../lib/messages.ts"
+import { freshness, orderByFreshness } from "./pantry-freshness"
 
 type Entry = components["schemas"]["Entry"]
 type Draft = components["schemas"]["PantryEntryInput"] & { id: string; revision: number }
@@ -25,6 +27,20 @@ const styles = {
   body: css({ display: "grid", gap: "3", paddingBlockEnd: "3" }),
   hint: css({ color: "fg.muted", fontSize: "sm", margin: "0" }),
   add: css({ justifySelf: "start" }),
+  date: css({ display: "block", color: "fg.muted", fontSize: "sm" }),
+  due: css({ display: "block", color: "warning.fg", fontSize: "sm", fontWeight: "medium" }),
+}
+
+function bestBefore(value: string) {
+  const date = formatDate(value)
+  switch (freshness(value, calendarDate())) {
+    case "past":
+      return <span class={styles.due}>{m.pantry_past_best_before({ date })}</span>
+    case "soon":
+      return <span class={styles.due}>{m.pantry_use_soon({ date })}</span>
+    default:
+      return <span class={styles.date}>{m.pantry_best_before_value({ date })}</span>
+  }
 }
 
 export function PantryPanel(props: { canEdit: boolean }) {
@@ -37,7 +53,9 @@ export function PantryPanel(props: { canEdit: boolean }) {
   function save() {
     const value = draft()
     if (!value || busy()) return
-    const { id, revision, ...body } = value
+    const { id, revision, best_before, ...rest } = value
+    // The API rejects an empty date.
+    const body = best_before ? { ...rest, best_before } : rest
     void run(async () => {
       unwrap(
         await client.PUT("/api/v1/pantry/{id}", {
@@ -76,7 +94,7 @@ export function PantryPanel(props: { canEdit: boolean }) {
             {m.pantry_retry()}
           </Button>
         </Show>
-        <For each={settled(entries) ?? []}>
+        <For each={orderByFreshness(settled(entries) ?? [], calendarDate())}>
           {(entry) => (
             <div
               class={css({ display: "flex", gap: "3", alignItems: "center", paddingBlock: "2" })}
@@ -89,6 +107,7 @@ export function PantryPanel(props: { canEdit: boolean }) {
                 <Show when={entry.note}>
                   <span class={css({ display: "block", color: "fg.muted" })}>{entry.note}</span>
                 </Show>
+                <Show when={entry.best_before}>{(value) => bestBefore(value())}</Show>
               </p>
               <Show when={props.canEdit}>
                 <Button
@@ -104,6 +123,7 @@ export function PantryPanel(props: { canEdit: boolean }) {
                       note: entry.note,
                       location: entry.location,
                       semantic_id: entry.semantic_id,
+                      best_before: entry.best_before,
                     })
                   }
                 >
@@ -164,6 +184,14 @@ export function PantryPanel(props: { canEdit: boolean }) {
                 maxLength={100}
                 value={draft()?.location ?? ""}
                 onInput={(event) => field("location", event.currentTarget.value)}
+              />
+            </label>
+            <label>
+              {m.pantry_best_before()}
+              <Input
+                type="date"
+                value={draft()?.best_before ?? ""}
+                onInput={(event) => field("best_before", event.currentTarget.value)}
               />
             </label>
             <label>

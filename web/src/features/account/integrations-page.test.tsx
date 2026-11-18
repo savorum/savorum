@@ -92,7 +92,9 @@ test("pantry drafts retain identity, focus, composition, and edits during a live
   ))
   fireEvent.click(await view.findByRole("button", { name: "Pantry" }))
   fireEvent.click(await view.findByRole("button", { name: "Add ingredient" }))
-  const inputs = [...view.container.querySelectorAll<HTMLInputElement>("form input")]
+  const inputs = [
+    ...view.container.querySelectorAll<HTMLInputElement>("form input:not([type=date])"),
+  ]
   expect(inputs).toHaveLength(5)
   for (const input of inputs) compose(input)
   publish({ type: "pantry.entry.updated", resource: { type: "pantry_entry", id: "someone-else" } })

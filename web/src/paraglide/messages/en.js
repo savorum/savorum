@@ -1666,6 +1666,8 @@
 /** @typedef {{ name: NonNullable<unknown> }} Page_Title_NamedInputs */
 /** @typedef {{}} Pantry_AddInputs */
 /** @typedef {{}} Pantry_AmountInputs */
+/** @typedef {{}} Pantry_Best_BeforeInputs */
+/** @typedef {{ date: NonNullable<unknown> }} Pantry_Best_Before_ValueInputs */
 /** @typedef {{}} Pantry_CancelInputs */
 /** @typedef {{}} Pantry_EditInputs */
 /** @typedef {{}} Pantry_FailedInputs */
@@ -1674,6 +1676,7 @@
 /** @typedef {{ value: NonNullable<unknown> }} Pantry_May_HaveInputs */
 /** @typedef {{}} Pantry_NameInputs */
 /** @typedef {{}} Pantry_NoteInputs */
+/** @typedef {{ date: NonNullable<unknown> }} Pantry_Past_Best_BeforeInputs */
 /** @typedef {{}} Pantry_RemoveInputs */
 /** @typedef {{}} Pantry_RetryInputs */
 /** @typedef {{}} Pantry_ReviewInputs */
@@ -1681,6 +1684,7 @@
 /** @typedef {{}} Pantry_SaveInputs */
 /** @typedef {{}} Pantry_TitleInputs */
 /** @typedef {{}} Pantry_UnitInputs */
+/** @typedef {{ date: NonNullable<unknown> }} Pantry_Use_SoonInputs */
 /** @typedef {{}} Passkeys_Registration_CancelledInputs */
 /** @typedef {{}} Passkeys_Sign_In_CancelledInputs */
 /** @typedef {{}} Pdf_Preview_KbInputs */
@@ -9375,6 +9379,14 @@ export const pantry_amount = /** @type {(inputs: Pantry_AmountInputs) => Localiz
 	return /** @type {LocalizedString} */ (`Approximate amount (optional)`)
 };
 
+export const pantry_best_before = /** @type {(inputs: Pantry_Best_BeforeInputs) => LocalizedString} */ () => {
+	return /** @type {LocalizedString} */ (`Best before (optional)`)
+};
+
+export const pantry_best_before_value = /** @type {(inputs: Pantry_Best_Before_ValueInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`Best before ${i?.date}`)
+};
+
 export const pantry_cancel = /** @type {(inputs: Pantry_CancelInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Cancel`)
 };
@@ -9407,6 +9419,10 @@ export const pantry_note = /** @type {(inputs: Pantry_NoteInputs) => LocalizedSt
 	return /** @type {LocalizedString} */ (`Note (optional)`)
 };
 
+export const pantry_past_best_before = /** @type {(inputs: Pantry_Past_Best_BeforeInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`Past best before: ${i?.date}`)
+};
+
 export const pantry_remove = /** @type {(inputs: Pantry_RemoveInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Remove`)
 };
@@ -9433,6 +9449,10 @@ export const pantry_title = /** @type {(inputs: Pantry_TitleInputs) => Localized
 
 export const pantry_unit = /** @type {(inputs: Pantry_UnitInputs) => LocalizedString} */ () => {
 	return /** @type {LocalizedString} */ (`Unit (optional)`)
+};
+
+export const pantry_use_soon = /** @type {(inputs: Pantry_Use_SoonInputs) => LocalizedString} */ (i) => {
+	return /** @type {LocalizedString} */ (`Use soon: best before ${i?.date}`)
 };
 
 export const passkeys_registration_cancelled = /** @type {(inputs: Passkeys_Registration_CancelledInputs) => LocalizedString} */ () => {

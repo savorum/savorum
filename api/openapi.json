@@ -2695,6 +2695,10 @@
             "maxLength": 100,
             "type": "string"
           },
+          "best_before": {
+            "format": "date",
+            "type": "string"
+          },
           "id": {
             "type": "string"
           },
@@ -6830,6 +6834,10 @@
         "properties": {
           "amount": {
             "maxLength": 100,
+            "type": "string"
+          },
+          "best_before": {
+            "format": "date",
             "type": "string"
           },
           "location": {
