@@ -22,6 +22,7 @@ Notable changes to Savorum Core. Each release publishes
 
 - Fix accepting an invitation leaving another library selected.
 - Fix hosted member removal leaving access through other libraries or sign-in methods.
+- Fix cooking, meal plan, library, and source check pages sometimes not finishing loading.
 
 ## 0.5.0
 

@@ -13,6 +13,16 @@ export function getRouter() {
     defaultPreloadStaleTime: 0,
     defaultNotFoundComponent: NotFoundPage,
   })
+  // Solid keeps resource updates made during a transition until it commits, and
+  // a load that settles in that window can stay unresolved. Navigation commits
+  // directly instead; the Transitioner's assignment is ignored.
+  Object.defineProperty(router, "startTransition", {
+    get: () => (commit: () => void) => {
+      commit()
+      return Promise.resolve(true)
+    },
+    set: () => {},
+  })
 
   return router
 }
