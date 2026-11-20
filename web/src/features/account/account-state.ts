@@ -96,10 +96,14 @@ export async function refreshAccount(): Promise<void> {
   if (typeof window !== "undefined" && value.user) {
     const library = joinedLibrary()
     if (library && value.libraries.some((item) => item.id === library)) {
-      setCSRFToken(value.csrf_token ?? "")
-      await accountRequest("/account/library", "POST", { library_id: library })
       sessionStorage.removeItem(joinedLibraryKey)
-      value = await accountRequest<Account>("/account")
+      setCSRFToken(value.csrf_token ?? "")
+      try {
+        await accountRequest("/account/library", "POST", { library_id: library })
+        value = await accountRequest<Account>("/account")
+      } catch {
+        // Selecting the joined library is best effort; the account still loads.
+      }
     }
   }
   if (value.auth_enabled && !value.user) void takeStartupResponse("/api/v1/me/preferences")
