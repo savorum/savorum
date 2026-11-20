@@ -78,13 +78,16 @@ export function LibrarySettings(props: { libraryID: string }) {
                 </p>
               }
             >
-              <Members library={entry()} />
-              <InvitationLinks library={entry()} />
-              <section class={styles.section}>
-                <h2>{m.account_activity_heading()}</h2>
-                <AuditView library={entry().id} />
-              </section>
-              <RetireLibrary libraryID={entry().id} libraryName={entry().name} />
+              {/* Remount per library so no row acts on the previous library's members. */}
+              <Show when={entry().id} keyed>
+                <Members library={entry()} />
+                <InvitationLinks library={entry()} />
+                <section class={styles.section}>
+                  <h2>{m.account_activity_heading()}</h2>
+                  <AuditView library={entry().id} />
+                </section>
+                <RetireLibrary libraryID={entry().id} libraryName={entry().name} />
+              </Show>
             </Show>
           )}
         </Show>
@@ -198,8 +201,9 @@ function Members(props: { library: AccountLibrary }) {
 /** Links not yet used. Accepted, revoked, and expired links appear in activity. */
 function InvitationLinks(props: { library: AccountLibrary }) {
   const [hosting] = createResource(readManagedHosting)
+  const managedHosting = () => (hosting.state === "ready" ? hosting() : undefined)
   const [invitations, { refetch }] = createResource(
-    () => !hosting.loading && ([props.library.id, !!hosting()] as const),
+    () => hosting.state === "ready" && ([props.library.id, !!hosting()] as const),
     async ([id, managed]) =>
       (
         await accountRequest<{ invitations: Invitation[] }>(
@@ -220,23 +224,25 @@ function InvitationLinks(props: { library: AccountLibrary }) {
       <SectionHeader
         title={m.library_invitations_heading()}
         action={
-          <Show
-            when={hosting()}
-            fallback={
-              <Button size="sm" variant="outline" onClick={() => setCreating(true)}>
-                {m.account_invitations_create()}
-              </Button>
-            }
-          >
-            {(managed) => (
-              <a class={styles.navLink} href={hostingAccountURL(managed(), props.library.id)}>
-                {m.account_invitations_create()}
-              </a>
-            )}
+          <Show when={hosting.state === "ready"}>
+            <Show
+              when={managedHosting()}
+              fallback={
+                <Button size="sm" variant="outline" onClick={() => setCreating(true)}>
+                  {m.account_invitations_create()}
+                </Button>
+              }
+            >
+              {(managed) => (
+                <a class={styles.navLink} href={hostingAccountURL(managed(), props.library.id)}>
+                  {m.account_invitations_create()}
+                </a>
+              )}
+            </Show>
           </Show>
         }
       />
-      <Show when={hosting()}>
+      <Show when={managedHosting()}>
         <p class={styles.muted}>{m.account_hosted_invitations_hint()}</p>
       </Show>
       <ChangeError error={change.error() ?? hosting.error ?? invitations.error} />
@@ -277,7 +283,7 @@ function InvitationLinks(props: { library: AccountLibrary }) {
             )}
           </For>
         </ul>
-        <Show when={hosting()}>
+        <Show when={managedHosting()}>
           <p class={styles.muted}>{m.account_hosted_replace_hint()}</p>
         </Show>
       </Show>

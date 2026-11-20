@@ -91,6 +91,17 @@ test("failed responses carry the parsed problem, or its text when it is not JSON
   const text = recorder(() => new Response("upstream down", { status: 502 }))
   const plain = await text.client.GET("/items/{id}", { params: { path: { id: "1" } } })
   expect(plain.error).toBe("upstream down")
+
+  const truncated = recorder(
+    () =>
+      new Response('{"code":', {
+        status: 502,
+        headers: { "Content-Type": "application/json" },
+      }),
+  )
+  const partial = await truncated.client.GET("/items/{id}", { params: { path: { id: "1" } } })
+  expect(partial.error).toBe('{"code":')
+  expect(partial.response.status).toBe(502)
 })
 
 test("responses without content have no data", async () => {

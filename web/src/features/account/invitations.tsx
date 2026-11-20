@@ -6,6 +6,7 @@ import { ChangeError } from "@/components/status"
 import { Button } from "@/components/ui/button"
 import { FormField } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { latestUnlessFailed } from "@/lib/settled"
 
 import { m } from "../../lib/messages.ts"
 import { accountStyles as styles } from "./account-layout"
@@ -62,7 +63,7 @@ function createInvitationPreview() {
   const [token, setToken] = createSignal("")
   onMount(() => setToken(invitationToken()))
   const [preview, actions] = createResource(() => token() || false, previewInvitation)
-  return { token, setToken, preview, ...actions }
+  return { token, setToken, preview, current: () => latestUnlessFailed(preview), ...actions }
 }
 
 // The fragment stays out of server request logs and is removed as soon as it is read.
@@ -122,6 +123,7 @@ function LocalInvitationAcceptance() {
     token,
     setToken,
     preview,
+    current,
     refetch: retryPreview,
     mutate: updatePreview,
   } = createInvitationPreview()
@@ -158,9 +160,9 @@ function LocalInvitationAcceptance() {
     setBusy(true)
     setError(undefined)
     try {
-      const current = preview()
-      if (!current) return
-      const target = await ensureAccepted(current)
+      const invitation = current()
+      if (!invitation) return
+      const target = await ensureAccepted(invitation)
       await accountRequest("/account/library", "POST", { library_id: target.library_id })
       await refreshAccount()
       forgetInvitation()
@@ -175,7 +177,7 @@ function LocalInvitationAcceptance() {
     <Show when={token() && account()?.user}>
       <section class={styles.section} aria-label={m.account_invitation_heading()}>
         <h2>{m.account_invitation_heading()}</h2>
-        <InvitationDetails preview={preview()} />
+        <InvitationDetails preview={current()} />
         <ChangeError error={preview.error} />
         <Show when={preview.error}>
           <Button variant="outline" onClick={() => void retryPreview()}>
@@ -185,8 +187,8 @@ function LocalInvitationAcceptance() {
         <p>{m.account_invitation_join_as({ name: account()?.user?.display_name ?? "" })}</p>
         <ChangeError error={error()} />
         <div class={styles.actions}>
-          <Button disabled={busy() || !preview()} onClick={() => void accept()}>
-            {preview()?.accepted
+          <Button disabled={busy() || !current()} onClick={() => void accept()}>
+            {current()?.accepted
               ? m.account_invitation_open_library()
               : m.account_invitation_accept()}
           </Button>
@@ -226,6 +228,7 @@ export function InvitedRegistration(props: { signIn?: JSX.Element } = {}) {
           </Show>
         </Show>
       </Show>
+      <Show when={hosting.error}>{props.signIn}</Show>
     </>
   )
 }
@@ -233,7 +236,7 @@ export function InvitedRegistration(props: { signIn?: JSX.Element } = {}) {
 function LocalInvitedRegistration(props: { signIn?: JSX.Element }) {
   const signIn = children(() => props.signIn)
   const [existingAccount, setExistingAccount] = createSignal(false)
-  const { token, preview, refetch: retryPreview } = createInvitationPreview()
+  const { token, preview, current, refetch: retryPreview } = createInvitationPreview()
   const [login, setLogin] = createSignal("")
   const [display, setDisplay] = createSignal("")
   const [password, setPassword] = createSignal("")
@@ -267,7 +270,7 @@ function LocalInvitedRegistration(props: { signIn?: JSX.Element }) {
               : m.account_invitation_create_heading()}
           </h1>
         </Show>
-        <InvitationDetails preview={preview()} />
+        <InvitationDetails preview={current()} />
         <ChangeError error={preview.error} />
         <Show when={preview.error}>
           <Button variant="outline" onClick={() => void retryPreview()}>
@@ -309,7 +312,7 @@ function LocalInvitedRegistration(props: { signIn?: JSX.Element }) {
             </FormField>
             <ChangeError error={error()} />
             <div class={styles.actions}>
-              <Button type="submit" disabled={busy() || !preview()}>
+              <Button type="submit" disabled={busy() || !current()}>
                 {m.account_register_submit()}
               </Button>
             </div>
