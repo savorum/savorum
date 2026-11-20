@@ -57,6 +57,15 @@ export async function accountRequest<T = unknown>(
   return (response.status === 204 ? undefined : await response.json()) as T
 }
 let redirectingManagedSignIn = false
+const joinedLibraryKey = "savorum.joined-library"
+
+function joinedLibrary(): string | null {
+  try {
+    return sessionStorage.getItem(joinedLibraryKey)
+  } catch {
+    return null
+  }
+}
 
 function retainInvitedLibrary(): boolean {
   if (redirectingManagedSignIn) return true
@@ -64,7 +73,11 @@ function retainInvitedLibrary(): boolean {
   const target = new URL(window.location.href)
   const library = target.searchParams.get("joined_library")
   if (!library || library.length > 128) return false
-  sessionStorage.setItem("savorum.joined-library", library)
+  try {
+    sessionStorage.setItem(joinedLibraryKey, library)
+  } catch {
+    // Selecting the joined library is best effort when tab storage is unavailable.
+  }
   const provider = target.searchParams.get("managed_sign_in")
   target.searchParams.delete("joined_library")
   target.searchParams.delete("managed_sign_in")
@@ -81,11 +94,11 @@ export async function refreshAccount(): Promise<void> {
   if (retainInvitedLibrary()) return
   let value = await accountRequest<Account>("/account")
   if (typeof window !== "undefined" && value.user) {
-    const library = sessionStorage.getItem("savorum.joined-library")
+    const library = joinedLibrary()
     if (library && value.libraries.some((item) => item.id === library)) {
       setCSRFToken(value.csrf_token ?? "")
       await accountRequest("/account/library", "POST", { library_id: library })
-      sessionStorage.removeItem("savorum.joined-library")
+      sessionStorage.removeItem(joinedLibraryKey)
       value = await accountRequest<Account>("/account")
     }
   }

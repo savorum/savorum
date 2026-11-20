@@ -44,10 +44,13 @@ type InitArgs<O extends Operation> = [RequiredKeys<RequestFields<O>>] extends [n
   ? [init?: Init<O>]
   : [init: Init<O>]
 
-/** A response the server accepted carries `data`; any other carries the parsed `error`. */
+/**
+ * A response the server accepted carries `data`. Any other carries the parsed
+ * `error`, or, when its body is not JSON, the body as text, a Blob, or nothing.
+ */
 export type FetchResult<O extends Operation> =
   | { data: O["data"]; error?: never; response: Response }
-  | { data?: never; error: O["error"]; response: Response }
+  | { data?: never; error: O["error"] | string | Blob | undefined; response: Response }
 
 type Call<Paths, M extends Method> = <P extends PathsWith<Paths, M>>(
   path: P,
@@ -122,7 +125,14 @@ async function readBody(response: Response): Promise<unknown> {
   switch (mediaKind(response.headers.get("Content-Type"))) {
     case "json": {
       const text = await response.text()
-      return text ? (JSON.parse(text) as unknown) : undefined
+      if (!text) return undefined
+      try {
+        return JSON.parse(text) as unknown
+      } catch (failure) {
+        // A proxy failure page may claim JSON; its text stays the error.
+        if (response.ok) throw failure
+        return text
+      }
     }
     case "text":
       return response.text()

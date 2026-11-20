@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/solid-router"
 import { Share } from "lucide-solid"
-import { Show, createResource, createSignal, type JSX } from "solid-js"
+import { Show, createEffect, createResource, createSignal, type JSX } from "solid-js"
 import { css } from "styled-system/css"
 
 import { ChangeError } from "@/components/status"
@@ -67,6 +67,7 @@ export function InvitationLinkDialog(props: {
 }) {
   const [hosting] = createResource(readManagedHosting)
   const [libraryID, setLibraryID] = createSignal("")
+  const [creating, setCreating] = createSignal(false)
   const library = () =>
     props.libraries.find((entry) => entry.id === libraryID()) ?? props.libraries[0]
   return (
@@ -81,6 +82,7 @@ export function InvitationLinkDialog(props: {
         <FormField label={m.account_admin_invite_library()}>
           <Select
             value={library()?.id ?? ""}
+            disabled={creating()}
             onValueChange={setLibraryID}
             items={props.libraries.map((entry) => ({ value: entry.id, label: entry.name }))}
           />
@@ -94,6 +96,7 @@ export function InvitationLinkDialog(props: {
             fallback={
               <LinkCreator
                 libraryID={entry.id}
+                onBusy={setCreating}
                 onCreated={props.onCreated}
                 settingsLink={
                   props.linkToSettings ? (
@@ -134,6 +137,7 @@ function canShare(url: string): boolean {
 function LinkCreator(props: {
   libraryID: string
   settingsLink?: JSX.Element
+  onBusy: (busy: boolean) => void
   onCreated?: () => void
 }) {
   const [role, setRole] = createSignal("viewer")
@@ -142,6 +146,7 @@ function LinkCreator(props: {
   const [url, setURL] = createSignal("")
   const [error, setError] = createSignal<unknown>()
   const [busy, setBusy] = createSignal(false)
+  createEffect(() => props.onBusy(busy()))
   async function create(event: SubmitEvent) {
     event.preventDefault()
     setBusy(true)

@@ -136,3 +136,27 @@ test("a join link stores its token and leaves the address bar", () => {
   expect(sessionStorage.getItem("savorum.invitation")).toBe("short-secret-token-22c")
   history.replaceState(null, "", "/")
 })
+
+test("a failed preview keeps its retry and the registration form", async () => {
+  sessionStorage.setItem("savorum.invitation", "invitation-secret")
+  vi.mocked(accountRequest)
+    .mockImplementationOnce(async () => ({ providers: [] }))
+    .mockImplementationOnce(async () => {
+      throw new Error("Preview failed")
+    })
+  const screen = render(() => <InvitedRegistration />)
+  expect(await screen.findByText("Preview failed")).toBeTruthy()
+  expect(screen.getByRole("button", { name: "Retry" })).toBeTruthy()
+  expect(screen.getByLabelText("Display name")).toBeTruthy()
+})
+
+test("failed hosting discovery keeps the supplied sign-in", async () => {
+  sessionStorage.setItem("savorum.invitation", "invitation-secret")
+  vi.mocked(accountRequest).mockImplementationOnce(async () => {
+    throw new Error("Discovery failed")
+  })
+  const screen = render(() => <InvitedRegistration signIn={<p>Existing account form</p>} />)
+  expect(await screen.findByText("Existing account form")).toBeTruthy()
+  expect(screen.getByRole("button", { name: "Retry" })).toBeTruthy()
+  expect(screen.queryByLabelText("Display name")).toBeNull()
+})

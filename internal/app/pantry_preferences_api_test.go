@@ -35,9 +35,17 @@ func TestPantryBestBeforeIsOptionalAndValidated(t *testing.T) {
 		t.Fatalf("best-before date not kept: %s", body)
 	}
 
+	if body := h.send(http.MethodGet, "/api/v1/pantry", nil, http.StatusOK).Body.String(); !strings.Contains(body, `"best_before":"2027-02-28"`) {
+		t.Fatalf("best-before date not stored: %s", body)
+	}
+
 	cleared := h.send(http.MethodPut, "/api/v1/pantry/yeast", map[string]any{"name": "Yeast"}, http.StatusOK, "If-Match", created.Header().Get("ETag"))
 	if body := cleared.Body.String(); strings.Contains(body, "best_before") {
 		t.Fatalf("best-before date not cleared: %s", body)
+	}
+
+	if body := h.send(http.MethodGet, "/api/v1/pantry", nil, http.StatusOK).Body.String(); strings.Contains(body, "best_before") {
+		t.Fatalf("stored best-before date not cleared: %s", body)
 	}
 
 	h.send(http.MethodPut, "/api/v1/pantry/salt", map[string]any{"name": "Salt", "best_before": "2027-02-30"}, http.StatusUnprocessableEntity, "If-None-Match", "*")
